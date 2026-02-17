@@ -264,12 +264,14 @@ namespace WebFreight.Web
                     IsMobileLogin = logintokenparam.IsMobileLogin,
                     MobileVersion = logintokenparam.MobileVersion,
                 };
-             
+                if (LogitudeSettings.IsCostomsDeploy)
+                {
                     IGlobalContext globalContext = GlobalContext.GetContext();
                     var contactPasswordRepository = new ContactPasswordRepository(globalContext);
 
                     var dbcontact =
-                         contactPasswordRepository.GetSingleContactPassword(auttoken.Email);
+                        //globalContext.ContactPasswords.Where(c => c.Email == auttoken.Email).FirstOrDefault();
+                        contactPasswordRepository.GetSingleContactPassword(auttoken.Email);
                     if (dbcontact != null)
                     {
                         dbcontact = dbcontact ?? new ContactPassword();
@@ -277,7 +279,8 @@ namespace WebFreight.Web
                         {
                             if (dbcontact.Password != loginParameters.Password)
                             {
-                                 loginParameters.Password = dbcontact.Password;
+                               NetCommonHelper.Logger.DevLog.Instance.WriteDebug(@"ihab(@Itzik):SSO:the Hash Password from token irrelevant Allow Login even though HashPass  not match");
+                                loginParameters.Password = dbcontact.Password;
                             }
                         }
                         if (dbcontact.MustChangePassword)
@@ -287,7 +290,8 @@ namespace WebFreight.Web
                             globalContext.SaveChanges();
                         }
                     }
- 
+                }
+
                 userdata = PostUserValidation(loginParameters);
 
                 if (!userdata.HasError)
@@ -646,14 +650,6 @@ namespace WebFreight.Web
 
 
             return true;
-        }
-        public HttpResponseMessage GetIsAppServiceData()
-        {
-            var isAppServiceENV = Environment.GetEnvironmentVariable("IsAppService") == "true";
-            bool isAppService = ConfigurationManager.AppSettings["IsAppService"] == "true";
-            return (isAppServiceENV || isAppService) ? 
-                Request.CreateResponse(HttpStatusCode.OK, true) :
-                Request.CreateResponse(HttpStatusCode.OK, false);
         }
 
         public HttpResponseMessage getLoggedDomain()
@@ -1800,6 +1796,7 @@ namespace WebFreight.Web
                     }
 
                     user.HtmlVersion = GetHtmlVersion();
+                    user.IsAdmin = SecurityUtility.isUserAdmin(email, tenant) || customerCare;
                 }
 
                 int executionTime = (int)((DateTime.Now.Ticks - DateBeforePostLoginData.Ticks) / TimeSpan.TicksPerMillisecond);
@@ -3184,7 +3181,7 @@ namespace WebFreight.Web
             else HttpContext.Current.Response.Headers.Add("ServerTime", executionTime.ToString());
 
         }
-        
+
 
 
         //   [OperationContract]

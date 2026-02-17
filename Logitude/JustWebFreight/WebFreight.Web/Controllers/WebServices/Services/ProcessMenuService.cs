@@ -84,7 +84,6 @@ namespace WebFreight.Web.Controllers.WebServices.Services
 
         public List<MenuItemClass> GetProcessesByIds(List<string> ids, int tenant)
         {
-
             ReportExecutionLogRepository  repository = new ReportExecutionLogRepository(tenant);
             (repository.context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false;
 

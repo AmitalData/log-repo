@@ -1438,8 +1438,11 @@
                     return;
                 }
             }
+            var isTenantAllowed = false;
             var Tenant = userdata.CurrentTenant;
-            
+            if (Tenant == 42 || Tenant == 1232 || Tenant == 1586 || Tenant == 1637 || Tenant == 1638 || Tenant == 341) {
+                isTenantAllowed = true;
+            }
 
             if (navigator.sayswho && navigator.sayswho.toString().indexOf("IE") > -1) {
                 alert("Internet explorer is not supported in HTML5 version, please use Chrome, Firefox or Opera.");
@@ -1453,21 +1456,36 @@
 
             if (navigator.userAgent != null) {
                 if (navigator.userAgent.toString().toLowerCase().indexOf("iphone") > -1) {
+                    if (!isTenantAllowed) {
                         alert("IOS is currently not supported in HTML5 version");
                         return;
+                    }
                 }
 
                 else if (navigator.userAgent.toString().toLowerCase().indexOf("ipad") > -1) {
+                    if (!isTenantAllowed) {
                         alert("IOS is currently not supported in HTML5 version");
                         return;
+                    }
                 }
 
                 else if (navigator.userAgent.toString().toLowerCase().indexOf("ipod") > -1) {
+                    if (!isTenantAllowed) {
                         alert("IOS is currently not supported in HTML5 version");
                         return;
+                    }
                 }
             }
 
+
+            //if (navigator.sayswho && navigator.sayswho.toString().indexOf("Safari") > -1) {
+            //    var issafari = true;
+            //    if (navigator.userAgent && (navigator.userAgent.toString().indexOf("Chrome") > -1 || navigator.userAgent.toString().indexOf("Firefox") > -1 || navigator.userAgent.toString().indexOf("FxiOS") > -1 || navigator.userAgent.toString().indexOf("ChiOS") > -1)) issafari = false;
+            //    if (issafari == true) {
+            //        alert("Safari is currently not supported in HTML5 version, please use Chrome, Firefox or Opera.");
+            //        return;
+            //    }
+            //}
 
             var pageUrl = document.URL;
             var additionalParturl = "";
@@ -1497,7 +1515,28 @@
 
             }
 
-            
+            let prodNewEnvTenants = [2889, 341, 1, 42, 1489, 0, 1688, 2655, 2138, 3018, 2086, 1604, 3017, 558, 2860, 194, 2915,
+                2838, 2780, 2779, 2770, 2742, 2601, 2591, 2580, 2531, 2526, 2511, 2331, 2240, 2037, 1681,
+                1595, 1530, 1445, 807, 3000, 2999, 2998, 2983, 2964, 2961, 2935, 2927, 2921, 2915, 2899,
+                2886, 2878, 2838, 2780, 2779, 2770, 2742, 2741, 2740, 2713, 2711, 2680, 2679, 2601, 2591,
+                2580, 2531, 2526, 2511, 2510, 2470, 2450, 2448, 2383, 2366, 2331, 2268, 2240, 2219, 2211,
+                2199, 2170, 2169, 2086, 2037, 1681, 1604, 1595, 1530, 1484, 1469, 1445, 1433, 1151, 1056,
+                807, 802, 799, 468, 331, 293, 291, 289, 288, 286, 284, 283, 282, 281, 277, 275, 274, 272,
+                270, 268, 266, 255, 253, 252, 251, 250, 248, 247, 242, 239, 237, 235];
+            let testNewEnvTenants = [951, 1022];
+
+            let newSystemTenant = getCookie("newSystemTenant");
+            if (newSystemTenant == "") {
+                if (document.location.href.indexOf("system.logitudeworld") > 0 || document.location.href.indexOf("staging.logitudeworld")>0) {
+                    if (prodNewEnvTenants.indexOf(Tenant) >= 0) {
+                        setCookie("newSystemTenant", Tenant, 70);
+                    }
+                } else if (document.location.href.indexOf("test.logitudeworld") > 0) {
+                    if (testNewEnvTenants.indexOf(Tenant) >= 0) {
+                        setCookie("newSystemTenant", Tenant, 70);
+                    }
+                }
+            }
             if (document.location.href.indexOf('?Menu=') > 0) {
                 document.location.href = document.location.href.replace("/Login.aspx", "/").replace("/login.aspx", "/").split('?')[0] + angularUrl;
             }
