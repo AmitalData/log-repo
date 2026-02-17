@@ -145,13 +145,6 @@
     <Constraints
       Nullable="true" />
   </Column>
-  <Column
-    Name="UseStimul"
-    Type="bit"
-    DefaultValue="1">
-    <Constraints
-      Nullable="false" />
-  </Column>
   <Relation
     ForeignKeyColumn="ReportId"
     ReferencedTable="Reports"

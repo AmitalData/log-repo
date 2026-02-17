@@ -119,7 +119,7 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
         if (this.EntityPM.IsFromInterestBatchInvoice) {
             IsFromInterestBatchInvoice = true;
         }
-        if (ObjectsLocator.GlobalSetting?.WorkEnvironment === 'cloud' && IsFromInterestBatchInvoice == false && SessionLocator.TenantPM.AccountingActivated && this.DataContext.invoiceType != "IT") {
+        if (ObjectsLocator.GlobalSetting.WorkEnvironment === 'cloud' && IsFromInterestBatchInvoice == false && SessionLocator.TenantPM.AccountingActivated && this.DataContext.invoiceType != "IT") {
             this.UpdateDocumentsAutomatically();
         }
 
@@ -730,7 +730,7 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
                                 this.ItemsSource.push(new DocumentCopiesViewModel(item, this.CurrentDocumentOut, this.EntityId, this.ChildEntityId, this.ObjectTableId, this.ChildObjectTableId, this.DocumentTypeload, this.ChildReference));
                             });
 
-                            if (ObjectsLocator.GlobalSetting?.WorkEnvironment === 'cloud' && SessionLocator.TenantPM.AccountingActivated) {
+                            if (ObjectsLocator.GlobalSetting.WorkEnvironment === 'cloud' && SessionLocator.TenantPM.AccountingActivated) {
                                 this.ItemsSource = this.ItemsSource.filter((value, index, self) =>
                                     index === self.findIndex((t) => (
                                         t.Id === value.Id

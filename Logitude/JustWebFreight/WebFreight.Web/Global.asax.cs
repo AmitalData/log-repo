@@ -189,13 +189,14 @@ namespace WebFreight.Web
             // This value must be no more than 1/3 of the DisconnectTimeout value.
             GlobalHost.Configuration.KeepAlive = TimeSpan.FromSeconds(5);
 
-            StiLicense.Key = "6vJhGtLLLz2GNviWmUTrhSqnOItdDwjBylQzQcAOiHlDUTDyyOzH1Ys3qCPYbCdoOPkp0wcjMFs/nMMKkWriMMfI0I" +
-"PTmv3vqyK+kiZMWBXbmk/5nVaYnoKdZDQcs9S4EXbREpWCaBtBUPBdGK/RvynNQgdJ92boAv5dvQNf+cI/TFtMD5Zu" +
-"IUmN7IUWcOYxu68ChgVJhjNdkvfh+tpcYa9gRW/Ik/9N1FO2Uaq7qiKAnO0rn1Put5GiR8zSvegcgRcRzkn5wApANF" +
-"lb0W//9Ce8sgpSUwO1no2Auf/Efv+2uV3Ld9e5WZvjKskFJDhLYbdvWq3xNMZkwdo0qSBdavsMZqOtPfpzpSmrGPCC" +
-"cFFCq4hgXdc9BrS7XjM/KGcojYpSArv6b3oEp4XOa1rgach8lukVJCR5WwMAyfgXHT9Na5d87xey46BtTRZWJd2Svx" +
-"tXYYoWNDtqe0IEh54aL6prLL162XgeDiWnlUiLIHYm3Jtwp6/N39l+p3kHYDdGnS+vgv1Eso7uUmYl7FKrqzjczh7l" +
-"wjvqoQrAretQXTtTlqp0O8LtDn2cbEsboWm3";
+            StiLicense.Key = "6vJhGtLLLz2GNviWmUTrhSqnOItdDwjBylQzQcAOiHk5LQfMb0Dr1Ze4z6YRXSb7imTiay6/HzKYGUzkd/h3FMt5R7" +
+"uunoM5lX8Vs2voVkSeT6Wv6WI6Jcy4xOeAjjPkTBhC+ivrrxidMQjLaebItqFcnJWqKXBUgoJa0WfmH3soi0IbfEmI" +
+"fQ3ZmMq5BHsjsKoHSdnbzDUPWMXieYRTJZL6tsBC6QRy2ALPnYwg88ZJDGAWgAqMhZ+M0BVM17B3YJN9mu1MfAblN7" +
+"rG1eWrSrR5B53af4aeWs0RmqVNatfenGL8sufvTgOiyEuQmC9J7sHOT6VoQpWOlZthrc7JOl4zbw+qduZHZrpLuK+1" +
+"O3AB8EeDCQ6EgM8TcUesQBZZrUA4ZUFpxsCdvL0n4DQiB1tIof1TGHXCtZ62S1kAfU4XJzEGM/g3MYbKridAK5ckyc" +
+"0xwsK2y46rm9W3EV0m49Na0pcJe+2ZScc6BP1o3tDS9ddHbfkt7hFZpUNTqOxn9BOP0YVoQul+dPckYle4PS4mzXVp" +
+"tMrKV4En69rnW/z658axW0kQ2GxorKwW0IAR";
+
 
 
 
