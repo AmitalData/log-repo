@@ -30,7 +30,7 @@ namespace Unifreight.BL.EntityUpdateServices
 
         protected override Simplog.Server.Infrastructure.EntityKeyFields GetKeys(CCUQUELOCKPM entityPM)
         {
-            return new CCUQUELOCKKeys() { ENTNAME = entityPM.ENTNAME, FILENO = entityPM.FILENO, Tenant = entityPM.Tenant };
+            return new CCUQUELOCKKeys() { ENTNAME = entityPM.ENTNAME, FILENO = entityPM.FILENO };
         }
 
         protected override void OnCreating(CCUQUELOCKPM entityPM, EntityPM entityParentPM)
