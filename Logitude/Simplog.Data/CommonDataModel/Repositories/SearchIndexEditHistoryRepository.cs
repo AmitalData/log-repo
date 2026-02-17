@@ -12,8 +12,8 @@ namespace Simplog.Data.CommonDataModel.Repositories
         readonly ICommonDataContext iContext;
         public SearchIndexEditHistoryRepository(int tenant)
         {
-            if (tenant < 0)
-                throw new ArgumentOutOfRangeException(nameof(tenant), "tenant must be greater than -1");
+            if (tenant <= 0)
+                throw new ArgumentOutOfRangeException(nameof(tenant), "tenant must be greater than 0");
             iContext = CommonDataContext.GetContext(tenant);
         }
 

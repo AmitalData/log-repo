@@ -3,10 +3,10 @@
         background: #f7f7f7;
         position: absolute;
         /*z-index: 99;*/
-        top: 0px;
+        top: 50px;
         bottom: 8px;
 
-        width: 100%;
+        width: 250px;
         border-right: 1px solid #8eabc1;
         border-left: 1px solid #8eabc1;
         border-bottom: 1px solid #8eabc1;
@@ -51,8 +51,8 @@
         background: -moz-linear-gradient(#E7F5FE, #62AAC4);
         /* For Firefox 3.6 to 15 */
         background: linear-gradient(#E7F5FE, #62AAC4);
-        width: 200px;
-        margin: auto;
+
+
     }
 
     .timeline {
@@ -226,8 +226,6 @@
                                                                 {{LayoutDirection == 'rtl'?
                                                                 item.LocalName
                                                                 :item.Name}}
-                                                                 <img  *ngIf="item.ItemType === 2"   style="height:12px;width:12px;" src="./Images/Buttons/excelicon.png" />
-
                                                             </div>
                                                         </td>
 
@@ -247,8 +245,21 @@
                                                             </div>
                                                         </td>
                                                     </tr>
-                                                    <tr style="float: right;">
+                                                    <tr>
 
+                                                        <td>
+                                                            <div style="margin-right:6px;overflow:hidden">
+                                                                <div *ngIf="item.StatusCode !== 'F';">
+
+                                                                    <div *ngIf="item.StatusCode !== 'D'"
+                                                                        class="progress-container">
+                                                                        <div class="progress"></div>
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+
+                                                        </td>
                                                         <td [hidden]="item.StatusCode=='D' || item.StatusCode=='F' || item.ItemType === 1"
                                                             style="width: 1px; vertical-align: top;">
                                                             <img style="width: 18px;height: 18px;" [title]="'Cancel'"
@@ -267,19 +278,6 @@
                                                             <img [title]="item.ExceptionMessage && !item.ExceptionMessage.startsWith('Stopped manually by') ? item.ExceptionMessage :'Cancelled'"
                                                                 style=" cursor: pointer;"
                                                                 [src]="item.ExceptionMessage && !item.ExceptionMessage.startsWith('Stopped manually by') ? './Images/process_failed@1x.png' : './Images/process_cancelled.png'" />
-                                                        </td>
-                                                        <td style="width: 180px;">
-                                                            <div style="margin-right:6px;overflow:hidden">
-                                                                <div *ngIf="item.StatusCode !== 'F';">
-
-                                                                    <div *ngIf="item.StatusCode !== 'D'"
-                                                                        class="progress-container">
-                                                                        <div class="progress"></div>
-                                                                    </div>
-
-                                                                </div>
-                                                            </div>
-
                                                         </td>
 
 
