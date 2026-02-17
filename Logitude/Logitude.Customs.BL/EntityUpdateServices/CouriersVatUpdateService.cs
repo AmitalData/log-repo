@@ -128,7 +128,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         bool IsVatNumberExisit(string vatNumber, int tenant, string entityId = null)
         {
             CouriersVatRepository repo = new CouriersVatRepository(tenant);
-            var exist = repo.GetByVatNumber(vatNumber, entityId, tenant);
+            var exist = repo.GetByVatNumber(vatNumber, entityId);
 
             return ( (exist != null) ? true : false );
 
