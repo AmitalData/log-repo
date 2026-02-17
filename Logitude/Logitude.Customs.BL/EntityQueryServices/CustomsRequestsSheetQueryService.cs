@@ -623,7 +623,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "8319",//כללים - ספר סיווג
 "8318",// תדפיסי חקיקה (מקח''ים) - ספר סיווג
 "DOC8318",// תדפיסי חקיקה (מקח''ים) - ספר סיווג - attachment
-"UCB8373",
+"UCB8373"
 };
 
 

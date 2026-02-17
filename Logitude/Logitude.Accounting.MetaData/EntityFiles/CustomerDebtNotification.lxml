@@ -763,15 +763,7 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false">
-    <ForeignEntitySettings>
-      <Setting
-        IsForeignKey="false"
-        ForeignEntity="&quot;&quot;"
-        DontBuildRelationOnDB="false"
-        NavigationPropertyName="&quot;&quot;" />
-    </ForeignEntitySettings>
-  </field>
+    EnableFullscreenTextBox="false" />
   <Screen
     Name="&quot;CustomerDebtNotificationHeaderScreen&quot;"
     ObjectTableName="&quot;CustomerDebtNotification&quot;"
