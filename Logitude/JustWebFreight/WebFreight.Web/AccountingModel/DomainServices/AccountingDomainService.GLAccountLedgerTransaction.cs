@@ -44,14 +44,11 @@ namespace WebFreight.Web.AccountingModel.DomainServices
                 QueryOperations queryOperations = EntityListFilter.GetQueryOperations(xmlFilters);
                 LedgerTransactionBalanceFilterCreateLTBFilter ledgerTransactionBalanceFilterCreateLTBFilter = new LedgerTransactionBalanceFilterCreateLTBFilter();
                 LedgerTransactionBalanceFilter LTBFilter = ledgerTransactionBalanceFilterCreateLTBFilter.CreateLTBFilter(null, tenant, queryOperations);
-                LTBFilter.GetCount = true;
                 ledgerTransactionBalanceService = new LedgerTransactionBalanceService(accountingContext, LTBFilter);
                 ledgerTransactionBalanceService.Run(true);
                 MapLedgerTransactionnList();
-                if (LTBFilter.TaxReportTotalCount.HasValue)
-                {
-                    ledgerTransactionBalanceService.Response.TotalRowCount = LTBFilter.TaxReportTotalCount.Value;
-                }
+                 
+
             }
             return (int)ledgerTransactionBalanceService.Response.TotalRowCount;
 

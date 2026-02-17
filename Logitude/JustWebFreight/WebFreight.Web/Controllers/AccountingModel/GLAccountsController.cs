@@ -70,28 +70,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
             }
 
         }
-        public HttpResponseMessage GetTotalOpenChequesInLocalCurById(string glaccountId)
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                int tenant = authToken.Tenant;
-                SecurityUtility.AuthenticationOnTenant(tenant);
-                SecurityUtility.CheckContactFeature("GLAccount", "READ", tenant);
 
-                IAccountingContext MyContext = AccountingContext.GetContext(tenant);
-                GLAccountQueryService gLAccountQuery = new GLAccountQueryService(MyContext);                
-                decimal TotalOpenChequesInLocalCur = gLAccountQuery.GetTotalOpenChequesInLocalCurById(glaccountId, tenant);                
-
-                return Request.CreateResponse(HttpStatusCode.OK, TotalOpenChequesInLocalCur);
-            }
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-
-        }
         public HttpResponseMessage CheckIfSplitted(string accountId)
         {
             try
