@@ -440,7 +440,7 @@
                     </log-column>
 
                      <!-- InternalNote -->
-                      <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'80'" [header]="'LedgerTransaction.F.Notes' | TextCodeTranslationPipe">
+                      <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'80'" [header]="'Internal Notes'">
                         <ng-template let-item>
                         <log-cell-template   #logcelltemplate>
                             <table>
@@ -532,7 +532,7 @@
                     </td>
                 
 
-                    <td style="width:20px;" *ngIf="failedJournalsInReconcileProcess">
+                     <td style="width:20px;" *ngIf="failedJournalsInReconcileProcess">
                 
                         <div>
                 

@@ -13,7 +13,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
     {
         ICommonDataContext commonDataContext;
 
-  
+        public MeasurementRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
 
         public MeasurementRepository(ICommonDataContext context)
         {
