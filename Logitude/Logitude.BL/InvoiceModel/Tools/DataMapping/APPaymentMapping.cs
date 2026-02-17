@@ -72,7 +72,7 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entity.VendorBankAccountNumber = entityPM.VendorBankAccountNumber;
             entity.VendorIBANNumber = entityPM.VendorIBANNumber;
             entity.VendorSwift = entityPM.VendorSwift;
-            entity.MasavInterfaceId = entityPM.MasavInterfaceId;
+            
             if (entityPM.SetApproved)
             {
                 entityPM.ApprovedByUserId = loggedContact.Id;

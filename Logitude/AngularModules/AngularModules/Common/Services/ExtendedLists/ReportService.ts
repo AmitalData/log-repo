@@ -39,11 +39,12 @@ export class ReportService {
         }),catchError(ServiceHelper.HandleServiceError));
     }
     
-    GetPrepareSendReport(type: string, fileName: string,  tenant: number, displayName: string) {
+    GetPrepareSendReport(type: string, fileName: string,  tenant: number) {
 
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken())
-        return this._http.get(this._apiUrl + "/GetPrepareSendReport" + '?type=' + type + '&fileName=' + fileName  +  '&tenant=' + tenant + '&displayName=' + (displayName || ""),ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        return this._http.get(this._apiUrl + "/GetPrepareSendReport" + '?type=' + type + '&fileName=' + fileName  +  '&tenant=' + tenant,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+
             var pmresponse: ServiceResponse;
             pmresponse = new ServiceResponse();
             pmresponse.Result = response;
@@ -163,17 +164,51 @@ export class ReportService {
                 );
         }).toPromise() as Promise<any>;
     }
+   
 
-    GetPowerBIReports() {
+    
+
+    getReportTemplate(processType:string,reportTemplateId:string,reportsTemplateId:string,templateType:string,templateId:string) {
+
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken())
-        return this._http.get(this._apiUrl + '/GetPowerBIReports',ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        return this._http.get(this._apiUrl 
+            + "/GetReportTemplate"
+            + '?processType=' + processType
+            + '&reportTemplateId=' + reportTemplateId
+            + '&reportsTemplateId=' + reportsTemplateId
+            + '&templateType=' + templateType
+            + '&templateId=' + templateId ,
+            ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+
             var pmresponse: ServiceResponse;
             pmresponse = new ServiceResponse();
             pmresponse.Result = response;
             return pmresponse;
         }),catchError(ServiceHelper.HandleServiceError));
     }
+    saveReportTemplate(templateId:string ,reportTemplateId:string,processType:string,reportBase64:string) {
+        const body = {
+            processType: processType,
+            reportTemplateId: reportTemplateId,
+            templateId: templateId,
+            templateBase64: reportBase64
+          };
+        
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken())
+        return this._http.post(this._apiUrl 
+            + "/PostSaveReportTemplate"
+             ,body,
+            ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+
+            var pmresponse: ServiceResponse;
+            pmresponse = new ServiceResponse();
+            pmresponse.Result = response;
+            return pmresponse;
+        }),catchError(ServiceHelper.HandleServiceError));
+    }
+
 
 }
 

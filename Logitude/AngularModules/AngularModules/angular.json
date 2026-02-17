@@ -28,8 +28,7 @@
               "favicon.ico",
               "_Resources",
               "Js",
-              "Images",
-			  "nl-files"
+              "Images"
             ],
             "styles": [              
               "styles.css",
@@ -84,7 +83,11 @@
               "_Resources/Froala/js/plugins/save.min.js",
               "_Resources/Froala/js/plugins/url.min.js",
               "_Resources/Froala/js/plugins/video.min.js",
-              "_Resources/Froala/js/plugins/line_height.min.js"
+              "_Resources/Froala/js/plugins/line_height.min.js",
+              "node_modules/stimulsoft-reports-js/Scripts/stimulsoft.reports.js",
+              "node_modules/stimulsoft-reports-js/Scripts/stimulsoft.viewer.js",
+              "node_modules/stimulsoft-reports-js/Scripts/stimulsoft.designer.js"
+            
             ]
           },
           "configurations": {

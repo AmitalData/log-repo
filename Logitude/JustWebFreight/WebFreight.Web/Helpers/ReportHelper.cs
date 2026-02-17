@@ -5,6 +5,7 @@ using Logitude.BL.CommonDataModel.EntityLists;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.ExternalService;
+using Logitude.BL.CommonDataModel.Tools.EntityService;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
@@ -12,12 +13,14 @@ using Logitude.Server.Tools.QueueService;
 using Logitude.Server.Tools.StorageService;
 using Logitude.SystemLogs;
 using Microsoft.Practices.Unity;
+using Microsoft.TeamFoundation.WorkItemTracking.WebApi.Models;
 using Newtonsoft.Json.Linq;
 using NPOI.SS.UserModel;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs; 
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.DataContracts;
 using Stimulsoft.Base;
@@ -34,13 +37,16 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Linq.Dynamic.Core;
+using System.Reflection;
 using System.Text;
 using System.Web.UI.WebControls;
 using System.Xml.Serialization;
 using WebFreight.Web.CommonDataModel.DomainServices;
+using WebFreight.Web.Controllers.WebDomainControllers;
 using WebFreight.Web.DataProviders;
 using WebFreight.Web.Helpers.DataProviderHelpers;
 using WebFreight.Web.Helpers.ExcelReport;
+using WebFreight.Web.Helpers.StimulReportCustomizationDataProvider;
 using WebFreight.Web.ReportsWebServices;
 using WebFreight.Web.ReportsWebServices.LogitudeReports;
 using WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting;
@@ -54,10 +60,7 @@ using WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement;
 using WebFreight.Web.ShipmentPackageModel;
 using WebFreight.Web.TaxesApprovalModel;
 using WebFreight.Web.WebServices;
-using System.Reflection;
-using WebFreight.Web.DataContracts;
-using Microsoft.VisualStudio.Services.Common;
-using static Microsoft.VisualStudio.PlatformUI.SearchFilterDataSource;
+using static System.Web.Razor.Parser.SyntaxConstants;
 
 
 namespace WebFreight.Web.Helpers
@@ -267,7 +270,7 @@ namespace WebFreight.Web.Helpers
 			byte[] result = storageservice.Read(fileInfo);
 			if (result != null)
 			{
-				url = GetSpecificPageFromTiffImageAsBase64(reportFliter,ref result);
+				url = GetSpecificPageFromTiffImageAsBase64(reportFliter, ref result);
 
 			}
 
@@ -281,9 +284,9 @@ namespace WebFreight.Web.Helpers
 
 
 
-        public string AddReportTemplate(string reportId, string description, string userId, string documentId, int tenant, ReportsTemplateRepository reportsTemplateRepository, ReportsTemplatesVersionRepository reportsTemplatesVersionRepository, List<ReportsTemplate> reportsTemplates, bool isSystem, string templateType, string entityId = null, string objectTableId = null, string subject = null, string originalTemplateId = null, bool useStimul = false)
+		public string AddReportTemplate(string reportId, string description, string userId, string documentId, int tenant, ReportsTemplateRepository reportsTemplateRepository, ReportsTemplatesVersionRepository reportsTemplatesVersionRepository, List<ReportsTemplate> reportsTemplates, bool isSystem, string templateType, string entityId = null, string objectTableId = null, string subject = null, string originalTemplateId = null)
 		{
-            NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"Creating report template for report: {reportId}, template type: {templateType}, tenant: {tenant}, description: {description}");
+			NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"Creating report template for report: {reportId}, template type: {templateType}, tenant: {tenant}, description: {description}");
 
 			#region ReportsTemplate
 
@@ -303,9 +306,8 @@ namespace WebFreight.Web.Helpers
 				TemplateType = templateType,
 				EntityId = entityId,
 				ObjectTableId = objectTableId,
-                OriginalTemplateId = originalTemplateId,
-                Subject = subject,
-				UseStimul = useStimul
+				OriginalTemplateId = originalTemplateId,
+				Subject = subject
 			};
 			reportsTemplateRepository.Add(reportsTemplate);
 
@@ -831,112 +833,48 @@ namespace WebFreight.Web.Helpers
 				}
 
 			}
-            ExcelReportService reportsTemplateQuery = new ExcelReportService(reportFliter.tenant);
-            ExportToExcelHelper exportToExcelHelper = new ExportToExcelHelper();
+			ExportToExcelHelper exportToExcelHelper = new ExportToExcelHelper();
+			IWorkbook workbook = exportToExcelHelper.ExportToExcel(reportStimulDataProviderDetails.CurrentBusinessObject.BusinessObjectValue, reportStimulDataProviderDetails.CurrentBusinessObject.Name);
 
-            IWorkbook workbook;
-
-            if (reportFliter.DefaultExcelNoStimId == "DefExcelTempId")
-			{
-                 workbook = exportToExcelHelper.ExportToExcel(reportStimulDataProviderDetails.CurrentBusinessObject.BusinessObjectValue, reportStimulDataProviderDetails.CurrentBusinessObject.Name);
-            }
-            else
-			{
-                var selectedData = reportsTemplateQuery.GetSelectedDataProviderFields(reportFliter.ReportId, reportFliter.DefaultExcelNoStimId);
-                var sortMap = new Dictionary<string, int>();
-                var filteredData = FilterSelectedFieldsWithParent(reportStimulDataProviderDetails.CurrentBusinessObject.BusinessObjectValue, selectedData, null, sortMap);
-
-                workbook = exportToExcelHelper.ExportToExcel(filteredData, reportStimulDataProviderDetails.CurrentBusinessObject.Name, sortMap);
-            }
-
-
-            MemoryStream memoryStream = new MemoryStream();
+			MemoryStream memoryStream = new MemoryStream();
 			workbook.Write(memoryStream);
-            MemoryStream tempStream = new MemoryStream(memoryStream.ToArray());
+			MemoryStream tempStream = new MemoryStream(memoryStream.ToArray());
 
 
-            string tempFilePath = Path.GetTempFileName() + ".xlsx";
-            using (FileStream fileStream = new FileStream(tempFilePath, FileMode.Create, FileAccess.Write))
-            {
-                tempStream.Position = 0;
-                tempStream.CopyTo(fileStream);
-            }
+			string tempFilePath = Path.GetTempFileName() + ".xlsx";
+			using (FileStream fileStream = new FileStream(tempFilePath, FileMode.Create, FileAccess.Write))
+			{
+				tempStream.Position = 0;
+				tempStream.CopyTo(fileStream);
+			}
 
-            ReadFileFromStreamFileAndSaveOnStorgeByChunks(tempFilePath, reportFliter, ".xlsx");
-
-
-        }
+			ReadFileFromStreamFileAndSaveOnStorgeByChunks(tempFilePath, reportFliter, ".xlsx");
 
 
-        private IDictionary<string, object> FilterSelectedFieldsWithParent(object source, List<DataProviderField> selectedFields, string parentName = null, Dictionary<string, int> sortMap = null)
-        {
-            var result = new Dictionary<string, object>();
-            if (source == null || selectedFields == null)
-                return result;
+		}
 
-            foreach (var field in selectedFields)
-            {
-                var prop = source.GetType().GetProperty(field.Name);
-                if (prop == null)
-                    continue;
+		public MemoryStream GetExcel(string reportKey, string fileName, int tenant)
+		{
+			string extension = ".xlsx";
+			fileName = $"{reportKey}@{fileName}{extension}";
 
-                var value = prop.GetValue(source);
+			BlobFileInfo fileInfo = GetNewBlobFileInfo(fileName, extension, tenant);
 
-                string columnName = !string.IsNullOrEmpty(field.Translation)
-                    ? field.Translation
-                    : (string.IsNullOrEmpty(parentName)
-                        ? field.Name
-                        : parentName + "_" + field.Name);
+			IBlobService storageservice = ContainerAccessor.Container.Resolve(
+				typeof(IBlobService),
+				"StorageService",
+				new ParameterOverride("", 1)
+			) as IBlobService;
 
+			byte[] result = storageservice.Read(fileInfo);
 
-                if (field.Type == "List" && value is IEnumerable enumerable)
-                {
-                    var list = new List<object>();
-                    foreach (var item in enumerable)
-                    {
-                        if (field.Fields?.Any() == true)
-                        {
-                            list.Add(FilterSelectedFieldsWithParent(item, field.Fields, field.Name, sortMap));
-                        }
-                        else
-                        {
-                            list.Add(item);
-                        }
-                    }
-                    result[columnName] = list;
-                }
-                else
-                {
-                    sortMap?.TryAdd(columnName, field.Sort);
-                    result[columnName] = value;
-                }
-            }
+			if (result == null || result.Length == 0)
+				return null;
 
-            return result;
-        }
+			return new MemoryStream(result);
+		}
 
-        public MemoryStream GetExcel(string reportKey,string fileName,int tenant)
-        {
-            string extension = ".xlsx";
-             fileName = $"{reportKey}@{fileName}{extension}";
-
-            BlobFileInfo fileInfo = GetNewBlobFileInfo(fileName, extension, tenant);
-
-            IBlobService storageservice = ContainerAccessor.Container.Resolve(
-                typeof(IBlobService),
-                "StorageService",
-                new ParameterOverride("", 1)
-            ) as IBlobService;
-
-            byte[] result = storageservice.Read(fileInfo); 
-
-            if (result == null || result.Length == 0)
-                return null;
-
-            return new MemoryStream(result);
-        }
-
-        public string BuildStimulReport(ReportFliter reportFliter)
+		public string BuildStimulReport(ReportFliter reportFliter)
 		{
 			AdvancedDateResolver advancedDateResolver = new AdvancedDateResolver();
 			List<QueryFilterItem> reportFilterItems = advancedDateResolver.ResolveDateValues(reportFliter.QueryFilterItemLists);
@@ -953,7 +891,7 @@ namespace WebFreight.Web.Helpers
 			return result;
 		}
 
-		public StiReport GetStimulReportByReportFilter(ReportFliter reportFliter,Boolean getStimulReportForMail = false)
+		public StiReport GetStimulReportByReportFilter(ReportFliter reportFliter, Boolean getStimulReportForMail = false)
 		{
 			StiReport report = null;
 			if (reportFliter != null)
@@ -961,10 +899,10 @@ namespace WebFreight.Web.Helpers
 				byte[] filters = GetReportFilters(reportFliter.QueryFilterItemLists);
 				byte[] reportDataProvider = BuildReportDataProvider(reportFliter, filters);
 				if (reportDataProvider == null && reportFliter.IsSchedulerReport) return report;
-                NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"reportDataProvider length: {reportDataProvider.Length}");
+				NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"reportDataProvider length: {reportDataProvider.Length}");
 
 
-                byte[] template = GetReportByteByType(reportFliter);
+				byte[] template = GetReportByteByType(reportFliter);
 				if (template == null) throw new Exception("Report Template is missing");
 				else
 				{
@@ -1356,21 +1294,21 @@ namespace WebFreight.Web.Helpers
 						break;
 					}
 
-                case "AGER":
-                    {
-                        dataProvider = logitudeReportsWebService.LoadAccountingAgingDataProvider(filters, reportFliter.tenant);
-                        break;
-                    }
+				case "AGER":
+					{
+						dataProvider = logitudeReportsWebService.LoadAccountingAgingDataProvider(filters, reportFliter.tenant);
+						break;
+					}
 				case "NAGR":
 					{
 						dataProvider = logitudeReportsWebService.LoadAccountingNewAgingDataProvider(filters, reportFliter.tenant);
 						break;
 					}
 				case "OSBC":
-                    {
-                        dataProvider = logitudeReportsWebService.LoadOpenShipmentsByCustomerDataProvider(filters, reportFliter, reportFliter.tenant);
-                        break;
-                    }
+					{
+						dataProvider = logitudeReportsWebService.LoadOpenShipmentsByCustomerDataProvider(filters, reportFliter, reportFliter.tenant);
+						break;
+					}
 
 				case "PTVC":
 					{
@@ -1501,19 +1439,19 @@ namespace WebFreight.Web.Helpers
 						dataProvider = myDataManager.GetData();
 						break;
 					}
-                case "SHTO":
-                    {
-                        ShipmentFormLoader myDataManager = new ShipmentFormLoader(filters, reportFliter.tenant);
-                        dataProvider = myDataManager.GetData();
-                        break;
-                    }
-                case "ECCR":
+				case "SHTO":
+					{
+						ShipmentFormLoader myDataManager = new ShipmentFormLoader(filters, reportFliter.tenant);
+						dataProvider = myDataManager.GetData();
+						break;
+					}
+				case "ECCR":
 					{
 						CustomsCollateralLoader myDataManager = new CustomsCollateralLoader(filters, reportFliter.tenant);
 						dataProvider = myDataManager.GetData();
 						break;
 					}
-                case "COO":
+				case "COO":
 					{
 						CertificateOfOriginLoader myDataManager = new CertificateOfOriginLoader(filters, reportFliter.tenant);
 						dataProvider = myDataManager.GetData();
@@ -1525,18 +1463,18 @@ namespace WebFreight.Web.Helpers
 						dataProvider = myDataManager.GetData();
 						break;
 					}
-                case "NTRP":
-                    {
-                        dataProvider = logitudeReportsWebService.LoadNewLedgerTransactionDataProvider(filters, reportFliter, reportFliter.tenant);
-                        break;
-                    }
-                    #endregion
-            }
+				case "NTRP":
+					{
+						dataProvider = logitudeReportsWebService.LoadNewLedgerTransactionDataProvider(filters, reportFliter, reportFliter.tenant);
+						break;
+					}
+					#endregion
+			}
 			return dataProvider;
 		}
 		public object dataprovider;
 		public Dictionary<string, dynamic> myProperties;
-		public List<ISlvLeaf> mylist ;
+		public List<ISlvLeaf> mylist;
 
 		public string GetDataProviderName(string code)
 		{
@@ -1891,8 +1829,8 @@ namespace WebFreight.Web.Helpers
 					{
 						dataProviderName = "WebFreight.Web.DataProviders.AccountingAgingDataProvider";
 
-                        break;
-                    }
+						break;
+					}
 				case "NAGR":
 					{
 						dataProviderName = "WebFreight.Web.DataProviders.NewAccountingAgingDataProvider";
@@ -1900,8 +1838,8 @@ namespace WebFreight.Web.Helpers
 						break;
 					}
 				case "OSBC":
-                    {
-                        dataProviderName = "WebFreight.Web.DataProviders.OpenShipmentsByCustomerDataProvider";
+					{
+						dataProviderName = "WebFreight.Web.DataProviders.OpenShipmentsByCustomerDataProvider";
 
 						break;
 					}
@@ -2031,23 +1969,23 @@ namespace WebFreight.Web.Helpers
 						dataProviderName = "Logitude.Accounting.BL.DataContract.ControlForInvoiceLinesDataProvider";
 
 
-                        break;
-                    }
-                case "MBBR":
-                    {
+						break;
+					}
+				case "MBBR":
+					{
 						dataProviderName = "WebFreight.Web.DataProviders.MonthlyBalancesReportDataProvider";
 
 
 						break;
 					}
-                case "NTRP":
-                    {
-                        dataProviderName = "WebFreight.Web.DataProviders.NewLedgerTransactionDataProvider";
+				case "NTRP":
+					{
+						dataProviderName = "WebFreight.Web.DataProviders.NewLedgerTransactionDataProvider";
 
-                        break;
-                    }
-                    #endregion
-            }
+						break;
+					}
+					#endregion
+			}
 
 			return dataProviderName;
 		}
@@ -2068,45 +2006,46 @@ namespace WebFreight.Web.Helpers
 
 		public class ISlvLeaf
 		{
-			public  string content { get; set; } // Example: "<span>Child</span>"
+			public string content { get; set; } // Example: "<span>Child</span>"
 			public bool expanded { get; set; }
-			public  List<ISlvLeaf> children { get; set; }
+			public List<ISlvLeaf> children { get; set; }
 			public Type type { get; set; }
 		}
 		public List<ISlvLeaf> GetPropertyNames(string dataProviderName, List<ISlvLeaf> mylist)
 		{
 			NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"dataProviderName: {dataProviderName}");
-        
-            Type t = null;
 
-            foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
-            {
-                try
-                {
-                    var type = assembly.GetTypes().FirstOrDefault(x => x.FullName == dataProviderName);
-                    if (type != null)
-                    {
-                        t = type;
-                        break;
-                    }
-                }
-                catch (ReflectionTypeLoadException ex)
-                {
-                    var loaderErrors = ex.LoaderExceptions.Select(e => e.Message);
-                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug("LoaderExceptions: " + string.Join(" | ", loaderErrors));
-                }
-                catch (Exception ex)
-                {
-                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug("General Exception: " + ex.Message);
-                }
-            }
+			Type t = null;
 
-            NetCommonHelper.Logger.DevLog.Instance.WriteDebug(message: $"dataProvider type: {t?.FullName}");
+			foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
+			{
+				try
+				{
+					var type = assembly.GetTypes().FirstOrDefault(x => x.FullName == dataProviderName);
+					if (type != null)
+					{
+						t = type;
+						break;
+					}
+				}
+				catch (ReflectionTypeLoadException ex)
+				{
+					var loaderErrors = ex.LoaderExceptions.Select(e => e.Message);
+					NetCommonHelper.Logger.DevLog.Instance.WriteDebug("LoaderExceptions: " + string.Join(" | ", loaderErrors));
+				}
+				catch (Exception ex)
+				{
+					NetCommonHelper.Logger.DevLog.Instance.WriteDebug("General Exception: " + ex.Message);
+				}
+			}
+
+			NetCommonHelper.Logger.DevLog.Instance.WriteDebug(message: $"dataProvider type: {t?.FullName}");
 			var properties1 = t.GetProperties();
 
 			foreach (var property in properties1)
 			{
-				try{				
+				try
+				{
 					if (property.PropertyType.IsGenericType && property.PropertyType.GetGenericTypeDefinition() == typeof(List<>))
 					{
 						List<ISlvLeaf> childList = new List<ISlvLeaf>();
@@ -2231,34 +2170,34 @@ namespace WebFreight.Web.Helpers
 				{ "NTRP", (typeof(NewLedgerTransactionDataProvider), "NTRP") },
 			};
 
-            if (reportMap.TryGetValue(reportFliter.ReportCode, out var meta))
+			if (reportMap.TryGetValue(reportFliter.ReportCode, out var meta))
 			{
-                var serializer = new XmlSerializer(meta.type);
-                var dataProvider = (dynamic)serializer.Deserialize(memorystream);
+				var serializer = new XmlSerializer(meta.type);
+				var dataProvider = (dynamic)serializer.Deserialize(memorystream);
 
 				try
 				{
 					BaseDataProviderService.FillBaseVariableFields(dataProvider, stimulReportDataProviderDetails.Tenant);
-                    stimulReportDataProviderDetails.Logo = dataProvider.Logo;
-                }
-                catch (Exception ex)
+					stimulReportDataProviderDetails.Logo = dataProvider.Logo;
+				}
+				catch (Exception ex)
 				{
-                    NetCommonHelper.Logger.DevLog.Instance.WriteError($"Failed to fill base variable fields for report: {reportFliter.ReportCode}, error: {ex.Message}");
-                }
+					NetCommonHelper.Logger.DevLog.Instance.WriteError($"Failed to fill base variable fields for report: {reportFliter.ReportCode}, error: {ex.Message}");
+				}
 
-                stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject
-                {
-                    Category = meta.category,
-                    Name = meta.type.Name,
-                    BusinessObjectValue = dataProvider
-                };
-            }
+				stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject
+				{
+					Category = meta.category,
+					Name = meta.type.Name,
+					BusinessObjectValue = dataProvider
+				};
+			}
 			else
 			{
-                throw new Exception($"Report code: {reportFliter.ReportCode} not found in report map");
-            }
-            return stimulReportDataProviderDetails;
-        }
+				throw new Exception($"Report code: {reportFliter.ReportCode} not found in report map");
+			}
+			return stimulReportDataProviderDetails;
+		}
 
 		private StiReport GetStimulReportByTemplateAndProviderDetails(ReportStimulDataProviderDetails reportStimulDataProviderDetails, byte[] reportTemplate, Boolean getStimulReportForMail = false)
 		{
@@ -2411,7 +2350,7 @@ namespace WebFreight.Web.Helpers
 				default:
 					throw new Exception("Report code not found");
 			}
-		}	
+		}
 
 		private static void RemoveEmptyColumns(DataTable dataTable)
 		{
@@ -2477,32 +2416,32 @@ namespace WebFreight.Web.Helpers
 
 
 
-        private void ReadFileFromStreamFileAndSaveOnStorgeByChunks(string tempFilePath, ReportFliter reportFliter, string extension)
-        {
-            BlobFileInfo fileInfo = GetNewBlobFileInfo((reportFliter.ReportKey + "@" + reportFliter.ReportName + extension), extension, reportFliter.tenant);
-            IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
-            List<string> blockIdsList = new List<string>();
+		private void ReadFileFromStreamFileAndSaveOnStorgeByChunks(string tempFilePath, ReportFliter reportFliter, string extension)
+		{
+			BlobFileInfo fileInfo = GetNewBlobFileInfo((reportFliter.ReportKey + "@" + reportFliter.ReportName + extension), extension, reportFliter.tenant);
+			IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
+			List<string> blockIdsList = new List<string>();
 			int bufferNumber = 0; long sendSize = 0;
-            using (FileStream fileStream = new FileStream(tempFilePath, FileMode.Open, FileAccess.Read))
-            {
-                int bytesRead;
-                fileInfo.FileSize = fileStream.Length;
-                var buffer = new byte[GetChunkSize(fileStream.Length, sendSize)];
-                while ((bytesRead = fileStream.Read(buffer, 0, buffer.Length)) > 0)
-                {
+			using (FileStream fileStream = new FileStream(tempFilePath, FileMode.Open, FileAccess.Read))
+			{
+				int bytesRead;
+				fileInfo.FileSize = fileStream.Length;
+				var buffer = new byte[GetChunkSize(fileStream.Length, sendSize)];
+				while ((bytesRead = fileStream.Read(buffer, 0, buffer.Length)) > 0)
+				{
 					sendSize += buffer.Length;
-                    var blockId = Convert.ToBase64String(Guid.NewGuid().ToByteArray());
-                    blockIdsList.Add(blockId);
-                    storageservice.WriteBlock(buffer, sendSize, blockIdsList.ToArray(), bufferNumber, fileInfo);
+					var blockId = Convert.ToBase64String(Guid.NewGuid().ToByteArray());
+					blockIdsList.Add(blockId);
+					storageservice.WriteBlock(buffer, sendSize, blockIdsList.ToArray(), bufferNumber, fileInfo);
 					bufferNumber += 1;
-                    buffer = new byte[GetChunkSize(fileStream.Length, sendSize)];
-                }
+					buffer = new byte[GetChunkSize(fileStream.Length, sendSize)];
+				}
 				fileStream.Close();
-            }
-            File.Delete(tempFilePath);
-        }
+			}
+			File.Delete(tempFilePath);
+		}
 
-        private long GetChunkSize(long fileSize, long sendSize)
+		private long GetChunkSize(long fileSize, long sendSize)
 		{
 			long chunkSize = 1000000;
 			if ((fileSize - sendSize) < chunkSize) chunkSize = fileSize - sendSize;
@@ -2551,62 +2490,62 @@ namespace WebFreight.Web.Helpers
 			return logitudeReportsWebService.LoadShipmentsEventsListDataProvider(filters, tenant);
 		}
 
-        private bool IsHaveReport(string reportCode)
-        {
-            if (string.IsNullOrEmpty(reportCode))
-            {
-                switch (reportCode.ToLower())
-                {
-                    case "INVN":
-                    case "RACL":
-                    case "ASDB":
-                    case "RAAR":
-                    case "EBRP":
-                    case "RALS":
-                    case "RSLS":
-                    case "CODT":
-                    case "COTR":
-                    case "CUAD":
-                    case "CUPA":
-                    case "EWRP":
-                    case "EXIN":
-                    case "FBRP":
-                    case "RITS":
-                    case "RIBP":
-                    case "RINV":
-                    case "RAPI":
-                    case "MCOR":
-                    case "OCRP":
-                    case "PUAC":
-                    case "RPRS":
-                    case "RQUO":
-                    case "SCHT":
-                    case "SCHA":
-                    case "OPSC":
-                    case "RSID":
-                    case "RSTA":
-                    case "RSAS":
-                    case "SBAG":
-                    case "RCLS":
-                    case "ARID":
-                    case "CASS":
-                    case "SPQS":
-                    case "AREX":
-                    case "INVR":
-                    case "EMTS":
-                    case "WDTS":
-                    case "TPTS":
-                    case "AGER":
-                    case "OSBC":
-                    case "PTVC":
-                    case "LICM":
-                    case "LTRP":
-                    case "CSSR":
-                    case "LOCR":
-                    case "SRQR":
+		private bool IsHaveReport(string reportCode)
+		{
+			if (string.IsNullOrEmpty(reportCode))
+			{
+				switch (reportCode.ToLower())
+				{
+					case "INVN":
+					case "RACL":
+					case "ASDB":
+					case "RAAR":
+					case "EBRP":
+					case "RALS":
+					case "RSLS":
+					case "CODT":
+					case "COTR":
+					case "CUAD":
+					case "CUPA":
+					case "EWRP":
+					case "EXIN":
+					case "FBRP":
+					case "RITS":
+					case "RIBP":
+					case "RINV":
+					case "RAPI":
+					case "MCOR":
+					case "OCRP":
+					case "PUAC":
+					case "RPRS":
+					case "RQUO":
+					case "SCHT":
+					case "SCHA":
+					case "OPSC":
+					case "RSID":
+					case "RSTA":
+					case "RSAS":
+					case "SBAG":
+					case "RCLS":
+					case "ARID":
+					case "CASS":
+					case "SPQS":
+					case "AREX":
+					case "INVR":
+					case "EMTS":
+					case "WDTS":
+					case "TPTS":
+					case "AGER":
+					case "OSBC":
+					case "PTVC":
+					case "LICM":
+					case "LTRP":
+					case "CSSR":
+					case "LOCR":
+					case "SRQR":
 					case "NAGR":
 					case "NTRP":
-                        return true;
+						return true;
 
 					default:
 						return false;
@@ -2616,7 +2555,7 @@ namespace WebFreight.Web.Helpers
 		}
 
 
-		public string GetSpecificPageFromTiffImageAsBase64(ReportFliter reportFliter,ref byte[] data)
+		public string GetSpecificPageFromTiffImageAsBase64(ReportFliter reportFliter, ref byte[] data)
 		{
 			string url = string.Empty;
 			if (data != null)
@@ -2638,64 +2577,64 @@ namespace WebFreight.Web.Helpers
 
 		#region UpdateReport
 
-        public void CopyFromTenant0(int tenant, int tenantToCopy, string reportCode = null)
-        {
-            ICommonDataContext commonDataContext = CommonDataContext.GetContext(tenantToCopy);
-            reportsTemplateRepository = new ReportsTemplateRepository(commonDataContext);
-            reportsTemplatesVersionRepository = new ReportsTemplatesVersionRepository(commonDataContext);
-            documentRepository = new DocumentRepository(commonDataContext);
+		public void CopyFromTenant0(int tenant, int tenantToCopy, string reportCode = null)
+		{
+			ICommonDataContext commonDataContext = CommonDataContext.GetContext(tenantToCopy);
+			reportsTemplateRepository = new ReportsTemplateRepository(commonDataContext);
+			reportsTemplatesVersionRepository = new ReportsTemplatesVersionRepository(commonDataContext);
+			documentRepository = new DocumentRepository(commonDataContext);
 
-            ContactRepository contactRepository = new ContactRepository(commonDataContext);
-            string userId = contactRepository.GetConactIdByemail("system@tenant" + tenantToCopy.ToString() + ".com", tenantToCopy);
+			ContactRepository contactRepository = new ContactRepository(commonDataContext);
+			string userId = contactRepository.GetConactIdByemail("system@tenant" + tenantToCopy.ToString() + ".com", tenantToCopy);
 
-            ReportGroupQuery reportGroupQuery = new ReportGroupQuery(tenantToCopy);
-            string accountingReportGroupId = reportGroupQuery.GetReportGroupPMsByTenant(0).Where(a => a.Code == "RACC").Select(a => a.Id).FirstOrDefault();
-            tenantZeroReportsTemplate = reportsTemplateRepository.GetReportsTemplates(0)
-                .Where(d => d.IsCopiedAtSignup && d.Report.ReportGroupId == accountingReportGroupId && !d.InActive).ToList();
-            tenantZeroReportsTemplatesVersionLists = reportsTemplatesVersionRepository.GetReportsTemplatesVersionsByReportsTemplateIds(tenantZeroReportsTemplate.Select(d => d.Id).ToList(), 0);
-            documentLists = documentRepository.GetDocumentsByIds(tenantZeroReportsTemplatesVersionLists.Select(d => d.ReportDocumentId).ToList());
-            List<Report> tenantZeroReports = tenantZeroReportsTemplate.Select(a => a.Report).Distinct().ToList();
+			ReportGroupQuery reportGroupQuery = new ReportGroupQuery(tenantToCopy);
+			string accountingReportGroupId = reportGroupQuery.GetReportGroupPMsByTenant(0).Where(a => a.Code == "RACC").Select(a => a.Id).FirstOrDefault();
+			tenantZeroReportsTemplate = reportsTemplateRepository.GetReportsTemplates(0)
+				.Where(d => d.IsCopiedAtSignup && d.Report.ReportGroupId == accountingReportGroupId && !d.InActive).ToList();
+			tenantZeroReportsTemplatesVersionLists = reportsTemplatesVersionRepository.GetReportsTemplatesVersionsByReportsTemplateIds(tenantZeroReportsTemplate.Select(d => d.Id).ToList(), 0);
+			documentLists = documentRepository.GetDocumentsByIds(tenantZeroReportsTemplatesVersionLists.Select(d => d.ReportDocumentId).ToList());
+			List<Report> tenantZeroReports = tenantZeroReportsTemplate.Select(a => a.Report).Distinct().ToList();
 
-            myTenantReportsTemplate = reportsTemplateRepository.GetReportsTemplatesWithOutInclude(tenantToCopy);
-            myTenantReportsTemplatesVersion = reportsTemplatesVersionRepository.GetReportsTemplatesVersionsByReportsTemplateIds(myTenantReportsTemplate.Select(d => d.Id).ToList(), tenantToCopy);
-            ReportRepository reportRepository = new ReportRepository(commonDataContext);
-            List<Report> myReports = reportRepository.GetReports(tenantToCopy).ToList();
+			myTenantReportsTemplate = reportsTemplateRepository.GetReportsTemplatesWithOutInclude(tenantToCopy);
+			myTenantReportsTemplatesVersion = reportsTemplatesVersionRepository.GetReportsTemplatesVersionsByReportsTemplateIds(myTenantReportsTemplate.Select(d => d.Id).ToList(), tenantToCopy);
+			ReportRepository reportRepository = new ReportRepository(commonDataContext);
+			List<Report> myReports = reportRepository.GetReports(tenantToCopy).ToList();
 
 			if (!string.IsNullOrEmpty(reportCode))
 			{
 				tenantZeroReports = tenantZeroReports.Where(a => a.Code == reportCode).ToList();
-            }
+			}
 
-            tenantZeroReports.ForEach(report => CreateReportTemplates(report, tenantToCopy, userId, myReports));
+			tenantZeroReports.ForEach(report => CreateReportTemplates(report, tenantToCopy, userId, myReports));
 
-            documentRepository.SubmitChanges();
-            reportsTemplateRepository.SubmitChanges();
-            reportsTemplatesVersionRepository.SubmitChanges();
-            reportRepository.SubmitChanges();
-        }
+			documentRepository.SubmitChanges();
+			reportsTemplateRepository.SubmitChanges();
+			reportsTemplatesVersionRepository.SubmitChanges();
+			reportRepository.SubmitChanges();
+		}
 
-        private void CreateReportTemplates(Report report, int tenantToCopy, string userId, List<Report> myReports)
-        {
-            Report currentTenantReport = myReports.Where(d => d.Code == report.Code).FirstOrDefault();
-            if (currentTenantReport == null)
-            {
-                NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Report not found in tenant " + tenantToCopy + " for code " + report.Code);
-                return;
-            }
+		private void CreateReportTemplates(Report report, int tenantToCopy, string userId, List<Report> myReports)
+		{
+			Report currentTenantReport = myReports.Where(d => d.Code == report.Code).FirstOrDefault();
+			if (currentTenantReport == null)
+			{
+				NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Report not found in tenant " + tenantToCopy + " for code " + report.Code);
+				return;
+			}
 
-            HashSet<string> existingReportTemplates = myTenantReportsTemplate.Where(d => d.ReportId == currentTenantReport.Id).Select(a => a.OriginalTemplateId).ToHashSet();
+			HashSet<string> existingReportTemplates = myTenantReportsTemplate.Where(d => d.ReportId == currentTenantReport.Id).Select(a => a.OriginalTemplateId).ToHashSet();
 
-            List<ReportsTemplate> reportsTemplateToAdd = tenantZeroReportsTemplate.Where(d => d.ReportId == report.Id && d.IsCopiedAtSignup && !existingReportTemplates.Contains(d.Id)).ToList();
+			List<ReportsTemplate> reportsTemplateToAdd = tenantZeroReportsTemplate.Where(d => d.ReportId == report.Id && d.IsCopiedAtSignup && !existingReportTemplates.Contains(d.Id)).ToList();
 
-            // create templates for report template type
-            reportsTemplateToAdd.Where(d => d.TemplateType == "R").ToList().ForEach(reportTemplate => CreateNewReportsTemplate(new CopyReportTemplateArgs { tenant = tenantToCopy, userId = userId, report = report, systemReportTemplate = reportTemplate }, currentTenantReport));
+			// create templates for report template type
+			reportsTemplateToAdd.Where(d => d.TemplateType == "R").ToList().ForEach(reportTemplate => CreateNewReportsTemplate(new CopyReportTemplateArgs { tenant = tenantToCopy, userId = userId, report = report, systemReportTemplate = reportTemplate }, currentTenantReport));
 
-            // create templates for excel template type
-            reportsTemplateToAdd.Where(d => d.TemplateType == "E").ToList().ForEach(reportTemplate => AddExcelDocument(tenantToCopy, userId, report, reportTemplate, currentTenantReport));
-        }
+			// create templates for excel template type
+			reportsTemplateToAdd.Where(d => d.TemplateType == "E").ToList().ForEach(reportTemplate => AddExcelDocument(tenantToCopy, userId, report, reportTemplate, currentTenantReport));
+		}
 
 
-        private ReportsTemplateRepository reportsTemplateRepository;
+		private ReportsTemplateRepository reportsTemplateRepository;
 		private ReportsTemplatesVersionRepository reportsTemplatesVersionRepository;
 		private DocumentRepository documentRepository;
 		private List<ReportsTemplate> tenantZeroReportsTemplate;
@@ -2747,8 +2686,7 @@ namespace WebFreight.Web.Helpers
 							FeatureUniqeCode = report.FeatureUniqeCode,
 							AvailableForScheduling = report.AvailableForScheduling,
 							DisablePreview = report.DisablePreview,
-							DefaultExcelTemplateId = report.DefaultExcelTemplateId,
-							DefaultExcelNoStimId = report.DefaultExcelNoStimId
+							DefaultExcelTemplateId = report.DefaultExcelTemplateId
 
 						};
 						reportRepository.Add(newReport);
@@ -2759,35 +2697,34 @@ namespace WebFreight.Web.Helpers
 
 				if (isChangeReport) reportRepository.SubmitChanges();
 
-                ReportGroupQuery reportGroupQuery = new ReportGroupQuery(tenant);
-                string accountingReportGroupId = reportGroupQuery.GetReportGroupPMsByTenant(0).Where(a => a.Code == "RACC").Select(a => a.Id).FirstOrDefault();
+				ReportGroupQuery reportGroupQuery = new ReportGroupQuery(tenant);
+				string accountingReportGroupId = reportGroupQuery.GetReportGroupPMsByTenant(0).Where(a => a.Code == "RACC").Select(a => a.Id).FirstOrDefault();
 
 				isChangeReport = false;
 				foreach (Report report in reportList)
-                {
-                    if (report.ReportGroupId == accountingReportGroupId)
-                    {
-                        CreateReportTemplates(report, tenant, userId, myReports);
-                    }
-                    else
-                    {
+				{
+					if (report.ReportGroupId == accountingReportGroupId)
+					{
+						CreateReportTemplates(report, tenant, userId, myReports);
+					}
+					else
+					{
 
 
-                        isChangeReport = UpdateExcelReports(tenant, userId, report, myReports) ? true : isChangeReport;
-                        ReportsTemplate systemReportTemplate = tenantZeroReportsTemplate.Where(d => d.ReportId == report.Id && d.Id == report.DefaultTemplateId).FirstOrDefault();
+						isChangeReport = UpdateExcelReports(tenant, userId, report, myReports) ? true : isChangeReport;
+						ReportsTemplate systemReportTemplate = tenantZeroReportsTemplate.Where(d => d.ReportId == report.Id && d.Id == report.DefaultTemplateId).FirstOrDefault();
 
 
-                        if(systemReportTemplate != null)
+						if (systemReportTemplate != null)
 
-                            isChangeReport = CopySystemReportTemplate(new CopyReportTemplateArgs { tenant = tenant, userId = userId, myReports = myReports, isChangeReport = isChangeReport, report = report, systemReportTemplate = systemReportTemplate });
+							isChangeReport = CopySystemReportTemplate(new CopyReportTemplateArgs { tenant = tenant, userId = userId, myReports = myReports, isChangeReport = isChangeReport, report = report, systemReportTemplate = systemReportTemplate });
 
-
-                    }
-                    ReportsTemplate systemEmailReportTemplate = tenantZeroReportsTemplate.Where(d => d.ReportId == report.Id && d.Id == report.DefaultMessageTemplateId).FirstOrDefault();
-                    if (systemEmailReportTemplate != null)
+					}
+					ReportsTemplate systemEmailReportTemplate = tenantZeroReportsTemplate.Where(d => d.ReportId == report.Id && d.Id == report.DefaultMessageTemplateId).FirstOrDefault();
+					if (systemEmailReportTemplate != null)
 						isChangeReport = CopySystemReportTemplate(new CopyReportTemplateArgs { tenant = tenant, userId = userId, myReports = myReports, isChangeReport = isChangeReport, report = report, systemReportTemplate = systemEmailReportTemplate });
-
 				}
+
 
 				if (isChangeReport)
 				{
@@ -2864,26 +2801,26 @@ namespace WebFreight.Web.Helpers
 			string documentId = AddDocument(documentRepository, tenantZeroReportsTemplatesVersion.ReportDocumentId, copyReportTemplateArgs.report.Tenant, copyReportTemplateArgs.tenant, documentLists);
 			if (string.IsNullOrEmpty(documentId)) return copyReportTemplateArgs.isChangeReport;
 
-            string reportTemplateId = AddReportTemplate(currentTenantReport.Id, copyReportTemplateArgs.systemReportTemplate.Description, copyReportTemplateArgs.userId, documentId, copyReportTemplateArgs.tenant, reportsTemplateRepository, reportsTemplatesVersionRepository, null, true, copyReportTemplateArgs.systemReportTemplate.TemplateType, null, null, null, copyReportTemplateArgs.systemReportTemplate.Id);
+			string reportTemplateId = AddReportTemplate(currentTenantReport.Id, copyReportTemplateArgs.systemReportTemplate.Description, copyReportTemplateArgs.userId, documentId, copyReportTemplateArgs.tenant, reportsTemplateRepository, reportsTemplatesVersionRepository, null, true, copyReportTemplateArgs.systemReportTemplate.TemplateType, null, null, null, copyReportTemplateArgs.systemReportTemplate.Id);
 			SetReportDefaultTemplates(copyReportTemplateArgs, currentTenantReport, reportTemplateId);
 			return true;
 		}
 
 		private static void SetReportDefaultTemplates(CopyReportTemplateArgs copyReportTemplateArgs, Report currentTenantReport, string reportTemplateId)
 		{
-            if (copyReportTemplateArgs.systemReportTemplate.TemplateType == "R" && string.IsNullOrEmpty(currentTenantReport.DefaultTemplateId))
-            {
-                currentTenantReport.DefaultTemplateId = reportTemplateId;
+			if (copyReportTemplateArgs.systemReportTemplate.TemplateType == "R")
+			{
+				currentTenantReport.DefaultTemplateId = reportTemplateId;
 			}
-            else if (copyReportTemplateArgs.systemReportTemplate.TemplateType == "M" && string.IsNullOrEmpty(currentTenantReport.DefaultMessageTemplateId))
-            {
-                currentTenantReport.DefaultMessageTemplateId = reportTemplateId;
+			else if (copyReportTemplateArgs.systemReportTemplate.TemplateType == "M")
+			{
+				currentTenantReport.DefaultMessageTemplateId = reportTemplateId;
 			}
 		}
 
 		private ReportsTemplate GetCurrentTenantReportsTemplate(Report currentTenantReport, string systemReportTemplateType)
 		{
-			if(systemReportTemplateType == "M")
+			if (systemReportTemplateType == "M")
 			{
 				return myTenantReportsTemplate.Where(d => d.ReportId == currentTenantReport.Id && d.Id == currentTenantReport.DefaultMessageTemplateId).FirstOrDefault();
 			}
@@ -2897,7 +2834,7 @@ namespace WebFreight.Web.Helpers
 			return currentTenantReportsTemplate;
 		}
 
-		private bool UpdateExcelReports(int tenant, string userId, Report reportTenantZero,List<Report> myReports)
+		private bool UpdateExcelReports(int tenant, string userId, Report reportTenantZero, List<Report> myReports)
 		{
 			ReportsTemplate systemExcelReportTemplate = tenantZeroReportsTemplate.Where(d => d.ReportId == reportTenantZero.Id && d.Id == reportTenantZero.DefaultExcelTemplateId).FirstOrDefault();
 			if (systemExcelReportTemplate == null)
@@ -2973,7 +2910,7 @@ namespace WebFreight.Web.Helpers
 			if (string.IsNullOrEmpty(documentId))
 				return false;
 
-            myReport.DefaultExcelTemplateId = AddReportTemplate(myReport.Id, systemExcelReportTemplate.Description, userId, documentId, tenant, reportsTemplateRepository, reportsTemplatesVersionRepository, null, true, "E", null, null, null, systemExcelReportTemplate.Id , systemExcelReportTemplate.UseStimul);
+			myReport.DefaultExcelTemplateId = AddReportTemplate(myReport.Id, systemExcelReportTemplate.Description, userId, documentId, tenant, reportsTemplateRepository, reportsTemplatesVersionRepository, null, true, "E", null, null, null, systemExcelReportTemplate.Id);
 			return true;
 
 		}
@@ -2994,15 +2931,9 @@ namespace WebFreight.Web.Helpers
 				Tenant = reportFliter.tenant,
 				StatusCode = "W",
 				ReportId = reportFliter.ReportId,
-                ReportTemplateId = reportFliter.ProcessType == "ExportToExcel"
-					? (!string.IsNullOrEmpty(reportFliter.DefaultExcelNoStimId)
-						? reportFliter.DefaultExcelNoStimId
-						: null)
-					: (!string.IsNullOrWhiteSpace(reportFliter.DefaultTemplateId)
-						? reportFliter.DefaultTemplateId
-						: null),
+				ReportTemplateId = string.IsNullOrWhiteSpace(reportFliter.DefaultTemplateId) ? null : reportFliter.DefaultTemplateId,
 				DisablePreview = reportFliter.DisablePreview,
-                NotDisplayInMenu = reportFliter.NotDisplayInMenu ,
+				NotDisplayInMenu = reportFliter.NotDisplayInMenu,
 			};
 
 			reportExecutionLogRepository.Add(reportExecutionLog);
@@ -3018,18 +2949,217 @@ namespace WebFreight.Web.Helpers
 
 		public static void AddStimulsoftLicenseKey()
 		{
-            StiLicense.Key = "6vJhGtLLLz2GNviWmUTrhSqnOItdDwjBylQzQcAOiHlDUTDyyOzH1Ys3qCPYbCdoOPkp0wcjMFs/nMMKkWriMMfI0I" +
-"PTmv3vqyK+kiZMWBXbmk/5nVaYnoKdZDQcs9S4EXbREpWCaBtBUPBdGK/RvynNQgdJ92boAv5dvQNf+cI/TFtMD5Zu" +
-"IUmN7IUWcOYxu68ChgVJhjNdkvfh+tpcYa9gRW/Ik/9N1FO2Uaq7qiKAnO0rn1Put5GiR8zSvegcgRcRzkn5wApANF" +
-"lb0W//9Ce8sgpSUwO1no2Auf/Efv+2uV3Ld9e5WZvjKskFJDhLYbdvWq3xNMZkwdo0qSBdavsMZqOtPfpzpSmrGPCC" +
-"cFFCq4hgXdc9BrS7XjM/KGcojYpSArv6b3oEp4XOa1rgach8lukVJCR5WwMAyfgXHT9Na5d87xey46BtTRZWJd2Svx" +
-"tXYYoWNDtqe0IEh54aL6prLL162XgeDiWnlUiLIHYm3Jtwp6/N39l+p3kHYDdGnS+vgv1Eso7uUmYl7FKrqzjczh7l" +
-"wjvqoQrAretQXTtTlqp0O8LtDn2cbEsboWm3";
+			StiLicense.Key = "6vJhGtLLLz2GNviWmUTrhSqnOItdDwjBylQzQcAOiHk5LQfMb0Dr1Ze4z6YRXSb7imTiay6/HzKYGUzkd/h3FMt5R7" +
+"uunoM5lX8Vs2voVkSeT6Wv6WI6Jcy4xOeAjjPkTBhC+ivrrxidMQjLaebItqFcnJWqKXBUgoJa0WfmH3soi0IbfEmI" +
+"fQ3ZmMq5BHsjsKoHSdnbzDUPWMXieYRTJZL6tsBC6QRy2ALPnYwg88ZJDGAWgAqMhZ+M0BVM17B3YJN9mu1MfAblN7" +
+"rG1eWrSrR5B53af4aeWs0RmqVNatfenGL8sufvTgOiyEuQmC9J7sHOT6VoQpWOlZthrc7JOl4zbw+qduZHZrpLuK+1" +
+"O3AB8EeDCQ6EgM8TcUesQBZZrUA4ZUFpxsCdvL0n4DQiB1tIof1TGHXCtZ62S1kAfU4XJzEGM/g3MYbKridAK5ckyc" +
+"0xwsK2y46rm9W3EV0m49Na0pcJe+2ZScc6BP1o3tDS9ddHbfkt7hFZpUNTqOxn9BOP0YVoQul+dPckYle4PS4mzXVp" +
+"tMrKV4En69rnW/z658axW0kQ2GxorKwW0IAR";
 		}
-	}
 
 
-	public class BuildReportDataResult
+
+        public ReportResult GetReportTemplate(
+    string processType,
+    string reportTemplateId,
+    int tenant,
+    string reportsTemplateId,
+    string templateType,
+    string templateId)
+        {
+            byte[] templateData = null;
+            StiReport report = new StiReport();
+
+            List<object> businessObjectsData = new List<object>();
+            var stiBusinessObjects = new List<StiBusinessObjectData>();
+            if (!string.IsNullOrEmpty(templateId))
+            {
+                DocumentTypeTemplateQuery tempQuery = new DocumentTypeTemplateQuery(tenant);
+                DocumentTypeTemplatePM documentTypeTemplatePM = tempQuery.GetSinglePM(templateId, tenant);
+
+                if (documentTypeTemplatePM?.TemplateBody != null)
+                {
+                    templateData = documentTypeTemplatePM.TemplateBody;
+                    report.Load(templateData);
+                   
+                }
+            }
+            else if (!string.IsNullOrEmpty(reportTemplateId))
+            {
+                ReportHelper reportHelper = new ReportHelper();
+                templateData = reportHelper.LoadDataToStimulReport(
+                    processType: processType,
+                    reportTemplateId: reportTemplateId,
+                    tenant: tenant,
+                    reportsTemplateId: reportsTemplateId,
+                    templateType: templateType
+                );
+                report.Load(templateData);
+          
+
+            }
+
+            ReportDataSourceDto dataSourceMeta = BuildDataSourceMetadata(
+                tenant,
+                reportTemplateId,
+                templateId);
+
+            // ReFillBusinessObjects(report.Dictionary.BusinessObjects, tenant, reportTemplateId, templateId);
+            if (templateData == null)
+                throw new Exception("Template not found");
+
+            return new ReportResult
+            {
+                TemplateBase64 = Convert.ToBase64String(templateData),
+                DataSource = dataSourceMeta
+            };
+        }
+
+        private ReportDataSourceDto BuildDataSourceMetadata(
+    int tenant,
+    string reportTemplateId,
+    string templateId)
+        {
+            string dpName = "";
+            string code = "";
+
+            ReportHelper reportHelper = new ReportHelper();
+
+            if (!string.IsNullOrEmpty(reportTemplateId))
+            {
+                var version = new ReportsTemplatesVersionQuery(tenant)
+                    .GetLastReportsTemplatesVersionPMByReportsTemplateId(reportTemplateId, tenant);
+
+                code = new ReportQuery(tenant)
+                    .GetReportCodeById(version.ReportId, tenant);
+
+                dpName = reportHelper.GetDataProviderName(code);
+            }
+            else
+            {
+                var doc = new DocumentTypeTemplateQuery(tenant)
+                    .GetById(templateId, tenant);
+
+                var args = new StiBusinessObjectDataService()
+                    .GetDocumentDataProviderArgs(doc.DocumentTypeCode);
+
+                dpName = args.Type.FullName;
+                code = args.Type.Name;
+            }
+
+            var variables = reportHelper.GetPropertyNames(dpName, new List<ISlvLeaf>());
+
+            var columns = new List<ReportColumnDto>();
+            CollectColumns(variables, columns);
+
+            return new ReportDataSourceDto
+            {
+                Name = code,
+                Columns = columns
+            };
+        }
+
+        private void CollectColumns(
+            List<ISlvLeaf> vars,
+            List<ReportColumnDto> columns)
+        {
+            foreach (var v in vars)
+            {
+                if (v.expanded && v.children != null)
+                {
+                    CollectColumns(v.children, columns);
+                }
+                else if (v.type != null && v.type.FullName.StartsWith("System."))
+                {
+                    columns.Add(new ReportColumnDto
+                    {
+                        Name = v.content,
+                        Type = v.type.Name
+                    });
+                }
+            }
+        }
+
+        public class ReportColumnDto
+        {
+            public string Name { get; set; }
+            public string Type { get; set; }
+        }
+
+        public class ReportDataSourceDto
+        {
+            public string Name { get; set; }
+            public List<ReportColumnDto> Columns { get; set; }
+        }
+        public bool SaveReportTemplate(string processType,string reportTemplateId,string templateId,string jsonReport, AuthenticationToken authToken) {
+
+			int tenant = authToken.Tenant;
+            UserRepository userRep = new UserRepository(tenant);
+            User loggedUser = userRep.GetSingleUserByEmail(authToken.Email, tenant);
+            if (loggedUser == null)
+                throw new Exception("User not found");
+            byte[] reportBytes = Convert.FromBase64String(jsonReport);
+            try
+            {
+                if (!string.IsNullOrEmpty(templateId))
+                {
+                    SaveDocumentTypeTemplate(templateId, tenant, loggedUser.Id, reportBytes);
+                }
+                else if (!string.IsNullOrEmpty(reportTemplateId))
+                {
+                    SaveReportTemplate(reportTemplateId, processType, tenant, loggedUser.Id, reportBytes);
+                }
+
+				return true;
+            }
+            catch (Exception ex)
+            {
+				return false;
+            }        
+         }
+        private void SaveReportTemplate(string reportTemplateId, string processType, int tenant, string userId, byte[] reportBytes)
+        {
+            ReportHelper reportHelper = new ReportHelper();
+            reportHelper.StimulReportSaved(processType, reportTemplateId, reportBytes, userId, tenant);
+        }
+        private void SaveDocumentTypeTemplate(string templateId, int tenant, string userId, byte[] reportBytes)
+        {
+            DocumentTypeTemplateQuery tempQuery = new DocumentTypeTemplateQuery(tenant);
+            DocumentTypeTemplatePM documentTypeTemplatePM = tempQuery.GetSinglePM(templateId, tenant);
+
+            if (documentTypeTemplatePM != null)
+            {
+                documentTypeTemplatePM.LastUpdatedByUserId = userId;
+                documentTypeTemplatePM.LastUpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+                documentTypeTemplatePM.TemplateBody = reportBytes;
+                documentTypeTemplatePM.TemplateTechnologyCode = "AG";
+
+                DocumentTypeTemplateService templateService = new DocumentTypeTemplateService(CommonDataContext.GetContext(tenant), tenant);
+                templateService.Update(documentTypeTemplatePM);
+            }
+        }
+
+
+
+   
+}
+    public class JsBusinessObject
+    {
+        public string Name { get; set; }
+        public string Alias { get; set; }
+        public List<JsColumn> Columns { get; set; }
+        public List<JsBusinessObject> BusinessObjects { get; set; } 
+    }
+
+    public class JsColumn
+    {
+        public string Name { get; set; }
+        public string Type { get; set; }
+    }
+
+
+    public class BuildReportDataResult
 	{
 		public CustomerPotentialActualDataProvider CustomerPotentialActualDataProvider { get; set; }
 		public string UrlImage { get; set; }

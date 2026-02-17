@@ -12,6 +12,7 @@ using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Server.Infrastructure;
 using Stimulsoft.Report;
+using Stimulsoft.Report.Dictionary;
 using Stimulsoft.Report.Export;
 using System;
 using System.Collections.Generic;
@@ -286,7 +287,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         //       }
         //   }
 
-        public HttpResponseMessage GetPrepareSendReport(string type, string fileName, int tenant, string displayName = null)
+        public HttpResponseMessage GetPrepareSendReport(string type, string fileName, int tenant)
         {
             try
             {
@@ -390,7 +391,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     document = new Document()
                     {
                         FileName = fileName,
-                        CalculatedFileName = displayName,
                         CreateDate = DateTime.Now,
                         Extension = extension,
                         FileSize = ByteData.Length,
@@ -830,32 +830,58 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
         }
 
-        public HttpResponseMessage GetPowerBIReports()
+        public HttpResponseMessage GetReportTemplate(string processType, string reportTemplateId,string reportsTemplateId, string templateType, string templateId)
         {
             try
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                PowerBIReportHelper reportHelper = new PowerBIReportHelper(authToken.Tenant);
-                var results = reportHelper.GetReports();
+                ReportHelper reportHelper = new ReportHelper();
 
-                var response = new
-                {
-                    reportHelper.ActiveDirectoryTenantId,
-                    Reports = results
-                };
-
-                return Request.CreateResponse(HttpStatusCode.OK, response);
+                ReportResult res = reportHelper.GetReportTemplate(processType, reportTemplateId, authToken.Tenant, reportsTemplateId, templateType, templateId);
+                return Request.CreateResponse(HttpStatusCode.OK, res);
             }
             catch (Exception ex)
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+
+      
+        public HttpResponseMessage PostSaveReportTemplate([FromBody] SaveReportTemplateRequest request)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                ReportHelper reportHelper = new ReportHelper();
+
+                bool res = reportHelper.SaveReportTemplate(request.ProcessType, request.ReportTemplateId, request.TemplateId, request.TemplateBase64, authToken);
+                return Request.CreateResponse(HttpStatusCode.OK, res);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+    }
+    public class SaveReportTemplateRequest
+    {
+        public string ProcessType { get; set; }
+        public string ReportTemplateId { get; set; }
+        public string TemplateId { get; set; }
+        public string TemplateBase64 { get; set; }
     }
 
-	public class ReportBuildResult
+    public class ReportResult
+    {
+        public string TemplateBase64 { get; set; }
+        public ReportDataSourceDto DataSource { get; set; }
+    }
+    public class ReportBuildResult
     {
         public string ExceptionMessage { get; set; }
         public bool HasError { get; set; }

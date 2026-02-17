@@ -1,0 +1,951 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<StiSerializer version="1.02" type="Net" application="StiReport">
+  <Culture isNull="true" />
+  <Dictionary Ref="1" type="Dictionary" isKey="true">
+    <BusinessObjects isList="true" count="1">
+      <LedgerTransactionsDataProvider Ref="2" type="Stimulsoft.Report.Dictionary.StiBusinessObject" isKey="true">
+        <Alias>LedgerTransactionsDataProvider</Alias>
+        <BusinessObjects isList="true" count="3">
+          <Transactions Ref="3" type="Stimulsoft.Report.Dictionary.StiBusinessObject" isKey="true">
+            <Alias>Transactions</Alias>
+            <BusinessObjects isList="true" count="0" />
+            <Category />
+            <Columns isList="true" count="61">
+              <value>AccountingDate,System.String</value>
+              <value>CreateDate,System.DateTime</value>
+              <value>CumulativeLocalAmount,System.Decimal</value>
+              <value>CurrencyCode,System.String</value>
+              <value>CurrencySign,System.String</value>
+              <value>DocumentDate,System.String</value>
+              <value>DueDate,System.String</value>
+              <value>JournalNumber,System.String</value>
+              <value>OpenAmount,System.Decimal</value>
+              <value>OpenAmountCurrencyCode,System.String</value>
+              <value>OriginalAmount,System.Decimal</value>
+              <value>OriginalAmountCurrencySign,System.String</value>
+              <value>Reference1,System.String</value>
+              <value>Reference2,System.String</value>
+              <value>Reference3,System.String</value>
+              <value>Source,System.String</value>
+              <value>Notes,System.String</value>
+              <value>ForeignAmount,System.Decimal</value>
+              <value>AccountEnglishName,System.String</value>
+              <value>AccountLocalName,System.String</value>
+              <value>AccountNumber,System.String</value>
+              <value>Id,System.String</value>
+              <value>Tenant,System.Int32</value>
+              <value>JournalId,System.String</value>
+              <value>JournalLineNumber,System.Int32</value>
+              <value>JournalCreatedByUser,System.String</value>
+              <value>ControlAccountId,System.String</value>
+              <value>AccountId,System.String</value>
+              <value>LocalAmountDebit,System.Decimal</value>
+              <value>LocalAmountCredit,System.Decimal</value>
+              <value>CurrencyId,System.String</value>
+              <value>ForeignAmountDebit,System.Decimal</value>
+              <value>ForeignAmountCredit,System.Decimal</value>
+              <value>ExchangeRate,System.Decimal</value>
+              <value>OppositeAccountId,System.String</value>
+              <value>SearchFields,System.String</value>
+              <value>OpenAmountCurrencyId,System.String</value>
+              <value>OpenAmountCurrencySign,System.String</value>
+              <value>AmountToReconcile,System.Decimal</value>
+              <value>Mark,System.Boolean</value>
+              <value>IsReconciled,System.Boolean</value>
+              <value>IsExternalReconcile,System.Boolean</value>
+              <value>InReconcileProgress,System.Boolean</value>
+              <value>ReconcileRemarks,System.String</value>
+              <value>CumulativeForeignAmount,System.Decimal</value>
+              <value>OppositeAccountDisplayNumber,System.String</value>
+              <value>OppositeAccountLocalName,System.String</value>
+              <value>OppositeAccountEnglishName,System.String</value>
+              <value>GLAccountRecoMethodCode,System.String</value>
+              <value>TenantCurrencySign,System.String</value>
+              <value>CumulativeOpenAmount,System.Decimal</value>
+              <value>CalculatedForeignAmount,System.Decimal</value>
+              <value>Category1Id,System.String</value>
+              <value>Category2Id,System.String</value>
+              <value>Category3Id,System.String</value>
+              <value>Category4Id,System.String</value>
+              <value>Category5Id,System.String</value>
+              <value>Collector,System.String</value>
+              <value>PaymentTerms,System.String</value>
+              <value>IsExternalEntity,System.Boolean</value>
+              <value>LocalAmount,System.Decimal</value>
+            </Columns>
+            <Dictionary isRef="1" />
+            <Guid>2199397b4e45464c9d172af660932c3a</Guid>
+            <Name>Transactions</Name>
+          </Transactions>
+          <LocalOpenBalanceList Ref="4" type="Stimulsoft.Report.Dictionary.StiBusinessObject" isKey="true">
+            <Alias>LocalOpenBalanceList</Alias>
+            <BusinessObjects isList="true" count="0" />
+            <Category />
+            <Columns isList="true" count="13">
+              <value>BalanceLocal,System.Decimal</value>
+              <value>BalanceForeign,System.Decimal</value>
+              <value>CurrencyId,System.String</value>
+              <value>LocalCurrencySign,System.String</value>
+              <value>ForeignCurrencySign,System.String</value>
+              <value>LocalBalanceWithSign,System.String</value>
+              <value>ForeignBalanceWithSign,System.String</value>
+              <value>LocalBalanceInDue,System.Nullable`1[System.Decimal]</value>
+              <value>BalanceInForeignCurrency,System.Nullable`1[System.Decimal]</value>
+              <value>ForeignBalanceInDue,System.Nullable`1[System.Decimal]</value>
+              <value>LocalBalanceInDueWithSign,System.String</value>
+              <value>BalanceInForeignCurrencyWithSign,System.String</value>
+              <value>ForeignBalanceInDueWithSign,System.String</value>
+            </Columns>
+            <Dictionary isRef="1" />
+            <Guid>33a4c609bd71414390ee038c22b62dfe</Guid>
+            <Name>LocalOpenBalanceList</Name>
+          </LocalOpenBalanceList>
+          <LocalClosedBalanceList Ref="5" type="Stimulsoft.Report.Dictionary.StiBusinessObject" isKey="true">
+            <Alias>LocalClosedBalanceList</Alias>
+            <BusinessObjects isList="true" count="0" />
+            <Category />
+            <Columns isList="true" count="13">
+              <value>BalanceForeign,System.Decimal</value>
+              <value>BalanceLocal,System.Decimal</value>
+              <value>CurrencyId,System.String</value>
+              <value>ForeignCurrencySign,System.String</value>
+              <value>LocalCurrencySign,System.String</value>
+              <value>ForeignBalanceWithSign,System.String</value>
+              <value>LocalBalanceWithSign,System.String</value>
+              <value>LocalBalanceInDue,System.Nullable`1[System.Decimal]</value>
+              <value>BalanceInForeignCurrency,System.Nullable`1[System.Decimal]</value>
+              <value>ForeignBalanceInDue,System.Nullable`1[System.Decimal]</value>
+              <value>LocalBalanceInDueWithSign,System.String</value>
+              <value>BalanceInForeignCurrencyWithSign,System.String</value>
+              <value>ForeignBalanceInDueWithSign,System.String</value>
+            </Columns>
+            <Dictionary isRef="1" />
+            <Guid>55931b7ed83e462ebc22e47de7a0aa9d</Guid>
+            <Name>LocalClosedBalanceList</Name>
+          </LocalClosedBalanceList>
+        </BusinessObjects>
+        <Category>LTRP</Category>
+        <Columns isList="true" count="27">
+          <value>FromDate,System.DateTime</value>
+          <value>ToDate,System.DateTime</value>
+          <value>AccountNumber,System.String</value>
+          <value>AccountEnglishName,System.String</value>
+          <value>AccountLocalName,System.String</value>
+          <value>IsAccountMulticurrency,System.Boolean</value>
+          <value>AccountCurrencySign,System.String</value>
+          <value>AccountCurrencyCode,System.String</value>
+          <value>PrintedByUser,System.String</value>
+          <value>LocalOpenBalance,System.Decimal</value>
+          <value>LocalClosedBalance,System.Decimal</value>
+          <value>TenantCurrencySign,System.String</value>
+          <value>TenantCurrencyCode,System.String</value>
+          <value>PrintDate,System.DateTime</value>
+          <value>AccountReconcileMethod,System.String</value>
+          <value>UserEnglishName,System.String</value>
+          <value>ForeignOpenBalance,System.Decimal</value>
+          <value>ForeignClosedBalance,System.Decimal</value>
+          <value>LastCumulativeOpenAmount,System.Decimal</value>
+          <value>StartTotalOpenAmount,System.Decimal</value>
+          <value>Today_DateTime,System.DateTime</value>
+          <value>Logo,System.Byte[]</value>
+          <value>Address,System.String</value>
+          <value>GeneralAddress,System.String</value>
+          <value>CompanyName,System.String</value>
+          <value>InvoicePrintNotes,System.String</value>
+          <value>InvoicePrintNotesLocal,System.String</value>
+        </Columns>
+        <Dictionary isRef="1" />
+        <Guid>def7ce29e8ad487fb4d9026bca94256e</Guid>
+        <Name>LedgerTransactionsDataProvider</Name>
+      </LedgerTransactionsDataProvider>
+    </BusinessObjects>
+    <Databases isList="true" count="0" />
+    <DataSources isList="true" count="0" />
+    <Relations isList="true" count="0" />
+    <Report isRef="0" />
+    <Resources isList="true" count="0" />
+    <Variables isList="true" count="0" />
+  </Dictionary>
+  <EngineVersion>EngineV2</EngineVersion>
+  <GlobalizationStrings isList="true" count="1">
+    <Item5 Ref="6" type="Stimulsoft.Report.StiGlobalizationContainer" isKey="true">
+      <CultureName>he</CultureName>
+      <Items isList="true" count="1">
+        <value>Text3.Text,شروة_x0020_بطيخ</value>
+      </Items>
+    </Item5>
+  </GlobalizationStrings>
+  <MetaTags isList="true" count="0" />
+  <Pages isList="true" count="1">
+    <Page1 Ref="7" type="Page" isKey="true">
+      <Border>None;Black;2;Solid;False;4;Black</Border>
+      <Brush>Transparent</Brush>
+      <Components isList="true" count="5">
+        <PageHeaderBand1 Ref="8" type="PageHeaderBand" isKey="true">
+          <Border>None;Black;2;Solid;False;4;Black</Border>
+          <Brush>Transparent</Brush>
+          <CanGrow>False</CanGrow>
+          <ClientRectangle>0,0.2,7.68,2.4</ClientRectangle>
+          <Components isList="true" count="14">
+            <Text1 Ref="9" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>1.3,1.4,0.6,0.2</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,10</Font>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text1</Name>
+              <Page isRef="7" />
+              <Parent isRef="8" />
+              <Text>בתאריך:</Text>
+              <TextBrush>[84:141:212]</TextBrush>
+              <TextOptions>,,RightToLeft=True,,,A=0</TextOptions>
+              <Type>Expression</Type>
+            </Text1>
+            <Text2 Ref="10" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>1.3,1.7,0.6,0.2</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,10</Font>
+              <Guid>2638359c65ff4d23b512b8e9f4d9b6eb</Guid>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text2</Name>
+              <Page isRef="7" />
+              <Parent isRef="8" />
+              <Text>הודפס ע"י:</Text>
+              <TextBrush>[84:141:212]</TextBrush>
+              <TextOptions>,,RightToLeft=True,,,A=0</TextOptions>
+              <Type>Expression</Type>
+            </Text2>
+            <Text3 Ref="11" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>6.3,1.2,1.4,0.2</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,10,Bold</Font>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text3</Name>
+              <Page isRef="7" />
+              <Parent isRef="8" />
+              <Text>דוח כרטסת</Text>
+              <TextBrush>[84:141:212]</TextBrush>
+              <TextOptions>,,RightToLeft=True,,,A=0</TextOptions>
+              <Type>Expression</Type>
+            </Text3>
+            <Text4 Ref="12" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>7.1,1.4,0.5,0.2</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,10</Font>
+              <Guid>ae90c938fbeb4b1084f9e0981639dfc9</Guid>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text4</Name>
+              <Page isRef="7" />
+              <Parent isRef="8" />
+              <Text>מתאריך:</Text>
+              <TextBrush>[84:141:212]</TextBrush>
+              <TextOptions>,,RightToLeft=True,,,A=0</TextOptions>
+              <Type>Expression</Type>
+            </Text4>
+            <Text5 Ref="13" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>7.1,1.7,0.5,0.2</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,10</Font>
+              <Guid>2753b1fd250c4412881c3075023ceca4</Guid>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text5</Name>
+              <Page isRef="7" />
+              <Parent isRef="8" />
+              <Text>כרטיס: </Text>
+              <TextBrush>[84:141:212]</TextBrush>
+              <TextOptions>,,RightToLeft=True,,,A=0</TextOptions>
+              <Type>Expression</Type>
+            </Text5>
+            <Text7 Ref="14" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>0,1.4,1.3,0.2</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,10,Bold</Font>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text7</Name>
+              <Page isRef="7" />
+              <Parent isRef="8" />
+              <Text>{LedgerTransactionsDataProvider.PrintDate}</Text>
+              <TextBrush>[89:89:89]</TextBrush>
+              <TextFormat Ref="15" type="CustomFormat" isKey="true">
+                <StringFormat>dd.MM.yyyy HH:mm</StringFormat>
+              </TextFormat>
+              <Type>DataColumn</Type>
+            </Text7>
+            <Text8 Ref="16" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>0,1.7,1.3,0.2</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,10,Bold</Font>
+              <Guid>ad714ab4e95641fcbc6353422fa97d7a</Guid>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text8</Name>
+              <Page isRef="7" />
+              <Parent isRef="8" />
+              <Text>{LedgerTransactionsDataProvider.PrintedByUser}</Text>
+              <TextBrush>[89:89:89]</TextBrush>
+              <Type>DataColumn</Type>
+            </Text8>
+            <Text9 Ref="17" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>6.3,1.4,0.8,0.2</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,10,Bold</Font>
+              <Guid>db05678b97044a0f9294ddeca60609df</Guid>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text9</Name>
+              <Page isRef="7" />
+              <Parent isRef="8" />
+              <Text>{LedgerTransactionsDataProvider.FromDate}</Text>
+              <TextBrush>[89:89:89]</TextBrush>
+              <TextFormat Ref="18" type="CustomFormat" isKey="true">
+                <StringFormat>dd.MM.yyyy</StringFormat>
+              </TextFormat>
+              <TextOptions>,,RightToLeft=True,,,A=0</TextOptions>
+              <Type>DataColumn</Type>
+            </Text9>
+            <Text10 Ref="19" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>2.8,1.7,4.3,0.2</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,10,Bold</Font>
+              <Guid>e90a0f7efce04c55b2d319b13c52f5f9</Guid>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text10</Name>
+              <Page isRef="7" />
+              <Parent isRef="8" />
+              <Text>{LedgerTransactionsDataProvider.AccountNumber} - {LedgerTransactionsDataProvider.AccountLocalName}</Text>
+              <TextBrush>[89:89:89]</TextBrush>
+              <TextOptions>,,RightToLeft=True,,,A=0</TextOptions>
+              <Type>Expression</Type>
+            </Text10>
+            <Text12 Ref="20" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>6,1.4,0.2,0.2</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,10</Font>
+              <Guid>4940b92310aa4311899cce48b2c00e82</Guid>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text12</Name>
+              <Page isRef="7" />
+              <Parent isRef="8" />
+              <Text>עד</Text>
+              <TextBrush>[84:141:212]</TextBrush>
+              <Type>Expression</Type>
+            </Text12>
+            <Text51 Ref="21" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>4.6,1.4,1.3,0.2</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,10,Bold</Font>
+              <Guid>88915d99ffa64d02b49120a54bbed437</Guid>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text51</Name>
+              <Page isRef="7" />
+              <Parent isRef="8" />
+              <Text>{LedgerTransactionsDataProvider.ToDate}</Text>
+              <TextBrush>[89:89:89]</TextBrush>
+              <TextFormat Ref="22" type="CustomFormat" isKey="true">
+                <StringFormat>dd.MM.yyyy</StringFormat>
+              </TextFormat>
+              <TextOptions>,,RightToLeft=True,,,A=0</TextOptions>
+              <Type>Expression</Type>
+            </Text51>
+            <Text6 Ref="23" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>5.74,2,1.9,0.2</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,10</Font>
+              <Guid>2f34e6426d2d4d9ea0ad9df7f6f34c02</Guid>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text6</Name>
+              <Page isRef="7" />
+              <Parent isRef="8" />
+              <Text>סה”כ יתרת פתיחה במטבע מקומי:</Text>
+              <TextBrush>[84:141:212]</TextBrush>
+              <TextOptions>,,RightToLeft=True,,,A=0</TextOptions>
+              <Type>Expression</Type>
+            </Text6>
+            <Text22 Ref="24" type="Text" isKey="true">
+              <Anchor>Top, Right</Anchor>
+              <AutoWidth>True</AutoWidth>
+              <Brush>Transparent</Brush>
+              <CanShrink>True</CanShrink>
+              <ClientRectangle>2.8,2,2.8,0.2</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,10,Bold</Font>
+              <Guid>19a8854b1eb149f8b8e6ab5e9527ccb8</Guid>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text22</Name>
+              <Page isRef="7" />
+              <Parent isRef="8" />
+              <ShiftMode>None</ShiftMode>
+              <Text>{(Format("{0:N2}", LedgerTransactionsDataProvider.LocalOpenBalance)).ToString()} </Text>
+              <TextBrush>[89:89:89]</TextBrush>
+              <Type>Expression</Type>
+            </Text22>
+            <Image1 Ref="25" type="Image" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>0.7,0,6.1,0.9</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Image>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</Image>
+              <Margins>0,0,0,0</Margins>
+              <Name>Image1</Name>
+              <Page isRef="7" />
+              <Parent isRef="8" />
+              <Stretch>True</Stretch>
+            </Image1>
+          </Components>
+          <Conditions isList="true" count="0" />
+          <MinHeight>1.5</MinHeight>
+          <Name>PageHeaderBand1</Name>
+          <Page isRef="7" />
+          <Parent isRef="7" />
+          <PrintOn>OnlyFirstPage</PrintOn>
+        </PageHeaderBand1>
+        <PageFooterBand1 Ref="26" type="PageFooterBand" isKey="true">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>0,9.98,7.68,0.2</ClientRectangle>
+          <Components isList="true" count="1">
+            <Text31 Ref="27" type="Text" isKey="true">
+              <Border>None;[89:89:89];1;Solid;False;4;Black</Border>
+              <Brush>White</Brush>
+              <ClientRectangle>0,-0.02,7.7,0.2</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,8,Bold</Font>
+              <Guid>3ae11435a24a46ee80e3d641ecec934d</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text31</Name>
+              <Page isRef="7" />
+              <Parent isRef="26" />
+              <Text>עמוד {PageNumber} מתוך {TotalPageCount}</Text>
+              <TextBrush>[63:63:63]</TextBrush>
+              <Type>Expression</Type>
+            </Text31>
+          </Components>
+          <Conditions isList="true" count="0" />
+          <Name>PageFooterBand1</Name>
+          <Page isRef="7" />
+          <Parent isRef="7" />
+        </PageFooterBand1>
+        <HeaderBand1 Ref="28" type="HeaderBand" isKey="true">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>0,3,7.68,0.3</ClientRectangle>
+          <Components isList="true" count="10">
+            <Text41 Ref="29" type="Text" isKey="true">
+              <Border>All;[89:89:89];1;Solid;False;4;Black</Border>
+              <Brush>[198:217:240]</Brush>
+              <ClientRectangle>6.4,0,0.6,0.3</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,8,Bold</Font>
+              <Guid>89a71f8fa65548de8212aaeba59b5d79</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text41</Name>
+              <Page isRef="7" />
+              <Parent isRef="28" />
+              <Text>ת.אסמכתא</Text>
+              <TextBrush>[63:63:63]</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text41>
+            <Text45 Ref="30" type="Text" isKey="true">
+              <Border>All;[89:89:89];1;Solid;False;4;Black</Border>
+              <Brush>[198:217:240]</Brush>
+              <ClientRectangle>5.8,0,0.6,0.3</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,8,Bold</Font>
+              <Guid>cd19043f049041068d4752a8ee5bf73f</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text45</Name>
+              <Page isRef="7" />
+              <Parent isRef="28" />
+              <Text>ת.פרעון</Text>
+              <TextBrush>[63:63:63]</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text45>
+            <Text46 Ref="31" type="Text" isKey="true">
+              <Border>All;[89:89:89];1;Solid;False;4;Black</Border>
+              <Brush>[198:217:240]</Brush>
+              <ClientRectangle>1.9,0,0.7,0.3</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,8,Bold</Font>
+              <Guid>e14c773c229e49ddbd2cf29ac6d70f33</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text46</Name>
+              <Page isRef="7" />
+              <Parent isRef="28" />
+              <Text>סכום </Text>
+              <TextBrush>[63:63:63]</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text46>
+            <Text47 Ref="32" type="Text" isKey="true">
+              <Border>All;[89:89:89];1;Solid;False;4;Black</Border>
+              <Brush>[198:217:240]</Brush>
+              <ClientRectangle>0.8,0,0.8,0.3</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,8,Bold</Font>
+              <Guid>6b3cb305be3f4bdda95ece4028e563fa</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text47</Name>
+              <Page isRef="7" />
+              <Parent isRef="28" />
+              <Text>סכום פתוח</Text>
+              <TextBrush>[63:63:63]</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text47>
+            <Text48 Ref="33" type="Text" isKey="true">
+              <Border>All;[89:89:89];1;Solid;False;4;Black</Border>
+              <Brush>[198:217:240]</Brush>
+              <ClientRectangle>5,0,0.8,0.3</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,8,Bold</Font>
+              <Guid>d06ec14300fe4759b7cecb051c76787e</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text48</Name>
+              <Page isRef="7" />
+              <Parent isRef="28" />
+              <Text>אסמכתא 1</Text>
+              <TextBrush>[63:63:63]</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text48>
+            <Text11 Ref="34" type="Text" isKey="true">
+              <Border>All;[89:89:89];1;Solid;False;4;Black</Border>
+              <Brush>[198:217:240]</Brush>
+              <ClientRectangle>0,0,0.8,0.3</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,8,Bold</Font>
+              <Guid>1a537415b43544989331b73eb7d7bf06</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text11</Name>
+              <Page isRef="7" />
+              <Parent isRef="28" />
+              <Text>מצטבר שקלי</Text>
+              <TextBrush>[63:63:63]</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text11>
+            <Text24 Ref="35" type="Text" isKey="true">
+              <Border>All;[89:89:89];1;Solid;False;4;Black</Border>
+              <Brush>[198:217:240]</Brush>
+              <ClientRectangle>2.6,0,1.7,0.3</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,8,Bold</Font>
+              <Guid>a689e36c63b147c09ce3d0846d97bd7f</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text24</Name>
+              <Page isRef="7" />
+              <Parent isRef="28" />
+              <Text>פרטים</Text>
+              <TextBrush>[63:63:63]</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text24>
+            <Text44 Ref="36" type="Text" isKey="true">
+              <Border>All;[89:89:89];1;Solid;False;4;[0:0:0]</Border>
+              <Brush>[198:217:240]</Brush>
+              <ClientRectangle>7,0,0.6,0.3</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,8,Bold</Font>
+              <Guid>45ab72f5e0af4d569440f4789f1de2e0</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text44</Name>
+              <Page isRef="7" />
+              <Parent isRef="28" />
+              <Text>ת.חשבונאי</Text>
+              <TextBrush>[63:63:63]</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text44>
+            <Text13 Ref="37" type="Text" isKey="true">
+              <Border>All;[89:89:89];1;Solid;False;4;Black</Border>
+              <Brush>[198:217:240]</Brush>
+              <ClientRectangle>4.3,0,0.7,0.3</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,8,Bold</Font>
+              <Guid>f78f1fed89dc4e9193cba1d7c8d2d8e5</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text13</Name>
+              <Page isRef="7" />
+              <Parent isRef="28" />
+              <Text>אסמכתא 2</Text>
+              <TextBrush>[63:63:63]</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text13>
+            <Text27 Ref="38" type="Text" isKey="true">
+              <Border>All;[89:89:89];1;Solid;False;4;Black</Border>
+              <Brush>[198:217:240]</Brush>
+              <ClientRectangle>1.6,0,0.3,0.3</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,8,Bold</Font>
+              <Guid>97fb4428f8784d6b8512d1de380a5886</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text27</Name>
+              <Page isRef="7" />
+              <Parent isRef="28" />
+              <Text>מטבע</Text>
+              <TextBrush>[63:63:63]</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text27>
+          </Components>
+          <Conditions isList="true" count="0" />
+          <Name>HeaderBand1</Name>
+          <Page isRef="7" />
+          <Parent isRef="7" />
+        </HeaderBand1>
+        <DataBand1 Ref="39" type="DataBand" isKey="true">
+          <Brush>Transparent</Brush>
+          <BusinessObjectGuid>2199397b4e45464c9d172af660932c3a</BusinessObjectGuid>
+          <CanBreak>True</CanBreak>
+          <ClientRectangle>0,3.7,7.68,0.3</ClientRectangle>
+          <Components isList="true" count="10">
+            <Text21 Ref="40" type="Text" isKey="true">
+              <Border>All;[89:89:89];1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>6.4,0,0.6,0.3</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,8</Font>
+              <Guid>9cc163c798ea438a8fa8d96c2da4d79f</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text21</Name>
+              <Page isRef="7" />
+              <Parent isRef="39" />
+              <Text>{LedgerTransactionsDataProvider.Transactions.DocumentDate}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextFormat Ref="41" type="CustomFormat" isKey="true">
+                <StringFormat>dd.MM.yyyy</StringFormat>
+              </TextFormat>
+              <Type>DataColumn</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text21>
+            <Text15 Ref="42" type="Text" isKey="true">
+              <Border>All;[89:89:89];1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>5.8,0,0.6,0.3</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,8</Font>
+              <Guid>1f160b4cb75f4c1aab263fd54d4b7b08</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text15</Name>
+              <Page isRef="7" />
+              <Parent isRef="39" />
+              <Text>{LedgerTransactionsDataProvider.Transactions.DueDate}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextFormat Ref="43" type="CustomFormat" isKey="true">
+                <StringFormat>dd.MM.yyyy</StringFormat>
+              </TextFormat>
+              <Type>DataColumn</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text15>
+            <Text16 Ref="44" type="Text" isKey="true">
+              <Border>All;[89:89:89];1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>1.9,0,0.7,0.3</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,8</Font>
+              <Guid>45ee24e4d79340379232b09ba609b632</Guid>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>3,3,0,0</Margins>
+              <Name>Text16</Name>
+              <Page isRef="7" />
+              <Parent isRef="39" />
+              <Text>{Format("{0:N2}", LedgerTransactionsDataProvider.Transactions.OriginalAmount)}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextFormat Ref="45" type="NumberFormat" isKey="true">
+                <GroupSeparator>,</GroupSeparator>
+                <NegativePattern>1</NegativePattern>
+              </TextFormat>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text16>
+            <Text17 Ref="46" type="Text" isKey="true">
+              <Border>All;[89:89:89];1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>0.8,0,0.8,0.3</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,8</Font>
+              <Guid>3543fc25617149f3bc5c31ba949605a5</Guid>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>3,3,0,0</Margins>
+              <Name>Text17</Name>
+              <Page isRef="7" />
+              <Parent isRef="39" />
+              <Text>{Format("{0:N2}", LedgerTransactionsDataProvider.Transactions.OpenAmount)}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextFormat Ref="47" type="NumberFormat" isKey="true">
+                <GroupSeparator>,</GroupSeparator>
+                <NegativePattern>1</NegativePattern>
+              </TextFormat>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text17>
+            <Text18 Ref="48" type="Text" isKey="true">
+              <Border>All;[89:89:89];1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>5,0,0.8,0.3</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,8</Font>
+              <Guid>77b5707a803341be9f10644f08719ef4</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>5,5,0,0</Margins>
+              <Name>Text18</Name>
+              <Page isRef="7" />
+              <Parent isRef="39" />
+              <Text>{LedgerTransactionsDataProvider.Transactions.Reference1}</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>DataColumn</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text18>
+            <Text20 Ref="49" type="Text" isKey="true">
+              <Border>All;[89:89:89];1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>0,0,0.8,0.3</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,8</Font>
+              <Guid>2e867cccd4534579b73616e65df70038</Guid>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>3,3,0,0</Margins>
+              <Name>Text20</Name>
+              <Page isRef="7" />
+              <Parent isRef="39" />
+              <Text>{LedgerTransactionsDataProvider.Transactions.CumulativeLocalAmount}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextFormat Ref="50" type="NumberFormat" isKey="true">
+                <GroupSeparator>,</GroupSeparator>
+                <NegativePattern>1</NegativePattern>
+              </TextFormat>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text20>
+            <Text19 Ref="51" type="Text" isKey="true">
+              <Border>All;[0:0:0];1;Solid;False;4;[0:0:0]</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>2.6,0,1.7,0.3</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,8</Font>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text19</Name>
+              <Page isRef="7" />
+              <Parent isRef="39" />
+              <Text>{LedgerTransactionsDataProvider.Transactions.Notes}</Text>
+              <TextBrush>Black</TextBrush>
+              <VertAlignment>Center</VertAlignment>
+            </Text19>
+            <Text34 Ref="52" type="Text" isKey="true">
+              <Border>All;[89:89:89];1;Solid;False;4;[0:0:0]</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>7,0,0.6,0.3</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,8</Font>
+              <Guid>edc36078b4254e74993d5857dcd9156f</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text34</Name>
+              <Page isRef="7" />
+              <Parent isRef="39" />
+              <Text>{LedgerTransactionsDataProvider.Transactions.AccountingDate}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextFormat Ref="53" type="CustomFormat" isKey="true">
+                <StringFormat>dd.MM.yyyy</StringFormat>
+              </TextFormat>
+              <Type>DataColumn</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text34>
+            <Text25 Ref="54" type="Text" isKey="true">
+              <Border>All;[0:0:0];1;Solid;False;4;[0:0:0]</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>4.3,0,0.7,0.3</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,8</Font>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text25</Name>
+              <Page isRef="7" />
+              <Parent isRef="39" />
+              <Text>{LedgerTransactionsDataProvider.Transactions.Reference2}</Text>
+              <TextBrush>[0:0:0]</TextBrush>
+              <VertAlignment>Center</VertAlignment>
+            </Text25>
+            <Text26 Ref="55" type="Text" isKey="true">
+              <Border>All;[89:89:89];1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>1.6,0,0.3,0.3</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,8</Font>
+              <Guid>1db4c4b040d245d4932a6227e18ad52f</Guid>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>3,3,0,0</Margins>
+              <Name>Text26</Name>
+              <Page isRef="7" />
+              <Parent isRef="39" />
+              <Text>{LedgerTransactionsDataProvider.Transactions.OriginalAmountCurrencySign}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextFormat Ref="56" type="NumberFormat" isKey="true">
+                <GroupSeparator>,</GroupSeparator>
+                <NegativePattern>1</NegativePattern>
+              </TextFormat>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text26>
+          </Components>
+          <Conditions isList="true" count="0" />
+          <DataSourceName isNull="true" />
+          <Filters isList="true" count="0" />
+          <Name>DataBand1</Name>
+          <Page isRef="7" />
+          <Parent isRef="7" />
+          <Sort isList="true" count="0" />
+        </DataBand1>
+        <FooterBand1 Ref="57" type="FooterBand" isKey="true">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>0,4.4,7.68,0.8</ClientRectangle>
+          <Components isList="true" count="3">
+            <Text14 Ref="58" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>6,0,1.6,0.2</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,10</Font>
+              <Guid>a70da1d0378c4582b8e14c10375d0cfe</Guid>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text14</Name>
+              <Page isRef="7" />
+              <Parent isRef="57" />
+              <Text>יתרת סגירה במטבע מקומי:</Text>
+              <TextBrush>[84:141:212]</TextBrush>
+              <TextOptions>,,RightToLeft=True,,,A=0</TextOptions>
+              <Type>Expression</Type>
+            </Text14>
+            <Text23 Ref="59" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>2.5,0,3.4,0.2</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,10,Bold</Font>
+              <Guid>11732417e28b48d8875c051454f26d40</Guid>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text23</Name>
+              <Page isRef="7" />
+              <Parent isRef="57" />
+              <Text>{Format("{0:N2}", LedgerTransactionsDataProvider.LocalClosedBalance)} </Text>
+              <TextBrush>[89:89:89]</TextBrush>
+              <TextFormat Ref="60" type="CurrencyFormat" isKey="true">
+                <GroupSeparator>,</GroupSeparator>
+                <NegativePattern>5</NegativePattern>
+                <PositivePattern>1</PositivePattern>
+                <State>PositivePattern, NegativePattern</State>
+              </TextFormat>
+              <Type>Expression</Type>
+            </Text23>
+            <Text28 Ref="61" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>5.6,0.2,2,0.6</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,8</Font>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text28</Name>
+              <Page isRef="7" />
+              <Parent isRef="57" />
+              <Text>
+בנק הפועלים סניף 780 מס. חשבון 603222
+ בנק לאומי  סניף 767  מס. חשבון 830058
+בנק מזרחי סניף 478 מס. חשבון 139872</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+            </Text28>
+          </Components>
+          <Conditions isList="true" count="0" />
+          <Name>FooterBand1</Name>
+          <Page isRef="7" />
+          <Parent isRef="7" />
+          <PrintOn>OnlyLastPage</PrintOn>
+        </FooterBand1>
+      </Components>
+      <Conditions isList="true" count="0" />
+      <Guid>60e004c5de35449f8656dca179a7f7b3</Guid>
+      <Margins>0.41,0.41,0.41,0.41</Margins>
+      <Name>Page1</Name>
+      <PageHeight>11</PageHeight>
+      <PageWidth>8.5</PageWidth>
+      <PaperSize>Letter</PaperSize>
+      <Report isRef="0" />
+      <RightToLeft>True</RightToLeft>
+      <Watermark Ref="62" type="Stimulsoft.Report.Components.StiWatermark" isKey="true">
+        <Font>Arial,100</Font>
+        <TextBrush>[50:0:0:0]</TextBrush>
+      </Watermark>
+    </Page1>
+  </Pages>
+  <PrinterSettings Ref="63" type="Stimulsoft.Report.Print.StiPrinterSettings" isKey="true" />
+  <ReferencedAssemblies isList="true" count="8">
+    <value>System.Dll</value>
+    <value>System.Drawing.Dll</value>
+    <value>System.Windows.Forms.Dll</value>
+    <value>System.Data.Dll</value>
+    <value>System.Xml.Dll</value>
+    <value>Stimulsoft.Controls.Dll</value>
+    <value>Stimulsoft.Base.Dll</value>
+    <value>Stimulsoft.Report.Dll</value>
+  </ReferencedAssemblies>
+  <ReportAlias>Report</ReportAlias>
+  <ReportChanged>7/22/2020 2:38:28 PM</ReportChanged>
+  <ReportCreated>10/25/2017 4:59:51 PM</ReportCreated>
+  <ReportFile />
+  <ReportGuid>ddb2ebe1f9514de3bf87609b4f004467</ReportGuid>
+  <ReportImage isNull="true" />
+  <ReportName>Report</ReportName>
+  <ReportUnit>Inches</ReportUnit>
+  <ReportVersion>2017.1.11.0</ReportVersion>
+  <Script>using System;
+using System.Drawing;
+using System.Windows.Forms;
+using System.Data;
+using Stimulsoft.Controls;
+using Stimulsoft.Base.Drawing;
+using Stimulsoft.Report;
+using Stimulsoft.Report.Dialogs;
+using Stimulsoft.Report.Components;
+
+namespace Reports
+{
+    public class Report : Stimulsoft.Report.StiReport
+    {
+        public Report()        {
+            this.InitializeComponent();
+        }
+
+        #region StiReport Designer generated code - do not modify
+		#endregion StiReport Designer generated code - do not modify
+    }
+}
+</Script>
+  <ScriptLanguage>CSharp</ScriptLanguage>
+  <Styles isList="true" count="0" />
+</StiSerializer>
