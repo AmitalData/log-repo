@@ -12,12 +12,10 @@ using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
 using Logitude.SystemLogs;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; 
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; 
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel.Repositories;
@@ -54,7 +52,6 @@ using Logitude.Accounting.Data.EntityPOCOs;
 using Customer = Simplog.Data.CommonDataModel.EntityPOCOs.Customer;
 using Microsoft.TeamFoundation.Common;
 using Logitude.Accounting.Data.Repositories;
-using CreateDocumentOutArgs = Logitude.BL.Helpers.CreateDocumentOutArgs;
 
 namespace WebFreight.Web.App_Code.AngularJS_App_Code
 {
@@ -295,8 +292,25 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                 if (createDocumentOutArgs.ChildReference == "null" || createDocumentOutArgs.ChildReference == "undefined") createDocumentOutArgs.ChildReference = null;
 
                 Authentication(createDocumentOutArgs.Tenant);
-                DocumentHelper documentHelper = new DocumentHelper();
-                DocumentOutPM documentOutPM =  documentHelper.PutCreateDocumentOut(createDocumentOutArgs).document;
+
+                DocumentOutQuery documentOutQuery = new DocumentOutQuery(createDocumentOutArgs.Tenant);
+                DocumentOutPM documentOutPM = documentOutQuery.GetDocumentOutByDocumentTypeEntityAndChild(createDocumentOutArgs.EntityId, createDocumentOutArgs.ChildEntityId, createDocumentOutArgs.DocumentTypeId, createDocumentOutArgs.Tenant);
+                if (documentOutPM == null)
+                {
+                    DocumentHelper documentHelper = new DocumentHelper();
+                    documentOutPM = documentHelper.CreateDocumentOut(createDocumentOutArgs.DocumentTypeId, createDocumentOutArgs.EntityId, createDocumentOutArgs.ChildEntityId, createDocumentOutArgs.ChildReference, createDocumentOutArgs.ObjectTableId, createDocumentOutArgs.Tenant, null, createDocumentOutArgs.DocumentTypeTemplateId);
+                  if (createDocumentOutArgs.SignHSM)
+                    {
+                        IFullAccountingSettingQueryServiceExt query = ContainerAccessor.Container.Resolve(typeof(IFullAccountingSettingQueryServiceExt), "FullAccountingSettingQueryServiceExt", new ParameterOverride("", 1)) as IFullAccountingSettingQueryServiceExt;
+                        FullAccountingSettingPM accountingSettings = query.GetFullAccountingSettingByTenant(createDocumentOutArgs.Tenant);
+                       DocumentHelper DocumentHelper = new DocumentHelper();
+                        if (accountingSettings.AccountingActivated && !string.IsNullOrEmpty(accountingSettings.HSM) &&! string.IsNullOrEmpty(accountingSettings.HSMaddress )&& !string.IsNullOrEmpty(accountingSettings.HSMtoken))
+                            DocumentHelper.Sign(documentOutPM.Id, createDocumentOutArgs.Tenant, accountingSettings);
+                       // this.CheckDetailsToHSM(documentOutPM.Id,createDocumentOutArgs.Tenant, accountingSettings);
+                        
+                    }
+              
+                }
 
                 return Request.CreateResponse(HttpStatusCode.OK, documentOutPM);
             }
