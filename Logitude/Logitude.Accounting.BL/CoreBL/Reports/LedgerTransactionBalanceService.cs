@@ -444,7 +444,6 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             var sw = Stopwatch.StartNew();
             bool includeChildAccounts = false;
 
-
             var qGperiod = (from r in QOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId
                             group r by 1 into g
                             select new

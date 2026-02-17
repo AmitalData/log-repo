@@ -20,7 +20,7 @@
 @import "~ag-grid-community/dist/styles/ag-grid.css";
 @import "~ag-grid-community/dist/styles/ag-theme-balham.css";
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
-/* @import '../../assets/css/default/style.min.css'; */
+
 @import url("_Resources/css/PrimeWebComponent.css");
 @import url("_Resources/css/logitude-workflow-styles.css");
 @import url("_Resources/css/custom-ng-zorro-antd-styles.css");

@@ -11,7 +11,7 @@ import { CustomMessageWrapperComponent } from '../../../../../CustomsModules/Cus
 import { CustomMessageProgressComponent } from '../../../../../CustomsModules/CustomsControls/Components/CustomMessageProgressComponent';
 import { ContinuousRequestOnClaimFileRequestParams } from '../../../../../Customs/DataContract/RequestParams/ContinuousRequestOnClaimFileRequestParams';
 import { ContinuousResponseOnClaimFileResponseData } from '../../../../../Customs/DataContract/ResponseData/ContinuousResponseOnClaimFileResponseData';
-import { CustomSendOptionsArgs, HsmStationContext } from '../../../../../Customs/DataContract/RequestParams/RequestParamsBase';
+import { CustomSendOptionsArgs } from '../../../../../Customs/DataContract/RequestParams/RequestParamsBase';
 import { ClaimsRelatedEntityExtendedPMService } from '../../../../../Customs/Services/ExtendedPMs/ClaimsRelatedEntityExtendedPMService';
 import { ServiceResponse } from '../../../../../Infrastructure/DataContracts/ServiceResponse';
 import { ClaimWebService } from '../../../../../Customs/Services/WebServices/ClaimWebService';
@@ -198,7 +198,6 @@ export class ClaimRelatedEntityCancelOrObjectionTabComponent
         currRequestParams.LoggingUserId = SessionLocator.LoggedUserId;
         currRequestParams.RequestVIA = customSendOptionsArgs.RequestVIA;
         currRequestParams.ForcePersonalSign = customSendOptionsArgs.ForcePersonalSign;
-        currRequestParams.HsmStationContext = HsmStationContext.Import;
         currRequestParams.Tenant = SessionLocator.Tenant;
 
         currRequestParams.AppicationId = this.EntityPM.ClaimId;
