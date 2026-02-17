@@ -223,7 +223,7 @@ export class SignalRChannelService {
         //  a client subscried to it the start sequence would be triggered
         //  again since it's a cold observable.
         //
-      if (ObjectsLocator.GlobalSetting?.DeploymentStage == "Dev") {
+      if (ObjectsLocator.GlobalSetting.DeploymentStage == "Dev") {
         this.hubConnection.start().done((result: any) => {
           window.logitudeHubConnected = true;
           this.connectionStarted = true;
