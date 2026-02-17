@@ -316,10 +316,10 @@
       <HintPath>..\Unifreight.Data\obj\Debug\Unifreight.Data.dll</HintPath>
     </Reference>
     <Reference Include="UnifreightIIG.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\UnifreightIIG.4.0.9\lib\Net40\UnifreightIIG.Common.dll</HintPath>
+      <HintPath>..\packages\UnifreightIIG.4.0.7\lib\Net40\UnifreightIIG.Common.dll</HintPath>
     </Reference>
     <Reference Include="UnifreightIIG.DCA, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\UnifreightIIG.4.0.9\lib\Net40\UnifreightIIG.DCA.dll</HintPath>
+      <HintPath>..\packages\UnifreightIIG.4.0.7\lib\Net40\UnifreightIIG.DCA.dll</HintPath>
     </Reference>
     <Reference Include="WindowsAzureEventSource, Version=2.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.WindowsAzure.SDK.2.9.0\lib\WindowsAzureEventSource.dll</HintPath>
@@ -395,7 +395,6 @@
     <Compile Include="Helpers\ClosedTable\Update1416ModificationAndDiscountType.cs" />
     <Compile Include="Helpers\ForbiddenSigns.cs" />
     <Compile Include="MessagingServices\DCAInCB_MSG_8314_8888_CustomItemDetailsHeaderMessagingService.cs" />
-    <Compile Include="MessagingServices\GetDOC8318_Web_GetAttachmentMessagingService.cs" />
     <Compile Include="MessagingServices\DCAInGet_CB_MSG_8318_CustomItemMekachMessagingService.cs" />
     <Compile Include="MessagingServices\DCAInGet_CB_MSG_8319_CustomItemRuleMessagingService.cs" />
     <Compile Include="MessagingServices\DCAInGet_CB_MSG_8323_ClassifGuidanceDetailsMessagingService.cs" />
@@ -569,7 +568,6 @@
     <Compile Include="RequestServices\DF_MSG8235_ExportDeclarationAmendmentRequestService.cs" />
     <Compile Include="RequestServices\DF_MSG8235_TransshipmentDeclarationAmendmentRequestService.cs" />
     <Compile Include="RequestServices\Get_CB_MSG_8314_8888_CustomItemDetailsHeaderRequestService.cs" />
-    <Compile Include="RequestServices\GetDOC8318_Web_GetAttachmentRequestService.cs" />
     <Compile Include="RequestServices\Get_CB_MSG_8318_CustomItemMekachRequestService.cs" />
     <Compile Include="RequestServices\Get_CB_MSG_8319_CustomItemRuleRequestService.cs" />
     <Compile Include="RequestServices\Get_CB_MSG_8323_ClassifGuidanceDetailsRequestService.cs" />
@@ -628,8 +626,7 @@
     <Compile Include="ResponseServices\DCAInUCUDO_UpdateOpenDeclarationsResponseService.cs" />
     <Compile Include="ResponseServices\DF_NG_8237_TransshipmentDeclerationAmendmentReplyResponseService.cs" />
     <Compile Include="ResponseServices\Get_CB_MSG_8314_8888_CustomItemDetailsHeaderResponseService.cs" />
-    <Compile Include="ResponseServices\GetDOC8318_Web_GetAttachmentResponseService.cs" />
-    <Compile Include="ResponseServices\Get_CB_MSG_8318_CustomItemMekachResponseService.cs" />
+    <Compile Include="ResponseServices\Get_CB_MSG_8318_CustomItemMekachRequestService.cs" />
     <Compile Include="ResponseServices\Get_CB_MSG_8319_CustomItemRuleResponseService.cs" />
     <Compile Include="ResponseServices\Get_CB_MSG_8323_ClassifGuidanceDetailsResponseService.cs" />
     <Compile Include="ResponseServices\Get_CB_MSG_8317_CustomItemClassifGuidanceResponseService.cs" />
@@ -812,7 +809,6 @@
     <Compile Include="ResponseServices\VE_MSG013_VendorAddCommunicationDeviceResponseService.cs" />
     <Compile Include="ResponseServices\VE_MSG052_VendorSearchResultsForCustomsAgentResponseService.cs" />
     <Compile Include="ResponseServices\VP_NG_2691_MSG101_VehicleInResponseService.cs" />
-    <Compile Include="Tasks\ConnectDocumentToDeclarationCourier.cs" />
     <Compile Include="Tasks\UpdateClosedTables.cs" />
     <Compile Include="Tasks\POAExpireReminder.cs" />
     <Compile Include="Tasks\EnqueueSucceedRequestsheets.cs" />

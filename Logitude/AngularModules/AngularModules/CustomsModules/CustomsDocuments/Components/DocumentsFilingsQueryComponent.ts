@@ -263,8 +263,8 @@ export class DocumentsFilingsQueryComponent extends BaseComponent {
 
 
 
-        filters.PageSize = take;
-        filters.PageIndex = skip; // decremented 1 in the service
+        filters.PageSize = 30;
+        filters.PageIndex = 0; // decremented 1 in the service
         filters.GetAll = false;
         filters.GetCount = true;
         filters.SortBy = sortingCol;
