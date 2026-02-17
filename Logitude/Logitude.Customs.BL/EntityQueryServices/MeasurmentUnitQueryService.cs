@@ -1,5 +1,4 @@
-﻿using Logitude.Customs.Data.EntityPOCOs;
-using Logitude.Customs.Def.EntityPMs;
+﻿using Logitude.Customs.Def.EntityPMs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,20 +23,6 @@ namespace Logitude.Customs.BL.EntityQueryServices
              }
              return pm;
          }
-
-        public IQueryable<MeasurmentUnitPM> GetMeasurmentUnitPMs()
-        {
-            IQueryable<MeasurmentUnit> pocos = repository.GetAll();
-            IQueryable<MeasurmentUnitPM> query = from a in pocos
-                                                 select new MeasurmentUnitPM
-                                                 {
-                                                     Code = a.Code,
-                                                     EnglishName = a.EnglishName,
-                                                     LocalName = a.LocalName,
-                                                     Inactive = a.Inactive,
-                                                 };
-            return query;
-        }
 
 
     }

@@ -1,48 +1,46 @@
 
 
 declare var window: any;
-import { Component, AfterViewInit, ChangeDetectorRef } from '@angular/core';
-import { EntityArgs } from '../../../../../Infrastructure/DataContracts/EntityArgs';
-import { AppTool, ArrayTool, DateTool } from '../../../../../Infrastructure/Tools';
-import { FeatureLocator } from '../../../../../Infrastructure/Utilities/FeatureLocator';
-import { SessionLocator } from '../../../../../Infrastructure/Utilities/SessionLocator';
-import { TextCodeTranslator } from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
-import { BaseComponent } from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import { ObservableCollection } from '../../../../../Infrastructure/Utilities/ObservableCollection';
-import { ConfirmWindow } from '../../../../../Controls/Windows/ConfirmWindow';
-import { MessageWindow } from '../../../../../Controls/Windows/MessageWindow';
-import { ServiceResponse } from '../../../../../Infrastructure/DataContracts/ServiceResponse';
-import { LogitudeWindow } from '../../../../../Controls/Windows/LogitudeWindow';
-import { DeclarationDisplayOnlyChecks, DisplayOnlyCheckResult } from '../../../../../Customs/Utilities/DeclarationDisplayOnlyChecks';
+import {Component, AfterViewInit, ChangeDetectorRef}  from '@angular/core';
+import {EntityArgs} from '../../../../../Infrastructure/DataContracts/EntityArgs';
+import {AppTool, ArrayTool, DateTool} from '../../../../../Infrastructure/Tools';
+import {FeatureLocator} from '../../../../../Infrastructure/Utilities/FeatureLocator';
+import {SessionLocator} from '../../../../../Infrastructure/Utilities/SessionLocator';
+import {TextCodeTranslator} from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
+import {BaseComponent} from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import {ObservableCollection} from '../../../../../Infrastructure/Utilities/ObservableCollection';
+import {ConfirmWindow} from '../../../../../Controls/Windows/ConfirmWindow';
+import {MessageWindow} from '../../../../../Controls/Windows/MessageWindow';
+import {ServiceResponse} from '../../../../../Infrastructure/DataContracts/ServiceResponse';
+import {LogitudeWindow} from '../../../../../Controls/Windows/LogitudeWindow';
+import {DeclarationDisplayOnlyChecks, DisplayOnlyCheckResult} from '../../../../../Customs/Utilities/DeclarationDisplayOnlyChecks';
 
-import { DeclarationPM } from '../../../../../Customs/EntityPMs/DeclarationPM';
-import { ConsignmentPM } from '../../../../../Customs/EntityPMs/ConsignmentPM';
-import { SupplierInvoicePM } from '../../../../../Customs/EntityPMs/SupplierInvoicePM';
-import { AmendmentView } from '../../../../../Customs/EntityPMs/Extended/AmendmentView';
+import {DeclarationPM} from '../../../../../Customs/EntityPMs/DeclarationPM';
+import {ConsignmentPM} from '../../../../../Customs/EntityPMs/ConsignmentPM';
+import {SupplierInvoicePM} from '../../../../../Customs/EntityPMs/SupplierInvoicePM';
+import {AmendmentView} from '../../../../../Customs/EntityPMs/Extended/AmendmentView';
 import { GeneralDataView } from '../../../../../Customs/EntityPMs/Extended/GeneralDataView';
 import { error } from '../../../../../Customs/EntityPMs/Extended/AmendmentView';
-import { DeclarationCorrectionView } from '../../../../../Customs/EntityPMs/Extended/DeclarationCorrectionView';
-import { DeclarationConstraintPM } from '../../../../../Customs/EntityPMs/DeclarationConstraintPM';
-import { DeclarationEventManager } from '../../../../../Customs/Utilities/DeclarationEventManager';
+import {DeclarationCorrectionView} from '../../../../../Customs/EntityPMs/Extended/DeclarationCorrectionView';
+import {DeclarationConstraintPM} from '../../../../../Customs/EntityPMs/DeclarationConstraintPM';
+import {DeclarationEventManager} from '../../../../../Customs/Utilities/DeclarationEventManager';
 
-import { DeclarationWebService } from '../../../../../Customs/Services/WebServices/DeclarationWebService';
-import { DeclarationPMService } from '../../../../../Customs/Services/StandardPMs/DeclarationPMService';
-import { ConstraintApprovalRequestParams } from '../../../../../Customs/DataContract/RequestParams/ConstraintApprovalRequestParams';
+import {DeclarationWebService} from '../../../../../Customs/Services/WebServices/DeclarationWebService';
+import {DeclarationPMService} from '../../../../../Customs/Services/StandardPMs/DeclarationPMService';
+import {ConstraintApprovalRequestParams} from '../../../../../Customs/DataContract/RequestParams/ConstraintApprovalRequestParams';
 
 // Send Request
-import { INF_MSG_GenericResponseData } from '../../../../../Customs/DataContract/ResponseData/INF_MSG_GenericResponseData';
-import { VendorCommunicationResult } from '../../../../../Customs/DataContract/ResponseData/VendorCommunicationResult';
-import { VendorInsertUpdateDeleteMessageRequestParams, OperationTypes } from '../../../../../Customs/DataContract/RequestParams/VendorInsertUpdateDeleteMessageRequestParams';
+import {INF_MSG_GenericResponseData} from '../../../../../Customs/DataContract/ResponseData/INF_MSG_GenericResponseData';
+import {VendorCommunicationResult} from '../../../../../Customs/DataContract/ResponseData/VendorCommunicationResult';
+import {VendorInsertUpdateDeleteMessageRequestParams, OperationTypes} from '../../../../../Customs/DataContract/RequestParams/VendorInsertUpdateDeleteMessageRequestParams';
 import { CustomMessageProgressComponent } from '../../../../../CustomsModules/CustomsControls/Components/CustomMessageProgressComponent';
-import { DeclarationMessagesService } from '../../../../../Customs/Services/WebServices/DeclarationMessagesService';
-import { SendRequestVIA } from '../../../../../Customs/DataContract/RequestParams/RequestParamsBase';
-import { EntityResourceService } from '../../../../../Infrastructure/Services/EntityResourceService';
+import {DeclarationMessagesService} from '../../../../../Customs/Services/WebServices/DeclarationMessagesService';
+import {SendRequestVIA} from '../../../../../Customs/DataContract/RequestParams/RequestParamsBase';
+import {EntityResourceService} from '../../../../../Infrastructure/Services/EntityResourceService';
 import { ObjectsLocator } from '../../../../../Infrastructure/Locators/ObjectsLocator';
-import { AmendmentMessageCacheService } from 'CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/General/AmendmentMessageCacheService';
-
 
 @Component({
-
+    
     templateUrl: '././DeclarationCorrectionsComponent.html',
 })
 
@@ -53,7 +51,7 @@ export class DeclarationCorrectionsComponent extends BaseComponent {
     public CurrentEditComponentId: string;
     public IsDisplayOnly: boolean = false;
     public DisplayOnlyMessage: string = "";
-    public IsAmendmentDeficitInitiatedEnabled: boolean = false;
+    public IsAmendmentDeficitInitiatedEnabled: boolean=false;
     public IsNoAmendmentsMsgVisible: boolean = false;
     ResponseData: INF_MSG_GenericResponseData;
     public IsOldAmendment: boolean;
@@ -65,7 +63,8 @@ export class DeclarationCorrectionsComponent extends BaseComponent {
 
     //Services
     private declarationWebService: DeclarationWebService = new DeclarationWebService;
-    private amendmentMessageCacheService: AmendmentMessageCacheService;
+    private declarationMessagesService: DeclarationMessagesService = new DeclarationMessagesService;
+    private declarationPMService: DeclarationPMService = new DeclarationPMService;
     private CurrentSession = SessionLocator.SelectedSession;
     TabsSource: any[] = [];
     SelectedTab: string = "";
@@ -85,7 +84,7 @@ export class DeclarationCorrectionsComponent extends BaseComponent {
 
 
     }
-    public set AmendmentissueDate(newValue: string) { }
+    public set AmendmentissueDate(newValue: string) {  }
 
 
     public get AmendmentDeficitInitiated() { return this.EntityPM ? this.EntityPM.AmendmentDeficitInitiated : null; }
@@ -112,12 +111,11 @@ export class DeclarationCorrectionsComponent extends BaseComponent {
     constructor(public entityArgs: EntityArgs, private cd: ChangeDetectorRef, private EntityResourceService: EntityResourceService) {
         super();
 
-        this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response: any) => {
-            this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsCollateral").subscribe((response: any) => {
-                this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsCollateralsCondition").subscribe((response: any) => {
-                    this.EntityResourceService.getEntityResourceByTableName("Customs.PaymentOrder").subscribe((response: any) => {
+        this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response:any) => {
+            this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsCollateral").subscribe((response:any) => {
+                this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsCollateralsCondition").subscribe((response:any) => {
+                    this.EntityResourceService.getEntityResourceByTableName("Customs.PaymentOrder").subscribe((response:any) => {
                         this.EntityPM = this.entityArgs.EntityPM;
-                        this.amendmentMessageCacheService = new AmendmentMessageCacheService(this.declarationWebService);
                         this.ObjectTableName = this.entityArgs.ObjectTableName;
                         this.LayoutDirection = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
                         this.Listen();
@@ -127,7 +125,7 @@ export class DeclarationCorrectionsComponent extends BaseComponent {
 
                         this.ReloadDeclarationCorrection();
 
-
+   
                         this.UIProperties.SetEnabled("AmendmentRequestNumber", this.ObjectTableName, false);
                         this.UIProperties.SetEnabled("AmendmentissueDate", this.ObjectTableName, false);
                         this.UIProperties.SetEnabled("VersionId", this.ObjectTableName, false);
@@ -135,11 +133,11 @@ export class DeclarationCorrectionsComponent extends BaseComponent {
 
                         this.DisplayOnlyCheck();
 
-                    });
+                     });
                 });
             });
         });
-
+ 
 
     }
     SelectionChanged(tab: any) {
@@ -165,34 +163,29 @@ export class DeclarationCorrectionsComponent extends BaseComponent {
     }
 
 
-    async DisplayOnlyCheck() {
+    DisplayOnlyCheck() {
 
-        let am = null as any;
-
-        if (this.EntityPM?.Id) {
-            am = await this.amendmentMessageCacheService.Get(this.EntityPM.Id);
-        }
-
-        if (am && am.AmendmentMessage) {
-            this.DisplayOnlyMessage = am.AmendmentMessage;
-            this.IsDisplayOnly = !!am.IsAmendmentDisplayOnly;
-        }
-        else {
-            this.DisplayOnlyMessage = "";
-            if (!this.EntityPM.AmendmentDeficitInitiated) {
-                this.UIProperties.SetEnabled("AmendDeficitInitiatedReasTo", this.ObjectTableName, false);
+         var declarationDisplayOnlyChecks: DeclarationDisplayOnlyChecks = new DeclarationDisplayOnlyChecks();
+             if (this.EntityPM.AmendmentMessage != null && this.EntityPM.AmendmentMessage != "") {
+                {
+                     this.DisplayOnlyMessage = this.EntityPM.AmendmentMessage;
+                    if (this.EntityPM.IsAmendmentDisplayOnly) this.IsDisplayOnly = this.EntityPM.IsAmendmentDisplayOnly;
+                }
             }
-        }
+             else {
+                if (!this.EntityPM.AmendmentDeficitInitiated) this.UIProperties.SetEnabled("AmendDeficitInitiatedReasTo", this.ObjectTableName, false);
 
-        this.SetScreenFieldsEditability();
-        DeclarationEventManager.DisplayModeChanged.emit(this.IsDisplayOnly);
+            }            this.SetScreenFieldsEditability();
+
+            DeclarationEventManager.DisplayModeChanged.emit(this.IsDisplayOnly);
+ 
     }
     SetScreenFieldsEditability() {
         this.UIProperties.SetEnabled("AmendmentRemarks", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("AmendDeficitInitiatedReasTo", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("AmendmentDeficitInitiated", this.ObjectTableName, !this.IsDisplayOnly);
-
-        if (!this.AmendmentDeficitInitiated)
+       
+        if ( !this.AmendmentDeficitInitiated)
             this.UIProperties.SetEnabled("AmendDeficitInitiatedReasTo", this.ObjectTableName, false);
 
 
@@ -216,18 +209,18 @@ export class DeclarationCorrectionsComponent extends BaseComponent {
                 this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                     if (isLoadSuccess) {
                         this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
-                        this.DisplayOnlyCheck();
+                        //this.DisplayOnlyCheck();
                     }
                 })
             );
             this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
-                this.CurrentSession.CurrentEditComponent.TabSelected.subscribe((tabCode: string) => {
-                    if (this.CurrentEditComponentId == this.CurrentSession.CurrentEditComponent.ComponentId) {
-                        if (tabCode == "DCCR") {
-                            //this.DisplayOnlyCheck();
-                            this.ReloadDeclarationCorrection();
-                        }
+            this.CurrentSession.CurrentEditComponent.TabSelected.subscribe((tabCode: string) => {
+                if (this.CurrentEditComponentId == this.CurrentSession.CurrentEditComponent.ComponentId) {
+                    if (tabCode == "DCCR") {
+                        //this.DisplayOnlyCheck();
+                        this.ReloadDeclarationCorrection();
                     }
+                }
                 })
             );;
         }
@@ -236,7 +229,7 @@ export class DeclarationCorrectionsComponent extends BaseComponent {
     AmendmentDeficitInitiatedChecked(checked) {
         if (checked) {
             this.UIProperties.SetEnabled("AmendDeficitInitiatedReasTo", this.ObjectTableName, true);
-
+            
         }
 
         else {
@@ -247,7 +240,6 @@ export class DeclarationCorrectionsComponent extends BaseComponent {
     RefreshEntity() {
         this.CurrentSession.CurrentEditComponent.EditComponentController.ResetMustRefresh();
         this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-        this.DisplayOnlyCheck();
     }
 
     public IsDescriptionVisible: boolean = false;
@@ -265,56 +257,56 @@ export class DeclarationCorrectionsComponent extends BaseComponent {
 
         //[1] GetDeclarationCorrections();
         this.declarationWebService.GetDeclarationCorrection(this.EntityPM.Id).subscribe((myServiceResponse: ServiceResponse) => {
-            console.log("[Response] GetDeclarationConstraints : ", myServiceResponse.Result);
-            var res: DeclarationCorrectionView = myServiceResponse.Result;
+                console.log("[Response] GetDeclarationConstraints : ", myServiceResponse.Result);
+                var res: DeclarationCorrectionView = myServiceResponse.Result;
 
-            if (!AppTool.IsNullOrEmpty(res)) {
+                if (!AppTool.IsNullOrEmpty(res)) {
 
-                this.GeneralData = [];
-                var amendmentViewsList = [];
-                var referenceList = [];
+                    this.GeneralData = [];
+                    var amendmentViewsList = [];
+                    var referenceList = [];
 
-                //sort data
-                var data = res.GeneralDataViews ? res.GeneralDataViews.sort((a, b) => { return (a.Version < b.Version) ? 1 : -1 }) : null
+                    //sort data
+                    var data = res.GeneralDataViews ? res.GeneralDataViews.sort((a, b) => { return (a.Version < b.Version) ? 1 : -1 }) : null
 
-                //build version list
-                this.BuildGeneralData(data);
+                    //build version list
+                    this.BuildGeneralData(data); 
 
-                // select amendment for the first version
-                var general = this.GeneralData[0];
-                this.AmendmentViewsList = new ObservableCollection([]);
-                this.AdditionalInformationlist.InsertCollection(general.AdditionalInformation);
-                general.AmendmentViews.forEach(el => {
-                    amendmentViewsList.push(el);
-                });
+                    // select amendment for the first version
+                    var general = this.GeneralData[0];
+                    this.AmendmentViewsList = new ObservableCollection([]);
+                    this.AdditionalInformationlist.InsertCollection(general.AdditionalInformation);
+                    general.AmendmentViews.forEach(el => {
+                        amendmentViewsList.push(el);
+                    });
 
-                this.AmendmentViewsList.InsertCollection(amendmentViewsList);
+                     this.AmendmentViewsList.InsertCollection(amendmentViewsList);
 
-                this.GetResources(this.AmendmentViewsList.Collection);
+                    this.GetResources(this.AmendmentViewsList.Collection);
 
 
 
 
                 this.ReferenceList = new ObservableCollection([]);
-                if (!AppTool.IsNullOrEmpty(general.ReferenceViews)) {
-                    general.ReferenceViews.forEach(el => {
-                        referenceList.push(el);
-                    });
+                    if (!AppTool.IsNullOrEmpty(general.ReferenceViews)) {
+                        general.ReferenceViews.forEach(el => {
+                            referenceList.push(el);
+                        });
+                    }
+                  
+
+                    this.ReferenceList.InsertCollection(referenceList);
+
+ 
+
+                    this.BuildSystemMessage(general.SystemMessageViews);
+
+                } else {
+                    if (!this.EntityPM.IsAmendment) this.IsNoAmendmentsMsgVisible = true;
                 }
+                this.CurrentSession.StopBusyIndicator();
 
-
-                this.ReferenceList.InsertCollection(referenceList);
-
-
-
-                this.BuildSystemMessage(general.SystemMessageViews);
-
-            } else {
-                if (!this.EntityPM.IsAmendment) this.IsNoAmendmentsMsgVisible = true;
-            }
-            this.CurrentSession.StopBusyIndicator();
-
-        });
+            });
     }
 
     BuildGeneralData(data: GeneralDataView[]) {
@@ -466,7 +458,7 @@ export class DeclarationCorrectionsComponent extends BaseComponent {
                                 logWindow.WindowClosed.subscribe(($event: any) => {
 
                                 });
-                                logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/AddEditSupplierInvoiceComponent');
+                              logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/AddEditSupplierInvoiceComponent');
                                 this.CurrentSession.StopBusyIndicator();
 
                             }
@@ -534,7 +526,7 @@ export class DeclarationCorrectionsComponent extends BaseComponent {
                                     logWindow.Title = this.GetEditedScreenTitle(amendmentView.EntityName, amendmentView);
                                     this.CurrentSession.StopBusyIndicator();
 
-                                    logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/AddEditSupplierInvoiceComponent');
+                                  logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/AddEditSupplierInvoiceComponent');
                                     this.CurrentSession.StopBusyIndicator();
 
                                 }
@@ -598,7 +590,7 @@ export class DeclarationCorrectionsComponent extends BaseComponent {
                                         logWindow.Title = this.GetEditedScreenTitle(amendmentView.EntityName, amendmentView);
                                         this.CurrentSession.StopBusyIndicator();
 
-                                        logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/SupplierInvoiceItem/SupplierInvoiceItemCertificatesComponent');
+                                      logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/SupplierInvoiceItem/SupplierInvoiceItemCertificatesComponent');
                                         //end open certificate
                                     }
                                     this.CurrentSession.StopBusyIndicator();
@@ -698,7 +690,7 @@ export class DeclarationCorrectionsComponent extends BaseComponent {
                         objectTableName = 'Customs.SupplierInvioceItemCertificat';
                     }
                     console.log("Get resources for ===> ", objectTableName);
-                    this.EntityResourceService.getEntityResourceByTableName(objectTableName).subscribe((response: any) => {
+                    this.EntityResourceService.getEntityResourceByTableName(objectTableName).subscribe((response:any) => {
                         if (this.arrayLength != 1) {
                             this.arrayLength--;
                         }
@@ -720,7 +712,7 @@ export class DeclarationCorrectionsComponent extends BaseComponent {
     //#endregion
 
     //#region XML Errors
-
+    
     //EditEntity(amendmentView: DeclarationErrorView) {
 
 
