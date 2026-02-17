@@ -35,6 +35,7 @@ export class ReportComponent {
     InitComponent() {
 
     }
+
     private groupList: ReportGroupList[];
     public reportList: ReportList[];
     LoadData() {
@@ -210,17 +211,13 @@ export class ReportComponent {
     ReportTemplates: any[] = [];
     LoadReportTemplate(groupList: ReportGroupList, reportList: ReportList) {
      
-        this.reportsTemplateListExtendedService.getReportsTemplateListsByReportId(reportList.Id).subscribe((myResponse: ServiceResponse) => {
+        this.reportsTemplateListExtendedService.getReportsTemplateListsByReportId(reportList.Id,"R").subscribe((myResponse: ServiceResponse) => {
             
             if (!myResponse.HasError) {
                 this.ReportTemplates = myResponse.Result;
              
             }
-            
             this.IsLoadReportsTemplateListRuning = false;
-            reportList.DefaultExcelTemplateId = this.ReportTemplates.filter(d => d.TemplateType == "E" && d.IsDefault && d.UseStimul)[0]?.Id ?? "";
-            reportList.DefaultExcelNoStimId = this.ReportTemplates.filter(d => d.TemplateType == "E" && d.IsDefault && !d.UseStimul)[0]?.Id ?? "";
-            reportList.DefaultTemplateId = this.ReportTemplates.filter(d => d.TemplateType == "R" && d.IsDefault)[0]?.Id ?? "";
             this.LoadComplete(groupList, reportList);
 
         });

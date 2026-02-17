@@ -1,4 +1,4 @@
-
+ 
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -16,15 +16,15 @@ using Logitude.Accounting.Data.EntityKeys;
 using Logitude.Accounting.Data;
 using Simplog.Server.Infrastructure;
 namespace Logitude.Accounting.BL.EntityQueryServices
-{
-    public partial class ARPChequeLineQueryService : EntityQueryService<ARPChequeLine, ARPChequeLineKeys, ARPChequeLinePM, object, ARPChequeLineKeys>
-    {
-
+{ 
+   public partial class ARPChequeLineQueryService: EntityQueryService<ARPChequeLine,ARPChequeLineKeys,ARPChequeLinePM,object,ARPChequeLineKeys>
+   {
+   
         ARPChequeLineRepository repository;
-        IAccountingContext context;
+		IAccountingContext  context;
         public ARPChequeLineQueryService(int tenant)
         {
-            context = AccountingContext.GetContext(tenant);
+		    context = AccountingContext.GetContext(tenant);
             MainContext = context;
             repository = new ARPChequeLineRepository(context);
             Repository = repository;
@@ -47,22 +47,23 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             Repository = repository;
             mapping = new ARPChequeLineDataMapping();
         }
-
-        public ARPChequeLinePM GetSingle(string id, bool getComposition, bool getFromCache)
+		 
+		public  ARPChequeLinePM GetSingle(string id,bool getComposition, bool getFromCache)
         {
-            EntityKeys = new ARPChequeLineKeys() { Id = id };
+             EntityKeys = new ARPChequeLineKeys(){ Id = id };
 
-            return base.GetSingle(EntityKeys, getComposition, getFromCache);
+			 return base.GetSingle(EntityKeys, getComposition, getFromCache);
         }
 
-
-        protected override EntityKeyFields GetKeys(ARPChequeLine entityPOCO)
+       
+	    protected override EntityKeyFields GetKeys(ARPChequeLine entityPOCO)
         {
-            ARPChequeLineKeys entityKeys = new ARPChequeLineKeys() { Id = entityPOCO.Id, };
+            ARPChequeLineKeys entityKeys = new ARPChequeLineKeys() { Id = entityPOCO.Id,  };
             return entityKeys;
         }
-
-
-    }
-
+     
+	 
+   }
+   
 }
+	 

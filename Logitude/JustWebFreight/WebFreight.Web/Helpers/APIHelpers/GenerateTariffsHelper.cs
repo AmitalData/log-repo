@@ -3,14 +3,12 @@ using Logitude.BL.CommonDataModel.Tools.EntityService;
 using Logitude.Infrastructure.BL.EntityPMs;
 using Logitude.Infrastructure.BL.ExtendedServices;
 using Logitude.Server.Tools.Counters;
-using Logitude.Server.Tools.Helpers;
 using Logitude.TariffModule.Data;
 using Logitude.TariffModule.Data.EntityPOCOs;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; 
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
@@ -55,7 +53,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
             StateRepository stateRep = new StateRepository(commonDataContext);
             Dictionary<string, State> statesDictionary = stateRep.GetStates(tenant).ToDictionary(d => d.Code + ',' + d.CountryId, o => o);
             Dictionary<string, Country> countrieysDictionary = countryRep.GetCountries(tenant).ToDictionary(d => d.Code, o => o);
-           
+
             Country country = null;
             if (countrieysDictionary.Keys.Contains("MX"))
             {
@@ -101,18 +99,13 @@ namespace WebFreight.Web.Helpers.APIHelpers
 
             for (int i = 1; i <= 200; i++)
             {
-                var counterAdditionalParameters = new Dictionary<string, string>
-                {
-                    ["[B]"] = "CS",
-                    ["[BranchName]"] = "CS"
-                };
                 CustomerPM customer = new CustomerPM()
                 {
                     EnglishName = "customer " + i,
                     VatNumber = "customervat " + i,
                     Tenant = tenant,
                     IsHybrid = true,
-                    Code = TableCounter.DoesCounterDefinitionExist("CADC", tenant, "CS") ? CodeCounter.GetNumber("Customer", tenant).ToString() :TableCounter.GetNumber(tenant, "CADC", "CS", null, counterAdditionalParameters, true),
+                    Code = CodeCounter.GetNumber("Customer", tenant).ToString(),
                     PartnerTypeId = "CS",
                     CustomerStatusCode = "ACT",
                     IsCustomer = true,
@@ -125,18 +118,13 @@ namespace WebFreight.Web.Helpers.APIHelpers
 
             for (int i = 1; i <= 100; i++)
             {
-                var counterAdditionalParameters = new Dictionary<string, string>
-                {
-                    ["[B]"] = "AG",
-                    ["[BranchName]"] = "AG"
-                };
                 AgentPM agent = new AgentPM()
                 {
                     EnglishName = "agent " + i,
                     VatNumber = "agentvat " + i,
                     Tenant = tenant,
                     IsHybrid = true,
-                    Code = TableCounter.DoesCounterDefinitionExist("CADC", tenant, "AG") ?  TableCounter.GetNumber(tenant, "CADC", "AG", null, counterAdditionalParameters, true)  : CodeCounter.GetNumber("Agent", tenant).ToString(),
+                    Code = CodeCounter.GetNumber("Agent", tenant).ToString(),
                     PartnerTypeId = "AG",
                 };
                 agent.Addresses.Add(address);
@@ -182,18 +170,13 @@ namespace WebFreight.Web.Helpers.APIHelpers
 
             for (int i = 1; i <= 200; i++)
             {
-                var counterAdditionalParameters = new Dictionary<string, string>
-                {
-                    ["[B]"] = "VD",
-                    ["[BranchName]"] = "VD"
-                };
                 VendorPM vendor = new VendorPM()
                 {
                     EnglishName = "vendor " + i,
                     VatNumber = "vendorvat " + i,
                     Tenant = tenant,
                     IsHybrid = true,
-                    Code = TableCounter.DoesCounterDefinitionExist("CADC", tenant, "VD") ?TableCounter.GetNumber(tenant, "CADC", "VD", null, counterAdditionalParameters, true) : CodeCounter.GetNumber("Vendor", tenant).ToString(),
+                    Code = CodeCounter.GetNumber("Vendor", tenant).ToString(),
                     PartnerTypeId = "VD",
                 };
                 vendor.Addresses.Add(address);
@@ -204,18 +187,13 @@ namespace WebFreight.Web.Helpers.APIHelpers
 
             for (int i = 1; i <= 100; i++)
             {
-                var counterAdditionalParameters = new Dictionary<string, string>
-                {
-                    ["[B]"] = "AG",
-                    ["[BranchName]"] = "AG"
-                };
                 CustomAgentPM customAgent = new CustomAgentPM()
                 {
                     EnglishName = "customAgent " + i,
                     VatNumber = "customAgentvat " + i,
                     Tenant = tenant,
                     IsHybrid = true,
-                    Code = TableCounter.DoesCounterDefinitionExist("CADC", tenant, "AG") ? TableCounter.GetNumber(tenant, "CADC", "AG", null, counterAdditionalParameters, true) : CodeCounter.GetNumber("Agent", tenant).ToString(),
+                    Code = CodeCounter.GetNumber("Agent", tenant).ToString(),
                     PartnerTypeId = "CG",
                 };
                 customAgent.Addresses.Add(address);
