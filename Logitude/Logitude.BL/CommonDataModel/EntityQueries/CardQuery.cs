@@ -136,7 +136,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                  EmailForSendingSingArinvoice = card.EmailForSendingSingArinvoice,
                                                  SendingInterestReport = card.SendingInterestReport,
                                                  ExternalSystem = card.ExternalSystem,
-                                                 IsCustomer = card.IsCustomer,
                                              });
 
 
@@ -156,39 +155,34 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return res;
         }
 
-        public CardPM GetSinglePM(string id, int tenant, bool includeAddress = true)
+        public CardPM GetSinglePM(string id, int tenant)
         {
             if (!string.IsNullOrEmpty(id))
             {
                 string entityName = "CardPM" + id + tenant;
                 CardPM entity;
-                string myMainAddressId = null;
-                string myBillingAddressId = null;
-                string myPickupDeliveryAddressId = null;
 
                 AddressQuery addressQuery = new AddressQuery(tenant);
-
-                if (includeAddress)
+                AddressPM myMainAddresss = addressQuery.GetAddressPMByTypeAndCard(id, "M", tenant);
+                string myMainAddressId = null;
+                if (myMainAddresss != null)
                 {
-                    AddressPM myMainAddresss = addressQuery.GetAddressPMByTypeAndCard(id, "M", tenant);
-                    if (myMainAddresss != null)
-                    {
-                        myMainAddressId = myMainAddresss.Id;
-                    }
-
-                    AddressPM myBillingAddress = addressQuery.GetAddressPMByTypeAndCard(id, "B", tenant);
-                    if (myBillingAddress != null)
-                    {
-                        myBillingAddressId = myBillingAddress.Id;
-                    }
-
-                    AddressPM myPickupDeliveryAddress = addressQuery.GetAddressPMByTypeAndCard(id, "P", tenant);
-                    if (myPickupDeliveryAddress != null)
-                    {
-                        myPickupDeliveryAddressId = myPickupDeliveryAddress.Id;
-                    }
+                    myMainAddressId = myMainAddresss.Id;
                 }
 
+                AddressPM myBillingAddress = addressQuery.GetAddressPMByTypeAndCard(id, "B", tenant);
+                string myBillingAddressId = null;
+                if (myBillingAddress != null)
+                {
+                    myBillingAddressId = myBillingAddress.Id;
+                }
+
+                AddressPM myPickupDeliveryAddress = addressQuery.GetAddressPMByTypeAndCard(id, "P", tenant);
+                string myPickupDeliveryAddressId = null;
+                if (myPickupDeliveryAddress != null)
+                {
+                    myPickupDeliveryAddressId = myPickupDeliveryAddress.Id;
+                }
 
                 if (HttpContext.Current != null)
                 {
@@ -1504,7 +1498,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 EmailForSendingSingArinvoice = card.EmailForSendingSingArinvoice,
                                                 SendingInterestReport = card.SendingInterestReport,
                                                 ExternalSystem = card.ExternalSystem,
-                                                IsCustomer = card.IsCustomer,
+
                                             };
 
             if (myResult.Count() > 0)
@@ -1547,9 +1541,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 CalculatedLocalName = string.IsNullOrEmpty(card.LocalName) ? card.EnglishName : card.LocalName,
                                                 GLAccountDisplayNumber = card.GLAccountDisplayNumber,
                                                 GLAccountId = card.GLAccountId,
-                                                SearchFields = card.SearchFields,
-                                                IsCustomer = card.IsCustomer,
-
+                                                SearchFields = card.SearchFields
 
                                             };
 

@@ -624,7 +624,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
             string referentUserId = null;
             if (this._MyDeclarationPM != null)
             {
-                newNotificationPM.ResponseToMessage = responseToMessage;
+                if (this._MyDeclarationPM.Direction == "E")
+                    newNotificationPM.ResponseToMessage = responseToMessage;
 
                 newNotificationPM.EntityId = this._MyDeclarationPM.Id;
                 newNotificationPM.ObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");

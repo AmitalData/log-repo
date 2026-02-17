@@ -230,7 +230,6 @@ namespace <#= entitymapnamespacestring #>
 		string keysstring="";
 		foreach(var field in entity["field"])  //get all classes
 	 {
-	 if (ShouldSkipMap(field)) continue;
 		if(field.IsPrimaryKey.ToString() == "true")
         {
 			dynamic fieldName = GetEntityMapPropertyName(field.FieldName);
@@ -243,7 +242,7 @@ namespace <#= entitymapnamespacestring #>
 	 <#+
  	foreach(var field in entity["field"])  //get all classes
 	 {
-	if (ShouldSkipMap(field)) continue;
+	
 	 if( field.HasDataBaseField.GetType() == typeof(string))
         {
           if(field.HasDataBaseField == "false")
@@ -273,9 +272,9 @@ namespace <#= entitymapnamespacestring #>
 
 public void WriteEntityMapProperty(dynamic field)
 {
-    if (ShouldSkipMap(field)) return;
+
     dynamic fieldName = GetEntityMapPropertyName(field.FieldName);
-	dynamic shortFieldName =  field.ShortName.ToString();
+	 dynamic shortFieldName =  field.ShortName.ToString();
 
     dynamic dBfieldName = fieldName;
 	
@@ -537,13 +536,6 @@ private string GetEntityMapPropertyName(dynamic property)
 		  return result;
 
         }
-#>
-<#+
-private bool ShouldSkipMap(dynamic field)
-{
-    try { return (field.ObjectFieldDBOnly.GetType() == typeof(string) && field.ObjectFieldDBOnly == "true"); }
-    catch { return false; }
-}
 #>
 <#+
 //Create an elastic object
