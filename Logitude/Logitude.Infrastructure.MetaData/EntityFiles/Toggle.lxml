@@ -44,7 +44,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Toggle&quot;"
-  Code="&quot;9a33&quot;"
+  Code="&quot;60eb&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -998,11 +998,6 @@
       SearchFields="&quot;VPI, Get Tax Report VAT from A/P Invoice&quot;"
       Description="&quot;Get Tax Report VAT from A/P Invoice&quot;" />
     <Record
-      Code="&quot;IRN&quot;"
-      Name="&quot;Interest Report Notes New Logic&quot;"
-      SearchFields="&quot;IRN, Interest Report Notes New Logic&quot;"
-      Description="&quot;Interest Report Notes: Entity of ARInvoice, Cheques of ARPayment&quot;" />
-    <Record
       Code="&quot;JAM&quot;"
       Name="&quot;Journal Approval MultiThreading&quot;"
       SearchFields="&quot;JAM, Journal Approval MultiThreading&quot;"
@@ -1048,10 +1043,10 @@
       Description="&quot;חשבוניות ישראל לא להפעיל V2&quot;"
       SearchFields="&quot;AV2 ,Israel Invoices Do Not Activate V2&quot;" />
     <Record
-      Code="&quot;BMO&quot;"
-      Name="&quot;Open Format Report Optimization&quot;"
-      SearchFields="&quot;BMO,Open Format Report Optimization&quot;"
-      Description="&quot;דוח במבנה אחיד - אופטימיזציה&quot;" />
+     Code="&quot;BMO&quot;"
+     Name="&quot;Open Format Report Optimization&quot;"
+     SearchFields="&quot;BMO,Open Format Report Optimization&quot;"
+     Description="&quot;דוח במבנה אחיד - אופטימיזציה&quot;" />
     <Record
       Code="&quot;STQ&quot;"
       Name="&quot;Add Task Scheduler To Queue By Date&quot;"
@@ -1082,16 +1077,6 @@
       Name="&quot;Second Worker Role&quot;"
       SearchFields="&quot;SWR,Second Worker Role&quot;"
       Description="&quot;Second Worker Role&quot;" />
-    <Record
-      Code="&quot;OCA&quot;"
-      Name="&quot;Original Name For Child Account&quot;"
-      SearchFields="&quot;OCA,Original Name For Child Account&quot;"
-      Description="&quot;Original Name For Child Account&quot;" />
-    <Record
-      Code="&quot;SSH&quot;"
-      Name="&quot;Skip Steps on Hasavot&quot;"
-      SearchFields="&quot;HAS,Skip Steps on Hasavot&quot;"
-      Description="&quot;לדלג על השלבים עבור הסבות&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />

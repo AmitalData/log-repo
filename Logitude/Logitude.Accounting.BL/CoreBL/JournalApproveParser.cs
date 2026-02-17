@@ -21,7 +21,7 @@ namespace Logitude.Accounting.BL.CoreBL
     public interface IJournalApproveParser
     {
         void OnApproveUpdatingFillArrangeJournalPMResetControlAccount();
-        bool ParseIt(string selectedQueue = null);
+        bool ParseIt();
     }
     public class JournalApproveParser : IJournalApproveParser
     {
@@ -157,13 +157,13 @@ namespace Logitude.Accounting.BL.CoreBL
             return pm;
         }
         public bool StreamingJournalAlreadChecked = false;
-        public virtual bool ParseIt(string selectedQueue = null)
+        public virtual bool ParseIt()
         {
             try
             {
                 string logtext = "";
 
-                if (_JournalPM.StatusCode == "6")
+                if (_JournalPM.StatusCode == "6" )
                 {
                     logtext = "JournalApproveParser.ParseIt(), Point 1, Journal " + _JournalPM.JournalNumber + ", T=" + _JournalPM.Tenant.ToString()
                         + ", Status=" + _JournalPM.StatusCode
@@ -201,35 +201,33 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 CheckLedgerTransactions();
 
-                if (selectedQueue != JournalApproveService.K_AccountingConversionJournalApproveWR || !FeatureToggleHelper.HasFeatureToggle("SSH", _JournalPM.Tenant))
+                logtext = "JournalApproveParser.ParseIt(), Point 5, Journal " + _JournalPM.JournalNumber + ", T=" + _JournalPM.Tenant.ToString()
+                    + ", Status=" + _JournalPM.StatusCode
+                    + ", QueueId=" + _JournalPM.QueueId;
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug(logtext);
+
+                CreateGLAccountTotalByMonthFromLedger();
+                CheckGLAccountTotalByMonth();
+
+                if (_JournalPM.StatusCode == "6" )
                 {
-                    logtext = "JournalApproveParser.ParseIt(), Point 5, Journal " + _JournalPM.JournalNumber + ", T=" + _JournalPM.Tenant.ToString()
-                        + ", Status=" + _JournalPM.StatusCode
-                        + ", QueueId=" + _JournalPM.QueueId;
-                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug(logtext);
-
-                    CreateGLAccountTotalByMonthFromLedger();
-                    CheckGLAccountTotalByMonth();
-
-                    if (_JournalPM.StatusCode == "6")
-                    {
-                        CreateControlGLAccountTotalByMonthFromLedger();
-                        CheckControlGLAccountTotalByMonths();
-                    }
-
-                    logtext = "JournalApproveParser.ParseIt(), Point 8, Journal " + _JournalPM.JournalNumber + ", T=" + _JournalPM.Tenant.ToString()
-                        + ", Status=" + _JournalPM.StatusCode
-                        + ", QueueId=" + _JournalPM.QueueId;
-                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug(logtext);
-
-                    CheckTotalByMonthDateType();
-
-
-                    logtext = "JournalApproveParser.ParseIt(), Point 9, Journal " + _JournalPM.JournalNumber + ", T=" + _JournalPM.Tenant.ToString()
-                        + ", Status=" + _JournalPM.StatusCode
-                        + ", QueueId=" + _JournalPM.QueueId;
-                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug(logtext);
+                    CreateControlGLAccountTotalByMonthFromLedger();
+                    CheckControlGLAccountTotalByMonths();
                 }
+
+                logtext = "JournalApproveParser.ParseIt(), Point 8, Journal " + _JournalPM.JournalNumber + ", T=" + _JournalPM.Tenant.ToString()
+                    + ", Status=" + _JournalPM.StatusCode
+                    + ", QueueId=" + _JournalPM.QueueId;
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug(logtext);
+
+                CheckTotalByMonthDateType();
+
+
+                logtext = "JournalApproveParser.ParseIt(), Point 9, Journal " + _JournalPM.JournalNumber + ", T=" + _JournalPM.Tenant.ToString()
+                    + ", Status=" + _JournalPM.StatusCode
+                    + ", QueueId=" + _JournalPM.QueueId;
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug(logtext);
+
             }
             catch (Exception)
             {

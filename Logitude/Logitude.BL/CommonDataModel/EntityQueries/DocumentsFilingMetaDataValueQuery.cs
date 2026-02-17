@@ -1,17 +1,17 @@
-﻿using Logitude.BL.CommonDataModel.EntityLists;
-using Logitude.BL.CommonDataModel.EntityPMs;
-using Logitude.BL.CommonDataModel.Tools.DataMapping;
-using Logitude.BL.Helpers;
-using Logitude.Server.Tools.Counters;
-using Logitude.Server.Tools.Helpers;
-using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; 
-using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Simplog.Server.Infrastructure.Helpers;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
+using System.Web;
+using System.Collections.Generic;
+using Logitude.BL.Helpers;
+using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityLists;
+using Simplog.Data.CommonDataModel;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Server.Infrastructure.Helpers;
+using Logitude.Server.Tools.Counters;
+using Logitude.BL.CommonDataModel.Tools.DataMapping;
+using Logitude.Server.Tools.Helpers;
 
 namespace Logitude.BL.CommonDataModel.EntityQueries
 {
@@ -278,23 +278,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 							                            select a).GroupBy(p => p.DocumentsFilingId).Where(x => x.Count() == 2).Select(y => y.Key).ToList();
 			return documents;
 		}
-		public List<DocumentsFilingMetaDataValue> GetDocumentsFilingMetaDataValuesByCARFI(int tenant, string CARFI)
-		{
-	        var list = repository.context.DocumentsFilingMetaDataValues
-	               .Where(v =>
-	               	v.DocumentsMetaDataType.Tenant == tenant &&
-	               	v.DocumentsMetaDataType.Code == CARFI &&
-	               	v.DocumentsFiling.EntityId == null)
-	               .ToList();
-            return list;
-		}
-		public DocumentsFilingMetaDataValue GetDocumentsFilingMetaDataValueByINTGR_R(int tenant, string documentsFilingId, string INTGR_R)
-		{
-			return repository.context.DocumentsFilingMetaDataValues
-				   .Where(v =>
-					   v.DocumentsMetaDataType.Tenant == tenant && v.DocumentsFilingId == documentsFilingId &&
-					   v.DocumentsMetaDataType.Code == INTGR_R)
-				   .FirstOrDefault();
-		}
+
 	}
 }

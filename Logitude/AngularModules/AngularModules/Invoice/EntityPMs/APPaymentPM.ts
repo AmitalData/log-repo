@@ -581,10 +581,6 @@ export class APPaymentPM {
     private vendorCountry: string;
     public get VendorCountry() { return this.vendorCountry; }
     public set VendorCountry(newValue: string) { if (this.vendorCountry != newValue) { this.vendorCountry = newValue; this.MarkAsDirty("VendorCountry"); } }
-    
-    private masavInterfaceId: string;
-    public get MasavInterfaceId() { return this.masavInterfaceId; }
-    public set MasavInterfaceId(newValue: string) { if (this.masavInterfaceId != newValue) { this.masavInterfaceId = newValue; this.MarkAsDirty("MasavInterfaceId"); } }
        
 	 
     public OldEntityPM: APPaymentPM;

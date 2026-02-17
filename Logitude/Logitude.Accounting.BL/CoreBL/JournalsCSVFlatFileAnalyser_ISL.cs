@@ -228,7 +228,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     }
                     continue;// remark do nothing ...
                 }
-                var rowtype = rawLine.Split(',')[0]?.Trim();///.Substring(0, 1);
+                var rowtype = rawLine.Split(',')[0];///.Substring(0, 1);
 
                 if (!reading_Lines)
                 {
@@ -352,9 +352,6 @@ namespace Logitude.Accounting.BL.CoreBL
                     if (jLine.DuplCheck)
                     {
                         jLine.SkipLine = CheckDuplicateRef(jLine.Reference1, jLine.CreditGLAccountId, tenant, jLine.CreditGLAccount);
-                        if (jLine.SkipLine)
-                            _JournalSrcLinesDTO.ForEach(jl => { if (jl != jLine && jl.Reference1 == jLine.Reference1) jl.SkipLine = true; });
-
                     }
                     if (!jLine.SkipLine) totalCredit += Math.Round(jLine.LocalAmount, 2);
 
@@ -392,9 +389,13 @@ namespace Logitude.Accounting.BL.CoreBL
                     {
                         jLine.DebitGLAccountId = debitPM.Id;
                     }
-                    totalDebit += Math.Round(jLine.LocalAmount, 2);
+                    if (jLine.DuplCheck)
+                    {
+                        jLine.SkipLine = CheckDuplicateRef(jLine.Reference1, jLine.DebitGLAccountId, tenant, jLine.DebitGLAccount);
+                    }
+                    if (!jLine.SkipLine) totalDebit += Math.Round(jLine.LocalAmount, 2);
 
-                }
+				}
 
                 count++;
             }
@@ -413,8 +414,8 @@ namespace Logitude.Accounting.BL.CoreBL
 
         private bool CheckDuplicateRef(string reference1, string gLAccountId, int tenant, string account)
         {
-            JournalLineQueryService journalLineQueryService = new JournalLineQueryService(accountingContext);
-            if (journalLineQueryService.ExistsJournalLineByReferenceCreditAccountId(reference1, gLAccountId, tenant))
+            LedgerTransactionQueryService ledgerTransactionQueryService = new LedgerTransactionQueryService(accountingContext);
+            if (ledgerTransactionQueryService.ExistsLedgerTransactionByReferenceGLAccountId(reference1,gLAccountId, tenant))
             {
                 string text = $"The reference: {reference1} already exists in the account: {account}.";
                 this.AddAccountLineRow(text);
