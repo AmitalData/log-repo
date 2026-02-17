@@ -808,7 +808,7 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                       var vendorCurrencyList=  vendorCurrencyQueryService.GetVendorCurrencyByVendorId(ResolvedTenant(), this._MySupplierInvoicePM.VendorId);
                         if(vendorCurrencyList!=null&& vendorCurrencyList.Count() == 1)
 						{
-                            this._MySupplierInvoicePM.InvoiceCurrencyTypeCode = vendorCurrencyList[0].Currency == "" ? null : vendorCurrencyList[0].Currency;
+                            this._MySupplierInvoicePM.InvoiceCurrencyTypeCode = vendorCurrencyList[0].Currency;
                         }
                     }
                 }
@@ -1457,7 +1457,7 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                                 if (myexpenseCurrency == null)
                                 {
                                     string expenseCurrencyCode = "";
-                                        expenseCurrencyCode = GetTranslationL2P("IIGC", "CTBCURRENCY", this._INVOICE.CURRENCYCODE);
+                                    expenseCurrencyCode = GetTranslationL2P("IIGC", "CTBCURRENCY", this._INVOICE.CURRENCYCODE);
 
                                     if (!string.IsNullOrWhiteSpace(expenseCurrencyCode)) SupplierInvoiceModificationPM.CurrencyTypeCode = expenseCurrencyCode;
                                 }
@@ -1710,13 +1710,6 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
 
 		public string GetTranslationL2P(string partnerID, string tableID, string localCode)
         {
-            CustomsSettingQueryService settingService = new CustomsSettingQueryService(_MyDeclarationPM.Tenant);
-            CustomsSettingPM setting = settingService.GetSettingByTenantN(_MyDeclarationPM.Tenant);
-            if (!setting.IsConnectedToUniFreight)
-            {
-                return localCode;
-            }
-
             var rec = (from a in amitalContext.GTRTRANs
                        where a.PARTNERID == partnerID && a.TABLEID == tableID && a.LOCALCODE == localCode
                        select a).FirstOrDefault();

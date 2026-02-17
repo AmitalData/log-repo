@@ -205,7 +205,6 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             entityRepository.Update(Poco);
             entityRepository.SubmitChanges();
         }
-
 		public void Delete(int tenant,string taskSchedularId)
 		{
 			this.Poco = entityRepository.GetSingleTasksScheduler(taskSchedularId, tenant);
@@ -240,7 +239,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
         }
 
     }
-	}
+}
 [System.Runtime.Serialization.DataContract]
 public class SchedulerDateRange
 {

@@ -477,9 +477,7 @@ namespace Logitude.Accounting.Data.Repositories
                                      return num >= fromNum && num <= toNum;
                                  }
                                  return false;
-                             })
-                             .OrderBy(r => r.DisplayNumber)
-                             .AsQueryable();
+                             }).AsQueryable();
                 }
             }
             if (!includeControlAccount)
@@ -840,7 +838,7 @@ namespace Logitude.Accounting.Data.Repositories
 
         public List<GLAccount> GetByRevaluationEnabled_OtherParams(bool? revaluationEnabled, string chartOfAccountsTypeCode, string chartOfAccountsId, string accountTypeCode, string gLAccountId, string accountingCurrencyId, int tenant)
         {
-            if (revaluationEnabled == true && String.IsNullOrEmpty(chartOfAccountsId))
+            if (revaluationEnabled.HasValue && revaluationEnabled.Value)
             {
                 List<GLAccount> rv1;
                 IQueryable<GLAccount> rec1 =
@@ -870,7 +868,6 @@ namespace Logitude.Accounting.Data.Repositories
                                     && (record.Id == gLAccountId || String.IsNullOrEmpty(gLAccountId)
                                     && (record.CurrencyId != accountingCurrencyId || (record.IsMultiCurrency.HasValue && record.IsMultiCurrency.Value) || String.IsNullOrEmpty(accountingCurrencyId))
                                     && (!record.IsControlAccount.HasValue || record.IsControlAccount == false)
-                                    && (revaluationEnabled != true || record.RevaluationEnabled == true) 
                )
                  select record;
                 if (rec2 != null)
@@ -1351,19 +1348,6 @@ namespace Logitude.Accounting.Data.Repositories
                     return rv;
                 }
             }
-        }
-
-        public decimal GetTotalOpenChequesInLocalCurById(String glaccountId, int tenant)
-        {                           
-           var now = DateTime.UtcNow;
-           
-           return context.AllARPaymentChequesViews
-               .Where(a => a.AccountId == glaccountId
-                        && a.Tenant == tenant
-                        && a.Notes != "החזרת שיק ללקוח"
-                        && a.ValueDate <= now)
-               .Sum(a => (decimal?)a.LocalAmountCredit) ?? 0m;        
-            
         }
 
         public List<GLAccount> GetByDisplayNumberEnding(String displayNumberEnding, int tenant)

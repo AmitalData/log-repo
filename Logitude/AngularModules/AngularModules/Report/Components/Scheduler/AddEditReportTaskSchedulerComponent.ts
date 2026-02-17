@@ -64,7 +64,7 @@ export class AddEditReportTaskSchedulerComponent implements AfterViewInit{
         this.SetSchedulerReport();
     }
     SendValidation() {
-        if ((SessionLocator.LoggedUserPM.IsCustomerCare || ObjectsLocator.GlobalSetting?.DeploymentStage == "Dev") && this.DataContext?.fatherComponent?.ReportList?.Code != "RSTA") {
+        if ((SessionLocator.LoggedUserPM.IsCustomerCare || ObjectsLocator.GlobalSetting.DeploymentStage == "Dev") && this.DataContext?.fatherComponent?.ReportList?.Code != "RSTA") {
             this.DisplayFTPOption = true;
         }
     }

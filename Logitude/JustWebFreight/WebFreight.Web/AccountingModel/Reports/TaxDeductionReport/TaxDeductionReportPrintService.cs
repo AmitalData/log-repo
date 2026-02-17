@@ -6,7 +6,6 @@ using Logitude.Accounting.Data;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Logitude.Customs.Data.EntityPOCOs;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
