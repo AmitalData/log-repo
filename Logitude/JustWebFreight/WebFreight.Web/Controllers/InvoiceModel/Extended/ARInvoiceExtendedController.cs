@@ -153,28 +153,5 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Extended
             }
         }
 
-        public HttpResponseMessage GetCanBeReconciled(string arInvoiceId)
-        {
-            try
-            {
-                string logKey = PerformanceLogger.LogCurrentTime();
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                int tenant = authToken.Tenant;
-
-                ARInvoiceQuery service = new ARInvoiceQuery(tenant);
-                var result = service.CheckIfArInvoiceCanBeReconcilied(arInvoiceId, tenant);
-                ServiceResponse response = new ServiceResponse();
-                response.Result = result;
-                PerformanceLogger.AddServerExecutionTimeHeader(logKey);
-                return Request.CreateResponse(HttpStatusCode.OK, result );
-            }
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
-
     }
 }

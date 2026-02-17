@@ -27,14 +27,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             this.MyResponseData = new INF_MSG_GenericResponseData();
             this.MyResponseData.Succeeded = true;
-            this.MyResponseData.HasException = false;
 
-            if (!string.IsNullOrWhiteSpace(customResponse?.ResponseContentHeader?.Remark))
+            if(customResponse?.ResponseContentHeader?.Remark != null)
             {
-                this.MyResponseData.Succeeded = false;
-                this.MyResponseData.HasException = true;
                 this.MyResponseData.UserMessage = customResponse.ResponseContentHeader.Remark;
-                return;
             }
         }
 

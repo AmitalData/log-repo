@@ -6998,9 +6998,6 @@ User/Pass",
                 if (ofd.ShowDialog() != DialogResult.OK) return;
 
                 List<string> customsFiles = ReadColumnFromCsv(ofd.FileName, 0);
-                List<string> actions = null;
-                try { actions = ReadColumnFromCsv(ofd.FileName, 1); } catch { }
-
 
                 var declarationQueryService = new DeclarationQueryService(1);
 
@@ -7011,130 +7008,79 @@ User/Pass",
 
                 MessagingServiceFactoryHelper.InitContainer(); ContainerAccessor.InitContainer();
                 FillAppSettings();
-                for (int i = 0; i < customsFiles.Count; i++)
+                foreach (string customsFile in customsFiles)
                 {
+                    try
                     {
-                        string customsFile = customsFiles[i];
-                        string action = (actions != null && i < actions.Count && !string.IsNullOrWhiteSpace(actions[i]))
-                            ? actions[i].Trim().ToLowerInvariant()
-                            : "status"; // default
-
-                        try
-                        {
-                            string decId = declarationQueryService.GetIdByCustomFileNo(customsFile, 1);
-                            if (string.IsNullOrEmpty(decId))
-                            {
-                                MessageBox.Show(
-                                    $"No declaration ID found for Customs File: {customsFile}",
-                                    "Not Found",
-                                    MessageBoxButtons.OK,
-                                    MessageBoxIcon.Information);
-                                continue;
-                            }
-
-                            var declarationPM = declarationQueryService.GetAcceptDeclarationAmendment(decId, 1);
-                            if (declarationPM == null)
-                            {
-                                MessageBox.Show(
-                                    $"Declaration object is NULL for ID {decId} (Customs File {customsFile}).",
-                                    "Not Found",
-                                    MessageBoxButtons.OK,
-                                    MessageBoxIcon.Information);
-                                continue;
-                            }
-
-                            if (action == "restore")
-                            {
-                                SendDeclarationRestoreRequest(declarationPM);
-                            }
-                            else
-                            {
-                                SendDeclarationStatusRequest(declarationPM); // existing behavior
-                            }
-                        }
-                        catch (Exception ex)
+                        string decId = declarationQueryService.GetIdByCustomFileNo(customsFile, 1);
+                        if (string.IsNullOrEmpty(decId))
                         {
                             MessageBox.Show(
-                                $"ERROR while processing Customs File {customsFile}.\n\n{ex}",
-                                "Error",
+                                $"No declaration ID found for Customs File: {customsFile}",
+                                "Not Found",
                                 MessageBoxButtons.OK,
-                                MessageBoxIcon.Error);
+                                MessageBoxIcon.Information);
+                            continue;
                         }
-                    }
 
+                        var declarationPM = declarationQueryService.GetAcceptDeclarationAmendment(decId, 1);
+                        if (declarationPM == null)
+                        {
+                            MessageBox.Show(
+                                $"Declaration object is NULL for ID {decId} (Customs File {customsFile}).",
+                                "Not Found",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Information);
+                            continue;
+                        }
+                        SendDeclarationStatusRequest(declarationPM);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(
+                            $"ERROR while processing Customs File {customsFile}.\n\n{ex}",
+                            "Error",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Error);
+                    }
                 }
 
             }
-            void SendDeclarationRestoreRequest(DeclarationPM myDeclarationPM)
+
+        }
+        void SendDeclarationStatusRequest(DeclarationPM myDeclarationPM)
+        {
+
+
+            var newSearchDeclarationStatusRequestParams = new DeclarationStatusRequestParams()
             {
-                var restoreParams = new DeclarationRestoreRequestParams
-                {
-                    LoggingEnabled = true,
-                    LoggingUserId = AuthenticationUtil.ResolveUserId(myDeclarationPM.Tenant),
-                    Tenant = myDeclarationPM.Tenant,
-                    LoggingEntityReference = myDeclarationPM.Direction,
-                    LoggingObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration"),
-                    AppicationId = myDeclarationPM.Id,
-                    DeclarationId = myDeclarationPM.Id,
-                    DeclarationNumber = myDeclarationPM.DeclarationNumber,
-                    CustomsFile = myDeclarationPM.CustomFileNo,
-                    RequestVIA = SendRequestVIA.WebServiceBatch,
-                    InterfaceTypeCode = "8373",
-                    ResponseName = "8373",
-                    RequestName = "Restore From ResetDeclaration",
-                };
-                try
-                {
-                    SBQMessageService.CreateSheetSBQMessage<DeclarationRestoreRequestParams>(restoreParams, false);
-                }
-                catch (CustomsRequestsSheetDomainModelServiceException ex)
-                {
-                    if (ex.Where == CustomsRequestsSheetDomainModelServiceException.WhereEnum.SameRequestInProgress)
-                    {
-                        Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance
-                            .AppendLine("Restore (8373) RequestInProgress – skipping new one.");
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
+                LoggingEnabled = true,
+                CustomFileNo = myDeclarationPM.CustomFileNo,
+                DeclarationNumber = myDeclarationPM.DeclarationNumber,
+                Tenant = myDeclarationPM.Tenant,
+                RequestName = "Declaration Status " + myDeclarationPM.DeclarationNumber,
+                ResponseName = "Declaration Status " + myDeclarationPM.DeclarationNumber,
+                RequestVIA = SendRequestVIA.WebServiceBatch,
+                InterfaceTypeCode = "8250",
+                LoggingEntityId = myDeclarationPM.Id,
+                LoggingObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration"),
+                LoggingUserId = AuthenticationUtil.ResolveUserId(myDeclarationPM.Tenant),
+            };
+
+
+
+            try
+            {
+                SBQMessageService.CreateSheetSBQMessage<Logitude.CustomsMessaging.Common.RequestParams.DeclarationStatusRequestParams>(newSearchDeclarationStatusRequestParams
+                    , false
+                    );
+
             }
-
-            void SendDeclarationStatusRequest(DeclarationPM myDeclarationPM)
+            catch (CustomsRequestsSheetDomainModelServiceException myCustomsRequestsSheetServiceException)
             {
-
-
-                var newSearchDeclarationStatusRequestParams = new DeclarationStatusRequestParams()
+                if (myCustomsRequestsSheetServiceException.Where == CustomsRequestsSheetDomainModelServiceException.WhereEnum.SameRequestInProgress)
                 {
-                    LoggingEnabled = true,
-                    CustomFileNo = myDeclarationPM.CustomFileNo,
-                    DeclarationNumber = myDeclarationPM.DeclarationNumber,
-                    Tenant = myDeclarationPM.Tenant,
-                    RequestName = "Declaration Status " + myDeclarationPM.DeclarationNumber,
-                    ResponseName = "Declaration Status " + myDeclarationPM.DeclarationNumber,
-                    RequestVIA = SendRequestVIA.WebServiceBatch,
-                    InterfaceTypeCode = "8250",
-                    LoggingEntityId = myDeclarationPM.Id,
-                    LoggingObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration"),
-                    LoggingUserId = AuthenticationUtil.ResolveUserId(myDeclarationPM.Tenant),
-                };
-
-
-
-                try
-                {
-                    SBQMessageService.CreateSheetSBQMessage<Logitude.CustomsMessaging.Common.RequestParams.DeclarationStatusRequestParams>(newSearchDeclarationStatusRequestParams
-                        , false
-                        );
-
-                }
-                catch (CustomsRequestsSheetDomainModelServiceException myCustomsRequestsSheetServiceException)
-                {
-                    if (myCustomsRequestsSheetServiceException.Where == CustomsRequestsSheetDomainModelServiceException.WhereEnum.SameRequestInProgress)
-                    {
-                        Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("8250 RequestInProgress stop create a new one !! ");
-                    }
+                    Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("8250 RequestInProgress stop create a new one !! ");
                 }
             }
         }

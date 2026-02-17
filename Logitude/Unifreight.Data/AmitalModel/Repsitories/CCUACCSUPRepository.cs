@@ -23,10 +23,10 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             currentContext = context;
         }
 
-        public CCUACCSUP GetSingle(int FILENO, int LINENO,int? tenant)
+        public CCUACCSUP GetSingle(int FILENO, int LINENO)
         {
             return (from a in context.CCUACCSUPs
-                    where a.FILENO == FILENO && a.LINENO == LINENO && a.TENANT == tenant
+                    where a.FILENO == FILENO && a.LINENO == LINENO
                     select a).FirstOrDefault();
         }
 
@@ -43,15 +43,21 @@ namespace Unifreight.Data.AmitalModel.Repsitories
 
         public void Remove(CCUACCSUP entity)
         {
-             {
+            //if (entity.EntityState == System.Data.EntityState.Unchanged)
+            {
                 context.CCUACCSUPs.Attach(entity);
             }
-             context.CCUACCSUPs.Remove(entity);
+            //context.AddToCCUACCSUPs 
+            //context.CCUACCSUPs.DeleteAllOnSubmit //ther isn't
+        //http://forums.devart.com/viewtopic.php?t=13223
+            //context.ExecuteStoreCommand 
+            context.CCUACCSUPs.Remove(entity);
         }
 
         public void Update(CCUACCSUP entity)
         {
-             {
+            //if (entity.EntityState == System.Data.EntityState.Unchanged)
+            {
                 context.CCUACCSUPs.Attach(entity); context.SetAsModified(entity);
             }
             
@@ -77,20 +83,20 @@ namespace Unifreight.Data.AmitalModel.Repsitories
         {
             var keys = entityKeys as CCUFILEMKeys;
             return (from a in context.CCUACCSUPs
-                    where a.FILENO == keys.FILENO && a.TENANT == keys.TENANT
+                    where a.FILENO == keys.FILENO
                     select a).ToList();
         }
 
         public CCUACCSUP GetSingle(EntityKeyFields entityKeys)
         {
             var keys = entityKeys as CCUACCSUPKeys;
-            return this.GetSingle(keys.FILENO, keys.LINENO, keys.Tenant);
+            return this.GetSingle(keys.FILENO, keys.LINENO);
         }
 
         public int FastDeleteMulti(CCUFILEMKeys parentEntityKeys)
         {
             var keys = parentEntityKeys as CCUFILEMKeys;
-            return context.DeleteWhere<CCUACCSUP>(rec => rec.FILENO == keys.FILENO && rec.TENANT == keys.TENANT);
+            return context.DeleteWhere<CCUACCSUP>(rec => rec.FILENO == keys.FILENO);
         }
     }
 }
