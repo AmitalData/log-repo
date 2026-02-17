@@ -292,41 +292,16 @@ namespace Logitude.BL.InfrastructureModel
                 IsInternallyDefined = false, 
                 Description = "InvoiceApiQueryTask", 
 			});
-			 
-            all.Add(new SchedulerProcedureDetails()
-            {    
-                Code = "ReconcileInProgressCleanupTask", 
-                Name = "ReconcileInProgressCleanupTask", 
-                SearchFields = "ReconcileInProgressCleanupTask,ReconcileInProgressCleanupTask", 
-                IsInternallyDefined = false, 
-                Description = "ReconcileInProgressCleanupTask", 
-			});
-			 
-            all.Add(new SchedulerProcedureDetails()
-            {    
-                Code = "IntegrityCheckTask", 
-                Name = "IntegrityCheckTask", 
-                SearchFields = "IntegrityCheckTask", 
-                Description = "IntegrityCheckTask", 
-                IsInternallyDefined = false, 
-			});
-			 
-            all.Add(new SchedulerProcedureDetails()
-            {    
-                Code = "ExpenseAllocationTask", 
-                Name = "ExpenseAllocationTask", 
-                SearchFields = "ExpenseAllocationTask", 
-                Description = "ExpenseAllocationTask", 
-                IsInternallyDefined = false, 
-			});
-
+			
             all.Add(new SchedulerProcedureDetails()
             {
-                Code = "OceanCarrierAPITask",
-                Name = "OceanCarrierAPITask",
-                SearchFields = "OceanCarrierAPITask,OceanCarrierAPITask",
+                Code = "ReconcileInProgressCleanupTask",
+                Name = "ReconcileInProgressCleanupTask",
+                SearchFields = "ReconcileInProgressCleanupTask",
+                Description = "ReconcileInProgressCleanupTask",
+                IsInternallyDefined = false,
             });
-			
+
             return all;
        }
 

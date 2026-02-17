@@ -13,7 +13,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
     {
         ICommonDataContext commonDataContext;
 
-
+        public VesselRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
 
         public VesselRepository(ICommonDataContext context)
         {

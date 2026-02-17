@@ -22,7 +22,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
             commonDataContext = CommonDataContext.GetContext(tenant);
         }
 
-
+        public WarehouseStoragePricingRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
 
         public IQueryable<WarehouseStoragePricing> GetWarehouseStoragePricings(int tenant)
         {

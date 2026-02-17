@@ -16,7 +16,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         VatTypeRepository repository;
 
- 
+        public VatTypeQuery()
+        {
+            repository = new VatTypeRepository(); 
+        }
         public VatTypeQuery(int tenant)
         {
             repository = new VatTypeRepository(tenant);

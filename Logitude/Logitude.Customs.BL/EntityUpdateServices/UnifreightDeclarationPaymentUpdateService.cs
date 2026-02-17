@@ -87,41 +87,20 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 {
                     using (_AmitalContext = AmitalContext.GetContext(_DeclarationPM.Tenant))
                     {
+                        //AmitalContext.SetOracleMonitor();
                         var myCCUFILEMQueryService = new CCUFILEMQueryService(_AmitalContext);
                         var myCCUPAYHANDQueryService = new CCUPAYHANDQueryService(_AmitalContext);
                         var myCCUPAYHANDUpdateService = new CCUPAYHANDUpdateService(_AmitalContext);
                         myCCUPAYHANDUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
-                        int? FILENO = myCCUFILEMQueryService.GetFILENOByCUSTOMFILENO(lCUSTOMFILENO, _DeclarationPM.Tenant);
+                        int? FILENO = myCCUFILEMQueryService.GetFILENOByCUSTOMFILENO(lCUSTOMFILENO);
                         if (!FILENO.HasValue)
                         {
-                            var unifrightDeclarationUpdateService = new UnifrightDeclarationUpdateService(declarationPM, null, declarationPM.CreatedByUserId);
-                            var _CCUFILEMPM=unifrightDeclarationUpdateService.DoCustomFile();
-                            var myCCUFILEMUpdateService = new CCUFILEMUpdateService(_AmitalContext);
-
-                            using (var logger = (_AmitalContext as DbContextBase).CreateLogger())
-                            {
-                                try
-                                {
-                                    LogMessagingUtil.Instance.AppendLine("Update1: _CCUFILEMPM Update, file: " + _CCUFILEMPM.CUSTOMFILENO);
-                                    myCCUFILEMUpdateService.Update(_CCUFILEMPM, true);
-                                }
-                                catch (Exception eUpdate)
-                                {
-
-
-                                    LogMessagingUtil.Instance.Append("CCUFILEMUpdateService.Update:");
-
-                                    throw;
-                                }
-
-                            }
-                            FILENO = myCCUFILEMQueryService.GetFILENOByCUSTOMFILENO(lCUSTOMFILENO, _DeclarationPM.Tenant)?? _CCUFILEMPM.FILENO;
-
+                            throw new BusinessErrorException("GetFILENOByCUSTOMFILENO return null");
                         }
 
 						int? FILENO1 = myCCUFILEMQueryService.GetFILENOByCUSTOMFILENO_forUpdateNOWAIT(lCUSTOMFILENO, _DeclarationPM.Tenant);
 
-						_CCUPAYHAND = myCCUPAYHANDQueryService.GetSingle(FILENO.Value, true, _DeclarationPM.Tenant, false);
+						_CCUPAYHAND = myCCUPAYHANDQueryService.GetSingle(FILENO.Value, true, false);
 
 						Boolean noUpdate = false;
                         var currentRequestSheetContext = RequestSheetContext.Current.GetContextOrDefault();
@@ -214,14 +193,32 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             {
                 _CCUPAYHAND.ChangeSetOp = ChangeSetOperation.Update;
             }
+            
+            
+            var setting = CustomsSettingQueryService.GetSettingByTenant(_DirtyDeclarationPaymentPM.Tenant);
+            if (!setting.IsConnectedToUniFreight)
+            {
+                _CCUPAYHAND.Tenant =  _DirtyDeclarationPaymentPM.Tenant;
+            }
 
-            _CCUPAYHAND.Tenant = _DirtyDeclarationPaymentPM.Tenant;
             _CCUPAYHAND.DeclarationId = _DeclarationPM.Id;
+
+            //_CCUPAYHAND.PAYTAX = _DirtyDeclarationPaymentPM.;
+            ///_CCUPAYHAND.REJECTTAX = _DirtyDeclarationPaymentPM.;
             if (_DirtyDeclarationPaymentPM.IsProcessA == true)
             {
                 _CCUPAYHAND.PROCESSWANT = "א";
             }
 
+
+
+            //cCUTAXPM.POSTPONEDTAX = decSupplierInvoiceItemTaxes.DeferedTaxAmount.ToNullableDouble("decSupplierInvoiceItemTaxes.DeferedTaxAmount");
+            //cCUTAXPM.TAXTOPAY = cCUTAXPM.TAXAMOUNT - cCUTAXPM.POSTPONEDTAX;
+            // cCUTAXPM.TAXTOPAY = cCUTAXPM.TAXAMOUNT - decDeclarationTaxes.DeferredTaxAmount.ToNullableDouble("decDeclarationTaxes.DeferredTaxAmount");
+            //_DeclarationPM.DeclarationTaxes[0].DeferredTaxAmount
+
+            //_CCUPAYHAND.TOTALPAYTAX = _DirtyDeclarationPaymentPM.;
+            //_CCUPAYHAND.TOTALPAYDEPOSIT = _DirtyDeclarationPaymentPM.;
             _CCUPAYHAND.HANDDATE = _DirtyDeclarationPaymentPM.PaymentDate;
             _CCUPAYHAND.HANDTYPE = 1;
             if (!String.IsNullOrWhiteSpace(_DirtyDeclarationPaymentPM.SignatoryIdentification))
@@ -354,10 +351,39 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             curCCUPAYLINEF.BANKBRANCH = decDeclarationPaymentMethods.BranchCode;
             curCCUPAYLINEF.BANKACCOUNT = decDeclarationPaymentMethods.AccountNumber;
             curCCUPAYLINEF.PAYORDNO = _DeclarationPM.PaymentOrderNumber.ToNullableInt("_DeclarationPM.PaymentOrderNumber"); //Yuval Chalup 20.09.2015 TASK-16498      
-            curCCUPAYLINEF.Tenant = _DirtyDeclarationPaymentPM.Tenant;
-            
+
+            var setting = CustomsSettingQueryService.GetSettingByTenant(_DirtyDeclarationPaymentPM.Tenant);
+            if (!setting.IsConnectedToUniFreight)
+            {
+                curCCUPAYLINEF.Tenant = _DirtyDeclarationPaymentPM.Tenant;
+            }
 
             return curCCUPAYLINEF;
+        }
+
+        private int GetCounter(DeclarationPaymentPM _DeclarationPaymentPM)
+        {
+            int i = Convert.ToInt32(_DeclarationPaymentPM.DeclarationId.Replace("-", ""));
+            return 50000000 + i;
+        }
+
+        private string GetTranslationP2L(string partnerID, string tableID, string partnerCode)
+        {
+            var myGTRTRANQueryService = new GTRTRANQueryService(_AmitalContext);
+
+            if (partnerID == null || tableID == null || partnerCode == null)
+            {
+                return ("");
+            }
+
+            GTRTRAN myGTRTRANPM = myGTRTRANQueryService.GetTranslationP2L(partnerID, tableID, partnerCode);
+
+            if (myGTRTRANPM == null)
+            {
+                return ("");
+            }
+
+            return (myGTRTRANPM.LOCALCODE);
         }
     }
 }

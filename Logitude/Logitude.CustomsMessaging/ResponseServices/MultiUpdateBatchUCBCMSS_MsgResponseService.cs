@@ -34,7 +34,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
     public class MultiUpdateBatchUCBCMSS_MsgResponseService : ResponseServiceBase<INF_MSG_GenericResponseData, DCAInUCBMultiUpdateWithResponseContentHeader, GenericRequestParams>
     {
         bool isFromPendingView;
-        bool isUpdated;
+
         public override INF_MSG_GenericResponseData GetResponse(DCAInUCBMultiUpdateWithResponseContentHeader customResponse, GenericRequestParams requestParams)
         {
             return this.MyResponseData;
@@ -81,8 +81,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         private void Do_Update(DCAInUCBMultiUpdateWithResponseContentHeader customResponse, GenericRequestParams requestParams, string declarationId)
         {
-            isUpdated = false;
-			var context = CustomContext.GetContext(requestParams.Tenant);
+            var context = CustomContext.GetContext(requestParams.Tenant);
             var myDeclarationQueryService = new DeclarationQueryService(context);
             DeclarationPM declarationPM = myDeclarationQueryService.GetSingle(declarationId, true, false);
 
@@ -100,23 +99,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 UpdateDeclarationCourierStatus(requestParams, context, declarationPM);
                 UpdateConsignmentPackages(customResponse, requestParams, declarationId, context);
             }
+        }
 
-
-			if (declarationPM.IsCourierDeclaration)
-			{
-				if (isUpdated)
-				{
-					declarationPM.ManifestCargoStatusCode = null;
-					declarationPM.IsChanged = true;
-					declarationPM.ChangeSetOp = ChangeSetOperation.Update;
-					DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant);
-					declarationUpdateService.Update(declarationPM, true);
-				}
-			}
-
-		}
-
-		private void UpdateInvoiceitems(DCAInUCBMultiUpdateWithResponseContentHeader customResponse, DeclarationPM declarationPM, ICustomContext context, GenericRequestParams requestParams)
+        private void UpdateInvoiceitems(DCAInUCBMultiUpdateWithResponseContentHeader customResponse, DeclarationPM declarationPM, ICustomContext context, GenericRequestParams requestParams)
         {
             var mySupplierInvoiceItemQueryService = new SupplierInvoiceItemQueryService(context);
             var mySupplierInvioceItemCertificatQueryService = new SupplierInvioceItemCertificatQueryService(context);
@@ -166,8 +151,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             if (!procestypesExist)
             {
-				isUpdated = true;
-				var entity = new SupplierInvoiceItemProcesTypePM();
+                var entity = new SupplierInvoiceItemProcesTypePM();
                 entity.ChangeSetOp = ChangeSetOperation.Insert;
                 entity.Tenant = customResponse.tenant;
                 entity.ProcessTypeCode = customResponse.ProcessTypeCode;
@@ -181,8 +165,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
         {
             if (customResponse.TaxExemptCode == null)
                 return;
-			isUpdated = true;
-			invoice.TaxExemptCode = customResponse.TaxExemptCode;
+
+            invoice.TaxExemptCode = customResponse.TaxExemptCode;
             invoice.ChangeSetOp = ChangeSetOperation.Update;
         }
 
@@ -191,8 +175,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             if (customResponse.ClassificationCode == null)
                 return;
 
-			isUpdated = true;
-			LogMessagingUtil.Instance.AppendLine("set ClassificationCode");
+            LogMessagingUtil.Instance.AppendLine("set ClassificationCode");
 
             invoice.ClassificationCode = customResponse.ClassificationCode;
 
@@ -210,8 +193,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             if (customResponse.InvoiceCurrencyTypeCode == null)
                 return;
 
-			isUpdated = true;
-			supplierInvoiceItem.ItemPriceCurrencyCode = customResponse.InvoiceCurrencyTypeCode;
+            supplierInvoiceItem.ItemPriceCurrencyCode = customResponse.InvoiceCurrencyTypeCode;
             supplierInvoiceItem.ChangeSetOp = ChangeSetOperation.Update;
         }
 
@@ -220,8 +202,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             if (customResponse.InvoiceAmount == null)
                 return;
 
-			isUpdated = true;
-			supplierInvoiceItem.ItemPrice = customResponse.InvoiceAmount;
+            supplierInvoiceItem.ItemPrice = customResponse.InvoiceAmount;
             supplierInvoiceItem.ChangeSetOp = ChangeSetOperation.Update;
         }
 
@@ -230,8 +211,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             if (customResponse.InvoiceQuantity == null)
                 return;
 
-			isUpdated = true;
-			supplierInvoiceItem.InvoiceQuantity = customResponse.InvoiceQuantity;
+            supplierInvoiceItem.InvoiceQuantity = customResponse.InvoiceQuantity;
             supplierInvoiceItem.ChangeSetOp = ChangeSetOperation.Update;
         }
 
@@ -240,8 +220,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             if (customResponse.InvoiceQuantityType == null)
                 return;
 
-			isUpdated = true;
-			supplierInvoiceItem.InvoiceQuantityType = customResponse.InvoiceQuantityType;
+            supplierInvoiceItem.InvoiceQuantityType = customResponse.InvoiceQuantityType;
             supplierInvoiceItem.ChangeSetOp = ChangeSetOperation.Update;
         }
 
@@ -249,8 +228,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
         {
             if (customResponse.ProcessTypeCode == null)
                 return;
-			isUpdated = true;
-			LogMessagingUtil.Instance.AppendLine("set declaration.ProcessTypeCode");
+
+            LogMessagingUtil.Instance.AppendLine("set declaration.ProcessTypeCode");
             declarationPM.ProcedureCurrentCode = customResponse.ProcessTypeCode;
             declarationPM.ChangeSetOp = ChangeSetOperation.Update;
             DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant);
@@ -276,8 +255,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
         {
             if (customResponse.InvoiceCurrencyTypeCode == null)
                 return;
-			isUpdated = true;
-			supplierInvoice.InvoiceCurrencyTypeCode = customResponse.InvoiceCurrencyTypeCode;
+
+            supplierInvoice.InvoiceCurrencyTypeCode = customResponse.InvoiceCurrencyTypeCode;
             supplierInvoice.ChangeSetOp = ChangeSetOperation.Update;
         }
 
@@ -285,8 +264,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
         {
             if (customResponse.InvoiceAmount == null)
                 return;
-			isUpdated = true;
-			supplierInvoice.InvoiceAmount = customResponse.InvoiceAmount;
+
+            supplierInvoice.InvoiceAmount = customResponse.InvoiceAmount;
             supplierInvoice.ChangeSetOp = ChangeSetOperation.Update;
         }
 
@@ -307,8 +286,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             foreach (var consignmentPackagePM in consignmentPackages)
             {
-				isUpdated = true;
-				consignmentPackagePM.GrossMassMeasure = customResponse.GrossMassMeasure;
+                consignmentPackagePM.GrossMassMeasure = customResponse.GrossMassMeasure;
                 consignmentPackagePM.ChangeSetOp = ChangeSetOperation.Update;
 
                 consignmentPackageUpdateService.Update(consignmentPackagePM, true);

@@ -5876,7 +5876,7 @@ namespace WebFreight.Web.MetaDataUpdate
             List<Query> TenantQueries = QueriesList.Where(d => d.TenantLevel == true && d.UserId == null).ToList(); //QueriesRepository.GetQueriesByTenantTenantLevel(tenant).ToList();
             List<Query> UsersQueries = QueriesList.Where(d => d.UserId == userId).ToList();//QueriesRepository.GetQueryByTenantAndUser(tenant, userId).ToList();
 
-            UserRepository userRep = new UserRepository(tenant);
+            UserRepository userRep = new UserRepository();
             bool DoSubmittChanges = false;
             User user = userRep.GetSingleUser(userId, tenant, false);
             if (user != null)
