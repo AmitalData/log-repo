@@ -226,7 +226,8 @@ namespace CommunicationWorkerRole
                                                                                  ? response.MessageValues["invoiceApiCommunicationLogId"]?.ToString()
                                                                                   : null;
 
-                     aRInvoicePM.SetApproved = true;
+
+                    aRInvoicePM.SetApproved = true;
                     aRInvoicePM.IsApprovalFailed = false;
                     if (aRInvoicePM.StatusCode == "AC")
                         aRInvoicePM.SetApprovedAutoCredit = true;
@@ -254,6 +255,7 @@ namespace CommunicationWorkerRole
                         }
                     }
 
+
                     ARInvoice invoice = invoiceRepository.GetSingle(arinvoiceId, tenant);
                     invoice.ApprovalInProgress = true;
                     UpdateARInvoiceInRepository(invoice, invoiceRepository);
@@ -264,11 +266,11 @@ namespace CommunicationWorkerRole
                     {
                         try
                         {
-                            aRInvoicePM = aRInvoiceQuery.GetSinglePM(arinvoiceId, tenant); // refresh after update
                             aRInvoicePM.InterestReportId = interestReportId;
                             UpdateInterestReportsStatues(interestReportId, tenant, "2", aRInvoicePM.CreatedByUserId, aRInvoicePM);
 
-
+                            if (!string.IsNullOrEmpty(batchId))
+                            {
                                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                                 {
                                     InterestReportQueryService interestReportQueryService = new InterestReportQueryService(tenant);
@@ -276,9 +278,8 @@ namespace CommunicationWorkerRole
                                     try
                                     {
 
-
-                                        invoiceService.PrintOrSendInvoice(aRInvoicePM.Id, aRInvoicePM.InvoiceNumber, tenant, aRInvoicePM.CreatedByUserId);
-
+                                        invoiceService.BuildDocumentsForNewInvoice(aRInvoicePM, interestReportPM);
+                                        invoiceService.SignInvoice(aRInvoicePM, tenant);
                                         NetCommonHelper.Logger.DevLog.Instance.WriteTrace("End CreateInvoiceForInterestReport (*3*) aRInvoicePM.Id=" + aRInvoicePM.Id);
                                         scope.Complete();
                                     }
@@ -291,7 +292,7 @@ namespace CommunicationWorkerRole
                                     }
 
                                 }
-
+                            }
                         }
                         catch (Exception ex)
                         {
@@ -331,12 +332,7 @@ namespace CommunicationWorkerRole
                 }
                 catch (Exception ex)
                 {
-                    if (!string.IsNullOrEmpty(invoiceApiCommunicationLogId))
-                    {
-                        UpdateInvoiceApiCommunication(tenant,Logitude.Accounting.BL.CloseTables.InvoiceApiStepEnum.ApproveInvoice,Logitude.Accounting.BL.CloseTables.InvoiceApiStatusEnum.Failed, arinvoiceId, ex.Message);
-
-
-                    }
+                    
                     ARInvoice invoice = invoiceRepository.GetSingle(arinvoiceId, tenant);
                   
                     if (!string.IsNullOrEmpty(aRInvoicePM.InvoiceNumber) && aRInvoicePM.InvoiceNumber != aRInvoicePM.Id)
@@ -483,7 +479,8 @@ namespace CommunicationWorkerRole
                 Notes = exception
             });
         }
+
      
-     
+
     }
 }

@@ -913,11 +913,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 updateClass.FillContainerizationHataraStatus(tenant);
                 updateClass.FillOcrStatusTable(tenant);
                 updateClass.FillSIIRequestStatusTable(tenant);
-                updateClass.FillSIIDocumentType(tenant);
-                updateClass.FillSIIRequestLineStatus(tenant);
 
-
-                updateClass.FillSIIDocumentType(tenant);
 
 
             }
@@ -2450,8 +2446,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 MapUserToContact(user, newContact);
 
                 newContact.Email = newContact.Email.ToLower();
-                Contact adminContact = contactsRepository.GetSingleContactByEmailMultiDB("support@amital.co.il", 0, contextTenant: tenant);
-
+                Contact adminContact = contactsRepository.GetSingleContactByEmailMultiDB("admin@fnarsoft.com", 0, contextTenant: tenant);
                 if (adminContact != null)
                 {
                     newContact.Signature = adminContact.Signature;

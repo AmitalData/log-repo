@@ -65,9 +65,9 @@ export class DeclarationGeneralComponent extends BaseComponent implements OnDest
     private CurrentSession = SessionLocator.SelectedSession;
     exportStorageConnectToDeclaration: ExportStorageConnectToDeclaration = null as any;
     clientIndicationListService: ClientIndicationListService = new ClientIndicationListService();
-    clientIndications: any
-    _IsIndicationsClientFeature: boolean = false;
-    _ShowExcludeManifestFeature: boolean = false;
+    clientIndications:any
+    _IsIndicationsClientFeature:boolean = false;
+    _ShowExcludeManifestFeature:boolean = false;
 
     constructor(public entityArgs: EntityArgs, private cd: ChangeDetectorRef, private EntityResourceService: EntityResourceService, public declarationExtendedListService: DeclarationExtendedListService) {
         super();
@@ -83,59 +83,59 @@ export class DeclarationGeneralComponent extends BaseComponent implements OnDest
                                         this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsVendor").subscribe((response: any) => {
                                             this.EntityResourceService.getEntityResourceByTableName("Customs.DeclarationExportRecipient").subscribe((response: any) => {
                                                 this.EntityResourceService.getEntityResourceByTableName("Customs.ClientIndication").subscribe((response: any) => {
+                                                
+                                                this.EntityPM = this.entityArgs.EntityPM;
+                                                this.ObjectTableName = this.entityArgs.ObjectTableName;
+                                                this.Listen();
+                                                //var tab;
+                                                console.log("DeclarationGeneralComponent/EntityPM ", this.EntityPM);
+                                                if (!AppTool.IsNullOrEmpty(this.EntityPM)) {
+                                                    // create consignment tabs from entity
+                                                    //for (let item of this.EntityPM.Consignments) {
 
-                                                    this.EntityPM = this.entityArgs.EntityPM;
-                                                    this.ObjectTableName = this.entityArgs.ObjectTableName;
-                                                    this.Listen();
-                                                    //var tab;
-                                                    console.log("DeclarationGeneralComponent/EntityPM ", this.EntityPM);
-                                                    if (!AppTool.IsNullOrEmpty(this.EntityPM)) {
-                                                        // create consignment tabs from entity
-                                                        //for (let item of this.EntityPM.Consignments) {
+                                                    //    tab = new LogTab();
+                                                    //    tab.EntityPM = item;
+                                                    //    tab.Code = item.SequenceNumeric.toString();
+                                                    //    tab.Header = (item.ManifestNumber ? (item.ManifestNumber + '-') : '') + item.SequenceNumeric;
+                                                    //    tab.ComponentPath = "./Customs/Components/Declaration/EditTabs/General/ConsigmentTabContent/ConsigmentTabContentComponent";
+                                                    //    this.ConsigmentTabs.push(tab);
+                                                    //}
+                                                    this.BuildConsignments();
 
-                                                        //    tab = new LogTab();
-                                                        //    tab.EntityPM = item;
-                                                        //    tab.Code = item.SequenceNumeric.toString();
-                                                        //    tab.Header = (item.ManifestNumber ? (item.ManifestNumber + '-') : '') + item.SequenceNumeric;
-                                                        //    tab.ComponentPath = "./Customs/Components/Declaration/EditTabs/General/ConsigmentTabContent/ConsigmentTabContentComponent";
-                                                        //    this.ConsigmentTabs.push(tab);
-                                                        //}
-                                                        this.BuildConsignments();
+                                                    this.checkImportersVisibility();
+                                                    this.DisplayOnlyCheck();
+                                                    this.BuildRecipientsList();
 
-                                                        this.checkImportersVisibility();
-                                                        this.DisplayOnlyCheck();
-                                                        this.BuildRecipientsList();
+                                                    this.CheckRequrierdFieldsForSend();
+                                                    this.getExportStorageData();
+                                                    this.setRequiredTranssshipment();
+                                                    this.PreceduralFilterItems = new ApiQueryFilters();
+                                                    if (this.EntityPM.Direction != "E") {
+                                                        this.PreceduralFilterItems.addAdditionalFilter("IsImport", true, null, null, "Equals", false, false, false, "boolean");
 
-                                                        this.CheckRequrierdFieldsForSend();
-                                                        this.getExportStorageData();
-                                                        this.setRequiredTranssshipment();
-                                                        this.PreceduralFilterItems = new ApiQueryFilters();
-                                                        if (this.EntityPM.Direction != "E") {
-                                                            this.PreceduralFilterItems.addAdditionalFilter("IsImport", true, null, null, "Equals", false, false, false, "boolean");
-
-                                                        }
-                                                        if (this.EntityPM.Direction == "E") {
-                                                            this.CurrentSession.ChangeSessionHeader({ Text: TextCodeTranslator.Translate("Customs.Declaration.O.ExportDeclarations") });
-                                                        } else {
-                                                            this.CurrentSession.ChangeSessionHeader({ Text: TextCodeTranslator.Translate("Customs.Declaration.O.ImportDeclarations") });
-                                                        }
-                                                        if (!AppTool.IsNullOrEmpty(this.EntityPM.ImporterId)) {
-                                                            this.getClientIndication();
-                                                        }
-                                                        var table = window.ObjectTables.filter(d => d.Name === 'Customs.ClientIndication')[0];
-
-                                                        var IsIndicationsClientFeature = FeatureLocator.Features.filter(f => (f.Code == "IndicationsClient") && f.ObjectTableId == table.Id)[0];
-                                                        if (IsIndicationsClientFeature) {
-                                                            this._IsIndicationsClientFeature = true
-                                                        }
-                                                        var tableDec = window.ObjectTables.filter(d => d.Name === 'Customs.Declaration')[0];
-
-                                                        var IsExcludeManifestFeature = FeatureLocator.Features.filter(f => (f.Code == "ISEXCLUDEMANIFEST") && f.ObjectTableId == tableDec.Id)[0];
-                                                        if (IsExcludeManifestFeature) {
-                                                            this._ShowExcludeManifestFeature = true;
-                                                        }
                                                     }
-                                                });
+                                                    if (this.EntityPM.Direction == "E") {
+                                                        this.CurrentSession.ChangeSessionHeader({ Text: TextCodeTranslator.Translate("Customs.Declaration.O.ExportDeclarations") });
+                                                    } else {
+                                                        this.CurrentSession.ChangeSessionHeader({ Text: TextCodeTranslator.Translate("Customs.Declaration.O.ImportDeclarations") });
+                                                    }
+                                                    if (!AppTool.IsNullOrEmpty(this.EntityPM.ImporterId)) {               
+                                                        this.getClientIndication();
+                                                     }
+                                                    var table = window.ObjectTables.filter(d => d.Name === 'Customs.ClientIndication')[0];
+                                            
+                                                    var IsIndicationsClientFeature = FeatureLocator.Features.filter(f => (f.Code == "IndicationsClient") && f.ObjectTableId == table.Id)[0];
+                                                    if (IsIndicationsClientFeature) {
+                                                        this._IsIndicationsClientFeature=true
+                                                    }
+                                                    var tableDec = window.ObjectTables.filter(d => d.Name === 'Customs.Declaration')[0];
+
+                                                    var IsExcludeManifestFeature = FeatureLocator.Features.filter(f => (f.Code == "ISEXCLUDEMANIFEST") && f.ObjectTableId == tableDec.Id)[0];
+                                                    if (IsExcludeManifestFeature) {
+                                                          this._ShowExcludeManifestFeature= true;
+                                                    }
+                                                }
+                                              });
                                             });
                                         });
                                     });
@@ -769,8 +769,8 @@ export class DeclarationGeneralComponent extends BaseComponent implements OnDest
         this.UIProperties.SetRequired("IsExporterConfirmation", this.ObjectTableName, false);
     }
 
-    public get IsMoreConsignment1() { return this.EntityPM.Consignments.filter(x => x.ConsignmentType == "E").length > 1; }
-    public get IsOceanExport() { return this.EntityPM.TransportModeId == 'O' && this.EntityPM.Direction == 'E'; }
+    public get IsMoreConsignment1() { return this.EntityPM.Consignments.filter(x=>x.ConsignmentType=="E").length>1; }
+    public get IsOceanExport() { return this.EntityPM.TransportModeId == 'O' && this.EntityPM.Direction == 'E' ; }
 
 
     public CalculatedClient: any;
@@ -820,8 +820,8 @@ export class DeclarationGeneralComponent extends BaseComponent implements OnDest
                         this.CalculatedImporterName = client.FullName;
                     }
 
-                    if (!AppTool.IsNullOrEmpty(this.EntityPM.ImporterId)) {
-                        this.getClientIndication();
+                    if (!AppTool.IsNullOrEmpty(this.EntityPM.ImporterId)) {               
+                       this.getClientIndication();
                     }
 
                     break;
@@ -933,12 +933,12 @@ export class DeclarationGeneralComponent extends BaseComponent implements OnDest
             this.ImporterCode = item;
             if (item.length < 9) {
                 valid = false;
-                errorMessage = this.EntityPM.Direction != 'E' ? TextCodeTranslator.Translate("Customs.Declaration.O.ImporterIsTooShort") : TextCodeTranslator.Translate("Customs.Declaration.O.ExporterIsTooShort");
+                errorMessage = this.EntityPM.Direction !='E' ? TextCodeTranslator.Translate("Customs.Declaration.O.ImporterIsTooShort") : TextCodeTranslator.Translate("Customs.Declaration.O.ExporterIsTooShort");
                 //this.UIProperties.SetValidity("ImporterCode", "Customs.Declaration", false, TextCodeTranslator.Translate("Customs.Declaration.O.CodeShort"));
             }
             else if (item.length > 9) {
                 valid = false;
-                errorMessage = this.EntityPM.Direction != 'E' ? TextCodeTranslator.Translate("Customs.Declaration.O.TooLongCode") : TextCodeTranslator.Translate("Customs.Declaration.O.TooLongExporterCode");
+                errorMessage = TextCodeTranslator.Translate("Customs.Declaration.O.TooLongCode");
                 //this.UIProperties.SetValidity("ImporterCode", "Customs.Declaration", false, TextCodeTranslator.Translate("Customs.Declaration.O.TooLongCode"));
             }
             else {
@@ -1093,21 +1093,22 @@ export class DeclarationGeneralComponent extends BaseComponent implements OnDest
 
         this.CurrentSession.StartBusyIndicatorLoading();
 
-        if (this.CurrentSession.CurrentEditComponent.EntityPM.IsDirty) {
+        if(this.CurrentSession.CurrentEditComponent.EntityPM.IsDirty)
+        {
             this.CurrentSession.CurrentEditComponent.SaveChanges();
             const unsub = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
-                this.OpenImporterDetailsComponent();
-                unsub.unsubscribe();
+            this.OpenImporterDetailsComponent();
+            unsub.unsubscribe();
 
-            });
+            }); 
         }
 
         else
             this.OpenImporterDetailsComponent();
-
+       
     }
 
-    OpenImporterDetailsComponent() {
+    OpenImporterDetailsComponent(){
 
         this.CurrentSession.StopBusyIndicator();
         var windowArgs: any = {};
@@ -1166,9 +1167,9 @@ export class DeclarationGeneralComponent extends BaseComponent implements OnDest
         logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/General/ExportDeclarationComponent');
     }
 
-    showButtonSearchClient: boolean = false;
+    showButtonSearchClient:boolean = false;
     SearchClient(type, item) {
-
+        
         if (this.IsDisplayOnly && !this.showButtonSearchClient) {
             return;
         }
@@ -1210,7 +1211,7 @@ export class DeclarationGeneralComponent extends BaseComponent implements OnDest
 
         var windowArgs: any = {};
         windowArgs.EntityPM = this.EntityPM;
-
+        
         var logWindow = new LogitudeWindow();
         windowArgs.Mode = "DeclarationGeneralComponent";
         windowArgs.ImporterCode = importerCode;
@@ -1401,37 +1402,38 @@ export class DeclarationGeneralComponent extends BaseComponent implements OnDest
         }
 
         var windowArgs: any = {};
-        windowArgs.CustomerIndicationList = this.clientIndications;
+        windowArgs.CustomerIndicationList =  this.clientIndications;
         windowArgs.IsClientIndication = true;
         var logitudeWindow = new LogitudeWindow();
         logitudeWindow.Width = 470;
         logitudeWindow.Height = 520;
         logitudeWindow.IsShowCloseButton = false;
-        logitudeWindow.Title = TextCodeTranslator.Translate("Customs.ClientIndication.O.IndicationClient");
+        logitudeWindow.Title =TextCodeTranslator.Translate("Customs.ClientIndication.O.IndicationClient"); 
         logitudeWindow.WindowArgs = windowArgs;
         logitudeWindow.Show('./CustomsModules/CustomsGeneralRequests/Components/CustomerIndicationComponent');
 
     }
-    getClientIndication() {
-
-        let filters = new ApiQueryFilters();
-
-
-        filters.PageSize = 200;
-        filters.PageIndex = 0;
-        filters.GetAll = false;
-        filters.GetCount = true;
-
-        filters.addAdditionalFilter("ClientId", this.EntityPM.ImporterId, null, null, "Equals", false, false, false, "string", false);
-        filters.addAdditionalFilter("Tenant", this.EntityPM.Tenant, null, null, "Equals", true, false, false, "string");
-
-
-        return this.clientIndicationListService.getByFilters(filters)
-            .subscribe(r => {
-                this.clientIndications = r.Result
-            });
-
-    }
+    getClientIndication()
+        {
+           
+            let filters = new ApiQueryFilters();
+    
+    
+            filters.PageSize = 200;
+            filters.PageIndex = 0;
+            filters.GetAll = false;
+            filters.GetCount = true;           
+               
+            filters.addAdditionalFilter("ClientId", this.EntityPM.ImporterId , null, null, "Equals", false, false, false, "string", false);
+            filters.addAdditionalFilter("Tenant", this.EntityPM.Tenant, null, null, "Equals", true, false, false, "string");
+           
+    
+            return this.clientIndicationListService.getByFilters(filters)
+                .subscribe(r => {
+                    this.clientIndications=r.Result
+                });
+             
+        }
     SetFieldsDisabled(message: string) {
         if (message == "ok") {
             if (this.Type == "Importer") {
@@ -1485,7 +1487,7 @@ export class DeclarationGeneralComponent extends BaseComponent implements OnDest
         if (this.EntityPM.Consignments.length > 0) {
             var maxObj = this.EntityPM.Consignments.reduce(function (prev, current) { return (prev.SequenceNumeric > current.SequenceNumeric) ? prev : current });
 
-            if (this.EntityPM.Direction == "E") {
+            if (this.EntityPM.Direction == "E"){
                 var consignmentsSameType = this.EntityPM.Consignments.filter(x => x.ConsignmentType == "E");
                 if (consignmentsSameType.length > 0) {
                     maxObj = consignmentsSameType.reduce(function (prev, current) { return (prev.SequenceNumeric > current.SequenceNumeric) ? prev : current });
@@ -1600,7 +1602,7 @@ export class DeclarationGeneralComponent extends BaseComponent implements OnDest
                                 this.ConsigmentTabs[i].Header = (consignment.ManifestNumber ? (consignment.ManifestNumber + '-') : '') + consignment.SequenceNumeric;
                             }
                         }
-
+                        
                     }
 
                     // select the last tab
@@ -1643,7 +1645,6 @@ export class DeclarationGeneralComponent extends BaseComponent implements OnDest
     }
 
     DisplayOnlyCheck() {
-        debugger;
         this.DrawMe = true;
         this.IsDisplayOnly = this.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayMode;
         this.IsDisplayMessage = this.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayMode;
@@ -1683,10 +1684,7 @@ export class DeclarationGeneralComponent extends BaseComponent implements OnDest
                 }
             }
             else if (this.IsDisplayOnly) {
-                const prefix = (TextCodeTranslator.Translate("Customs.Declaration.O.DisplayOnly") || "").trim();
-                const msg = (displayOnlyCheckResult.DisplayOnlyMessage || "").trim();
-
-                this.DisplayOnlyMessage = msg.startsWith(prefix) ? msg : (prefix + msg);
+                this.DisplayOnlyMessage = TextCodeTranslator.Translate("Customs.Declaration.O.DisplayOnly") + displayOnlyCheckResult.DisplayOnlyMessage;
             }
             else if (this.EntityPM.StorageStatusCode) {
                 this.ShowStorageStatusMessage = true;
@@ -1704,10 +1702,10 @@ export class DeclarationGeneralComponent extends BaseComponent implements OnDest
 
         });
 
-        if ((this.EntityPM?.IsSubmitDeclaration && this.EntityPM?.Direction === "E") || this.EntityPM?.PaymentDate) {
+        if((this.EntityPM?.IsSubmitDeclaration && this.EntityPM?.Direction === "E" ) || this.EntityPM?.PaymentDate){
             this.showButtonSearchClient = true;
         }
-        else {
+        else{
             this.showButtonSearchClient = false;
         }
     }
@@ -1719,7 +1717,7 @@ export class DeclarationGeneralComponent extends BaseComponent implements OnDest
             var tab = new LogTab();
             tab.EntityPM = item;
             tab.Parent = this.EntityPM;
-            tab.Code = this.EntityPM.Direction == "E" ? item.ConsignmentNumber.toString() : item.SequenceNumeric.toString();
+            tab.Code = this.EntityPM.Direction == "E" ? item.ConsignmentNumber.toString() :item.SequenceNumeric.toString();
             tab.Header = (item.ManifestNumber ? (item.ManifestNumber + '-') : '') + item.SequenceNumeric;
             if (this.EntityPM.Direction == 'E' && this.EntityPM.TransportModeId == 'O' && !AppTool.IsNullOrEmpty(item.ConsignmentPackages[0]?.MarksNumbers)) {
 
@@ -1754,13 +1752,13 @@ export class DeclarationGeneralComponent extends BaseComponent implements OnDest
             requiredFields.forEach((field) => {
                 var objectField = window.ObjectFields.filter(d => d.FieldCode == field.ObjectfieldCode)[0];
                 var isExporterInShortProc = objectField && objectField.Code == "ExporterImporterCode" && this.EntityPM.ShortProcedure;
-
-                if (objectField && !isExporterInShortProc) {
+                
+                if (objectField && !isExporterInShortProc){
                     this.UIProperties.SetWarning(objectField.FieldName, 'Customs.Declaration', true);
                 }
-
+                    
             });
-        });
+        }); 
 
 
 
@@ -1772,7 +1770,7 @@ export class DeclarationGeneralComponent extends BaseComponent implements OnDest
             this.exportStorageConnectToDeclaration = await new DeclarationWebService().getExportStorageConnectToDeclaration(this.EntityPM.Id);
         }
     }
-    ComprehensiveUpdate() {
+    ComprehensiveUpdate(){
         var args: any = {
             EntityPM: this.EntityPM
         };
@@ -1799,7 +1797,7 @@ export class DeclarationExportRecipientModel extends BaseComponent {
         super();
         this.Parent = parent;
         this.EntityPM = item;
-
+        
         this.EntityResourceService.getEntityResourceByTableName("Customs.DeclarationExportRecipient").subscribe((response: any) => {
             this.UIProperties.SetEnabled("RecipientIssueCountryCode", this.ObjectTableName, !this.Parent.IsDisplayOnly);
             this.UIProperties.SetEnabled("RecipientAddress", this.ObjectTableName, !this.Parent.IsDisplayOnly);
