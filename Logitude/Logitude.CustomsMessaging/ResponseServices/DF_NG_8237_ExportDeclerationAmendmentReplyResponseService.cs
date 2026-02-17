@@ -14,7 +14,10 @@ using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using UnifreightIIG.Common.MessageLib.Fault;
 using UnifreightIIG.Common.MessageLib.Collateral;
 using Logitude.Customs.BL.Messaging.LogitudeClient.DeclarationErrorPointer;
@@ -32,13 +35,14 @@ using Logitude.Customs.Def.EntityQueryServicesExt;
 using Microsoft.Practices.ObjectBuilder2;
 using System.Globalization;
 using Logitude.Customs.BL.Messaging.Customs.SignQueueBL;
-using NLog;
+using Logitude.Customs.Data.Repsitories;
+using System.Data.Entity;
+using Logitude.CustomsMessaging.Helpers;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
     public class DF_NG_8237_ExportDeclerationAmendmentReplyResponseService : ResponseServiceBase<ExportDeclarationAmendmentResponseData, DF_NG_8237_MSG14003_ExportDeclarationAmendmentReplyMsg, AmendmentRequestParams>
     {
-        public static readonly Logger logger = LogManager.GetCurrentClassLogger();
         DeclarationPM _MyDeclarationPM;
         DeclarationPM _MyDeclarationPMOrg;
 
@@ -83,37 +87,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                 if (customResponse.ResponseContentHeader != null && customResponse.ResponseContentHeader.Exception != null && customResponse.ResponseContentHeader.Exception.Count() > 0)
                 {
-                    DeclarationPM declarationPM = null;
                     if (requestParams.IsFromAutoClosing)
                     {
-                        declarationPM = myDeclarationQueryService.GetSingle(requestParams.AppicationId, true, false);
+                        var declarationPM = myDeclarationQueryService.GetSingle(requestParams.AppicationId, false, false);
                         var comments = "";
                         customResponse.ResponseContentHeader.Exception.ForEach(x => comments += x.ExeptionDescription);
                         RaiseEvent(declarationPM, null, "CF2", comments);
-                    }
-                    if (requestParams.IsExportClose)
-                    {
-                        DeclarationError declarationError = new DeclarationError();
-                        declarationError.Entitites = new List<Entity>();
-                        foreach (var item in customResponse.ResponseContentHeader?.Exception)
-                        {
-                            Entity entity = new Entity();
-                            entity.FieldErrors = new List<field>();
-                            entity.FieldErrors.Add(new field()
-                            {
-                                MessageError = item.ExeptionDescription,
-                                Code = "Exception",
-                                ListVersionID = "1"
-
-                            });
-                            declarationError.Entitites.Add(entity);
-                        }
-                        var myDeclaretionErrorXml = XmlGenericUtil<DeclarationError>.SerializeObject(declarationError);
-                        if(declarationPM == null)
-                            declarationPM = myDeclarationQueryService.GetSingle(requestParams.AppicationId, true, false);
-                        declarationPM.ExportClosedErrorXML = myDeclaretionErrorXml;
-                        declarationPM.ChangeSetOp = ChangeSetOperation.Update;
-                        myDeclarationUpdateService.Update(declarationPM, true);
                     }
                     this.MyResponseData.ApplicationID = requestParams.AppicationId;
                     this.MyResponseData.Succeeded = true;
@@ -908,9 +887,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     }
                 }
 
-
-                AutoFixDeclarationDiamondByErrors(customResponse, _MyDeclarationPM, context, requestParams.RequestVIA);
-
                 this.MyResponseData.ApplicationID = requestParams.AppicationId;
                 this.MyResponseData.Succeeded = true;
                 this.MyResponseData.HasException = false;
@@ -955,96 +931,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }                                             //{
                                                           //     requestParams.AppicationId = myDeclarationQueryService.GetIdByExternalDeclarationNumber(customResponse.Response.Declaration.DMExtensions.ExternalDeclarationID.Value, requestParams.Tenant);
                                                           //}
-        }
-
-
-        public void AutoFixDeclarationDiamondByErrors(DF_NG_8237_MSG14003_ExportDeclarationAmendmentReplyMsg customResponse, DeclarationPM declaration, ICustomContext context, SendRequestVIA requestVIA)
-        {
-            try
-            {
-            if (declaration.Direction == "E" && requestVIA != SendRequestVIA.WebServiceInteractive)
-            {
-                logger.Debug("Starting To Handle Customs Errors.");
-                if (customResponse?.Response?.Error == null) return;
-
-                ICustomContext MyContext = CustomContext.GetContext(_MyDeclarationPM.Tenant);
-                ExportDeclarationClosingDataQueryService exportDeclarationClosingDataQuery = new ExportDeclarationClosingDataQueryService(MyContext);
-                exportDeclarationClosingDataQuery.InitializeSettings();
-                ExportDeclarationClosingDataPM exportDeclarationClosingDataPM = exportDeclarationClosingDataQuery.GetSingle(declaration?.Id, true, false);
-                bool errorsFound = false;
-
-                if (exportDeclarationClosingDataPM == null)
-                {
-                    logger.Debug("exportDeclarationClosingDataPM is null, creating new ExportDeclarationClosingDataPM.");
-                    exportDeclarationClosingDataPM = new ExportDeclarationClosingDataPM();
-                    exportDeclarationClosingDataPM.DeclarationId = declaration?.Id; 
-                    exportDeclarationClosingDataPM.ChangeSetOp = ChangeSetOperation.Insert;
-                }
-
-                foreach (var errorItem in customResponse.Response.Error)
-                {
-                    string valueText = errorItem?.ValidationCode?.name ?? string.Empty;                
-                        string valueCode = errorItem?.ValidationCode?.Value ?? string.Empty;
-                    if (valueCode == "140181" || valueText.Contains("תאריך טעינה"))
-                    {
-                        logger.Debug("Founded LoadingDateTime on customs error.");
-
-                        string marker = "שונה מתאריך יציאה";
-                        if (valueText.Contains(marker))
-                        {
-                            string afterMarker = valueText.Substring(valueText.IndexOf(marker) + marker.Length).Trim();
-                            string[] parts = afterMarker.Split(' ');
-                            string loadingDateTime = parts.FirstOrDefault(p => DateTime.TryParse(p, out _));
-                            if (DateTime.TryParse(loadingDateTime, out DateTime actualLoadingDate))
-                            {
-                                logger.Debug("update LoadingDateTime to exportDeclarationClosingData table.");
-                                exportDeclarationClosingDataPM.LoadingDateTime = actualLoadingDate;
-                                errorsFound = true;
-                            }
-                        }
-                    }
-                        else if (valueCode == "140189" || valueText.Contains("שטר מטען"))
-                    {
-                        logger.Debug("Founded FinalManifestNumber on customs error.");
-
-                        string marker = "שונה מ- מזהה שטר מטען לאחר טעינה";
-                        if (valueText.Contains(marker))
-                        {
-                            string afterMarker = valueText.Substring(valueText.IndexOf(marker) + marker.Length).Trim();
-                            string[] parts = afterMarker.Split(' ');
-                            string finalManifestNumber = parts.FirstOrDefault(p => p.Contains("-"));
-                            if (!string.IsNullOrWhiteSpace(finalManifestNumber))
-                            {
-                                logger.Debug("update FinalManifestNumber to exportDeclarationClosingData table.");
-                                exportDeclarationClosingDataPM.FinalManifestNumber = finalManifestNumber;
-                                errorsFound = true;
-                            }
-                        }
-                    }
-                }
-                logger.Debug("Finish To Handle Customs Errors. errorsFound= " + errorsFound);
-
-                if (errorsFound)
-                {
-                    exportDeclarationClosingDataPM.ChangeSetOp = ChangeSetOperation.Update;
-                    logger.Debug("Start to updating exportDeclarationClosingData");
-                    ExportDeclarationClosingDataUpdateService exportDeclarationClosingDataUpdateservice = new ExportDeclarationClosingDataUpdateService(context, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
-                    exportDeclarationClosingDataUpdateservice.Update(exportDeclarationClosingDataPM, true);
-                    logger.Debug("Finish to updating exportDeclarationClosingData");
-
-                    // send auto close declaration:
-                    logger.Debug("Before Send8235.");
-                    ICustomsAutoDecClosing CustomsAutoDecClosing = Server.Tools.ContainerAccessor.Container.Resolve(typeof(ICustomsAutoDecClosing), "CustomsAutoDecClosing", new Microsoft.Practices.Unity.ParameterOverride("", 1)) as ICustomsAutoDecClosing;
-                    CustomsAutoDecClosing.Send8235(_MyDeclarationPM,"" , true);
-                    logger.Debug("After Send8235.");
-                }
-            }
-        }
-            catch(System.Exception ex)
-            {
-                logger.Debug("AutoFixDeclarationDiamondByErrors Exception: " + ex.Message);
-                throw ex;
-            }
         }
 
 
@@ -1368,7 +1254,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
     public class CustomsAutoDecClosing : ICustomsAutoDecClosing
     {
 
-        public void Send8235(DeclarationPM decPm, string LoggingUserId = "", bool isAutoSendByErrorDiamondDec = false)
+        public void Send8235(DeclarationPM decPm, string LoggingUserId = "")
         {
             DateTime stopLogAt = DateTime.MinValue;
 
@@ -1420,39 +1306,17 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             try
             {
-                if (isAutoSendByErrorDiamondDec)
-                {  requestParamsData.ignoreConcurrentKiller=true; 
-                    requestParamsData.InterfaceTypeCode = requestParamsData.IsTransShipment ? "8235T" : "8235";
-                    requestParamsData.FutureSendDateTime = DateTime.Now.AddMinutes(1);
-                    SBQMessageService.CreateSheetSBQMessage<AmendmentRequestParams>(requestParamsData , false, requestParamsData.FutureSendDateTime );
-                }
-                else
-                {
-                    ExportDeclarationAmendmentResponseData responseData = requestParamsData.IsTransShipment ?
-                            new DF_MSG8235_TransshipmentDeclarationAmendmentMessagingService().Send(requestParamsData) :
-                            new DF_MSG8235_ExportDeclarationAmendmentMessagingService().Send(requestParamsData);
-                    LogitudeSettings.HandleLogMe("ICustomsAutoDecClosing AFTER SEND", false, "sendClosing", stopLogAt);
-					if (responseData.HasException == true)
-					{
-						throw new System.Exception("Ex" + responseData.UserMessage);
+                ExportDeclarationAmendmentResponseData responseData = requestParamsData.IsTransShipment ?
+                        new DF_MSG8235_TransshipmentDeclarationAmendmentMessagingService().Send(requestParamsData) :
+                        new DF_MSG8235_ExportDeclarationAmendmentMessagingService().Send(requestParamsData);
+                LogitudeSettings.HandleLogMe("ICustomsAutoDecClosing AFTER SEND", false, "sendClosing", stopLogAt);
 
-					}
-				}
-                
             }
             catch (System.Exception ex)
             {
                 LogitudeSettings.HandleLogMe("ICustomsAutoDecClosing ex" + ex.Message.ToString(), false, "sendClosing", stopLogAt);
-				NetCommonHelper.Logger.DevLog.Instance.WriteError(
-				   "ICustomsAutoDecClosing failed | " +
-				   "Tenant=" + decPm?.Tenant + " | " +
-				   "DeclarationId=" + decPm?.Id + " | " +
-				   "loggedUserId=" + loggedUserId + " | " +
-				   "Exception=" + ex.Message.ToString()
-				   );
-                throw ex;
 
-			}
+            }
             LogitudeSettings.HandleLogMe("ICustomsAutoDecClosing FINISH SEND", false, "sendClosing", stopLogAt);
 
 

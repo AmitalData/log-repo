@@ -28,7 +28,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         AirlineRepository repository;
 
-
+        public AirlineQuery()
+        {
+            repository = new AirlineRepository();
+        }
 
         public AirlineQuery(int tenant)
         {

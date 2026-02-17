@@ -307,28 +307,13 @@ namespace Logitude.Accounting.BL.Utils
                     ///// 1. Compute BalanceInLocalCurrency
 
                     Decimal balanceInLocalCurrency = 0m;
-                    var partialResults = new List<decimal>();
+                    var partialResults = new ConcurrentBag<decimal>();
 
-
-
-                    var totalsByAccount = gLAccountQueryService
-                            .GetCurrencyBalancesByIdsV2(concernedGLAccounts, interestActivationDate, _Tenant);
-
-                    foreach (var acc in concernedGLAccounts)
+                    Parallel.ForEach(concernedGLAccounts, acc =>
                     {
-                        if (totalsByAccount.TryGetValue(acc, out var balances))
-                        {
-                            foreach (var bal in balances)
-                            {
-                                partialResults.Add(bal.LocalAmount ?? 0m);
-                            }
-                        }
-                        else
-                        {
-                            partialResults.Add(0m); // if no rows for that account
-                        }
-                    }
-
+                        decimal localBalance = gLAccountQueryService.GetTotalLocalBalance(acc, interestActivationDate, _Tenant);
+                        partialResults.Add(localBalance);
+                    });
 
                     balanceInLocalCurrency = partialResults.Sum();
 

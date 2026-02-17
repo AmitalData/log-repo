@@ -77,8 +77,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                               NumberOfThreads = a.BatchServicesDefinitionMods.NumberOfThreads,
                               Parameter1 = a.Parameter1,
                               Parameter2 = a.Parameter2,
-                              QueueDefinitionCode = a.QueueDefinitionCode,
-                              QueueBase = a.QueueBase
+                              QueueDefinitionCode = a.QueueDefinitionCode
                           }
                           );
 
