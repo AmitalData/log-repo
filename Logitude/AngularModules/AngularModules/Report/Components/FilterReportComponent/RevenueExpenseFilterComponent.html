@@ -81,10 +81,7 @@
 
                       <td></td>
 
-                      <td style="width:90px;text-align:left">
-                        <app-run-report-toggle [isRTL]="true" [IsSchedulerReport]="IsSchedulerReport" (runReport)="RunReport($event)"></app-run-report-toggle>
-                      </td>
-                      <td></td>
+
                   </tr>
               </table>
             </td>
@@ -135,7 +132,6 @@
                         </div>
                     </div>
                   </td>
-                  <td></td>
                 </tr>
               </table>
             </td>
@@ -152,18 +148,27 @@
                     <CheckBox [IsChecked]="UseBalanceFilter" (Checked)="UseBalanceFilter = $event"></CheckBox>
 
                   </td>
-                  <td style="width:250px">{{'Accounting.General.O.AlsoWithZeroBalance' | TextCodeTranslationPipe}}</td>
+                  <td style="width:250px">{{'Accounting.General.O.WithZeroBalance' | TextCodeTranslationPipe}}</td>
 
                   <td style="width:200px; min-width: 200px;">
                     <ComboBox [ItemsSource]="BalanceOptionsFilterList" [Binding]="showLocal ? 'LocalName' : 'Name'" [SelectedItem]="SelectedBalanceOptionFilter" (SelectedItemChanged)="SelectedBalanceOptionFilter = $event"></ComboBox>
                   </td>
 
                   <td style="width:70px"></td>
-                  <td></td>
+                  <td style="width:90px;text-align:left">
+                    <button (click)="RunReport()" class="greenButton" style="width:90px;height:22px;border:1px solid green;border-radius:3px;">
+                      <div style="color:black;  text-align:center;vertical-align:central;font-size:12px;">{{RunReportTitle}}</div>
+                    </button>
+
+                  </td>
                   <td></td>
                 </tr>
               </table>
             </td>
+
+
+
+
 
 
           </tr>

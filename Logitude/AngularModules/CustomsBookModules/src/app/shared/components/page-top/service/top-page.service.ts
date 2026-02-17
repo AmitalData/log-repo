@@ -15,9 +15,8 @@ export class SearchService {
 
   private _searchTextSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
   public searchText$: Observable<string> = this._searchTextSubject.asObservable();
-  public customsItemHierarchicDefault: string = null;
-
-  public searchTextFromHost: BehaviorSubject<string> = new BehaviorSubject<string>('');
+  // public customsItemHierarchicDefault:string = '1,2,3,4,5,6,7';
+  public customsItemHierarchicDefault:string = null;
 
   constructor() {
     this._searchTextSubject.next('');
@@ -43,25 +42,4 @@ export class SearchService {
   SetSearchText(value: string) {
     this._searchTextSubject.next(value);
   }
-
-  isNumeric(value: string): boolean {
-    const res = /^\d+$/.test(value);
-    this.SearchBy(res ? 'searchBy_form01' : 'pageSearch_form02');
-    return res;
-  }
-
-  getParameterByName(name, url) {
-    if (!url) url = window.location.href;
-    name = name.replace(/[\[\]]/g, '\\$&');
-    var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
-      results = regex.exec(url);
-    if (!results) return null;
-    if (!results[2]) return '';
-    return decodeURIComponent(results[2].replace(/\+/g, ' '));
-  }
-
-  getDecodeUrl(url) {
-    return decodeURIComponent(url);
-  }
-
 }

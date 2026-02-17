@@ -13,7 +13,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         UnassignedEntityRepository repository;
 
-
+        public UnassignedEntityQuery()
+        {
+            repository = new UnassignedEntityRepository();
+        }
 
         public UnassignedEntityQuery(int tenant)
         {

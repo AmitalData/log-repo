@@ -13,7 +13,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         WeightUnitRepository repository;
 
-
+        public WeightUnitQuery()
+        {
+            repository = new WeightUnitRepository();
+        }
 
         public WeightUnitQuery(int tenant)
         {
