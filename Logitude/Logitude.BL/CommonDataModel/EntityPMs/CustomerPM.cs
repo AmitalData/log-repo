@@ -1027,11 +1027,5 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public bool IsPotential { get; set; }
         [DataMember]
         public string ContactForAccounting { get; set; }
-
-        [DataMember]
-        public string BankBranch { get; set; }
-        [DataMember]
-        public string BankCodeId { get; set; }
-
-        }
+    }
 }
