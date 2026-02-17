@@ -17,7 +17,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
             commonDataContext = context;
         }
 
-
+        public NumberFormatRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
 
         public NumberFormatRepository(int tenant)
         {

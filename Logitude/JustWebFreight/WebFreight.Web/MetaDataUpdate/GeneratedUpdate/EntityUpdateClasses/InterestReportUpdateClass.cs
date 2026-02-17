@@ -26,7 +26,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class InterestReportUpdateClass
    {  		
-		public const string HashString = "85c7ffc3cc858d6a3e6a684f2f100f9f";
+		public const string HashString = "d73ebf639e0f5bc11edbbfdb7e57cf80";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -70,7 +70,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    NewWizardControlName =  "./Accounting/Components/NewEntity/NewInterestReportComponent",
-			      				    LocalDefaultText =  "BS64:IteT15XXlyDXqNeZ15HXmdeqIg==",
+			      				    LocalDefaultText =  "דוח ריבית",
 			      				    DefaultText =  "Interest Report",
 			      				    Code =  "25a2",
 			      				    Name =  " Query Group",
@@ -136,7 +136,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Id",
 					  						DefaultText =  "Id",
-					  						FullLocalDefaultText =  "BS64:Itee15bXlNeUINek16DXmdee15ki",
+					  						FullLocalDefaultText =  "מזהה פנימי",
 					  						ListFieldLable =  "IdListLable",
 					  						ListLableDefaultText =  "Id",
 					  						IsForeignKey =  false,
@@ -200,7 +200,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Tenant",
 					  						DefaultText =  "Tenant",
-					  						FullLocalDefaultText =  "BS64:IteT15nXmdeoIg==",
+					  						FullLocalDefaultText =  "דייר",
 					  						ListFieldLable =  "TenantListLable",
 					  						ListLableDefaultText =  "Tenant",
 					  						IsForeignKey =  false,
@@ -265,10 +265,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CreateDateTime",
 					  						DefaultText =  "Create Date",
-					  						FullLocalDefaultText =  "BS64:Itep16LXqiDXmdem15nXqNeUIg==",
+					  						FullLocalDefaultText =  "שעת יצירה",
 					  						ListFieldLable =  "CreateDateTimeListLable",
 					  						ListLableDefaultText =  "Create Date",
-					  						ListLocalDefaultText =  "BS64:Itep16LXqiDXmdem15nXqNeUIg==",
+					  						ListLocalDefaultText =  "שעת יצירה",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -332,10 +332,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CreatedByUserId",
 					  						DefaultText =  "Created By",
-					  						FullLocalDefaultText =  "BS64:Iteg15XXpteoINeiIteZIg==",
+					  						FullLocalDefaultText =  "נוצר ע\"י",
 					  						ListFieldLable =  "CreatedByUserIdListLable",
 					  						ListLableDefaultText =  "Created By",
-					  						ListLocalDefaultText =  "BS64:Iteg15XXpteoINeiIteZIg==",
+					  						ListLocalDefaultText =  "נוצר ע\"י",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "User",
 					  						NavigationPropertyName =  "CreatedByUser",
@@ -399,10 +399,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "UpdateDateTime",
 					  						DefaultText =  "Update Date",
-					  						FullLocalDefaultText =  "BS64:Itep16LXqiDXoteT15vXldefIg==",
+					  						FullLocalDefaultText =  "שעת עדכון",
 					  						ListFieldLable =  "UpdateDateTimeListLable",
 					  						ListLableDefaultText =  "Update Date",
-					  						ListLocalDefaultText =  "BS64:Itep16LXqiDXoteT15vXldefIg==",
+					  						ListLocalDefaultText =  "שעת עדכון",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -464,10 +464,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "UpdatedByUserId",
 					  						DefaultText =  "Updated By",
-					  						FullLocalDefaultText =  "BS64:Itei15XXk9eb158g16Ii15ki",
+					  						FullLocalDefaultText =  "עודכן ע\"י",
 					  						ListFieldLable =  "UpdatedByUserIdListLable",
 					  						ListLableDefaultText =  "UpdatedByUserId",
-					  						ListLocalDefaultText =  "BS64:Itei15XXk9eb158g16Ii15ki",
+					  						ListLocalDefaultText =  "עודכן ע\"י",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "User",
 					  						NavigationPropertyName =  "UpdatedByUser",
@@ -531,10 +531,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "GLAccountId",
 					  						DefaultText =  "GLAccount",
-					  						FullLocalDefaultText =  "BS64:Itee15bXlNeUINek16DXmdee15kg15zXm9eo15jXmdehIg==",
+					  						FullLocalDefaultText =  "מזהה פנימי לכרטיס",
 					  						ListFieldLable =  "GLAccountIdListLable",
 					  						ListLableDefaultText =  "GLAccount",
-					  						ListLocalDefaultText =  "BS64:Itee15bXlNeUINek16DXmdee15kg15zXm9eo15jXmdehIg==",
+					  						ListLocalDefaultText =  "מזהה פנימי לכרטיס",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "GLAccount",
 					  						NavigationPropertyName =  "GLAccount",
@@ -599,10 +599,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ReportNumber",
 					  						DefaultText =  "Report Number",
-					  						FullLocalDefaultText =  "BS64:IteT15XXlyDXnteh16TXqCI=",
+					  						FullLocalDefaultText =  "דוח מספר",
 					  						ListFieldLable =  "ReportNumberListLable",
 					  						ListLableDefaultText =  "Report Number",
-					  						ListLocalDefaultText =  "BS64:IteT15XXlyDXnteh16TXqCI=",
+					  						ListLocalDefaultText =  "דוח מספר",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -665,10 +665,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "InterestCalculationDate",
 					  						DefaultText =  "Calculation Date",
-					  						FullLocalDefaultText =  "BS64:Iteq15DXqNeZ15og15fXmdep15XXkSDXqNeZ15HXmdeqIg==",
+					  						FullLocalDefaultText =  "תאריך חישוב ריבית",
 					  						ListFieldLable =  "InterestCalculationDateListLable",
 					  						ListLableDefaultText =  "Calculation Date",
-					  						ListLocalDefaultText =  "BS64:Iteq15DXqNeZ15og15fXmdep15XXkSDXqNeZ15HXmdeqIg==",
+					  						ListLocalDefaultText =  "תאריך חישוב ריבית",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -733,10 +733,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "TotalAmount",
 					  						DefaultText =  "Total Interest Amount",
-					  						FullLocalDefaultText =  "BS64:Iteh15vXldedINeo15nXkdeZ16og157Xl9eV16nXkSI=",
+					  						FullLocalDefaultText =  "סכום ריבית מחושב",
 					  						ListFieldLable =  "TotalAmountListLable",
 					  						ListLableDefaultText =  "Total Interest Amount",
-					  						ListLocalDefaultText =  "BS64:Iteh15vXldedINeo15nXkdeZ16og157Xl9eV16nXkSI=",
+					  						ListLocalDefaultText =  "סכום ריבית מחושב",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -774,7 +774,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						IsListFilter =  false,
-					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -801,10 +800,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "OpenBalance",
 					  						DefaultText =  "Open Balance",
-					  						FullLocalDefaultText =  "BS64:IteZ16rXqNeqINek16rXmdeX15Qi",
+					  						FullLocalDefaultText =  "יתרת פתיחה",
 					  						ListFieldLable =  "OpenBalanceListLable",
 					  						ListLableDefaultText =  "Open Balance",
-					  						ListLocalDefaultText =  "BS64:IteZ16rXqNeqINek16rXmdeX15Qg15zXk9eV15ci",
+					  						ListLocalDefaultText =  "יתרת פתיחה לדוח",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -842,7 +841,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						IsListFilter =  false,
-					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -869,10 +867,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CloseBalance",
 					  						DefaultText =  "Close Balance",
-					  						FullLocalDefaultText =  "BS64:IteZ16rXqNeqINeh15LXmdeo15Qi",
+					  						FullLocalDefaultText =  "יתרת סגירה",
 					  						ListFieldLable =  "CloseBalanceListLable",
 					  						ListLableDefaultText =  "Close Balance",
-					  						ListLocalDefaultText =  "BS64:IteZ16rXqNeqINeh15LXmdeo15Qg15zXk9eV15ci",
+					  						ListLocalDefaultText =  "יתרת סגירה לדוח",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -933,7 +931,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ARinvoiceId",
 					  						DefaultText =  "ARinvoice",
-					  						FullLocalDefaultText =  "BS64:Itee15bXlNeUINek16DXmdee15kg15zXl9ep15HXldeg15nXqiI=",
+					  						FullLocalDefaultText =  "מזהה פנימי לחשבונית",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "ARInvoice",
 					  						NavigationPropertyName =  "ARInvoice",
@@ -1000,10 +998,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "InvoiceAmount",
 					  						DefaultText =  "Invoice Amount Including VAT",
-					  						FullLocalDefaultText =  "BS64:Iteh15vXldedINeX16nXkdeV16DXmdeqINeb15XXnNecINee16LXniI=",
+					  						FullLocalDefaultText =  "סכום חשבונית כולל מעמ",
 					  						ListFieldLable =  "InvoiceAmountListLable",
 					  						ListLableDefaultText =  "Invoice Amount Including VAT",
-					  						ListLocalDefaultText =  "BS64:Iteh15vXldedINeX16nXkdeV16DXmdeqINeb15XXnNecINee16LXniI=",
+					  						ListLocalDefaultText =  "סכום חשבונית כולל מעמ",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1066,10 +1064,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "GLAccountInterestCreditLimit",
 					  						DefaultText =  "Credit Limit",
-					  						FullLocalDefaultText =  "BS64:Itee16HXkteo16og15DXqdeo15DXmSDXqdecINeU15vXqNeY15nXoSI=",
+					  						FullLocalDefaultText =  "מסגרת אשראי של הכרטיס",
 					  						ListFieldLable =  "GLAccountInterestCreditLimitListLable",
 					  						ListLableDefaultText =  "GLAccountInterestCreditLimit",
-					  						ListLocalDefaultText =  "BS64:Itee16HXkteo16og15DXqdeo15DXmSDXqdecINeU15vXqNeY15nXoSI=",
+					  						ListLocalDefaultText =  "מסגרת אשראי של הכרטיס",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1133,10 +1131,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "InterestReportStatusCode",
 					  						DefaultText =  "Status Code",
-					  						FullLocalDefaultText =  "BS64:Iten15XXkyDXodeY15DXmNeV16Eg16nXnCDXlNeT15XXlyI=",
+					  						FullLocalDefaultText =  "קוד סטאטוס של הדוח",
 					  						ListFieldLable =  "InterestReportStatusCodeListLable",
 					  						ListLableDefaultText =  "Status Code",
-					  						ListLocalDefaultText =  "BS64:Iten15XXkyDXodeY15DXmNeV16Eg16nXnCDXlNeT15XXlyI=",
+					  						ListLocalDefaultText =  "קוד סטאטוס של הדוח",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "InterestReportStatuse",
 					  						NavigationPropertyName =  "InterestReportStatuse",
@@ -1201,10 +1199,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CreatedByLocalName",
 					  						DefaultText =  "Created By",
-					  						FullLocalDefaultText =  "BS64:Iteg15XXpteoINeiIteZINee16nXqtee16ki",
+					  						FullLocalDefaultText =  "נוצר ע\"י משתמש",
 					  						ListFieldLable =  "CreatedByLocalNameListLable",
 					  						ListLableDefaultText =  "Created By",
-					  						ListLocalDefaultText =  "BS64:Iteg15XXpteoINeiIteZINee16nXqtee16ki",
+					  						ListLocalDefaultText =  "נוצר ע\"י משתמש",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1267,10 +1265,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "GLAccountDisplayNumber",
 					  						DefaultText =  "Account No.",
-					  						FullLocalDefaultText =  "BS64:Itee16HXpNeoINeb16jXmNeZ16Ei",
+					  						FullLocalDefaultText =  "מספר כרטיס",
 					  						ListFieldLable =  "GLAccountDisplayNumberListLable",
 					  						ListLableDefaultText =  "Account No.",
-					  						ListLocalDefaultText =  "BS64:Itee16HXpNeoINeb16jXmNeZ16Ei",
+					  						ListLocalDefaultText =  "מספר כרטיס",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1333,10 +1331,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "GLAccountLocalName",
 					  						DefaultText =  "Local Name",
-					  						FullLocalDefaultText =  "BS64:Itep150g157Xp9eV157XmSI=",
+					  						FullLocalDefaultText =  "שם מקומי",
 					  						ListFieldLable =  "GLAccountLocalNameListLable",
 					  						ListLableDefaultText =  "Local Name",
-					  						ListLocalDefaultText =  "BS64:Itep150g157Xp9eV157XmSI=",
+					  						ListLocalDefaultText =  "שם מקומי",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1399,10 +1397,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ARInvoiceNumber",
 					  						DefaultText =  "Invoice Number",
-					  						FullLocalDefaultText =  "BS64:Itee16HXpNeoINeX16nXkdeV16DXmdeqIg==",
+					  						FullLocalDefaultText =  "מספר חשבונית",
 					  						ListFieldLable =  "ARInvoiceNumberListLable",
 					  						ListLableDefaultText =  "Invoice No.",
-					  						ListLocalDefaultText =  "BS64:Itee16HXpNeoINeX16nXkdeV16DXmdeqIg==",
+					  						ListLocalDefaultText =  "מספר חשבונית",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1464,10 +1462,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "UpdatedByLocalName",
 					  						DefaultText =  "Updated By",
-					  						FullLocalDefaultText =  "BS64:Itei15XXk9eb158g16LXnCDXmdeT15ki",
+					  						FullLocalDefaultText =  "עודכן על ידי",
 					  						ListFieldLable =  "UpdatedByLocalNameListLable",
 					  						ListLableDefaultText =  "Updated By",
-					  						ListLocalDefaultText =  "BS64:Itei15XXk9eb158g16LXnCDXmdeT15ki",
+					  						ListLocalDefaultText =  "עודכן על ידי",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1530,10 +1528,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "InterestReportStatusName",
 					  						DefaultText =  "Status Name",
-					  						FullLocalDefaultText =  "BS64:Iteh15jXmNeV16Eg16nXnCDXlNeT15XXlyI=",
+					  						FullLocalDefaultText =  "סטטוס של הדוח",
 					  						ListFieldLable =  "InterestReportStatusNameListLable",
 					  						ListLableDefaultText =  "Status Name",
-					  						ListLocalDefaultText =  "BS64:Iteh15jXmNeV16Eg16nXnCDXlNeT15XXlyI=",
+					  						ListLocalDefaultText =  "סטטוס של הדוח",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1595,10 +1593,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "SearchFields",
 					  						DefaultText =  "Search ...",
-					  						FullLocalDefaultText =  "BS64:IteX15nXpNeV16ki",
+					  						FullLocalDefaultText =  "חיפוש",
 					  						ListFieldLable =  "SearchFieldsListLable",
 					  						ListLableDefaultText =  "Search ...",
-					  						ListLocalDefaultText =  "BS64:IteX15nXpNeV16ki",
+					  						ListLocalDefaultText =  "חיפוש",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1660,10 +1658,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "InterestReportStatusLocalName",
 					  						DefaultText =  "Status Name",
-					  						FullLocalDefaultText =  "BS64:Iteh15jXmNeV16Eg16nXnCDXlNeT15XXlyI=",
+					  						FullLocalDefaultText =  "סטטוס של הדוח",
 					  						ListFieldLable =  "InterestReportStatusLocalNameListLable",
 					  						ListLableDefaultText =  "Status Name",
-					  						ListLocalDefaultText =  "BS64:Iteh15jXmNeV16Eg16nXnCDXlNeT15XXlyI=",
+					  						ListLocalDefaultText =  "סטטוס של הדוח",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1725,10 +1723,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CustomerId",
 					  						DefaultText =  "Customer",
-					  						FullLocalDefaultText =  "BS64:Itec16fXldeXIg==",
+					  						FullLocalDefaultText =  "לקוח",
 					  						ListFieldLable =  "CustomerIdListLable",
 					  						ListLableDefaultText =  "CustomerId",
-					  						ListLocalDefaultText =  "BS64:Itec16fXldeXIg==",
+					  						ListLocalDefaultText =  "לקוח",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "Card",
 					  						NavigationPropertyName =  "Card",
@@ -1854,10 +1852,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CustomerName",
 					  						DefaultText =  "Customer",
-					  						FullLocalDefaultText =  "BS64:Itep150g15zXp9eV15ci",
+					  						FullLocalDefaultText =  "שם לקוח",
 					  						ListFieldLable =  "CustomerNameListLable",
 					  						ListLableDefaultText =  "CustomerName",
-					  						ListLocalDefaultText =  "BS64:Itep150g15zXp9eV15ci",
+					  						ListLocalDefaultText =  "שם לקוח",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1918,10 +1916,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "GLAccountMinimumInterest",
 					  						DefaultText =  "Minimum Interest Invoice billing",
-					  						FullLocalDefaultText =  "BS64:Itee15nXoNeZ157XldedINeX15nXldeRINeR15fXqdeR15XXoNeZ16og16jXmdeR15nXqiI=",
+					  						FullLocalDefaultText =  "מינימום חיוב בחשבונית ריבית",
 					  						ListFieldLable =  "GLAccountMinimumInterestListLable",
 					  						ListLableDefaultText =  "GLAccountMinimumInterest",
-					  						ListLocalDefaultText =  "BS64:Itee15nXoNeZ157XldedINeX15nXldeRINeR15fXqdeR15XXoNeZ16og16jXmdeR15nXqiI=",
+					  						ListLocalDefaultText =  "מינימום חיוב בחשבונית ריבית",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1982,10 +1980,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CustomerLocalName",
 					  						DefaultText =  "Customer",
-					  						FullLocalDefaultText =  "BS64:Itep150g157Xp9eV157XmSDXnNen15XXlyI=",
+					  						FullLocalDefaultText =  "שם מקומי לקוח",
 					  						ListFieldLable =  "CustomerLocalNameListLable",
 					  						ListLableDefaultText =  "CustomerLocalName",
-					  						ListLocalDefaultText =  "BS64:Itep150g157Xp9eV157XmSDXnNen15XXlyI=",
+					  						ListLocalDefaultText =  "שם מקומי לקוח",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -2046,10 +2044,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "EnableInvoiceing",
 					  						DefaultText =  "EnableInvoiceing",
-					  						FullLocalDefaultText =  "BS64:IteU16TXotecINeX16nXkdeV16DXmdeqIg==",
+					  						FullLocalDefaultText =  "הפעל חשבונית",
 					  						ListFieldLable =  "EnableInvoiceingListLable",
 					  						ListLableDefaultText =  "EnableInvoiceing",
-					  						ListLocalDefaultText =  "BS64:IteU16TXotecINeX16nXkdeV16DXmdeqIg==",
+					  						ListLocalDefaultText =  "הפעל חשבונית",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -2171,10 +2169,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "InvoiceFailureReason",
 					  						DefaultText =  "InvoiceFailureReason",
-					  						FullLocalDefaultText =  "BS64:Iteh15nXkdeqINeb16nXnCDXkdeX16nXkdeV16DXmdeqIg==",
+					  						FullLocalDefaultText =  "סיבת כשל בחשבונית",
 					  						ListFieldLable =  "InvoiceFailureReasonListLable",
 					  						ListLableDefaultText =  "InvoiceFailureReason",
-					  						ListLocalDefaultText =  "BS64:Iteh15nXkdeqINeb16nXnCDXkdeX16nXkdeV16DXmdeqIg==",
+					  						ListLocalDefaultText =  "סיבת כשל בחשבונית",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -2657,10 +2655,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CreditAllotmentPercentage",
 					  						DefaultText =  "Credit Allotment Percentage ",
-					  						FullLocalDefaultText =  "BS64:IiUg16LXntec16og15TXp9em15DXqiDXkNep16jXkNeZIg==",
+					  						FullLocalDefaultText =  "% עמלת הקצאת אשראי",
 					  						ListFieldLable =  "CreditAllotmentPercentageListLable",
 					  						ListLableDefaultText =  "CreditAllotmentPercentage",
-					  						ListLocalDefaultText =  "BS64:IiUg16LXntec16og15TXp9em15DXqiDXkNep16jXkNeZIg==",
+					  						ListLocalDefaultText =  "% עמלת הקצאת אשראי",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -2725,10 +2723,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CalCreditAllotmentCommission",
 					  						DefaultText =  "Calculated Credit Allotment Commission",
-					  						FullLocalDefaultText =  "BS64:Itei157XnNeqINeU16fXpteQ16og15DXqdeo15DXmSDXnteX15XXqdeR16oi",
+					  						FullLocalDefaultText =  "עמלת הקצאת אשראי מחושבת",
 					  						ListFieldLable =  "CalCreditAllotmentCommissionListLable",
 					  						ListLableDefaultText =  "Calculated Credit Allotment Commission",
-					  						ListLocalDefaultText =  "BS64:Itei157XnNeqINeU16fXpteQ16og15DXqdeo15DXmSDXnteX15XXqdeR16oi",
+					  						ListLocalDefaultText =  "עמלת הקצאת אשראי מחושבת",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -2793,10 +2791,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CalculatedPostponedChequesCommision",
 					  						DefaultText =  "Calculated Postponed Cheques Commision",
-					  						FullLocalDefaultText =  "BS64:Itei157XnNeqINep16fXmdedINeT15fXldeZ15nXnSDXnteX15XXqdeR16oi",
+					  						FullLocalDefaultText =  "עמלת שקים דחויים מחושבת",
 					  						ListFieldLable =  "CalculatedPostponedChequesCommisionListLable",
 					  						ListLableDefaultText =  "Calculated Postponed Cheques Commision",
-					  						ListLocalDefaultText =  "BS64:Itei157XnNeqINep16fXmdedINeT15fXldeZ15nXnSDXnteX15XXqdeR16oi",
+					  						ListLocalDefaultText =  "עמלת שקים דחויים מחושבת",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -2859,10 +2857,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Category1Name",
 					  						DefaultText =  "Category 1 Name",
-					  						FullLocalDefaultText =  "BS64:Itep150g16fXmNeS15XXqNeZ15QgMSI=",
+					  						FullLocalDefaultText =  "שם קטגוריה 1",
 					  						ListFieldLable =  "Category1NameListLable",
 					  						ListLableDefaultText =  "Category 1 Name",
-					  						ListLocalDefaultText =  "BS64:Itep150g16fXmNeS15XXqNeZ15QgMSI=",
+					  						ListLocalDefaultText =  "שם קטגוריה 1",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -2925,10 +2923,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Category2Name",
 					  						DefaultText =  "Category 2 Name",
-					  						FullLocalDefaultText =  "BS64:Itep150g16fXmNeS15XXqNeZ15QgMiI=",
+					  						FullLocalDefaultText =  "שם קטגוריה 2",
 					  						ListFieldLable =  "Category2NameListLable",
 					  						ListLableDefaultText =  "Category 2 Name",
-					  						ListLocalDefaultText =  "BS64:Itep150g16fXmNeS15XXqNeZ15QgMiI=",
+					  						ListLocalDefaultText =  "שם קטגוריה 2",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -2991,10 +2989,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Category3Name",
 					  						DefaultText =  "Category 3 Name",
-					  						FullLocalDefaultText =  "BS64:Itep150g16fXmNeS15XXqNeZ15QgMyI=",
+					  						FullLocalDefaultText =  "שם קטגוריה 3",
 					  						ListFieldLable =  "Category3NameListLable",
 					  						ListLableDefaultText =  "Category 3 Name",
-					  						ListLocalDefaultText =  "BS64:Itep150g16fXmNeS15XXqNeZ15QgMyI=",
+					  						ListLocalDefaultText =  "שם קטגוריה 3",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -3057,10 +3055,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Category4Name",
 					  						DefaultText =  "Category 4 Name",
-					  						FullLocalDefaultText =  "BS64:Itep150g16fXmNeS15XXqNeZ15QgNCI=",
+					  						FullLocalDefaultText =  "שם קטגוריה 4",
 					  						ListFieldLable =  "Category4NameListLable",
 					  						ListLableDefaultText =  "Category 4 Name",
-					  						ListLocalDefaultText =  "BS64:Itep150g16fXmNeS15XXqNeZ15QgNCI=",
+					  						ListLocalDefaultText =  "שם קטגוריה 4",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -3123,10 +3121,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Category5Name",
 					  						DefaultText =  "Category 5 Name",
-					  						FullLocalDefaultText =  "BS64:Itep150g16fXmNeS15XXqNeZ15QgNSI=",
+					  						FullLocalDefaultText =  "שם קטגוריה 5",
 					  						ListFieldLable =  "Category5NameListLable",
 					  						ListLableDefaultText =  "Category 5 Name",
-					  						ListLocalDefaultText =  "BS64:Itep150g16fXmNeS15XXqNeZ15QgNSI=",
+					  						ListLocalDefaultText =  "שם קטגוריה 5",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -3189,10 +3187,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Category1LocalName",
 					  						DefaultText =  "Category1 LocalName",
-					  						FullLocalDefaultText =  "BS64:Itep150g157Xp9eV157XmSDXp9eY15LXldeo15nXlCAxIg==",
+					  						FullLocalDefaultText =  "שם מקומי קטגוריה 1",
 					  						ListFieldLable =  "Category1LocalNameListLable",
 					  						ListLableDefaultText =  "Category1 LocalName",
-					  						ListLocalDefaultText =  "BS64:Itep150g157Xp9eV157XmSDXp9eY15LXldeo15nXlCAxIg==",
+					  						ListLocalDefaultText =  "שם מקומי קטגוריה 1",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -3255,10 +3253,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Category2LocalName",
 					  						DefaultText =  "Category2 LocalName",
-					  						FullLocalDefaultText =  "BS64:Itep150g157Xp9eV157XmSDXp9eY15LXldeo15nXlCAyIg==",
+					  						FullLocalDefaultText =  "שם מקומי קטגוריה 2",
 					  						ListFieldLable =  "Category2LocalNameListLable",
 					  						ListLableDefaultText =  "Category2 LocalName",
-					  						ListLocalDefaultText =  "BS64:Itep150g157Xp9eV157XmSDXp9eY15LXldeo15nXlCAyIg==",
+					  						ListLocalDefaultText =  "שם מקומי קטגוריה 2",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -3321,10 +3319,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Category3LocalName",
 					  						DefaultText =  "Category3 LocalName",
-					  						FullLocalDefaultText =  "BS64:Itep150g157Xp9eV157XmSDXp9eY15LXldeo15nXlCAzIg==",
+					  						FullLocalDefaultText =  "שם מקומי קטגוריה 3",
 					  						ListFieldLable =  "Category3LocalNameListLable",
 					  						ListLableDefaultText =  "Category3 LocalName",
-					  						ListLocalDefaultText =  "BS64:Itep150g157Xp9eV157XmSDXp9eY15LXldeo15nXlCAzIg==",
+					  						ListLocalDefaultText =  "שם מקומי קטגוריה 3",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -3387,10 +3385,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Category4LocalName",
 					  						DefaultText =  "Category4 LocalName",
-					  						FullLocalDefaultText =  "BS64:Itep150g157Xp9eV157XmSDXp9eY15LXldeo15nXlCA0Ig==",
+					  						FullLocalDefaultText =  "שם מקומי קטגוריה 4",
 					  						ListFieldLable =  "Category4LocalNameListLable",
 					  						ListLableDefaultText =  "Category4 LocalName",
-					  						ListLocalDefaultText =  "BS64:Itep150g157Xp9eV157XmSDXp9eY15LXldeo15nXlCA0Ig==",
+					  						ListLocalDefaultText =  "שם מקומי קטגוריה 4",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -3453,10 +3451,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Category5LocalName",
 					  						DefaultText =  "Category5 LocalName",
-					  						FullLocalDefaultText =  "BS64:Itep150g157Xp9eV157XmSDXp9eY15LXldeo15nXlCA1Ig==",
+					  						FullLocalDefaultText =  "שם מקומי קטגוריה 5",
 					  						ListFieldLable =  "Category5LocalNameListLable",
 					  						ListLableDefaultText =  "Category5 LocalName",
-					  						ListLocalDefaultText =  "BS64:Itep150g157Xp9eV157XmSDXp9eY15LXldeo15nXlCA1Ig==",
+					  						ListLocalDefaultText =  "שם מקומי קטגוריה 5",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -3518,10 +3516,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Category1Id",
 					  						DefaultText =  "Category1Id",
-					  						FullLocalDefaultText =  "BS64:Itee15bXlNeUINen15jXkteV16jXmdeUIDEi",
+					  						FullLocalDefaultText =  "מזהה קטגוריה 1",
 					  						ListFieldLable =  "Category1IdListLable",
 					  						ListLableDefaultText =  "Category1Id",
-					  						ListLocalDefaultText =  "BS64:Itee15bXlNeUINen15jXkteV16jXmdeUIDEi",
+					  						ListLocalDefaultText =  "מזהה קטגוריה 1",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -3583,10 +3581,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Category2Id",
 					  						DefaultText =  "Category2Id",
-					  						FullLocalDefaultText =  "BS64:Itee15bXlNeUINen15jXkteV16jXmdeUIDIi",
+					  						FullLocalDefaultText =  "מזהה קטגוריה 2",
 					  						ListFieldLable =  "Category2IdListLable",
 					  						ListLableDefaultText =  "Category2Id",
-					  						ListLocalDefaultText =  "BS64:Itee15bXlNeUINen15jXkteV16jXmdeUIDIi",
+					  						ListLocalDefaultText =  "מזהה קטגוריה 2",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -3648,10 +3646,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Category3Id",
 					  						DefaultText =  "Category3Id",
-					  						FullLocalDefaultText =  "BS64:Itee15bXlNeUINen15jXkteV16jXmdeUIDMi",
+					  						FullLocalDefaultText =  "מזהה קטגוריה 3",
 					  						ListFieldLable =  "Category3IdListLable",
 					  						ListLableDefaultText =  "Category3Id",
-					  						ListLocalDefaultText =  "BS64:Itee15bXlNeUINen15jXkteV16jXmdeUIDMi",
+					  						ListLocalDefaultText =  "מזהה קטגוריה 3",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -3713,10 +3711,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Category4Id",
 					  						DefaultText =  "Category4Id",
-					  						FullLocalDefaultText =  "BS64:Itee15bXlNeUINen15jXkteV16jXmdeUIDQi",
+					  						FullLocalDefaultText =  "מזהה קטגוריה 4",
 					  						ListFieldLable =  "Category4IdListLable",
 					  						ListLableDefaultText =  "Category4Id",
-					  						ListLocalDefaultText =  "BS64:Itee15bXlNeUINen15jXkteV16jXmdeUIDQi",
+					  						ListLocalDefaultText =  "מזהה קטגוריה 4",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -3778,10 +3776,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Category5Id",
 					  						DefaultText =  "Category5Id",
-					  						FullLocalDefaultText =  "BS64:Itee15bXlNeUINen15jXkteV16jXmdeUIDUi",
+					  						FullLocalDefaultText =  "מזהה קטגוריה 5",
 					  						ListFieldLable =  "Category5IdListLable",
 					  						ListLableDefaultText =  "Category5Id",
-					  						ListLocalDefaultText =  "BS64:Itee15bXlNeUINen15jXkteV16jXmdeUIDUi",
+					  						ListLocalDefaultText =  "מזהה קטגוריה 5",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -3845,10 +3843,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ChartOfAccountsId",
 					  						DefaultText =  "Chart Of Accounts",
-					  						FullLocalDefaultText =  "BS64:Iten15HXldem16og157XkNeW158i",
+					  						FullLocalDefaultText =  "קבוצת מאזן",
 					  						ListFieldLable =  "ChartOfAccountsIdListLable",
 					  						ListLableDefaultText =  "Chart Of Accounts ",
-					  						ListLocalDefaultText =  "BS64:Iten15HXldem16og157XkNeW158i",
+					  						ListLocalDefaultText =  "קבוצת מאזן",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -3911,10 +3909,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ChartOfAccountsName",
 					  						DefaultText =  "Chart of Accounts",
-					  						FullLocalDefaultText =  "BS64:Iten15HXldem16og157XkNeW158i",
+					  						FullLocalDefaultText =  "קבוצת מאזן",
 					  						ListFieldLable =  "ChartOfAccountsNameListLable",
 					  						ListLableDefaultText =  "Chart of Accounts",
-					  						ListLocalDefaultText =  "BS64:Iten15HXldem16og157XkNeW158i",
+					  						ListLocalDefaultText =  "קבוצת מאזן",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -3977,276 +3975,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ChartOfAccountsCode",
 					  						DefaultText =  "Chart of Accounts Code",
-					  						FullLocalDefaultText =  "BS64:Iten15XXkyDXp9eR15XXpteqINee15DXltefIg==",
+					  						FullLocalDefaultText =  "קוד קבוצת מאזן",
 					  						ListFieldLable =  "ChartOfAccountsCodeListLable",
 					  						ListLableDefaultText =  "Chart of Accounts Code",
-					  						ListLocalDefaultText =  "BS64:Iten15XXkyDXp9eR15XXpteqINee15DXltefIg==",
-					  						IsForeignKey =  false,
-					  						IsMaxLength =  false,
-					  						NoMetaDataField =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
-					  						DisplayInRequiredFields =  false,
-					  						HasTemplate =  false,
-					  						IsCustom =  false,
-					  						EnableFullscreenTextBox =  false,
-					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
- 
-
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
-					 
-					 						FieldName =  "IsForeignCurrency",
-					  						ObjectTableName =  "InterestReport",
-					  						FieldsDataType =  "Boolean",
-					  						MinLength =  0,
-					  						MaxLength =  0,
-					  						IsRequired =  false,
-					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
-					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  true,
-					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  0,
-					  						DisplayInList =  true,
-					  						IsCustomFilter =  false,
-					  						IsListFilter =  false,
-					  						Operator =  "Equals",
-					  						MultiLine =  false,
-					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "IsForeignCurrency",
-					  						ListPropertyPath =  "IsForeignCurrency",
-					  						DisplayInLookUpIndex =  0,
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
-					  						IsMulti =  false,
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "InterestReport",
-					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						InActive =  false,
-					  						DisplayLongName =  false,
-					  						FullFieldLable =  "IsForeignCurrency",
-					  						DefaultText =  "Is Foreign Currency",
-					  						FullLocalDefaultText =  "BS64:IteT15XXlyDXkdee15gi15Yi",
-					  						ListFieldLable =  "IsForeignCurrencyListLable",
-					  						ListLableDefaultText =  "Is Foreign Currency",
-					  						ListLocalDefaultText =  "BS64:IteT15XXlyDXkdee15gi15Yi",
-					  						IsForeignKey =  false,
-					  						IsMaxLength =  false,
-					  						NoMetaDataField =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
-					  						DisplayInRequiredFields =  false,
-					  						HasTemplate =  false,
-					  						IsCustom =  false,
-					  						EnableFullscreenTextBox =  false,
-					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
- 
-
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
-					 
-					 						FieldName =  "ReportCurrencyId",
-					  						ObjectTableName =  "InterestReport",
-					  						FieldsDataType =  "LookUp",
-					  						LookUpTableName =  "Currency",
-					  						MinLength =  0,
-					  						MaxLength =  15,
-					  						IsRequired =  false,
-					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
-					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  true,
-					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  15,
-					  						DisplayInList =  true,
-					  						IsCustomFilter =  false,
-					  						IsListFilter =  false,
-					  						Operator =  "Equals",
-					  						MultiLine =  false,
-					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "ReportCurrencyId",
-					  						ListPropertyPath =  "ReportCurrencyId",
-					  						DisplayInLookUpIndex =  0,
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
-					  						IsMulti =  false,
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "InterestReport",
-					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						InActive =  false,
-					  						DisplayLongName =  false,
-					  						FullFieldLable =  "ReportCurrencyId",
-					  						DefaultText =  "Currency",
-					  						FullLocalDefaultText =  "BS64:Itee15jXkdeiINeU15PXldeXIg==",
-					  						ListFieldLable =  "ReportCurrencyIdListLable",
-					  						ListLableDefaultText =  "Report Currency",
-					  						ListLocalDefaultText =  "BS64:Itee15jXkdeiINeU15PXldeXIg==",
-					  						IsForeignKey =  true,
-					  						ForeignEntity =  "Currency",
-					  						NavigationPropertyName =  "Currency",
-					  						IsMaxLength =  false,
-					  						NoMetaDataField =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
-					  						DisplayInRequiredFields =  false,
-					  						HasTemplate =  false,
-					  						IsCustom =  false,
-					  						EnableFullscreenTextBox =  false,
-					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
- 
-
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
-					 
-					 						FieldName =  "ReportCurrencyCode",
-					  						ObjectTableName =  "InterestReport",
-					  						FieldsDataType =  "Text",
-					  						MinLength =  0,
-					  						MaxLength =  5,
-					  						IsRequired =  false,
-					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
-					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  true,
-					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  5,
-					  						DisplayInList =  true,
-					  						IsCustomFilter =  false,
-					  						IsListFilter =  false,
-					  						Operator =  "StartsWith",
-					  						MultiLine =  false,
-					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "ReportCurrencyCode",
-					  						ListPropertyPath =  "ReportCurrencyCode",
-					  						DisplayInLookUpIndex =  0,
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
-					  						IsMulti =  false,
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "InterestReport",
-					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						InActive =  false,
-					  						DisplayLongName =  false,
-					  						FullFieldLable =  "ReportCurrencyCode",
-					  						DefaultText =  "Report Currency Code",
-					  						FullLocalDefaultText =  "BS64:Iten15XXkyDXnteY15HXoiDXlNeT15XXlyI=",
-					  						ListFieldLable =  "ReportCurrencyCodeListLable",
-					  						ListLableDefaultText =  "Report Currency Code",
-					  						ListLocalDefaultText =  "BS64:Iten15XXkyDXnteY15HXoiDXlNeT15XXlyI=",
-					  						IsForeignKey =  false,
-					  						IsMaxLength =  false,
-					  						NoMetaDataField =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
-					  						DisplayInRequiredFields =  false,
-					  						HasTemplate =  false,
-					  						IsCustom =  false,
-					  						EnableFullscreenTextBox =  false,
-					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
- 
-
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
-					 
-					 						FieldName =  "VatNumber",
-					  						ObjectTableName =  "InterestReport",
-					  						FieldsDataType =  "Text",
-					  						MinLength =  0,
-					  						MaxLength =  20,
-					  						IsRequired =  false,
-					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
-					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  true,
-					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  20,
-					  						DisplayInList =  false,
-					  						IsCustomFilter =  false,
-					  						IsListFilter =  true,
-					  						Operator =  "StartsWith",
-					  						MultiLine =  false,
-					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "VatNumber",
-					  						ListPropertyPath =  "VatNumber",
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
-					  						IsMulti =  false,
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "InterestReport",
-					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						InActive =  false,
-					  						DisplayLongName =  false,
-					  						FullFieldLable =  "VatNumber",
-					  						DefaultText =  "Vat Number",
-					  						FullLocalDefaultText =  "Itee16HXpNeoINei15XXodenINee15XXqNep15Qi",
-					  						ListFieldLable =  "VatNumberListLable",
-					  						ListLableDefaultText =  "Vat Number",
-					  						ListLocalDefaultText =  "Itee16HXpNeoINei15XXodenINee15XXqNep15Qi",
+					  						ListLocalDefaultText =  "קוד קבוצת מאזן",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -4289,19 +4021,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
    
 
-			   TextCode InterestReportTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.Q.InterestReport", DefaultText = @"All Reports",LocalDefaultText = "BS64:Iteb15wg15TXk9eV15fXldeqIg==", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes,contextTenant);
+			   TextCode InterestReportTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.Q.InterestReport", DefaultText = @"All Reports",LocalDefaultText = "כל הדוחות", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes,contextTenant);
 			   Feature InterestReportFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "InterestReport.Q.InterestReport", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "InterestReportFeatures.InterestReport", NameTextCodeDefaultText = "Interest Report", FeatureTypeCode = "QUER", Packagable = false }, TenantFeatures, textCodes,InterestReportObjectTable, addedFeatures, addedTextCodes,contextTenant);
  
 
-			   TextCode InterestReportTextCode_1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.Q.DraftReports", DefaultText = @"Draft Reports",LocalDefaultText = "BS64:IteT15XXl9eV16og15jXmdeV15jXlCI=", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes,contextTenant);
+			   TextCode InterestReportTextCode_1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.Q.DraftReports", DefaultText = @"Draft Reports",LocalDefaultText = "דוחות טיוטה", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes,contextTenant);
 			   Feature InterestReportFeature_1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "InterestReport.Q.DraftReports", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "InterestReportFeatures.DraftReports", NameTextCodeDefaultText = "DraftReports", FeatureTypeCode = "QUER", Packagable = false }, TenantFeatures, textCodes,InterestReportObjectTable, addedFeatures, addedTextCodes,contextTenant);
  
 
-			   TextCode InterestReportTextCode_2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.Q.InvoicedReports", DefaultText = @"Invoiced Reports",LocalDefaultText = "BS64:IteT15XXl9eV16og16LXnSDXl9ep15HXldeg15nXqiI=", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes,contextTenant);
+			   TextCode InterestReportTextCode_2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.Q.InvoicedReports", DefaultText = @"Invoiced Reports",LocalDefaultText = "דוחות עם חשבונית", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes,contextTenant);
 			   Feature InterestReportFeature_2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "InterestReport.Q.InvoicedReports", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "InterestReportFeatures.InvoicedReports", NameTextCodeDefaultText = "InvoicedReports", FeatureTypeCode = "QUER", Packagable = false }, TenantFeatures, textCodes,InterestReportObjectTable, addedFeatures, addedTextCodes,contextTenant);
  
 
-			   TextCode InterestReportTextCode_3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.Q.ClosedWithoutInvoice", DefaultText = @"Closed Without Invoice",LocalDefaultText = "BS64:IteT15XXl9eV16og16nXoNeh15LXqNeVINec15zXkCDXl9ep15HXldeg15nXqiI=", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes,contextTenant);
+			   TextCode InterestReportTextCode_3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.Q.ClosedWithoutInvoice", DefaultText = @"Closed Without Invoice",LocalDefaultText = "דוחות שנסגרו ללא חשבונית", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes,contextTenant);
 			   Feature InterestReportFeature_3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "InterestReport.Q.ClosedWithoutInvoice", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "InterestReportFeatures.ClosedWithoutInvoice", NameTextCodeDefaultText = "ClosedWithoutInvoice", FeatureTypeCode = "QUER", Packagable = false }, TenantFeatures, textCodes,InterestReportObjectTable, addedFeatures, addedTextCodes,contextTenant);
 
 	        //TextCodeRepository.SubmitChanges();
@@ -4454,11 +4186,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   ObjectTable GeneralObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "General" && d.Tenant == 0).FirstOrDefault();   
 			   ObjectTable InterestReportObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "InterestReport" && d.Tenant == 0).FirstOrDefault();  
                  
-			   TextCode InterestReportGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.TH.General", DefaultText = "General",LocalDefaultText = "BS64:Iteb15zXnNeZIg==", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes,contextTenant);
+			   TextCode InterestReportGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.TH.General", DefaultText = "General",LocalDefaultText = "כללי", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes,contextTenant);
 			   Feature InterestReportGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "InterestReport.Tab.General", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "InterestReportFeatures.IRGN", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,InterestReportObjectTable,contextTenant);
  
                  
-			   TextCode InterestReportEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.TH.Events", DefaultText = "Events",LocalDefaultText = "BS64:IteQ15nXqNeV16LXmdedIg==", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes,contextTenant);
+			   TextCode InterestReportEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.TH.Events", DefaultText = "Events",LocalDefaultText = "אירועים", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes,contextTenant);
 			   Feature InterestReportEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "InterestReport.Tab.Events", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "InterestReportFeatures.IREV", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,InterestReportObjectTable,contextTenant);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
@@ -4651,7 +4383,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "IREC",
                 EnglishName =  "Recalculated",
-                LocalName =  "BS64:IteX15nXqdeV15Eg157Xl9eT16ki",
+                LocalName =  "חישוב מחדש",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,
@@ -4704,7 +4436,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "button",
 						FeatureId = InterestReportFeature_MB0.Id,
 						Style = "ApproveButtonStyle",
-						LocalDefaultText = "BS64:IteU16TXpyDXl9ep15HXldeg15nXqiI=",
+						LocalDefaultText = "הפק חשבונית",
 						FeatureUniqeCode = InterestReportFeature_MB0.FeatureUniqeCode,
 						HtmlComponentPath = null,
 						Width = 0,
@@ -4724,7 +4456,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "dropdownbutton",
 						FeatureId = null,
 						Style = null,
-						LocalDefaultText = "BS64:Iteg15XXodek15nXnSI=",
+						LocalDefaultText = "נוספים",
 						FeatureUniqeCode = null,
 						HtmlComponentPath = null,
 						Width = 0,
@@ -4744,7 +4476,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "menuitem",
 						FeatureId=  InterestReportFeature_MB10.Id,
 						Style = null,
-						LocalDefaultText = "BS64:IteU15PXpNeh15Qi",
+						LocalDefaultText = "הדפסה",
                         HtmlComponentPath=null,
                         Width=0,
 						FeatureUniqeCode=  InterestReportFeature_MB10.FeatureUniqeCode,
@@ -4764,7 +4496,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "menuitem",
 						FeatureId=  InterestReportFeature_MB11.Id,
 						Style = null,
-						LocalDefaultText = "BS64:IteR15nXmNeV15wg15PXldeXIg==",
+						LocalDefaultText = "ביטול דוח",
                         HtmlComponentPath=null,
                         Width=0,
 						FeatureUniqeCode=  InterestReportFeature_MB11.FeatureUniqeCode,
@@ -4784,7 +4516,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "menuitem",
 						FeatureId=  InterestReportFeature_MB12.Id,
 						Style = null,
-						LocalDefaultText = "BS64:Iteh15LXmdeo15Qg15zXnNeQINeX16nXkdeV16DXmdeqIg==",
+						LocalDefaultText = "סגירה ללא חשבונית",
                         HtmlComponentPath=null,
                         Width=0,
 						FeatureUniqeCode=  InterestReportFeature_MB12.FeatureUniqeCode,
@@ -4804,7 +4536,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "menuitem",
 						FeatureId=  InterestReportFeature_MB13.Id,
 						Style = null,
-						LocalDefaultText = "BS64:IteX15nXqdeV15Eg157Xl9eT16kg16nXnCDXlNeT15XXlyI=",
+						LocalDefaultText = "חישוב מחדש של הדוח",
                         HtmlComponentPath=null,
                         Width=0,
 						FeatureUniqeCode=  InterestReportFeature_MB13.FeatureUniqeCode,
@@ -4819,135 +4551,135 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   ObjectTable InterestReportObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "InterestReport" && d.Tenant == 0).FirstOrDefault(); 
 
- 		   TextCode InterestReportTextCode_InterestReportOCustomerisnotdefined = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.Customerisnotdefined", DefaultText = "Customer is not defined to interest",LocalDefaultText = @"BS64:Itec16fXldeXINec15Ag157XldeS15PXqCDXnNeo15nXkdeZ16oi", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode InterestReportTextCode_InterestReportOCustomerisnotdefined = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.Customerisnotdefined", DefaultText = "Customer is not defined to interest",LocalDefaultText = @"לקוח לא מוגדר לריבית", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode InterestReportTextCode_InterestReportOCustomerisnotconnected = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.Customerisnotconnected", DefaultText = "Customer is not connected to GLAccount",LocalDefaultText = @"BS64:IteU15zXp9eV15cg15zXkCDXnteX15XXkdeoINec15vXqNeY15nXoSDXlNeg15QnJ9eXIg==", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode InterestReportTextCode_InterestReportOCustomerisnotconnected = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.Customerisnotconnected", DefaultText = "Customer is not connected to GLAccount",LocalDefaultText = @"הלקוח לא מחובר לכרטיס הנה''ח", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode InterestReportTextCode_InterestReportOCustomeralreadyhasaDraftinterest = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.CustomeralreadyhasaDraftinterest", DefaultText = "Customer already has a Draft interest report  number",LocalDefaultText = @"BS64:Itec15zXp9eV15cg15vXkdeoINen15nXmdedINeT15XXlyDXqNeZ15HXmdeqINeR16HXmNeY15XXoSDXmNeZ15XXmNeUIg==", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode InterestReportTextCode_InterestReportOCustomeralreadyhasaDraftinterest = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.CustomeralreadyhasaDraftinterest", DefaultText = "Customer already has a Draft interest report  number",LocalDefaultText = @"ללקוח כבר קיים דוח ריבית בסטטוס טיוטה", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode InterestReportTextCode_InterestReportOShowDetails = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.ShowDetails", DefaultText = "Show Details",LocalDefaultText = @"BS64:Itek15nXqNeV15gi", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode InterestReportTextCode_InterestReportOShowDetails = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.ShowDetails", DefaultText = "Show Details",LocalDefaultText = @"פירוט", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode InterestReportTextCode_InterestReportOCustomeralreadyhasarecent = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.Customeralreadyhasarecent", DefaultText = "Customer already has a recent interest report date number",LocalDefaultText = @"BS64:Itec15zXp9eV15cg15vXkdeoINen15nXmdedINeT15XXlyDXqNeZ15HXmdeqINee16rXkNeo15nXmiDXnteQ15XXl9eoINeZ15XXqteoLSDXnteh16TXqCDXk9eV15ci", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode InterestReportTextCode_InterestReportOCustomeralreadyhasarecent = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.Customeralreadyhasarecent", DefaultText = "Customer already has a recent interest report date number",LocalDefaultText = @"ללקוח כבר קיים דוח ריבית מתאריך מאוחר יותר- מספר דוח", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode InterestReportTextCode_InterestReportOReportTotalAmountIslowerthanGLAccountMinimumamount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.ReportTotalAmountIslowerthanGLAccountMinimumamount", DefaultText = "Report total amount is lower than GLAccount Minimum amount definition  , Close the report without Invoice ?",LocalDefaultText = @"BS64:Iteh15vXldedINeU15PXldeXINen15jXnyDXnteU15LXk9eo16og16HXm9eV150g157Xmdeg15nXnteV150g15zXl9eZ15XXkSDXqNeZ15HXmdeqINeR15vXqNeY15nXoSAsINec16HXkteV16gg15DXqiDXlNeT15XXlyDXnNec15Ag15fXqdeR15XXoNeZ16ogPyI=", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode InterestReportTextCode_InterestReportOReportTotalAmountIslowerthanGLAccountMinimumamount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.ReportTotalAmountIslowerthanGLAccountMinimumamount", DefaultText = "Report total amount is lower than GLAccount Minimum amount definition  , Close the report without Invoice ?",LocalDefaultText = @"סכום הדוח קטן מהגדרת סכום מינימום לחיוב ריבית בכרטיס , לסגור את הדוח ללא חשבונית ?", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode InterestReportTextCode_InterestReportOCancel = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.Cancel", DefaultText = "Cancel",LocalDefaultText = @"BS64:IteR15nXmNeV15wi", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode InterestReportTextCode_InterestReportOCancel = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.Cancel", DefaultText = "Cancel",LocalDefaultText = @"ביטול", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode InterestReportTextCode_InterestReportOApprove = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.Approve", DefaultText = "Approve",LocalDefaultText = @"BS64:IteQ15nXqdeV16gi", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode InterestReportTextCode_InterestReportOApprove = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.Approve", DefaultText = "Approve",LocalDefaultText = @"אישור", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode InterestReportTextCode_InterestReportOInterestForDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.InterestForDate ", DefaultText = "Interest For Date ",LocalDefaultText = @"BS64:IteX15nXqdeV15Eg16jXmdeR15nXqiDXnNeq15DXqNeZ15oi", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode InterestReportTextCode_InterestReportOInterestForDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.InterestForDate ", DefaultText = "Interest For Date ",LocalDefaultText = @"חישוב ריבית לתאריך", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode InterestReportTextCode_InterestReportOClosingBalance = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.ClosingBalance", DefaultText = "Closing Balance",LocalDefaultText = @"BS64:IteZ16rXqNeqINeh15LXmdeo15Qi", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode InterestReportTextCode_InterestReportOClosingBalance = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.ClosingBalance", DefaultText = "Closing Balance",LocalDefaultText = @"יתרת סגירה", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode InterestReportTextCode_InterestReportOCantCancel = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.CantCancel", DefaultText = "Cant cancel this report , there’s a recent (with Higher interestReportDate) report for this customer , please cancel it first",LocalDefaultText = @"BS64:Itec15Ag16DXmdeq158g15zXkdeY15wg15DXqiDXlNeT15XXlyDXnteb15nXldeV158g16nXp9eZ15nXnSDXk9eV15cg157XkNeV15fXqCDXmdeV16rXqCDXnNec16fXldeXINeW15QgLCDXkNeg15Ag15HXmNecINeQ15XXqteVINen15XXk9edIg==", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode InterestReportTextCode_InterestReportOCantCancel = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.CantCancel", DefaultText = "Cant cancel this report , there’s a recent (with Higher interestReportDate) report for this customer , please cancel it first",LocalDefaultText = @"לא ניתן לבטל את הדוח מכיוון שקיים דוח מאוחר יותר ללקוח זה , אנא בטל אותו קודם", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode InterestReportTextCode_InterestReportOConfirmCancelling = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.ConfirmCancelling", DefaultText = "Please confirm canceling the report",LocalDefaultText = @"BS64:IteU15PXldeXINeU16DigJ3XnCDXmdeR15XXmNecICwg15TXkNedINec15TXntep15nXmiI=", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode InterestReportTextCode_InterestReportOConfirmCancelling = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.ConfirmCancelling", DefaultText = "Please confirm canceling the report",LocalDefaultText = @"הדוח הנ”ל יבוטל , האם להמשיך", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode InterestReportTextCode_InterestReportOCancelingInvoicedReportMessage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.CancelingInvoicedReportMessage", DefaultText = "ARinvoice already issued for this report , cancelling the report will create an Auto Credit Invoice , Continue ?",LocalDefaultText = @"BS64:Itec15PXldeXINeW15Qg15vXkdeoINeU15XXpNen15Qg15fXqdeR15XXoNeZ16ogLCDXkdeZ15jXldecINeU15PXldeXINeZ15HXmNecINeQ16og15TXl9ep15HXldeg15nXqiAsINeU15DXnSDXnNeU157XqdeZ15ogPyI=", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode InterestReportTextCode_InterestReportOCancelingInvoicedReportMessage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.CancelingInvoicedReportMessage", DefaultText = "ARinvoice already issued for this report , cancelling the report will create an Auto Credit Invoice , Continue ?",LocalDefaultText = @"לדוח זה כבר הופקה חשבונית , ביטול הדוח יבטל את החשבונית , האם להמשיך ?", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode InterestReportTextCode_InterestReportOTheReportisinProgress = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.TheReportisinProgress", DefaultText = "The Report is in Progress, Can't Cancel until it Finishes",LocalDefaultText = @"BS64:IteU15PXldeXINeR16rXlNec15nXmiAsINec15Ag16DXmdeq158g15zXkdeY15wg15vXqNeS16Ii", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode InterestReportTextCode_InterestReportOTheReportisinProgress = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.TheReportisinProgress", DefaultText = "The Report is in Progress, Can't Cancel until it Finishes",LocalDefaultText = @"הדוח בתהליך , לא ניתן לבטל כרגע", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode InterestReportTextCode_InterestReportOCustomeralreadyhasaninprogress = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.Customeralreadyhasaninprogress", DefaultText = "Customer already has an in progress interest report number",LocalDefaultText = @"BS64:Itec15zXp9eV15cg15vXkdeoINen15nXmdedINeT15XXlyDXkdeq15TXnNeZ15ogLCDXoNeQINec15TXnteq15nXnyDXnNeh15nXldedINeV15zXoNeh15XXqiDXqdeg15nXqiI=", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode InterestReportTextCode_InterestReportOCustomeralreadyhasaninprogress = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.Customeralreadyhasaninprogress", DefaultText = "Customer already has an in progress interest report number",LocalDefaultText = @"ללקוח כבר קיים דוח בתהליך , נא להמתין לסיום ולנסות שנית", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode InterestReportTextCode_InterestInvoiceOBatchInterest = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestInvoice.O.BatchInterest", DefaultText = "Batch Interest",LocalDefaultText = @"BS64:IteU16TXp9eUINee16jXldeb15bXqiI=", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode InterestReportTextCode_InterestInvoiceOBatchInterest = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestInvoice.O.BatchInterest", DefaultText = "Batch Interest",LocalDefaultText = @"הפקה מרוכזת", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode InterestReportTextCode_InterestReportOBatchInvoice = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.BatchInvoice", DefaultText = "Batch Invoice",LocalDefaultText = @"BS64:IteU16TXp9eqINeX16nXkdeV16DXmdeqINeo15nXkdeZ16og157XqNeV15vXlteqIg==", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode InterestReportTextCode_InterestReportOBatchInvoice = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.BatchInvoice", DefaultText = "Batch Invoice",LocalDefaultText = @"הפקת חשבונית ריבית מרוכזת", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode InterestReportTextCode_InterestReportOCreateInvoice = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.CreateInvoice", DefaultText = "Create Invoice",LocalDefaultText = @"BS64:Item15XXqCDXl9ep15HXldeg15nXqiI=", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode InterestReportTextCode_InterestReportOCreateInvoice = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.CreateInvoice", DefaultText = "Create Invoice",LocalDefaultText = @"צור חשבונית", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode InterestReportTextCode_InterestReportOSelectAtLeastOnLine = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.SelectAtLeastOnLine", DefaultText = "Please select at least one line",LocalDefaultText = @"BS64:IteQ16DXkCDXkdeX16gg16nXldeo15Qg15DXl9eqINec16TXl9eV16oi", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode InterestReportTextCode_InterestReportOSelectAtLeastOnLine = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.SelectAtLeastOnLine", DefaultText = "Please select at least one line",LocalDefaultText = @"אנא בחר שורה אחת לפחות", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode InterestReportTextCode_InterestReportOShowInvoicingInProgressReports = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.ShowInvoicingInProgressReports", DefaultText = "Show Invoicing In Progress Reports",LocalDefaultText = @"BS64:IteU16bXkiDXk9eV15fXldeqINeR16rXlNec15nXmiDXlNek16fXqiDXl9ep15HXldeg15nXqiI=", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode InterestReportTextCode_InterestReportOShowInvoicingInProgressReports = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.ShowInvoicingInProgressReports", DefaultText = "Show Invoicing In Progress Reports",LocalDefaultText = @"הצג דוחות בתהליך הפקת חשבונית", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode InterestReportTextCode_InterestReportOReportIsBeingInvoiced = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.ReportIsBeingInvoiced", DefaultText = "The Report is being Invoiced, Can't Cancel until it Finishes",LocalDefaultText = @"BS64:IiDXlNeT15XXlyDXkdeq15TXnNeZ15og15TXpNen16og15fXqdeR15XXoNeZ16ogLCDXoNeZ16rXnyDXmdeU15nXlCDXnNeR15jXnCDXkdeh15nXldedIg==", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode InterestReportTextCode_InterestReportOReportIsBeingInvoiced = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.ReportIsBeingInvoiced", DefaultText = "The Report is being Invoiced, Can't Cancel until it Finishes",LocalDefaultText = @" הדוח בתהליך הפקת חשבונית , ניתן יהיה לבטל בסיום", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode InterestReportTextCode_InterestReportOReportinProgress = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.ReportinProgress", DefaultText = "Report In Progress",LocalDefaultText = @"BS64:IteU15PXldeXINeg157XpteQINeR16rXlNec15nXmiDXkdeg15nXlCI=", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode InterestReportTextCode_InterestReportOReportinProgress = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.ReportinProgress", DefaultText = "Report In Progress",LocalDefaultText = @"הדוח נמצא בתהליך בניה", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode InterestReportTextCode_InterestReportOReportCreationFailed = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.ReportCreationFailed", DefaultText = "Report Creation Failed",LocalDefaultText = @"BS64:IteR16DXmdeqINeU15PXldeXINeg15vXqdec15Qi", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode InterestReportTextCode_InterestReportOReportCreationFailed = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.ReportCreationFailed", DefaultText = "Report Creation Failed",LocalDefaultText = @"בנית הדוח נכשלה", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode InterestReportTextCode_InterestReportOEditOpenBalance = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.EditOpenBalance", DefaultText = "Edit Open Balance",LocalDefaultText = @"BS64:Itei15PXm9efINeZ16rXqNeqINek16rXmdeX15Qi", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode InterestReportTextCode_InterestReportOEditOpenBalance = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.EditOpenBalance", DefaultText = "Edit Open Balance",LocalDefaultText = @"עדכן יתרת פתיחה", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode InterestReportTextCode_InterestReportOSelectedReportsWillNotHaveAnInvoice = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.SelectedReportsWillNotHaveAnInvoice", DefaultText = "selected reports will not have an invoice created for them because they do not meet the minimum billing requirements. They will be closed without invoices",LocalDefaultText = @"BS64:IteU15PXldeX15XXqiDXqdeg15HXl9eo15Ug15zXkCDXqteZ15XXldem16gg16LXkdeV16jXnSDXl9ep15HXldeg15nXqiDXnteb15nXldeV158g16nXlNedINec15Ag16LXldee15PXmdedINeR15TXkteT16jXqiDXlNeX15nXldeRINeU157Xmdeg157XnNeZ16og16nXkdeb16jXmNeZ16EgLiAi", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode InterestReportTextCode_InterestReportOSelectedReportsWillNotHaveAnInvoice = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.SelectedReportsWillNotHaveAnInvoice", DefaultText = "selected reports will not have an invoice created for them because they do not meet the minimum billing requirements. They will be closed without invoices",LocalDefaultText = @"הדוחות שנבחרו לא תיווצר עבורם חשבונית מכיוון שהם לא עומדים בהגדרת החיוב המינמלית שבכרטיס . ", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode InterestReportTextCode_InterestReportOOutOf = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.OutOf", DefaultText = "out of",LocalDefaultText = @"BS64:Itee16rXldeaIg==", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode InterestReportTextCode_InterestReportOOutOf = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.OutOf", DefaultText = "out of",LocalDefaultText = @"מתוך", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode InterestReportTextCode_InterestReportOAnotherBatchInvoiceStillInProgress = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.AnotherBatchInvoiceStillInProgress", DefaultText = "Please wait until all invoices that are being created have completed before creating more batch invoices",LocalDefaultText = @"BS64:Iten15nXmdee15XXqiDXl9ep15HXldeg15nXldeqINeR16rXlNec15nXmiDXlNek16fXlCAsINec15Ag16DXmdeq158g15zXlNek15nXpyDXoNeV16HXpNeV16og16LXkyDXqdeZ16HXqteZ15nXnteVIg==", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode InterestReportTextCode_InterestReportOAnotherBatchInvoiceStillInProgress = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.AnotherBatchInvoiceStillInProgress", DefaultText = "Please wait until all invoices that are being created have completed before creating more batch invoices",LocalDefaultText = @"קיימות חשבוניות בתהליך הפקה , לא ניתן להפיק נוספות עד שיסתיימו", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode InterestReportTextCode_InterestReportOBatchReport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.BatchReport", DefaultText = "Batch Report",LocalDefaultText = @"BS64:IteU16TXp9eqINeT15XXl9eV16og16jXmdeR15nXqiDXnteo15XXm9eW16ogIg==", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode InterestReportTextCode_InterestReportOBatchReport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.BatchReport", DefaultText = "Batch Report",LocalDefaultText = @"הפקת דוחות ריבית מרוכזת ", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode InterestReportTextCode_InterestReportOAnotherBatchReportStillInProgress = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.AnotherBatchReportStillInProgress", DefaultText = "Please wait until all reports that are being created have completed before creating more batch reports.",LocalDefaultText = @"BS64:Iten15nXmdee15nXnSDXk9eV15fXldeqINeR16rXlNec15nXmiDXlNek16fXlCAsINec15Ag16DXmdeq158g15zXlNek15nXpyDXoNeV16HXpNeZ150g16LXkyDXqdeZ16HXqteZ15nXnteVIg==", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode InterestReportTextCode_InterestReportOAnotherBatchReportStillInProgress = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.AnotherBatchReportStillInProgress", DefaultText = "Please wait until all reports that are being created have completed before creating more batch reports.",LocalDefaultText = @"קיימים דוחות בתהליך הפקה , לא ניתן להפיק נוספים עד שיסתיימו", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode InterestReportTextCode_InterestReportONoGlAccountPeriod = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.NoGlAccountPeriod", DefaultText = "There is no GL Account Interest period in the dates provided",LocalDefaultText = @"BS64:Itec15Ag16fXmdeZ157XqiDXlNeS15PXqNeqINeo15nXkdeZ16og15HXm9eo15jXmdehINeR16rXkNeo15nXm9eZ150g15DXnNeVIg==", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode InterestReportTextCode_InterestReportONoGlAccountPeriod = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.NoGlAccountPeriod", DefaultText = "There is no GL Account Interest period in the dates provided",LocalDefaultText = @"לא קיימת הגדרת ריבית בכרטיס בתאריכים אלו", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode InterestReportTextCode_InterestReportONoStandardBasePeriod = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.NoStandardBasePeriod", DefaultText = "there is no Interest Base period in the dates provided for the Standard Rate Base",LocalDefaultText = @"BS64:Itec15Ag16fXmdeZ157XqiDXlNeS15PXqNeqINeo15nXkdeZ16og16jXkteZ15zXlCAg15HXm9eo15jXmdehINeR16rXkNeo15nXm9eZ150g15DXnNeVIg==", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode InterestReportTextCode_InterestReportONoStandardBasePeriod = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.NoStandardBasePeriod", DefaultText = "there is no Interest Base period in the dates provided for the Standard Rate Base",LocalDefaultText = @"לא קיימת הגדרת ריבית רגילה  בכרטיס בתאריכים אלו", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode InterestReportTextCode_InterestReportONoExceptionalBasePeriod = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.NoExceptionalBasePeriod", DefaultText = "there is no Interest Base period in the dates provided for the Exceptional Rate Base",LocalDefaultText = @"BS64:Itec15Ag16fXmdeZ157XqiDXlNeS15PXqNeqINeo15nXkdeZ16og15fXqNeZ15LXlCDXkdeb16jXmNeZ16Eg15HXqteQ16jXmdeb15nXnSDXkNec15Ui", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode InterestReportTextCode_InterestReportONoExceptionalBasePeriod = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.NoExceptionalBasePeriod", DefaultText = "there is no Interest Base period in the dates provided for the Exceptional Rate Base",LocalDefaultText = @"לא קיימת הגדרת ריבית חריגה בכרטיס בתאריכים אלו", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode InterestReportTextCode_InterestReportONoCreditBasePeriod = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.NoCreditBasePeriod", DefaultText = "there is no Interest Base period in the dates provided for the Credit Rate Base",LocalDefaultText = @"BS64:Itec15Ag16fXmdeZ157XqiDXlNeS15PXqNeqINeo15nXkdeZ16og15bXm9eV16og15HXm9eo15jXmdehINeR16rXkNeo15nXm9eZ150g15DXnNeVIg==", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode InterestReportTextCode_InterestReportONoCreditBasePeriod = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.NoCreditBasePeriod", DefaultText = "there is no Interest Base period in the dates provided for the Credit Rate Base",LocalDefaultText = @"לא קיימת הגדרת ריבית זכות בכרטיס בתאריכים אלו", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode InterestReportTextCode_InterestReportOBatchPrint = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.BatchPrint", DefaultText = "Batch Print",LocalDefaultText = @"BS64:IteU15PXpNeh15Qg15HXqNem16Mi", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode InterestReportTextCode_InterestReportOBatchPrint = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.BatchPrint", DefaultText = "Batch Print",LocalDefaultText = @"הדפסה ברצף", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode InterestReportTextCode_InterestReportOShowReportsWithPrintedInvoices = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.ShowReportsWithPrintedInvoices", DefaultText = "Show Reports with Printed Invoices",LocalDefaultText = @"BS64:IteU16bXkiDXk9eV15fXldeqINeR16rXlNec15nXmiDXlNek16fXqiDXl9ep15HXldeg15nXqiI=", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode InterestReportTextCode_InterestReportOShowReportsWithPrintedInvoices = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.ShowReportsWithPrintedInvoices", DefaultText = "Show Reports with Printed Invoices",LocalDefaultText = @"הצג דוחות בתהליך הפקת חשבונית", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode InterestReportTextCode_InterestReportOInvoicesnovalidcopiestoprint = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.Invoicesnovalidcopiestoprint", DefaultText = " were not printed because there are no valid copies to print.",LocalDefaultText = @"BS64:Itec15Ag15TXldeT16TXodeVINee15vXmdeV15XXnyDXqdec15Ag16DXntem15DXlSDXoteV16rXp9eZ150g15zXlNeT16TXodeUIg==", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode InterestReportTextCode_InterestReportOInvoicesnovalidcopiestoprint = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.Invoicesnovalidcopiestoprint", DefaultText = " were not printed because there are no valid copies to print.",LocalDefaultText = @"לא הודפסו מכיוון שלא נמצאו עותקים להדפסה", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode InterestReportTextCode_InterestReportOReportsnovalidcopiestoprint = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.Reportsnovalidcopiestoprint", DefaultText = " were not printed because there are no valid copies to print.",LocalDefaultText = @"BS64:Itec15Ag15TXldeT16TXodeVINee15vXmdeV15XXnyDXqdec15Ag16DXntem15DXlSDXoteV16rXp9eZ150g15zXlNeT16TXodeUIg==", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode InterestReportTextCode_InterestReportOReportsnovalidcopiestoprint = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.Reportsnovalidcopiestoprint", DefaultText = " were not printed because there are no valid copies to print.",LocalDefaultText = @"לא הודפסו מכיוון שלא נמצאו עותקים להדפסה", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode InterestReportTextCode_InterestReportOInvoices = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.Invoices", DefaultText = "Invoices ",LocalDefaultText = @"BS64:IteX16nXkdeV16DXmdeV16oi", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode InterestReportTextCode_InterestReportOInvoices = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.Invoices", DefaultText = "Invoices ",LocalDefaultText = @"חשבוניות", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode InterestReportTextCode_InterestReportOReports = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.Reports", DefaultText = "Reports ",LocalDefaultText = @"BS64:IteT15XXl9eV16oi", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode InterestReportTextCode_InterestReportOReports = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.Reports", DefaultText = "Reports ",LocalDefaultText = @"דוחות", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode InterestReportTextCode_InterestReportOEditCalculationDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.EditCalculationDate", DefaultText = "Edit Calculation Date",LocalDefaultText = @"BS64:Itei15PXm9efINeq15DXqNeZ15og15fXmdep15XXkSI=", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode InterestReportTextCode_InterestReportOEditCalculationDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.EditCalculationDate", DefaultText = "Edit Calculation Date",LocalDefaultText = @"עדכן תאריך חישוב", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode InterestReportTextCode_InterestReportODownloadorView = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.DownloadorView", DefaultText = "Would you like to Download or View all selected interest invoices as one document?",LocalDefaultText = @"BS64:IteU15DXnSDXnNeU15PXpNeZ16Eg15DXqiDXlNeX16nXkdeV16DXmdeV16og15TXoNeR15fXqNeV16ogPyI=", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode InterestReportTextCode_InterestReportODownloadorView = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.DownloadorView", DefaultText = "Would you like to Download or View all selected interest invoices as one document?",LocalDefaultText = @"האם להדפיס את החשבוניות הנבחרות ?", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode InterestReportTextCode_InterestReportODownload = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.Download", DefaultText = "Download",LocalDefaultText = @"BS64:IteU15XXqNeT15Qi", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode InterestReportTextCode_InterestReportODownload = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.Download", DefaultText = "Download",LocalDefaultText = @"הורדה", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode InterestReportTextCode_InterestReportOView = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.View", DefaultText = "View",LocalDefaultText = @"BS64:Itec16bXpNeV16oi", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode InterestReportTextCode_InterestReportOView = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.View", DefaultText = "View",LocalDefaultText = @"לצפות", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode InterestReportTextCode_InterestReportOCreatingInvoicepermitted = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.CreatingInvoicepermitted", DefaultText = "Creating an Invoice is not permitted unless the report is 'Draft' or 'Invoicing Failed'",LocalDefaultText = @"BS64:Iteg15nXqtefINec15TXpNeZ16cg15fXqdeR15XXoNeZ16og16jXpyDXnNeT15XXlyDXqdeR16HXmNeY15XXoSDXmNeZ15XXmNeUINeQ15Ug16DXm9ep15wi", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode InterestReportTextCode_InterestReportOCreatingInvoicepermitted = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.CreatingInvoicepermitted", DefaultText = "Creating an Invoice is not permitted unless the report is 'Draft' or 'Invoicing Failed'",LocalDefaultText = @"ניתן להפיק חשבונית רק לדוח שבסטטוס טיוטה או נכשל", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
  		   TextCode InterestReportTextCode_InterestReportOEntertheInvoiceDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.EntertheInvoiceDate", DefaultText = "Enter the Invoice Date to be used for the invoices for all selected reports",LocalDefaultText = null, ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
  		   TextCode InterestReportTextCode_InterestReportOAlreadyExists = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.AlreadyExists", DefaultText = "] already exists",LocalDefaultText = null, ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode InterestReportTextCode_InterestReportOConfirmClosingWithoutInvoice = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.ConfirmClosingWithoutInvoice", DefaultText = "Confirm closing the report without invoice?",LocalDefaultText = @"BS64:Iteg15Ag15zXkNep16gg16HXkteZ16jXqiDXk9eV15fXldeqINec15zXkCDXlNek16fXqiDXl9ep15HXldeg15nXldeqIg==", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode InterestReportTextCode_InterestReportOConfirmClosingWithoutInvoice = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.ConfirmClosingWithoutInvoice", DefaultText = "Confirm closing the report without invoice?",LocalDefaultText = @"נא לאשר סגירת דוחות ללא הפקת חשבוניות", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode InterestReportTextCode_InterestReportOAttachReportWithEachInvoice = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.AttachReportWithEachInvoice", DefaultText = "Attach Report with Each Invoice",LocalDefaultText = @"BS64:Item16jXoyDXpNeZ16jXldeYINeo15nXkdeZ16og15zXlNeT16TXodeUIg==", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode InterestReportTextCode_InterestReportOAttachReportWithEachInvoice = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.AttachReportWithEachInvoice", DefaultText = "Attach Report with Each Invoice",LocalDefaultText = @"צרף פירוט ריבית להדפסה", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode InterestReportTextCode_InterestReportOon = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.on", DefaultText = "on",LocalDefaultText = @"BS64:Itei15Mi", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode InterestReportTextCode_InterestReportOon = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.on", DefaultText = "on",LocalDefaultText = @"עד", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode InterestReportTextCode_InterestReportOLineWasCreatedByTheSystem = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.LineWasCreatedByTheSystem", DefaultText = "This line was created by the system in order to calculate the interest on the Open Balance",LocalDefaultText = @"BS64:Iteo15nXkdeZ16og157Xl9eV16nXkdeqINei15wg15nXqteo16og15fXldeR15Qi", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode InterestReportTextCode_InterestReportOLineWasCreatedByTheSystem = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.LineWasCreatedByTheSystem", DefaultText = "This line was created by the system in order to calculate the interest on the Open Balance",LocalDefaultText = @"ריבית מחושבת על יתרת חובה", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode InterestReportTextCode_InterestReportOCannotCreateReportWithCalculationDateLess = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.CannotCreateReportWithCalculationDateLess", DefaultText = "Can't create report. [Report ",LocalDefaultText = @"BS64:Itec15Ag16DXmdeq158g15zXlNeb15nXnyDXkNeqINeU15PXldeXICwg15nXqdeg15Ug15PXldeXINeR16rXkNeo15nXm9eZ150i", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode InterestReportTextCode_InterestReportOCannotCreateReportWithCalculationDateLess = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.CannotCreateReportWithCalculationDateLess", DefaultText = "Can't create report. [Report ",LocalDefaultText = @"לא ניתן להכין את הדוח , ישנו דוח בתאריכים", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode InterestReportTextCode_InterestReportOUpdatingInvoicepermitted = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.UpdatingInvoicepermitted", DefaultText = "Update a report is not permitted unless the report is 'Draft' or 'Invoicing Failed'",LocalDefaultText = @"BS64:Iteg15nXqtefINec16LXk9eb158g15PXldeXINeo16cg15vXkNep16gg15TXodeY15DXmNeV16Eg16nXnCDXlNeT15XXlyAi15TXldeQICLXmNeZ15XXmNeUIiDXkNeVICLXoNeb16nXnCI=", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode InterestReportTextCode_InterestReportOUpdatingInvoicepermitted = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.UpdatingInvoicepermitted", DefaultText = "Update a report is not permitted unless the report is 'Draft' or 'Invoicing Failed'",LocalDefaultText = "ניתן לעדכן דוח רק כאשר הסטאטוס של הדוח ''הוא ''טיוטה'' או ''נכשל", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode InterestReportTextCode_InterestReportOConfirmRecalculateReport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.ConfirmRecalculateReport", DefaultText = "Confirm recalculating the report",LocalDefaultText = @"BS64:IteZ16kg15zXkNep16gg15fXmdep15XXkSDXnteX15PXqSDXqdecINeU15PXldeXIg==", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode InterestReportTextCode_InterestReportOConfirmRecalculateReport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.ConfirmRecalculateReport", DefaultText = "Confirm recalculating the report",LocalDefaultText = @"יש לאשר חישוב מחדש של הדוח", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode InterestReportTextCode_InterestReportOEnterCreditInvoiceDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.EnterCreditInvoiceDate", DefaultText = "Enter Credit Invoice Date",LocalDefaultText = @"BS64:IteU16fXnNeTINeq15DXqNeZ15og15zXl9ep15HXldeg15nXqiDXlteZ15vXldeZIg==", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode InterestReportTextCode_InterestReportOEnterCreditInvoiceDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.EnterCreditInvoiceDate", DefaultText = "Enter Credit Invoice Date",LocalDefaultText = @"הקלד תאריך לחשבונית זיכוי", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode InterestReportTextCode_InterestReportORequiedCreditInvoiceDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.RequiedCreditInvoiceDate", DefaultText = "The credit invoice date is required",LocalDefaultText = @"BS64:IteX15XXkdeUINec15TXp9ec15nXkyDXqteQ16jXmdeaINec15fXqdeR15XXoNeZ16og15bXmdeb15XXmSI=", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode InterestReportTextCode_InterestReportORequiedCreditInvoiceDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.RequiedCreditInvoiceDate", DefaultText = "The credit invoice date is required",LocalDefaultText = @"חובה להקליד תאריך לחשבונית זיכוי", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode InterestReportTextCode_InterestReportOCreditInvoiceDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.CreditInvoiceDate", DefaultText = "Credit Invoice Date",LocalDefaultText = @"BS64:IiDXqteQ16jXmdeaINec15fXqdeR15XXoNeZ16og15bXmdeb15XXmSI=", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode InterestReportTextCode_InterestReportOCreditInvoiceDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.CreditInvoiceDate", DefaultText = "Credit Invoice Date",LocalDefaultText = @" תאריך לחשבונית זיכוי", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode InterestReportTextCode_InterestReportOInterestReports = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.InterestReports", DefaultText = "Interest Report",LocalDefaultText = @"BS64:IteT15XXlyDXqNeZ15HXmdeqIg==", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode InterestReportTextCode_InterestReportOInterestReports = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.InterestReports", DefaultText = "Interest Report",LocalDefaultText = @"דוח ריבית", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode InterestReportTextCode_InterestReportOCloseAllSelectedWithoutInvoice = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.CloseAllSelectedWithoutInvoice", DefaultText = "Confirm closing all selected reports without invoices.",LocalDefaultText = @"BS64:IteQ15nXqdeV16gg16HXkteZ16jXqiDXm9ecINeU15PXldeX15XXqiDXlNee16HXldee16DXmdedINec15zXkCDXl9ep15HXldeg15nXldeqICI=", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode InterestReportTextCode_InterestReportOCloseAllSelectedWithoutInvoice = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.CloseAllSelectedWithoutInvoice", DefaultText = "Confirm closing all selected reports without invoices.",LocalDefaultText = @"אישור סגירת כל הדוחות המסומנים ללא חשבוניות ", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode InterestReportTextCode_InterestReportOCloseWithoutInvoice = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.CloseWithoutInvoice", DefaultText = "Close Without Invoice",LocalDefaultText = @"BS64:Iteh15LXmdeo15Qg15zXnNeQINeX16nXkdeV16DXmdeqIg==", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode InterestReportTextCode_InterestReportOCloseWithoutInvoice = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.CloseWithoutInvoice", DefaultText = "Close Without Invoice",LocalDefaultText = @"סגירה ללא חשבונית", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode InterestReportTextCode_InterestReportOPrintInvoicesAndAttachedReports = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.PrintInvoicesAndAttachedReports", DefaultText = "Print Invoices and Attached Reports",LocalDefaultText = @"BS64:IteU15PXpNehINeQ16og15TXl9ep15HXldeg15nXldeqINei150g15PXldeX15XXqiDXlNeo15nXkdeZ16oi", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode InterestReportTextCode_InterestReportOPrintInvoicesAndAttachedReports = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.PrintInvoicesAndAttachedReports", DefaultText = "Print Invoices and Attached Reports",LocalDefaultText = @"הדפס את החשבוניות עם דוחות הריבית", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode InterestReportTextCode_InterestReportOPrintInvoicesAlone = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.PrintInvoicesAlone", DefaultText = "Print Invoices Alone",LocalDefaultText = @"BS64:IteU15PXpNehINeX16nXkdeV16DXmdeV16og15HXnNeR15Mi", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode InterestReportTextCode_InterestReportOPrintInvoicesAlone = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.PrintInvoicesAlone", DefaultText = "Print Invoices Alone",LocalDefaultText = @"הדפס חשבוניות בלבד", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode InterestReportTextCode_InterestReportOOpeningBalanceNotCalculated = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.OpeningBalanceNotCalculated", DefaultText = "Opening balance for interest has not been calculated",LocalDefaultText = @"BS64:IteY16jXnSDXl9eV16nXkdeUINeZ16rXqNeqINek16rXmdeX15Qg15zXqNeZ15HXmdeqIg==", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode InterestReportTextCode_InterestReportOOpeningBalanceNotCalculated = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.OpeningBalanceNotCalculated", DefaultText = "Opening balance for interest has not been calculated",LocalDefaultText = @"טרם חושבה יתרת פתיחה לריבית", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode InterestReportTextCode_InterestReportOShowSignedAndSentInvoices = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.ShowSignedAndSentInvoices", DefaultText = "View invoices that have been signed and sent",LocalDefaultText = @"BS64:IteU16bXkiDXl9ep15HXldeg15nXldeqINep16DXl9eq157XlSDXldeg16nXnNeX15Ui", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode InterestReportTextCode_InterestReportOShowSignedAndSentInvoices = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.ShowSignedAndSentInvoices", DefaultText = "View invoices that have been signed and sent",LocalDefaultText = @"הצג חשבוניות שנחתמו ונשלחו", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode InterestReportTextCode_InterestReportOResendDigitalInvoices = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.ResendDigitalInvoices", DefaultText = "Resend digital invoices",LocalDefaultText = @"BS64:Itep15zXlyDXl9ep15HXldeg15nXldeqINeT15nXkteY15zXmdeV16og157Xl9eT16ki", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode InterestReportTextCode_InterestReportOResendDigitalInvoices = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.ResendDigitalInvoices", DefaultText = "Resend digital invoices",LocalDefaultText = @"שלח חשבוניות דיגטליות מחדש", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode InterestReportTextCode_InterestReportONewReport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.NewReport", DefaultText = "New Interest Report",LocalDefaultText = @"BS64:IteT15XXlyDXqNeZ15HXmdeqINeX15PXqSI=", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode InterestReportTextCode_InterestReportONewReport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.NewReport", DefaultText = "New Interest Report",LocalDefaultText = @"דוח ריבית חדש", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
    
 	    

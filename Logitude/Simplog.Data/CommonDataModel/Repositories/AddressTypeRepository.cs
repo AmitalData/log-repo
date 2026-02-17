@@ -8,7 +8,11 @@ namespace Simplog.Data.CommonDataModel.Repositories
     public class AddressTypeRepository : IRepository<AddressType>
     {
         ICommonDataContext Context;
+        public AddressTypeRepository()
+        {
+            Context = new CommonDataContext();
 
+        }
         public AddressTypeRepository(ICommonDataContext context)
         {
             Context = context;

@@ -16,7 +16,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         VesselRepository repository;
 
-
+        public VesselQuery()
+        {
+            repository = new VesselRepository(); 
+        }
 
         public VesselQuery(int tenant)
         {

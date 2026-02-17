@@ -34,7 +34,7 @@ namespace CommunicationWorkerRole
         {
             if (!isFirstTime) return;
 
-            DevLog.Instance.WriteDebug("IndexSearchWorkerRole start run (WorkOnce)");
+            DevLog.Instance.WriteDebug("SyncRecordsCCUTableWR start run (WorkOnce)");
 
             try
             {
@@ -77,13 +77,16 @@ namespace CommunicationWorkerRole
         private void InitScheduler()
         {
             runIndexerIntervalMinutes = GetValueFromConfig(nameof(runIndexerIntervalMinutes), runIndexerIntervalMinutes);
-            Scheduler(() => RunIndexerAsync(CancellationToken.None), TimeSpan.FromMinutes(runIndexerIntervalMinutes).TotalMilliseconds, nameof(RunIndexerAsync));
+            Scheduler(() => RunIndexerAsync(CancellationToken.None), runIndexerIntervalMinutes, nameof(RunIndexerAsync));
+            logger.WriteTrace($"Scheduler {nameof(RunIndexerAsync)} interval: {runIndexerIntervalMinutes}");
 
             removeOldIndexDataIntervalHours = GetValueFromConfig(nameof(removeOldIndexDataIntervalHours), removeOldIndexDataIntervalHours);
-            Scheduler(() => RemoveOldIndexDataAsync(CancellationToken.None), TimeSpan.FromHours(removeOldIndexDataIntervalHours).TotalMilliseconds, nameof(RemoveOldIndexDataAsync));
+            Scheduler(() => RemoveOldIndexDataAsync(CancellationToken.None), removeOldIndexDataIntervalHours, nameof(RemoveOldIndexDataAsync));
+            logger.WriteTrace($"Scheduler {nameof(RemoveOldIndexDataAsync)} interval: {removeOldIndexDataIntervalHours}");
 
             removeOldSearchDataIntervalHours = GetValueFromConfig(nameof(removeOldSearchDataIntervalHours), removeOldSearchDataIntervalHours);
-            Scheduler(() => RemoveOldSearchDataAsync(CancellationToken.None), TimeSpan.FromHours(removeOldSearchDataIntervalHours).TotalMilliseconds, nameof(RemoveOldSearchDataAsync));
+            Scheduler(() => RemoveOldSearchDataAsync(CancellationToken.None), removeOldSearchDataIntervalHours, nameof(RemoveOldSearchData));
+            logger.WriteTrace($"Scheduler {nameof(RemoveOldSearchDataAsync)} interval: {removeOldSearchDataIntervalHours}");
         }
 
         private double GetValueFromConfig(string configKey, double defaultValue)
@@ -94,8 +97,6 @@ namespace CommunicationWorkerRole
 
         public async Task RunIndexerAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            logger.WriteTrace("RunIndexerAsync started");
-
             SearchIndexQuery searchIndexQuery = new SearchIndexQuery(mainTenant);
             List<SearchIndex> allSearchIndexes = searchIndexQuery.GetAll();
 
@@ -131,14 +132,10 @@ namespace CommunicationWorkerRole
             {
                 Unlock(runIndexerLockKey);
             }
-
-            logger.WriteTrace("RunIndexerAsync completed");
         }
 
         public async Task RemoveOldIndexDataAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            logger.WriteTrace("RemoveOldIndexDataAsync started");
-
             SearchIndexQuery searchIndexQuery = new SearchIndexQuery(mainTenant);
             List<SearchIndex> allSearchIndexes = searchIndexQuery.GetAll();
 
@@ -173,16 +170,12 @@ namespace CommunicationWorkerRole
             {
                 Unlock(removeOldIndexDataLockKey);
             }
-
-            logger.WriteTrace("RemoveOldIndexDataAsync completed");
         }
 
         private async Task RemoveOldSearchDataAsync(CancellationToken cancellationToken = default(CancellationToken)) => await Task.Run(() => RemoveOldSearchData(), cancellationToken).ConfigureAwait(false);
 
         public void RemoveOldSearchData()
         {
-            logger.WriteTrace("RemoveOldSearchData started");
-
             SearchIndexTenantHistoryQuery searchIndexTenantHistoryQuery = new SearchIndexTenantHistoryQuery(mainTenant);
             SearchIndexEditHistoryQuery searchIndexEditHistoryQuery = new SearchIndexEditHistoryQuery(mainTenant);
             List<SearchIndexTenantHistory> allTenantHistories = searchIndexTenantHistoryQuery.GetAll();
@@ -221,8 +214,6 @@ namespace CommunicationWorkerRole
             {
                 Unlock(removeOldSearchDataLockKey);
             }
-
-            logger.WriteTrace("RemoveOldSearchData completed");
         }
 
         private void Lock(string key)
@@ -236,8 +227,6 @@ namespace CommunicationWorkerRole
 
         private Timer Scheduler(Func<Task> actionAsync, double intervalMiliseconds, string actionName = null)
         {
-            logger.WriteTrace(message: $"Scheduler {actionName} interval: {TimeSpan.FromMilliseconds(intervalMiliseconds).TotalMinutes} minutes");
-
             if (actionAsync == null)
                 throw new ArgumentNullException(nameof(actionAsync), "actionAsync cannot be null");
 
@@ -247,21 +236,16 @@ namespace CommunicationWorkerRole
             {
                 try
                 {
-                    logger.WriteTrace($"Starting scheduled action: {actionName} at {DateTime.Now}");
-                    ((Timer)timer).Stop(); // Stop the timer to prevent re-entrancy
                     await actionAsync().ConfigureAwait(false);
                 }
                 catch (Exception e)
                 {
-                    logger.WriteFatal(e, "error on scheduled  action " + actionName);
-                }
-                finally
-                {
-                    ((Timer)timer).Start();
+                    logger.WriteFatal(e, "error on Schdule action " + actionName);
                 }
             };
             aTimer.AutoReset = false;
             aTimer.Enabled = true;
+            aTimer.Start();
 
             return aTimer;
         }

@@ -16,7 +16,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         CustomerSalesNoteRepository repository;
 
-
+        public CustomerSalesNoteQuery()
+        {
+            repository = new CustomerSalesNoteRepository(); 
+        }
 
         public CustomerSalesNoteQuery(int tenant)
         {
