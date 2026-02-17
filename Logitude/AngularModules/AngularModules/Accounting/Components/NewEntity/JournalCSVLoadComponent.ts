@@ -1,10 +1,13 @@
-import { Component, ChangeDetectorRef, OnInit } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { BaseComponent } from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
+import { Validator } from '../../../Infrastructure/Validators/Validator';
+import { TenantPM } from '../../../Common/EntityPMs/TenantPM';
 import { JournalPM } from '../../EntityPMs/JournalPM';
-import { JournalAnalyseResult } from '../../EntityPMs/JournalAnalyseResult';
+import { JournalLinePM } from '../../EntityPMs/JournalLinePM';
 import { BankAccountPM } from '../../EntityPMs/BankAccountPM';
+import { GLAccountPM } from '../../EntityPMs/GLAccountPM';
 import { EntityResourceService } from '../../../Infrastructure/Services/EntityResourceService';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { JournalPMService } from '../../Services/StandardPMs/JournalPMService';
@@ -12,13 +15,17 @@ import { CurrencyPMService } from '../../../Common/Services/StandardPMs/Currency
 import { CurrencyListService } from '../../../Common/Services/StandardLists/CurrencyListService';
 import { JournalExtendedPMService } from '../../Services/ExtendedPMs/JournalExtendedPMService';
 import { EntityListService } from '../../../Infrastructure/Services/EntityListService';
-import { AppTool } from '../../../Infrastructure/Tools';
+import { AppTool, DateTool } from '../../../Infrastructure/Tools';
+import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
+import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 import { ObservableCollection } from '../../../Infrastructure/Utilities/ObservableCollection';
 import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator';
+
+
 import { Guid } from '../../../Infrastructure/Utilities/Guid';
 import { ImageParameter } from '../../../Infrastructure/DataContracts/ImageParameter';
 import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
-import { DefaultAndConfigurationExtendedService } from 'Infrastructure/Services/ExtendedPMs/DefaultAndConfigurationExtendedService';
+import { AccountingOpService } from '../../Services/Others/AccountingOpService';
 declare var attachmentUploader, ResultAsArray: any;
 
 
@@ -29,7 +36,7 @@ declare var attachmentUploader, ResultAsArray: any;
     templateUrl: './JournalCSVLoadComponent.html',
 })
 
-export class JournalCSVLoadComponent extends BaseComponent implements OnInit {
+export class JournalCSVLoadComponent extends BaseComponent {
     public JournalPM: JournalPM;
     public BankAccountPM: BankAccountPM;
     public PrevBankPagePM: JournalPM;
@@ -52,11 +59,11 @@ export class JournalCSVLoadComponent extends BaseComponent implements OnInit {
     _JournalPMService: JournalPMService = new JournalPMService();
 
     _JournalExtendedPMService: JournalExtendedPMService = new JournalExtendedPMService();
-    _DefaultAndConfigurationExtendedService: DefaultAndConfigurationExtendedService = new DefaultAndConfigurationExtendedService();
     _CurrencyPMService: CurrencyPMService = new CurrencyPMService();
     currencyListService: CurrencyListService = new CurrencyListService();
 
-    NewJournalNumber: string;
+    //_AccountingOpService: AccountingOpService;
+
 
     public UploadFileId: string = Guid.NewRandomString();
     FileName: string;
@@ -78,26 +85,13 @@ export class JournalCSVLoadComponent extends BaseComponent implements OnInit {
     HasError: boolean;
     _LabelLog: string;
     public _NewJournalPM: JournalPM;
-    public _DuplicateLinesSkippedNumber: number = 0;
-    public JournalExampleUrl: string;
-
     constructor(private CD: ChangeDetectorRef, public entityListService: EntityListService) {
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
 
         this.PageLinesList = new ObservableCollection([]);
 
-    }
 
-    ngOnInit(): void {
-        this._DefaultAndConfigurationExtendedService.GetBySetKey("JournalCsvExampleUrl").subscribe((myResponse:any) => {
-            if (!myResponse.HasError) {
-                const myResult = myResponse.Result;
-                if (myResult.length > 0) {
-                    this.JournalExampleUrl = myResult[0].Value1;
-                }
-            }
-        });
     }
 
     SetWindowArgs(args) {
@@ -133,13 +127,15 @@ export class JournalCSVLoadComponent extends BaseComponent implements OnInit {
 
 
 
-  
+    //#region Prev Bank Page
+
+    //#endregion
 
     SendJournal(): any {
-
+        //throw new Error("Method not implemented.");
         this.CurrentSession.StartBusyIndicatorCreating();
         if (this.fileUploadParamerter != null && this.fileUploadParamerter.Base64String != null) {
-            this._JournalExtendedPMService.PostJournalAsCSVWithSkip(this.fileUploadParamerter)
+            this._JournalExtendedPMService.PostJournalAsCSV(this.fileUploadParamerter)
                 .subscribe((myServiceResponse: ServiceResponse) => {
                     console.log("[Send] Response/LoadBankPages: ", myServiceResponse.Result);
                     var response = myServiceResponse.Result;
@@ -153,13 +149,13 @@ export class JournalCSVLoadComponent extends BaseComponent implements OnInit {
                     } else {
 
                         if (!AppTool.IsNullOrEmpty(response)) {
-                            var journalAnalyseResult: JournalAnalyseResult;
-                            journalAnalyseResult = myServiceResponse.Result;
-                            console.log(journalAnalyseResult);
-                            
-                            this._NewJournalPM = journalAnalyseResult.JournalPM;
-                            this._DuplicateLinesSkippedNumber = journalAnalyseResult.DuplicatesSkipped;
-                            this.NewJournalNumber = this._NewJournalPM.JournalNumber;
+                            //this.ShowMessage(JSON.stringify(response.Result));
+                            var journalPM: JournalPM;
+                            journalPM = myServiceResponse.Result;
+                            console.log(journalPM);
+                            this._NewJournalPM = journalPM;
+
+                            //this.CancelButtonClicked();
                         }
 
                     }
@@ -282,9 +278,6 @@ export class JournalCSVLoadComponent extends BaseComponent implements OnInit {
 
     }
 
-    public GetDuplicateLinesSkippedMessage() {
-        return TextCodeTranslator.Translate('Journal.O.DuplicateLinesSkipped') + " " + this._DuplicateLinesSkippedNumber;
-    }
 
     //#endregion upload
 

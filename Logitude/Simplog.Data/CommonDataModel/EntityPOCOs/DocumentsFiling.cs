@@ -145,6 +145,5 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string ReceivedByPartner { get; set; }
         public string BillToId { get; set; }
         public bool IsFromCloud { get; set; }
-        public string FileDataMD5Hash { get; set; }
     }
 }

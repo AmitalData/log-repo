@@ -22,13 +22,12 @@ create or ALTER PROCEDURE [dbo].[usp_NewAgingReport]
 @ChartOfAccountsId VARCHAR(50) = NULL,
 @CurrencyFilterSelectedValue VARCHAR(50) = null,
 @CurrencyId VARCHAR(50)=NULL,
-@GroupMultiAccounts  bit =0,
-@ReportDateTypeCode VARCHAR(50) = '1',
-@ReportTypeCode VARCHAR(50) = '1'
-AS
+
+  @GroupMultiAccounts  bit =0
+  AS
+
+
 BEGIN
-SET NOCOUNT ON;
-SET FMTONLY OFF;
 IF @InputDate IS NULL
 BEGIN
 SET @InputDate = GETDATE();
@@ -44,7 +43,6 @@ TotalOpenShipments decimal(18,2),
 TotFutureOpenChequesInLocalCur DECIMAL(18, 2),
 TotPastOpenChequesInLocalCur DECIMAL(18, 2),
 DisplayNumber VARCHAR(15),
-VatNumber VARCHAR(15),
 LocalName NVARCHAR(210),
 EnglishName VARCHAR(75),
 ID VARCHAR(15),
@@ -54,6 +52,7 @@ PaymnetTermEnglishName VARCHAR(75),
 MinimumInterestInvoiceBilling NVARCHAR(210),
 CreditAllotmentPercentage NVARCHAR(210),
 IsMultiCurrency bit,
+
 Minus30Days DECIMAL(30, 2),
 Minus60Days DECIMAL(30, 2),
 Minus90Days DECIMAL(30, 2),
@@ -67,15 +66,14 @@ Plus90Days DECIMAL(30, 2),
 Future DECIMAL(30, 2),
 ExternalTransactionsTotal DECIMAL(30, 2),
 MainGlaccountId VARCHAR(75),
+
 TotalForeign DECIMAL(30, 2),
 BalanceInLocalCurrency DECIMAL(30, 2),
 BalanceInForeignCurrency DECIMAL(30, 2),
 TotalToCollect DECIMAL(30, 2),
 
-StandardInterestRateBaseLocalName NVARCHAR(256),
-StandardAddInterestPercent DECIMAL(4, 2),
-
 );
+
 INSERT INTO #TemporaryTable
 SELECT
 ROW_NUMBER() OVER (ORDER BY t.accountId)  as RowNumber,
@@ -88,7 +86,6 @@ MAX(C.TotalOpenShipments) AS TotalOpenShipments,
 MAX(FUTQ.TotFutureOpenChequesInLocalCur) AS TotFutureOpenChequesInLocalCur,
 MAX(FUTQ.TotPastOpenChequesInLocalCur) AS TotPastOpenChequesInLocalCur,
 MAX(GL.DisplayNumber) AS DisplayNumber,
-MAX(C.VatNumber) AS VatNumber,
 MAX(GL.LocalName) AS LocalName,
 MAX(GL.EnglishName) AS EnglishName,
 MAX(GL.Id)AS ID,
@@ -98,202 +95,30 @@ MAX(PT.EnglishName) AS PaymnetTermEnglishName,
 max(gl.MinimumInterestInvoiceBilling) MinimumInterestInvoiceBilling,
 max(gl.CreditAllotmentPercentage) as CreditAllotmentPercentage,
 MAX(CAST(GL.IsMultiCurrency AS INT)) AS IsMultiCurrency,
-SUM(
-    CASE
-        WHEN @ReportTypeCode = '1' 
-             AND DATEDIFF(day,
-                 CASE WHEN @ReportDateTypeCode = 1 THEN T.AccountingDate ELSE T.DueDate END,
-                 @InputDate
-             ) BETWEEN 1 AND 30
-            THEN T.AdjustedOpenAmount
-        WHEN @ReportTypeCode = '2'
-		    and t.LocalAmountDebit ! =0
-            AND CASE WHEN @ReportDateTypeCode = 1 THEN T.AccountingDate ELSE T.DueDate END >= @InputDate
-            AND CASE WHEN @ReportDateTypeCode = 1 THEN T.AccountingDate ELSE T.DueDate END < DATEADD(MONTH, 1, @InputDate)
-            THEN T.AdjustedOpenAmount
-        ELSE 0
-    END
-) AS Minus30Days,
 
-SUM(
-    CASE
-        WHEN @ReportTypeCode = '1' 
-             AND DATEDIFF(day,
-                 CASE WHEN @ReportDateTypeCode = 1 THEN T.AccountingDate ELSE T.DueDate END,
-                 @InputDate
-             ) BETWEEN 31 AND 60
-            THEN T.AdjustedOpenAmount
-        WHEN @ReportTypeCode = '2'
-		    and t.LocalAmountDebit ! =0
-            AND CASE WHEN @ReportDateTypeCode = 1 THEN T.AccountingDate ELSE T.DueDate END >= DATEADD(MONTH, -1, @InputDate)
-            AND CASE WHEN @ReportDateTypeCode = 1 THEN T.AccountingDate ELSE T.DueDate END < @InputDate
-            THEN T.AdjustedOpenAmount
-        ELSE 0
-    END
-) AS Minus60Days,
+SUM(CASE
+WHEN DATEDIFF(day, T.DueDate, @InputDate) BETWEEN 1 AND 30 THEN T.AdjustedOpenAmount ELSE 0 END) AS Minus30Days,
+SUM(CASE
+WHEN DATEDIFF(day, T.DueDate, @InputDate) BETWEEN 31 AND 60 THEN T.AdjustedOpenAmount ELSE 0 END) AS Minus60Days,
+SUM(CASE
+WHEN DATEDIFF(day, T.DueDate, @InputDate) BETWEEN 61 AND 90 THEN T.AdjustedOpenAmount ELSE 0 END) AS Minus90Days,
+SUM(CASE
+WHEN DATEDIFF(day, T.DueDate, @InputDate) BETWEEN 91 AND 120 THEN T.AdjustedOpenAmount ELSE 0 END) AS Minus120Days,
+SUM(CASE
+WHEN DATEDIFF(day, T.DueDate, @InputDate) BETWEEN 121 AND 150 THEN T.AdjustedOpenAmount ELSE 0 END) AS Minus150Days,
+SUM(CASE
+WHEN DATEDIFF(day, T.DueDate, @InputDate) BETWEEN 151 AND 180 THEN T.AdjustedOpenAmount ELSE 0 END)AS Minus180Days,
+SUM(CASE
+WHEN DATEDIFF(day, T.DueDate, @InputDate) > 180 THEN T.AdjustedOpenAmount ELSE 0 END) AS Past,
+SUM(CASE
+WHEN DATEDIFF(day, T.DueDate, @InputDate) BETWEEN -30 AND 0 THEN T.AdjustedOpenAmount ELSE 0 END) AS Plus30Days,
+SUM(CASE
+WHEN DATEDIFF(day, T.DueDate, @InputDate) BETWEEN -60 AND -31 THEN T.AdjustedOpenAmount ELSE 0 END) AS Plus60Days,
+SUM(CASE
+WHEN DATEDIFF(day, T.DueDate, @InputDate) BETWEEN -90 AND -61 THEN T.AdjustedOpenAmount ELSE 0 END) AS Plus90Days,
+SUM(CASE
+WHEN DATEDIFF(day, T.DueDate, @InputDate) < -90 THEN T.AdjustedOpenAmount ELSE 0 END) AS Future,
 
-SUM(
-    CASE
-        WHEN @ReportTypeCode = '1' 
-             AND DATEDIFF(day,
-                 CASE WHEN @ReportDateTypeCode = 1 THEN T.AccountingDate ELSE T.DueDate END,
-                 @InputDate
-             ) BETWEEN 61 AND 90
-            THEN T.AdjustedOpenAmount
-        WHEN @ReportTypeCode = '2'
-		    and t.LocalAmountDebit ! =0
-            AND CASE WHEN @ReportDateTypeCode = 1 THEN T.AccountingDate ELSE T.DueDate END >= DATEADD(MONTH, -2, @InputDate)
-            AND CASE WHEN @ReportDateTypeCode = 1 THEN T.AccountingDate ELSE T.DueDate END < DATEADD(MONTH, -1, @InputDate)
-            THEN T.AdjustedOpenAmount
-        ELSE 0
-    END
-) AS Minus90Days,
-
-SUM(
-    CASE
-        WHEN @ReportTypeCode = '1' 
-             AND DATEDIFF(day,
-                 CASE WHEN @ReportDateTypeCode = 1 THEN T.AccountingDate ELSE T.DueDate END,
-                 @InputDate
-             ) BETWEEN 91 AND 120
-            THEN T.AdjustedOpenAmount
-        WHEN @ReportTypeCode = '2'
-		    and t.LocalAmountDebit ! =0
-            AND CASE WHEN @ReportDateTypeCode = 1 THEN T.AccountingDate ELSE T.DueDate END >= DATEADD(MONTH, -3, @InputDate)
-            AND CASE WHEN @ReportDateTypeCode = 1 THEN T.AccountingDate ELSE T.DueDate END < DATEADD(MONTH, -2, @InputDate)
-            THEN T.AdjustedOpenAmount
-
-        ELSE 0
-    END
-) AS Minus120Days,
-
-SUM(
-    CASE
-        WHEN @ReportTypeCode = '1' 
-             AND DATEDIFF(day,
-                 CASE WHEN @ReportDateTypeCode = 1 THEN T.AccountingDate ELSE T.DueDate END,
-                 @InputDate
-             ) BETWEEN 121 AND 150
-            THEN T.AdjustedOpenAmount
-        WHEN @ReportTypeCode = '2'
-		    and t.LocalAmountDebit ! =0
-            AND CASE WHEN @ReportDateTypeCode = 1 THEN T.AccountingDate ELSE T.DueDate END >= DATEADD(MONTH, -4, @InputDate)
-            AND CASE WHEN @ReportDateTypeCode = 1 THEN T.AccountingDate ELSE T.DueDate END < DATEADD(MONTH, -3, @InputDate)
-            THEN T.AdjustedOpenAmount
-
-        ELSE 0
-    END
-) AS Minus150Days,
-
-SUM(
-    CASE
-        WHEN @ReportTypeCode = '1' 
-             AND DATEDIFF(day,
-                 CASE WHEN @ReportDateTypeCode = 1 THEN T.AccountingDate ELSE T.DueDate END,
-                 @InputDate
-             ) BETWEEN 151 AND 180
-            THEN T.AdjustedOpenAmount
-        WHEN @ReportTypeCode = '2'
-	      	and t.LocalAmountDebit ! =0
-            AND CASE WHEN @ReportDateTypeCode = 1 THEN T.AccountingDate ELSE T.DueDate END >= DATEADD(MONTH, -5, @InputDate)
-            AND CASE WHEN @ReportDateTypeCode = 1 THEN T.AccountingDate ELSE T.DueDate END < DATEADD(MONTH, -4, @InputDate)
-            THEN T.AdjustedOpenAmount
-
-        ELSE 0
-    END
-) AS Minus180Days,
-SUM(
-    CASE
-        WHEN @ReportTypeCode = '1' 
-             AND DATEDIFF(day,
-                 CASE WHEN @ReportDateTypeCode = 1 THEN T.AccountingDate ELSE T.DueDate END,
-                 @InputDate
-             ) > 180
-            THEN T.AdjustedOpenAmount
-
-        WHEN @ReportTypeCode = '2'
-	     	and t.LocalAmountDebit ! =0
-            AND CASE WHEN @ReportDateTypeCode = 1 THEN T.AccountingDate ELSE T.DueDate END < DATEADD(MONTH, -5, @InputDate)
-            THEN T.AdjustedOpenAmount
-
-        ELSE 0
-    END
-) AS Past,
-SUM(
-    CASE
-        WHEN @ReportTypeCode = '1'
-             AND DATEDIFF(day,
-                 CASE WHEN @ReportDateTypeCode = 1 THEN T.AccountingDate ELSE T.DueDate END,
-                 @InputDate
-             ) BETWEEN -30 AND 0
-            THEN T.AdjustedOpenAmount
-
-        WHEN @ReportTypeCode = '2'
-		    and t.LocalAmountDebit ! =0
-            AND CASE WHEN @ReportDateTypeCode = 1 THEN T.AccountingDate ELSE T.DueDate END >= DATEADD(MONTH, 1, @InputDate)
-            AND CASE WHEN @ReportDateTypeCode = 1 THEN T.AccountingDate ELSE T.DueDate END < DATEADD(MONTH, 2, @InputDate)
-            THEN T.AdjustedOpenAmount
-
-
-        ELSE 0
-    END
-) AS Plus30Days,
-SUM(
-    CASE
-        WHEN @ReportTypeCode = '1'
-             AND DATEDIFF(day,
-                 CASE WHEN @ReportDateTypeCode = 1 THEN T.AccountingDate ELSE T.DueDate END,
-                 @InputDate
-             ) BETWEEN -60 AND -31
-            THEN T.AdjustedOpenAmount
-
-        WHEN @ReportTypeCode = '2'
-	    	and t.LocalAmountDebit ! =0
-            AND CASE WHEN @ReportDateTypeCode = 1 THEN T.AccountingDate ELSE T.DueDate END >= DATEADD(MONTH, 2, @InputDate)
-            AND CASE WHEN @ReportDateTypeCode = 1 THEN T.AccountingDate ELSE T.DueDate END < DATEADD(MONTH, 3, @InputDate)
-            THEN T.AdjustedOpenAmount
-
-
-        ELSE 0
-    END
-) AS Plus60Days,
-SUM(
-    CASE
-        WHEN @ReportTypeCode = '1'
-             AND DATEDIFF(day,
-                 CASE WHEN @ReportDateTypeCode = 1 THEN T.AccountingDate ELSE T.DueDate END,
-                 @InputDate
-             ) BETWEEN -90 AND -61
-            THEN T.AdjustedOpenAmount
-
-        WHEN @ReportTypeCode = '2'
-		    and t.LocalAmountDebit ! =0
-            AND CASE WHEN @ReportDateTypeCode = 1 THEN T.AccountingDate ELSE T.DueDate END >= DATEADD(MONTH, 3, @InputDate)
-            AND CASE WHEN @ReportDateTypeCode = 1 THEN T.AccountingDate ELSE T.DueDate END < DATEADD(MONTH, 4, @InputDate)
-            THEN T.AdjustedOpenAmount
-
-
-        ELSE 0
-    END
-) AS Plus90Days,
-
-SUM(
-    CASE
-        WHEN @ReportTypeCode = '1'
-             AND DATEDIFF(day,
-                 CASE WHEN @ReportDateTypeCode = 1 THEN T.AccountingDate ELSE T.DueDate END,
-                 @InputDate
-             ) < -90
-            THEN T.AdjustedOpenAmount
-
-        WHEN @ReportTypeCode = '2'
-		    and t.LocalAmountDebit ! =0
-            AND CASE WHEN @ReportDateTypeCode = 1 THEN T.AccountingDate ELSE T.DueDate END >= DATEADD(MONTH, 4, @InputDate)
-            THEN T.AdjustedOpenAmount
-
-        ELSE 0
-    END
-) AS Future,
 (SELECT SUM(trans.LocalAmountCredit)
 FROM LedgerTransactions trans
 JOIN Journals jrn ON trans.JournalId = jrn.Id
@@ -301,17 +126,14 @@ WHERE
 jrn.ExternalSystem IS NOT NULL
 AND trans.AccountId = T.AccountId
 AND trans.Tenant = @Tenant
-AND
-(
-    (@ReportDateTypeCode = 1 AND trans.AccountingDate > @InputDate)
- OR (@ReportDateTypeCode = 2 AND trans.DueDate> @InputDate)
-)
+AND trans.DueDate > @InputDate
 AND trans.LocalAmountCredit != 0
 ) AS ExternalTransactionsTotal,
+
 (SELECT max(MainGLAccountId)
-FROM GLAccountCurrencies
+FROM GLAccountCurrencies 
 where MainGLAccountId  =t.accountid or  glaccountid =t.accountid
-) AS MainGlaccountId,
+ ) AS MainGlaccountId,
 SUM(CASE
 WHEN T.CreateDate < @InputDate THEN (T.ForeignAmountDebit - T.ForeignAmountCredit)
 ELSE 0
@@ -322,57 +144,54 @@ WHEN GL.ReconcileMethodCode = 0 THEN t.OpenAmount
 ELSE t.OpenAmount * t.ExchangeRate
 END
 ) AS BalanceInLocalCurrency,
-SUM(t.OpenAmount) AS BalanceInForeignCurrency,
+SUM(
+  CASE
+    WHEN GL.ReconcileMethodCode = 0 and gl.IsMultiCurrency!=1 AND t.ExchangeRate != 0
+      THEN t.OpenAmount / t.ExchangeRate
+    ELSE t.OpenAmount
+  END
+) AS BalanceInForeignCurrency,
 SUM(CASE
-WHEN T.LocalAmountCredit != 0 THEN (t.AdjustedOpenAmount)
+WHEN T.AdjustedOpenAmount < 0 THEN (t.AdjustedOpenAmount)
 ELSE 0
-END) AS TotalToCollect,
-CASE WHEN MAX(CAST(gl.ActiveForInterest AS INT)) = 1 THEN max(InterestData.StandardInterestRateBaseLocalName) ELSE NULL END AS StandardInterestRateBaseLocalName,
-CASE WHEN MAX(CAST(gl.ActiveForInterest AS INT)) = 1 THEN max(InterestData.StandardAddInterestPercentData) ELSE NULL END AS StandardAddInterestPercent
-FROM GLACCOUNTS GL
-OUTER APPLY (
-SELECT TOP 1 ibt.LocalName AS StandardInterestRateBaseLocalName, glaip.StandardAddInterestPercent as StandardAddInterestPercentData
-FROM GLAccountInterestPeriods glaip
-LEFT JOIN InterestBasesTypes ibt ON ibt.Id = glaip.StandardInterestRateBaseId
-WHERE glaip.GLAccountId = GL.Id AND glaip.PeriodStartDate < GETDATE()
-ORDER BY glaip.PeriodStartDate DESC
-) AS InterestData
+END) AS TotalToCollect
+FROM
+GLACCOUNTS GL
 LEFT JOIN
 (
-SELECT
-lt.Id,
-lt.AccountId,
-lt.OpenAmount,
-lt.OpenAmountCurrencyId,
-lt.ExchangeRate,
-CASE
-WHEN (@CurrencyFilterSelectedValue = 'filter_LocalCurr'
-OR (
-EXISTS (
-SELECT 1
-FROM GLAccountCurrencies g
-WHERE g.Tenant=@tenant and g.MainGLAccountId = lt.AccountId OR g.GLAccountId = lt.AccountId
-) AND @GroupMultiAccounts = 1
-))
-AND lt.OpenAmountCurrencyId != ten.CurrencyId
-THEN lt.OpenAmount * lt.ExchangeRate
-ELSE lt.OpenAmount
-END AS AdjustedOpenAmount,
-lt.DueDate,
-lt.AccountingDate,
-lt.CreateDate,
-lt.ForeignAmountCredit,
-lt.ForeignAmountDebit,
-lt.Tenant,
-lt.CurrencyId,
-ten.CurrencyId as TenantCurrencyId,
-lt.LocalAmountDebit ,
-lt.LocalAmountCredit
-FROM LedgerTransactions lt
-INNER JOIN
-TENANTS TEN ON lt.tenant = TEN.Id
-WHERE lt.Tenant = @Tenant AND IsReconciled = 0 AND IsExternalReconcile = 0
-) T ON GL.Id = T.AccountId
+    SELECT 
+        lt.Id,
+        lt.AccountId,
+        lt.OpenAmount,
+        lt.OpenAmountCurrencyId,
+        lt.ExchangeRate,
+        CASE 
+            WHEN @CurrencyFilterSelectedValue = 'filter_LocalCurr' 
+                 OR (
+                     EXISTS (
+                         SELECT 1
+                         FROM GLAccountCurrencies g
+                         WHERE g.Tenant=@tenant and g.MainGLAccountId = lt.AccountId OR g.GLAccountId = lt.AccountId
+                     ) AND @GroupMultiAccounts = 1
+                 )
+                 AND lt.OpenAmountCurrencyId != ten.CurrencyId
+            THEN lt.OpenAmount * lt.ExchangeRate
+            ELSE lt.OpenAmount
+        END AS AdjustedOpenAmount,
+        lt.DueDate,
+        lt.CreateDate,
+        lt.ForeignAmountCredit,
+        lt.ForeignAmountDebit,
+		lt.Tenant,
+		lt.CurrencyId,
+		ten.CurrencyId as TenantCurrencyId
+
+    FROM LedgerTransactions lt
+	INNER JOIN
+    TENANTS TEN ON lt.tenant = TEN.Id
+
+    WHERE lt.Tenant = @Tenant AND IsReconciled = 0 AND IsExternalReconcile = 0
+) T ON GL.Id = T.AccountId 
 LEFT JOIN
 (
 SELECT max(a.AccountId) as AccountId,
@@ -384,16 +203,16 @@ AND a.Tenant = @tenant
 group by  a.AccountId
 )  FUTQ ON FUTQ.AccountId = GL.ID
 LEFT JOIN
-(SELECT VatNumber,TotalOpenShipments,InsuredcreditLimit,CreditLimit,ID,PaymentTermId FROM GLAccountCardsDatas WHERE tenant = @Tenant  )
+(SELECT TotalOpenShipments,InsuredcreditLimit,CreditLimit,ID,PaymentTermId FROM GLAccountCardsDatas WHERE tenant = @Tenant  )
 C ON GL.CardsDataId = C.Id
 LEFT JOIN
 (SELECT Id, Code FROM Currencies WHERE InActive = 0 AND Tenant=@Tenant)
-CURRENCY
-ON
-CASE
-WHEN GL.ReconcileMethodCode = 0 THEN T.TenantCurrencyId
-ELSE T.OpenAmountCurrencyId
-END = CURRENCY.Id
+CURRENCY 
+ ON 
+    CASE 
+        WHEN GL.ReconcileMethodCode = 0 THEN T.TenantCurrencyId
+        ELSE T.OpenAmountCurrencyId
+    END = CURRENCY.Id
 left JOIN
 PaymentTerms PT ON PT.Id = C.PaymentTermId
 WHERE
@@ -425,11 +244,10 @@ MAX(CONTACT_Collector.EnglishName) AS AccountCollectorName,
 MAX(CONTACT_Collector.LocalName) AS AccountCollectorLocalName,
 MAX(CONTACT_Salesman.EnglishNamE) AS AccountSalesmanName,
 MAX(CONTACT_Salesman.LocalName) AS AccountSalesmanLocalName,
-max(COALESCE(CONTACT_GLAccount.PreferredPhone, CONTACT_GLAccount.Email)) AS ContactPhoneOrEmail,
-max(CONTACT_GLAccount.LocalName) as ContactLocalName,
-max(CONTACT_GLAccount.EnglishName) as ContactEnglishName,
+MAX(CONTACT_GLAccount.BusinessPhone) as AccountBusinessPhone,
 max(t.MainGlaccountId) as MainGlaccountId,
 MAX(t.Id)AS ID,
+
 MAX(CAST(t.IsMultiCurrency AS INT)) AS IsMultiCurrency,
 MAX(t.CreditLimit) AS CreditLimit ,
 MAX(t.InsuredcreditLimit) AS InsuredcreditLimit,
@@ -440,22 +258,19 @@ MAX(t.TotalOpenShipments) AS TotalOpenShipments,
 MAX(t.TotFutureOpenChequesInLocalCur) AS TotFutureOpenChequesInLocalCur,
 MAX(t.TotPastOpenChequesInLocalCur) AS TotPastOpenChequesInLocalCur,
 MAX(t.DisplayNumber) AS DisplayNumber,
-MAX(t.VatNumber) AS VatNumber,
-MAX(CASE
-WHEN T.MainGlaccountId = T.Id THEN T.LocalName
-WHEN T.MainGlaccountId IS NULL  or @GroupMultiAccounts =0 THEN T.LocalName
-ELSE NULL
-END) AS LocalName,
-MAX(CASE
-WHEN T.MainGlaccountId = T.Id THEN T.EnglishName
-WHEN T.MainGlaccountId IS NULL  or @GroupMultiAccounts =0 THEN T.EnglishName
-ELSE NULL
-END) AS EnglishName,
+MAX(CASE 
+            WHEN T.MainGlaccountId = T.Id THEN T.LocalName 
+            WHEN T.MainGlaccountId IS NULL  or @GroupMultiAccounts =0 THEN T.LocalName
+            ELSE NULL 
+        END) AS LocalName,
+MAX(CASE 
+            WHEN T.MainGlaccountId = T.Id THEN T.EnglishName 
+            WHEN T.MainGlaccountId IS NULL  or @GroupMultiAccounts =0 THEN T.EnglishName
+            ELSE NULL 
+        END) AS EnglishName,
 MAX(t.ContactId)AS ContactId,
 MAX(t.PaymnetTermLocalName) AS PaymnetTermLocalName,
 MAX(t.PaymnetTermEnglishName) AS PaymnetTermEnglishName,
-MAX(t.StandardInterestRateBaseLocalName) AS StandardInterestRateBaseLocalName,
-MAX(t.StandardAddInterestPercent) AS StandardAddInterestPercent,
 max(t.MinimumInterestInvoiceBilling) MinimumInterestInvoiceBilling,
 max(t.CreditAllotmentPercentage) as CreditAllotmentPercentage,
 SUM(T.BalanceInLocalCurrency) AS BalanceInLocalCurrency,
@@ -473,7 +288,7 @@ MAX(t.Minus60Days) AS Minus60Days,
 max(t.Minus90Days) Minus90Days,
 max(t.Minus120Days) as Minus120Days,
 SUM(T.Minus150Days) AS Minus150Days ,
-SUM(T.Minus180Days) AS Minus180Days
+SUM(T.Minus180Days) AS Minus180Days 
 FROM #TemporaryTable T
 LEFT JOIN
 (SELECT Id, EnglishName, LocalName ,Tenant FROM Contacts  WHERE InActive=0)
@@ -481,36 +296,28 @@ CONTACT_Salesman ON CONTACT_Salesman.Tenant=@Tenant AND  T.SalesmanUserId = CONT
 LEFT JOIN
 (SELECT Id, EnglishName, LocalName,Tenant FROM Contacts WHERE InActive=0)
 CONTACT_Collector ON   CONTACT_Collector.Tenant=@Tenant AND  T.CollectorId = CONTACT_Collector.Id
-OUTER APPLY (
-SELECT TOP 1
-c.Id,
-c.BusinessPhone,
-c.Mobile,
-c.Email,
-c.LocalName,
-c.EnglishName,
-CASE
-WHEN c.BusinessPhone IS NOT NULL AND c.BusinessPhone <> '' THEN c.BusinessPhone
-WHEN c.Mobile IS NOT NULL AND c.Mobile <> '' THEN c.Mobile
-ELSE NULL
-END AS PreferredPhone
-FROM Contacts c
-WHERE c.InActive = 0
-AND c.ContactForAccounting = 1
-AND c.Id = t.ContactId
-) AS CONTACT_GLAccount
+left join 
+(select id ,BusinessPhone from Contacts where InActive= 0)
+CONTACT_GLAccount on CONTACT_GLAccount.Id  = t.ContactId 
 left join GLAccountCurrencies GLC
 ON GLC.MainGLAccountId = T.ID AND GLC.GLAccountId =T.ID
-GROUP BY
-CASE
-WHEN @GroupMultiAccounts = 0 THEN t.RowNumber
-WHEN T.MainGlaccountId IS NULL and @GroupMultiAccounts=1 THEN T.id
-ELSE T.MainGlaccountId
-END
-ORDER BY
-MAX(T.MainGlaccountId)
-DROP TABLE  #TemporaryTable
+
+
+	
+
+GROUP BY  
+    CASE
+        WHEN @GroupMultiAccounts = 0 THEN t.RowNumber
+        WHEN T.MainGlaccountId IS NULL and @GroupMultiAccounts=1 THEN T.id
+        ELSE T.MainGlaccountId
+    END
+	ORDER BY 
+  MAX(T.MainGlaccountId)
+
+	  DROP TABLE  #TemporaryTable 
 END;
+
+
 
 
 ]]>

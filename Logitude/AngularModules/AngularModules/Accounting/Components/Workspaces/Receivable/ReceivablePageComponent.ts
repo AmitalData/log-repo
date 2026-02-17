@@ -825,10 +825,6 @@ export class ReceivablePageComponent {
                     if (!myResponse.HasError) {
                         var myResult: GLAccountList[] = myResponse.Result;
 
-                        // sort desc
-                        const sortField = this.SelectedDeptorsFilter.EnglishName === 'Balance Due'? 'LocalBalanceInDue': 'BalanceInLocalCurrency';
-                        myResult.sort((a, b) => b[sortField] - a[sortField]);
-
                         this.TopDebtorsList = myResult;
 
                         console.log("DEPTORS: ", myResult);

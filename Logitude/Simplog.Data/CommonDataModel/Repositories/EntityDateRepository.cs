@@ -8,7 +8,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
     public class EntityDateRepository:IRepository<EntityDate>
     {
         ICommonDataContext commonDataContext;
-
+        public EntityDateRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
         public EntityDateRepository(ICommonDataContext context)
         {
             commonDataContext = context;

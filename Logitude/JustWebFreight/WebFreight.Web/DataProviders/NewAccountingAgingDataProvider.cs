@@ -19,18 +19,6 @@ namespace WebFreight.Web.DataProviders
         public bool IsFromGLAccountAgingData { get; set; }
 
         public List<NewAgingPeriod> AgingPeriods { get; set; }
-        public string Past1 { get; set; }     
-        public string Past2 { get; set; }     
-        public string Past3 { get; set; }    
-        public string Past4 { get; set; }     
-        public string Past5 { get; set; }    
-        public string Past6 { get; set; }    
-        public string Past { get; set; }       
-        public string Future1 { get; set; }   
-        public string Future2 { get; set; }   
-        public string Future3 { get; set; }  
-        public string Future { get; set; }
-
     }
 
     public class NewAgingPeriod
@@ -41,8 +29,6 @@ namespace WebFreight.Web.DataProviders
         public string AccountEnglishName { get; set; }
         public string AccountLocalName { get; set; }
         public string AccountDisplayNumber { get; set; }
-        public string AccountVatNumber { get; set; }
-
         public string AccountCurrencyCode { get; set; }
         public decimal? InsuredCreditLimit { get; set; }
         public decimal? ExternalTransactionsTotal { get; set; }
@@ -61,15 +47,10 @@ namespace WebFreight.Web.DataProviders
         public string AccountSalesmanLocalName { get; set; }
          public string AccountCollectorName { get; set; }
         public string AccountCollectorLocalName { get; set; }
-        public string ContactPhoneOrEmail { get; set; }
-        public string ContactLocalName { get; set; }
-        public string ContactEnglishName { get; set; }
+        public string AccountBusinessPhone { get; set; }
+
         public string MinimumInterestInvoiceBilling { get; set; }
         public string CreditAllotmentPercentage { get; set; }
-        public string PaymentTermEnglishName { get; set; }
-        public string PaymentTermLocalName { get; set; }
-        public string StandardInterestRateBaseLocalName { get; set; }
-        public decimal? StandardAddInterestPercent { get; set; }
         public decimal? CreditLimit { get; set; }
          public decimal? TotalToCollect { get; set; }
         public decimal? AccountingBalance { get; set; }
