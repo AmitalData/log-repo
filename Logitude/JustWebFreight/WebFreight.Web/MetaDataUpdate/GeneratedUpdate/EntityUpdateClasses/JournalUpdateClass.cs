@@ -26,7 +26,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class JournalUpdateClass
    {  		
-		public const string HashString = "98990e8ac488492cb010b06d221bc94f";
+		public const string HashString = "42497dbd1e30b8841540ea761db3b0f1";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -3983,8 +3983,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 		   Feature JournalFeature_Journal_Feature_ManageSecurity = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Journal.Feature.ManageSecurity", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = JournalObjectTable.Id, Tenant = 0, NameTextCodeCode = "Journal.Features.Journal.Feature.ManageSecurity", NameTextCodeDefaultText = @"Manage Security" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,JournalObjectTable,contextTenant);
 
-		   Feature JournalFeature_LOADJOURNALMICHPAL = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "LOADJOURNALMICHPAL", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = JournalObjectTable.Id, Tenant = 0, NameTextCodeCode = "Journal.Features.LOADJOURNALMICHPAL", NameTextCodeDefaultText = @"Load michpal file" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,JournalObjectTable,contextTenant);
-
    
 	    
 		}
@@ -4592,8 +4590,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode JournalTextCode_JournalOAccountIsAccountControl = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.AccountIsAccountControl", DefaultText = "{account} is a control account",LocalDefaultText = @"BS64:InthY2NvdW50fSDXlNeV15Ag15fXqdeR15XXnyDXnteo15vXliI=", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
  		   TextCode JournalTextCode_JournalOSplitByDifferentExchangeRate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.SplitByDifferentExchangeRate", DefaultText = "The %debitAccountName card has a conversion rate of %debitExchangeRateName and the %creditAccountName card has a conversion rate of %creditExchangeRateName. A debit/credit transaction cannot be recorded. Please split the transactions.",LocalDefaultText = @"BS64:Itec15vXqNeY15nXoSAlZGViaXRBY2NvdW50TmFtZSDXnteV15LXk9eoINep16LXqCDXlNee16jXlCAlZGViaXRFeGNoYW5nZVJhdGVOYW1lINeV15zXm9eo15jXmdehICVjcmVkaXRBY2NvdW50TmFtZSDXnteV15LXk9eoINep16LXqCDXlNee16jXlCAlY3JlZGl0RXhjaGFuZ2VSYXRlTmFtZSwg15zXkCDXoNeZ16rXnyDXnNeo16nXldedINeq16DXldei16og15fXmdeV15Ev15bXmdeb15XXmSwg16DXkCDXnNek16bXnCDXkNeqINeU16rXoNeV16LXldeqIg==", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
-
- 		   TextCode JournalTextCode_JournalOJournalCreated = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.JournalCreated", DefaultText = "Journal Created",LocalDefaultText = @"BS64:Iteg15XXpteo15Qg16TXp9eV15PXqiDXmdeV157XnyI=", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
    
 	    
