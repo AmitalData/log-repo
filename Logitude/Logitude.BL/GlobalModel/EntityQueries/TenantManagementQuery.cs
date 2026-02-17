@@ -38,7 +38,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
 
             domain = TrimDomainByRegex(domain);
             TenantManagementPM TenantManagement = (from a in repository.context.TenantManagements
-                                                   where a.EnableBranding && string.Equals(a.CustomerURL, domain) && a.Id != 0 && a.GlobalTenant.IsActive
+                                                   where a.EnableBranding && a.CustomerURL == domain && a.Id != 0 && a.GlobalTenant.IsActive
                                                    select new TenantManagementPM()
                                                    {
                                                        Id = a.Id,
@@ -555,7 +555,6 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                   ExportLoginCredintial=a.ExportLoginCredintial,
                                                   ExportTenant=a.ExportTenant,
 												  MinutsTimeOutSession = a.MinutsTimeOutSession,
-												  AmitalApiToken = a.AmitalApiToken
 											  }).FirstOrDefault();
 
                 if (tenant1 != null)

@@ -43,10 +43,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         DutchRequested, 
 	         RequestRequiredStatus, 
 	         ItemNo, 
-	         ItemName, 
-	         StatusCode, 
-	         StatusDate, 
-	         DistApprovalAttachmentPath,
+	         ItemName,
 	      }
 
 
@@ -70,22 +67,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         RequestRequiredStatus, 
 	         ItemNo, 
 	         ItemName, 
-	         DutchGroupItem, 
 	         InvoiceQuantity, 
 	         InvoiceQuantityType, 
 	         StatisticQuantity, 
-	         StatisticQuantityType, 
-	         OriginCountryCode, 
-	         ClassificationCode, 
-	         InvoiceQuantityTypeCode, 
-	         InvoiceNumber, 
-	         IssueDate, 
-	         StatisticQuantityTypeCode, 
-	         VendorName, 
-	         StatusCode, 
-	         StatusDate, 
-	         DistApprovalAttachmentPath, 
-	         StatusName,
+	         StatisticQuantityType,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -104,9 +89,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 				entityPOCO.SearchFields = entityPM.SearchFields;
 			}
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LineNumber))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SIIRequestID))
             {
-				entityPOCO.LineNumber = entityPM.LineNumber;
+				entityPOCO.SIIRequestID = entityPM.SIIRequestID;
 			}
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.RequestType))
@@ -152,21 +137,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ItemName))
             {
 				entityPOCO.ItemName = entityPM.ItemName;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.StatusCode))
-            {
-				entityPOCO.StatusCode = entityPM.StatusCode;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.StatusDate))
-            {
-				entityPOCO.StatusDate = entityPM.StatusDate;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DistApprovalAttachmentPath))
-            {
-				entityPOCO.DistApprovalAttachmentPath = entityPM.DistApprovalAttachmentPath;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -255,21 +225,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.ItemName = entityPOCO.ItemName;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.StatusCode))
-            {
-					entityPM.StatusCode = entityPOCO.StatusCode;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.StatusDate))
-            {
-					entityPM.StatusDate = entityPOCO.StatusDate;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DistApprovalAttachmentPath))
-            {
-					entityPM.DistApprovalAttachmentPath = entityPOCO.DistApprovalAttachmentPath;
-            }
-
 		}
 
 		public void PMToOldPM(SupplierInvoiceItemsReqListPM entityPM, SupplierInvoiceItemsReqListPM oldEntityPM)
@@ -286,9 +241,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 oldEntityPM.SearchFields = entityPM.SearchFields;
             }
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LineNumber))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SIIRequestID))
             {
-                oldEntityPM.LineNumber = entityPM.LineNumber;
+                oldEntityPM.SIIRequestID = entityPM.SIIRequestID;
             }
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.RequestType))
@@ -334,21 +289,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ItemName))
             {
                 oldEntityPM.ItemName = entityPM.ItemName;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.StatusCode))
-            {
-                oldEntityPM.StatusCode = entityPM.StatusCode;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.StatusDate))
-            {
-                oldEntityPM.StatusDate = entityPM.StatusDate;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DistApprovalAttachmentPath))
-            {
-                oldEntityPM.DistApprovalAttachmentPath = entityPM.DistApprovalAttachmentPath;
             }
 			
 		}

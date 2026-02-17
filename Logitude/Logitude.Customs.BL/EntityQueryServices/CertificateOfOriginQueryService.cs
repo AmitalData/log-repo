@@ -17,13 +17,13 @@ using System.IO;
 
 namespace Logitude.Customs.BL.EntityQueryServices
 {
-	public partial class CertificateOfOriginQueryService : EntityQueryService<CertificateOfOrigin, CertificateOfOriginKeys, CertificateOfOriginPM, object, CertificateOfOriginKeys>
-	{
-		public override void GetComposition(EntityKeyFields entityKeys, CertificateOfOriginPM entityPM)
-		{
-			ICustomContext context = MainContext as CustomContext;
-			CertificateOfOriginKeys CertificateOfOriginKeys = entityKeys as CertificateOfOriginKeys;
-
+    public partial class CertificateOfOriginQueryService : EntityQueryService<CertificateOfOrigin, CertificateOfOriginKeys, CertificateOfOriginPM, object, CertificateOfOriginKeys>
+    {
+        public override void GetComposition(EntityKeyFields entityKeys, CertificateOfOriginPM entityPM)
+        {
+            ICustomContext context = MainContext as CustomContext;
+            CertificateOfOriginKeys CertificateOfOriginKeys = entityKeys as CertificateOfOriginKeys;
+           
 			CertificateOfOriginInvoiceQueryService certificateOfOriginInvoiceQueryService = new CertificateOfOriginInvoiceQueryService(context);
 			entityPM.CertificateOriginInvoiceItems = certificateOfOriginInvoiceQueryService.GetMulti(CertificateOfOriginKeys, false);
 
@@ -31,17 +31,17 @@ namespace Logitude.Customs.BL.EntityQueryServices
 			entityPM.CertificateOriginItemItems = certificateOfOriginItemQueryService.GetMulti(CertificateOfOriginKeys, false);
 
 		}
-		public CertificateOfOriginPM GetCertificateOfOriginByCounter(string Counter, int tenant = 0)
+		public CertificateOfOriginPM GetCertificateOfOriginByCounter(string Counter, int tenant=0)
 		{
-			var certificateOfOrigin = repository.GetCertificateOfOriginByCounter(Counter, tenant);
+			 var certificateOfOrigin = repository.GetCertificateOfOriginByCounter(Counter, tenant);
 			CertificateOfOriginPM certificateOfOriginPM = null;
 			if (certificateOfOrigin != null)
 			{
-				certificateOfOriginPM = this.GetEntityPM(certificateOfOrigin, false, null);
+				certificateOfOriginPM = this.GetEntityPM(certificateOfOrigin, false, null);			
 			}
 			return certificateOfOriginPM;
 		}
-		public List<CertificateOfOriginPM> GetCertificateOfOriginsByDeclarationId(string declarationId, string amendmentOriginalDeclartation, int tenant, bool IsFromUI = false)
+		public List<CertificateOfOriginPM> GetCertificateOfOriginsByDeclarationId(string declarationId, string amendmentOriginalDeclartation, int tenant,bool IsFromUI = false)
 		{
 			ICustomContext context = MainContext as CustomContext;
 
@@ -57,9 +57,9 @@ namespace Logitude.Customs.BL.EntityQueryServices
 				foreach (var item in certificateOfOriginList)
 				{
 					var certificateOfOriginPM = this.GetEntityPM(item, false, new CertificateOfOriginKeys { Id = item.Id });
-					if (IsFromUI)
-					{
-						certificateOfOriginPM.CertificateOriginDocuments = documentsFilingQueryService.GetCOOEDocument(decId, item.Id, tenant);
+					if (IsFromUI) 
+					{ 
+					  certificateOfOriginPM.CertificateOriginDocuments = documentsFilingQueryService.GetCOOEDocument(decId, item.Id, tenant);
 					}
 					certificateOfOriginPMList.Add(certificateOfOriginPM);
 
@@ -68,20 +68,20 @@ namespace Logitude.Customs.BL.EntityQueryServices
 			return certificateOfOriginPMList;
 		}
 
-		public CertificateOfOriginPM GetCertificateOfOriginsByDeclarationIdIncludeChildrens(string certificateId, string declarationId, int tenant)
-		{
-			CertificateOfOrigin certificateOfOrigin = repository.GetCertificateOfOriginsByDeclarationIdIncludeChildrens(certificateId, declarationId, tenant);
-			CertificateOfOriginPM certificateOfOriginPM = new CertificateOfOriginPM();
+        public CertificateOfOriginPM GetCertificateOfOriginsByDeclarationIdIncludeChildrens(string certificateId, string declarationId, int tenant)
+        {
+            CertificateOfOrigin certificateOfOrigin = repository.GetCertificateOfOriginsByDeclarationIdIncludeChildrens(certificateId, declarationId, tenant);
+            CertificateOfOriginPM certificateOfOriginPM = new CertificateOfOriginPM();
 
-			if (certificateOfOrigin != null)
-			{
-				certificateOfOriginPM = this.GetEntityPM(certificateOfOrigin, true, new CertificateOfOriginKeys { Id = certificateOfOrigin.Id });
-			}
-			return certificateOfOriginPM;
-		}
+            if (certificateOfOrigin != null)
+            {
+                certificateOfOriginPM = this.GetEntityPM(certificateOfOrigin, true, new CertificateOfOriginKeys { Id = certificateOfOrigin.Id });
+            }
+            return certificateOfOriginPM;
+        }
 
-		public Dictionary<string, byte[]> GetToolTipFromStorage()
-		{
+        public Dictionary<string, byte[]> GetToolTipFromStorage()
+        {
 			if (LogitudeSettings.StorageServiceMode == "Azure")
 			{
 				Logitude.Server.Tools.StorageService.IBlobService storageservice = Logitude.Server.Tools.ContainerAccessor.Container.Resolve(typeof(Logitude.Server.Tools.StorageService.IBlobService), "StorageService", new ParameterOverride("", 1)) as Logitude.Server.Tools.StorageService.IBlobService;
@@ -89,18 +89,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
 				return ArryByte;
 			}
 			return null;
-		}
-		public CertificateOfOriginPM GetCertificateOfOriginByCounterAndCOONumber(string Counter, string COONumber)
-		{
-			var certificateOfOrigin = repository.GetCertificateOfOriginByCounterAndCOONumber(Counter, COONumber);
-			CertificateOfOriginPM certificateOfOriginPM = null;
-			if (certificateOfOrigin != null)
-			{
-				certificateOfOriginPM = this.GetEntityPM(certificateOfOrigin, false, null);
-			}
-			return certificateOfOriginPM;
+        }
 
-
-		}
-	}
+    }
 }
