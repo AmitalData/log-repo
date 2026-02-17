@@ -338,7 +338,6 @@
                                                                 [ObjectTableName]="ObjectTableName"
                                                                 [DataContext]="DataContext"
                                                                 [LookUpTableName]="'GLAccount'"
-                                                                [DependencyFilter1Value]="'false'"
                                                                 [StartSearchFromChar]="3" [StartSearchFromNumber]="5">
                                                             </LogLov>
                                                         </td>
@@ -357,7 +356,6 @@
                                                                 [ObjectTableName]="ObjectTableName"
                                                                 [DataContext]="DataContext"
                                                                 [LookUpTableName]="'GLAccount'"
-                                                                [DependencyFilter1Value]="'false'"
                                                                 [StartSearchFromChar]="3" [StartSearchFromNumber]="5">
                                                             </LogLov>
                                                         </td>
@@ -464,54 +462,6 @@
                                                         </td>
                                                     </tr>
 
-                                                    <!-- HebrewTenant -->
-                                                    <tr class="FormFieldRow">
-                                                        <td>
-                                                            <LogLabel [ObjectFieldName]="'HebrewTenant'"
-                                                                [ObjectTableName]="ObjectTableName"
-                                                                [DataContext]="DataContext"></LogLabel>
-                                                        </td>
-
-                                                        <td colspan="2">
-                                                            <CheckBox [IsChecked]="HebrewTenant"
-                                                                (Checked)="HebrewTenant = $event"></CheckBox>
-                                                        </td>
-                                                    </tr>
-                                                      <!-- MasavBankId -->
-                                                      <tr class="FormFieldRow">
-                                                        <td>
-                                                            <LogLabel [ObjectFieldName]="'MasavBankId'"
-                                                                [ObjectTableName]="ObjectTableName"
-                                                                [DataContext]="DataContext"></LogLabel>
-                                                        </td>
-
-                                                        <td>
-                                                            <LogLov [ObjectFieldName]="'MasavBankId'"
-                                                                [ObjectTableName]="ObjectTableName"
-                                                                [DataContext]="DataContext"
-                                                                [LookUpTableName]="'BankAccount'"
-                                                                (SelectedItemChanged)="MasavBank = $event"
-                                                                [DependencyFilter1Value]="'false'"
-                                                                [QueryFilterItems]="BankAccountFilterItems"
-                                                                [StartSearchFromChar]="3" [StartSearchFromNumber]="5">
-                                                            </LogLov>
-                                                        </td>
-                                                    </tr>
-                                                    <tr class="FormFieldRow">
-                                                        <td>
-                                                            <LogLabel [ObjectFieldName]="'MasavCode'"
-                                                                [ObjectTableName]="ObjectTableName"
-                                                                [DataContext]="DataContext"></LogLabel>
-                                                        </td>
-
-                                                        <td>
-                                                            <LogTextBox [ObjectFieldName]="'MasavCode'"
-                                                                [ObjectTableName]="ObjectTableName"
-                                                                [InputType]="'text'" [DataContext]="DataContext">
-                                                            </LogTextBox>
-                                                        </td>
-                                                    </tr>
-
                                                 </table>
                                             </td>
 
@@ -536,7 +486,6 @@
                                                                 [DataContext]="DataContext"
                                                                 [LookUpTableName]="'GLAccount'"
                                                                 (SelectedItemChanged)="TaxWithholdingGLAccount = $event"
-                                                                [DependencyFilter1Value]="'false'"
                                                                 [StartSearchFromChar]="3" [StartSearchFromNumber]="5">
                                                             </LogLov>
                                                         </td>
@@ -572,7 +521,6 @@
                                                                 [ObjectTableName]="ObjectTableName"
                                                                 [DataContext]="DataContext"
                                                                 [LookUpTableName]="'GLAccount'"
-                                                                [DependencyFilter1Value]="'false'"
                                                                 [StartSearchFromChar]="3" [StartSearchFromNumber]="5">
                                                             </LogLov>
                                                         </td>
@@ -591,7 +539,6 @@
                                                                 [ObjectTableName]="ObjectTableName"
                                                                 [DataContext]="DataContext"
                                                                 [LookUpTableName]="'GLAccount'"
-                                                                [DependencyFilter1Value]="'false'"
                                                                 [DependencyFilter2Value]="'1'"
                                                                 (SelectedItemChanged)="RevenueExpenseGLAccount = $event"
                                                                 [StartSearchFromChar]="3" [StartSearchFromNumber]="5">
@@ -650,7 +597,6 @@
                                                             <LogLov [ObjectFieldName]="'DefaultDifferencesGLAccountId'"
                                                                 [ObjectTableName]="ObjectTableName"
                                                                 [DataContext]="DataContext"
-                                                                [DependencyFilter1Value]="'false'"
                                                                 [DependencyFilter2Value]="'1'"
                                                                 [LookUpTableName]="'GLAccount'"
                                                                 [StartSearchFromChar]="3" [StartSearchFromNumber]="5">
@@ -671,7 +617,6 @@
                                                             <LogLov [ObjectFieldName]="'DefaultExternalDiffGLAccountId'"
                                                                 [ObjectTableName]="ObjectTableName"
                                                                 [DataContext]="DataContext"
-                                                                [DependencyFilter1Value]="'false'"
                                                                 [DependencyFilter2Value]="'1'"
                                                                 [LookUpTableName]="'GLAccount'"
                                                                 [StartSearchFromChar]="3" [StartSearchFromNumber]="5">
@@ -689,25 +634,6 @@
 
                                                         <td colspan="2">
                                                             <LogLov [ObjectFieldName]="'TaxInstitutionGLAccountId'"
-                                                                [ObjectTableName]="ObjectTableName"
-                                                                [DataContext]="DataContext"
-                                                                [QueryFilterItems]="TaxInstitutionGLAccountFilterItems"
-                                                                [LookUpTableName]="'GLAccount'"
-                                                                [StartSearchFromChar]="3" [StartSearchFromNumber]="5">
-                                                            </LogLov>
-                                                        </td>
-                                                    </tr>
-
-                                                     <!-- PrepaidExpensesGLAccountId -->
-                                                     <tr class="FormFieldRow">
-                                                        <td>
-                                                            <LogLabel [ObjectFieldName]="'PrepaidExpensesGLAccountId'"
-                                                                [ObjectTableName]="ObjectTableName"
-                                                                [DataContext]="DataContext"></LogLabel>
-                                                        </td>
-
-                                                        <td colspan="2">
-                                                            <LogLov [ObjectFieldName]="'PrepaidExpensesGLAccountId'"
                                                                 [ObjectTableName]="ObjectTableName"
                                                                 [DataContext]="DataContext"
                                                                 [QueryFilterItems]="TaxInstitutionGLAccountFilterItems"
@@ -793,12 +719,6 @@
                                                             </CheckBox>
                                                         </td>
                                                     </tr>
-                                                    <td>
-                                                        <div></div>
-                                                    </td>
-                                                    <td>
-                                                        <div></div>
-                                                    </td>
                                                 </table>
                                             </td>
                                         </tr>

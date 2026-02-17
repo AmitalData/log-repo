@@ -44,7 +44,6 @@ export class ReportsPreviewComponent implements AfterViewInit {
     public IsMenuReport: boolean = false;
 
     DefaultReportTemplateId: string;
-    ProcessMenuTemplateId: string;
     reportsTemplateListExtendedService: ReportsTemplateListExtendedService;
     StimulsoftArg: StimulsoftArg;
     ReportFliter: ReportFliter;
@@ -96,6 +95,7 @@ export class ReportsPreviewComponent implements AfterViewInit {
         this.RunComponent();
     }
 
+
     ngAfterViewInit() {
         if (!this.IsSchedulerReport) {
             this.BuildStimulsoft();
@@ -140,12 +140,10 @@ export class ReportsPreviewComponent implements AfterViewInit {
         return templateType;
     }
 
-    SetReportTemplate(reportTemplateId: string, fromProcessMenu = false) {
-        if(fromProcessMenu) {
-            this.ProcessMenuTemplateId = reportTemplateId;
-        }
-        else
+    SetReportTemplate(reportTemplateId: string) {
+        if (reportTemplateId) {
             this.DefaultReportTemplateId = reportTemplateId;
+        }
     }
 
     SetReportTemplateType(templateType: string) {
@@ -253,7 +251,6 @@ export class ReportsPreviewComponent implements AfterViewInit {
                 this.BuildStimulsoft();
             });
     }
-    
 
     private BuildStimulsoft() {
         if (this.isLoaderReady) {
@@ -281,9 +278,6 @@ export class ReportsPreviewComponent implements AfterViewInit {
                 if (this.DefaultReportTemplateId) {
                     this.Report.DefaultTemplateId = this.DefaultReportTemplateId;
                 }
-                if (this.ProcessMenuTemplateId) {
-                    this.StimulsoftArg.ProcessMenuTemplateId = this.ProcessMenuTemplateId;
-                }
                 this.StimulsoftArg.DefaultTemplateId = this.Report.DefaultTemplateId;
                 this.StimulsoftArg.ReportsTemplateLists = this.ReportsTemplateLists;
                 this.StimulsoftArg.ShowReportsTemlatesLists = true;
@@ -297,8 +291,6 @@ export class ReportsPreviewComponent implements AfterViewInit {
                 this.StimulsoftArg.MessageTemplateLists = this.MessageTemplateLists;
 
                 this.StimulsoftArg.DefaultMessageTemplateId =  this.DefaultMessageTemplateId ? this.DefaultMessageTemplateId : this.Report.DefaultMessageTemplateId;
-                this.StimulsoftArg.DefaultExcelTemplateId = this.Report?.DefaultExcelTemplateId;
-                this.StimulsoftArg.DefaultExcelNoStimId = this.Report?.DefaultExcelNoStimId;
                 this.StimulsoftArg.ResultType = this.ResultType;
                 this.StimulsoftArg.EntityId = this.ReportEntityId;
                 this.StimulsoftArg.ObjectTableId = this.ObjectTableId;
@@ -360,8 +352,7 @@ export class ReportsPreviewComponent implements AfterViewInit {
             if (this.IsUsedExportToExel || this.ReportFliter.ReportCode == "EXDE")
             {
                this.ReportFliter.ProcessType = "ExportToExcel";
-               this.ReportFliter.DefaultExcelNoStimId = this.StimulsoftArg.DefaultExcelNoStimId;
-               this.StartBuildStimulReportViaWorkerRole(this.ReportFliter, true); 
+               this.StartBuildStimulReportViaWorkerRole(this.ReportFliter, true);
                this.IsUsedExportToExel = false;
                return
             }
@@ -484,8 +475,7 @@ export class ReportsPreviewComponent implements AfterViewInit {
     FillReportFilter(filter: ReportFliter, isInteractive: boolean) {
         if (AppTool.IsNullOrEmpty(filter.DefaultTemplateId)) {
             if (this.StimulsoftArg) {
-                filter.DefaultTemplateId = this.StimulsoftArg.StimulsoftViewerComponent.TemplateType !=="E" ? 
-                    this.StimulsoftArg.DefaultTemplateId : this.StimulsoftArg.DefaultExcelTemplateId;
+                filter.DefaultTemplateId = this.StimulsoftArg.DefaultTemplateId;
             } else {
                 filter.DefaultTemplateId = this.Report.DefaultTemplateId;
             }
@@ -553,8 +543,8 @@ export class ReportsPreviewComponent implements AfterViewInit {
 
 
     StartBuildStimulReportViaWorkerRole(filter: ReportFliter, isInteractive?: boolean) {
-        
         filter.ReportsRunUsingWR = this.IsUsedReportsRunUsingWR = true;
+
 
         if(this.ReportFliter.ProcessType === "ExportToExcel")
             this.StartBusyIndicator(TextCodeTranslator.Translate("General.B.ExportingDataToExcel"));

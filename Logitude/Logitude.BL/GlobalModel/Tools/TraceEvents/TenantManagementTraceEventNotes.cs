@@ -53,8 +53,6 @@ namespace Logitude.BL.GlobalModel.Tools.TraceEvents
                     continue;
                 }
                 object pocoInstance;
-                if (tenant == null)
-                    continue;
                 if (LBtenantsetting == null)
                      pocoInstance = new object[] { poco, tenant, globalTenant }.FirstOrDefault(x => x.GetType().GetProperty(property.Name) != null);
                 else

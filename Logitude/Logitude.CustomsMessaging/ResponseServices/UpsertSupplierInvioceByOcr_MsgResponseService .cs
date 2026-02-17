@@ -269,9 +269,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
             string originCountryField = "";
             ICustomContext context = CustomContext.GetContext(customResponse.tenant);
             SupplierInvoiceQueryService supplierInvoiceQueryService = new SupplierInvoiceQueryService(customResponse.tenant);
-            SupplierInvioceItemCertificatUpdateService supplierInvioceItemCertificatUpdateService = new SupplierInvioceItemCertificatUpdateService(context, new Dictionary<string, IContext>(), tenant);
+			SupplierInvioceItemCertificatUpdateService supplierInvioceItemCertificatUpdateService = new SupplierInvioceItemCertificatUpdateService(context, new Dictionary<string, IContext>(), tenant);
 
-            List<SupplierInvoicePM> mySupplierInvoices = supplierInvoiceQueryService.GetInvoicesForDeclarationByInvoiceNum(customResponse.Declarationid, invoiceNumber, customResponse.tenant, true);
+			List<SupplierInvoicePM> mySupplierInvoices = supplierInvoiceQueryService.GetInvoicesForDeclarationByInvoiceNum(customResponse.Declarationid, invoiceNumber, customResponse.tenant, true);
             SupplierInvoicePM mySupplierInvoice =
                                     mySupplierInvoices.FirstOrDefault(x => x.InvoiceNumber == invoiceNumber)
                                     ?? mySupplierInvoices.FirstOrDefault(x => x.InvoiceNumber == null)
@@ -540,27 +540,27 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         {
                             supplierInvoiceItemPM.ItemAdditionalStatus = true;
                         }
-                        if (myInvoiceDefaults.SupplierInvItemCertificatDefs != null && myInvoiceDefaults.SupplierInvItemCertificatDefs.Count > 0)
-                        {
-                            foreach (var CerDef in myInvoiceDefaults.SupplierInvItemCertificatDefs)
-                            {
-                                var supplierInvioceItemCertificatPM = new SupplierInvioceItemCertificatPM()
-                                {
-                                    ChangeSetOp = ChangeSetOperation.Insert,
-                                    CertificateNumber = CerDef.CertificateNumber,
-                                    ReqConfirmationTypeCode = CerDef.ReqConfirmationTypeCode,
-                                    CertificateExemptionTypeCode = CerDef.CertificateExemptionTypeCode,
-                                    AttachmentTypeCode = CerDef.AttachmentTypeCode,
-                                    ResConfirmationTypeCode = CerDef.ResConfirmationTypeCode,
-                                    CustomsAttachmentID = CerDef.CustomsAttachmentID,
-                                    SequenceNumeric = CerDef.SequenceNumeric,
-
-                                };
-                                supplierInvoiceItemPM.CertificatesStatusCode = supplierInvioceItemCertificatUpdateService.UpdateCertificateStatus(supplierInvioceItemCertificatPM, tenant, true);
-                                supplierInvoiceItemPM.SupplierInvioceItemCertificats.Add(supplierInvioceItemCertificatPM);
-                            }
-                        }
-                    }
+                        if (myInvoiceDefaults.SupplierInvItemCertificatDefs != null && myInvoiceDefaults.SupplierInvItemCertificatDefs.Count > 0) 
+                        { 
+                             foreach(var CerDef in myInvoiceDefaults.SupplierInvItemCertificatDefs)
+                             {
+                                 var supplierInvioceItemCertificatPM = new SupplierInvioceItemCertificatPM()
+                                 {
+						     		 ChangeSetOp = ChangeSetOperation.Insert,
+			                         CertificateNumber = CerDef.CertificateNumber,
+			                         ReqConfirmationTypeCode = CerDef.ReqConfirmationTypeCode,
+						     		 CertificateExemptionTypeCode = CerDef.CertificateExemptionTypeCode,
+						     		 AttachmentTypeCode = CerDef.AttachmentTypeCode,
+			                         ResConfirmationTypeCode = CerDef.ResConfirmationTypeCode,
+			                         CustomsAttachmentID = CerDef.CustomsAttachmentID,
+			                         SequenceNumeric = CerDef.SequenceNumeric,
+                             
+						     	};
+								supplierInvoiceItemPM.CertificatesStatusCode = supplierInvioceItemCertificatUpdateService.UpdateCertificateStatus(supplierInvioceItemCertificatPM, tenant, true);
+								supplierInvoiceItemPM.SupplierInvioceItemCertificats.Add(supplierInvioceItemCertificatPM);
+						     }
+						}
+					}
                     // update ocr column position: page_no, ymin, ymax - #94509
                     if (ocrPosition.Count > counter)
                     {
