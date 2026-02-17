@@ -38,6 +38,9 @@ using Logitude.Customs.BL.Messaging.Customs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.AmitalMessaging.Customs.CustomFile;
 using Logitude.Customs.BL.CloseTables.Codes;
+using Simplog.Global.Data.GlobalModel.Repositories;
+using Logitude.BL.GlobalModel.EntityQueries;
+using Simplog.Global.Data.GlobalModel;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -88,7 +91,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     DeclarationPM declarationPM = declarationUpdateService.GetSertByConvertedDeclarationNumber(declarationNumber, requestParams.Tenant, true);
                     if (declarationPM == null || string.IsNullOrWhiteSpace(declarationPM.Id))
                     {
-                        Handle2470DeclarationNotFound(customResponse, requestParams, declarationNumber, dbContext);
                         var errMess = "DeclarationPM not found: DeclarationNumber=" + declarationNumber;
                         this.MyResponseData = new ReleaseGoodsResponseData();
                         this.MyResponseData.Succeeded = true;
@@ -127,7 +129,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                DeclarationNumber = declarationPM.DeclarationNumber,
                                DeclarationId = declarationPM.Id,
                                Tenant = declarationPM.Tenant,
-                               LoggingEntityId = declarationPM.Id,
+                               LoggingEntityId = declarationPM.Id, 
                                LoggingObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration"),
                                LoggingUserId = AuthenticationUtil.ResolveUserId(declarationPM.Tenant),
                                RequestName = "Retrieve Import Declaration " + declarationPM.DeclarationNumber,
@@ -170,7 +172,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                             this.CloseCustomsCollateral(declarationPM);
 
-
+                           
 
 
                             if (setting.IsConnectedToUniFreight || AmitalEventTracer.UseHybrid_When_NotIsConnectedToUniFreight)
@@ -332,7 +334,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
         {
             if (!declarationPM.AutoSending || !declarationPM.IsDiamondDeclaration) return;
             // determine if the export diamonds feature is enabled to allow autosending
-            ICommonDataContext myContextCommon = CommonDataContext.GetContext(declarationPM.Tenant);
+            IGlobalContext myContextCommon = GlobalContext.GetContext();
             FeatureRepository myFeatureRepository = new FeatureRepository(myContextCommon);
             FeatureQuery featureQuery = new FeatureQuery(myFeatureRepository);
             var features = featureQuery.GetAllowedFeaturesForLoggedUser(AuthenticationUtil.ResolveUserId(declarationPM.Tenant), declarationPM.Tenant);
@@ -369,13 +371,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
         {
             LogMessagingUtil.Instance.AppendLine("הגדרת ברירת מחדל חדשה ביוניפרייט ברמת מערכת עמילות כפתור בלדרות: שליחה של מסר הודעה מוקדמת לממן עם אופציות .");
 
-            DefaultValueQueryService defaultValueQueryService = new DefaultValueQueryService(requestParams.Tenant);
-            var objCGO_2470 = defaultValueQueryService.GetDefault("ISRAEL", "CGO_2470", "NON", "NON", requestParams.Tenant);
+			DefaultValueQueryService defaultValueQueryService = new DefaultValueQueryService(requestParams.Tenant);
+			var objCGO_2470 = defaultValueQueryService.GetDefault("ISRAEL", "CGO_2470", "NON", "NON", requestParams.Tenant);
 
-            bool sendMaman2470 = objCGO_2470 == "Y";
+			bool sendMaman2470 = objCGO_2470 == "Y";
 
 
-            LogMessagingUtil.Instance.AppendLine("default value CGO_2470 ==" + objCGO_2470 ?? "N");
+			LogMessagingUtil.Instance.AppendLine("default value CGO_2470 ==" + objCGO_2470 ?? "N");
             if (!sendMaman2470)
             {
                 return;
@@ -510,7 +512,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
             };
 
-            AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel, suppress_RAISE_EVENT: true, iscustomUser: true, isExport: true);
+            AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel, suppress_RAISE_EVENT: true, iscustomUser: true,isExport: true);
 
 
 
@@ -580,86 +582,5 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }
         }
 
-        private void Handle2470DeclarationNotFound(
-    DF_NG_2470_DF_MSG16001_ReleaseGoodsMessage customResponse,
-    GenericRequestParams requestParams,
-    string declarationNumber,
-    ICustomContext dbContext)
-        {
-            try
-            {
-                var releaseMessageCode = customResponse?.GeneralData?.ReleaseMessageCode;
-
-                string defCode = null;
-                string desc = null;
-                string type = null;
-
-                switch (releaseMessageCode)
-                {
-                    case 1: // released
-                        defCode = "2470N";
-                        desc = "התרה לתיק - מספר הצהרה: " + declarationNumber;
-                        type = "I";
-                        break;
-
-                    case 5: // released cancelled
-                        defCode = "2470C";
-                        desc = "בוטלה התרה - מספר הצהרה: " + declarationNumber;
-                        type = "A";
-                        break;
-
-                    case 9: // Pre clearance
-                        defCode = "2470P";
-                        desc = "הודעה מוקדמת לסוכן מכס - מספר הצהרה: " + declarationNumber;
-                        type = "I";
-                        break;
-
-                    case 14: // Release When Arrived
-                        defCode = "2470A";
-                        desc = "תיק מאושר להתרה לאחר הגשת טובין - מספר הצהרה: " + declarationNumber;
-                        type = "I";
-                        break;
-
-                    case 4:
-                        defCode = "2470S";
-                        desc = "אישור שטעון - מספר הצהרה: " + declarationNumber;
-                        type = "A";
-                        break;
-
-                    case 8: // Transshipment Approved Canceled
-                        defCode = "2470T";
-                        desc = "אישור שטעון בוטל - מספר הצהרה: " + declarationNumber;
-                        type = "A";
-                        break;
-
-                    default:
-                        LogMessagingUtil.Instance.AppendLine(
-                            "Handle2470DeclarationNotFound: Undeveloped ReleaseMessageCode=" + releaseMessageCode
-                            + ", DeclarationNumber=" + declarationNumber);
-                        return;
-                }
-
-                LogMessagingUtil.Instance.AppendLine(
-                    $"Handle2470DeclarationNotFound: Creating notification {defCode}, Ref={declarationNumber}");
-
-                NotificationBase.CreateNotification(
-                    dbContext: dbContext,
-                    tenant: requestParams.Tenant,
-                    objectTableName: "Customs.Declaration",
-                    notificationDefinitionCode: defCode,
-                    description: desc,
-                    assigneToNotificationTypeCode: type,
-                    reference1Number: declarationNumber,
-                    entityId: null,
-                    createdByRequestId: requestParams?.CustomsRequestsSheetId
-                     );
-            }
-            catch (Exception ex)
-            {
-                LogMessagingUtil.Instance.AppendLine(
-                    "Handle2470DeclarationNotFound failed: DeclarationNumber=" + declarationNumber + ", ex=" + ex);
-            }
-        }
     }
-        
 }

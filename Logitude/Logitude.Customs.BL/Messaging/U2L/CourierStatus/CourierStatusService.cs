@@ -31,6 +31,7 @@ using Unifreight.Data.AmitalModel;
 using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.GlobalModel.EntityQueries;
 
 namespace Logitude.Customs.BL.Messaging.U2L.CourierStatus
 {
@@ -101,7 +102,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.CourierStatus
             if(newDeclarationCourierStatusPM != null)
             {
 
-                FeatureQuery featureQuery = new FeatureQuery(_MyDeclarationPM.Tenant);
+                FeatureQuery featureQuery = new FeatureQuery();
                 var features = featureQuery.GetAllowedFeaturesForLoggedUser(AuthenticationUtil.ResolveUserId(_MyDeclarationPM.Tenant), _MyDeclarationPM.Tenant);
                 var feature = features.Features.FirstOrDefault(x => x.Code == "UpdateDistributionStatus");
          

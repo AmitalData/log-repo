@@ -28,6 +28,9 @@ using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.CommonDataModel;
 using Logitude.Customs.Data.EntityMapping;
 using Logitude.BL.CommonDataModel.EntityPMs;
+using Simplog.Global.Data.GlobalModel.Repositories;
+using Simplog.Global.Data.GlobalModel;
+using Logitude.BL.GlobalModel.EntityQueries;
 /*using Unifreight.BL.EntityPMs;
 using Unifreight.BL.EntityQueryServices;
 using Unifreight.BL.EntityUpdateServices;*/
@@ -43,7 +46,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             entityPM.DeclarationId = entityParentPM.DeclarationId;
             entityPM.CounterKey = entityParentPM.InvoiceCounterKey;
 
-            if (!entityPM.IsCopy && entityPM.LastCopyFromOrderNo != "10000" && entityPM.LineNumber == 0)
+            if (!entityPM.IsCopy && entityPM.LastCopyFromOrderNo != "10000" && entityPM.LineNumber ==0)
             {
                 entityParentPM.InvoiceItemLastLineNumber += 1;
                 entityPM.LineNumber = entityParentPM.InvoiceItemLastLineNumber;
@@ -57,6 +60,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     entityPM.SequenceNumeric = entityPM.LineNumber;
                 }
             }
+            if (entityPM.Tenant < 1)
+            {
+                throw new BusinessErrorException("Tenant '" + entityPM.Tenant + "' Can't be less than 1 (OnCreating)");
+            }
         }
 
         public void DoOnCreating(SupplierInvoiceItemPM entityPM, SupplierInvoicePM entityParentPM)
@@ -66,6 +73,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
         protected override void UpdateComposition(SupplierInvoiceItemPM entityPM)
         {
+
+            //SupplierInvoiceItemsQuantityUpdateService supplierInvoiceItemsQuantityUpdateService = new SupplierInvoiceItemsQuantityUpdateService(MainContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), Tenant);
+            //supplierInvoiceItemsQuantityUpdateService.UpdateMulti(entityPM.SupplierInvoiceItemsQuantities, entityPM.DeletedSupplierInvoiceItemsQuantities, entityPM, false);
+
             SupplierInvoiceItemsTaxUpdateService supplierInvoiceItemsTaxUpdateService = new SupplierInvoiceItemsTaxUpdateService(MainContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), Tenant);
             supplierInvoiceItemsTaxUpdateService.UpdateMulti(entityPM.SupplierInvoiceItemTaxes, entityPM.DeletedSupplierInvoiceItemTaxes, entityPM, false);
 
@@ -112,26 +123,52 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             base.UpdateComposition(entityPM);
         }
 
+        protected override void AfterUpdating(SupplierInvoiceItemPM entityPM, SupplierInvoicePM entityParentPM)
+        {
+
+            //if ((entityPM.ChangeSetOp == ChangeSetOperation.Insert || entityPM.ChangeSetOp == ChangeSetOperation.Delete)&&entityParentPM.ChangeSetOp!=ChangeSetOperation.Delete)
+            //{
+            //    SubmitChanges();
+            //    ICustomContext context = MainContext as CustomContext;
+            //    SupplierInvoiceItemRepository invoiceItemRepository = new SupplierInvoiceItemRepository(context);
+            //    List<SupplierInvoiceItem> supplierInvoices = invoiceItemRepository.GetMulti(new SupplierInvoiceKeys() { DeclarationId = entityPM.DeclarationId, InvoiceCounterKey = entityPM.CounterKey });
+
+
+            //    bool dirty = false;
+            //    int index = 0;
+            //    foreach (SupplierInvoiceItem item in supplierInvoices)
+            //    {
+            //        index += 1;
+            //        if (item.SequenceNumeric == index) continue; //itzik 
+            //        dirty = true; //itzik 
+            //        item.SequenceNumeric = index;
+            //        invoiceItemRepository.Update(item);
+            //        if (item.DeclarationId == entityPM.DeclarationId && item.CounterKey == entityPM.CounterKey && item.LineNumber==entityPM.LineNumber)
+            //        {
+            //            entityPM.SequenceNumeric = item.SequenceNumeric;
+            //        }
+            //    }
+            //    if (dirty)
+            //    {
+            //        invoiceItemRepository.SubmitChanges();
+            //    }
+            //}
+        }
+
         protected override void OnUpdating(SupplierInvoiceItemPM entityPM, SupplierInvoiceItem entityPOCO)
         {
-            var customsSettings = CustomsSettingQueryService.GetSettingByTenant(entityPM.Tenant);
+            DateTime stopLogAt = new DateTime(2020, 06, 01);
+            string logData = "";
+            DeclarationPM declarationPM = null;
+            DeclarationQueryService declarationQueryService = new DeclarationQueryService(entityPM.Tenant);
 
             if (entityPM.ClassificationCode != entityPOCO.ClassificationCode)
             {
-                DateTime stopLogAt = new DateTime(2020, 06, 01);
                 var loggedUser = AuthenticationUtil.ResolveUserIdentityName(entityPM.Tenant);
-                string logData = $"entityPM.ClassificationCode(New value)={entityPM.ClassificationCode},entityPOCO.ClassificationCode(Old value)={entityPOCO.ClassificationCode}, User name={loggedUser}";
-                LogitudeSettings.HandleLogMe("ClassificationCode changed " + logData, false, "SupplierInvoiceItemUpdate.ClassificationCode", stopLogAt);
+                logData = $"entityPM.ClassificationCode(New value)={entityPM.ClassificationCode},entityPOCO.ClassificationCode(Old value)={entityPOCO.ClassificationCode}, User name={loggedUser}"; 
+                LogitudeSettings.HandleLogMe("ClassificationCode changed " + logData, false, "SupplierInvoiceItemUpdate.ClassificationCode", stopLogAt);                
             }
 
-            if (customsSettings != null && customsSettings.CompanyType == "B")
-            {
-                base.OnUpdating(entityPM, entityPOCO);
-                return;
-            }
-
-            DeclarationPM declarationPM = null;
-            DeclarationQueryService declarationQueryService = new DeclarationQueryService(entityPM.Tenant);
             bool OCRisOn = false;
             try
             {
@@ -141,9 +178,9 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             {
                 LogMessagingUtil.Instance.AppendLine("EntityException occurred, possible database connection issue: " + ex.Message);
             }
-            if (OCRisOn && (!string.IsNullOrEmpty(entityPM.ItemCode) || !string.IsNullOrEmpty(entityPM.ItemDescription)))
+            if (OCRisOn && (!string.IsNullOrEmpty(entityPM.ItemCode) || !string.IsNullOrEmpty(entityPM.ItemDescription))) 
             {
-                if (string.IsNullOrEmpty(entityPM.ClassificationCode))
+                if(string.IsNullOrEmpty(entityPM.ClassificationCode))
                 {
                     ClientItemQueryService clientItemQueryService = new ClientItemQueryService(entityPM.Tenant);
                     declarationPM = declarationQueryService.GetSingle(entityPM.DeclarationId, false, true);
@@ -153,10 +190,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         string itemKey = $"{(entityPM.ItemCode ?? "")}_{(entityPM.ItemDescription ?? "")}";
 
                         ClientItemPM clientItem = clientItemQueryService.GetSingleWithTenantByItemKey(itemKey, declarationPM.ExporterImporterCode, entityPM.Tenant);
-                        if (clientItem != null)
+                        if(clientItem != null)
                         {
                             entityPM.ClassificationCode = clientItem?.ClassificationCode;
-                            if (string.IsNullOrEmpty(entityPM.ItemDescription))
+                            if(string.IsNullOrEmpty(entityPM.ItemDescription))
                                 entityPM.ItemDescription = clientItem?.ItemDescription;
                             if (string.IsNullOrEmpty(entityPM.OriginCountryCode))
                                 entityPM.OriginCountryCode = clientItem?.OriginCountryCode;
@@ -168,14 +205,19 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                                 string quantityType = customsItemQueryService.GetQuantityTypeByClassificationWithMultiCustomItems(entityPM.ClassificationCode, entityPM.Tenant, true);
                                 if (!string.IsNullOrEmpty(quantityType))
                                 {
-                                    entityPM.InvoiceQuantityType = quantityType;
+                                    //entityPM.StatisticQuantityType = quantityType;
+                                    //entityPM.StatisticQuantity = entityPM?.InvoiceQuantity;
+                                    //entityPM.ItemAdditionalStatus = true;
+                                    //if (string.IsNullOrEmpty(entityPM.InvoiceQuantityType))
+                                        entityPM.InvoiceQuantityType = quantityType;
+
                                 }
                             }
                         }
                     }
 
                 }
-                else
+                else 
                 {
                     if (entityPM.ClassificationCode != entityPOCO.ClassificationCode || entityPM.ItemCode != entityPOCO.ItemCode || entityPM.OriginCountryCode != entityPOCO.OriginCountryCode || entityPM.ItemDescription != entityPOCO.ItemDescription)
                     {
@@ -187,9 +229,12 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         }
 
                     }
+                   
                 }
-            }
 
+
+
+            }
 
             base.OnUpdating(entityPM, entityPOCO);
         }
@@ -198,8 +243,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         {
             bool isValid = true;
             bool hasRequest = false;
-            var customsSettings = CustomsSettingQueryService.GetSettingByTenant(entityPM.Tenant);
-            if (entityPM.ChangeSetOp == ChangeSetOperation.Delete)
+             if (entityPM.ChangeSetOp == ChangeSetOperation.Delete)
             {
                 ICustomContext context = this.MainContext as CustomContext;
                 CustomsDocumentsTicketQueryService ticketsQueryService = new CustomsDocumentsTicketQueryService(context);
@@ -237,33 +281,34 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
             else
             {
-                if (!(customsSettings != null && customsSettings.CompanyType == "B"))
+                IGlobalContext myContext = GlobalContext.GetContext();
+                FeatureRepository myFeatureRepository = new FeatureRepository(myContext);
+                FeatureQuery featureQuery = new FeatureQuery(myFeatureRepository);
+                FeaturePM feature = null; 
+                try
                 {
-                    ICommonDataContext myContext = CommonDataContext.GetContext(entityPM.Tenant);
-                    FeatureRepository myFeatureRepository = new FeatureRepository(myContext);
-                    FeatureQuery featureQuery = new FeatureQuery(myFeatureRepository);
-                    FeaturePM feature = null;
-                    try
-                    {
-                        var features = featureQuery.GetAllowedFeaturesForLoggedUser(AuthenticationUtil.ResolveUserId(entityPM.Tenant), entityPM.Tenant);
-                        feature = features.Features.FirstOrDefault(x => x.Code == "REFERANTWORKSPACE");
-                    }
-                    catch (Exception ex)
-                    {
-                        LogMessagingUtil.Instance.AppendLine("EntityException occurred, possible database connection issue: " + ex.Message);
-                    }
-
-
-                    if (!string.IsNullOrWhiteSpace(entityPM.ClasifiedRemarks) && feature != null)
-                    {
-                        DeclarationReferantDataUpdate(entityPM);
-                    }
+                    var features = featureQuery.GetAllowedFeaturesForLoggedUser(AuthenticationUtil.ResolveUserId(entityPM.Tenant), entityPM.Tenant);
+                    feature = features.Features.FirstOrDefault(x => x.Code == "REFERANTWORKSPACE");
+                }
+                catch (Exception ex)
+                {
+                    LogMessagingUtil.Instance.AppendLine("EntityException occurred, possible database connection issue: " + ex.Message);
                 }
 
+
+                if (!string.IsNullOrWhiteSpace(entityPM.ClasifiedRemarks)  && feature!=null)
+                {
+                    DeclarationReferantDataUpdate(entityPM);
+                }
+
+               
                 if (entityPM.IsItemChanged && !string.IsNullOrWhiteSpace(entityPM.ItemCode))
                 {
-                    if (customsSettings != null && customsSettings.IsConnectedToUniFreight)
+                    var setting = CustomsSettingQueryService.GetSettingByTenant(entityPM.Tenant);
+                    if (setting != null && setting.IsConnectedToUniFreight)
                     {
+
+
                         TransactionScope scope = null;
                         if (!DbContextBaseUtil.UnifreightDataIncludedInMain_FeatureOn)
                         {
@@ -290,13 +335,13 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         }
                     }
 
-
+                  
                 }
             }
             bool notdeleted = entityPM.SupplierInvioceItemCertificats.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).Any();
             if (entityPM.SupplierInvioceItemCertificats.Count == 0 || !notdeleted)
             {
-                entityPM.CertificatesStatusCode = null;
+                  entityPM.CertificatesStatusCode = null;
             }
 
             else
@@ -319,7 +364,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         {
                             if (entityPM.Direction == "E")
                             {
-                                if (string.IsNullOrWhiteSpace(item.CertificateNumber) || string.IsNullOrWhiteSpace(item.ReqConfirmationTypeCode) || string.IsNullOrWhiteSpace(item.ResConfirmationTypeCode) || !string.IsNullOrWhiteSpace(item.CertificateExemptionTypeCode))
+                                if (string.IsNullOrWhiteSpace(item.CertificateNumber) || string.IsNullOrWhiteSpace(item.ReqConfirmationTypeCode) || string.IsNullOrWhiteSpace(item.ResConfirmationTypeCode) || !string.IsNullOrWhiteSpace(item.CertificateExemptionTypeCode)  )
                                 {
                                     isValid = false;
                                     break;
@@ -333,7 +378,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                                     break;
                                 }
                             }
-
+                          
 
                         }
 
@@ -378,7 +423,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
 
             }
-
+            //var mySIAccumulationUtil = new SIAccumulationUtil();
+            //string itemHash = 
             if (entityPM.ItemHash != null && (entityPM.CurrentContextTag == null || entityPM.CurrentContextTag.ToString() != "ACCUMULATION"))
             {
                 object entityPOCO; object entityPM1; object entityParentPM;
@@ -396,6 +442,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     if (ItemHash != entityPM.ItemHash) entityPM.ItemHash = null;
                 }
             }
+            if (entityPM.Tenant < 1)
+            {
+                throw new BusinessErrorException("Tenant '" + entityPM.Tenant + "' Can't be less than 1 (OnUpdating)");
+            }
         }
 
         private void DeclarationReferantDataUpdate(SupplierInvoiceItemPM entityPM)
@@ -405,10 +455,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             ICustomContext _context = this.MainContext as CustomContext;
             var myDeclarationReferantDataQueryService = new DeclarationReferantDataQueryService(_context);
             DeclarationReferantDataPM declarationReferantDataPM = myDeclarationReferantDataQueryService.GetSingle(entityPM.DeclarationId, true, false);
+            
+            if (declarationReferantDataPM == null)return;
 
-            if (declarationReferantDataPM == null) return;
-
-            if (declarationReferantDataPM.IsClassificationRemarks) return;
+            if(declarationReferantDataPM.IsClassificationRemarks) return;
 
             var myDeclarationReferantDataUpdateService = new DeclarationReferantDataUpdateService(_context, new Dictionary<string, IContext>(), entityPM.Tenant);
             declarationReferantDataPM.IsClassificationRemarks = true;
@@ -423,16 +473,21 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             var updateService = new GTBITEMUpdateService(myAmitalContext);
 
             ICustomContext context = this.MainContext as CustomContext;
+            DeclarationQueryService declarationQueryService = new DeclarationQueryService(context);
 
             string partnerId = "";
+            DeclarationKeys entityKeys = new DeclarationKeys() { Id = supplierInvoiceItem.DeclarationId, };
             DeclarationPM myDeclarationPM;
-
+            //object entityPOCO; object entityPM; object entityParentPM;
+            //this.GetAncestor(out entityPOCO, out entityPM, out entityParentPM);
+            //myDeclarationPM = (entityPM as DeclarationPM);
             var myQueryService = new DeclarationQueryService(context);
             myDeclarationPM = myQueryService.GetSingle(supplierInvoiceItem.DeclarationId, false, true);
-            if (myDeclarationPM == null || !myDeclarationPM.IsConnectedToUnifreight) return;
-
-            partnerId = myDeclarationPM.CustomerCode;
-
+            if (!myDeclarationPM.IsConnectedToUnifreight) return;
+            if (myDeclarationPM != null)
+            {
+                partnerId = myDeclarationPM.CustomerCode;
+            }
             DefaultValueQueryService defaultValueQueryService = new DefaultValueQueryService(supplierInvoiceItem.Tenant);
 
             string partnerDefault = defaultValueQueryService.GetDefault("ISRAEL", "CIM_SIVUG_103", "NON", partnerId, supplierInvoiceItem.Tenant); // S=Supplier I=Client
@@ -488,13 +543,13 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         }
 
 
-
+       
 
         public void FastDeleteComposition(Logitude.Customs.Data.EntityKeys.DeclarationKeys entityKeyFields)
         {
             (Repository as Logitude.Customs.Data.Repsitories.SupplierInvoiceItemRepository).FastDeleteMulti(entityKeyFields);
         }
-
+   
         public void DeclarationSupplierInvoiceItemsParentsFastDeleteComposition(Logitude.Customs.Data.EntityKeys.SupplierInvoiceKeys entityKeyFields, ICustomContext dbContext, int tenant, bool isParent = true)
         {
 
@@ -546,8 +601,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             var supplierInvoiceItemsPriceUpdateService = new SupplierInvoiceItemsPriceUpdateService(dbContext, new Dictionary<string, IContext>(), tenant);
             supplierInvoiceItemsPriceUpdateService.FastDeleteMultiParents(entityKeyFields, supplierInvoiceItemsParentsLines);
 
-            var suppInvoiceItemsAbachStatementUpdateService = new SuppInvoiceItemsAbachStatementUpdateService(dbContext, new Dictionary<string, IContext>(), tenant);
-            suppInvoiceItemsAbachStatementUpdateService.FastDeleteMultiParents(entityKeyFields, supplierInvoiceItemsParentsLines);
+            var suppInvoiceItemsAbachStatementUpdateService = new  SuppInvoiceItemsAbachStatementUpdateService(dbContext, new Dictionary<string, IContext>(), tenant);
+             suppInvoiceItemsAbachStatementUpdateService.FastDeleteMultiParents(entityKeyFields, supplierInvoiceItemsParentsLines);
 
         }
 

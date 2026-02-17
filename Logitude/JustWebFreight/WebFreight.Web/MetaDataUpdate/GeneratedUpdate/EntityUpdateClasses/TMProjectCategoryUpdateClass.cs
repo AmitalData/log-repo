@@ -23,6 +23,8 @@ using Logitude.TimeManagement.Data.Repositories;
 using Logitude.TimeManagement.Data.EntityPOCOs;
 using Logitude.TimeManagement.BL;
 using Logitude.TimeManagement.BL.CLoseTable;
+using Simplog.Global.Data.GlobalModel.Repositories;
+
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class TMProjectCategoryUpdateClass

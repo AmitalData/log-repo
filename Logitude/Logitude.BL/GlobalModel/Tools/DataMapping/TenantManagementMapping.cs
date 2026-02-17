@@ -1,6 +1,7 @@
 ﻿using Logitude.BL.GlobalModel.EntityPMs;
 using Logitude.Server.Tools.Helpers;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; 
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.Helpers;
@@ -10,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
+using Simplog.Global.Data.GlobalModel.Repositories;
 
 namespace Logitude.BL.GlobalModel.Tools.DataMapping
 {
@@ -196,7 +198,7 @@ namespace Logitude.BL.GlobalModel.Tools.DataMapping
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
                 TenantRepository tenantRepository = new TenantRepository(entityPM.Id);
-                PackageRepository packageRepository = new PackageRepository(entityPM.Id);
+                PackageRepository packageRepository = new PackageRepository();
                 LogBoxTenantSettingRepository LBtenantsettingRepository = new LogBoxTenantSettingRepository(entityPM.Id);
 
                 Tenant tenant = tenantRepository.GetSingleTenant(entityPM.Id);

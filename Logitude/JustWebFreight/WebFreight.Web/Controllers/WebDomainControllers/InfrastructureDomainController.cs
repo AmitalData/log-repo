@@ -2,6 +2,10 @@
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
+using Logitude.BL.GlobalModel.EntityQueries;
+using Logitude.BL.GlobalModel.Tools.EntityService;
+using Logitude.BL.Helpers;
+using Logitude.BL.InfrastructureModel.EntityLists;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.QuoteModel.EntityLists;
@@ -9,74 +13,76 @@ using Logitude.BL.ShipmentsModel.EntityLists;
 using Logitude.BookingLib.Data;
 using Logitude.BookingLib.Data.EntityListQueryServices;
 using Logitude.BookingLib.Data.EntityLists;
+using Logitude.BookingLib.Data.EntityPOCOs;
+using Logitude.BookingLib.Data.Repositories;
 using Logitude.CRM.Data;
 using Logitude.CRM.Data.EntityListQueryServices;
 using Logitude.CRM.Data.EntityLists;
 using Logitude.CRM.Data.EntityPOCOs;
 using Logitude.CRM.Data.Repsitories;
+using Logitude.Infrastructure.BL.EntityPMs;
+using Logitude.Infrastructure.BL.EntityQueryServices;
+using Logitude.Infrastructure.BL.EntityUpdateServices;
+using Logitude.Infrastructure.Data;
+using Logitude.Infrastructure.Data.EntityListQueryServices;
+using Logitude.Infrastructure.Data.EntityLists;
+using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Infrastructure.Data.Repsitories;
+using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
+using Logitude.Server.Tools.QueueService;
+using Logitude.SystemLogs;
+using Logitude.SystemLogs.POCOs;
+using Logitude.SystemLogs.Repositories;
+using Microsoft.ApplicationInsights.Extensibility.Implementation;
+using Microsoft.Azure.Pipelines.WebApi;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; 
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
+using Simplog.Data.InfrastructureModel;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; 
 using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
+using Simplog.Data.InvoiceModel.Repositories;
+using Simplog.Data.QuoteModel.EntityPOCOs;
+using Simplog.Data.QuoteModel.Repositories;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.Repositories;
+using Simplog.Global.Data.GlobalModel;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
-using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure;
+using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.Common;
+using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading;
 using System.Transactions;
 using System.Web;
 using System.Web.Http;
+using System.Xml.Serialization;
+using WebFreight.Web.App_Code.AngularJS_App_Code.Global;
+using WebFreight.Web.DataContracts;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.Helpers.APIHelpers;
+using WebFreight.Web.Helpers.BIReport;
 using WebFreight.Web.InfrastructureModel.DomainServices;
 using WebFreight.Web.QuoteModel.DomainServices;
 using WebFreight.Web.Security;
 using WebFreight.Web.ShipmentsModel.DomainServices;
 using WebFreight.Web.SystemLogsModel.EntityList;
 using WebFreight.Web.SystemLogsModel.Queries;
-using Logitude.SystemLogs;
-using Logitude.SystemLogs.Repositories;
-using Logitude.SystemLogs.POCOs;
-using Simplog.Data.QuoteModel.Repositories;
-using Simplog.Data.InvoiceModel.Repositories;
-using Logitude.BookingLib.Data.Repositories;
-using Logitude.BookingLib.Data.EntityPOCOs;
-using Simplog.Data.QuoteModel.EntityPOCOs;
-using Simplog.Data.InvoiceModel.EntityPOCOs;
-using System.Data.Common;
-using Simplog.Data.InfrastructureModel;
-using System.Data.SqlClient;
-using System.Data;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Logitude.Server.Tools;
-using Simplog.Global.Data.GlobalModel;
-using Logitude.BL.InfrastructureModel.EntityLists;
-using System.Threading;
-using Logitude.Server.Tools.QueueService;
-using Logitude.Infrastructure.BL.EntityPMs;
-using Logitude.Infrastructure.Data;
-using Logitude.Infrastructure.BL.EntityUpdateServices;
-using System.Xml.Serialization;
-using WebFreight.Web.DataContracts;
-using Logitude.Infrastructure.BL.EntityQueryServices;
-using Logitude.Infrastructure.Data.Repsitories;
-using System.IO;
-using WebFreight.Web.App_Code.AngularJS_App_Code.Global;
-using Logitude.Infrastructure.Data.EntityPOCOs;
-using Logitude.Infrastructure.Data.EntityListQueryServices;
-using Logitude.Infrastructure.Data.EntityLists;
-using Logitude.BL.Helpers;
-using WebFreight.Web.Helpers.BIReport;
 
 namespace WebFreight.Web.Controllers.WebDomainControllers
 {
@@ -285,10 +291,11 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     allowedPackages = inf.PackagesCodes;
                 }
 
-                ICommonDataContext commonDataContext = CommonDataContext.GetContext(tenant);
-                IWebFreightContext webFreightContext = WebFreightContext.GetContext(tenant);
-                FeatureRepository iFeatureRepository = new FeatureRepository(commonDataContext);
+				IGlobalContext globalContext = GlobalContext.GetContext();
+				ICommonDataContext commonDataContext = CommonDataContext.GetContext(tenant);
+				IWebFreightContext webFreightContext = WebFreightContext.GetContext(tenant);
 
+                FeatureRepository iFeatureRepository = new FeatureRepository(globalContext);
                 FeatureQuery featureQuery = new FeatureQuery(iFeatureRepository);
                 List<FeaturePM> myResult = featureQuery.GetSelectedAndUnSelectedFeatures(RoleId, allowedPackages, tenant);
 
@@ -355,7 +362,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                 SecurityUtility.AuthenticationOnTenant(tenant);
 
-                FeatureQuery featureQuery = new FeatureQuery(tenant);
+                FeatureQuery featureQuery = new FeatureQuery();
                 List<FeaturePM> myResult = featureQuery.GetSelectedAndUnselectedPackagesFeatures(PackageCode, tenant);
 
                 foreach (FeaturePM item in myResult)
@@ -389,7 +396,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     allowedPackages = inf.PackagesCodes;
                 }
 
-                FeatureQuery featureQuery = new FeatureQuery(tenant);
+                FeatureQuery featureQuery = new FeatureQuery();
                 var result = featureQuery.GetAllowedFeaturesForRole(roleId, allowedPackages, tenant);
                 return Request.CreateResponse(HttpStatusCode.OK, result);
             }
@@ -418,7 +425,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     NetCommonHelper.Logger.DevLog.Instance.WriteInfo("GetAllowedFeaturesForLoggedUser ,contact.Id - " + contact.Id);
                     loggedUserId = contact.Id;
                 }
-                FeatureQuery featureQuery = new FeatureQuery(tenant);
+                FeatureQuery featureQuery = new FeatureQuery();
                 LoggedUserFeatures loggedUserFeatures = featureQuery.GetAllowedFeaturesForLoggedUser(loggedUserId, tenant);
                 List<FeaturePM> myResult1 = loggedUserFeatures.Features;
                 List<FeaturePM> myResult = new List<FeaturePM>();
@@ -464,7 +471,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                 SecurityUtility.AuthenticationOnTenant(tenant);
 
-                FeatureQuery featureQuery = new FeatureQuery(tenant);
+                FeatureQuery featureQuery = new FeatureQuery();
                 List<FeatureList> myResult = featureQuery.GetNewFeaturesList(tenant);
 
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
@@ -485,7 +492,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                 SecurityUtility.AuthenticationOnTenant(tenant);
 
-                PackageQuery packageQuery = new PackageQuery(tenant);
+                PackageQuery packageQuery = new PackageQuery();
                 List<PackagePM> myResult = packageQuery.GetPackagePMs();
 
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
@@ -513,7 +520,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     {
                         if (args.Items.Count > 0)
                         {
-                            ICommonDataContext objectContext = CommonDataContext.GetContext(tenant);
+                            IGlobalContext objectContext = GlobalContext.GetContext();
                             FeatureService service = new FeatureService(objectContext, tenant);
 
                             List<FeaturePM> featuresAdded = new List<FeaturePM>();
@@ -555,16 +562,18 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                             this.BuildFeatureChangesRemoved(ref myFeatureChanges, featuresRemoved);
 
                             if (myFeatureChanges != null)
-                            {
+                            { 
+                                GlobalContactRepository repository = new GlobalContactRepository(objectContext);
                                 string loggedUserEmail = authToken.Email;
-                                string loggedUserId = this.GetLoggedUserId(loggedUserEmail, tenant);
+                                string loggedUserId = repository.GetGlobalContactByEmailAndTenant(loggedUserEmail, tenant)?.Id;
 
-                                FeatureChangeRepository myRepository = new FeatureChangeRepository(objectContext);
+								FeatureChangeRepository myRepository = new FeatureChangeRepository(objectContext);
                                 FeatureChange myFeatureChange = new FeatureChange()
                                 {
                                     Tenant = tenant,
                                     Id = IdCounter.GetNumber("FeatureChange", tenant).ToString(),
                                     EventDateTime = TenantServerConfigration.GetCurrentDateTime(tenant),
+                                    Notes = myFeatureChanges,
                                     UserId = loggedUserId,
                                 };
 
@@ -997,28 +1006,41 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                 SecurityUtility.AuthenticationOnTenant(tenant);
 
-                ICommonDataContext myContext = CommonDataContext.GetContext(tenant);
+				IGlobalContext myContext = GlobalContext.GetContext();
+				ICommonDataContext commonDataContext = CommonDataContext.GetContext(tenant);
 
-                IQueryable<FeatureChange> iQueryable = (from a in myContext.FeatureChanges
+				IQueryable<FeatureChange> iQueryable = (from a in myContext.FeatureChanges
                                                         where a.Tenant == tenant
                                                         && a.RoleId == RoleId
                                                         select a);
+				var userIds = iQueryable.Select(f => f.UserId).Where(id => id != null).Distinct().ToList();
 
-                List<FeatureChangeList> myResult = (from d in iQueryable.Include("User").Include("User.Contact")
-                                                    select new FeatureChangeList()
-                                                    {
-                                                        Id = d.Id,
-                                                        Tenant = d.Tenant,
-                                                        Name = d.Name,
-                                                        EventDateTime = d.EventDateTime,
-                                                        PackageCode = d.PackageCode,
-                                                        RoleId = d.RoleId,
-                                                        SearchFields = d.SearchFields,
-                                                        UserId = d.UserId,
-                                                        UserName = d.User == null ? null : d.User.Contact.EnglishName,
-                                                    }).ToList();
+				var contacts = (from c in commonDataContext.Contacts
+							 where userIds.Contains(c.Id)
+							 select new
+							 {
+								 c.Id,
+								 UserName = c != null ? c.EnglishName : null
+							 }).ToList();
 
-                return Request.CreateResponse(HttpStatusCode.OK, myResult.OrderByDescending(d => d.EventDateTime));
+				List<FeatureChangeList> myResult = (from f in iQueryable
+													join u in contacts on f.UserId equals u.Id into gj
+													from subUser in gj.DefaultIfEmpty()
+													select new FeatureChangeList()
+													{
+														Id = f.Id,
+														Tenant = f.Tenant,
+														Name = f.Name,
+														Notes = f.Notes,
+														EventDateTime = f.EventDateTime,
+														PackageCode = f.PackageCode,
+														RoleId = f.RoleId,
+														SearchFields = f.SearchFields,
+														UserId = f.UserId,
+														UserName = subUser.UserName
+													}).ToList();
+
+				return Request.CreateResponse(HttpStatusCode.OK, myResult.OrderByDescending(d => d.EventDateTime));
             }
 
             catch (Exception ex)
@@ -1036,28 +1058,41 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                 SecurityUtility.AuthenticationOnTenant(tenant);
 
-                ICommonDataContext myContext = CommonDataContext.GetContext(tenant);
+				IGlobalContext myContext = GlobalContext.GetContext();
+				ICommonDataContext commonDataContext = CommonDataContext.GetContext(tenant);
 
-                IQueryable<FeatureChange> iQueryable = (from a in myContext.FeatureChanges
+				IQueryable<FeatureChange> iQueryable = (from a in myContext.FeatureChanges
                                                         where a.Tenant == tenant
                                                         && a.PackageCode == PackageCode
                                                         select a);
+				var userIds = iQueryable.Select(f => f.UserId).Where(id => id != null).Distinct().ToList();
 
-                List<FeatureChangeList> myResult = (from d in iQueryable.Include("User").Include("User.Contact")
-                                                    select new FeatureChangeList()
-                                                    {
-                                                        Id = d.Id,
-                                                        Tenant = d.Tenant,
-                                                        Name = d.Name,
-                                                        EventDateTime = d.EventDateTime,
-                                                        PackageCode = d.PackageCode,
-                                                        RoleId = d.RoleId,
-                                                        SearchFields = d.SearchFields,
-                                                        UserId = d.UserId,
-                                                        UserName = d.User == null ? null : d.User.Contact.EnglishName,
-                                                    }).ToList();
+				var contacts = (from c in commonDataContext.Contacts
+								where userIds.Contains(c.Id)
+								select new
+								{
+									c.Id,
+									UserName = c != null ? c.EnglishName : null
+								}).ToList();
 
-                return Request.CreateResponse(HttpStatusCode.OK, myResult.OrderByDescending(d => d.EventDateTime));
+				List<FeatureChangeList> myResult = (from f in iQueryable
+													join u in contacts on f.UserId equals u.Id into gj
+													from subUser in gj.DefaultIfEmpty()
+													select new FeatureChangeList()
+													{
+														Id = f.Id,
+														Tenant = f.Tenant,
+														Name = f.Name,
+														Notes = f.Notes,
+														EventDateTime = f.EventDateTime,
+														PackageCode = f.PackageCode,
+														RoleId = f.RoleId,
+														SearchFields = f.SearchFields,
+														UserId = f.UserId,
+														UserName = subUser.UserName
+													}).ToList();
+
+				return Request.CreateResponse(HttpStatusCode.OK, myResult.OrderByDescending(d => d.EventDateTime));
             }
 
             catch (Exception ex)

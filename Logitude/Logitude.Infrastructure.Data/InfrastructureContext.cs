@@ -21,6 +21,7 @@ using Logitude.Infrastructure.Data.EntityPOCOs;
 using Logitude.Infrastructure.Data; 
 using Logitude.Infrastructure.Data.EntityMapping;
 using Devart.Data.Oracle.Entity.Configuration;
+using Simplog.Global.Data.GlobalModel.Mapping;
 
 namespace Logitude.Infrastructure.Data
 {

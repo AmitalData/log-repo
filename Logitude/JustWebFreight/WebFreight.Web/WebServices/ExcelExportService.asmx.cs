@@ -1,41 +1,45 @@
+using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.InfrastructureModel.EntityPMs;
+using Logitude.BL.InfrastructureModel.EntityQueries;
+using Logitude.Server.Tools.Counters;
+using Logitude.Server.Tools.Helpers;
+using Logitude.SystemLogs;
+using Simplog.Data.CommonDataModel;
+using Simplog.Data.CommonDataModel.EntityPOCOs; 
+using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.Helpers;
+using Simplog.Data.InfrastructureModel;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; 
+using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Global.Data.GlobalModel;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.Repositories;
+using Simplog.Server.Infrastructure;
+using Simplog.Server.Infrastructure.DataContracts;
+using Simplog.Server.Infrastructure.Helpers;
+using Syncfusion.Calculate;
+using Syncfusion.XlsIO;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.Remoting.Contexts;
 using System.ServiceModel.DomainServices.Server;
 using System.Text;
+using System.Text.RegularExpressions;
+using System.Transactions;
 using System.Web;
 using System.Web.Services;
 using System.Xml;
 using System.Xml.Serialization;
-using Logitude.SystemLogs;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Simplog.Data.InfrastructureModel.Repositories;
-using Simplog.Server.Infrastructure.Helpers;
-using Syncfusion.Calculate;
-using Syncfusion.XlsIO;
-using Logitude.BL.CommonDataModel.EntityPMs;
-using Logitude.BL.CommonDataModel.EntityQueries;
 using WebFreight.Web.DataContracts;
 using WebFreight.Web.Helpers;
-using Logitude.BL.InfrastructureModel.EntityPMs;
-using Logitude.BL.InfrastructureModel.EntityQueries;
-using Logitude.Server.Tools.Counters;
-using Simplog.Server.Infrastructure.DataContracts;
-using System.Transactions;
-using Logitude.Server.Tools.Helpers;
-using System.Text.RegularExpressions;
-using Simplog.Global.Data.GlobalModel.Repositories;
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Simplog.Data.Helpers;
-using Simplog.Data.CommonDataModel;
-using Simplog.Data.InfrastructureModel;
-using System.Data.Common;
-using Simplog.Server.Infrastructure;
 
 namespace WebFreight.Web.WebServices
 {
@@ -445,44 +449,57 @@ namespace WebFreight.Web.WebServices
             else fixed_data = ControlChars.Value.Replace(data.ToString(), FixData_Replace);
             return fixed_data;
         }
+		public class FeaturePackageDto
+		{
+			public string PackageCode { get; set; }
+			public string FeatureCode { get; set; }
+			public string ObjectTableName { get; set; }
+		}
 
-        [WebMethod]
+		public class PartialFeaturePackageDto
+		{
+			public string PackageCode { get; set; }
+			public string FeatureCode { get; set; }
+			public string ObjectTableId { get; set; }
+		}
+		[WebMethod]
         public byte[] ExportFeaturesToCSVFile()
         {
-            int tenant = 0;
-            ICommonDataContext commonDataContext = CommonDataContext.GetContext(tenant);
-            IWebFreightContext webFreightContext = WebFreightContext.GetContext(tenant);
-            var List = (from PackageFeature in commonDataContext.PackageFeatures
-                        join Feature in commonDataContext.Features on PackageFeature.FeatureId equals Feature.Id into FeaturePackages
-                        from FeaturePackage in FeaturePackages.DefaultIfEmpty()
-                        where PackageFeature.Tenant == 0
-                        orderby PackageFeature.PackageCode
-                        select new
-                        {
-                            PackageCode = PackageFeature.PackageCode,
-                            ObjectTableName = PackageFeature.Feature.ObjectTable.Name,
-                            FeatureCode = FeaturePackage.Code,
-                        }
+		   int tenant = 0;
+           
+		   IGlobalContext globalContext = GlobalContext.GetContext();
+		   IWebFreightContext webFreightContext = WebFreightContext.GetContext(tenant);
+
+		
+			List<PartialFeaturePackageDto> rawList = (
+			from pf in globalContext.PackageFeatures
+			where pf.Tenant == tenant
+			join f in globalContext.Features on pf.FeatureId equals f.Id into featureGroup
+			from f in featureGroup.DefaultIfEmpty()
+			orderby pf.PackageCode
+			select new PartialFeaturePackageDto
+			{
+				PackageCode = pf.PackageCode,
+				FeatureCode = f != null ? f.Code : null,
+				ObjectTableId = f != null ? f.ObjectTableId : null
+			}).ToList();
+		   var objectTables = webFreightContext.ObjectTables
+			.Select(ot => new { ot.Id, ot.Name })
+			.ToList();
+
+		  List<FeaturePackageDto> List = (
+			from r in rawList
+			join ot in objectTables on r.ObjectTableId equals ot.Id into objectTableGroup
+			from ot in objectTableGroup.DefaultIfEmpty()
+			select new FeaturePackageDto
+			{
+				PackageCode = r.PackageCode,
+				FeatureCode = r.FeatureCode,
+				ObjectTableName = ot?.Name
+			}).ToList();
 
 
-                        ).ToList();
-
-//            var list2 = (from Table in webFreightContext.ObjectTables
-//                         join objt in List on Table.Id
-//equals objt.ObjectTableId into FeatureTables
-//                         from FeatureTable in FeatureTables.DefaultIfEmpty()
-
-
-//                         select new
-//                         {
-//                             PackageCode = FeatureTable.PackageCode,
-//                             TableName = Table.Name,
-//                             FeatureCode = FeatureTable.FeatureCode,
-//                         }
-//                 ).ToList();
-
-
-            StringBuilder sb = new StringBuilder();
+		StringBuilder sb = new StringBuilder();
 
             foreach (var packagefeature in List)
             {
@@ -500,8 +517,8 @@ namespace WebFreight.Web.WebServices
 
         public byte[] ExportFeaturesToCSVFile2()
         {
-            PackageFeatureRepository rep = new PackageFeatureRepository(0);
-            FeatureRepository featurrep = new FeatureRepository(0);
+            PackageFeatureRepository rep = new PackageFeatureRepository();
+            FeatureRepository featurrep = new FeatureRepository();
             ObjectTableRepository objecttablerep = new ObjectTableRepository(0);
             List<PackageFeature> packagefeatures = rep.GetPackageFeaturesByTenant(0).OrderBy(f=>f.PackageCode).ToList();
 
@@ -565,9 +582,9 @@ namespace WebFreight.Web.WebServices
         [WebMethod]
         public byte[] ExportRoleFeaturesToCSVFile()
         {
-            RoleRepository roleRep = new RoleRepository(0);
-            RoleFeatureRepository rep = new RoleFeatureRepository(0);
-            FeatureRepository featurrep = new FeatureRepository(0);
+            RoleRepository roleRep = new RoleRepository();
+            RoleFeatureRepository rep = new RoleFeatureRepository();
+            FeatureRepository featurrep = new FeatureRepository();
             ObjectTableRepository objecttablerep = new ObjectTableRepository(0);
             List<Role> roles = roleRep.GetRoles(0).ToList();
             List<RoleFeature> rolefeatures = rep.GetRoleFeaturesByTenant(0).OrderBy(f => f.RoleId).ToList();
@@ -600,12 +617,12 @@ namespace WebFreight.Web.WebServices
         public byte[] ExportRoleFeaturesFromSourceDB(string dbConnectionString)
         {
             DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionString, null);
-            ICommonDataContext commonDataContext = new CommonDataContext(connection);
+            IGlobalContext globalContext = new GlobalContext(connection);
             IWebFreightContext webDataContext = new WebFreightContext(connection);
 
-            RoleRepository roleRep = new RoleRepository(commonDataContext);
-            RoleFeatureRepository rep = new RoleFeatureRepository(commonDataContext);
-            FeatureRepository featurrep = new FeatureRepository(commonDataContext);
+            RoleRepository roleRep = new RoleRepository(globalContext);
+            RoleFeatureRepository rep = new RoleFeatureRepository(globalContext);
+            FeatureRepository featurrep = new FeatureRepository(globalContext);
             ObjectTableRepository objecttablerep = new ObjectTableRepository(webDataContext);
             List<Role> roles = roleRep.GetRoles(0).ToList();
             List<RoleFeature> rolefeatures = rep.GetRoleFeaturesByTenant(0).OrderBy(f => f.RoleId).ToList();
@@ -633,19 +650,35 @@ namespace WebFreight.Web.WebServices
         public byte[] ExportPackagesFeaturesFromSourceDB(string dbConnectionString)
         {
             DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionString, null);
-            ICommonDataContext commonDataContext = new CommonDataContext(connection);
+            IGlobalContext globalContext = new GlobalContext(connection);
+			IWebFreightContext webFreightContext = WebFreightContext.GetContext(0);
 
-            var List = (from PackageFeature in commonDataContext.PackageFeatures
-                        join Feature in commonDataContext.Features on PackageFeature.FeatureId equals Feature.Id into FeaturePackages
-                        from FeaturePackage in FeaturePackages.DefaultIfEmpty()
-                        where PackageFeature.Tenant == 0
-                        orderby PackageFeature.PackageCode
-                        select new
-                        {
-                            PackageCode = PackageFeature.PackageCode,
-                            ObjectTableName = PackageFeature.Feature.ObjectTable.Name,
-                            FeatureCode = FeaturePackage.Code,
-                        }).ToList();
+			List<PartialFeaturePackageDto> rawList = (
+               from pf in globalContext.PackageFeatures
+               where pf.Tenant == 0
+               join f in globalContext.Features on pf.FeatureId equals f.Id into featureGroup
+               from f in featureGroup.DefaultIfEmpty()
+               orderby pf.PackageCode
+               select new PartialFeaturePackageDto
+               {
+               	  PackageCode = pf.PackageCode,
+               	  FeatureCode = f != null ? f.Code : null,
+               	  ObjectTableId = f != null ? f.ObjectTableId : null
+               }).ToList();
+			var objectTables = webFreightContext.ObjectTables
+			 .Select(ot => new { ot.Id, ot.Name })
+			 .ToList();
+
+			List<FeaturePackageDto> List = (
+			  from r in rawList
+			  join ot in objectTables on r.ObjectTableId equals ot.Id into objectTableGroup
+			  from ot in objectTableGroup.DefaultIfEmpty()
+			  select new FeaturePackageDto
+			  {
+				  PackageCode = r.PackageCode,
+				  FeatureCode = r.FeatureCode,
+				  ObjectTableName = ot?.Name
+			  }).ToList();
 
             StringBuilder sb = new StringBuilder();
 

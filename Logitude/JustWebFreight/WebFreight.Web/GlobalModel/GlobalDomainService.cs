@@ -71,8 +71,17 @@ namespace WebFreight.Web.GlobalModel
         private SettingQuery settingQuery;
         private BatchServicesDefinitionQuery batchServicesDefinitionQuery;
         private TenantTypeQuery tenantTypeQuery;
-
-        private UserData currentUser;
+		private RoleRepository roleRepository;
+		private RoleFeatureRepository roleFeatureRepository;
+		private FeatureRepository featureRepository;
+		private PackageFeatureRepository packageFeatureRepository;
+		private FeatureQuery featureQuery;
+		private RoleFeatureQuery roleFeatureQuery;
+		private FeatureTypeRepository featureTypeRepository;
+        private PackageQuery packageQuery;
+        private PackageRepository packageRepository;
+        private RoleTypeRepository roleTypeRepository;
+		private UserData currentUser;
         public UserData CurrentUser
         {
             get { return currentUser; }
@@ -95,7 +104,18 @@ namespace WebFreight.Web.GlobalModel
             settingRepository = new SettingRepository(objectContext);
             batchServicesDefinitionRepository = new BatchServicesDefinitionRepository(objectContext);
             tenantTypeRepository = new TenantTypeRepository(objectContext);
-        }
+
+	        roleRepository  = new RoleRepository(objectContext);
+			roleFeatureRepository   = new RoleFeatureRepository(objectContext);
+			featureRepository     = new FeatureRepository(objectContext);
+			packageFeatureRepository  = new PackageFeatureRepository(objectContext);
+			featureTypeRepository	 = new FeatureTypeRepository(objectContext);
+			featureQuery = new FeatureQuery();
+			roleFeatureQuery  = new RoleFeatureQuery();
+            packageQuery = new PackageQuery();
+			packageRepository = new PackageRepository(objectContext);
+			roleTypeRepository = new RoleTypeRepository(objectContext);
+		}
 
         public GlobalDomainService()
         {
@@ -113,9 +133,20 @@ namespace WebFreight.Web.GlobalModel
             settingRepository = new SettingRepository(objectContext);
             batchServicesDefinitionRepository = new BatchServicesDefinitionRepository(objectContext);
             tenantTypeRepository = new TenantTypeRepository(objectContext);
-        }
+			roleRepository = new RoleRepository(objectContext);
+			roleFeatureRepository = new RoleFeatureRepository(objectContext);
+			featureRepository = new FeatureRepository(objectContext);
+			packageFeatureRepository = new PackageFeatureRepository(objectContext);
+			featureQuery = new FeatureQuery();
+			roleFeatureQuery = new RoleFeatureQuery();
+			featureTypeRepository = new FeatureTypeRepository();
+			packageQuery = new PackageQuery();
+			packageRepository = new PackageRepository(objectContext);
+			roleTypeRepository = new RoleTypeRepository(objectContext);
 
-        public GlobalDomainService(IGlobalContext context)
+		}
+
+		public GlobalDomainService(IGlobalContext context)
         {
             globalTenantsRepository = new GlobalTenantRepository(context);
             globalContactsRepository = new GlobalContactRepository(context);
@@ -129,10 +160,20 @@ namespace WebFreight.Web.GlobalModel
             settingRepository = new SettingRepository(context);
             batchServicesDefinitionRepository = new BatchServicesDefinitionRepository(context);
             tenantTypeRepository = new TenantTypeRepository(context);
-        }
+			roleRepository = new RoleRepository(objectContext);
+			roleFeatureRepository = new RoleFeatureRepository(objectContext);
+			featureRepository = new FeatureRepository(objectContext);
+			packageFeatureRepository = new PackageFeatureRepository(objectContext);
+			featureQuery = new FeatureQuery();
+			roleFeatureQuery = new RoleFeatureQuery();
+			featureTypeRepository = new FeatureTypeRepository();
+			packageQuery = new PackageQuery();
+			packageRepository = new PackageRepository(objectContext);
+			roleTypeRepository = new RoleTypeRepository(objectContext);
+		}
 
-        #region GlobalContacts
-        public GlobalContact GetGlobalContactByEmailAndTenant2(string email, int tenant)
+		#region GlobalContacts
+		public GlobalContact GetGlobalContactByEmailAndTenant2(string email, int tenant)
         {
             return globalContactsRepository.GetGlobalContactByEmailAndTenant(email, tenant);
         }

@@ -447,10 +447,7 @@ namespace Simplog.Data.CommonDataModel.Mocks
             }
         }
 
-        public IDbSet<Role> Roles
-        {
-            get { throw new NotImplementedException(); }
-        }
+
 
         public IDbSet<PaymentTerm> PaymentTerms
         {
@@ -939,10 +936,6 @@ namespace Simplog.Data.CommonDataModel.Mocks
             get { throw new NotImplementedException(); }
         }
 
-        public IDbSet<RoleFeature> RoleFeatures
-        {
-            get { throw new NotImplementedException(); }
-        }
 
         public IDbSet<Restriction> Restrictions
         {
@@ -1133,15 +1126,6 @@ namespace Simplog.Data.CommonDataModel.Mocks
             }
         }
 
-        public IDbSet<FeatureType> FeatureTypes
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        public IDbSet<RoleType> RoleTypes
-        {
-            get { throw new NotImplementedException(); }
-        }
         
         public List<Port> GetPorts()
         {
@@ -1163,25 +1147,6 @@ namespace Simplog.Data.CommonDataModel.Mocks
             return 1;
         }
 
-        List<Package> packages;
-        public IDbSet<Package> Packages
-        {
-            get
-            {
-                if (packages == null)
-                {
-                    packages = new List<Package>() {
-                        new Package() { Code = "DF",/*Tenants=Tenants.Where(d=>d.Id==1).ToList() */ },
-                        new Package() { Code = "AF", /*Tenants=Tenants.Where(d=>d.Id==2).ToList()*/ } };
-                }
-                return new MockObjectSet<Package>(packages);
-            }
-        }
-
-        public IDbSet<PackageFeature> PackageFeatures
-        {
-            get { throw new NotImplementedException(); }
-        }
         
         public IDbSet<UserLastLogin> UserLastLogins
         {
@@ -1759,17 +1724,7 @@ namespace Simplog.Data.CommonDataModel.Mocks
                 throw new NotImplementedException();
             }
         }
-        public IDbSet<FeatureAccessLevel> FeatureAccessLevels
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
+
         public IDbSet<EmailProvider> EmailProviders
         {
             get { throw new NotImplementedException(); }
@@ -2101,28 +2056,6 @@ namespace Simplog.Data.CommonDataModel.Mocks
                 throw new NotImplementedException();
             }
         }
-        public IDbSet<FeaturePackageType> FeaturePackageTypes
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-        public IDbSet<PackageConnectedPackage> PackageConnectedPackages
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
         public IDbSet<UserLicense> UserLicenses
         {
             get
@@ -2428,18 +2361,7 @@ namespace Simplog.Data.CommonDataModel.Mocks
             }
 
         }
-        public IDbSet<FeatureChange> FeatureChanges
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
 
-        }
         public IDbSet<FilingInbox> FilingInboxes
         {
             get

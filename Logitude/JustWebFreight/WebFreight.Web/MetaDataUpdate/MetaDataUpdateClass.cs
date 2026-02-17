@@ -3,11 +3,15 @@ using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.Server.Tools.Counters;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; 
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; 
 using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Global.Data.GlobalModel;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -6294,7 +6298,7 @@ namespace WebFreight.Web.MetaDataUpdate
             // |           ANY NEW FEATURE MUST BE ADDED To LXML Files      |
             // |____________________________________________________________|
             return;
-            ICommonDataContext ObjectContext = CommonDataContext.GetContext(tenant);
+			IGlobalContext ObjectContext = GlobalContext.GetContext(tenant);
             FeatureRepository FeaturesRepository = new FeatureRepository(ObjectContext);
             RoleFeatureRepository RoleFeaturesRepository = new RoleFeatureRepository(ObjectContext);
             TextCodeRepository textCodeRep = new TextCodeRepository(tenant);

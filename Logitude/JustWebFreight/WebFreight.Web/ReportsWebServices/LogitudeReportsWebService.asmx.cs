@@ -1,98 +1,98 @@
-﻿using Logitude.Accounting.BL.CoreBL.Reports;
-using Logitude.Accounting.BL.EntityQueryServices;
-using Logitude.Accounting.Data;
-using Logitude.Accounting.Data.EntityListQueryServices;
-using Logitude.Accounting.Data.EntityLists;
-using Logitude.Accounting.Data.EntityPOCOs;
-using Logitude.Accounting.Data.Enums;
-using Logitude.Accounting.Data.Repositories;
-using Logitude.Accounting.Def.EntityPMs;
-using Logitude.BL.CommonDataModel.BusinessUnitFilters;
-using Logitude.BL.CommonDataModel.EntityLists;
-using Logitude.BL.CommonDataModel.EntityPMs;
-using Logitude.BL.CommonDataModel.EntityQueries;
-using Logitude.BL.CommonDataModel.Tools.EntityService;
-using Logitude.BL.DataContracts;
-using Logitude.BL.GlobalModel.EntityLists;
-using Logitude.BL.GlobalModel.EntityQueries;
-using Logitude.BL.Helpers;
-using Logitude.BL.InfrastructureModel.EntityPMs;
-using Logitude.BL.InfrastructureModel.EntityQueries;
-using Logitude.BL.InvoiceModel.CustomFilters;
-using Logitude.BL.InvoiceModel.EntityLists;
-using Logitude.BL.InvoiceModel.EntityQueries;
-using Logitude.BL.QuoteModel;
-using Logitude.BL.QuoteModel.EntityLists;
-using Logitude.BL.QuoteModel.EntityQueries;
-using Logitude.BL.Resolvers;
-using Logitude.BL.ShipmentsModel.CustomFilters;
-using Logitude.BL.ShipmentsModel.EntityLists;
-using Logitude.BL.ShipmentsModel.EntityPMs;
-using Logitude.BL.ShipmentsModel.EntityQueries;
-using Logitude.CRM.Data;
-using Logitude.CRM.Data.EntityListQueryServices;
-using Logitude.CRM.Data.EntityLists;
-using Logitude.CRM.Data.EntityPOCOs;
-using Logitude.CRM.Data.Repsitories;
-using Logitude.Server.Tools;
-using Logitude.Server.Tools.Helpers;
-using Logitude.TimeManagement.Data;
-using Logitude.TimeManagement.Data.EntityPOCOs;
-using Logitude.TimeManagement.Data.Repositories;
-using Logitude.WarehouseLib.BL.DataContracts;
-using Logitude.WarehouseLib.BL.EntityQueryServices;
-using Microsoft.Azure.Management.ResourceManager.Models;
-using Microsoft.Practices.ObjectBuilder2;
-using Newtonsoft.Json;
-using NLog;
-using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; 
-using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.Helpers;
-using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; 
-using Simplog.Data.InfrastructureModel.Repositories;
-using Simplog.Data.InvoiceModel;
-using Simplog.Data.InvoiceModel.EntityPOCOs;
-using Simplog.Data.InvoiceModel.Repositories;
-using Simplog.Data.QuoteModel.EntityPOCOs;
-using Simplog.Data.QuoteModel.Repositories;
-using Simplog.Data.ShipmentsModel;
-using Simplog.Data.ShipmentsModel.EntityPOCOs;
-using Simplog.Data.ShipmentsModel.Repositories;
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Simplog.Global.Data.GlobalModel.Repositories;
-using Simplog.Server.Infrastructure;
-using Simplog.Server.Infrastructure.DataContracts;
-using Simplog.Server.Infrastructure.Helpers;
-using System;
-using System.Collections;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Data;
 using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using System.Transactions;
-using System.Web;
 using System.Web.Services;
-using System.Windows.Media;
 using System.Xml.Serialization;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Simplog.Data.ShipmentsModel.Repositories;
+using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityQueries;
 using WebFreight.Web.DataContracts;
 using WebFreight.Web.DataProviders;
-using WebFreight.Web.Helpers;
-using WebFreight.Web.Helpers.DataProviderHelpers;
-using WebFreight.Web.Helpers.Reports;
+using Logitude.BL.ShipmentsModel.EntityLists;
+using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.CommonDataModel.EntityPOCOs; 
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
+using Simplog.Data.InvoiceModel.Repositories;
+using Logitude.BL.InvoiceModel.EntityQueries;
+using Logitude.BL.InvoiceModel.EntityLists;
+using Simplog.Data.Helpers;
+using Simplog.Data.QuoteModel.Repositories;
+using Logitude.BL.QuoteModel.EntityQueries;
+using Simplog.Data.QuoteModel.EntityPOCOs;
+using Logitude.BL.QuoteModel.EntityLists;
+using Simplog.Server.Infrastructure.DataContracts;
+using Simplog.Server.Infrastructure.Helpers;
+using Logitude.BL.ShipmentsModel.EntityQueries;
+using Logitude.CRM.Data.EntityListQueryServices;
+using Logitude.CRM.Data;
+using Logitude.CRM.Data.EntityLists;
+using Logitude.BL.ShipmentsModel.EntityPMs;
+using Logitude.CRM.Data.Repsitories;
+using Logitude.CRM.Data.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.Repositories;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Server.Infrastructure;
+using System.Transactions;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; 
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.Repositories;
 using WebFreight.Web.InfrastructureModel.DomainServices;
-using WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting;
 using WebFreight.Web.Security;
-using WebFreight.Web.Services;
-using WebFreight.Web.WebServices;
+using Logitude.BL.CommonDataModel.BusinessUnitFilters;
+using System.ComponentModel.DataAnnotations;
+using Logitude.Server.Tools.Helpers;
+using Logitude.BL.QuoteModel;
+using Logitude.BL.InvoiceModel.CustomFilters;
+using Logitude.BL.ShipmentsModel.CustomFilters;
+using Logitude.BL.Helpers;
+using Simplog.Data.ShipmentsModel;
+using Simplog.Data.CommonDataModel;
+using Simplog.Data.InvoiceModel;
+using Logitude.WarehouseLib.BL.EntityQueryServices;
+using Logitude.WarehouseLib.BL.DataContracts;
+using Logitude.TimeManagement.Data.Repositories;
+using Logitude.TimeManagement.Data.EntityPOCOs;
+using Logitude.TimeManagement.Data;
+using Logitude.Accounting.BL.CoreBL.Reports;
+using Logitude.Accounting.Data.Repositories;
+using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.BL.GlobalModel.EntityQueries;
+using Logitude.BL.GlobalModel.EntityLists;
+using Logitude.BL.CommonDataModel.EntityLists;
 using static Logitude.Accounting.BL.CoreBL.Reports.RevenueExpenseReportParam;
+using Logitude.Accounting.BL.EntityQueryServices;
+using Logitude.Accounting.Def.EntityPMs;
+using Logitude.Server.Tools;
+using System.Data;
+using Newtonsoft.Json;
+using Logitude.Accounting.Data;
+using WebFreight.Web.Helpers.DataProviderHelpers;
+using System.Text;
+using System.Web;
+using Logitude.BL.DataContracts;
+using Simplog.Data.InfrastructureModel;
+using Logitude.BL.InfrastructureModel.EntityQueries;
+using Logitude.Accounting.Data.EntityListQueryServices;
+using Logitude.Accounting.Data.EntityLists;
+using Logitude.BL.InfrastructureModel.EntityPMs;
+using Logitude.BL.Resolvers;
+using WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting;
+using Logitude.BL.CommonDataModel.Tools.EntityService;
+using System.Reflection;
+using System.Collections;
+using WebFreight.Web.Helpers;
+using WebFreight.Web.Helpers.Reports;
+using WebFreight.Web.WebServices;
+using WebFreight.Web.Services;
+using System.Threading.Tasks;
+using NLog;
+using System.Windows.Media;
+using Microsoft.Azure.Management.ResourceManager.Models;
+using Microsoft.Practices.ObjectBuilder2;
+using Simplog.Global.Data.GlobalModel;
 //using NPOI.SS.Formula.Functions;
 
 namespace WebFreight.Web.ReportsWebServices
@@ -5346,7 +5346,7 @@ namespace WebFreight.Web.ReportsWebServices
             if (iQueryable_IsActiveCustomers.Count() > 0 && iQueryable_TenantManagements.Count() > 0)
             {
                 TenantRepository tenantRepository = new TenantRepository(tenant);
-                PackageRepository packageRepository = new PackageRepository(tenant);
+                PackageRepository packageRepository = new PackageRepository();
                 PaymentChannelRepository paymentChannelRepository = new PaymentChannelRepository(tenant);
                 CustomerSalesNoteRepository salesNoteRepository = new CustomerSalesNoteRepository(tenant);
                 WebFreightDomainService webFreightDomain = new WebFreightDomainService();
@@ -10051,20 +10051,6 @@ namespace WebFreight.Web.ReportsWebServices
             return transactionReportLoader.LoadFromXML(xmlFilters);
         }
 
-        public NewLedgerTransactionDataProvider GetNewLedgerTransactionsDataProvider(byte[] xmlFilters, int tenant)
-        {
-            NewLedgerTransactionReportLoader transactionReportLoader = new NewLedgerTransactionReportLoader(tenant);
-
-            return transactionReportLoader.LoadFromXML(xmlFilters);
-        }
-        public byte[] LoadNewLedgerTransactionDataProvider(byte[] xmlFilters, ReportFliter reportFliter, int tenant)
-        {
-            NewLedgerTransactionDataProvider dataprovider = GetNewLedgerTransactionsDataProvider(xmlFilters, tenant);
-            byte[] bytearray = new ReportMemoryStreamService().Convert(dataprovider, typeof(NewLedgerTransactionDataProvider), tenant);
-            ReportManipulationDataService reportManipulationDataService = new ReportManipulationDataService(dataprovider, reportFliter);
-            bytearray = reportManipulationDataService.IsDataProviderHaveListWithValues() ? bytearray : null;
-            return bytearray;
-        }
         T GetQueryFilterItemValue<T>(QueryFilterItem filterItem)
         {
             if (filterItem?.FieldValue != null)
@@ -10544,11 +10530,6 @@ namespace WebFreight.Web.ReportsWebServices
                         revenueExpenseReportParam.MyCardFilter = CardFilterEnum.ShowAllCard;
                         break;
                     }
-                case "3":
-                    {
-                        revenueExpenseReportParam.MyCardFilter = CardFilterEnum.ShowCardsWithActivity_AndBalanceNotZero;
-                        break;
-                    }
 
             }
             totalData.ForDate = toDate;
@@ -10869,10 +10850,6 @@ namespace WebFreight.Web.ReportsWebServices
 
             }
 
-            if (level == GLAccount)
-            {
-                RemoveRevExpZeroBalanceCards(totalData);
-            }
             RecalculateParentTotals(totalData);
 
             totalData.ResultList.OrderBy(d => d.Name);
@@ -10892,10 +10869,6 @@ namespace WebFreight.Web.ReportsWebServices
 
 
             totalData.TotalRevenueExpense = (totalRevenues == null ? 0 : totalRevenues) + (totalExpenses == null ? 0 : totalExpenses);
-            foreach (var res in totalData.ResultList.Where(r => r.Balance == null))
-            {
-                res.Balance = 0;
-            }
 
 
             #endregion
@@ -10903,64 +10876,6 @@ namespace WebFreight.Web.ReportsWebServices
             return totalData;
         }
 
-
-        private void RemoveRevExpZeroBalanceCards(RevenueExpenseDataProvider totalData)
-        {
-            // ** Stage 1: Removal of Parents of the removed GLAccounts that have no children left
-            // Get the set of all remaining ParentIds in the list - these are parents that still have children after the GLAccount removal.
-            var remainingParentIds = totalData.ResultList.Select(item => item.ParentId).ToHashSet();
-
-            // Identify the parent Ids from the groupedList that no longer have any children in the list.
-            var chartIdsToRemove = totalData.ResultList
-                .Where(res => res.Type == ChartOfAccount && res.ParentId != null).Select(res => res.Id)
-                .Where(chartId => !remainingParentIds.Contains(chartId))
-                .ToHashSet();
-
-            List<string> typeIdList = ChartOfAccountsTypes.All.ToList();
-            if (!typeIdList.Any())
-            {
-                typeIdList = new List<string>() { "1", "2", "3", "4", "5", "6", "7" };
-            }
-
-
-            // Identify GrandParents of the removed charts to check if they have any children left after the removal of the charts.
-            var grandParentIdsToCheck = totalData.ResultList
-            .Where(res => chartIdsToRemove.Contains(res.Id) && res.ParentId != null
-                        && !typeIdList.Contains(res.ParentId))
-            .Select(item => item.ParentId).ToHashSet();
-
-            // Remove the parent items that have no children left.
-            totalData.ResultList.RemoveAll(item => chartIdsToRemove.Contains(item.Id));
-
-            // ** Stage 2: Check GrandParents of the removed Parents and remove them if they have no children left
-            const int maxIterations = 3; // Remaining levels to check
-            if (grandParentIdsToCheck.Any())
-            {
-
-                for (int i = 0; i < maxIterations; i++)
-                {
-                    remainingParentIds = totalData.ResultList.Select(item => item.ParentId).ToHashSet();
-                    var gpIdsToRemove = new HashSet<string>(
-                        grandParentIdsToCheck.Where(grandParentId =>
-                                        !remainingParentIds.Contains(grandParentId)));
-
-                    if (!gpIdsToRemove.Any())
-                    {
-                        break; // Exit loop if no items to remove
-                    }
-
-                    grandParentIdsToCheck = totalData.ResultList
-                        .Where(res => gpIdsToRemove.Contains(res.Id) && res.ParentId != null
-                            && !typeIdList.Contains(res.ParentId))
-                        .Select(item => item.ParentId).ToHashSet();
-
-
-                    totalData.ResultList.RemoveAll(item => gpIdsToRemove.Contains(item.Id));
-
-                }
-
-            }
-        }
 
         #endregion
 
@@ -13074,9 +12989,11 @@ namespace WebFreight.Web.ReportsWebServices
             totalData.LicensedUsers = new List<LicenseManagementDataList>();
 
             ICommonDataContext myContext = CommonDataContext.GetContext(tenant);
-            UserRepository userRepository = new UserRepository(myContext);
+			IGlobalContext myGlobalContext = GlobalContext.GetContext(tenant);
+
+			UserRepository userRepository = new UserRepository(myContext);
             UserLicenseRepository myRepository = new UserLicenseRepository(myContext);
-            PackageRepository packageRepository = new PackageRepository(myContext);
+            PackageRepository packageRepository = new PackageRepository(myGlobalContext);
             TenantManagementLicenseRepository myTenantRepository = new TenantManagementLicenseRepository(tenant);
 
             #region Report Filters

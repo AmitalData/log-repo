@@ -5,7 +5,8 @@ using System.ServiceModel.DomainServices.Hosting;
 using System.Web;
 
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; 
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.Helpers;
@@ -22,6 +23,7 @@ using System.Transactions;
 using Logitude.Server.Tools.Counters;
 using Simplog.Server.Infrastructure;
 using Logitude.Server.Tools.Helpers;
+using Logitude.BL.GlobalModel.EntityQueries;
 
 namespace WebFreight.Web.Security
 {
@@ -138,7 +140,7 @@ namespace WebFreight.Web.Security
                                 //RoleRepository rolerep = new RoleRepository(tenant);
 
 
-                                RoleQuery roleQuery = new RoleQuery(tenant);
+                                RoleQuery roleQuery = new RoleQuery();
                                 List<RolePM> allRoles = roleQuery.GetRolesForContact(contact.Id, contact.GlobalTenantId).ToList();
                                 List<RolePM> allCustomRoles = allRoles.Where(d => d.IsCustomRole == true).ToList();
 

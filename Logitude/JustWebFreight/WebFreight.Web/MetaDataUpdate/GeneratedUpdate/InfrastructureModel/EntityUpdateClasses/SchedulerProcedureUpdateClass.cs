@@ -18,12 +18,13 @@ using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using WebFreight.Web.MetaDataUpdate.AddClasses;
 using WebFreight.Web.MetaDataUpdate.DetailClasses;
+using Simplog.Global.Data.GlobalModel.Repositories;
 
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.EntityUpdateClasses
 {
    public class SchedulerProcedureUpdateClass
    {  		
-		public const string HashString = "1ceea7766254c162b59b04a452c6d4db";
+		public const string HashString = "48a3ac0f7cb4ec38533eaafab36989d9";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -41,7 +42,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    SupportSubEntity =  false,
 			      				    ApplyGenericCustomFields =  false,
 			      				    AvailableInDocumentTypes =  false,
-			      				    IsLock =  false,
 			      				    HasHelper =  false,
 			      				    HasShortTitle =  false,
 			      				    HasFiltersMenu =  false,
@@ -69,7 +69,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Scheduler Procedure",
-			      				    Code =  "ad06",
+			      				    Code =  "be35",
 			      				    Name =  " Query Group",
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "Name",
@@ -78,7 +78,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    NoTS =  false,
 			      				    HasMenuButtons =  false,
 			      				    AllowedForComputingPartners =  false,
-			      				    ShowFastSearch =  false,
 			      				    CustomFieldsCount =  0,
 			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  false,

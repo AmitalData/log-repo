@@ -80,6 +80,7 @@ using Logitude.Workflow.BL.CLoseTable;
 using Logitude.DashboardModule.Data.Repositories;
 using Logitude.DashboardModule.Data.EntityPOCOs;
 using Logitude.DashboardModule.BL;
+using Simplog.Global.Data.GlobalModel.Repositories;
 
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.EntityUpdateClasses
 {

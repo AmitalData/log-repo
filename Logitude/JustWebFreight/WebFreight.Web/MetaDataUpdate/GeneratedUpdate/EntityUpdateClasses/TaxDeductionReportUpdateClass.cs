@@ -22,11 +22,13 @@ using WebFreight.Web.MetaDataUpdate.DetailClasses;
 using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.BL;
+using Simplog.Global.Data.GlobalModel.Repositories;
+
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class TaxDeductionReportUpdateClass
    {  		
-		public const string HashString = "d197c891dee0a14e8ca94cfa1d370420";
+		public const string HashString = "590fe682fba5d164c0b4377928453a3f";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -70,7 +72,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    NewWizardControlName =  "NewTaxDeductionReportComponent",
-			      				    LocalDefaultText =  "BS64:Iteg15nXm9eV15kg157XoSI=",
+			      				    LocalDefaultText =  "ניכוי מס",
 			      				    DefaultText =  "Tax Deduction Report",
 			      				    Code =  "1c9c",
 			      				    Name =  " Query Group",
@@ -263,10 +265,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CreateDate",
 					  						DefaultText =  "Create Date",
-					  						FullLocalDefaultText =  "BS64:Iteq15DXqNeZ15og15nXpteZ16jXlCI=",
+					  						FullLocalDefaultText =  "תאריך יצירה",
 					  						ListFieldLable =  "CreateDateListLable",
 					  						ListLableDefaultText =  "Create Date",
-					  						ListLocalDefaultText =  "BS64:Iteq15DXqNeZ15og15nXpteZ16jXlCI=",
+					  						ListLocalDefaultText =  "תאריך יצירה",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -329,7 +331,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CreatedByUserId",
 					  						DefaultText =  "Created By",
-					  						FullLocalDefaultText =  "BS64:Iteg15XXpteoINeiXCLXmSI=",
+					  						FullLocalDefaultText =  "נוצר ע\\\"י",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "User",
 					  						NavigationPropertyName =  "CreatedByUser",
@@ -394,10 +396,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "UpdateDate",
 					  						DefaultText =  "Update Date",
-					  						FullLocalDefaultText =  "BS64:Iteq15DXqNeZ15og16LXk9eb15XXnyI=",
+					  						FullLocalDefaultText =  "תאריך עדכון",
 					  						ListFieldLable =  "UpdateDateListLable",
 					  						ListLableDefaultText =  "Update Date",
-					  						ListLocalDefaultText =  "BS64:Iteq15DXqNeZ15og16LXk9eb15XXnyI=",
+					  						ListLocalDefaultText =  "תאריך עדכון",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -587,10 +589,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ReportNumber",
 					  						DefaultText =  "Report Number",
-					  						FullLocalDefaultText =  "BS64:Itee16HXpNeoINeT15XXlyI=",
+					  						FullLocalDefaultText =  "מספר דוח",
 					  						ListFieldLable =  "ReportNumberListLable",
 					  						ListLableDefaultText =  "Report Number",
-					  						ListLocalDefaultText =  "BS64:Itee16HXpNeoINeT15XXlyI=",
+					  						ListLocalDefaultText =  "מספר דוח",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -654,10 +656,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "StatusTypeCode",
 					  						DefaultText =  "Status Type",
-					  						FullLocalDefaultText =  "BS64:Iteh15jXmNeV16Ei",
+					  						FullLocalDefaultText =  "סטטוס",
 					  						ListFieldLable =  "StatusTypeCodeListLable",
 					  						ListLableDefaultText =  "Status Type",
-					  						ListLocalDefaultText =  "BS64:Iteh15jXmNeV16Ei",
+					  						ListLocalDefaultText =  "סטטוס",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "TaxDeductionReportStatus",
 					  						NavigationPropertyName =  "TaxDeductionReportStatus",
@@ -722,10 +724,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsAdditionalReportExist",
 					  						DefaultText =  "Additional Report Exist",
-					  						FullLocalDefaultText =  "BS64:Iten15nXmdedINeT15XXlyDXntep15zXmdedIg==",
+					  						FullLocalDefaultText =  "קיים דוח משלים",
 					  						ListFieldLable =  "IsAdditionalReportExistListLable",
 					  						ListLableDefaultText =  "Additional Report Exist",
-					  						ListLocalDefaultText =  "BS64:Iten15nXmdedINeT15XXlyDXntep15zXmdedIg==",
+					  						ListLocalDefaultText =  "קיים דוח משלים",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -788,10 +790,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "TaxYear",
 					  						DefaultText =  "Tax Year",
-					  						FullLocalDefaultText =  "BS64:Itep16DXqiDXntehIg==",
+					  						FullLocalDefaultText =  "שנת מס",
 					  						ListFieldLable =  "TaxYearListLable",
 					  						ListLableDefaultText =  "Tax Year",
-					  						ListLocalDefaultText =  "BS64:Itep16DXqiDXntehIg==",
+					  						ListLocalDefaultText =  "שנת מס",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -854,10 +856,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Email",
 					  						DefaultText =  "Email",
-					  						FullLocalDefaultText =  "BS64:Iteb16rXldeR16og157XmdeZ15wg15zXk9eZ15XXldeXIg==",
+					  						FullLocalDefaultText =  "כתובת מייל לדיווח",
 					  						ListFieldLable =  "EmailListLable",
 					  						ListLableDefaultText =  "Email",
-					  						ListLocalDefaultText =  "BS64:Iteb16rXldeR16og157XmdeZ15wg15zXk9eZ15XXldeXIg==",
+					  						ListLocalDefaultText =  "כתובת מייל לדיווח",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -920,10 +922,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ErrorMessage",
 					  						DefaultText =  "Error Message",
-					  						FullLocalDefaultText =  "BS64:IteU16LXqNeV16og16nXkteZ15DXlCI=",
+					  						FullLocalDefaultText =  "הערות שגיאה",
 					  						ListFieldLable =  "ErrorMessageListLable",
 					  						ListLableDefaultText =  "Error Message",
-					  						ListLocalDefaultText =  "BS64:IteU16LXqNeV16og16nXkteZ15DXlCI=",
+					  						ListLocalDefaultText =  "הערות שגיאה",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  true,
 					  						NoMetaDataField =  false,
@@ -985,10 +987,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CreatedByUser",
 					  						DefaultText =  "Created By User",
-					  						FullLocalDefaultText =  "BS64:Iteg15XXpteoINeiXCLXmSI=",
+					  						FullLocalDefaultText =  "נוצר ע\\\"י",
 					  						ListFieldLable =  "CreatedByUserListLable",
 					  						ListLableDefaultText =  "Created By User",
-					  						ListLocalDefaultText =  "BS64:Iteg15XXpteoINeiXCLXmSI=",
+					  						ListLocalDefaultText =  "נוצר ע\\\"י",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1050,10 +1052,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Status",
 					  						DefaultText =  "Status",
-					  						FullLocalDefaultText =  "BS64:Iteh15jXmNeV16Ei",
+					  						FullLocalDefaultText =  "סטטוס",
 					  						ListFieldLable =  "StatusListLable",
 					  						ListLableDefaultText =  "Status",
-					  						ListLocalDefaultText =  "BS64:Iteh15jXmNeV16Ei",
+					  						ListLocalDefaultText =  "סטטוס",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1176,10 +1178,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ByMonth",
 					  						DefaultText =  "By Month",
-					  						FullLocalDefaultText =  "BS64:Itec16TXmSDXl9eV15PXqSI=",
+					  						FullLocalDefaultText =  "לפי חודש",
 					  						ListFieldLable =  "ByMonthListLable",
 					  						ListLableDefaultText =  "By Month",
-					  						ListLocalDefaultText =  "BS64:Itec16TXmSDXl9eV15PXqSI=",
+					  						ListLocalDefaultText =  "לפי חודש",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1242,10 +1244,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Month",
 					  						DefaultText =  "Month",
-					  						FullLocalDefaultText =  "BS64:Itec15fXldeT16ki",
+					  						FullLocalDefaultText =  "לחודש",
 					  						ListFieldLable =  "MonthListLable",
 					  						ListLableDefaultText =  "Month",
-					  						ListLocalDefaultText =  "BS64:Itec15fXldeT16ki",
+					  						ListLocalDefaultText =  "לחודש",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1258,133 +1260,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInAutomationAsEnitity =  false,
 					  						DisplayInRequiredFields =  false,
 					  						HasTemplate =  true,
-					  						IsCustom =  false,
-					  						EnableFullscreenTextBox =  false,
-					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
- 
-
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
-					 
-					 						FieldName =  "FromMonth",
-					  						ObjectTableName =  "TaxDeductionReport",
-					  						FieldsDataType =  "DateTime",
-					  						MinLength =  0,
-					  						MaxLength =  0,
-					  						IsRequired =  false,
-					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
-					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  true,
-					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  0,
-					  						DisplayInList =  true,
-					  						IsCustomFilter =  false,
-					  						IsListFilter =  false,
-					  						Operator =  "Equals",
-					  						MultiLine =  false,
-					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "FromMonth",
-					  						ListPropertyPath =  "FromMonth",
-					  						DisplayInLookUpIndex =  0,
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
-					  						IsMulti =  false,
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "TaxDeductionReport",
-					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						InActive =  false,
-					  						DisplayLongName =  false,
-					  						FullFieldLable =  "FromMonth",
-					  						DefaultText =  "From Month",
-					  						FullLocalDefaultText =  "BS64:Itee15fXldeT16ki",
-					  						ListFieldLable =  "FromMonthListLable",
-					  						ListLableDefaultText =  "FromMonth",
-					  						ListLocalDefaultText =  "BS64:Itee15fXldeT16ki",
-					  						IsForeignKey =  false,
-					  						IsMaxLength =  false,
-					  						NoMetaDataField =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
-					  						DisplayInRequiredFields =  false,
-					  						HasTemplate =  true,
-					  						IsCustom =  false,
-					  						EnableFullscreenTextBox =  false,
-					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
- 
-
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
-					 
-					 						FieldName =  "ReportSavedData",
-					  						ObjectTableName =  "TaxDeductionReport",
-					  						FieldsDataType =  "nText",
-					  						MinLength =  0,
-					  						MaxLength =  100000,
-					  						IsRequired =  false,
-					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
-					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
-					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  100000,
-					  						DisplayInList =  false,
-					  						IsCustomFilter =  false,
-					  						IsListFilter =  false,
-					  						MultiLine =  false,
-					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "ReportSavedData",
-					  						ListPropertyPath =  "ReportSavedData",
-					  						DisplayInLookUpIndex =  0,
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
-					  						IsMulti =  false,
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "TaxDeductionReport",
-					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						InActive =  false,
-					  						DisplayLongName =  false,
-					  						FullFieldLable =  "ReportSavedData",
-					  						DefaultText =  "Report Saved Data",
-					  						IsForeignKey =  false,
-					  						IsMaxLength =  true,
-					  						NoMetaDataField =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
-					  						DisplayInRequiredFields =  false,
-					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
@@ -1415,8 +1290,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
    
 
-			   TextCode TaxDeductionReportTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxDeductionReport.Q.ALLTaxDeductionReports", DefaultText = @"Tax Deduction Reports",LocalDefaultText = "BS64:Iteg15nXm9eV15kg157XoSI=", ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes,contextTenant);
-			   Feature TaxDeductionReportFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TaxDeductionReport.Q.ALLTaxDeductionReports", ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "TaxDeductionReportFeatures.ALLTaxDeductionReports", NameTextCodeDefaultText = "ALLTaxDeductionReports", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,TaxDeductionReportObjectTable, addedFeatures, addedTextCodes,contextTenant);
+			   TextCode TaxDeductionReportTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxDeductionReport.Q.ALLTaxDeductionReports", DefaultText = @"Tax Deduction Reports",LocalDefaultText = "ניכוי מס", ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes,contextTenant);
+			   Feature TaxDeductionReportFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TaxDeductionReport.Q.ALLTaxDeductionReports", ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "TaxDeductionReportFeatures.ALLTaxDeductionReports", NameTextCodeDefaultText = "ALLTaxDeductionReports", FeatureTypeCode = "QUER", Packagable = false }, TenantFeatures, textCodes,TaxDeductionReportObjectTable, addedFeatures, addedTextCodes,contextTenant);
 
 	        //TextCodeRepository.SubmitChanges();
 	        //FeaturesRepository.SubmitChanges();    
@@ -1469,15 +1344,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   ObjectTable GeneralObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "General" && d.Tenant == 0).FirstOrDefault();   
 			   ObjectTable TaxDeductionReportObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "TaxDeductionReport" && d.Tenant == 0).FirstOrDefault();  
                  
-			   TextCode TaxDeductionReportGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxDeductionReport.TH.General", DefaultText = "General",LocalDefaultText = "BS64:Itek16jXmNeZ150i", ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   TextCode TaxDeductionReportGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxDeductionReport.TH.General", DefaultText = "General",LocalDefaultText = "פרטים", ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes,contextTenant);
 			   Feature TaxDeductionReportGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TaxDeductionReport.Tab.General", ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "TaxDeductionReportFeatures.TDGN", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,TaxDeductionReportObjectTable,contextTenant);
  
                  
-			   TextCode TaxDeductionReportLogTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxDeductionReport.TH.Log", DefaultText = "Log",LocalDefaultText = "BS64:Itec15XXkiI=", ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   TextCode TaxDeductionReportLogTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxDeductionReport.TH.Log", DefaultText = "Log",LocalDefaultText = "לוג", ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes,contextTenant);
 			   Feature TaxDeductionReportLogFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TaxDeductionReport.Tab.Log", ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "TaxDeductionReportFeatures.LOG", NameTextCodeDefaultText = "Log", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,TaxDeductionReportObjectTable,contextTenant);
  
                  
-			   TextCode TaxDeductionReportEventsTextCode_TH2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxDeductionReport.TH.Events", DefaultText = "Events",LocalDefaultText = "BS64:IteQ15nXqNeV16LXmdedIg==", ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   TextCode TaxDeductionReportEventsTextCode_TH2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxDeductionReport.TH.Events", DefaultText = "Events",LocalDefaultText = "אירועים", ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes,contextTenant);
 			   Feature TaxDeductionReportEventsFeature_TH2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TaxDeductionReport.Tab.Events", ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "TaxDeductionReportFeatures.TDEV", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,TaxDeductionReportObjectTable,contextTenant);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
@@ -1581,7 +1456,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "dropdownbutton",
 						FeatureId = null,
 						Style = null,
-						LocalDefaultText = "BS64:Iteg15XXodek15nXnSI=",
+						LocalDefaultText = "נוספים",
 						FeatureUniqeCode = null,
 						HtmlComponentPath = null,
 						Width = 0,
@@ -1601,7 +1476,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "menuitem",
 						FeatureId=  TaxDeductionReportFeature_MB00.Id,
 						Style = null,
-						LocalDefaultText = "BS64:IteU15XXqNeTINen15XXkdelINeY16fXodeYIg==",
+						LocalDefaultText = "הורד קובץ טקסט",
                         HtmlComponentPath=null,
                         Width=0,
 						FeatureUniqeCode=  TaxDeductionReportFeature_MB00.FeatureUniqeCode,
@@ -1621,7 +1496,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "menuitem",
 						FeatureId=  TaxDeductionReportFeature_MB01.Id,
 						Style = null,
-						LocalDefaultText = "BS64:IteU15XXqNeTINen15XXkdelIFBERiAgIg==",
+						LocalDefaultText = "הורד קובץ PDF  ",
                         HtmlComponentPath=null,
                         Width=0,
 						FeatureUniqeCode=  TaxDeductionReportFeature_MB01.FeatureUniqeCode,
@@ -1636,63 +1511,33 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   ObjectTable TaxDeductionReportObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "TaxDeductionReport" && d.Tenant == 0).FirstOrDefault(); 
 
- 		   TextCode TaxDeductionReportTextCode_TaxDeductionReportOAccountWithoutVendor = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxDeductionReport.O.AccountWithoutVendor", DefaultText = "is not connected to Card",LocalDefaultText = @"BS64:Iteb16jXmNeZ16Eg15TXoNeU15cg15zXkCDXnten15XXqdeoINec15vXqNeY15nXoSDXodek16cg16rXpNei15XXnNeZIg==", ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode TaxDeductionReportTextCode_TaxDeductionReportOAccountWithoutVendor = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxDeductionReport.O.AccountWithoutVendor", DefaultText = "is not connected to Card",LocalDefaultText = @"כרטיס הנהח לא מקושר לכרטיס ספק תפעולי", ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode TaxDeductionReportTextCode_TaxDeductionReportOVendorWithoutAccount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxDeductionReport.O.VendorWithoutAccount", DefaultText = " Vendor Card is not connected to Account",LocalDefaultText = @"BS64:IiDXm9eo15jXmdehINeh16TXpyDXqtek16LXldec15kg15zXkCDXnten15XXqdeoINec15vXqNeY15nXoSDXlNeg15TigJ3XlyI=", ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode TaxDeductionReportTextCode_TaxDeductionReportOCardWithoutVatNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxDeductionReport.O.CardWithoutVatNumber", DefaultText = "GLAccount connected to a card without Vat Number ",LocalDefaultText = @" כרטיס תפעולי ללא חפ", ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode TaxDeductionReportTextCode_TaxDeductionReportOPaymentOrder = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxDeductionReport.O.PaymentOrder", DefaultText = "Payment Order ",LocalDefaultText = @"BS64:IteU15XXqNeQ16og16rXqdec15XXnSAi", ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode TaxDeductionReportTextCode_TaxDeductionReportOCardWithoutAddress = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxDeductionReport.O.CardWithoutAddress", DefaultText = "GLAccount connected to a card without Address",LocalDefaultText = @"כרטיס תפועלי ללא כתובת", ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode TaxDeductionReportTextCode_TaxDeductionReportOCardWithoutVatNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxDeductionReport.O.CardWithoutVatNumber", DefaultText = "GLAccount connected to a card without Vat Number ",LocalDefaultText = @"BS64:IiDXm9eo15jXmdehINeq16TXoteV15zXmSDXnNec15Ag15fXpCI=", ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode TaxDeductionReportTextCode_TaxDeductionReportOVendorGLAccount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxDeductionReport.O.VendorGLAccount", DefaultText = "Vendor GLAccount",LocalDefaultText = @"כרטיס הספק", ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode TaxDeductionReportTextCode_TaxDeductionReportOCardWithoutAddress = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxDeductionReport.O.CardWithoutAddress", DefaultText = "GLAccount connected to a card without Address",LocalDefaultText = @"BS64:Iteb16jXmNeZ16Eg16rXpNeV16LXnNeZINec15zXkCDXm9eq15XXkdeqIg==", ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode TaxDeductionReportTextCode_TaxDeductionReportOConnected2ManyCards = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxDeductionReport.O.Connected2ManyCards", DefaultText = "is connected to more than one Operational Vendor",LocalDefaultText = @"מחובר ליותר מספק תפעולי אחד", ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode TaxDeductionReportTextCode_TaxDeductionReportOVendorGLAccount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxDeductionReport.O.VendorGLAccount", DefaultText = "Vendor GLAccount",LocalDefaultText = @"BS64:Iteb16jXmNeZ16Eg15TXodek16ci", ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode TaxDeductionReportTextCode_TaxDeductionReportOByMonth = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxDeductionReport.O.ByMonth", DefaultText = "By Month",LocalDefaultText = @"חודשי", ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode TaxDeductionReportTextCode_TaxDeductionReportOConnected2ManyCards = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxDeductionReport.O.Connected2ManyCards", DefaultText = "is connected to more than one Operational Vendor",LocalDefaultText = @"BS64:Itee15fXldeR16gg15zXmdeV16rXqCDXnteh16TXpyDXqtek16LXldec15kg15DXl9eTIg==", ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode TaxDeductionReportTextCode_TaxDeductionReportOByYear = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxDeductionReport.O.ByYear", DefaultText = "By Year",LocalDefaultText = @"שנתי", ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode TaxDeductionReportTextCode_TaxDeductionReportOByMonth = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxDeductionReport.O.ByMonth", DefaultText = "By Month",LocalDefaultText = @"BS64:IteX15XXk9ep15ki", ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode TaxDeductionReportTextCode_TaxDeductionReportOGLAccountMissedFields = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxDeductionReport.O.GLAccountMissedFields", DefaultText = "GLAccount is without ",LocalDefaultText = @"תפעולי ללא ", ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode TaxDeductionReportTextCode_TaxDeductionReportOByYear = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxDeductionReport.O.ByYear", DefaultText = "By Year",LocalDefaultText = @"BS64:Itep16DXqteZIg==", ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode TaxDeductionReportTextCode_TaxDeductionReportOVendor = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxDeductionReport.O.Vendor", DefaultText = "Vendor",LocalDefaultText = @"ספק", ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode TaxDeductionReportTextCode_TaxDeductionReportOGLAccountMissedFields = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxDeductionReport.O.GLAccountMissedFields", DefaultText = "GLAccount is without ",LocalDefaultText = @"BS64:Iteq16TXoteV15zXmSDXnNec15AgIg==", ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode TaxDeductionReportTextCode_TaxDeductionReportOToDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxDeductionReport.O.ToDate", DefaultText = "To Date",LocalDefaultText = @"עד תאריך", ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode TaxDeductionReportTextCode_TaxDeductionReportOVendor = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxDeductionReport.O.Vendor", DefaultText = "Vendor",LocalDefaultText = @"BS64:Iteh16TXpyI=", ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode TaxDeductionReportTextCode_TaxDeductionReportOAllVendors = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxDeductionReport.O.AllVendors", DefaultText = "All Vendors",LocalDefaultText = @"כל הספקים", ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode TaxDeductionReportTextCode_TaxDeductionReportOToDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxDeductionReport.O.ToDate", DefaultText = "To Date",LocalDefaultText = @"BS64:Itei15Mg16rXkNeo15nXmiI=", ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode TaxDeductionReportTextCode_TaxDeductionReportONoVendorSelected = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxDeductionReport.O.NoVendorSelected", DefaultText = "No vendor has been selected",LocalDefaultText = @"אף ספק לא נבחר", ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode TaxDeductionReportTextCode_TaxDeductionReportOAllVendors = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxDeductionReport.O.AllVendors", DefaultText = "All Vendors",LocalDefaultText = @"BS64:Iteb15wg15TXodek16fXmdedIg==", ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode TaxDeductionReportTextCode_TaxDeductionReportONoVendorGlAccount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxDeductionReport.O.NoVendorGlAccount", DefaultText = "The selected vendor doesn't have GlAccount",LocalDefaultText = @"לספק הנבחר לא מחובר כרטיס הנהלת חשבונות", ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode TaxDeductionReportTextCode_TaxDeductionReportONoVendorSelected = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxDeductionReport.O.NoVendorSelected", DefaultText = "No vendor has been selected",LocalDefaultText = @"BS64:IteQ16Mg16HXpNenINec15Ag16DXkdeX16gi", ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
-
- 		   TextCode TaxDeductionReportTextCode_TaxDeductionReportONoVendorGlAccount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxDeductionReport.O.NoVendorGlAccount", DefaultText = "The selected vendor doesn't have GlAccount",LocalDefaultText = @"BS64:Itec16HXpNenINeU16DXkdeX16gg15zXkCDXnteX15XXkdeoINeb16jXmNeZ16Eg15TXoNeU15zXqiDXl9ep15HXldeg15XXqiI=", ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
-
- 		   TextCode TaxDeductionReportTextCode_TaxDeductionReportOExcludedFromDeductionReport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxDeductionReport.O.ExcludedFromDeductionReport", DefaultText = "The selected vendor is excluded from deduction report",LocalDefaultText = @"BS64:IiDXlNeh16TXpyDXlNeg15HXl9eoINee16HXldee158gItec15Ag15zXk9eZ15XXldeXIiDXkdeT15XXlyA4NTYi", ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
-
- 		   TextCode TaxDeductionReportTextCode_TaxDeductionReportOPeriodic = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxDeductionReport.O.Periodic", DefaultText = "Periodic",LocalDefaultText = @"BS64:Iteq16fXldek16rXmSI=", ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
-
- 		   TextCode TaxDeductionReportTextCode_TaxDeductionReportOInvalidMonthPeriod = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxDeductionReport.O.InvalidMonthPeriod", DefaultText = "To month must be greater than from month",LocalDefaultText = @"BS64:Itei16jXmiDXlNep15PXlCAn15zXl9eV15PXqScg15fXmdeZ15Eg15zXlNeZ15XXqiDXkteT15XXnCDXntei16jXmiDXlNep15PXlCAn157Xl9eV15PXqSci", ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
-
- 		   TextCode TaxDeductionReportTextCode_TaxDeductionReportOReportType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxDeductionReport.O.ReportType", DefaultText = "Report Type",LocalDefaultText = @"BS64:Iteh15XXkiDXk9eVJyfXlyI=", ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
-
- 		   TextCode TaxDeductionReportTextCode_TaxDeductionReportOReportPeriod = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxDeductionReport.O.ReportPeriod", DefaultText = "Report Period",LocalDefaultText = @"BS64:Iteq16fXldek16og15TXk9eVJyfXlyI=", ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
-
- 		   TextCode TaxDeductionReportTextCode_TaxDeductionReportOReportData = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxDeductionReport.O.ReportData", DefaultText = "Report Data",LocalDefaultText = @"BS64:Iteg16rXldeg15kg15TXk9eVJyfXlyI=", ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
-
- 		   TextCode TaxDeductionReportTextCode_TaxDeductionReportOTotalPayments = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxDeductionReport.O.TotalPayments", DefaultText = "Total Payments",LocalDefaultText = @"BS64:Iteh15QnJ9ebINeq16nXnNeV157XmdedIg==", ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
-
- 		   TextCode TaxDeductionReportTextCode_TaxDeductionReportOTotalDeductions = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxDeductionReport.O.TotalDeductions", DefaultText = "Total Deductions",LocalDefaultText = @"BS64:Iteh15QnJ9ebINeg15nXm9eV15nXmdedIg==", ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
-
- 		   TextCode TaxDeductionReportTextCode_TaxDeductionReportOMonth = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxDeductionReport.O.Month", DefaultText = "Month",LocalDefaultText = @"BS64:IteX15XXk9epIg==", ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
-
- 		   TextCode TaxDeductionReportTextCode_TaxDeductionReportONumberOfVendors = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxDeductionReport.O.NumberOfVendors", DefaultText = "Number Of Vendors",LocalDefaultText = @"BS64:Iteh15QnJ9ebINeh16TXp9eZ150i", ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
-
- 		   TextCode TaxDeductionReportTextCode_TaxDeductionReportOTotalPaymentsWODividend = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxDeductionReport.O.TotalPaymentsWODividend", DefaultText = "Total Payments without Dividend",LocalDefaultText = @"BS64:Iteh15QnJ9ebINeq16nXnNeV157XmdedINec15zXkCDXk9eZ15HXmdeT16DXkyI=", ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
-
- 		   TextCode TaxDeductionReportTextCode_TaxDeductionReportOTotalDeductionsWODividend = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxDeductionReport.O.TotalDeductionsWODividend", DefaultText = "Total Deductions without Dividend",LocalDefaultText = @"BS64:Iteh15QnJ9ebINeg15nXm9eV15nXmdedINec15zXkCDXk9eZ15HXmdeT16DXkyI=", ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
-
- 		   TextCode TaxDeductionReportTextCode_TaxDeductionReportOReportGenerationMessage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxDeductionReport.O.ReportGenerationMessage", DefaultText = "The report is being generated",LocalDefaultText = @"הדוח עבר להפקה", ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
-
- 		   TextCode TaxDeductionReportTextCode_TaxDeductionReportOInProgress = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxDeductionReport.O.InProgress", DefaultText = "In Progress",LocalDefaultText = @"בתהליך", ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode TaxDeductionReportTextCode_TaxDeductionReportOExcludedFromDeductionReport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxDeductionReport.O.ExcludedFromDeductionReport", DefaultText = "The selected vendor is excluded from deduction report",LocalDefaultText = " הספק הנבחר מסומן ''לא לדיווח'' בדוח 856", ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
    
 	    

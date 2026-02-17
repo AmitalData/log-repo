@@ -20,7 +20,9 @@ using Simplog.Data.QuoteModel.Mapping;
 using Logitude.WarehouseLib.Data.EntityPOCOs;
 using Logitude.WarehouseLib.Data; 
 using Logitude.WarehouseLib.Data.EntityMapping;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; 
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.Mapping;
 
 namespace Logitude.WarehouseLib.Data
 {

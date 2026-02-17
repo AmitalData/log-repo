@@ -6,9 +6,11 @@ using System.Reflection;
 using System.ServiceModel.DomainServices.Server;
 using System.Xml.Serialization;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; 
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; 
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using WebFreight.Web.Security;
 using Simplog.Server.Infrastructure.Helpers;
@@ -29,6 +31,7 @@ using System.Transactions;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using System.Threading.Tasks;
+using Simplog.Global.Data.GlobalModel;
 
 namespace WebFreight.Web.CommonDataModel.DomainServices
 {
@@ -479,7 +482,6 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
                                                CASSCode = card.Agent == null ? null : card.Agent.CASSCode,
                                                IATACode = card.Agent == null ? null : card.Agent.IATACode,
                                                RegulatedAgentCode = card.Agent == null ? null : card.Agent.RegulatedAgentCode,
-                                               IsCustomer = card.IsCustomer,
                                            });
 
             CustomerBusinessUnitFilter myFilter = new CustomerBusinessUnitFilter(tenant);
@@ -502,7 +504,7 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
             //AddressRepository = new AddressRepository(objectContext);
             CardContactRepository = new CardContactRepository(objectContext);
             PartnerTypeRepository partnersTypeRepository = new PartnerTypeRepository(objectContext);
-            FeatureRepository featuresRepository = new FeatureRepository(objectContext);
+            FeatureRepository featuresRepository = new FeatureRepository(GlobalContext.GetContext());
             
             MemoryStream memorystream = new MemoryStream(xmlFilters);
             XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
@@ -579,7 +581,6 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
                                                CASSCode = card.Agent == null ? null : card.Agent.CASSCode,
                                                IATACode = card.Agent == null ? null : card.Agent.IATACode,
                                                RegulatedAgentCode = card.Agent == null ? null : card.Agent.RegulatedAgentCode,
-                                               
                                            });
 
             CustomerBusinessUnitFilter myFilter = new CustomerBusinessUnitFilter(tenant);
@@ -767,7 +768,6 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
                                                CASSCode = card.Agent == null ? null : card.Agent.CASSCode,
                                                IATACode = card.Agent == null ? null : card.Agent.IATACode,
                                                RegulatedAgentCode = card.Agent == null ? null : card.Agent.RegulatedAgentCode,
-                                               IsCustomer = card.IsCustomer,
                                            });
 
             CustomerBusinessUnitFilter myFilter = new CustomerBusinessUnitFilter(tenant);
@@ -911,7 +911,6 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
                                                CASSCode = card.Agent == null ? null : card.Agent.CASSCode,
                                                IATACode = card.Agent == null ? null : card.Agent.IATACode,
                                                RegulatedAgentCode = card.Agent == null ? null : card.Agent.RegulatedAgentCode,
-                                                  IsCustomer = card.IsCustomer,
                                            });
 
 
@@ -1589,7 +1588,7 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
             airlineRepository = new AirlineRepository(objectContext);
 
             PartnerTypeRepository partnersTypeRepository = new PartnerTypeRepository(objectContext);
-            FeatureRepository featuresRepository = new FeatureRepository(objectContext);
+            FeatureRepository featuresRepository = new FeatureRepository(GlobalContext.GetContext());
             MemoryStream memorystream = new MemoryStream(xmlFilters);
             XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
             QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);

@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="Packages"
+  Schema="dbo"
+  DBType="Global"
+  Module="Common">
+  <Column
+    Name="Code"
+    Type="varchar"
+    Size="5">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Name"
+    Type="varchar"
+    Size="40">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="SearchFields"
+    Type="nvarchar"
+    Size="1000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="FeaturePackageTypeCode"
+    Type="varchar"
+    Size="2">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="InActive"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Relation
+    ForeignKeyColumn="FeaturePackageTypeCode"
+    ReferencedTable="FeaturePackageTypes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
+</Table>

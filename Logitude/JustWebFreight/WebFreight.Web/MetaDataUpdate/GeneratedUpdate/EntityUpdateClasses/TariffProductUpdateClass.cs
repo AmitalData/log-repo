@@ -23,6 +23,8 @@ using Logitude.TariffModule.Data.Repositories;
 using Logitude.TariffModule.Data.EntityPOCOs;
 using Logitude.TariffModule.BL;
 using Logitude.TariffModule.BL.CLoseTable;
+using Simplog.Global.Data.GlobalModel.Repositories;
+
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class TariffProductUpdateClass

@@ -27,10 +27,14 @@ using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.Repositories;
 using WebFreight.Web.Security;
 using WebFreight.Web.DataContracts;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; 
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.Server.Tools.Helpers;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; 
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Global.Data.GlobalModel.Repositories;
+using Logitude.BL.GlobalModel.EntityQueries;
 
 namespace WebFreight.Web.CommonDataModel.DomainServices
 {
@@ -43,7 +47,9 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
     public partial class ContactDomainService : LogitudeDomainService
     {
         private ICommonDataContext objectContext;
-        private ContactRepository contactRepository;
+		private IGlobalContext globalContext;
+
+		private ContactRepository contactRepository;
         private CardContactRepository cardContactRepository;
         private RoleRepository roleRepository;
         private ContactTenantRepository contactTenantRepository;

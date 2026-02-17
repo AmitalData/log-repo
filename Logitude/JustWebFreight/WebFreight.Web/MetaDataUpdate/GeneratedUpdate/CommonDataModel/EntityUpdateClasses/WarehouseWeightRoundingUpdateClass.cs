@@ -18,6 +18,7 @@ using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using WebFreight.Web.MetaDataUpdate.AddClasses;
 using WebFreight.Web.MetaDataUpdate.DetailClasses;
+using Simplog.Global.Data.GlobalModel.Repositories;
 
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUpdateClasses
 {

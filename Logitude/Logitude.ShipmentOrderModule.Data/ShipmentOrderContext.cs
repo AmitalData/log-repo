@@ -21,6 +21,7 @@ using Logitude.ShipmentOrderModule.Data.EntityPOCOs;
 using Logitude.ShipmentOrderModule.Data; 
 using Logitude.ShipmentOrderModule.Data.EntityMapping;
 using Devart.Data.Oracle.Entity.Configuration;
+using Simplog.Global.Data.GlobalModel.Mapping;
 namespace Logitude.ShipmentOrderModule.Data
 {
    public class ShipmentOrderContext: DbContextBase, IShipmentOrderContext

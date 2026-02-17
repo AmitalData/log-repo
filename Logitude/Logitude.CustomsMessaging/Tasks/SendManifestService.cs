@@ -1,4 +1,5 @@
 ﻿using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.GlobalModel.EntityQueries;
 using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.BL.EntityUpdateServices;
 using Logitude.Customs.BL.Validators;
@@ -33,7 +34,7 @@ namespace Logitude.Customs.CustomsMessaging.Tasks
 
         private void RunPerTenant(CustomsSettingPM t)
         {
-            FeatureQuery featureQuery = new FeatureQuery(t.Tenant);
+            FeatureQuery featureQuery = new FeatureQuery();
             var usrid = AuthenticationUtil.ResolveUserId(t.Tenant);
             var features = featureQuery.GetAllowedFeaturesForLoggedUser(usrid, t.Tenant);
             var feature = features.Features.FirstOrDefault(x => x.Code == "SendManifest");

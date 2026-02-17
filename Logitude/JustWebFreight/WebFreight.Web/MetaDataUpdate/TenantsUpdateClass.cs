@@ -58,6 +58,7 @@ using Simplog.Global.Data.GlobalModel.Helpers;
 using WebFreight.Web.Helpers.QuoteTemplate;
 using Logitude.BL.CommonDataModel.ExternalService;
 using MetadataUpdateUtility = WebFreight.Web.Helpers.MetadataUpdateUtility;
+using Logitude.BL.GlobalModel.EntityQueries;
 
 namespace WebFreight.Web.MetaDataUpdate
 {
@@ -913,11 +914,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 updateClass.FillContainerizationHataraStatus(tenant);
                 updateClass.FillOcrStatusTable(tenant);
                 updateClass.FillSIIRequestStatusTable(tenant);
-                updateClass.FillSIIDocumentType(tenant);
-                updateClass.FillSIIRequestLineStatus(tenant);
 
-
-                updateClass.FillSIIDocumentType(tenant);
 
 
             }
@@ -1188,7 +1185,7 @@ namespace WebFreight.Web.MetaDataUpdate
             try
             {
                 CargoTrackingUpdateClass modelUpdateClass = new CargoTrackingUpdateClass();
-                modelUpdateClass.CreateAllClosedTables(0);
+                modelUpdateClass.CreateAllClosedTables();
                 performanceTimerLogger.LogMessage("Generated" + ",CargoTrackingModelUpdateClass");
             }
             catch (Exception ex)
@@ -2359,7 +2356,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 {
                     return "";
                 }
-                RoleRepository theRoleRepository = new RoleRepository(tenant);
+                RoleRepository theRoleRepository = new RoleRepository();
                 UserRepository theUserRepository = new UserRepository(tenant);
                 BranchRepository branchRepository = new BranchRepository(tenant);
                 DepartmentRepository departmentRepository = new DepartmentRepository(tenant);
@@ -2450,8 +2447,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 MapUserToContact(user, newContact);
 
                 newContact.Email = newContact.Email.ToLower();
-                Contact adminContact = contactsRepository.GetSingleContactByEmailMultiDB("support@amital.co.il", 0, contextTenant: tenant);
-
+                Contact adminContact = contactsRepository.GetSingleContactByEmailMultiDB("admin@fnarsoft.com", 0, contextTenant: tenant);
                 if (adminContact != null)
                 {
                     newContact.Signature = adminContact.Signature;

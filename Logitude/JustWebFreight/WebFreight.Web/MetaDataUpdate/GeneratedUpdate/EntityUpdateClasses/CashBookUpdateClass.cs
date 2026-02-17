@@ -22,11 +22,13 @@ using WebFreight.Web.MetaDataUpdate.DetailClasses;
 using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.BL;
+using Simplog.Global.Data.GlobalModel.Repositories;
+
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CashBookUpdateClass
    {  		
-		public const string HashString = "af51169a37983f46b8d74c3e14c0e938";
+		public const string HashString = "4fe3e789fcf702d033e5bbc6768791e2";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -275,11 +277,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CreateDate",
 					  						DefaultText =  "Create Date",
-					  						FullLocalDefaultTextBack_up =  "תאריך פתיחה",
+					  						FullLocalDefaultTextBack_up =  "תםריך פתיחה",
 					  						FullLocalDefaultText =  "BS64:Iteq15DXqNeZ15og16TXqteZ15fXlCI=",
 					  						ListFieldLable =  "CreateDateListLable",
 					  						ListLableDefaultText =  "Create Date",
-					  						ListLocalDefaultTextBack_up =  "תאריך פתיחה",
+					  						ListLocalDefaultTextBack_up =  "תםריך פתיחה",
 					  						ListLocalDefaultText =  "BS64:Iteq15DXqNeZ15og16TXqteZ15fXlCI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
@@ -414,11 +416,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "UpdateDate",
 					  						DefaultText =  "Update Date",
-					  						FullLocalDefaultTextBack_up =  "תאריך עדכון",
+					  						FullLocalDefaultTextBack_up =  "תםריך עדכון",
 					  						FullLocalDefaultText =  "BS64:Iteq15DXqNeZ15og16LXk9eb15XXnyI=",
 					  						ListFieldLable =  "UpdateDateListLable",
 					  						ListLableDefaultText =  "Update Date",
-					  						ListLocalDefaultTextBack_up =  "תאריך עדכון",
+					  						ListLocalDefaultTextBack_up =  "תםריך עדכון",
 					  						ListLocalDefaultText =  "BS64:Iteq15DXqNeZ15og16LXk9eb15XXnyI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
@@ -756,11 +758,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "EnglishName",
 					  						DefaultText =  "English Name",
-					  						FullLocalDefaultTextBack_up =  "שם באנגלית",
+					  						FullLocalDefaultTextBack_up =  "שם בםנגלית",
 					  						FullLocalDefaultText =  "BS64:Itep150g15HXkNeg15LXnNeZ16oi",
 					  						ListFieldLable =  "EnglishNameListLable",
 					  						ListLableDefaultText =  "English Name",
-					  						ListLocalDefaultTextBack_up =  "שם באנגלית",
+					  						ListLocalDefaultTextBack_up =  "שם בםנגלית",
 					  						ListLocalDefaultText =  "BS64:Itep150g15HXkNeg15LXnNeZ16oi",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,

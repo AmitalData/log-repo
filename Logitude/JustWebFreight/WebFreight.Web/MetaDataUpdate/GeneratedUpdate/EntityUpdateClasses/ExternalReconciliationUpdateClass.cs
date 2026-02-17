@@ -22,6 +22,8 @@ using WebFreight.Web.MetaDataUpdate.DetailClasses;
 using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.BL;
+using Simplog.Global.Data.GlobalModel.Repositories;
+
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ExternalReconciliationUpdateClass

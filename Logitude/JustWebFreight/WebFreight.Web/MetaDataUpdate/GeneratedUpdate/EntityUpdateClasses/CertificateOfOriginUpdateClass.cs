@@ -18,12 +18,13 @@ using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using WebFreight.Web.MetaDataUpdate.AddClasses;
 using WebFreight.Web.MetaDataUpdate.DetailClasses;
+using Simplog.Global.Data.GlobalModel.Repositories;
 
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CertificateOfOriginUpdateClass
    {  		
-		public const string HashString = "910d39b8ac31de58962ff6f043d3b24b";
+		public const string HashString = "e38fba5132c9bc333daf726461450d80";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -73,7 +74,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    LocalDefaultTextBack_up =  "תעודות מקור",
 			      				    LocalDefaultText =  "BS64:Iteq16LXldeT15XXqiDXnten15XXqCI=",
 			      				    DefaultText =  "Certificate Of Origin",
-			      				    Code =  "d137",
+			      				    Code =  "3ee1",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -82,7 +83,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    NoTS =  false,
 			      				    HasMenuButtons =  false,
 			      				    AllowedForComputingPartners =  false,
-			      				    ShowFastSearch =  false,
 			      				    CustomFieldsCount =  0,
 			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  false,
@@ -5896,8 +5896,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode CertificateOfOriginTextCode_CustomsCertificateOfOriginOOriginCriterionCodeRequired = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CertificateOfOrigin.O.OriginCriterionCodeRequired", DefaultText = "Criterion Code Required",LocalDefaultText = @"BS64:Iten15XXkyDXlNei15PXpNeUINeg15PXqNepIg==", ObjectTableId = CertificateOfOriginObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
  		   TextCode CertificateOfOriginTextCode_CustomsCertificateOfOriginOAttentionStatusCert = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CertificateOfOrigin.O.AttentionStatusCert", DefaultText = "Attention Status Cert",LocalDefaultText = @"BS64:Itep15nXnSDXnNeRINeU157XmNei158g15nXpteQINee15TXkNeo16Ug15nXqSDXnNep16fXldecINeU15DXnSDXoNeT16jXqdeqICLXlNeV16HXpNeqINeq16LXldeT15Qg15HXk9eZ16LXkdeTICIg15HXnten15XXnSAi15TXldeh16TXqiDXqtei15XXk9eUINeX15PXqdeUIg==", ObjectTableId = CertificateOfOriginObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
-
- 		   TextCode CertificateOfOriginTextCode_CustomsCertificateOfOriginOIsReqField = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CertificateOfOrigin.O.IsReqField", DefaultText = "Is Requiered",LocalDefaultText = @"BS64:IteX15XXkdeUINec157Xmdec15XXmSI=", ObjectTableId = CertificateOfOriginObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
    
 	    

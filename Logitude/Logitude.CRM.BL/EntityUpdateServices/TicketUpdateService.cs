@@ -12,11 +12,13 @@ using Logitude.Server.Tools.EntityChanges;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.QueueService;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; 
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; 
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.QuoteModel;
 using Simplog.Data.QuoteModel.EntityPOCOs;
@@ -31,6 +33,9 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using Simplog.Global.Data.GlobalModel.Repositories;
+using Logitude.BL.GlobalModel.EntityQueries;
+using Simplog.Global.Data.GlobalModel;
 
 namespace Logitude.CRM.BL.EntityUpdateServices
 {
@@ -795,7 +800,7 @@ namespace Logitude.CRM.BL.EntityUpdateServices
         }
         public void CheckOwnerFeature(int tenant, string ownerId, string ownerName)
         {
-            ICommonDataContext myContext = CommonDataContext.GetContext(tenant);
+            IGlobalContext myContext = GlobalContext.GetContext();
             FeatureRepository myFeatureRepository = new FeatureRepository(myContext);
             ObjectTableRepository objectTableRepository = new ObjectTableRepository(tenant);
 

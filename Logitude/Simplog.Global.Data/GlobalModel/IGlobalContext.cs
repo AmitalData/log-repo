@@ -1,6 +1,8 @@
-using System.Data.Entity;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; 
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using System.Data.Entity;
+using System.Data.Entity.Core.Objects;
 
 namespace Simplog.Global.Data.GlobalModel
 {
@@ -46,11 +48,20 @@ namespace Simplog.Global.Data.GlobalModel
         IDbSet<InvalidEmailResetPassword> InvalidEmailResetPasswords { get; }
         IDbSet<WebhookKeys> WebhookKeys { get; }
         IDbSet<BluesnapContractType> BluesnapContractTypes { get; }
-        IDbSet<DefaultAndConfiguration> DefaultAndConfigurations { get; }
-        IDbSet<DefaultAndConfigurationKey> DefaultAndConfigurationKeys { get; }
         IDbSet<AuthenticationToken> AuthenticationTokens { get; }
+		IDbSet<FeatureAccessLevel> FeatureAccessLevels { get; }
+		IDbSet<Feature> Features { get; }
+		IDbSet<FeatureType> FeatureTypes { get; }
+		IDbSet<FeaturePackageType> FeaturePackageTypes { get; }
+		IDbSet<FeatureChange> FeatureChanges { get; }
+		IDbSet<PackageFeature> PackageFeatures { get; }
+		IDbSet<Package> Packages { get; }
+		IDbSet<PackageConnectedPackage> PackageConnectedPackages { get; }
+		IDbSet<RoleFeature> RoleFeatures { get; }
+		IDbSet<RoleType> RoleTypes { get; }
+		IDbSet<Role> Roles { get; }
 
-        string GetCurrentConnection();
+		string GetCurrentConnection();
         void SetAsModified(object entity);
           
         void DetectChanges();

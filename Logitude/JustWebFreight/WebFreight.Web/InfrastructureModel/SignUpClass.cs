@@ -58,8 +58,7 @@ using Logitude.Workflow.Data.EntityPOCOs;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.Accounting.BL.EntityQueryServices;
 using Simplog.Data.InfrastructureModel;
-using WebFreight.Web.Helpers.APIHelpers;
-using WebFreight.Web.WebServices;
+using Logitude.BL.GlobalModel.EntityQueries;
 
 namespace WebFreight.Web.InfrastructureModel
 {
@@ -252,9 +251,9 @@ namespace WebFreight.Web.InfrastructureModel
             textCodeRepository = new TextCodeRepository(theTenant);
             objectFieldsRepository = new ObjectFieldRepository(theTenant);
             ObjectFieldValidationRepository = new ObjectFieldValidationRepository(theTenant);
-            roleRepository = new RoleRepository(theTenant);
-            featureRepository = new FeatureRepository(theTenant);
-            RoleFeatureRepository = new RoleFeatureRepository(theTenant);
+            roleRepository = new RoleRepository();
+            featureRepository = new FeatureRepository();
+            RoleFeatureRepository = new RoleFeatureRepository();
             userRepository = new UserRepository(theTenant);
             counterRepository = new CounterRepository(theTenant);
             counterDefinitionRepository = new CounterDefinitionRepository(theTenant);
@@ -1264,41 +1263,6 @@ namespace WebFreight.Web.InfrastructureModel
                  SearchFields = field.Code +","+field.EnglishName +"," + field.LocalName,
 
                 };
-
-                if (!string.IsNullOrEmpty(newField.LogoId))
-                {
-                    try
-                    {
-                        Uploader uploader = new Uploader();
-                        byte[] data = uploader.DownloadFile(newField.LogoId, "jpg", "images", field.Tenant);
-
-                        if (data != null)
-                        {
-                            ImageLibraryControllerHelper imageLibraryControllerHelper = new ImageLibraryControllerHelper();
-                            ImageParameter filter = new ImageParameter()
-                            {
-                                Key = newField.LogoId,
-                                Base64String = Convert.ToBase64String(data),
-                                BufferNumber = 0,
-                                Extension = "jpg",
-                                FileLocation = "",
-                                FileName = "images",
-                                Height = 150,
-                                Width = 150,
-                                Tenant = tenant,
-                                TokenTenant = tenant,
-                                KeepOriginalSize = false,
-                                UploadMode = "ImageComponent",
-                            };
-                            newField.LogoId = imageLibraryControllerHelper.UploadImage(filter);
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        NetCommonHelper.Logger.DevLog.Instance.WriteError($"Failed copying logo from tenant {field?.Tenant} to new tenant {tenant}, error: {ex.Message}");
-                    }
-                }
-
                 bankCodeRepository.Add(newField);
             }
 
@@ -1752,7 +1716,7 @@ namespace WebFreight.Web.InfrastructureModel
             user.Email = user.Email.ToLower();
             Contact newContact = new Contact();
             MapUserToContact(user, newContact);
-            Contact adminContact = contactsRepository.GetSingleContactByEmail("support@amital.co.il", 0);
+            Contact adminContact = contactsRepository.GetSingleContactByEmail("admin@fnarsoft.com", 0);
             if (adminContact != null)
             {
                 newContact.Signature = adminContact.Signature;
@@ -1834,19 +1798,36 @@ namespace WebFreight.Web.InfrastructureModel
                         globalContext.ContactPasswords.Add(contactPassword);
                     }
 
+
+
                     GlobalContactRepository globalContactRep = new GlobalContactRepository(globalContext);
-                    bool globalContactExists = (from a in globalContactRep.GetGlobalContactByTenant(0)
+
+                    bool globalContactExists = (from a in globalContactRep.GetGlobalContactByTenant(newContact.Tenant)
                                                 where a.Email == newContact.Email
                                                 select a).Any();
 
+                    //bool globalContactIdExists = (from a in globalContactRep.GetGlobalContactByTenant(newContact.Tenant)
+                    //                            where a.Id==newContact.Id
+                    //                            select a).Any();
+                    //while (globalContactIdExists)
+                    //{
+                    //    newContact.Id = IdCounter.GetNumber("Contact", newContact.Tenant);
+                    //    globalContactIdExists = (from a in globalContactRep.GetGlobalContactByTenant(newContact.Tenant)
+                    //                             where a.Id == newContact.Id
+                    //                             select a).Any();
+                    //}
+
                     if (!globalContactExists)
                     {
-                        GlobalContact gcontact = new GlobalContact() { Email = newContact.Email, Id = newContact.Id, GlobalTenantId = 0, IsUser = true, };
+
+                        GlobalContact gcontact = new GlobalContact() { Email = newContact.Email, Id = newContact.Id, GlobalTenantId = newContact.Tenant, IsUser = true, };
 
                         globalContactRep.Add(gcontact);
                         globalContactRep.SubmitChanges();
                         scope.Complete();
                     }
+                    //throw new Exception("hahahahahaha");
+
                 }
                 contactTenantsRepository.Add(newContactTenant);
             }

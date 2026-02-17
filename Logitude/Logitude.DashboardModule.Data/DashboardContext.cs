@@ -20,6 +20,7 @@ using Logitude.DashboardModule.Data.EntityPOCOs;
 using Logitude.DashboardModule.Data; 
 using Logitude.DashboardModule.Data.EntityMapping;
 using Devart.Data.Oracle.Entity.Configuration;
+using Simplog.Global.Data.GlobalModel.Mapping;
 
 namespace Logitude.DashboardModule.Data
 {

@@ -21,6 +21,8 @@ using WebFreight.Web.MetaDataUpdate.DetailClasses;
 
 using Simplog.Data.ShipmentsModel.Repositories;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.Repositories;
+
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpdateClasses
 {
    public class ShipmentCustomerTypeUpdateClass

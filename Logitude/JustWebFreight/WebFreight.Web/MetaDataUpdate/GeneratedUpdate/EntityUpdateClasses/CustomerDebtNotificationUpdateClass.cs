@@ -22,11 +22,13 @@ using WebFreight.Web.MetaDataUpdate.DetailClasses;
 using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.BL;
+using Simplog.Global.Data.GlobalModel.Repositories;
+
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CustomerDebtNotificationUpdateClass
    {  		
-		public const string HashString = "f12230a7ad0606ec53b65d19e93da066";
+		public const string HashString = "1f5a56c44b9a26d2689760857a41fe07";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -44,7 +46,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    SupportSubEntity =  false,
 			      				    ApplyGenericCustomFields =  false,
 			      				    AvailableInDocumentTypes =  false,
-			      				    IsLock =  false,
 			      				    HasHelper =  false,
 			      				    HasShortTitle =  false,
 			      				    HasFiltersMenu =  false,
@@ -71,14 +72,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Customer Debt Notifications",
-			      				    Code =  "0a21",
+			      				    Code =  "e75c",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Accounting",
 			      				    NoTS =  false,
 			      				    HasMenuButtons =  false,
 			      				    AllowedForComputingPartners =  false,
-			      				    ShowFastSearch =  false,
 			      				    CustomFieldsCount =  0,
 			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  false,
@@ -261,12 +261,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "InActive",
 					  						DefaultText =  "InActive",
-					  						FullLocalDefaultTextBack_up =  "פעיל",
-					  						FullLocalDefaultText =  "BS64:Itek16LXmdecIg==",
+					  						FullLocalDefaultText =  "פעיל",
 					  						ListFieldLable =  "InActiveListLable",
 					  						ListLableDefaultText =  "InActive",
-					  						ListLocalDefaultTextBack_up =  "פעיל",
-					  						ListLocalDefaultText =  "BS64:Itek16LXmdecIg==",
+					  						ListLocalDefaultText =  "פעיל",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -328,12 +326,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "TypesDebts",
 					  						DefaultText =  "TypesDebts",
-					  						FullLocalDefaultTextBack_up =  "סוגי חובות",
-					  						FullLocalDefaultText =  "BS64:Iteh15XXkteZINeX15XXkdeV16oi",
+					  						FullLocalDefaultText =  "סוגי חובות",
 					  						ListFieldLable =  "TypesDebtsListLable",
 					  						ListLableDefaultText =  "Types of debts",
-					  						ListLocalDefaultTextBack_up =  "סוגי חובות",
-					  						ListLocalDefaultText =  "BS64:Iteh15XXkteZINeX15XXkdeV16oi",
+					  						ListLocalDefaultText =  "סוגי חובות",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -395,12 +391,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DebtLevel",
 					  						DefaultText =  "Debt level",
-					  						FullLocalDefaultTextBack_up =  "רמת חוב",
-					  						FullLocalDefaultText =  "BS64:Iteo157XqiDXl9eV15Ei",
+					  						FullLocalDefaultText =  "רמת חוב",
 					  						ListFieldLable =  "DebtLevelListLable",
 					  						ListLableDefaultText =  "Debt level",
-					  						ListLocalDefaultTextBack_up =  "רמת חוב",
-					  						ListLocalDefaultText =  "BS64:Iteo157XqiDXl9eV15Ei",
+					  						ListLocalDefaultText =  "רמת חוב",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -458,18 +452,16 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowFilters =  false,
 					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						DisplayInDocumentReferences =  false,
-					  						NumberOfDigits =  10,
+					  						NumberOfDigits =  6,
 					  						DigitsAfterPoint =  3,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DebtLevelAmount",
 					  						DefaultText =  "Debt level amount",
-					  						FullLocalDefaultTextBack_up =  "סכום חריגה",
-					  						FullLocalDefaultText =  "BS64:Iteh15vXldedINeX16jXmdeS15Qi",
+					  						FullLocalDefaultText =  "סכום חריגה",
 					  						ListFieldLable =  "DebtLevelAmountListLable",
 					  						ListLableDefaultText =  "Debt level amount",
-					  						ListLocalDefaultTextBack_up =  "סכום חריגה",
-					  						ListLocalDefaultText =  "BS64:Iteh15vXldedINeX16jXmdeS15Qi",
+					  						ListLocalDefaultText =  "סכום חריגה",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -532,12 +524,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "TasksSchedulerId",
 					  						DefaultText =  "TasksSchedulerId",
-					  						FullLocalDefaultTextBack_up =  "דוח כרטסת",
-					  						FullLocalDefaultText =  "BS64:IteT15XXlyDXm9eo15jXodeqIg==",
+					  						FullLocalDefaultText =  "דוח כרטסת",
 					  						ListFieldLable =  "TasksSchedulerIdListLable",
 					  						ListLableDefaultText =  "TasksSchedulerId",
-					  						ListLocalDefaultTextBack_up =  "דוח כרטסת",
-					  						ListLocalDefaultText =  "BS64:IteT15XXlyDXm9eo15jXodeqIg==",
+					  						ListLocalDefaultText =  "דוח כרטסת",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "TasksScheduler",
 					  						NavigationPropertyName =  "TasksScheduler",
@@ -601,12 +591,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "PaymentNotes",
 					  						DefaultText =  "Payment notes",
-					  						FullLocalDefaultTextBack_up =  "הערות לתשלום",
-					  						FullLocalDefaultText =  "BS64:IteU16LXqNeV16og15zXqtep15zXldedIg==",
+					  						FullLocalDefaultText =  "הערות לתשלום",
 					  						ListFieldLable =  "PaymentNotesListLable",
 					  						ListLableDefaultText =  "Payment notes",
-					  						ListLocalDefaultTextBack_up =  "הערות לתשלום",
-					  						ListLocalDefaultText =  "BS64:IteU16LXqNeV16og15zXqtep15zXldedIg==",
+					  						ListLocalDefaultText =  "הערות לתשלום",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  true,
 					  						NoMetaDataField =  false,
@@ -649,7 +637,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "AccountId",
 					  						ListPropertyPath =  "AccountId",
-					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -771,31 +758,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext,int contextTenant)
-	    {  
-
-		   		   //--------------> Additional TextCodes <--------------\\
-
- 		   ObjectTable CustomerDebtNotificationObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CustomerDebtNotification" && d.Tenant == 0).FirstOrDefault(); 
-
- 		   TextCode CustomerDebtNotificationTextCode_CustomerDebtNotificationODebtNotificationToCustomers = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerDebtNotification.O.DebtNotificationToCustomers", DefaultText = "Debt notification to customers",LocalDefaultText = @"BS64:IteU15XXk9ei16og15fXldeRINec15zXp9eV15fXldeqIg==", ObjectTableId = CustomerDebtNotificationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
-
- 		   TextCode CustomerDebtNotificationTextCode_CustomerDebtNotificationONotActive = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerDebtNotification.O.NotActive", DefaultText = "Not Active",LocalDefaultText = @"BS64:Itec15Ag16TXoteZ15wi", ObjectTableId = CustomerDebtNotificationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
-
- 		   TextCode CustomerDebtNotificationTextCode_CustomerDebtNotificationOActiveAllCustomers = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerDebtNotification.O.ActiveAllCustomers", DefaultText = "Active for all customers",LocalDefaultText = @"BS64:Itek16LXmdecINec15vXnCDXlNec16fXldeX15XXqiI=", ObjectTableId = CustomerDebtNotificationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
-
- 		   TextCode CustomerDebtNotificationTextCode_CustomerDebtNotificationOActiveSelectedCustomers = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerDebtNotification.O.ActiveSelectedCustomers", DefaultText = "Active for selected customers",LocalDefaultText = @"BS64:Itek16LXmdecINec15zXp9eV15fXldeqINeg15HXl9eo15nXnSI=", ObjectTableId = CustomerDebtNotificationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
-
- 		   TextCode CustomerDebtNotificationTextCode_CustomerDebtNotificationOObligato = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerDebtNotification.O.Obligato", DefaultText = "Obligato",LocalDefaultText = @"BS64:IteQ15XXkdec15nXkteVIg==", ObjectTableId = CustomerDebtNotificationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
-
- 		   TextCode CustomerDebtNotificationTextCode_CustomerDebtNotificationOAccountingBalance = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerDebtNotification.O.AccountingBalance", DefaultText = "Accounting balance",LocalDefaultText = @"BS64:IteZ16rXqNeUINeX16nXkdeV16DXkNeZ16oi", ObjectTableId = CustomerDebtNotificationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
-
- 		   TextCode CustomerDebtNotificationTextCode_CustomerDebtNotificationOBalanceRegarding = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerDebtNotification.O.BalanceRegarding", DefaultText = "Balance regarding",LocalDefaultText = @"BS64:IteZ16rXqNeUINec15LXkdeZ15Qi", ObjectTableId = CustomerDebtNotificationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
-
- 		   TextCode CustomerDebtNotificationTextCode_CustomerDebtNotificationOPercentage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerDebtNotification.O.Percentage", DefaultText = "Percentage",LocalDefaultText = @"BS64:IteQ15fXldeWIg==", ObjectTableId = CustomerDebtNotificationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
-
- 		   TextCode CustomerDebtNotificationTextCode_CustomerDebtNotificationOTotalAmount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerDebtNotification.O.TotalAmount", DefaultText = "Total amount",LocalDefaultText = @"BS64:Iteh15vXldedINee15XXl9ec15gi", ObjectTableId = CustomerDebtNotificationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
-
-   
+	    {     
 	    
 }
 

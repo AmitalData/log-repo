@@ -864,8 +864,6 @@ namespace WebFreight.Web.MetaDataUpdate
             AddClosedTables.AddAPPaymentstatus(new APPaymentStatusDetails() { Code = "AD", Name = "Approved" }, apPaymentStatusRepository);
             AddClosedTables.AddAPPaymentstatus(new APPaymentStatusDetails() { Code = "VD", Name = "Void" }, apPaymentStatusRepository);
             AddClosedTables.AddAPPaymentstatus(new APPaymentStatusDetails() { Code = "CL", Name = "Closed" }, apPaymentStatusRepository);
-            AddClosedTables.AddAPPaymentstatus(new APPaymentStatusDetails() { Code = "PD", Name = "Paid" }, apPaymentStatusRepository);
-
             apPaymentStatusRepository.SubmitChanges();
 
             //-------- SAT Interfaces ----------//
@@ -892,7 +890,7 @@ namespace WebFreight.Web.MetaDataUpdate
             permissionTypeRepository.SubmitChanges();
 
             //-------------Feature Type---------------
-            FeatureTypeRepository featureTypeRepository = new FeatureTypeRepository(commonContext);
+            FeatureTypeRepository featureTypeRepository = new FeatureTypeRepository(globalContext);
             AddClosedTables.AddFeatureTypes(new FeatureTypeDetails() { Code = "NEW", Name = "New" }, featureTypeRepository);
             AddClosedTables.AddFeatureTypes(new FeatureTypeDetails() { Code = "UPDT", Name = "Update" }, featureTypeRepository);
             AddClosedTables.AddFeatureTypes(new FeatureTypeDetails() { Code = "READ", Name = "Read" }, featureTypeRepository);
@@ -907,7 +905,7 @@ namespace WebFreight.Web.MetaDataUpdate
             featureTypeRepository.SubmitChanges();
 
             //-------------Role Type---------------
-            RoleTypeRepository roleTypeRepository = new RoleTypeRepository(commonContext);
+            RoleTypeRepository roleTypeRepository = new RoleTypeRepository(globalContext);
             AddClosedTables.AddRoleTypes(new RoleTypeDetails() { Code = "SA", Name = "Sales" }, roleTypeRepository);
             AddClosedTables.AddRoleTypes(new RoleTypeDetails() { Code = "AC", Name = "Accounting" }, roleTypeRepository);
             AddClosedTables.AddRoleTypes(new RoleTypeDetails() { Code = "IN", Name = "Internal User" }, roleTypeRepository);
@@ -1234,7 +1232,7 @@ namespace WebFreight.Web.MetaDataUpdate
             AddClosedTables.AddCustomerStatus(new CustomerStatusDetails() { Code = "INA", Name = "Inactive" }, CustomerStatusRep);
             CustomerStatusRep.SubmitChanges();
 
-            FeatureAccessLevelRepository featureAccessLevelRepository = new FeatureAccessLevelRepository(commonContext);
+            FeatureAccessLevelRepository featureAccessLevelRepository = new FeatureAccessLevelRepository(globalContext);
             AddClosedTables.AddFeatureAccessLevel(new FeatureAccessLevelDetails() { Code = "NO", Name = "None" }, featureAccessLevelRepository);
             AddClosedTables.AddFeatureAccessLevel(new FeatureAccessLevelDetails() { Code = "US", Name = "User" }, featureAccessLevelRepository);
             AddClosedTables.AddFeatureAccessLevel(new FeatureAccessLevelDetails() { Code = "BU", Name = "Business Unit" }, featureAccessLevelRepository);
@@ -1331,8 +1329,6 @@ namespace WebFreight.Web.MetaDataUpdate
             UpdateINTTRAStatuses(shipmentContext);
             UpdateINTTRADocumentTypes(shipmentContext);
             UpdateConfirmationNumberStatusClosedTable(invoiceContext);
-            UpdateMasavInterfaceStatusClosedTable(invoiceContext);
-
 
         }
 
@@ -1340,8 +1336,8 @@ namespace WebFreight.Web.MetaDataUpdate
         {
             WebFreightContext tempContext = new WebFreightContext(DatabaseInitializer.GetConnection(connectionStr));
             CommonDataContext commonContext = new CommonDataContext(DatabaseInitializer.GetConnection(connectionStr));
-                    
-            string dbConnectionInfo = "";
+
+			string dbConnectionInfo = "";
             if (LogitudeSettings.DatabaseManagementSystem == "oracle")
             {
                 dbConnectionInfo = ConfigurationManager.ConnectionStrings["Oracle_Globalstr"].ConnectionString;
@@ -1801,7 +1797,7 @@ namespace WebFreight.Web.MetaDataUpdate
             permissionTypeRepository.SubmitChanges();
 
             //-------------Feature Type---------------
-            FeatureTypeRepository featureTypeRepository = new FeatureTypeRepository(commonContext);
+            FeatureTypeRepository featureTypeRepository = new FeatureTypeRepository(globalContext);
             AddClosedTables.AddFeatureTypes(new FeatureTypeDetails() { Code = "NEW", Name = "New" }, featureTypeRepository);
             AddClosedTables.AddFeatureTypes(new FeatureTypeDetails() { Code = "UPDT", Name = "Update" }, featureTypeRepository);
             AddClosedTables.AddFeatureTypes(new FeatureTypeDetails() { Code = "READ", Name = "Read" }, featureTypeRepository);
@@ -1816,7 +1812,7 @@ namespace WebFreight.Web.MetaDataUpdate
             featureTypeRepository.SubmitChanges();
 
             //-------------Role Type---------------
-            RoleTypeRepository roleTypeRepository = new RoleTypeRepository(commonContext);
+            RoleTypeRepository roleTypeRepository = new RoleTypeRepository(globalContext);
             AddClosedTables.AddRoleTypes(new RoleTypeDetails() { Code = "SA", Name = "Sales" }, roleTypeRepository);
             AddClosedTables.AddRoleTypes(new RoleTypeDetails() { Code = "AC", Name = "Accounting" }, roleTypeRepository);
             AddClosedTables.AddRoleTypes(new RoleTypeDetails() { Code = "IN", Name = "Internal User" }, roleTypeRepository);
@@ -1952,7 +1948,7 @@ namespace WebFreight.Web.MetaDataUpdate
             AddClosedTables.AddCustomerStatus(new CustomerStatusDetails() { Code = "INA", Name = "Inactive" }, CustomerStatusRep);
             CustomerStatusRep.SubmitChanges();
 
-            FeatureAccessLevelRepository featureAccessLevelRepository = new FeatureAccessLevelRepository(commonContext);
+            FeatureAccessLevelRepository featureAccessLevelRepository = new FeatureAccessLevelRepository(globalContext);
             AddClosedTables.AddFeatureAccessLevel(new FeatureAccessLevelDetails() { Code = "NO", Name = "None" }, featureAccessLevelRepository);
             AddClosedTables.AddFeatureAccessLevel(new FeatureAccessLevelDetails() { Code = "US", Name = "User" }, featureAccessLevelRepository);
             AddClosedTables.AddFeatureAccessLevel(new FeatureAccessLevelDetails() { Code = "BU", Name = "Business Unit" }, featureAccessLevelRepository);
@@ -2625,46 +2621,6 @@ namespace WebFreight.Web.MetaDataUpdate
             AddClosedTables.AddSATInvoiceStatus(new SATInvoiceStatusDetails() { Code = "PP", Name = "Partially Paid in SAT" }, entityRepository);
             AddClosedTables.AddSATInvoiceStatus(new SATInvoiceStatusDetails() { Code = "PD", Name = "Paid in SAT" }, entityRepository);
 
-            entityRepository.SubmitChanges();
-        }
-        private void UpdateMasavInterfaceStatusClosedTable(InvoiceContext invoiceContext)
-        {
-            MasavInterfaceStatusRepository entityRepository = new MasavInterfaceStatusRepository(invoiceContext);
-            AddClosedTables.AddMasavInterfaceStatus(new MasavInterfaceStatus() {
-                Name = "Draft",               
-                Code = "DR",
-                LocalName = "טיוטה",
-            }, entityRepository);
-            AddClosedTables.AddMasavInterfaceStatus(new MasavInterfaceStatus()
-            {
-                Name = "Transmitted",
-                Code = "TR",
-                LocalName = "שודר",
-            }, entityRepository);
-            AddClosedTables.AddMasavInterfaceStatus(new MasavInterfaceStatus()
-            {
-                Name = "Cancelled",
-                Code = "CN",
-                LocalName = "בוטל",
-            }, entityRepository);
-            AddClosedTables.AddMasavInterfaceStatus(new MasavInterfaceStatus()
-            {
-                Name = "Failed",
-                Code = "FD",
-                LocalName = "נכשל",
-            }, entityRepository);
-            AddClosedTables.AddMasavInterfaceStatus(new MasavInterfaceStatus()
-            {
-                Name = "In Progress",
-                Code = "IP",
-                LocalName = "בתהליך",
-            }, entityRepository);
-            AddClosedTables.AddMasavInterfaceStatus(new MasavInterfaceStatus()
-            {
-                Name = "Cancellation In Progress",
-                Code = "CP",
-                LocalName = "הביטול בתהליך",
-            }, entityRepository);
             entityRepository.SubmitChanges();
         }
         public void LoadMeasurements()

@@ -165,8 +165,18 @@ namespace Simplog.Global.Data.GlobalModel
             modelBuilder.Configurations.Add(new AuthenticationTokenMap());
             //Was Missing
             modelBuilder.Configurations.Add(new BatchServicesDefinitionMap());
-
-            base.OnModelCreating(modelBuilder);
+			modelBuilder.Configurations.Add(new RoleFeatureMap());
+			modelBuilder.Configurations.Add(new RoleMap());
+			modelBuilder.Configurations.Add(new RoleTypeMap());
+			modelBuilder.Configurations.Add(new PackageFeatureMap());
+			modelBuilder.Configurations.Add(new PackageMap());
+			modelBuilder.Configurations.Add(new FeaturePackageTypeMap());
+			modelBuilder.Configurations.Add(new PackageConnectedPackageMap());
+			modelBuilder.Configurations.Add(new FeatureChangeMap());
+			modelBuilder.Configurations.Add(new FeatureMap());
+			modelBuilder.Configurations.Add(new FeatureTypeMap());
+			modelBuilder.Configurations.Add(new FeatureAccessLevelMap());
+			base.OnModelCreating(modelBuilder);
         }
 
         protected override void Dispose(bool disposing)
@@ -232,8 +242,17 @@ namespace Simplog.Global.Data.GlobalModel
         public IDbSet<CaptchaKey> CaptchaKeys { get; set; }
         public IDbSet<InvalidEmailResetPassword> InvalidEmailResetPasswords { get; set; }
         public IDbSet<WebhookKeys> WebhookKeys { get; set; }
-        public IDbSet<DefaultAndConfiguration> DefaultAndConfigurations { get; set; }
-        public IDbSet<DefaultAndConfigurationKey> DefaultAndConfigurationKeys { get; set; }
         public IDbSet<AuthenticationToken> AuthenticationTokens { get; set; }
-    }
+		public IDbSet<FeatureAccessLevel> FeatureAccessLevels { get; set; }
+		public IDbSet<Feature> Features { get; set; }
+		public IDbSet<FeatureType> FeatureTypes { get; set; }
+		public IDbSet<FeaturePackageType> FeaturePackageTypes { get; set; }
+		public IDbSet<FeatureChange> FeatureChanges { get; set; }
+		public IDbSet<PackageFeature> PackageFeatures { get; set; }
+		public IDbSet<Package> Packages { get; set; }
+		public IDbSet<PackageConnectedPackage> PackageConnectedPackages { get; set; }
+		public IDbSet<RoleFeature> RoleFeatures { get; set; }
+		public IDbSet<RoleType> RoleTypes { get; set; }
+		public IDbSet<Role> Roles { get; set; }
+	}
 }

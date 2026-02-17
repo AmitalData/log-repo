@@ -1,8 +1,10 @@
 ﻿using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.GlobalModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; 
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +18,7 @@ namespace WebFreight.Web.MetaDataUpdate
     {
         public List<MenuButtonGroupPM> CreateMenuButtonsForTenant(int tenant)
         {
-            FeatureQuery featureQuery = new FeatureQuery(tenant);
+            FeatureQuery featureQuery = new FeatureQuery();
             List<FeaturePM> features = featureQuery.GetFeaturePMsByTenant(tenant).ToList();
 
             Dictionary<string, TextCode> TextCodes = TextCodeRepository.GetTextCodesByTenant(tenant).Where(d => d.TextCodeTypeCode == "B").GroupBy(d => d.Code).ToDictionary(g => g.Key, a => a.FirstOrDefault());

@@ -12,6 +12,7 @@ using WebFreight.Web.Helpers;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InvoiceModel.EntityQueries;
+using Simplog.Global.Data.GlobalModel.Repositories;
 
 namespace WebFreight.Web.CommonDataModel.DomainServices
 {

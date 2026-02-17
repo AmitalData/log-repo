@@ -8,10 +8,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; 
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; 
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using WebFreight.Web.MetaDataUpdate.AddClasses;
 using WebFreight.Web.MetaDataUpdate.DetailClasses;
@@ -20,6 +22,8 @@ using Logitude.Server.Tools.Helpers;
 using System.Transactions;
 using Simplog.Server.Infrastructure.Helpers;
 using WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses;
+using Simplog.Global.Data.GlobalModel.Repositories;
+using Simplog.Global.Data.GlobalModel;
 
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 {
@@ -461,9 +465,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 		ServersNameUpdateClass  ServersNameUpdateClass = new ServersNameUpdateClass();
 		SignatureTypeUpdateClass  SignatureTypeUpdateClass = new SignatureTypeUpdateClass();
 		SignStationUpdateClass  SignStationUpdateClass = new SignStationUpdateClass();
-		SIIDocumentTypeUpdateClass  SIIDocumentTypeUpdateClass = new SIIDocumentTypeUpdateClass();
 		SIIRequestUpdateClass  SIIRequestUpdateClass = new SIIRequestUpdateClass();
-		SIIRequestLineStatusUpdateClass  SIIRequestLineStatusUpdateClass = new SIIRequestLineStatusUpdateClass();
 		SIIRequestStatusUpdateClass  SIIRequestStatusUpdateClass = new SIIRequestStatusUpdateClass();
 		SiteLookupUpdateClass  SiteLookupUpdateClass = new SiteLookupUpdateClass();
 		SiteTypeUpdateClass  SiteTypeUpdateClass = new SiteTypeUpdateClass();
@@ -559,7 +561,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 			EventTypeRepository = new EventTypeRepository(ObjectContext);
 			menuButtonRepository = new MenuButtonRepository(ObjectContext);
 			menuButtonGroupRepository = new MenuButtonGroupRepository(ObjectContext);
-			FeaturesRepository = new FeatureRepository(CommonContext);
+			FeaturesRepository = new FeatureRepository(GlobalContext.GetContext());
 			EntityStatusRepository = new EntityStatusRepository(context);
 
             TextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToDictionary(d => d.Code + d.Tenant.ToString() + d.ObjectTableId, a => a, StringComparer.OrdinalIgnoreCase);
@@ -626,7 +628,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 			EventTypeRepository = new EventTypeRepository(ObjectContext);
 			menuButtonRepository = new MenuButtonRepository(ObjectContext);
 			menuButtonGroupRepository = new MenuButtonGroupRepository(ObjectContext);
-			FeaturesRepository = new FeatureRepository(CommonContext);
+			FeaturesRepository = new FeatureRepository(GlobalContext.GetContext());
 			EntityStatusRepository = new EntityStatusRepository(context);
 
             ObjectTables = ObjectTableRepository.GetObjectsByTenant(0).ToDictionary(d => d.Name, a => a);
@@ -1098,9 +1100,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 			TablesHashStrings.Add("ServersName",  ServersNameUpdateClass.HashString);
 			TablesHashStrings.Add("SignatureType",  SignatureTypeUpdateClass.HashString);
 			TablesHashStrings.Add("SignStation",  SignStationUpdateClass.HashString);
-			TablesHashStrings.Add("SIIDocumentType",  SIIDocumentTypeUpdateClass.HashString);
 			TablesHashStrings.Add("SIIRequest",  SIIRequestUpdateClass.HashString);
-			TablesHashStrings.Add("SIIRequestLineStatus",  SIIRequestLineStatusUpdateClass.HashString);
 			TablesHashStrings.Add("SIIRequestStatus",  SIIRequestStatusUpdateClass.HashString);
 			TablesHashStrings.Add("SiteLookup",  SiteLookupUpdateClass.HashString);
 			TablesHashStrings.Add("SiteType",  SiteTypeUpdateClass.HashString);
@@ -14481,39 +14481,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.SIIDocumentType", ObjectTables, SIIDocumentTypeUpdateClass.HashString))
-			{
-				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
-				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.SIIDocumentType",contextTenant);
-					SIIDocumentTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository,contextTenant);
-					this.ObjectContext.SaveChanges();
-					List<ObjectField> addedFields = new List<ObjectField>();
-					List<TextCode> addedTextCodes = new List<TextCode>();
-					SIIDocumentTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository, addedFields, addedTextCodes,contextTenant);
-					SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes,contextTenant);
-					SqlBulkInsert.BulkInsert("ObjectFields", addedFields,contextTenant);					
-					//this.ObjectContext.TextCodes.AddRange(addedTextCodes);
-					//this.ObjectContext.ObjectFields.AddRange(addedFields);
-					//this.ObjectContext.SaveChanges();
-					SIIDocumentTypeUpdateClass.AddTableQueries(Queries, QueryColumns, ObjectTables, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters,tenantQueryGroups,contextTenant);
-					//this.ObjectContext.SaveChanges();
-					SIIDocumentTypeUpdateClass.AddTableScreens(tenantScreens, tenantScreenFields, screensRepository, screenFieldsRepository, ObjectContext,contextTenant);
-					//this.ObjectContext.SaveChanges();
-					SIIDocumentTypeUpdateClass.AddTableTabs(TenantObjectTableTabs, TextCodes, objectTableTabsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, ObjectContext,contextTenant);
-					//this.ObjectContext.SaveChanges();
-					SIIDocumentTypeUpdateClass.AddTableEventTypes(tenantEventTypes, EventTypeRepository, ObjectContext, AllEntityStatuses,contextTenant);
-					//this.ObjectContext.SaveChanges();
-					SIIDocumentTypeUpdateClass.AddTableFeatures(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext,contextTenant);
-					//this.ObjectContext.SaveChanges();
-					SIIDocumentTypeUpdateClass.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext,contextTenant);
-					//this.ObjectContext.SaveChanges();
-					SIIDocumentTypeUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext,contextTenant);
-					this.ObjectContext.SaveChanges();
-					scope.Complete();
-				}
-			}
-
 			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.SIIRequest", ObjectTables, SIIRequestUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -14542,39 +14509,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 					SIIRequestUpdateClass.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext,contextTenant);
 					//this.ObjectContext.SaveChanges();
 					SIIRequestUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext,contextTenant);
-					this.ObjectContext.SaveChanges();
-					scope.Complete();
-				}
-			}
-
-			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.SIIRequestLineStatus", ObjectTables, SIIRequestLineStatusUpdateClass.HashString))
-			{
-				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
-				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.SIIRequestLineStatus",contextTenant);
-					SIIRequestLineStatusUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository,contextTenant);
-					this.ObjectContext.SaveChanges();
-					List<ObjectField> addedFields = new List<ObjectField>();
-					List<TextCode> addedTextCodes = new List<TextCode>();
-					SIIRequestLineStatusUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository, addedFields, addedTextCodes,contextTenant);
-					SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes,contextTenant);
-					SqlBulkInsert.BulkInsert("ObjectFields", addedFields,contextTenant);					
-					//this.ObjectContext.TextCodes.AddRange(addedTextCodes);
-					//this.ObjectContext.ObjectFields.AddRange(addedFields);
-					//this.ObjectContext.SaveChanges();
-					SIIRequestLineStatusUpdateClass.AddTableQueries(Queries, QueryColumns, ObjectTables, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters,tenantQueryGroups,contextTenant);
-					//this.ObjectContext.SaveChanges();
-					SIIRequestLineStatusUpdateClass.AddTableScreens(tenantScreens, tenantScreenFields, screensRepository, screenFieldsRepository, ObjectContext,contextTenant);
-					//this.ObjectContext.SaveChanges();
-					SIIRequestLineStatusUpdateClass.AddTableTabs(TenantObjectTableTabs, TextCodes, objectTableTabsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, ObjectContext,contextTenant);
-					//this.ObjectContext.SaveChanges();
-					SIIRequestLineStatusUpdateClass.AddTableEventTypes(tenantEventTypes, EventTypeRepository, ObjectContext, AllEntityStatuses,contextTenant);
-					//this.ObjectContext.SaveChanges();
-					SIIRequestLineStatusUpdateClass.AddTableFeatures(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext,contextTenant);
-					//this.ObjectContext.SaveChanges();
-					SIIRequestLineStatusUpdateClass.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext,contextTenant);
-					//this.ObjectContext.SaveChanges();
-					SIIRequestLineStatusUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext,contextTenant);
 					this.ObjectContext.SaveChanges();
 					scope.Complete();
 				}
@@ -17900,11 +17834,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	
 	   	   SignStationUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository,contextTenant);
 	
-	   	   SIIDocumentTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository,contextTenant);
-	
 	   	   SIIRequestUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository,contextTenant);
-	
-	   	   SIIRequestLineStatusUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository,contextTenant);
 	
 	   	   SIIRequestStatusUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository,contextTenant);
 	
@@ -18870,11 +18800,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	
 	   	   //SignStationUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository,TextCodeRepository,contextTenant);
 	
-	   	   //SIIDocumentTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository,TextCodeRepository,contextTenant);
-	
 	   	   //SIIRequestUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository,TextCodeRepository,contextTenant);
-	
-	   	   //SIIRequestLineStatusUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository,TextCodeRepository,contextTenant);
 	
 	   	   //SIIRequestStatusUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository,TextCodeRepository,contextTenant);
 	
@@ -19839,11 +19765,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	
 	   	   SignStationUpdateClass.AddTableQueries(Queries,QueryColumns, ObjectTables, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters,tenantQueryGroups,contextTenant);
 	
-	   	   SIIDocumentTypeUpdateClass.AddTableQueries(Queries,QueryColumns, ObjectTables, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters,tenantQueryGroups,contextTenant);
-	
 	   	   SIIRequestUpdateClass.AddTableQueries(Queries,QueryColumns, ObjectTables, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters,tenantQueryGroups,contextTenant);
-	
-	   	   SIIRequestLineStatusUpdateClass.AddTableQueries(Queries,QueryColumns, ObjectTables, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters,tenantQueryGroups,contextTenant);
 	
 	   	   SIIRequestStatusUpdateClass.AddTableQueries(Queries,QueryColumns, ObjectTables, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters,tenantQueryGroups,contextTenant);
 	
@@ -20808,11 +20730,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	
 	   	   SignStationUpdateClass.AddTableScreens(tenantScreens,tenantScreenFields,screensRepository,screenFieldsRepository,ObjectContext,contextTenant);
 	
-	   	   SIIDocumentTypeUpdateClass.AddTableScreens(tenantScreens,tenantScreenFields,screensRepository,screenFieldsRepository,ObjectContext,contextTenant);
-	
 	   	   SIIRequestUpdateClass.AddTableScreens(tenantScreens,tenantScreenFields,screensRepository,screenFieldsRepository,ObjectContext,contextTenant);
-	
-	   	   SIIRequestLineStatusUpdateClass.AddTableScreens(tenantScreens,tenantScreenFields,screensRepository,screenFieldsRepository,ObjectContext,contextTenant);
 	
 	   	   SIIRequestStatusUpdateClass.AddTableScreens(tenantScreens,tenantScreenFields,screensRepository,screenFieldsRepository,ObjectContext,contextTenant);
 	
@@ -21777,11 +21695,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	
 	   	   SignStationUpdateClass.AddTableTabs(TenantObjectTableTabs,TextCodes,objectTableTabsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,ObjectContext,contextTenant);
 	
-	   	   SIIDocumentTypeUpdateClass.AddTableTabs(TenantObjectTableTabs,TextCodes,objectTableTabsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,ObjectContext,contextTenant);
-	
 	   	   SIIRequestUpdateClass.AddTableTabs(TenantObjectTableTabs,TextCodes,objectTableTabsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,ObjectContext,contextTenant);
-	
-	   	   SIIRequestLineStatusUpdateClass.AddTableTabs(TenantObjectTableTabs,TextCodes,objectTableTabsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,ObjectContext,contextTenant);
 	
 	   	   SIIRequestStatusUpdateClass.AddTableTabs(TenantObjectTableTabs,TextCodes,objectTableTabsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,ObjectContext,contextTenant);
 	
@@ -22746,11 +22660,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	
 	   	   SignStationUpdateClass.AddTableEventTypes(tenantEventTypes,EventTypeRepository,ObjectContext,AllEntityStatuses,contextTenant);
 	
-	   	   SIIDocumentTypeUpdateClass.AddTableEventTypes(tenantEventTypes,EventTypeRepository,ObjectContext,AllEntityStatuses,contextTenant);
-	
 	   	   SIIRequestUpdateClass.AddTableEventTypes(tenantEventTypes,EventTypeRepository,ObjectContext,AllEntityStatuses,contextTenant);
-	
-	   	   SIIRequestLineStatusUpdateClass.AddTableEventTypes(tenantEventTypes,EventTypeRepository,ObjectContext,AllEntityStatuses,contextTenant);
 	
 	   	   SIIRequestStatusUpdateClass.AddTableEventTypes(tenantEventTypes,EventTypeRepository,ObjectContext,AllEntityStatuses,contextTenant);
 	
@@ -23715,11 +23625,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	
 	   	   SignStationUpdateClass.AddTableFeatures(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext,contextTenant);
 	
-	   	   SIIDocumentTypeUpdateClass.AddTableFeatures(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext,contextTenant);
-	
 	   	   SIIRequestUpdateClass.AddTableFeatures(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext,contextTenant);
-	
-	   	   SIIRequestLineStatusUpdateClass.AddTableFeatures(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext,contextTenant);
 	
 	   	   SIIRequestStatusUpdateClass.AddTableFeatures(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext,contextTenant);
 	
@@ -24683,11 +24589,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	
 	   	   SignStationUpdateClass.AddTableTextCodes(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext,contextTenant);
 	
-	   	   SIIDocumentTypeUpdateClass.AddTableTextCodes(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext,contextTenant);
-	
 	   	   SIIRequestUpdateClass.AddTableTextCodes(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext,contextTenant);
-	
-	   	   SIIRequestLineStatusUpdateClass.AddTableTextCodes(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext,contextTenant);
 	
 	   	   SIIRequestStatusUpdateClass.AddTableTextCodes(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext,contextTenant);
 	
@@ -25651,11 +25553,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	
 	   	   SignStationUpdateClass.AddTableMenuButtons(tenantMenuButtons,tenantMenuButtonGroups,TextCodes,TextCodeRepository,FeaturesRepository,menuButtonRepository,TenantFeatures,menuButtonGroupRepository ,ObjectContext,contextTenant);
 	
-	   	   SIIDocumentTypeUpdateClass.AddTableMenuButtons(tenantMenuButtons,tenantMenuButtonGroups,TextCodes,TextCodeRepository,FeaturesRepository,menuButtonRepository,TenantFeatures,menuButtonGroupRepository ,ObjectContext,contextTenant);
-	
 	   	   SIIRequestUpdateClass.AddTableMenuButtons(tenantMenuButtons,tenantMenuButtonGroups,TextCodes,TextCodeRepository,FeaturesRepository,menuButtonRepository,TenantFeatures,menuButtonGroupRepository ,ObjectContext,contextTenant);
-	
-	   	   SIIRequestLineStatusUpdateClass.AddTableMenuButtons(tenantMenuButtons,tenantMenuButtonGroups,TextCodes,TextCodeRepository,FeaturesRepository,menuButtonRepository,TenantFeatures,menuButtonGroupRepository ,ObjectContext,contextTenant);
 	
 	   	   SIIRequestStatusUpdateClass.AddTableMenuButtons(tenantMenuButtons,tenantMenuButtonGroups,TextCodes,TextCodeRepository,FeaturesRepository,menuButtonRepository,TenantFeatures,menuButtonGroupRepository ,ObjectContext,contextTenant);
 	
@@ -25814,8 +25712,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 		public void CreateAllClosedTables(int contextTenant)
         {
    
-	   
-	   
 	   
 	   
 	   

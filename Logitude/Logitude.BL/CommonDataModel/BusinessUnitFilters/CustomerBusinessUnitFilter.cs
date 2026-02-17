@@ -1,7 +1,9 @@
 ﻿using Logitude.Server.Tools.Helpers;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; 
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; 
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using System;
 using System.Collections.Generic;
@@ -9,6 +11,7 @@ using System.Linq;
 using System.Web;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Logitude.BL.CommonDataModel.EntityPMs;
+using Simplog.Global.Data.GlobalModel.Repositories;
 
 namespace Logitude.BL.CommonDataModel.BusinessUnitFilters
 {
@@ -170,9 +173,9 @@ namespace Logitude.BL.CommonDataModel.BusinessUnitFilters
 
         public IQueryable<CardList> RunFilter(IQueryable<CardList> iQueryableData)
         {
-            var iQueryableData_NotCustomers = iQueryableData.Where(d => (d.PartnerTypeId != "CS" && d.PartnerTypeId != "PO" )|| ( d.PartnerTypeId =="CS" && !d.IsCustomer));
+            var iQueryableData_NotCustomers = iQueryableData.Where(d => d.PartnerTypeId != "CS" && d.PartnerTypeId != "PO");
 
-            iQueryableData = iQueryableData.Where(d => (d.PartnerTypeId == "CS" && d.IsCustomer )|| d.PartnerTypeId == "PO");
+            iQueryableData = iQueryableData.Where(d => d.PartnerTypeId == "CS" || d.PartnerTypeId == "PO");
 
             if (iQueryableData.Count() > 0)
             {
@@ -393,18 +396,18 @@ namespace Logitude.BL.CommonDataModel.BusinessUnitFilters
         {
             List<RoleFeature> myFeatureRoles = new List<RoleFeature>();
 
-            if (loggedUserEmail != "support@amital.co.il")
+            if (loggedUserEmail != "admin@fnarsoft.com")
             {
                 ObjectTableRepository objectTabelRepository = new ObjectTableRepository(myCurrentTenant);
                 ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("Customer", 0, true);
 
-                FeatureRepository featureRepository = new FeatureRepository(myCurrentTenant);
+                FeatureRepository featureRepository = new FeatureRepository();
                 Feature myFeature = featureRepository.GetSingleFeatureByCode(objectTable.Id, "READ", myCurrentTenant);
                 if (myFeature != null)
                 {
-                    RoleRepository roleRepository = new RoleRepository(myCurrentTenant);
-                    RoleFeatureRepository roleFeatureRepository = new RoleFeatureRepository(myCurrentTenant);
-                    List<string> myRolesIds = roleRepository.GetUserRolesIds(loggedUser.Id, myCurrentTenant);
+                    ContactTenantRepository contactTenantRepository = new ContactTenantRepository(myCurrentTenant);
+                    RoleFeatureRepository roleFeatureRepository = new RoleFeatureRepository();
+                    List<string> myRolesIds = contactTenantRepository.GetUserRolesIds(loggedUser.Id, myCurrentTenant);
 
                     if (myFeature.IsBusinessUnitEnabled)
                     {

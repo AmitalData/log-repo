@@ -12,7 +12,8 @@ using WebFreight.Web.DataContracts;
 using WebFreight.Web.Security;
 using WebFreight.Web.Helpers;
 using Logitude.BL.CommonDataModel.EntityQueries;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; 
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using System.Linq;
 using System.IO;
 using System.Xml.Serialization;
@@ -20,8 +21,11 @@ using Simplog.Server.Infrastructure.Helpers;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Simplog.Server.Infrastructure.DataContracts;
 using System.Reflection;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; 
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Global.Data.GlobalModel.Repositories;
+using Logitude.BL.GlobalModel.EntityQueries;
 
 namespace WebFreight.Web.CommonDataModel.DomainServices
 {

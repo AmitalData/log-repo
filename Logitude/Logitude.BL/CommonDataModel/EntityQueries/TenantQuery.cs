@@ -1060,9 +1060,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                UseNewTermsOfUse = a.UseNewTermsOfUse,                                          
                                                ShipmentATADateIndicator = a.ShipmentATADateIndicator,
                                                ApproveUploadedDocuments = a.ApproveUploadedDocuments,
-                                               InvoicePrintNotes = a.InvoicePrintNotes,
-                                               InvoicePrintNotesLocal = a.InvoicePrintNotesLocal,
-                                               HebrewTenant = a.HebrewTenant,
                                            }).FirstOrDefault();
 
                         using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -1240,9 +1237,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            UseNewTermsOfUse = a.UseNewTermsOfUse,
                                            ShipmentATADateIndicator = a.ShipmentATADateIndicator,
                                            ApproveUploadedDocuments = a.ApproveUploadedDocuments,
-                                           InvoicePrintNotes = a.InvoicePrintNotes,
-                                           InvoicePrintNotesLocal = a.InvoicePrintNotesLocal,
-                                           HebrewTenant = a.HebrewTenant,
                                        }).FirstOrDefault();
 
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -1407,9 +1401,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        UseNewTermsOfUse = a.UseNewTermsOfUse,
                                        ShipmentATADateIndicator = a.ShipmentATADateIndicator,
                                        ApproveUploadedDocuments = a.ApproveUploadedDocuments,
-                                       InvoicePrintNotes = a.InvoicePrintNotes,
-                                       InvoicePrintNotesLocal = a.InvoicePrintNotesLocal,
-                                       HebrewTenant = a.HebrewTenant,
                                    }).FirstOrDefault();
                 if (tenant != null)
                 {
@@ -1593,9 +1584,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     UseNewTermsOfUse = myPOCO.UseNewTermsOfUse,
                     ShipmentATADateIndicator = myPOCO.ShipmentATADateIndicator,
                     ApproveUploadedDocuments = myPOCO.ApproveUploadedDocuments,
-                    InvoicePrintNotes = myPOCO.InvoicePrintNotes,
-                    InvoicePrintNotesLocal = myPOCO.InvoicePrintNotesLocal,
-                    HebrewTenant = myPOCO.HebrewTenant,
                 };
 
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -1816,7 +1804,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             #endregion
 
             #region Tenant Management  &  Package & TenantAddOnPM
-            PackageRepository packageRepository = new PackageRepository(tenant);
+            PackageRepository packageRepository = new PackageRepository();
             List<Package> packageLists = packageRepository.GetPackages().ToList();
             List<TenantManagement> tenantmanagements = new List<TenantManagement>();
             List<TenantManagementLicensePM> tenantManagementLicensePMLists = new List<TenantManagementLicensePM>();

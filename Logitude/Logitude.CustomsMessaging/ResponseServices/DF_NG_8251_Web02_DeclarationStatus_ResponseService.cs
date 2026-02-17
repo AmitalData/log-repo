@@ -1,34 +1,37 @@
-﻿using Logitude.AmitalMessaging.Utils;
-using Logitude.Customs.Def.EntityPMs;
+﻿using Logitude.AmitalMessaging.Customs.CustomFile;
+using Logitude.AmitalMessaging.Utils;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.GlobalModel.EntityQueries;
 using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.BL.EntityUpdateServices;
+using Logitude.Customs.BL.Messaging.Customs;
+using Logitude.Customs.BL.Messaging.L2U.CustomFile;
 using Logitude.Customs.BL.Models;
+using Logitude.Customs.BL.TraceEvents;
 using Logitude.Customs.Data;
+using Logitude.Customs.Def.EntityPMs;
 using Logitude.CustomsMessaging.Common.RequestParams;
 using Logitude.CustomsMessaging.Common.ResponseData;
-using Logitude.Server.Tools.Helpers;
-using Simplog.Data.InfrastructureModel.Repositories;
-using Simplog.Server.Infrastructure;
-using System;
-using System.Linq;
-using System.Collections.Generic;
-using UnifreightIIG.Common.DeclarationStatusQueryRequestServiceReference;
-using Logitude.Customs.BL.TraceEvents;
-using System.Configuration;
-using Unifreight.Data.AmitalModel;
-using Unifreight.BL.EntityQueryServices;
-using Unifreight.BL.EntityPMs.UGenerated;
 using Logitude.CustomsMessaging.MessagingServices;
-using Logitude.Customs.BL.Messaging.L2U.CustomFile;
-using Logitude.AmitalMessaging.Customs.CustomFile;
-using System.Globalization;
-using Simplog.Server.Infrastructure.Helpers;
-using Logitude.Customs.BL.Messaging.Customs;
-using Simplog.Data.CommonDataModel.Repositories;
+using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Global.Data.GlobalModel;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Logitude.BL.CommonDataModel.EntityQueries;
+using Simplog.Global.Data.GlobalModel.Repositories;
+using Simplog.Server.Infrastructure;
+using Simplog.Server.Infrastructure.Helpers;
+using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Globalization;
+using System.Linq;
+using Unifreight.BL.EntityPMs.UGenerated;
+using Unifreight.BL.EntityQueryServices;
+using Unifreight.Data.AmitalModel;
+using UnifreightIIG.Common.DeclarationStatusQueryRequestServiceReference;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -855,83 +858,51 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         private void SendPayment(DeclarationPM declarationPM, ICustomContext dbContext, DeclarationStatusRequestParams requestParams, DateTime? declarationAvaliabilityDate)
         {
-            try
+            if (declarationPM.AvailabilityDate != null) return;
+            var myDeclarationPaymentQueryService = new DeclarationPaymentQueryService(dbContext);
+            var myDeclarationPaymentUpdateService = new DeclarationPaymentUpdateService(dbContext, new Dictionary<string, IContext>(), requestParams.Tenant); ;
+            var myDeclarationQueryService = new DeclarationQueryService(dbContext);
+            var myDeclarationUpdateService = new DeclarationUpdateService(dbContext, new Dictionary<string, IContext>(), requestParams.Tenant);
+            var _declarationPM = myDeclarationQueryService.GetSingle(declarationPM.Id, true, false);
+            _declarationPM.MarkAsChanged = false;
+            _declarationPM.AvailabilityDate = declarationAvaliabilityDate ?? DateTime.Now;
+            LogMessagingUtil.Instance.AppendLine("AvailabilityDate: " + _declarationPM.AvailabilityDate?.ToString("hh:mm:ss.fff tt"));
+            _declarationPM.ChangeSetOp = ChangeSetOperation.Update;
+            myDeclarationUpdateService.Update(_declarationPM, true);
+
+            var declarationPaymentPM = myDeclarationPaymentQueryService.GetSingle(_declarationPM.Id, true, false);
+
+
+
+            if (declarationPaymentPM != null)
             {
-                if (declarationPM.AvailabilityDate != null) return;
-                var myDeclarationPaymentQueryService = new DeclarationPaymentQueryService(dbContext);
-                var myDeclarationPaymentUpdateService = new DeclarationPaymentUpdateService(dbContext, new Dictionary<string, IContext>(), requestParams.Tenant); ;
-                var myDeclarationQueryService = new DeclarationQueryService(dbContext);
-                var myDeclarationUpdateService = new DeclarationUpdateService(dbContext, new Dictionary<string, IContext>(), requestParams.Tenant);
-                var _declarationPM = myDeclarationQueryService.GetSingle(declarationPM.Id, true, false);
-                _declarationPM.MarkAsChanged = false;
-                _declarationPM.AvailabilityDate = declarationAvaliabilityDate ?? DateTime.Now;
-                LogMessagingUtil.Instance.AppendLine("AvailabilityDate: " + _declarationPM.AvailabilityDate?.ToString("hh:mm:ss.fff tt"));
-                _declarationPM.ChangeSetOp = ChangeSetOperation.Update;
-                myDeclarationUpdateService.Update(_declarationPM, true);
-
-                var declarationPaymentPM = myDeclarationPaymentQueryService.GetSingle(_declarationPM.Id, true, false);
-
-
-
-                if (declarationPaymentPM != null)
+                if (declarationPaymentPM.AutomaticPayment == 1)
                 {
-                    if (declarationPaymentPM.AutomaticPayment == 1)
+                    CustomsSettingQueryService settingService = new CustomsSettingQueryService(requestParams.Tenant);
+                    CustomsSettingPM setting = settingService.GetSettingByTenantN(requestParams.Tenant);
+                    CheckFileCrediteReq checkFileCrediteReq = new CheckFileCrediteReq();
+                    checkFileCrediteReq.ClassName = "DF_NG_8251_Web02_DeclarationStatus_ResponseService";
+                    checkFileCrediteReq.AppicationId = declarationPM.Id;
+                    checkFileCrediteReq.LoggingUserId = requestParams.LoggingUserId;
+                    checkFileCrediteReq.LoggingObjectTableId = requestParams.LoggingObjectTableId;
+                    checkFileCrediteReq.LoggingEntityReference = requestParams.LoggingEntityReference;
+
+                    string jsonString = System.Text.Json.JsonSerializer.Serialize(checkFileCrediteReq);
+
+
+                    var isCheckFileCredit = CheckFileCredit(declarationPM, declarationPaymentPM, requestParams.LoggingUserId, jsonString);
+                    if (setting.IsConnectedToUniFreight)
                     {
-                        CustomsSettingQueryService settingService = new CustomsSettingQueryService(requestParams.Tenant);
-                        CustomsSettingPM setting = settingService.GetSettingByTenantN(requestParams.Tenant);
-                        CheckFileCrediteReq checkFileCrediteReq = new CheckFileCrediteReq();
-                        checkFileCrediteReq.ClassName = "DF_NG_8251_Web02_DeclarationStatus_ResponseService";
-                        checkFileCrediteReq.AppicationId = declarationPM.Id;
-                        checkFileCrediteReq.LoggingUserId = requestParams.LoggingUserId;
-                        checkFileCrediteReq.LoggingObjectTableId = requestParams.LoggingObjectTableId;
-                        checkFileCrediteReq.LoggingEntityReference = requestParams.LoggingEntityReference;
-
-                        string jsonString = System.Text.Json.JsonSerializer.Serialize(checkFileCrediteReq);
-
-
-                        var isCheckFileCredit = CheckFileCredit(declarationPM, declarationPaymentPM, requestParams.LoggingUserId, jsonString);
-                        if (setting.IsConnectedToUniFreight)
-                        {
-                            SendPaymentIsCheckFileCredit(isCheckFileCredit, declarationPM, declarationPaymentPM, dbContext, requestParams.LoggingUserId, requestParams.LoggingObjectTableId, requestParams.LoggingEntityReference);
-                        }
+                        SendPaymentIsCheckFileCredit(isCheckFileCredit, declarationPM, declarationPaymentPM, dbContext, requestParams.LoggingUserId, requestParams.LoggingObjectTableId, requestParams.LoggingEntityReference);
                     }
-                    myDeclarationPaymentUpdateService.Update(declarationPaymentPM, true);
-
                 }
-            }
-            catch (System.Exception ex)
-            {
-                SendAPAYF(declarationPM, dbContext, requestParams, ex);
+                myDeclarationPaymentUpdateService.Update(declarationPaymentPM, true);
 
-                throw;
             }
 
 
-
         }
-
-        private void SendAPAYF(DeclarationPM declarationPM, ICustomContext dbContext, DeclarationStatusRequestParams requestParams, System.Exception ex)
-        {
-            var MyUnifreightEventParam = new UnifreightEventParam()
-            {
-                Code = "APAYF",
-                Mode = UnifreightEventMode.@new,
-                EventDateTime = DateTime.Now,
-                Entname = "CFIFILEM",
-                PrimaryNum = declarationPM.CustomFileNo,
-                EventRemarks = "כשלון בשליחת הגשת תשלום" + ex?.Message,
-            };
-            LogMessagingUtil.Instance.AppendLine("MyUnifreightEventParam = " + MyUnifreightEventParam ?? "NULL");
-            var myOpenUnifreighTask = new UnifreightEventTaskService();
-            myOpenUnifreighTask.UpsertEventLE2U(
-                declarationPM.Tenant,
-               requestParams.LoggingUserId,
-                MyUnifreightEventParam);
-
-            UpdateManualPayment(requestParams.LoggingEntityReference, dbContext, declarationPM);
-        }
-
-        public void SendPaymentIsCheckFileCredit(bool isCheckFileCredit, DeclarationPM declarationPM, DeclarationPaymentPM declarationPaymentPM, ICustomContext dbContext, string LoggingUserId, string LoggingObjectTableId, string LoggingEntityReference, bool isFromAPI = false,   DeclarationStatusRequestParams requestParams=null)
+        public void SendPaymentIsCheckFileCredit(bool isCheckFileCredit, DeclarationPM declarationPM, DeclarationPaymentPM declarationPaymentPM, ICustomContext dbContext, string LoggingUserId, string LoggingObjectTableId, string LoggingEntityReference, bool isFromAPI = false)
         {
             var myDeclarationPaymentUpdateService = new DeclarationPaymentUpdateService(dbContext, new Dictionary<string, IContext>(), declarationPM.Tenant); ;
 
@@ -1000,11 +971,25 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     }
 
                 }
-                catch (System.Exception ex)
+                catch (System.Exception)
                 {
-                    if(requestParams!= null)
-                    SendAPAYF(declarationPM, dbContext, requestParams, ex);
+                    var MyUnifreightEventParam = new UnifreightEventParam()
+                    {
+                        Code = "APAYF",
+                        Mode = UnifreightEventMode.@new,
+                        EventDateTime = DateTime.Now,
+                        Entname = "CFIFILEM",
+                        PrimaryNum = declarationPM.CustomFileNo,
+                        EventRemarks = "כשלון בשליחת הגשת תשלום",
+                    };
+                    LogMessagingUtil.Instance.AppendLine("MyUnifreightEventParam = " + MyUnifreightEventParam ?? "NULL");
+                    var myOpenUnifreighTask = new UnifreightEventTaskService();
+                    myOpenUnifreighTask.UpsertEventLE2U(
+                        declarationPM.Tenant,
+                       LoggingUserId,
+                        MyUnifreightEventParam);
 
+                    UpdateManualPayment(LoggingEntityReference, dbContext, declarationPM);
 
                     throw;
                 }
@@ -1252,8 +1237,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
         {
             if (!declarationPM.AutoSending || !declarationPM.IsDiamondDeclaration) return;
 
-            // determine if the export diamonds feature is enabled to allow autosending
-            ICommonDataContext myContextCommon = CommonDataContext.GetContext(declarationPM.Tenant);
+			// determine if the export diamonds feature is enabled to allow autosending
+			IGlobalContext myContextCommon = GlobalContext.GetContext();
             FeatureRepository myFeatureRepository = new FeatureRepository(myContextCommon);
             FeatureQuery featureQuery = new FeatureQuery(myFeatureRepository);
             var features = featureQuery.GetAllowedFeaturesForLoggedUser(AuthenticationUtil.ResolveUserId(declarationPM.Tenant), declarationPM.Tenant);

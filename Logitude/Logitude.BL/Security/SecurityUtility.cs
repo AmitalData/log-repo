@@ -86,7 +86,7 @@ namespace Logitude.BL.Security
 
                 if (contactinfo != null)
                 {
-                    if (contactinfo.IsLogitudeAdmin || contactinfo.IsApi)
+                    if (contactinfo.IsApi)
                     {
                         exists = true;
                     }
@@ -145,7 +145,7 @@ namespace Logitude.BL.Security
 
             if (CacheManager.CacheWrapper.Get(roleKey) == null || forceAPIFeaturesCheck)
             {
-                FeatureQuery featuresQuery = new FeatureQuery(tenant);
+                FeatureQuery featuresQuery = new FeatureQuery();
                 List<FeaturePM> fet = featuresQuery.GetAllowedFeaturesForRole(roleId, allowedPackages, tenant);
                 features = fet.ToDictionary(d => d.Code + d.ObjectTableId, d => d);
                 CacheManager.CacheWrapper.Insert(roleKey, features, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
@@ -275,7 +275,7 @@ namespace Logitude.BL.Security
 
                         if (contact.Tenant == 0 && tenant != 0)
                         {
-                            UserRepository userRep = new UserRepository(tenant);
+                            UserRepository userRep = new UserRepository(0);
                             User zeroUser = userRep.GetSingleUserByEmail(email, 0, true);
                             if (zeroUser != null)
                             {
@@ -310,7 +310,7 @@ namespace Logitude.BL.Security
                         //    }
                         //}
 
-                        RoleQuery roleQuery = new RoleQuery(tenant);
+                        RoleQuery roleQuery = new RoleQuery();
                         List<RolePM> allRoles = roleQuery.GetRolesForContact(contact.Id, contact.Tenant).ToList();
 
                         List<string> allRolesIds = allRoles.Select(s => s.Id).ToList();
@@ -421,7 +421,7 @@ namespace Logitude.BL.Security
 
                             if (contact.Tenant == 0 && tenant != 0)
                             {
-                                UserRepository userRep = new UserRepository(tenant);
+                                UserRepository userRep = new UserRepository(0);
                                 User zeroUser = userRep.GetSingleUserByEmail(email, 0, true);
                                 if (zeroUser != null)
                                 {
@@ -456,7 +456,7 @@ namespace Logitude.BL.Security
                             //    }
                             //}
 
-                            RoleQuery roleQuery = new RoleQuery(tenant);
+                            RoleQuery roleQuery = new RoleQuery();
                             List<RolePM> allRoles = roleQuery.GetRolesForContact(contact.Id, contact.Tenant).ToList();
 
                             List<string> allRolesIds = allRoles.Select(s => s.Id).ToList();
@@ -531,12 +531,12 @@ namespace Logitude.BL.Security
                     {
                         ObjectTablePM objectTable = ObjectTableQuery.GetObjectTableByCode(objectTableName, tenant);
 
-                        FeatureRepository featureRepository = new FeatureRepository(tenant);
+                        FeatureRepository featureRepository = new FeatureRepository();
                         Feature myFeature = featureRepository.GetSingleFeatureByCode(objectTable.Id, featureCode, tenant);
 
                         if (myFeature != null)
                         {
-                            RoleFeatureRepository roleFeatureRepository = new RoleFeatureRepository(tenant);
+                            RoleFeatureRepository roleFeatureRepository = new RoleFeatureRepository();
 
                             if (myFeature.IsBusinessUnitEnabled)
                             {
@@ -629,8 +629,9 @@ namespace Logitude.BL.Security
             List<string> allPackagesCodes_PK = new List<string>();
             List<string> allPackagesCodes_BS = new List<string>();
             ICommonDataContext myCommonContext = CommonDataContext.GetContext(tenant);
+			IGlobalContext myIGlobalContext = GlobalContext.GetContext();
 
-            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+			using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
                 #region
                 IGlobalContext globalContext = GlobalContext.GetContext();
@@ -714,7 +715,7 @@ namespace Logitude.BL.Security
                     //}
                 }
 
-                List<string> allConnectedCodes_PK = (from a in myCommonContext.PackageConnectedPackages
+                List<string> allConnectedCodes_PK = (from a in myIGlobalContext.PackageConnectedPackages
                                                      where allPackagesCodes_PK.Contains(a.PackageCode)
                                                      group a by a.ConnectedPackageCode into g
                                                      select g.Key).ToList();
@@ -732,7 +733,7 @@ namespace Logitude.BL.Security
             {
                 isAddingAddOns = true;
 
-                Package myPackage = (from a in myCommonContext.Packages where a.Code == myPackageCode select a).FirstOrDefault();
+                Package myPackage = (from a in myIGlobalContext.Packages where a.Code == myPackageCode select a).FirstOrDefault();
                 if (myPackage != null)
                 {
                     if (myPackage.FeaturePackageTypeCode == "BS")
@@ -745,7 +746,7 @@ namespace Logitude.BL.Security
 
                     else
                     {
-                        var allCodes = (from a in myCommonContext.PackageConnectedPackages
+                        var allCodes = (from a in myIGlobalContext.PackageConnectedPackages
                                         where a.PackageCode == myPackageCode
                                         group a by a.ConnectedPackageCode into g
                                         select g.Key).ToList();
@@ -765,7 +766,7 @@ namespace Logitude.BL.Security
             {
                 if (allPackagesCodes_AD.Count > 0)
                 {
-                    List<string> allConnectedCodes_AD = (from a in myCommonContext.PackageConnectedPackages
+                    List<string> allConnectedCodes_AD = (from a in myIGlobalContext.PackageConnectedPackages
                                                          where allPackagesCodes_AD.Contains(a.PackageCode)
                                                          group a by a.ConnectedPackageCode into g
                                                          select g.Key).ToList();
@@ -1070,7 +1071,7 @@ namespace Logitude.BL.Security
         {
             bool exists = false;
 
-            ICommonDataContext context = CommonDataContext.GetContext(tenant);
+            IGlobalContext context = GlobalContext.GetContext(tenant);
             PackagesCodesManager iManager = new PackagesCodesManager(tenant, null, false);
             List<string> allowedPackages = iManager.BasePackagesCodes;
 
@@ -1078,7 +1079,7 @@ namespace Logitude.BL.Security
 
             if (objectTable != null)
             {
-                FeatureQuery featuresQuery = new FeatureQuery(tenant);
+                FeatureQuery featuresQuery = new FeatureQuery();
                 FeaturePM myFeature = featuresQuery.GetSingleFeaturePMByCodeAndObjectTable(featureCode, objectTable.Id, tenant);
 
                 if (myFeature != null)

@@ -23,6 +23,8 @@ using Logitude.CRM.Data.Repsitories;
 using Logitude.CRM.Data.EntityPOCOs;
 using Logitude.CRM.BL;
 using Logitude.CRM.BL.CLoseTable;
+using Simplog.Global.Data.GlobalModel.Repositories;
+
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ActivityEmailRecipientUpdateClass

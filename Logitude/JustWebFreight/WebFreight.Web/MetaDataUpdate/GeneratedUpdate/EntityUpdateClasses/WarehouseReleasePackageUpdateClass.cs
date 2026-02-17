@@ -23,6 +23,8 @@ using Logitude.WarehouseLib.Data.Repositories;
 using Logitude.WarehouseLib.Data.EntityPOCOs;
 using Logitude.WarehouseLib.BL;
 using Logitude.WarehouseLib.BL.CLoseTable;
+using Simplog.Global.Data.GlobalModel.Repositories;
+
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class WarehouseReleasePackageUpdateClass

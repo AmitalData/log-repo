@@ -33,6 +33,7 @@ using System.Data.Entity.Core.EntityClient;
 using System.Configuration;
 using Simplog.Server.Infrastructure;
 using System.Data.Common;
+using Simplog.Global.Data.GlobalModel.Repositories;
 
 namespace JustWebFreight.WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {

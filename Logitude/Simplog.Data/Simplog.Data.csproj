@@ -298,7 +298,6 @@
     <Compile Include="CommonDataModel\EntityPOCOs\CarrierServiceLine.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\ChargesExternalAccountsByProduct.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\CheckDigitControlAlgorithm.cs" />
-    <Compile Include="CommonDataModel\EntityPOCOs\BankAccountView.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\CustomsBookMainView.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\Responsibility.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\TruckerSetting.cs" />
@@ -360,6 +359,8 @@
     <Compile Include="Helpers\ShipmentToShipmentAnalyticMapper.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\AdditionalCurrencyRate.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\CurrencyRate.cs" />
+    <Compile Include="InfrastructureModel\EntityPOCOs\DefaultAndConfiguration.cs" />
+    <Compile Include="InfrastructureModel\EntityPOCOs\DefaultAndConfigurationKey.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\EventRemark.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\CustomChildObject.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\ChildEntitiesCustomField.cs" />
@@ -471,8 +472,6 @@
     <Compile Include="CommonDataModel\EntityPOCOs\EmailProvider.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\EntityDate.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\Ext\CommunicationLogExt.cs" />
-    <Compile Include="CommonDataModel\EntityPOCOs\FeatureChange.cs" />
-    <Compile Include="CommonDataModel\EntityPOCOs\FeaturePackageType.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\FilingInbox.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\FilingInboxAttachment.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\FilingInboxAttachmentLog.cs" />
@@ -487,7 +486,6 @@
     <Compile Include="CommonDataModel\EntityPOCOs\LogBoxTenantSetting.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\LogitudeMessagesTransmissionLog.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\MetodoPago.cs" />
-    <Compile Include="CommonDataModel\EntityPOCOs\PackageConnectedPackage.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\Participant.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\PaymentGatewayPartner.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\PaymentTermDateType.cs" />
@@ -496,9 +494,6 @@
     <Compile Include="CommonDataModel\EntityPOCOs\ReportsTemplate.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\ReportsTemplatesVersion.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\SharedFollowedShipment.cs" />
-    <Compile Include="CommonDataModel\EntityPOCOs\Feature.cs" />
-    <Compile Include="CommonDataModel\EntityPOCOs\FeatureAccessLevel.cs" />
-    <Compile Include="CommonDataModel\EntityPOCOs\FeatureType.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\FormCustomField.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\GlobalZone.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\Incoterm.cs" />
@@ -506,8 +501,6 @@
     <Compile Include="CommonDataModel\EntityPOCOs\LeadSource.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\MAWBStack.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\Measurement.cs" />
-    <Compile Include="CommonDataModel\EntityPOCOs\Package.cs" />
-    <Compile Include="CommonDataModel\EntityPOCOs\PackageFeature.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\PackageType.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\PartnerType.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\PasswordPolicy.cs" />
@@ -524,9 +517,6 @@
     <Compile Include="CommonDataModel\EntityPOCOs\ReportGroup.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\ReportModification.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\Restriction.cs" />
-    <Compile Include="CommonDataModel\EntityPOCOs\Role.cs" />
-    <Compile Include="CommonDataModel\EntityPOCOs\RoleFeature.cs" />
-    <Compile Include="CommonDataModel\EntityPOCOs\RoleType.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\SharedLogisticsContactLastLogin.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\SharedManifestsStatus.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\SharedManifestTranslation.cs" />
@@ -618,8 +608,6 @@
     <Compile Include="CommonDataModel\Mapping\EmailProviderMap.cs" />
     <Compile Include="CommonDataModel\Mapping\EntityCasualDataMap.cs" />
     <Compile Include="CommonDataModel\Mapping\EntityChangeMap.cs" />
-    <Compile Include="CommonDataModel\Mapping\FeatureChangeMap.cs" />
-    <Compile Include="CommonDataModel\Mapping\FeaturePackageTypeMap.cs" />
     <Compile Include="CommonDataModel\Mapping\FilingInboxAttachmentLogMap.cs" />
     <Compile Include="CommonDataModel\Mapping\FilingInboxAttachmentMap.cs" />
     <Compile Include="CommonDataModel\Mapping\FilingInboxMap.cs" />
@@ -635,7 +623,6 @@
     <Compile Include="CommonDataModel\Mapping\LogBoxTenantSettingMap.cs" />
     <Compile Include="CommonDataModel\Mapping\LogitudeMessagesTransmissionLogMap.cs" />
     <Compile Include="CommonDataModel\Mapping\MetodoPagoMap.cs" />
-    <Compile Include="CommonDataModel\Mapping\PackageConnectedPackageMap.cs" />
     <Compile Include="CommonDataModel\Mapping\ParticipantMap.cs" />
     <Compile Include="CommonDataModel\Mapping\PaymentTermDateTypeMap.cs" />
     <Compile Include="CommonDataModel\Mapping\PortTimeZoneMap.cs" />
@@ -741,7 +728,6 @@
     <Compile Include="CommonDataModel\Repositories\EmailProviderRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\EntityChangeRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\EntityTrackingRepository.cs" />
-    <Compile Include="CommonDataModel\Repositories\FeatureChangeRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\FilingInboxAttachmentLogRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\FilingInboxAttachmentRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\FilingInboxRepository.cs" />
@@ -792,6 +778,8 @@
     <Compile Include="InfrastructureModel\EntityPOCOs\SearchIndexTenantHistory.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\TabModification.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\ScreenSection.cs" />
+    <Compile Include="InfrastructureModel\EntityPOCOs\DefaultAndConfiguration.cs" />
+    <Compile Include="InfrastructureModel\EntityPOCOs\DefaultAndConfigurationKey.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\WorkerRoleName.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\DWSubQuery.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\DWQuery .cs" />
@@ -802,6 +790,8 @@
     <Compile Include="InfrastructureModel\EntityPOCOs\SharedUserQuery.cs" />
     <Compile Include="InfrastructureModel\Mapping\AdditionalCurrencyRateMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\CurrencyRateMap.cs" />
+    <Compile Include="InfrastructureModel\Mapping\DefaultAndConfigurationKeyMap.cs" />
+    <Compile Include="InfrastructureModel\Mapping\DefaultAndConfigurationMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\EventRemarkMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\CustomChildObjectMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\ChildEntitiesCustomFieldMap.cs" />
@@ -824,6 +814,8 @@
     <Compile Include="InfrastructureModel\Mapping\SearchIndexTenantHistoryMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\TabModificationMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\ScreenSectionMap.cs" />
+    <Compile Include="InfrastructureModel\Mapping\DefaultAndConfigurationMap.cs" />
+    <Compile Include="InfrastructureModel\Mapping\DefaultAndConfigurationKeyMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\WokerRoleNameMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\DWSubQueryMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\RuleUpdateHistoryMap.cs" />
@@ -831,6 +823,8 @@
     <Compile Include="InfrastructureModel\Mapping\SharedUserQueryMap.cs" />
     <Compile Include="InfrastructureModel\Repositories\AdditionalCurrencyRateRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\CurrencyRateRepository.cs" />
+    <Compile Include="InfrastructureModel\Repositories\DefaultAndConfigurationKeyRepository.cs" />
+    <Compile Include="InfrastructureModel\Repositories\DefaultAndConfigurationRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\EventRemarkRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\CustomChildObjectRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\ChildEntitiesCustomFieldRepository.cs" />
@@ -856,6 +850,8 @@
     <Compile Include="InfrastructureModel\Repositories\SearchIndexRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\SearchIndexTenantHistoryRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\TabModificationRepository.cs" />
+    <Compile Include="InfrastructureModel\Repositories\DefaultAndConfigurationRepository.cs" />
+    <Compile Include="InfrastructureModel\Repositories\DefaultAndConfigurationKeyRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\WorkerRoleNameRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\DWSubQueryRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\DWQueryRepository.cs" />
@@ -880,10 +876,6 @@
     <Compile Include="InvoiceModel\EntityPOCOs\BankAccountLite.cs" />
     <Compile Include="InvoiceModel\EntityPOCOs\ControlForInvoiceLinesDataView.cs" />
     <Compile Include="InvoiceModel\EntityPOCOs\DigitalInvoicesCounterDataView.cs" />
-    <Compile Include="InvoiceModel\EntityPOCOs\ExpenseAllocationFlow.cs" />
-    <Compile Include="InvoiceModel\EntityPOCOs\ExpenseAllocationSetting.cs" />
-    <Compile Include="InvoiceModel\EntityPOCOs\MasavInterface.cs" />
-    <Compile Include="InvoiceModel\EntityPOCOs\MasavInterfaceStatus.cs" />
     <Compile Include="InvoiceModel\EntityPOCOs\SATPaymentMethod.cs" />
     <Compile Include="InvoiceModel\EntityPOCOs\SATInvoiceStatus.cs" />
     <Compile Include="InvoiceModel\EntityPOCOs\QBOGlobalTaxCalculation.cs" />
@@ -902,10 +894,6 @@
     <Compile Include="InvoiceModel\Mapping\BankAccountLiteMap.cs" />
     <Compile Include="InvoiceModel\Mapping\ControlForInvoiceLinesDataViewMap.cs" />
     <Compile Include="InvoiceModel\Mapping\DigitalInvoicesCounterDataViewMap.cs" />
-    <Compile Include="InvoiceModel\Mapping\ExpenseAllocationFlowMap.cs" />
-    <Compile Include="InvoiceModel\Mapping\ExpenseAllocationSettingMap.cs" />
-    <Compile Include="InvoiceModel\Mapping\MasavInterfaceMap.cs" />
-    <Compile Include="InvoiceModel\Mapping\MasavInterfaceStatusMap.cs" />
     <Compile Include="InvoiceModel\Mapping\SATPaymentMethodMap.cs" />
     <Compile Include="InvoiceModel\Mapping\SATInvoiceStatusMap.cs" />
     <Compile Include="InvoiceModel\Mapping\QBOGlobalTaxCalculationMap.cs" />
@@ -922,10 +910,6 @@
     <Compile Include="InvoiceModel\Repositories\BankAccountLiteRepository.cs" />
     <Compile Include="InvoiceModel\Repositories\ConfirmationNumberDefaultRepository.cs" />
     <Compile Include="InvoiceModel\Repositories\ConfirmationNumberStatusRepository.cs" />
-    <Compile Include="InvoiceModel\Repositories\ExpenseAllocationFlowRepository.cs" />
-    <Compile Include="InvoiceModel\Repositories\ExpenseAllocationSettingRepository.cs" />
-    <Compile Include="InvoiceModel\Repositories\MasavInterfaceStatusRepository.cs" />
-    <Compile Include="InvoiceModel\Repositories\MasavInterfaceRepository.cs" />
     <Compile Include="InvoiceModel\Repositories\SATPaymentMethodRepository.cs" />
     <Compile Include="InvoiceModel\Repositories\SATInvoiceStatusRepository.cs" />
     <Compile Include="InvoiceModel\Repositories\QBOGlobalTaxCalculationRepository.cs" />
@@ -961,7 +945,7 @@
     <Compile Include="ShipmentsModel\EntityPOCOs\LogitudeOceanInsightsRequest.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\LogitudeOceanInsightsResponse.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\OBLType.cs" />
-    <Compile Include="ShipmentsModel\EntityPOCOs\OceanCarrierStatusAPIconfig.cs" />
+    <Compile Include="ShipmentsModel\EntityPOCOs\OceanInsightsStatusLog.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\OceanInsightsRequestsCount.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\PayableProratedAmount.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\PickUpDeliveryPackageHarmonize.cs" />
@@ -1004,7 +988,7 @@
     <Compile Include="ShipmentsModel\Mapping\INTTRAStatusMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\LogitudeOceanInsightsRequestMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\LogitudeOceanInsightsResponseMap.cs" />
-    <Compile Include="ShipmentsModel\Mapping\OceanCarrierStatusAPIconfigMap.cs" />
+    <Compile Include="ShipmentsModel\Mapping\OceanInsightsStatusLogMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\ReferenceTypeMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\ShipmentAnalyticMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\OBLTypeMap.cs" />
@@ -1037,13 +1021,11 @@
     <Compile Include="ShipmentsModel\Repositories\CustomsTransferLineRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\CustomsTransferTypeRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\FBLStockRepository.cs" />
-    <Compile Include="CommonDataModel\Repositories\FeaturePackageTypeRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\HybridTenantStateRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\HybridTenantThresholdRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\HybridPartnerRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\IContactRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\LogitudeMessagesTransmissionLogRepository.cs" />
-    <Compile Include="CommonDataModel\Repositories\PackageConnectedPackageRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\ParticipantRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\PaymentTermDateTypeRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\RegionRepository.cs" />
@@ -1259,9 +1241,6 @@
     <Compile Include="CommonDataModel\Mapping\DocumentTypeTemplateMap.cs" />
     <Compile Include="CommonDataModel\Mapping\DueTypeMap.cs" />
     <Compile Include="CommonDataModel\Mapping\EntityDateMap.cs" />
-    <Compile Include="CommonDataModel\Mapping\FeatureAccessLevelMap.cs" />
-    <Compile Include="CommonDataModel\Mapping\FeatureMap.cs" />
-    <Compile Include="CommonDataModel\Mapping\FeatureTypeMap.cs" />
     <Compile Include="CommonDataModel\Mapping\FormCustomFields1Map.cs" />
     <Compile Include="CommonDataModel\Mapping\GlobalZoneMap.cs" />
     <Compile Include="CommonDataModel\Mapping\IncotermMap.cs" />
@@ -1269,8 +1248,6 @@
     <Compile Include="CommonDataModel\Mapping\LeadSourceMap.cs" />
     <Compile Include="CommonDataModel\Mapping\MAWBStackMap.cs" />
     <Compile Include="CommonDataModel\Mapping\MeasurementMap.cs" />
-    <Compile Include="CommonDataModel\Mapping\PackageFeatureMap.cs" />
-    <Compile Include="CommonDataModel\Mapping\PackageMap.cs" />
     <Compile Include="CommonDataModel\Mapping\PackageTypeMap.cs" />
     <Compile Include="CommonDataModel\Mapping\PartnerTypeMap.cs" />
     <Compile Include="CommonDataModel\Mapping\PasswordPolicyMap.cs" />
@@ -1287,9 +1264,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="CommonDataModel\Mapping\RestrictionMap.cs" />
-    <Compile Include="CommonDataModel\Mapping\RoleFeatureMap.cs" />
-    <Compile Include="CommonDataModel\Mapping\RoleMap.cs" />
-    <Compile Include="CommonDataModel\Mapping\RoleTypeMap.cs" />
     <Compile Include="CommonDataModel\Mapping\ShippingAgentMap.cs" />
     <Compile Include="CommonDataModel\Mapping\ShippingLineMap.cs" />
     <Compile Include="CommonDataModel\Mapping\SmallDocumentMap.cs" />
@@ -1391,9 +1365,6 @@
     <Compile Include="CommonDataModel\Repositories\DocumentTypeTemplateRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\DueTypeRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\EntityDateRepository.cs" />
-    <Compile Include="CommonDataModel\Repositories\FeatureAccessLevelRepository.cs" />
-    <Compile Include="CommonDataModel\Repositories\FeatureRepository.cs" />
-    <Compile Include="CommonDataModel\Repositories\FeatureTypeRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\FormCustomFieldRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\GlobalZoneRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\IncotermRepository.cs" />
@@ -1401,8 +1372,6 @@
     <Compile Include="CommonDataModel\Repositories\LeadSourceRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\MAWBStackRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\MeasurementRepository.cs" />
-    <Compile Include="CommonDataModel\Repositories\PackageFeatureRepository.cs" />
-    <Compile Include="CommonDataModel\Repositories\PackageRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\PackageTypeRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\PartnerTypeRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\PasswordPolicyRepository.cs" />
@@ -1418,9 +1387,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="CommonDataModel\Repositories\RestrictionRepository.cs" />
-    <Compile Include="CommonDataModel\Repositories\RoleFeatureRepository.cs" />
-    <Compile Include="CommonDataModel\Repositories\RoleRepository.cs" />
-    <Compile Include="CommonDataModel\Repositories\RoleTypeRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\ShippingAgentRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\ShippingLineRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\AccountingInformationIdentifierRepository.cs" />
@@ -1438,7 +1404,7 @@
     <Compile Include="ShipmentsModel\Repositories\INTTRASIStatusRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\INTTRAStatusRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\OBLTypeRepository.cs" />
-    <Compile Include="ShipmentsModel\Repositories\OceanCarrierStatusAPIconfigRepository.cs" />
+    <Compile Include="ShipmentsModel\Repositories\OceanInsightsStatusLogRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\OceanInsightsRequestsCountRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\OceanInsightsStatusesRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\OceanInsightsRequestRepository.cs" />

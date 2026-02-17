@@ -1,10 +1,12 @@
 ﻿using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.Repositories;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; 
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; 
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
@@ -31,7 +33,8 @@ using Logitude.Accounting.BL.EntityUpdateServices;
 using Logitude.Accounting.Def.EntityPMs;
  using System.Configuration;
  using Telerik.Windows.Controls.MaskedInput;
- 
+using Simplog.Global.Data.GlobalModel;
+
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 {
     public class AccountingUpdate
@@ -290,8 +293,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
             // |           MUST BE ADDED To LXML Files          |
             // |________________________________________________|
             ICommonDataContext ObjectContext = CommonDataContext.GetContext(tenant);
-            FeatureRepository FeaturesRepository = new FeatureRepository(ObjectContext);
-            RoleFeatureRepository RoleFeaturesRepository = new RoleFeatureRepository(ObjectContext);
+			IGlobalContext globalContext = GlobalContext.GetContext(tenant);
+
+			FeatureRepository FeaturesRepository = new FeatureRepository(globalContext);
+            RoleFeatureRepository RoleFeaturesRepository = new RoleFeatureRepository(globalContext);
             TextCodeRepository textCodeRep = new TextCodeRepository(tenant);
             ObjectTableRepository objecttableRep = new ObjectTableRepository(tenant);
             objectTabelQuery = new ObjectTableQuery(objecttableRep);
@@ -2106,7 +2111,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
             Dictionary<string, QueryColumn> tenantQueryColumns = queryColumnsRepository.GetQueryColumnsByTenant(0).ToDictionary(d => d.QueryId + d.ObjectFieldId, a => a);
             Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters = advancedQueryFiltersRepository.GetAdvancedQueryFiltersByTenant(0).ToDictionary(d => d.QueryId + d.ObjectFieldId, a => a);
 
-            FeatureRepository featureRepository = new FeatureRepository(0);
+            FeatureRepository featureRepository = new FeatureRepository();
             List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
   
           
@@ -2759,7 +2764,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 
             List<ObjectTablePM> objectTables = objectTabelQuery.GetObjectPMsByTenant(0).ToList();
             Dictionary<string, ObjectTableTab> TenantObjectTableTabs = objectTableTabsRepository.GetObjectTableTabsByTenant(0).ToDictionary(d => d.Code, a => a);
-            FeatureRepository featureRepository = new FeatureRepository(0);
+            FeatureRepository featureRepository = new FeatureRepository();
             List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
 
 
@@ -2905,7 +2910,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
             menusTablesRepository = new MenusTableRepository(objectContext);
             objectTableRepository = new ObjectTableRepository(objectContext);
 
-            FeatureRepository featureRepository = new FeatureRepository(0);
+            FeatureRepository featureRepository = new FeatureRepository();
             Dictionary<string, MenusTable> tenantMenusTables = menusTablesRepository.GetMenusTablesByTenant(0).ToDictionary(d => d.Code, a => a);
             List<ObjectTable> tenantObjectTables = objectTableRepository.GetObjectsByTenant(0).ToList();
             List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();

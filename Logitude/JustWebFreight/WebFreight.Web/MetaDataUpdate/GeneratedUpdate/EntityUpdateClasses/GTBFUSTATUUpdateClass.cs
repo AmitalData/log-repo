@@ -74,6 +74,7 @@ using Logitude.TariffModule.BL.CLoseTable;
 using Logitude.CargoTracking.Data.Repositories;
 using Logitude.CargoTracking.BL;
 using Logitude.CargoTracking.Data.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.Repositories;
 
 
 

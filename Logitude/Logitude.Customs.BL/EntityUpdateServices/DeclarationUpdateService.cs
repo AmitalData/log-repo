@@ -9,9 +9,11 @@ using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Simplog.Server.Infrastructure;
 using Logitude.Server.Tools.Helpers;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; 
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using System.Web;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; 
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.Data.Repsitories;
@@ -54,6 +56,7 @@ using Logitude.Customs.BL.Messaging.ILSWS;
 using System.Xml;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using System.Runtime.Remoting.Contexts;
+using Logitude.BL.GlobalModel.EntityQueries;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 {
@@ -68,8 +71,6 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         public string ImporterCode;
         public string LastMileServiceType;
         public string MAWB;
-        private DeclarationPM _dbEntityForThisUpdate;
-
 
         public bool IsFromApproveAmend;
 
@@ -172,13 +173,11 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 CustomsHouseTypePM houseType = houseTypeQuery.GetHouseTypewithAdditional(entityPM.DeclarationOfficeCode, entityPM.Tenant);
                 if (houseType != null && entityPM.IsAmendment != true)
                 {
-                    if (!string.IsNullOrWhiteSpace(houseType.UnloadPortCode))
-                    {
-                        entityPM.Consignments[0].UnloadPortCode = houseType.UnloadPortCode;
-                    }
+                    entityPM.Consignments[0].UnloadPortCode = houseType.UnloadPortCode;
                 }
                 if (entityPM.TransportModeId == "O")
                 {
+                    //<--- Yuval Chalup 14.09.2014 TASK 3075 (Override  houseType.UnloadPortCode)
                     var customsHouseTypeAdditionalRepository = new CustomsHouseTypeAdditionalRepository(entityPM.Tenant);
                     if (!String.IsNullOrWhiteSpace(entityPM.DeclarationOfficeCode))
                     {
@@ -188,6 +187,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                             entityPM.Consignments[0].UnloadPortCode = poko.UnloadPortCode;
                         }
                     }
+                    //Yuval Chalup 14.09.2014 TASK 3075 (Override  houseType.UnloadPortCode) --->
                 }
             }
 
@@ -195,10 +195,13 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             Card card = cardRep.GetSingleCard(entityPM.CustomerId, entityPM.Tenant);
             if (card != null && entityPM.IsAmendment != true)
             {
+                // moran 31.5.15 - Task 13325 -->
+                //entityPM.ImporterCode = card.VatNumber;
                 if (entityPM.ImporterCode == null && card.VatNumber != null)
                 {
                     entityPM.ImporterCode = card.VatNumber;
                 }
+                // moran 31.5.15 - Task 13325 <--
             }
             if (entityPM.IsAmendment != true && entityPM.IsConvertedDeclaration == false)
 
@@ -387,18 +390,18 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
         }
 
-
         protected override void OnUpdating(DeclarationPM entityPM)
         {
             try
             {
                 LogPayment("1", entityPM);
 
+                //<--- Yuval Chalup 30.12.2015 TASK-18507
                 if (HttpContextUtil.IsCustomDomainService())
                 {
                     if (!CheckIfUpdatingAllowed(entityPM)) return;
                 }
-                var dbEntity = GetDbEntityForThisUpdate(entityPM);
+                //Yuval Chalup 30.12.2015 TASK-18507 --->
                 if (!entityPM.IsCopiedFromOtherDeclaration)
                 {
 
@@ -441,43 +444,32 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 var eventContextTagModel = entityPM.CurrentContextTag as EventContextTagModel;
 
                 var declarationQueryService = new DeclarationQueryService(entityPM.Tenant);
-                DeclarationPM entityPMOrg = null;
 
                 if (entityPM.IsAmendment == true && eventContextTagModel != null && eventContextTagModel.CallProccessID == EventContextTagModel.ProccessEnum.DF_NG_2470_DF_MSG16001_ReleaseGoodsMessageResponseServiceUpdate)
                 {
 
-                    entityPMOrg = declarationQueryService.GetSingle(entityPM.AmendmentOriginalDeclartation, true, false);
+                    var entityPMOrg = declarationQueryService.GetSingle(entityPM.AmendmentOriginalDeclartation, true, false);
                     entityPMOrg.CurrentContextTag = eventContextTagModel;
-                    if (entityPM.HatraDate.HasValue)
-                        entityPMOrg.HatraDate = entityPM.HatraDate;
-
+                    entityPMOrg.HatraDate = entityPM.HatraDate;
+ 
                     UpdateUnifreight(entityPMOrg);
+
+
                 }
+
+
+                // var entityAmend = declarationQueryService.GetAcceptDeclarationAmendment(entityPM.Id, entityPM.Tenant);
 
                 if (entityPM.Direction!="E" &&!(entityPM.PaymentDate.HasValue && string.IsNullOrEmpty(entityPM.DeclarationNumber)))
                 {
-                    if(!entityPM.HatraDate.HasValue&& entityPM.IsAmendment == true&& !string.IsNullOrEmpty(entityPM.AmendmentOriginalDeclartation))
-                    {
-                        if (entityPMOrg != null && entityPMOrg.HatraDate.HasValue)
-                        {
-                            entityPM.HatraDate = entityPMOrg.HatraDate;
-                        }
-                        else
-                        {
-                            DateTime? hatraDate = declarationQueryService.GetHatraDateForDecId(entityPM.AmendmentOriginalDeclartation, entityPM.Tenant);
-                            if (hatraDate.HasValue)
-                            {
-                                entityPM.HatraDate = hatraDate.Value;
-                            }
-                        }
-                    }
-
                     UpdateUnifreight(entityPM);
                 }
 
 
                 if (entityPM.IsDiamondDeclaration)
                 {
+                    //  DeclarationQueryService declarationQueryService = new DeclarationQueryService(entityPM.Tenant);
+
                     entityPM.IsValidTicketsDiamond = declarationQueryService.IsValidTickets(entityPM);
 
                     entityPM.IsMissMandatoryDiamond = declarationQueryService.IsMissingMandatoryFields(entityPM);
@@ -532,14 +524,132 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
                 entityPM.UpdateDateTime = DateTime.Now;
 
-                if (entityPM.MarkAsChanged && entityPM.ChangeSetOp == ChangeSetOperation.Update)
+                if (entityPM.MarkAsChanged && entityPM.ChangeSetOp == ChangeSetOperation.Update && !string.IsNullOrEmpty(this.EntityChangeFieldXml) && entityPM.IsCourierDeclaration)
                 {
-                    entityPM.IsChanged = true;
+                    DateTime stopLogAt = new DateTime(2025, 06, 01);
+                    LogitudeSettings.HandleLogMe(" DeclarationUpdateService.OnUpdating = EntityChangeFieldXml " + this.EntityChangeFieldXml, false, "CreateUD2LTService", stopLogAt);
+                    XmlDocument doc = new XmlDocument();
+                    doc.LoadXml(this.EntityChangeFieldXml);
+                    foreach (XmlNode xmlnode in doc?.DocumentElement)
+                    {
+                        var changes = xmlnode?.InnerXml?.Split(new string[] { "<c" }, StringSplitOptions.None)?.Skip(1)?.ToArray();
+                        foreach (var change in changes)
+                        {
+                            string OldValue = "", NewValue = "";
+                            var oFrom = change.IndexOf("o=\"");
+                            if (change.Length > oFrom + 3)
+                            {
+                                var oSubStrined = change.Substring(oFrom + 3);
+                                var oFromDoubleQuote = oSubStrined.IndexOf("\"");
+                                OldValue = oSubStrined.Substring(0, oFromDoubleQuote);
+                            }
+                            var nFrom = change.IndexOf("n=\"");
+                            if (change.Length > nFrom + 3)
+                            {
+                                var nSubStrined = change.Substring(nFrom + 3);
+                                var nFromDoubleQuote = nSubStrined.IndexOf("\"");
+                                NewValue = nSubStrined.Substring(0, nFromDoubleQuote);
+                            }
+                            if (OldValue != NewValue && !change.Contains("CreatedByUserId") && !change.Contains("IsChanged") &&  (!AreEqualIgnoringSpaces(OldValue, NewValue)))
+                            {
+                                LogitudeSettings.HandleLogMe(" DeclarationUpdateService.OnUpdating: " + " CustomFileno : " + this.EntityPM.CustomFileNo + " = EntityChangeFieldXml " + this.EntityChangeFieldXml, false, "CreateUD2LTService", stopLogAt);
+                                LogitudeSettings.HandleLogMe(" DeclarationUpdateService.OnUpdating: " + " Old : " + OldValue + " = New " + NewValue, false, "CreateUD2LTService", stopLogAt);
+                                entityPM.IsChanged = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+                else if (entityPM.MarkAsChanged && !entityPM.IsCourierDeclaration)
+                {
+                    if (entityPM.ChangeSetOp == ChangeSetOperation.Update)
+                    {
+                        entityPM.IsChanged = true;
+                    }
+                }
+                ClientQueryService clientQueryService = new ClientQueryService(entityPM.Tenant);
+                if (!string.IsNullOrEmpty(entityPM.ImporterId))
+                {
+                    ClientPM client = clientQueryService.GetSingle(entityPM.ImporterId, false, true);
+                    if (client != null)
+                    {
+                        entityPM.ImporterId = client.Id;
+
+                    }
+                    else
+                    {
+                        entityPM.ImporterId = null;
+                    }
                 }
 
-                ResolveClientReferences(entityPM);
+                else if (!string.IsNullOrEmpty(entityPM.ImporterCode))
+                {
+                    ClientPM client = clientQueryService.GetClientByCode(entityPM.ImporterCode, entityPM.Tenant);
+                    if (client != null)
+                    {
+                        entityPM.ImporterId = client.Id;
+
+                    }
+                    else
+                    {
+                        entityPM.ImporterId = null;
+                    }
+                }
                 LogPayment("3", entityPM);
-                
+                if (!string.IsNullOrEmpty(entityPM.TransferImporterCode))
+                {
+                    ClientPM client = clientQueryService.GetClientByCode(entityPM.TransferImporterCode, entityPM.Tenant);
+                    if (client != null)
+                    {
+                        entityPM.TransferImporterId = client.Id;
+                        //entityPM.TransferImporterTypeCode = "1";
+                        //if (!string.IsNullOrWhiteSpace(client.PassportNumber) && !string.IsNullOrWhiteSpace(client.PassportCountryCode))
+                        //{
+                        //    if (client.PassportTypeCode == "1")
+                        //    {
+                        //        entityPM.TransferImporterTypeCode = "2";
+                        //    }
+                        //    else
+                        //    {
+                        //        entityPM.TransferImporterTypeCode = "3";
+                        //    }
+                        //    entityPM.TransferImporterCountryCode = client.PassportCountryCode;
+                        //}
+                    }
+                    else
+                    {
+                        entityPM.TransferImporterId = null;
+                    }
+                }
+
+                if (!string.IsNullOrEmpty(entityPM.EntitleImporterCode))
+                {
+                    ClientPM client = clientQueryService.GetClientByCode(entityPM.EntitleImporterCode, entityPM.Tenant);
+                    if (client != null)
+                    {
+                        entityPM.EntitleImporterId = client.Id;
+                        //entityPM.EntitleImporterTypeCode = "1";
+                        //if (!string.IsNullOrWhiteSpace(client.PassportNumber) && !string.IsNullOrWhiteSpace(client.PassportCountryCode))
+                        //{
+                        //    if (client.PassportTypeCode == "1")
+                        //    {
+                        //        entityPM.EntitleImporterTypeCode = "2";
+                        //    }
+                        //    else
+                        //    {
+                        //        entityPM.EntitleImporterTypeCode = "3";
+                        //    }
+                        //    entityPM.EntitleImporterCountryCode = client.PassportCountryCode;
+                        //}
+                    }
+
+                    else
+                    {
+                        entityPM.EntitleImporterId = null;
+                    }
+                }
+
+                //      DeclarationConstraintQueryService constraintQuery = new DeclarationConstraintQueryService(entityPM.Tenant);
 
                 bool constraintExist = entityPM.DeclarationConstraints.Any();
                 if (entityPM.DeclarationStatusTypeCode == "13" || entityPM.DeclarationStatusTypeCode == "5" || entityPM.DeclarationStatusTypeCode == "6" || entityPM.DeclarationStatusTypeCode == "10" || entityPM.DeclarationStatusTypeCode == "15")
@@ -558,7 +668,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 {
                     if (constraintExist)
                     {
-                        if (!String.IsNullOrWhiteSpace(entityPM.ErrosXml))
+                        if (!String.IsNullOrWhiteSpace(entityPM.ErrosXml))// itzik + yaromn (ihab in background ) - if HUGE SIItem - entityPM.ErrosXml ==null
                         {
                             if (entityPM.ErrosXml.Contains("<ListVersionID>1</ListVersionID>"))
                             {
@@ -582,8 +692,11 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     entityPM.HasConstraint = false;
                 }
                 LogPayment("4", entityPM);
+                CustomsHouseTypeQueryService customHouseQuery = new CustomsHouseTypeQueryService(entityPM.Tenant);
+                CustomsHouseTypePM houseType = customHouseQuery.GetHouseTypewithAdditional(entityPM.DeclarationOfficeCode, entityPM.Tenant);
+                //entityPM.TransportModeId = houseType.TransportModeId;
 
-                UpdateNotification(entityPM, dbEntity);
+                UpdateNotification(entityPM); // moran 2.9.14 - Task 7086
                 if (entityPM.ResetDeclarationNumber)//לא לאפשר איפוס הצהרה  במקרה וישנה בקשה לש הגשת תשלום בגליון בקשות (Call# 310088) CALL#310416
                 {
                     var crsQS = new CustomsRequestsSheetQueryService(entityPM.Tenant);
@@ -647,20 +760,22 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 {
 
                     string ImporterCode = entityPM.ImporterCode;
+
+
                     if (entityPM.ImporterCode.Length > 9)
                     {
                         ImporterCode = entityPM.ImporterCode.Substring(0, 9);
                     }
                     string clientId = TranslateClient(ImporterCode);
-                    if (clientId == null)
+                    FeatureQuery featureQuery = new FeatureQuery();
+                    var features = featureQuery.GetAllowedFeaturesForLoggedUser(AuthenticationUtil.ResolveUserId(entityPM.Tenant), entityPM.Tenant);
+                    var feature = features.Features.FirstOrDefault(x => x.Code == "AddNewClientFromManifest");
+
+
+                    if (clientId == null && feature != null)
                     {
-                        FeatureQuery featureQuery = new FeatureQuery(entityPM.Tenant);
-                        var features = featureQuery.GetAllowedFeaturesForLoggedUser(AuthenticationUtil.ResolveUserId(entityPM.Tenant), entityPM.Tenant);
-                        var feature = features.Features.FirstOrDefault(x => x.Code == "AddNewClientFromManifest");
-                        if (feature != null)
-                        {
-                            SendClientSearch(entityPM);
-                        }
+                        SendClientSearch(entityPM);
+
                     }
                 }
 
@@ -672,9 +787,12 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     string resolveLoggingUserId = AuthenticationUtil.ResolveUserIdentityName(entityPM.Tenant);
                     Contact contact = contactRep.GetSingleContactByEmail(resolveLoggingUserId, entityPM.Tenant);
 
-                    if (dbEntity.ImporterCode != entityPM.ImporterCode)
+                    DeclarationRepository rep = new DeclarationRepository(entityPM.Tenant);
+                    Declaration declaration = rep.GetSingle(entityPM.Id, entityPM.Tenant);
+
+                    if (declaration.ImporterCode != entityPM.ImporterCode)
                     {
-                        EventTracer.CreateTraceEvent(new EventTracerArgs() { EntityId = entityPM.Id, ObjectTableName = "Customs.Declaration", Tenant = entityPM.Tenant, UserId = contact.Id, EventTypeCode = "VATC", Notes = "Old VAT: " + dbEntity.ImporterCode + " New VAT: " + entityPM.ImporterCode });
+                        EventTracer.CreateTraceEvent(new EventTracerArgs() { EntityId = entityPM.Id, ObjectTableName = "Customs.Declaration", Tenant = entityPM.Tenant, UserId = contact.Id, EventTypeCode = "VATC", Notes = "Old VAT: " + declaration.ImporterCode + " New VAT: " + entityPM.ImporterCode });
                     }
                 }
                 if (!string.IsNullOrEmpty(entityPM.CalculatedImporterName) && entityPM.CalculatedImporterName.Length > 35) entityPM.CalculatedImporterName = entityPM.CalculatedImporterName.Substring(0, 35);
@@ -754,78 +872,22 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 			}
             finally
             {
+                //if (String.IsNullOrWhiteSpace(entityPM.PrimaryInvoiceCounterKey))
+                //{
+                //    if (entityPM.SupplierInvoices != null)
+                //    {
+                //        var firstInv = entityPM.SupplierInvoices.FirstOrDefault();
+                //        if (firstInv != null)
+                //        {
+                //            entityPM.PrimaryInvoiceCounterKey = firstInv.InvoiceCounterKey.ToString();
+                //        }
+
+                //    }
+                //}
                 var mySend2MasofIfNeededService = new Send2MasofIfNeededService();
-                mySend2MasofIfNeededService.Send2Masof(entityPM, CourierStorageSiteChanged, GetDbEntityForThisUpdate(entityPM));
+                mySend2MasofIfNeededService.Send2Masof(entityPM, CourierStorageSiteChanged, GetDBEntity(entityPM.Id, entityPM.Tenant));
                 LogPayment("7", entityPM);
             }
-        }
-
-        private void ResolveClientReferences(DeclarationPM entityPM)
-        {
-            var qs = new ClientQueryService(entityPM.Tenant);
-
-            entityPM.ImporterId = ResolveClientId(qs, entityPM.ImporterId, entityPM.ImporterCode, entityPM.Tenant);
-
-            bool hasTransfer = !string.IsNullOrWhiteSpace(entityPM.TransferImporterCode);
-            bool hasEntitle = !string.IsNullOrWhiteSpace(entityPM.EntitleImporterCode);
-
-            if (!hasTransfer && !hasEntitle)
-            {
-                entityPM.TransferImporterId = null;
-                entityPM.EntitleImporterId = null;
-                return;
-            }
-
-            var map = qs.GetClientIdsByCodes(new[]
-            {
-                hasTransfer ? entityPM.TransferImporterCode.Trim() : null,
-                hasEntitle  ? entityPM.EntitleImporterCode.Trim()  : null,
-            }, entityPM.Tenant);
-
-            entityPM.TransferImporterId =
-                hasTransfer && map.TryGetValue(entityPM.TransferImporterCode.Trim(), out var tId) ? tId : null;
-
-            entityPM.EntitleImporterId =
-                hasEntitle && map.TryGetValue(entityPM.EntitleImporterCode.Trim(), out var eId) ? eId : null;
-        }
-
-        private DeclarationPM GetDbEntityForThisUpdate(DeclarationPM entityPM)
-        {
-            if (_dbEntityForThisUpdate == null)
-            {
-                _dbEntityForThisUpdate = GetDBEntity(entityPM.Id, entityPM.Tenant);
-            }
-            return _dbEntityForThisUpdate;
-        }
-
-        private void ClearDbEntityForThisUpdate()
-        {
-            _dbEntityForThisUpdate = null;
-        }
-        private string ResolveClientId(ClientQueryService qs, string clientId, string clientCode, int tenant)
-        {
-            if (!string.IsNullOrEmpty(clientId))
-            {
-                var client = qs.GetSingle(clientId, false, true);
-                return client != null ? client.Id : null;
-            }
-
-            if (!string.IsNullOrEmpty(clientCode))
-            {
-                var client = qs.GetClientByCode(clientCode, tenant);
-                return client != null ? client.Id : null;
-            }
-
-            return null;
-        }
-
-        private string ResolveClientIdByCode(ClientQueryService qs, string clientCode, int tenant)
-        {
-            if (string.IsNullOrEmpty(clientCode))
-                return null;
-
-            var client = qs.GetClientByCode(clientCode, tenant);
-            return client != null ? client.Id : null;
         }
 
         private void DeleteExportStorage(int tenant, string id)
@@ -834,6 +896,23 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             exportStoragePM.DeclarationId = null;
             exportStoragePM.ChangeSetOp = ChangeSetOperation.Update;
             new ExportStorageUpdateService(MainContext as CustomContext, new Dictionary<string, IContext>(), tenant).Update(exportStoragePM, true);
+        }
+
+        private bool DeclarationIsSigned(DeclarationPM entityPM)
+        {
+            return true;
+            // entityPM.IsSignedVersion
+        }
+
+        private bool SendDeclarationMandatoryFields(DeclarationPM declarationPM)
+        {
+            Boolean sendDeclarationMandatory = true;
+            CustomsRequiredFieldErrors errorsForDeclaration = CustomsRequiredFieldsValidator.GetRequiredFieldErrorsForDeclaration(declarationPM.Id, declarationPM.Tenant, declarationPM);
+            if (errorsForDeclaration != null && errorsForDeclaration.RequiredFields != null && errorsForDeclaration.RequiredFields.Count() > 0)
+            {
+                sendDeclarationMandatory = false;
+            }
+            return sendDeclarationMandatory;
         }
 
         public void UpdateTaxationDateTime(List<string> ids,int tenant)
@@ -854,6 +933,72 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             _DeclarationUpdateService.SubmitChanges();
 
         }
+        private string DeclarationTicketsStatus(DeclarationPM declarationPM)
+        {
+            CustomsDocumentsTicketQueryService myCustomsDocumentsTicketQueryService = new CustomsDocumentsTicketQueryService(declarationPM.Tenant);
+            string ticketValidStatus = "C";
+
+            List<CustomsDocumentsTicketPM> customsDocumentsTicketPMList = myCustomsDocumentsTicketQueryService.GetCustomsDocumentsTicketPMsByEntityIdAndChilds(declarationPM.Id, "", "", "", declarationPM.Tenant, "Declaration").ToList();
+            if (customsDocumentsTicketPMList != null && customsDocumentsTicketPMList.Count() > 0)
+            {
+
+                var DocumentsFilingIdList = new List<string>();
+                foreach (var customsDocumentsTicketPM in customsDocumentsTicketPMList)
+                {
+                    if (!string.IsNullOrWhiteSpace(customsDocumentsTicketPM.DocumentsFilingId))
+                    {
+                        DocumentsFilingIdList.Add(customsDocumentsTicketPM.DocumentsFilingId);
+                    }
+                }
+                var customsDocumentPMList = new List<CustomsDocumentPM>();
+                if (DocumentsFilingIdList != null)
+                {
+                    var myCustomsDocumentQueryService = new CustomsDocumentQueryService(declarationPM.Tenant);
+                    customsDocumentPMList = myCustomsDocumentQueryService.GetCustomsDocumentList(DocumentsFilingIdList, declarationPM.Tenant);
+                }
+                if (customsDocumentPMList != null && customsDocumentPMList.Count() > 0)
+
+                {
+                    foreach (var customsDocumentPM in customsDocumentPMList)
+                    {
+                        if (customsDocumentPM.DocumentStatusCode != "1")
+                        {
+                            ticketValidStatus = "F";
+                            break;
+                        }
+                    }
+                }
+            }
+
+            if (IsDocumentMissing(declarationPM))
+            {
+                ticketValidStatus = "M";
+
+            }
+
+
+            return ticketValidStatus;
+        }
+
+
+        private bool IsDocumentMissing(DeclarationPM myDeclarationPM)
+        {
+            var customContext = CustomContext.GetContext(myDeclarationPM.Tenant);
+            CustomsDocumentsTicketQueryService myCustomsDocumentsTicketQueryService = new CustomsDocumentsTicketQueryService(customContext);
+            CustomDocumentTypeQueryService docTypeQuery = new CustomDocumentTypeQueryService(customContext);
+
+            List<CustomDocumentTypePM> documentTypePMs = docTypeQuery.GetMandatoryCustomDocumentTypes(myDeclarationPM.Tenant);
+
+            foreach (var doc in documentTypePMs)
+            {
+                List<CustomsDocumentsTicketPM> customsDocumentsTicketPMList = myCustomsDocumentsTicketQueryService.GetCustomsDocumentsTicketPMsByEntityIdAndChilds(myDeclarationPM.Id, "", "", "", myDeclarationPM.Tenant, "Declaration").Where(r => r.DocumentTypeCode == doc.Code).ToList();
+                if (customsDocumentsTicketPMList == null || customsDocumentsTicketPMList.Count() < 1)
+                    return true;
+            }
+
+            return false;
+
+        }
 
         public bool CourierStorageSiteChanged { get; set; }
 
@@ -862,6 +1007,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         {
 
             var documentsFilingQuery = new DocumentsFilingQuery(entityPM.Tenant);
+            //DocumentsFilingPM documentIn = documentsFilingQuery.GetSinglePM(_MyCustomsDocumentPM.DocumentsFilingId, requestParams.Tenant);
 
             var documentTypeQuery = new DocumentTypeQuery(entityPM.Tenant);
             var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
@@ -896,6 +1042,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         }
         protected override void OnUpdating(DeclarationPM entityPM, Declaration entityPOCO)
         {
+            //mohammad insurance if taxation changed
 
             ReCalculateDueTaxationDateChange(entityPM, entityPOCO);
             UpdateHataraStatusByContarization(entityPM, entityPOCO);
@@ -916,6 +1063,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
             if (entityPM.ImporterName != entityPOCO.ImporterName)
             {
+
                 {
                     UpdatePendingByKeyWordsByImporterName(entityPM, false);
                 }
@@ -941,7 +1089,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
             if (entityPM.IsCourierDeclaration && entityPM.ChangeSetOp == ChangeSetOperation.Update)
             {
-                if (CheckIfRequiredFieldForCourierHasChanged(entityPM, entityPOCO, GetDbEntityForThisUpdate(entityPM)))
+                if (CheckIfRequiredFieldForCourierHasChanged(entityPM, entityPOCO))
                 {
                     entityPM.ManifestCargoStatusCode = null;
                 }
@@ -951,10 +1099,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             if (entityPM.CourierCustomStatusCode != entityPOCO.CourierCustomStatusCode)
                 LogMessagingUtil.Instance.AppendLine("CourierCustomStatusCode update to=" + entityPM.CourierCustomStatusCode + DateTime.Now.ToString("hh: mm:ss.fff tt"));
 
-            ClearDbEntityForThisUpdate();
 
-            base.OnUpdating
-                (entityPM, entityPOCO);
+            base.OnUpdating(entityPM, entityPOCO);
         }
 
         private void UpdateDeclarationPending903InvalidPhoneNumber(DeclarationPM declarationPM)
@@ -981,7 +1127,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
         private void UpdateReferantData(DeclarationPM entityPM)
         {
-            if (entityPM.Direction == "E" || entityPM.IsCourierDeclaration) return;                   
+            if (entityPM.Direction == "E") return;                   
                 DateTime stopLogAt = new DateTime(2021, 06, 01);
                 string logData = "";
                 var loggedUser = AuthenticationUtil.ResolveUserIdentityName(entityPM.Tenant);
@@ -1076,6 +1222,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         public void updateDeclarationCourierStatusWithPending(DeclarationPM entityPM, DeclarationCourierStatusPM declarationCourierStatusPM)
         {
             List<string> pendingReasonCodeList = new List<string>();
+            DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(MainContext, new Dictionary<string, IContext>(), entityPM.Tenant);
             var pendingByKeywordQueryService = new PendingByKeywordQueryService(entityPM.Tenant);
             var courierReasonCodeList = pendingByKeywordQueryService.GetCourierPendingReasonCodeBykeyWords(
                 entityPM.ImporterName,
@@ -1113,7 +1260,6 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
             if (declarationCourierStatusPM != null && declarationCourierStatusPM.ChangeSetOp == ChangeSetOperation.Update)
             {
-                DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(MainContext, new Dictionary<string, IContext>(), entityPM.Tenant);
                 declarationCourierStatusUpdateService.Update(declarationCourierStatusPM, true);
             }
         }
@@ -1197,8 +1343,181 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
         protected override void AfterUpdating(DeclarationPM entityPM, EntityPM entityParentPM)
         {
+            LogMessagingUtil.Instance.AppendLine("declarationAfterUpdating start");
+            bool fromcache = true; // why i need the Name ?? 
+            _AfterCommitUpdate = true;
+            if (entityPM.CustomerId != null)
+            {
+                CardRepository rep = new CardRepository(entityPM.Tenant);
+                Card customerCard = rep.GetSingleCardByIdAndTenant(entityPM.CustomerId, entityPM.Tenant, fromcache);//i leave not from cache-due 4 update 
+                if (customerCard != null)
+                {
+                    entityPM.CustomerName = customerCard.LocalName != null ? customerCard.LocalName : customerCard.EnglishName;
+                    entityPM.CustomerCode = customerCard.Code;
+                }
+            }
+            LogMessagingUtil.Instance.AppendLine("declarationAfterUpdating step1");
+            if (!string.IsNullOrEmpty(entityPM.DepartmentId))
+            {
+                DepartmentRepository departmentRep = new DepartmentRepository(entityPM.Tenant);
+                Department department = departmentRep.GetSingleDepartmentCache(entityPM.DepartmentId, entityPM.Tenant);
+                if (department != null)
+                {
+                    entityPM.DepartmentName = department.LocalName != null ? department.LocalName : department.EnglishName;
+                }
+            }
+            LogMessagingUtil.Instance.AppendLine("declarationAfterUpdating step2");
+
+            if (entityPM.DeclarationOfficeCode != null)
+            {
+                CustomsHouseTypeQueryService customsHouseTypeQueryService = new CustomsHouseTypeQueryService(entityPM.Tenant);
+                CustomsHouseTypePM declarationOffice = customsHouseTypeQueryService.GetSingle(entityPM.DeclarationOfficeCode, false, fromcache);
+                if (declarationOffice != null)
+                {
+                    entityPM.DeclarationOfficeName = declarationOffice.LocalName;
+                }
+            }
+            LogMessagingUtil.Instance.AppendLine("declarationAfterUpdating step3");
+
+            if (entityPM.AutonomyRegionTypeCode != null)
+            {
+
+                AutonomyTypeQueryService autonomyTypeQueryService = new AutonomyTypeQueryService(entityPM.Tenant);
+                AutonomyTypePM autonomyType = autonomyTypeQueryService.GetSingle(entityPM.AutonomyRegionTypeCode, false, fromcache);
+                if (autonomyType != null)
+                {
+                    entityPM.AutonomyRegionTypeName = autonomyType.LocalName;
+                }
+
+            }
+
+            LogMessagingUtil.Instance.AppendLine("declarationAfterUpdating step4");
+
+            if (entityPM.ImporterEntitlementTypeCode != null)
+            {
+                LogMessagingUtil.Instance.AppendLine("declarationAfterUpdating step5");
+                EntitlementTypeQueryService entitlementTypeQueryService = new EntitlementTypeQueryService(entityPM.Tenant);
+                EntitlementTypePM entitlementType = entitlementTypeQueryService.GetSingle(entityPM.ImporterEntitlementTypeCode, false, fromcache);
+                if (entitlementType != null)
+                {
+                    entityPM.ImporterEntitlementTypeName = entitlementType.LocalName;
+                }
+            }
+
+            if (entityPM.ImporterPassCountryCode != null)
+            {
+                LogMessagingUtil.Instance.AppendLine("declarationAfterUpdating step6");
+                CustomsCountryQueryService countryQueryService = new CustomsCountryQueryService(entityPM.Tenant);
+                CustomsCountryPM country = countryQueryService.GetSingle(entityPM.ImporterPassCountryCode, false, fromcache);
+                if (country != null)
+                {
+                    entityPM.ImporterPassCountryName = country.LocalName;
+                }
+            }
+
+            if (entityPM.TransferImporterCountryCode != null)
+            {
+                LogMessagingUtil.Instance.AppendLine("declarationAfterUpdating step7");
+                CustomsCountryQueryService countryQueryService = new CustomsCountryQueryService(entityPM.Tenant);
+                CustomsCountryPM country = countryQueryService.GetSingle(entityPM.TransferImporterCountryCode, false, fromcache);
+                if (country != null)
+                {
+                    entityPM.ImporterPassCountryName = country.LocalName;
+                }
+            }
+
+            if (entityPM.ProcedureCurrentCode != null)
+            {
+                LogMessagingUtil.Instance.AppendLine("declarationAfterUpdating step8");
+                GovernmentProcedureTypeQueryService governmentProcedureTypeQueryService = new GovernmentProcedureTypeQueryService(entityPM.Tenant);
+                GovernmentProcedureTypePM governmentProcedureType = governmentProcedureTypeQueryService.GetSingle(entityPM.ProcedureCurrentCode, false, fromcache);
+                if (governmentProcedureType != null)
+                {
+                    entityPM.ProcedureCurrentName = governmentProcedureType.LocalName;
+                }
+            }
+
+            if (entityPM.ImporterId != null)
+            {
+                LogMessagingUtil.Instance.AppendLine("declarationAfterUpdating step9");
+                ClientQueryService clientQueryService = new ClientQueryService(entityPM.Tenant);
+                ClientPM client = clientQueryService.GetSingle(entityPM.ImporterId, false, fromcache);
+                if (client != null)
+                {
+                    entityPM.CalculatedImporterName = client.LocalFirstName;
+                }
+            }
+
+            if (entityPM.DeclarationStatusTypeCode != null)
+            {
+                LogMessagingUtil.Instance.AppendLine("declarationAfterUpdating step10");
+                DeclarationStatusTypeQueryService declarationStatusTypeQueryService = new DeclarationStatusTypeQueryService(entityPM.Tenant);
+                DeclarationStatusTypePM declarationStatusType = declarationStatusTypeQueryService.GetSingle(entityPM.DeclarationStatusTypeCode, false, fromcache);
+                if (declarationStatusType != null)
+                {
+                    entityPM.DeclarationStatusTypeName = declarationStatusType.LocalName;
+
+                }
+            }
+            if (entityPM.ImporterId != null)
+            {
+                ClientQueryService clientQueryService = new ClientQueryService(entityPM.Tenant);
+                ClientPM client = clientQueryService.GetSingle(entityPM.ImporterId, false, true);
+                if (client != null)
+                {
+
+                    entityPM.CalculatedImporterName = client.FullName;
+                    FacilitationTypeQueryService FacilitationTypeQueryService = new FacilitationTypeQueryService(entityPM.Tenant);
+                    FacilitationTypePM FacilitationType = FacilitationTypeQueryService.GetSingle(client.FacilitationTypeCode, false, true);
+                    entityPM.FacilityTypeName = FacilitationType != null ? FacilitationType.LocalName : null;
+                }
+
+                else
+                {
+                    entityPM.FacilityTypeName = null;
+                }
+            }
+
+            if (entityPM.ImporterId != null)
+            {
+                ClientQueryService clientQueryService = new ClientQueryService(entityPM.Tenant);
+                ClientPM client = clientQueryService.GetSingle(entityPM.ImporterId, false, true);
+                if (client != null)
+                {
+
+                    entityPM.CalculatedImporterName = client.FullName;
+                    FacilitationTypeQueryService FacilitationTypeQueryService = new FacilitationTypeQueryService(entityPM.Tenant);
+                    FacilitationTypePM FacilitationType = FacilitationTypeQueryService.GetSingle(client.FacilitationTypeCode, false, true);
+                    entityPM.FacilityTypeName = FacilitationType != null ? FacilitationType.LocalName : null;
+                }
+
+                else
+                {
+                    entityPM.FacilityTypeName = null;
+                }
+            }
+            else if (entityPM.ImporterCode != null)
+            {
+                LogMessagingUtil.Instance.AppendLine("declarationAfterUpdating step11");
+                ClientQueryService clientQueryService = new ClientQueryService(entityPM.Tenant);
+                ClientPM client = clientQueryService.GetClientByCode(entityPM.ImporterCode, entityPM.Tenant);
+                if (client != null)
+                {
+
+                    entityPM.CalculatedImporterName = client.FullName;
+                    FacilitationTypeQueryService FacilitationTypeQueryService = new FacilitationTypeQueryService(entityPM.Tenant);
+                    FacilitationTypePM FacilitationType = FacilitationTypeQueryService.GetSingle(client.FacilitationTypeCode, false, true);
+                    entityPM.FacilityTypeName = FacilitationType != null ? FacilitationType.LocalName : null;
+                }
+
+                else
+                {
+                    entityPM.FacilityTypeName = null;
+                }
+            }
             if (!string.IsNullOrEmpty(entityPM.CalculatedImporterName) && entityPM.CalculatedImporterName.Length > 35) entityPM.CalculatedImporterName = entityPM.CalculatedImporterName.Substring(0, 35);
             if (!string.IsNullOrEmpty(entityPM.ImporterName) && entityPM.ImporterName.Length > 35) entityPM.ImporterName = entityPM.ImporterName.Substring(0, 35);
+            LogMessagingUtil.Instance.AppendLine("declarationAfterUpdating _step12");
             bool isSubmitChanges = false;
             //----- consignment 
             bool isConsignmentInsert = (from a in entityPM.Consignments
@@ -1294,9 +1613,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     consignmentRepository.SubmitChanges();
                 }
             }
-
+            //-------------consignment packages
             foreach (ConsignmentPM consignmentPM in entityPM.Consignments.Where(d => d.ChangeSetOp == ChangeSetOperation.Update || d.ChangeSetOp == ChangeSetOperation.Insert))
             {
+                LogMessagingUtil.Instance.AppendLine("declarationAfterUpdating step13");
                 bool isConsignmentPackageInsert = (from a in consignmentPM.ConsignmentPackages
                                                    where a.ChangeSetOp == ChangeSetOperation.Insert
                                                    select a).Any();
@@ -1339,6 +1659,9 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
             if (entityPM.IsCourierDeclaration)
             {
+                LogMessagingUtil.Instance.AppendLine("declarationAfterUpdating step14");
+
+                //if (entityPM.ChangeSetOp != ChangeSetOperation.Insert)
                 {
                     LogMessagingUtil.Instance.AppendLine("declarationAfterUpdating, entityPM.IsCourierDeclaration = true");
                     var context = CustomContext.GetContext(entityPM.Tenant);
@@ -1361,8 +1684,67 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         newDeclarationCourierStatusPM = declarationCourierStatusUpdateService.UpdateLastMileServiceType(newDeclarationCourierStatusPM, entityPM);
                     }
 
+                    /*
+                     * getSingle moved to CalculateDeclarationCourierStatus
+                    DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
+                    DeclarationCourierStatusPM newDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(entityPM.Id, false, false);
+                    if (newDeclarationCourierStatusPM == null)
+                    {
+                        newDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Insert;
+                    }
+                    else
+                    {
+                        newDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                    }
+                    */
+
                     declarationCourierStatusUpdateService.Update(newDeclarationCourierStatusPM, true);
-                   
+                    /*
+                    if(entityPM.CurrentContextTag != null && entityPM.CurrentContextTag.ToString() == "Logitude.Customs.BL.Messaging.U2L.CommDec.CommDecService.Upsert()")
+                    {
+                        if (!string.IsNullOrWhiteSpace(entityPM.ImporterCode))
+                        {
+                            if (newDeclarationCourierStatusPM != null)
+                            {
+                                Boolean toUpdate = false;
+                                if (entityPM.ImporterCode.Substring(0, 1) == "5")
+                                {
+                                    if (newDeclarationCourierStatusPM.HighLowValue == "L" && entityPM.ProcedureCurrentCode != "4000007")
+                                    {
+                                        entityPM.ProcedureCurrentCode = "4000007";
+                                        toUpdate = true;
+                                    }
+                                    else if (newDeclarationCourierStatusPM.HighLowValue == "H" && entityPM.ProcedureCurrentCode != "4000001")
+                                    {
+                                        entityPM.ProcedureCurrentCode = "4000001";
+                                        toUpdate = true;
+                                    }
+                                }
+                                else
+                                {
+                                    if (newDeclarationCourierStatusPM.HighLowValue == "L" && entityPM.ProcedureCurrentCode != "4000507")
+                                    {
+                                        entityPM.ProcedureCurrentCode = "4000507";
+                                        toUpdate = true;
+                                    }
+                                    else if (newDeclarationCourierStatusPM.HighLowValue == "H" && entityPM.ProcedureCurrentCode != "4000501")
+                                    {
+                                        entityPM.ProcedureCurrentCode = "4000501";
+                                        toUpdate = true;
+                                    }
+                                }
+                                if(toUpdate)
+                                {
+                                    DeclarationRepository rep = new DeclarationRepository(entityPM.Tenant);
+                                    Declaration declaration = rep.GetSingle(entityPM.Id, entityPM.Tenant);
+                                    declaration.ProcedureCurrentCode = entityPM.ProcedureCurrentCode;
+                                    rep.Update(declaration);
+                                    rep.SubmitChanges();
+                                }
+                            }
+                        }
+                    }
+                    */
                     if (newDeclarationCourierStatusPM.ChangeSetOp == ChangeSetOperation.Insert)
                     {
                         if (entityPM.Consignments != null && entityPM.Consignments.Count() > 0)
@@ -1376,13 +1758,89 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         }
                         this.updateDeclarationCourierStatusWithPending(entityPM, newDeclarationCourierStatusPM);
                     }
+
+                    /*
+                    if(newDeclarationCourierStatusPM != null && !newDeclarationCourierStatusPM.IsClosedForFollowUp)
+                    {
+                        if (this._CourierMasterPM == null)
+                        {
+                            var myCourierDeclarationQueryService = new CourierDeclarationQueryService(context);
+                            CourierDeclarationPM _CourierDeclarationPM = myCourierDeclarationQueryService.GetCourierDeclarationByDeclarationId(entityPM.Id, entityPM.Tenant);
+                            if (_CourierDeclarationPM != null)
+                            {
+                                var myCourierMasterQueryService = new CourierMasterQueryService(context);
+                                this._CourierMasterPM = myCourierMasterQueryService.GetSingle(_CourierDeclarationPM.CourierMasterId, true, false);
+                            }
+                        }
+                        if (this._CourierMasterPM != null && !this._CourierMasterPM.IsOpen)
+                        {
+                            this._CourierMasterPM.IsOpen = true;
+                            this._CourierMasterPM.ChangeSetOp = ChangeSetOperation.Update;
+                            var myCourierMasterUpdateService = new CourierMasterUpdateService(context, new Dictionary<string, IContext>(), entityPM.Tenant);
+                            myCourierMasterUpdateService.Update(this._CourierMasterPM, true);
+                        }
+                    }
+                    */
                 }
+
             }
+            //  -------- Declaration Referant Data 
             UpdateReferantData(entityPM);
+            /*
+            DateTime stopLogAt = new DateTime(2020, 06, 01);
+            string logData = "";
+            var loggedUser = AuthenticationUtil.ResolveUserIdentityName(entityPM.Tenant);
+            logData = $"entityPM.CustomFileNo={entityPM.CustomFileNo}, User name={loggedUser}, before update1";
+            LogitudeSettings.HandleLogMe("Referant update " + logData, false, "referant.NewFile", stopLogAt);
+            
+            DeclarationReferantDataQueryService declarationReferantDataQueryService = new DeclarationReferantDataQueryService(entityPM.Tenant);
+            DeclarationReferantDataPM referant = declarationReferantDataQueryService.GetSingle(entityPM.Id, false, true);
+            if (referant != null)
+            {
+                if (entityPM.ProcedureCurrentCode != null)
+                {
+                    if (entityPM.ProcedureCurrentCode.Length > 3)
+                    {
+                        string ProcedureCurrentCode = entityPM.ProcedureCurrentCode.Substring(0, 3);
+                        if (ProcedureCurrentCode == "407")
+                        {
+                            if (referant.ClassificationStatus == null)
+                            {
+                                referant.ClassificationStatus = "N";
+                                referant.ChangeSetOp = ChangeSetOperation.Update;
+                            }
+                        }
+                    }
+                }
+                logData = $"entityPM.CustomFileNo={entityPM.CustomFileNo}, referant.NewFile={referant.NewFile}, before update2";
+                LogitudeSettings.HandleLogMe("Referant update " + logData, false, "referant.NewFile", stopLogAt);
+                if (referant.NewFile != false)
+                {
+                    if (HttpContextUtil.IsCustomDomainService())
+                    {
+                        logData = $"entityPM.CustomFileNo={entityPM.CustomFileNo}, before update3";
+                        LogitudeSettings.HandleLogMe("Referant update " + logData, false, "referant.NewFile", stopLogAt);
+                        referant.NewFile = false;
+                        referant.ChangeSetOp = ChangeSetOperation.Update;
+                    }
+                }
+                if(referant.ChangeSetOp == ChangeSetOperation.Update)
+                {
+                    ICustomContext context = MainContext as CustomContext;
+                    DeclarationReferantDataUpdateService service = new DeclarationReferantDataUpdateService(context, new Dictionary<string, IContext>(), entityPM.Tenant);
+                    service.Update(referant, true);
+                    DeclarationReferantDataRepository declarationReferantDataRepository = new DeclarationReferantDataRepository(context);
+                    declarationReferantDataRepository.SubmitChanges();
+                    logData = $"entityPM.CustomFileNo={entityPM.CustomFileNo}, referant.NewFile={referant.NewFile}, after update";
+                    LogitudeSettings.HandleLogMe("Referant update " + logData, false, "referant.NewFile", stopLogAt);
+                }
+            }*/
+            //var mySend2MasofIfNeededService = new Send2MasofIfNeededService();
+            //mySend2MasofIfNeededService.Send2Masof(entityPM, CourierStorageSiteChanged, GetDBEntity(entityPM.Id, entityPM.Tenant));
         }
 
 
-        private void UpdateNotification(DeclarationPM dirtyDeclarationPM, DeclarationPM dbEntity)
+        private void UpdateNotification(DeclarationPM dirtyDeclarationPM) // moran 2.9.14 - Task 7086 -->
         {
             if (dirtyDeclarationPM.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Update)
             {
@@ -1391,18 +1849,20 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
             string loggingUserId = AuthenticationUtil.ResolveUserId(dirtyDeclarationPM.Tenant);
 
+            DeclarationPM dbOccDeclarationPM = GetDBEntity(dirtyDeclarationPM.Id, dirtyDeclarationPM.Tenant);
+
             var eventContextTagModel = dirtyDeclarationPM.CurrentContextTag as EventContextTagModel;
             if (eventContextTagModel != null)
             {
                 switch (eventContextTagModel.CallProccessID)
                 {
                     case EventContextTagModel.ProccessEnum.DF_NG_5018_MSG14004_ImportDeclarationCancellation:
-                    case EventContextTagModel.ProccessEnum.DE_NG_5107_MSG10_AcceptanceOrRejectionMessageResponseService:
+                    case EventContextTagModel.ProccessEnum.DE_NG_5107_MSG10_AcceptanceOrRejectionMessageResponseService: // moran 2.11.14 - Task 8597
                     case EventContextTagModel.ProccessEnum.DF_NG_5117_ImportDeclerationAmendmentReplyResponseService:
                         {
                             if (!string.IsNullOrWhiteSpace(eventContextTagModel.EventCode))
                             {
-                                DoUpdateNotification(dirtyDeclarationPM, loggingUserId, eventContextTagModel.EventCode); 
+                                DoUpdateNotification(dirtyDeclarationPM, loggingUserId, eventContextTagModel.EventCode); // moran 11.8.14 - Task 7086
                             }
                         }
                         break;
@@ -1420,6 +1880,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
         }
 
+        // moran 11.8.14 - Task 7086 -->
         private void DoUpdateNotification(DeclarationPM declarationPM, string loggingUserId, string eventCode)
         {
             string notificationDefinitionCode = "";
@@ -1634,13 +2095,16 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
         protected override void CheckConcurrency(DeclarationPM entityPM, Declaration entityPOCO)
         {
+            //if (!entityPM.ConcurrencyGUID.Equals(entityPOCO.ConcurrencyGUID) && !entityPM.NewConcurrencyGUID.Equals(entityPOCO.ConcurrencyGUID))
             if (entityPM.ConcurrencyGUID != entityPOCO.ConcurrencyGUID && entityPM.NewConcurrencyGUID != entityPOCO.ConcurrencyGUID)
             {
                 string msg = TranslateTextsClass.Translate("General.M.CantUpdateRecord", entityPM.Tenant, true);
                 throw new OptimisticConcurrencyException(msg);
             }
+
         }
 
+        //<--- Yuval Chalup 19.11.2015 TASK-17450
         public DeclarationPM GetSertByConvertedDeclarationNumber(string declarationNumber, int tenant, bool getComposition = false)
         {
             if (String.IsNullOrWhiteSpace(declarationNumber)) return null;
@@ -1696,7 +2160,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     {
                          var myCCUFILEMQueryService = new CCUFILEMQueryService(amitalContext);
 
-                        myCCUFILEM = myCCUFILEMQueryService.GetCCUFILEMByRESHIMONNO(reshimonNumber,tenant);
+                        myCCUFILEM = myCCUFILEMQueryService.GetCCUFILEMByRESHIMONNO(reshimonNumber);
 
                         if (!setting.IsConnectedToUniFreight)
                         {
@@ -1764,6 +2228,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
             return myDeclarationPM;
         }
+        //Yuval Chalup 19.11.2015 TASK-17450 --->
 
         void SendDeclarationStatusRequest(DeclarationPM myDeclarationPM)
         {
@@ -1802,10 +2267,192 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 // throw;
             }
         }
+        //Yuval Chalup 10.12.2015 TASK-17450 --->
+
+        //<--- Yuval Chalup 17.12.2015 TASK-18939
+        public void ResetDeclarationNumber(DeclarationPM myDeclarationPM)
+        {
+            //If the Declaration exists
+            if (myDeclarationPM == null) return;
+
+            //Update ExternalDeclarationNumber
+            string externalDeclarationNumber = null;
+            int pos = myDeclarationPM.ExternalDeclarationNumber.IndexOf("-");
+            if (pos == -1)
+            {
+                externalDeclarationNumber = myDeclarationPM.ExternalDeclarationNumber + "-1";
+            }
+            else
+            {
+                if (pos + 1 >= myDeclarationPM.ExternalDeclarationNumber.Length)
+                {
+                    externalDeclarationNumber = myDeclarationPM.ExternalDeclarationNumber.Substring(0, myDeclarationPM.ExternalDeclarationNumber.Length - 1) + "-1";
+                }
+                else
+                {
+                    int after;
+                    if (int.TryParse(myDeclarationPM.ExternalDeclarationNumber.Substring(pos + 1), out after))
+                    {
+                        after++;
+                        externalDeclarationNumber = myDeclarationPM.ExternalDeclarationNumber.Substring(0, pos) + "-" + after.ToString();
+                    }
+                }
+            }
+            if (!string.IsNullOrWhiteSpace(externalDeclarationNumber))
+            {
+                myDeclarationPM.ExternalDeclarationNumber = externalDeclarationNumber;
+            }
+
+            var traceEventParams = new EventTracerArgs()
+            {
+                EntityId = myDeclarationPM.Id,
+                ObjectTableName = "Customs.Declaration",
+                Tenant = myDeclarationPM.Tenant,
+                UserId = AuthenticationUtil.ResolveUserId(myDeclarationPM.Tenant),
+                EventTypeCode = "DNR",
+                Notes = "Reset Declaration Number." + Environment.NewLine + "Old DeclarationNumber: " + myDeclarationPM.DeclarationNumber + Environment.NewLine + "Old VersionId: " + myDeclarationPM.VersionId,
+            };
+
+            EventTracer.CreateTraceEvent(traceEventParams);
+
+            LogMessagingUtil.Instance.AppendLine("AmitalEventTracer.CreateTraceEvent: EventCode= " + "DNR" + "CustomFileNo= " + myDeclarationPM.CustomFileNo + "  ");
+
+            myDeclarationPM.DeclarationNumber = null;
+            myDeclarationPM.VersionId = null;
+            myDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
+
+            return;
+        }
+        //Yuval Chalup 17.12.2015 TASK-18939 --->
+        //Yuval Chalup 17.12.2015 TASK-18939 --->
+
+        public bool CopyDeclaration_test(string fromDeclarationId, int tenant)
+        {
+            List<string> ids = new List<string>();
+            ICustomContext context = MainContext as CustomContext;
+
+            ids.Add(fromDeclarationId);
+
+            DeclarationQueryService declarationQueryService = new DeclarationQueryService(tenant);
+
+            List<DeclarationPM> declarationPMs = declarationQueryService.GetDeclarationsByIds(ids, tenant);
+
+            DeclarationPM fromDeclaration = declarationPMs.Where(d => d.Id == fromDeclarationId).FirstOrDefault();
+
+            DeclarationPM newDeclaration = new DeclarationPM();
+            newDeclaration = fromDeclaration;
+            newDeclaration.ChangeSetOp = ChangeSetOperation.Insert;
+
+            foreach (var consignment in newDeclaration.Consignments)
+            {
+                consignment.ChangeSetOp = ChangeSetOperation.Insert;
+                foreach (var package in consignment.ConsignmentPackages)
+                {
+                    package.ChangeSetOp = ChangeSetOperation.Insert;
+
+                    foreach (var consignmentPackDangers in package.ConsignmentPackDangers)
+                    {
+                        consignmentPackDangers.ChangeSetOp = ChangeSetOperation.Insert;
+                    }
+
+
+                }
+
+
+            }
+
+
+            foreach (var dangerContact in newDeclaration.DecDangersContacts)
+            {
+                dangerContact.ChangeSetOp = ChangeSetOperation.Insert;
+            }
+
+            newDeclaration.SupplierInvoices = null;
+
+
+            DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(context, new Dictionary<string, IContext>(), tenant);
+
+
+            declarationUpdateService.Update(newDeclaration, true);
+
+
+            declarationPMs = declarationQueryService.GetDeclarationsByIds(ids, tenant);
+
+            newDeclaration = declarationPMs.Where(d => d.Id == fromDeclarationId).FirstOrDefault();
+
+            foreach (var invoice in newDeclaration.SupplierInvoices)
+            {
+                invoice.ChangeSetOp = ChangeSetOperation.Insert;
+                foreach (var item in invoice.SupplierInvoiceItems)
+                {
+                    item.ChangeSetOp = ChangeSetOperation.Insert;
+                    foreach (var supplierInvioceItemCertificats in item.SupplierInvioceItemCertificats)
+                    {
+                        supplierInvioceItemCertificats.ChangeSetOp = ChangeSetOperation.Insert;
+                    }
+
+
+                    foreach (var supplierInvoiceItemLevies in item.SupplierInvoiceItemLevies)
+                    {
+                        supplierInvoiceItemLevies.ChangeSetOp = ChangeSetOperation.Insert;
+                    }
+
+                    foreach (var supplierInvoiceItemModVehicles in item.SupplierInvoiceItemModVehicles)
+                    {
+                        supplierInvoiceItemModVehicles.ChangeSetOp = ChangeSetOperation.Insert;
+                    }
+
+                    foreach (var supplierInvoiceItemProcesTypes in item.SupplierInvoiceItemProcesTypes)
+                    {
+                        supplierInvoiceItemProcesTypes.ChangeSetOp = ChangeSetOperation.Insert;
+                    }
+
+                    foreach (var supplierInvoiceItemsConDeclars in item.SupplierInvoiceItemsConDeclars)
+                    {
+                        supplierInvoiceItemsConDeclars.ChangeSetOp = ChangeSetOperation.Insert;
+                    }
+
+                    foreach (var supplierInvoiceItemsDescripts in item.SupplierInvoiceItemsDescripts)
+                    {
+                        supplierInvoiceItemsDescripts.ChangeSetOp = ChangeSetOperation.Insert;
+                    }
+
+                    foreach (var supplierInvoiceItemsMods in item.SupplierInvoiceItemsMods)
+                    {
+                        supplierInvoiceItemsMods.ChangeSetOp = ChangeSetOperation.Insert;
+                    }
+
+                    foreach (var supplierInvoiceItemsProdIdents in item.SupplierInvoiceItemsProdIdents)
+                    {
+                        supplierInvoiceItemsProdIdents.ChangeSetOp = ChangeSetOperation.Insert;
+                    }
+
+                    foreach (var supplierInvoiceItemsSerialNums in item.SupplierInvoiceItemsSerialNums)
+                    {
+                        supplierInvoiceItemsSerialNums.ChangeSetOp = ChangeSetOperation.Insert;
+                    }
+
+                    foreach (var supplierInvoiceItemTaxes in item.SupplierInvoiceItemTaxes)
+                    {
+                        supplierInvoiceItemTaxes.ChangeSetOp = ChangeSetOperation.Insert;
+                    }
+
+
+                    foreach (var supplierInvoiceItemVehicles in item.SupplierInvoiceItemVehicles)
+                    {
+                        supplierInvoiceItemVehicles.ChangeSetOp = ChangeSetOperation.Insert;
+                    }
+                }
+            }
+
+            declarationUpdateService.Update(newDeclaration, true);
+
+
+            return true;
+        }
 
         public bool CopyDeclaration(string fromDeclarationId, string toDeclarationId, int tenant)
         {
-
             using (TransactionScope scope = TransactionFactory.GetTransaction())
             {
                 List<string> ids = new List<string>();
@@ -1951,253 +2598,312 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
                 if (toDeclaration.Consignments.Count > 0)
                 {
-                    var toIsExport = string.Equals(toDeclaration.Direction, "E", StringComparison.OrdinalIgnoreCase);
-                    var fromIsExport = string.Equals(fromDeclaration.Direction, "E", StringComparison.OrdinalIgnoreCase);
-
                     foreach (ConsignmentPM Consignment in fromDeclaration.Consignments)
                     {
-                        // try to match by ConsignmentNumber if both have it; otherwise by SequenceNumeric
-                        ConsignmentPM consignmentPM = toDeclaration.Consignments
-                            .FirstOrDefault(d =>
-                                (d.ConsignmentNumber != null && Consignment.ConsignmentNumber != null && d.ConsignmentNumber == Consignment.ConsignmentNumber)
-                                || (d.ConsignmentNumber == null && Consignment.ConsignmentNumber == null && d.SequenceNumeric == Consignment.SequenceNumeric));
+
+
+                        ConsignmentPM consignmentPM = toDeclaration.Consignments.Where(d => d.SequenceNumeric == Consignment.SequenceNumeric).FirstOrDefault();
 
                         if (consignmentPM != null)
                         {
-                            // ---------- COMMON (direction-agnostic) ----------
+                            if (toDeclaration.Direction == "E")
+                            {
+                                consignmentPM.ConsignmentType = Consignment.ConsignmentType;
+                            }
+
+
+
                             if (string.IsNullOrEmpty(consignmentPM.CargoTypeCode))
+                            {
                                 consignmentPM.CargoTypeCode = Consignment.CargoTypeCode;
 
+                            }
+
                             if (string.IsNullOrEmpty(consignmentPM.CargoTypeName))
+                            {
                                 consignmentPM.CargoTypeName = Consignment.CargoTypeName;
 
+                            }
+
+
+                            if (string.IsNullOrEmpty(consignmentPM.ConsignmentPackagesActiveIds))
+                            {
+                                consignmentPM.ConsignmentPackagesActiveIds = Consignment.ConsignmentPackagesActiveIds;
+
+                            }
+
+                            if (string.IsNullOrEmpty(consignmentPM.LoadingPortCode))
+                            {
+                                consignmentPM.LoadingPortCode = Consignment.LoadingPortCode;
+
+                            }
+
                             if (consignmentPM.ManifestDate == null)
+                            {
                                 consignmentPM.ManifestDate = Consignment.ManifestDate;
 
+                            }
+
                             if (string.IsNullOrEmpty(consignmentPM.ManifestNumber))
+                            {
                                 consignmentPM.ManifestNumber = Consignment.ManifestNumber;
 
+                            }
+
+
                             if (string.IsNullOrEmpty(consignmentPM.OriginCountryCode))
+                            {
                                 consignmentPM.OriginCountryCode = Consignment.OriginCountryCode;
 
+                            }
+
                             if (string.IsNullOrEmpty(consignmentPM.OriginCountryName))
+                            {
                                 consignmentPM.OriginCountryName = Consignment.OriginCountryName;
 
+                            }
+                            if (string.IsNullOrEmpty(consignmentPM.ReceiverWarehouseCode))
+                            {
+                                consignmentPM.ReceiverWarehouseCode = Consignment.ReceiverWarehouseCode;
+
+                            }
+
+                            if (string.IsNullOrEmpty(consignmentPM.ReceiverWarehouseName))
+                            {
+                                consignmentPM.ReceiverWarehouseName = Consignment.ReceiverWarehouseName;
+
+                            }
+
                             if (string.IsNullOrEmpty(consignmentPM.SecondCargoID))
+                            {
                                 consignmentPM.SecondCargoID = Consignment.SecondCargoID;
 
+                            }
+
+                            if (string.IsNullOrEmpty(consignmentPM.StorageSiteCode))
+                            {
+                                consignmentPM.StorageSiteCode = Consignment.StorageSiteCode;
+
+                            }
+
+                            if (string.IsNullOrEmpty(consignmentPM.StorageSiteName))
+                            {
+                                consignmentPM.StorageSiteName = Consignment.StorageSiteName;
+
+                            }
+
+                            if (string.IsNullOrEmpty(consignmentPM.IsLastReleaseFromWarehous))
+                            {
+                                consignmentPM.IsLastReleaseFromWarehous = Consignment.IsLastReleaseFromWarehous;
+
+                            }
+
                             if (string.IsNullOrEmpty(consignmentPM.ThirdCargoID))
+                            {
                                 consignmentPM.ThirdCargoID = Consignment.ThirdCargoID;
 
+                            }
+
+
                             if (consignmentPM.UnloadDate == null)
+                            {
                                 consignmentPM.UnloadDate = Consignment.UnloadDate;
 
+                            }
+
+                            if (string.IsNullOrEmpty(consignmentPM.UnloadPortCode))
+                            {
+                                consignmentPM.UnloadPortCode = Consignment.UnloadPortCode;
+
+                            }
+
+                            if (string.IsNullOrEmpty(consignmentPM.UnloadPortName))
+                            {
+                                consignmentPM.UnloadPortName = Consignment.UnloadPortName;
+
+                            }
+
                             if (string.IsNullOrEmpty(consignmentPM.CargoDescription))
+                            {
                                 consignmentPM.CargoDescription = Consignment.CargoDescription;
 
-                            if (string.IsNullOrEmpty(consignmentPM.FinalDestinationPortCode))
-                                consignmentPM.FinalDestinationPortCode = Consignment.FinalDestinationPortCode;
-                            if (string.IsNullOrEmpty(consignmentPM.DeliverySiteCode))
-                               consignmentPM.DeliverySiteCode = Consignment.DeliverySiteCode;
-                            if (string.IsNullOrEmpty(consignmentPM.StorageSiteCode))
-                                consignmentPM.StorageSiteCode = Consignment.StorageSiteCode;
+                            }
+
+                            if (string.IsNullOrEmpty(consignmentPM.ExportLoadingPortCode))
+                            {
+                                consignmentPM.ExportLoadingPortCode = Consignment.ExportLoadingPortCode;
+
+                            }
+
+                            if (string.IsNullOrEmpty(consignmentPM.ExportRecieverWareHouseCode))
+                            {
+                                consignmentPM.ExportRecieverWareHouseCode = Consignment.ExportRecieverWareHouseCode;
+
+                            }
+
+                            if (string.IsNullOrEmpty(consignmentPM.ExportUnloadingPortCode))
+                            {
+                                consignmentPM.ExportUnloadingPortCode = Consignment.ExportUnloadingPortCode;
+
+                            }
 
                             consignmentPM.IsDangerousGoods = Consignment.IsDangerousGoods;
 
-                            // ---------- DIRECTION-SPECIFIC (NO cross-copy) ----------
-                            if (toIsExport)
+
+
+                            if (string.IsNullOrEmpty(consignmentPM.FinalDestinationPortCode))
                             {
-                                consignmentPM.ConsignmentType = Consignment.ConsignmentType; // you already had this for export
+                                consignmentPM.FinalDestinationPortCode = Consignment.FinalDestinationPortCode;
 
-                                if (string.IsNullOrEmpty(consignmentPM.ExportLoadingPortCode))
-                                    consignmentPM.ExportLoadingPortCode = fromIsExport ? Consignment.ExportLoadingPortCode : Consignment.LoadingPortCode;
-
-                                if (string.IsNullOrEmpty(consignmentPM.ExportUnloadingPortCode))
-                                    consignmentPM.ExportUnloadingPortCode = fromIsExport ? Consignment.ExportUnloadingPortCode : Consignment.UnloadPortCode;
-
-                                if (string.IsNullOrEmpty(consignmentPM.ExportRecieverWareHouseCode))
-                                    consignmentPM.ExportRecieverWareHouseCode = Consignment.ExportRecieverWareHouseCode ?? Consignment.ReceiverWarehouseCode;
                             }
-                            else
-                            {
-                                if (string.IsNullOrEmpty(consignmentPM.LoadingPortCode))
-                                    consignmentPM.LoadingPortCode = fromIsExport ? Consignment.ExportLoadingPortCode : Consignment.LoadingPortCode;
 
-                                if (string.IsNullOrEmpty(consignmentPM.UnloadPortCode))
-                                    consignmentPM.UnloadPortCode = fromIsExport ? Consignment.ExportUnloadingPortCode : Consignment.UnloadPortCode;
-
-                                if (string.IsNullOrEmpty(consignmentPM.UnloadPortName))
-                                    consignmentPM.UnloadPortName = Consignment.UnloadPortName;
-
-                                if (string.IsNullOrEmpty(consignmentPM.ReceiverWarehouseCode))
-                                    consignmentPM.ReceiverWarehouseCode = Consignment.ReceiverWarehouseCode ?? Consignment.ExportRecieverWareHouseCode;
-
-                                if (string.IsNullOrEmpty(consignmentPM.ReceiverWarehouseName))
-                                    consignmentPM.ReceiverWarehouseName = Consignment.ReceiverWarehouseName;
-
-                                if (string.IsNullOrEmpty(consignmentPM.StorageSiteCode))
-                                    consignmentPM.StorageSiteCode = Consignment.StorageSiteCode;
-
-                                if (string.IsNullOrEmpty(consignmentPM.StorageSiteName))
-                                    consignmentPM.StorageSiteName = Consignment.StorageSiteName;
-
-                                if (string.IsNullOrEmpty(consignmentPM.IsLastReleaseFromWarehous))
-                                    consignmentPM.IsLastReleaseFromWarehous = Consignment.IsLastReleaseFromWarehous;
-                            }
 
                             consignmentPM.ChangeSetOp = ChangeSetOperation.Update;
                         }
+
                         else
                         {
-                            // safe increment (handles null Max)
-                            int? number = (toDeclaration.Consignments.Max(d => d.ConsignmentNumber) ?? 0) + 1;
 
+                            int? number = toDeclaration.Consignments.Max(d => d.ConsignmentNumber);
+                            number += 1;
                             consignmentPM = new ConsignmentPM()
                             {
-                                DeclarationId = toDeclaration.Id,
-                                Tenant = Consignment.Tenant,
-                                ConsignmentNumber = number,
-                                SequenceNumeric = Consignment.SequenceNumeric,
-
-                                // ---------- COMMON ----------
+                                ConsignmentType = Consignment.ConsignmentType,
                                 CargoDescription = Consignment.CargoDescription,
                                 CargoTypeCode = Consignment.CargoTypeCode,
                                 CargoTypeName = Consignment.CargoTypeName,
                                 ConsignmentInternalTransitionLastLineNumber = Consignment.ConsignmentInternalTransitionLastLineNumber,
+                                ConsignmentNumber = number,
                                 ConsignmentPackagesActiveIds = Consignment.ConsignmentPackagesActiveIds,
+                                DeclarationId = toDeclaration.Id,
                                 ConsignmentPackagLastLineNumber = Consignment.ConsignmentPackagLastLineNumber,
+                                IsLastReleaseFromWarehous = Consignment.IsLastReleaseFromWarehous,
+                                LoadingPortCode = Consignment.LoadingPortCode,
                                 ManifestDate = Consignment.ManifestDate,
                                 ManifestNumber = Consignment.ManifestNumber,
                                 OriginCountryCode = Consignment.OriginCountryCode,
                                 OriginCountryName = Consignment.OriginCountryName,
+                                ReceiverWarehouseCode = Consignment.ReceiverWarehouseCode,
+                                ReceiverWarehouseName = Consignment.ReceiverWarehouseName,
                                 SecondCargoID = Consignment.SecondCargoID,
+                                SequenceNumeric = Consignment.SequenceNumeric,
+                                StorageSiteCode = Consignment.StorageSiteCode,
+                                StorageSiteName = Consignment.StorageSiteName,
+                                Tenant = Consignment.Tenant,
                                 ThirdCargoID = Consignment.ThirdCargoID,
                                 UnloadDate = Consignment.UnloadDate,
+                                UnloadPortCode = Consignment.UnloadPortCode,
+                                UnloadPortName = Consignment.UnloadPortName,
+                                ExportLoadingPortCode = Consignment.ExportLoadingPortCode,
+                                ExportRecieverWareHouseCode = Consignment.ExportRecieverWareHouseCode,
+                                ExportUnloadingPortCode = Consignment.ExportUnloadingPortCode,
                                 IsDangerousGoods = Consignment.IsDangerousGoods,
                                 FinalDestinationPortCode = Consignment.FinalDestinationPortCode,
-
-                                // ---------- DIRECTION-SPECIFIC ----------
-                                // export
-                                ExportLoadingPortCode = toIsExport ? (fromIsExport ? Consignment.ExportLoadingPortCode : Consignment.LoadingPortCode) : null,
-                                ExportUnloadingPortCode = toIsExport ? (fromIsExport ? Consignment.ExportUnloadingPortCode : Consignment.UnloadPortCode) : null,
-                                ExportRecieverWareHouseCode = toIsExport ? (Consignment.ExportRecieverWareHouseCode ?? Consignment.ReceiverWarehouseCode) : null,
-                                // import
-                                LoadingPortCode = toIsExport ? null : (fromIsExport ? Consignment.ExportLoadingPortCode : Consignment.LoadingPortCode),
-                                UnloadPortCode = toIsExport ? null : (fromIsExport ? Consignment.ExportUnloadingPortCode : Consignment.UnloadPortCode),
-                                UnloadPortName = toIsExport ? null : Consignment.UnloadPortName,
-                                ReceiverWarehouseCode = toIsExport ? null : (Consignment.ReceiverWarehouseCode ?? Consignment.ExportRecieverWareHouseCode),
-                                ReceiverWarehouseName = toIsExport ? null : Consignment.ReceiverWarehouseName,
-                                StorageSiteCode = toIsExport ? null : Consignment.StorageSiteCode,
-                                StorageSiteName = toIsExport ? null : Consignment.StorageSiteName,
-                                IsLastReleaseFromWarehous = toIsExport ? null : Consignment.IsLastReleaseFromWarehous,
-
-                                // export-only extra fields in your model (leave null on import)
-                                CargoTypeCodeForExport = toIsExport ? (Consignment.CargoTypeCodeForExport ?? Consignment.CargoTypeCode) : null,
-                                ExportStoragesId = toIsExport ? Consignment.ExportStoragesId : null,
-                                ExportContainerizationID = toIsExport ? Consignment.ExportContainerizationID : null,
-
-                                // export: you previously copied ConsignmentType only when E
-                                ConsignmentType = toIsExport ? Consignment.ConsignmentType : null,
 
                                 ChangeSetOp = ChangeSetOperation.Insert,
                             };
 
                             toDeclaration.Consignments.Add(consignmentPM);
-
-                            var declarationConsignment = new DeclarationConsignmentPM()
+                            DeclarationConsignmentPM declarationConsignment = new DeclarationConsignmentPM()
                             {
                                 DeclarationId = toDeclaration.Id,
                                 ManifestNumber = Consignment.ManifestNumber,
                                 SequenceNumeric = Consignment.SequenceNumeric,
                                 ConsignmentNumber = number,
+                                //ChangeSetOp = ChangeSetOperation.Insert,
+
                             };
+
                             toDeclaration.DeclarationConsignments.Add(declarationConsignment);
+
                         }
 
-                        // ---------- PACKAGES (bind to TARGET consignment; upsert by SequenceNumeric) ----------
+
                         if (consignmentPM.ConsignmentPackages.Count == 0)
                         {
                             foreach (ConsignmentPackagePM package in Consignment.ConsignmentPackages)
                             {
-                                var packagePM = new ConsignmentPackagePM()
+                                ConsignmentPackagePM packagePM = new ConsignmentPackagePM()
                                 {
-                                    ConsignmentNumber = consignmentPM.ConsignmentNumber, // <— target number
+                                    ConsignmentNumber = package.ConsignmentNumber,
                                     DeclarationId = toDeclaration.Id,
-                                    Tenant = consignmentPM.Tenant,
-                                    SequenceNumeric = package.SequenceNumeric,
+                                    GrossMassMeasure = package.GrossMassMeasure,
                                     LineNumber = package.LineNumber,
-                                    PackageTypeCode = package.PackageTypeCode,
-                                    PackageTypeName = package.PackageTypeName,
+                                    MarksNumbers = package.MarksNumbers,
                                     PackageMeasureQualifierCode = package.PackageMeasureQualifierCode,
                                     PackageMeasureQualifierName = package.PackageMeasureQualifierName,
                                     PackageQuantity = package.PackageQuantity,
-                                    GrossMassMeasure = package.GrossMassMeasure,
-                                    MarksNumbers = package.MarksNumbers,
+                                    PackageTypeCode = package.PackageTypeCode,
+                                    PackageTypeName = package.PackageTypeName,
+                                    Tenant = package.Tenant,
+                                    SequenceNumeric = package.SequenceNumeric,
                                     ChangeSetOp = ChangeSetOperation.Insert,
+
+
                                 };
                                 consignmentPM.ConsignmentPackages.Add(packagePM);
                             }
+
+
+
                         }
-                        else
+
+
+                        else if (consignmentPM.ConsignmentPackages.Count > 0)
                         {
                             foreach (ConsignmentPackagePM package in Consignment.ConsignmentPackages)
                             {
-                                var packagePM = consignmentPM.ConsignmentPackages
-                                    .FirstOrDefault(d => d.SequenceNumeric == package.SequenceNumeric);
 
-                                if (packagePM == null)
+                                ConsignmentPackagePM packagePM = consignmentPM.ConsignmentPackages.Where(d => d.PackageQuantity == null && d.GrossMassMeasure == null && d.SequenceNumeric == package.SequenceNumeric).FirstOrDefault();
+                                if (packagePM != null)
                                 {
-                                    packagePM = new ConsignmentPackagePM()
-                                    {
-                                        ConsignmentNumber = consignmentPM.ConsignmentNumber, // <— target number
-                                        DeclarationId = toDeclaration.Id,
-                                        Tenant = consignmentPM.Tenant,
-                                        SequenceNumeric = package.SequenceNumeric,
-                                        LineNumber = package.LineNumber,
-                                        PackageTypeCode = package.PackageTypeCode,
-                                        PackageTypeName = package.PackageTypeName,
-                                        PackageMeasureQualifierCode = package.PackageMeasureQualifierCode,
-                                        PackageMeasureQualifierName = package.PackageMeasureQualifierName,
-                                        PackageQuantity = package.PackageQuantity,
-                                        GrossMassMeasure = package.GrossMassMeasure,
-                                        MarksNumbers = package.MarksNumbers,
-                                        ChangeSetOp = ChangeSetOperation.Insert,
-                                    };
-                                    consignmentPM.ConsignmentPackages.Add(packagePM);
-                                }
-                                else
-                                {
-                                    packagePM.PackageTypeCode = package.PackageTypeCode;
-                                    packagePM.PackageTypeName = package.PackageTypeName;
+
+                                    packagePM.GrossMassMeasure = package.GrossMassMeasure;
+                                    packagePM.MarksNumbers = package.MarksNumbers;
                                     packagePM.PackageMeasureQualifierCode = package.PackageMeasureQualifierCode;
                                     packagePM.PackageMeasureQualifierName = package.PackageMeasureQualifierName;
                                     packagePM.PackageQuantity = package.PackageQuantity;
                                     packagePM.GrossMassMeasure = package.GrossMassMeasure;
-                                    packagePM.MarksNumbers = package.MarksNumbers;
+                                    packagePM.PackageTypeCode = package.PackageTypeCode;
+                                    packagePM.PackageTypeName = package.PackageTypeName;
                                     packagePM.ChangeSetOp = ChangeSetOperation.Update;
+
                                 }
+
                             }
+
+
                         }
 
-                        // ---------- INTERNAL TRANSITIONS (bind to TARGET consignment) ----------
+
+
+
                         if (consignmentPM.ConsignmentInternalTransitions.Count == 0)
                         {
                             foreach (ConsignmentInternalTransitionPM transition in Consignment.ConsignmentInternalTransitions)
                             {
-                                var transitionPM = new ConsignmentInternalTransitionPM()
+                                ConsignmentInternalTransitionPM transitionPM = new ConsignmentInternalTransitionPM()
                                 {
-                                    ConsignmentNumber = consignmentPM.ConsignmentNumber, // <— target number
+                                    ConsignmentNumber = transition.ConsignmentNumber,
                                     DeclarationId = toDeclaration.Id,
-                                    Tenant = consignmentPM.Tenant,
                                     LineNumber = transition.LineNumber,
+                                    Tenant = transition.Tenant,
                                     SiteCode = transition.SiteCode,
+
                                     ChangeSetOp = ChangeSetOperation.Insert,
+
                                 };
                                 consignmentPM.ConsignmentInternalTransitions.Add(transitionPM);
                             }
+
+
+
                         }
+
+
                     }
                 }
+
 
 
 
@@ -2641,6 +3347,175 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                             invoiceItem.SupplierInvoiceItemsSerialNums.Add(ItemsSerialNumPM);
                         }
 
+                        //
+
+
+                        //item.SupplierInvioceItemCertificats = supplierInvioceItemCertificatQueryService.GetMulti(new SupplierInvoiceItemKeys() { DeclarationId = fromDeclarationId, CounterKey = invoicePM.InvoiceCounterKey, LineNumber = item.LineNumber }, true, true); 
+
+                        //foreach (SupplierInvioceItemCertificatPM certificate in item.SupplierInvioceItemCertificats)
+                        //{
+                        //    SupplierInvioceItemCertificatPM certificatePM = new SupplierInvioceItemCertificatPM()
+                        //    {
+                        //        DeclarationId = toDeclaration.Id,
+                        //        InvoiceCounterKey = certificate.InvoiceCounterKey,
+                        //        LineNumber = certificate.LineNumber,
+                        //        Tenant = certificate.Tenant,
+                        //        ItemCertificateCounterKey = certificate.ItemCertificateCounterKey,
+                        //        CertificateNumber = certificate.CertificateNumber,
+                        //        AttachmentTypeCode = certificate.AttachmentTypeCode,
+                        //        AttachmentTypeName = certificate.AttachmentTypeName,
+                        //        CustomsAttachmentID = certificate.CustomsAttachmentID,
+                        //        CertificateExemptionTypeCode = certificate.CertificateExemptionTypeCode,
+                        //        CertificateExemptionTypeName = certificate.CertificateExemptionTypeName,
+                        //        ReqConfirmationTypeCode = certificate.ReqConfirmationTypeCode,
+                        //        ReqConfirmationTypeName = certificate.ReqConfirmationTypeName,
+                        //        ResConfirmationTypeCode = certificate.ResConfirmationTypeCode,
+                        //        ResConfirmationTypeName = certificate.ResConfirmationTypeName,
+                        //        ChangeSetOp = ChangeSetOperation.Insert,
+
+
+                        //    };
+
+                        //    invoiceItem.SupplierInvioceItemCertificats.Add(certificatePM);
+                        //}
+
+
+                        //foreach (SupplierInvoiceItemsConDeclarPM connectedDeclaration in item.SupplierInvoiceItemsConDeclars)
+                        //{
+                        //    SupplierInvoiceItemsConDeclarPM connectedDeclarationPM = new SupplierInvoiceItemsConDeclarPM()
+                        //    {
+                        //        DeclarationId = toDeclaration.Id,
+                        //        DeclarationNumber = toDeclaration.DeclarationNumber,
+                        //        DeclarationTypeCode = connectedDeclaration.DeclarationTypeCode,
+                        //        DeclarationTypeName = connectedDeclaration.DeclarationTypeName,
+                        //        InvoiceNumber = connectedDeclaration.InvoiceNumber,
+                        //        Quantity = connectedDeclaration.Quantity,
+                        //        Tenant = toDeclaration.Tenant,
+                        //        InvoiceCounterKey = connectedDeclaration.InvoiceCounterKey,
+                        //        InvoiceItemLineNumber = connectedDeclaration.InvoiceItemLineNumber,
+                        //        ItemSequence = connectedDeclaration.ItemSequence,
+                        //        LineNumber = connectedDeclaration.LineNumber
+                        //    };
+
+                        //    invoiceItem.SupplierInvoiceItemsConDeclars.Add(connectedDeclarationPM);
+
+                        //}
+
+                        //foreach (SupplierInvoiceItemsDescriptPM desc in item.SupplierInvoiceItemsDescripts)
+                        //{
+                        //    SupplierInvoiceItemsDescriptPM descreption = new SupplierInvoiceItemsDescriptPM()
+                        //        {
+                        //            DeclarationId = toDeclaration.Id,
+                        //            TypeCode = desc.TypeCode,
+                        //            TypeName = desc.TypeName,
+                        //            Description = desc.Description,
+                        //            InvoiceCounterKey = desc.InvoiceCounterKey,
+                        //            InvoiceItemLineNumber = desc.InvoiceItemLineNumber,
+                        //            LineNumber = desc.LineNumber,
+                        //            Tenant = desc.Tenant
+                        //        };
+
+                        //    invoiceItem.SupplierInvoiceItemsDescripts.Add(descreption);
+                        //}
+
+                        //foreach (SupplierInvoiceItemsLevyPM levy in item.SupplierInvoiceItemLevies)
+                        //{
+                        //    SupplierInvoiceItemsLevyPM levyPM = new SupplierInvoiceItemsLevyPM()
+                        //    {
+                        //        DeclarationId = toDeclaration.Id,
+                        //        Tenant = toDeclaration.Tenant,
+                        //        TradeLevyExamptCode = levy.TradeLevyExamptCode,
+                        //        TradeLevyExamptName = levy.TradeLevyExamptName,
+                        //        TradeLevyNumber = levy.TradeLevyNumber,
+                        //        InvoiceCounterKey = levy.InvoiceCounterKey,
+                        //        InvoiceItemLineNumber = levy.InvoiceItemLineNumber,
+                        //        LineNumber = levy.LineNumber
+
+                        //    };
+
+                        //    invoiceItem.SupplierInvoiceItemLevies.Add(levyPM);
+                        //}
+
+                        //foreach (SupplierInvoiceItemsModPM mod in item.SupplierInvoiceItemsMods)
+                        //{
+                        //    SupplierInvoiceItemsModPM modPM = new SupplierInvoiceItemsModPM()
+                        //    {
+                        //        DeclarationId = toDeclaration.Id,
+                        //        Tenant = toDeclaration.Tenant,
+                        //        Amount = mod.Amount,
+                        //        CurrencyTypeCode = mod.CurrencyTypeCode,
+                        //        CurrencyTypeName = mod.CurrencyTypeName,
+                        //        TypeCode = mod.TypeCode,
+                        //        TypeName = mod.TypeName,
+                        //        InvoiceCounterKey = mod.InvoiceCounterKey,
+                        //        LineNumber = mod.LineNumber,
+                        //        ModificationCounterKey = mod.ModificationCounterKey
+
+
+
+                        //    };
+
+                        //    invoiceItem.SupplierInvoiceItemsMods.Add(modPM);
+                        //}
+
+                        //foreach (SupplierInvoiceItemsProdIdentPM productIdent in item.SupplierInvoiceItemsProdIdents)
+                        //{
+                        //    SupplierInvoiceItemsProdIdentPM productIdentPM = new SupplierInvoiceItemsProdIdentPM()
+                        //    {
+                        //        DeclarationId = toDeclaration.Id,
+                        //        Tenant = toDeclaration.Tenant,
+                        //        Identification = productIdent.Identification,
+                        //        TypeCode = productIdent.TypeCode,
+                        //        TypeName = productIdent.TypeName,
+                        //        InvoiceCounterKey = productIdent.InvoiceCounterKey,
+                        //        LineNumber = productIdent.LineNumber,
+                        //        InvoiceItemLineNumber = productIdent.InvoiceItemLineNumber
+
+                        //    };
+
+                        //    invoiceItem.SupplierInvoiceItemsProdIdents.Add(productIdentPM);
+                        //}
+
+                        //foreach (SupplierInvoiceItemsSerialNumPM serialNum in item.SupplierInvoiceItemsSerialNums)
+                        //{
+                        //    SupplierInvoiceItemsSerialNumPM serialNumPM = new SupplierInvoiceItemsSerialNumPM()
+                        //    {
+                        //        DeclarationId = toDeclaration.Id,
+                        //        Tenant = toDeclaration.Tenant,
+                        //        SerialNumber = serialNum.SerialNumber,
+
+                        //        TypeCode = serialNum.TypeCode,
+                        //        TypeName = serialNum.TypeName,
+                        //        InvoiceCounterKey = serialNum.InvoiceCounterKey,
+                        //        LineNumber = serialNum.LineNumber,
+                        //        InvoiceItemLineNumber = serialNum.InvoiceItemLineNumber
+
+                        //    };
+
+                        //    invoiceItem.SupplierInvoiceItemsSerialNums.Add(serialNumPM);
+                        //}
+
+                        //foreach (SupplierInvoiceItemVehiclePM vehicle in item.SupplierInvoiceItemVehicles)
+                        //{
+                        //    SupplierInvoiceItemVehiclePM vehiclePM = new SupplierInvoiceItemVehiclePM()
+                        //    {
+                        //        DeclarationId = toDeclaration.Id,
+                        //        Tenant = toDeclaration.Tenant,
+                        //        RichbitFileNumber = vehicle.RichbitFileNumber,
+                        //        RichbitFileStatus = vehicle.RichbitFileStatus,
+                        //        VehicleChassisNumber = vehicle.VehicleChassisNumber,
+                        //        VehicleTypeCode = vehicle.VehicleTypeCode,
+                        //        VehicleId = vehicle.VehicleId,
+                        //        InvoiceCounterKey = vehicle.InvoiceCounterKey,
+                        //        LineNumber = vehicle.LineNumber,
+                        //        InvoiceItemLineNumber = vehicle.InvoiceItemLineNumber,
+
+                        //        SequenceNumeric = vehicle.SequenceNumeric,
+                        //    };
+
+                        //    invoiceItem.SupplierInvoiceItemVehicles.Add(vehiclePM);
+                        //}
+
 
                         invoicePM.SupplierInvoiceItems.Add(invoiceItem);
 
@@ -2651,9 +3526,30 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
                     SupplierInvoiceUpdateService invoiceUpdateService = new SupplierInvoiceUpdateService(context, new Dictionary<string, IContext>(), tenant);
                     invoiceUpdateService.Update(invoicePM, true);
+                    //     CustomsStoredProcedures.CopySupplierInvoiceItems(fromDeclarationId, toDeclarationId,invoicePM.InvoiceCounterKey,  tenant);
                 }
+
+                //CustomsStoredProcedures.CopySupplierInvoiceItems(fromDeclarationId, toDeclarationId, tenant);
+                //CustomsStoredProcedures.CopySupplierInvoiceItemsCer(fromDeclarationId, toDeclarationId, tenant);
+
+                //toDeclaration.SupplierInvoices.Add(invoicePM);
+
                 scope.Complete();
+
             }
+
+            //SaveCurrentEntityChangesEvent saveEntityChanges = currentAssemlyLocator.CurrentEditControlViewModel.eventAggregator.GetEvent<SaveCurrentEntityChangesEvent>();
+            //saveEntityChanges.Publish(new SaveCurrentEntityChangesEventArgs());
+
+            //RefreshScreenAfterReloadWithNewContextEvent RefreshScreenAfterReloadWithNewContext = currentAssemlyLocator.CurrentEditControlViewModel.eventAggregator.GetEvent<RefreshScreenAfterReloadWithNewContextEvent>();
+            //RefreshScreenAfterReloadWithNewContext.Publish(new RefreshScreenAfterReloadWithNewContextEventArgs() { ObjectTableName = "Customs.Declaration", CurrentEntity = entityPM, Context = declarationViewModel.context });
+
+            // declarationViewModel.context.SubmitChanges();
+
+            //declarationSelectionWindow.Close();
+            //declarationSelectionWindow = null;
+
+
             return true;
 
         }
@@ -2887,13 +3783,24 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             {
                 CustomContext context = this.MainContext as CustomContext;
                 InsuranceFreightUtil util = new InsuranceFreightUtil();
+                //EntityQueryServices.SupplierInvoiceQueryService invoicequeryservice = new EntityQueryServices.SupplierInvoiceQueryService(context);
                 SupplierInvoiceRepository invoiceRepository = new Data.Repsitories.SupplierInvoiceRepository(context);
+
+                //SupplierInvoiceUpdateService updateservice = new EntityUpdateServices.SupplierInvoiceUpdateService(context, new Dictionary<string, IContext>(), entityPM.Tenant);
                 List<SupplierInvoice> invoices = invoiceRepository.GetSupplierInvoicesForDeclaration(entityPM.Id, entityPM.Tenant);
                 foreach (SupplierInvoice invoice in invoices)
                 {
+
+
                     invoice.InvoiceAmountInUSD = InsuranceFreightUtil.CalcInvoiceAmountInUSD(entityPM.TaxationDateTime, invoice.InvoiceCurrencyTypeCode, invoice.InvoiceAmount.GetValueOrDefault(), invoice.Tenant);
+
+
+
                     util.CalculateFreightForInvoice(invoice, entityPM.TaxationDateTime);
+
                     invoiceRepository.SubmitChanges();
+                    //invoice.ChangeSetOp = ChangeSetOperation.Update;
+                    //updateservice.Update(invoice, true);
                 }
 
                 util.CalculateInsurance(entityPM);
@@ -2901,7 +3808,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
         }
 
-        public bool CheckIfRequiredFieldForCourierHasChanged(DeclarationPM entityPM, Declaration entityPOCO, DeclarationPM dbOccDeclarationPM)
+        public bool CheckIfRequiredFieldForCourierHasChanged(DeclarationPM entityPM, Declaration entityPOCO)
         {
             //Check Declaration fields
             if (!AreEqualIgnoringSpaces(entityPOCO.AgentId, entityPM.AgentId)  || !AreEqualIgnoringSpaces(entityPOCO.ImporterName, entityPM.ImporterName) || !AreEqualIgnoringSpaces(entityPOCO.ImporterAddress, entityPM.ImporterAddress))
@@ -2909,6 +3816,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 return true;
             }
 
+            DeclarationPM dbOccDeclarationPM = GetDBEntity(entityPM.Id, entityPM.Tenant);
             //Check SupplierInvoice fields
             if (entityPM.SupplierInvoices != null)
             {

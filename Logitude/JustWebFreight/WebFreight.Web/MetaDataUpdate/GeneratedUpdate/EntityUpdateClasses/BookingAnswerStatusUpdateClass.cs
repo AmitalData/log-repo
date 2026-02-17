@@ -23,6 +23,8 @@ using Logitude.BookingLib.Data.Repositories;
 using Logitude.BookingLib.Data.EntityPOCOs;
 using Logitude.BookingLib.BL;
 using Logitude.BookingLib.BL.CLoseTable;
+using Simplog.Global.Data.GlobalModel.Repositories;
+
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class BookingAnswerStatusUpdateClass

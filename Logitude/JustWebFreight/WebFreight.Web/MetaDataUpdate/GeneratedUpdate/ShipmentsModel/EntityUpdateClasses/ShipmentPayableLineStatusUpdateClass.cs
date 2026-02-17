@@ -68,6 +68,8 @@ using Logitude.BL.GlobalModel;
 using Logitude.Infrastructure.Data.Repsitories;
 using Logitude.Infrastructure.Data.EntityPOCOs;
 using Logitude.Infrastructure.BL;
+using Simplog.Global.Data.GlobalModel.Repositories;
+
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpdateClasses
 {
    public class ShipmentPayableLineStatusUpdateClass

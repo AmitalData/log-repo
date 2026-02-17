@@ -1,7 +1,8 @@
 ﻿using Logitude.BL.CommonDataModel.EntityLists;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; 
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,7 @@ using System.Web;
 using System.Web.Http;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.Security;
+using Logitude.BL.GlobalModel.EntityQueries;
 
 namespace WebFreight.Web.App_Code.AngularJS_App_Code.Common
 {
@@ -26,7 +28,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Common
             {
                 userId = null;
             }
-            RoleQuery roleQuery = new RoleQuery(tenant);
+            RoleQuery roleQuery = new RoleQuery();
             List<RolePM> result = roleQuery.GetRolesByUser(userId, tenant);
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }

@@ -14,7 +14,8 @@ using Logitude.BL.Security;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; 
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Global.Data.GlobalModel;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
@@ -24,6 +25,7 @@ using Simplog.Data.Helpers;
 using Logitude.BL.GlobalModel.Tools.Validating;
 using Simplog.Server.Infrastructure;
 using Logitude.Server.Tools.QueueService;
+using Logitude.BL.GlobalModel.EntityQueries;
 
 namespace Logitude.BL.CommonDataModel.Tools.EntityService
 {
@@ -48,7 +50,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         {
             this.tenant = tenant;
             this.objectContext = objectContext;
-            this.roleRepository = new RoleRepository(objectContext);
+            this.roleRepository = new RoleRepository(GlobalContext.GetContext());
             this.entityRepository = new ContactRepository(objectContext);
             this.CardContactRepository = new CardContactRepository(objectContext);
             this.contactTenantRepository = new ContactTenantRepository(objectContext);

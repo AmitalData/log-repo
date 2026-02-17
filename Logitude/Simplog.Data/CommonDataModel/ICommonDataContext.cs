@@ -42,7 +42,6 @@ namespace Simplog.Data.CommonDataModel
         IDbSet<Currency> Currencies { get; }
         IDbSet<ContactTenant> ContactTenants { get; }
         IDbSet<ContactTenantRole> ContactTenantRoles { get; }
-        IDbSet<Role> Roles { get; }
         IDbSet<PaymentTerm> PaymentTerms { get; }
         IDbSet<VatType> VatTypes { get; }
         IDbSet<Incoterm> Incoterms { get; }
@@ -71,8 +70,6 @@ namespace Simplog.Data.CommonDataModel
         IDbSet<MAWBStack> MAWBStacks { get; }
         IDbSet<DocumentTypeCopy> DocumentTypeCopies { get; }
         IDbSet<DocumentOutCopy> DocumentOutCopies { get; }
-        IDbSet<Feature> Features { get; }
-        IDbSet<RoleFeature> RoleFeatures { get; }
         IDbSet<Restriction> Restrictions { get; }
         IDbSet<VatTypePercentage> VatTypePercentages { get; }
         IDbSet<TarrifHeader> TarrifHeaders { get; }
@@ -86,10 +83,6 @@ namespace Simplog.Data.CommonDataModel
         IDbSet<Vendor> Vendors { get; }
         IDbSet<AccountingSetting> AccountingSettings { get; }
         IDbSet<AccountingSystem> AccountingSystems { get; }
-        IDbSet<FeatureType> FeatureTypes { get; }
-        IDbSet<RoleType> RoleTypes { get; }
-        IDbSet<Package> Packages { get; }
-        IDbSet<PackageFeature> PackageFeatures { get; }
         IDbSet<UserLastLogin> UserLastLogins { get; }
         IDbSet<TermsofUse> TermsofUses { get; }
         IDbSet<TermsofUseSignature> TermsofUseSignatures { get; }
@@ -131,7 +124,6 @@ namespace Simplog.Data.CommonDataModel
         IDbSet<CustomerMediatorByProduct> CustomerMediatorByProducts { get; set; }
         IDbSet<CardExternalCodeByCurrency> CardExternalCodeByCurrencies { get; set; }
         IDbSet<BusinessUnit> BusinessUnits { get; set; }
-        IDbSet<FeatureAccessLevel> FeatureAccessLevels { get; set; }
         IDbSet<EmailProvider> EmailProviders { get; }
         IDbSet<Region> Regions { get; set; }
         IDbSet<CustomerSize> CustomerSizes { get; set; }
@@ -169,8 +161,6 @@ namespace Simplog.Data.CommonDataModel
         IDbSet<AWBDescriptionOfGoods> AWBDescriptionOfGoods { get; }
         IDbSet<VatFormatType> VatFormatTypes { get; set; }
         IDbSet<LogitudeMessagesTransmissionLog> LogitudeMessagesTransmissionLogs { get; set; }
-        IDbSet<FeaturePackageType> FeaturePackageTypes { get; }
-        IDbSet<PackageConnectedPackage> PackageConnectedPackages { get; }
         IDbSet<UserLicense> UserLicenses { get; }
         IDbSet<EntityChange> EntityChanges { get; set; }
         IDbSet<Automation> Automations { get; set; }
@@ -206,7 +196,6 @@ namespace Simplog.Data.CommonDataModel
         IDbSet<PostalCode> PostalCodes { get; }
         IDbSet<ReportsTemplate> ReportsTemplates { get; set; }
         IDbSet<ReportsTemplatesVersion> ReportsTemplatesVersions { get; set; }
-        IDbSet<FeatureChange> FeatureChanges { get; set; }
         IDbSet<FilingInbox> FilingInboxes { get; set; }
         IDbSet<FilingInboxAttachment> FilingInboxAttachments { get; set; }
         IDbSet<FilingInboxAttachmentLog> FilingInboxAttachmentLogs { get; set; }

@@ -18,6 +18,7 @@ using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using WebFreight.Web.MetaDataUpdate.AddClasses;
 using WebFreight.Web.MetaDataUpdate.DetailClasses;
+using Simplog.Global.Data.GlobalModel.Repositories;
 
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
@@ -41,7 +42,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    SupportSubEntity =  false,
 			      				    ApplyGenericCustomFields =  false,
 			      				    AvailableInDocumentTypes =  false,
-			      				    IsLock =  false,
 			      				    HasHelper =  false,
 			      				    HasShortTitle =  false,
 			      				    HasFiltersMenu =  false,
@@ -80,7 +80,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    NoTS =  false,
 			      				    HasMenuButtons =  false,
 			      				    AllowedForComputingPartners =  false,
-			      				    ShowFastSearch =  false,
 			      				    CustomFieldsCount =  0,
 			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  false,
@@ -138,12 +137,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Code",
 					  						DefaultText =  "Code",
-					  						FullLocalDefaultTextBack_up =  "קוד",
-					  						FullLocalDefaultText =  "BS64:Iten15XXkyI=",
+					  						FullLocalDefaultText =  "קוד",
 					  						ListFieldLable =  "CodeListLable",
 					  						ListLableDefaultText =  "Code",
-					  						ListLocalDefaultTextBack_up =  "קוד",
-					  						ListLocalDefaultText =  "BS64:Iten15XXkyI=",
+					  						ListLocalDefaultText =  "קוד",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -206,12 +203,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "EnglishName",
 					  						DefaultText =  "English Name",
-					  						FullLocalDefaultTextBack_up =  "שם םנגלית",
-					  						FullLocalDefaultText =  "BS64:Itep150g15DXoNeS15zXmdeqIg==",
+					  						FullLocalDefaultText =  "שם אנגלית",
 					  						ListFieldLable =  "EnglishNameListLable",
 					  						ListLableDefaultText =  "English Name",
-					  						ListLocalDefaultTextBack_up =  "שם םנגלית",
-					  						ListLocalDefaultText =  "BS64:Itep150g15DXoNeS15zXmdeqIg==",
+					  						ListLocalDefaultText =  "שם אנגלית",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -274,12 +269,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "LocalName",
 					  						DefaultText =  "Local Name",
-					  						FullLocalDefaultTextBack_up =  "שם מקומי",
-					  						FullLocalDefaultText =  "BS64:Itep150g157Xp9eV157XmSI=",
+					  						FullLocalDefaultText =  "שם מקומי",
 					  						ListFieldLable =  "LocalNameListLable",
 					  						ListLableDefaultText =  "Local Name",
-					  						ListLocalDefaultTextBack_up =  "שם מקומי",
-					  						ListLocalDefaultText =  "BS64:Itep150g157Xp9eV157XmSI=",
+					  						ListLocalDefaultText =  "שם מקומי",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -405,12 +398,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Inactive",
 					  						DefaultText =  "Inactive ",
-					  						FullLocalDefaultTextBack_up =  "לם פּעיל",
-					  						FullLocalDefaultText =  "BS64:Itec15Ag16TWvNei15nXnCI=",
+					  						FullLocalDefaultText =  "לא פּעיל",
 					  						ListFieldLable =  "InactiveListLable",
 					  						ListLableDefaultText =  "Inactive",
-					  						ListLocalDefaultTextBack_up =  "לם פּעיל",
-					  						ListLocalDefaultText =  "BS64:Itec15Ag16TWvNei15nXnCI=",
+					  						ListLocalDefaultText =  "לא פּעיל",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -474,12 +465,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "PointerLevel",
 					  						DefaultText =  "PointerLevel",
-					  						FullLocalDefaultTextBack_up =  "קשור ל",
-					  						FullLocalDefaultText =  "BS64:Iten16nXldeoINecIg==",
+					  						FullLocalDefaultText =  "קשור ל",
 					  						ListFieldLable =  "PointerLevelListLable",
 					  						ListLableDefaultText =  "Pointer Level",
-					  						ListLocalDefaultTextBack_up =  "קשור ל",
-					  						ListLocalDefaultText =  "BS64:Iten16nXldeoINecIg==",
+					  						ListLocalDefaultText =  "קשור ל",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "PointerLevel",
 					  						NavigationPropertyName =  "Pointer",
@@ -544,12 +533,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AutoSetOriginalDocumentTrue",
 					  						DefaultText =  "AutoSetOriginalDocument",
-					  						FullLocalDefaultTextBack_up =  "סימון םוטומטי של מסמך מקורי",
-					  						FullLocalDefaultText =  "BS64:Iteh15nXnteV158g15DXldeY15XXnteY15kg16nXnCDXnteh157XmiDXnten15XXqNeZIg==",
+					  						FullLocalDefaultText =  "סימון אוטומטי של מסמך מקורי",
 					  						ListFieldLable =  "AutoSetOriginalDocumentTrueListLable",
 					  						ListLableDefaultText =  "Auto Set Original Document",
-					  						ListLocalDefaultTextBack_up =  "סימון םוטומטי של מסמך מקורי",
-					  						ListLocalDefaultText =  "BS64:Iteh15nXnteV158g15DXldeY15XXnteY15kg16nXnCDXnteh157XmiDXnten15XXqNeZIg==",
+					  						ListLocalDefaultText =  "סימון אוטומטי של מסמך מקורי",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -611,12 +598,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "PointerLevelName",
 					  						DefaultText =  "Pointer Level",
-					  						FullLocalDefaultTextBack_up =  "קשור ל",
-					  						FullLocalDefaultText =  "BS64:Iten16nXldeoINecIg==",
+					  						FullLocalDefaultText =  "קשור ל",
 					  						ListFieldLable =  "PointerLevelNameListLable",
 					  						ListLableDefaultText =  "Pointer Level",
-					  						ListLocalDefaultTextBack_up =  "קשור ל",
-					  						ListLocalDefaultText =  "BS64:Iten16nXldeoINecIg==",
+					  						ListLocalDefaultText =  "קשור ל",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -679,12 +664,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsCourierManadatory",
 					  						DefaultText =  "Courier Manadatory",
-					  						FullLocalDefaultTextBack_up =  "חובה לבלדרות",
-					  						FullLocalDefaultText =  "BS64:IteX15XXkdeUINec15HXnNeT16jXldeqIg==",
+					  						FullLocalDefaultText =  "חובה לבלדרות",
 					  						ListFieldLable =  "IsCourierManadatoryListLable",
 					  						ListLableDefaultText =  "Courier Manadatory",
-					  						ListLocalDefaultTextBack_up =  "חובה לבלדרות",
-					  						ListLocalDefaultText =  "BS64:IteX15XXkdeUINec15HXnNeT16jXldeqIg==",
+					  						ListLocalDefaultText =  "חובה לבלדרות",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -747,12 +730,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsDiamondManadatory",
 					  						DefaultText =  "Is Diamond Manadatory",
-					  						FullLocalDefaultTextBack_up =  "מסמך חובה ליהלומים",
-					  						FullLocalDefaultText =  "BS64:Itee16HXnteaINeX15XXkdeUINec15nXlNec15XXnteZ150i",
+					  						FullLocalDefaultText =  "מסמך חובה ליהלומים",
 					  						ListFieldLable =  "IsDiamondManadatoryListLable",
 					  						ListLableDefaultText =  "Is Diamond Manadatory",
-					  						ListLocalDefaultTextBack_up =  "מסמך חובה ליהלומים",
-					  						ListLocalDefaultText =  "BS64:Itee16HXnteaINeX15XXkdeUINec15nXlNec15XXnteZ150i",
+					  						ListLocalDefaultText =  "מסמך חובה ליהלומים",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -816,12 +797,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CustomsDocumentUpload",
 					  						DefaultText =  "CustomsDocumentUpload",
-					  						FullLocalDefaultTextBack_up =  "העלםת מסמך למכס",
-					  						FullLocalDefaultText =  "BS64:IteU16LXnNeQ16og157Xodee15og15zXnteb16Ei",
+					  						FullLocalDefaultText =  "העלאת מסמך למכס",
 					  						ListFieldLable =  "CustomsDocumentUploadListLable",
 					  						ListLableDefaultText =  "Customs Document Upload",
-					  						ListLocalDefaultTextBack_up =  " העלםת מסמך למכס",
-					  						ListLocalDefaultText =  "BS64:IiDXlNei15zXkNeqINee16HXnteaINec157Xm9ehIg==",
+					  						ListLocalDefaultText =  " העלאת מסמך למכס",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "CustomsDocumentUpload",
 					  						NavigationPropertyName =  "CustomsDocumentUploadT",
@@ -885,12 +864,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CustomsDocumentUploadName",
 					  						DefaultText =  "Customs Document Upload",
-					  						FullLocalDefaultTextBack_up =  "העלםת מסמך למכס",
-					  						FullLocalDefaultText =  "BS64:IteU16LXnNeQ16og157Xodee15og15zXnteb16Ei",
+					  						FullLocalDefaultText =  "העלאת מסמך למכס",
 					  						ListFieldLable =  "CustomsDocumentUploadNameListLable",
 					  						ListLableDefaultText =  "Customs Document Upload",
-					  						ListLocalDefaultTextBack_up =  "העלםת מסמך למכס",
-					  						ListLocalDefaultText =  "BS64:IteU16LXnNeQ16og157Xodee15og15zXnteb16Ei",
+					  						ListLocalDefaultText =  "העלאת מסמך למכס",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -933,14 +910,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
    
 
-			   TextCode CustomDocumentTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomDocumentType.Q.CustomDocumentTypeQuery", DefaultText = @"Document Types",LocalDefaultText = "BS64:Iteh15XXkteZINee16HXnteaIg==", ObjectTableId = CustomDocumentTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes,contextTenant);
+			   TextCode CustomDocumentTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomDocumentType.Q.CustomDocumentTypeQuery", DefaultText = @"Document Types",LocalDefaultText = "סוגי מסמך", ObjectTableId = CustomDocumentTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes,contextTenant);
 			   Feature CustomDocumentTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CUSTOMDOCUMENTTYPE", ObjectTableId = CustomDocumentTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CustomDocumentType.Features.CustomDocumentTypes", NameTextCodeDefaultText = "Custom Document Types", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,CustomDocumentTypeObjectTable, addedFeatures, addedTextCodes,contextTenant);
 
 	        //TextCodeRepository.SubmitChanges();
 	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query CustomDocumentTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomDocumentTypeTextCode_0.Id, NameTextCodeCode = CustomDocumentTypeTextCode_0.Code, ObjectTableName = "Customs.CustomDocumentType", Code = "CustomDocumentType",  QueryGroupCode = "CUDT", IndexOrder = 0, Tenant = 0, ObjectTableId = CustomDocumentTypeObjectTable.Id, QuerySection = "Customs.CustomDocumentType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CustomDocumentTypeFeature_0.Id,FeatureUniqeCode= CustomDocumentTypeFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Desending", Perspective = null }, addedQueries,contextTenant);
+			  Query CustomDocumentTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomDocumentTypeTextCode_0.Id, NameTextCodeCode = CustomDocumentTypeTextCode_0.Code, ObjectTableName = "Customs.CustomDocumentType", Code = "CustomDocumentType",  QueryGroupCode = "CUDT", IndexOrder = 0, Tenant = 0, ObjectTableId = CustomDocumentTypeObjectTable.Id, QuerySection = "Customs.CustomDocumentType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CustomDocumentTypeFeature_0.Id,FeatureUniqeCode= CustomDocumentTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries,contextTenant);
 	
 			 QueryColumn CustomDocumentTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomDocumentTypeQuery.Id,QueryCode = CustomDocumentTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.CustomDocumentType.Code" , ColumnWidth = 200 }, addedQueryColumns,contextTenant);
 
@@ -995,11 +972,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   ObjectTable GeneralObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "General" && d.Tenant == 0).FirstOrDefault();   
 			   ObjectTable CustomDocumentTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CustomDocumentType" && d.Tenant == 0).FirstOrDefault();  
                  
-			   TextCode CustomDocumentTypeGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomDocumentType.TH.General", DefaultText = "General",LocalDefaultText = "BS64:Iteb15zXnNeZIg==", ObjectTableId = CustomDocumentTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes,contextTenant);
+			   TextCode CustomDocumentTypeGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomDocumentType.TH.General", DefaultText = "General",LocalDefaultText = "כללי", ObjectTableId = CustomDocumentTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes,contextTenant);
 			   Feature CustomDocumentTypeGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CustomDocumentType.Tab.General", ObjectTableId = CustomDocumentTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomDocumentType.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,CustomDocumentTypeObjectTable,contextTenant);
  
                  
-			   TextCode CustomDocumentTypeEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomDocumentType.TH.Events", DefaultText = "Events",LocalDefaultText = "BS64:IteQ15nXqNeV16LXmdedIg==", ObjectTableId = CustomDocumentTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes,contextTenant);
+			   TextCode CustomDocumentTypeEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomDocumentType.TH.Events", DefaultText = "Events",LocalDefaultText = "אירועים", ObjectTableId = CustomDocumentTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes,contextTenant);
 			   Feature CustomDocumentTypeEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CustomDocumentType.Tab.Events", ObjectTableId = CustomDocumentTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomDocumentType.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,CustomDocumentTypeObjectTable,contextTenant);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();

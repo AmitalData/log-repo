@@ -221,8 +221,6 @@ namespace Simplog.Data.CommonDataModel
             modelBuilder.Configurations.Add(new EntityLastUpdateMap());
             modelBuilder.Configurations.Add(new EntityStatuMap());
             modelBuilder.Configurations.Add(new EventTypeMap());
-            modelBuilder.Configurations.Add(new FeatureMap());
-            modelBuilder.Configurations.Add(new FeatureTypeMap());
             modelBuilder.Configurations.Add(new FHLStatuMap());
             modelBuilder.Configurations.Add(new FieldDataTypeMap());
             modelBuilder.Configurations.Add(new FollowUpMap());
@@ -252,8 +250,7 @@ namespace Simplog.Data.CommonDataModel
             modelBuilder.Configurations.Add(new ObjectTableMap());
             modelBuilder.Configurations.Add(new ObjectTableTabMap());
             modelBuilder.Configurations.Add(new ObjectTableTypeMap());
-            modelBuilder.Configurations.Add(new PackageFeatureMap());
-            modelBuilder.Configurations.Add(new PackageMap());
+
             modelBuilder.Configurations.Add(new PackageTypeMap());
             modelBuilder.Configurations.Add(new PartnerTypeMap());
             modelBuilder.Configurations.Add(new PasswordPolicyMap());
@@ -278,9 +275,6 @@ namespace Simplog.Data.CommonDataModel
             modelBuilder.Configurations.Add(new RateClassMap());
             modelBuilder.Configurations.Add(new RatesTableMap());
             modelBuilder.Configurations.Add(new RestrictionMap());
-            modelBuilder.Configurations.Add(new RoleFeatureMap());
-            modelBuilder.Configurations.Add(new RoleMap());
-            modelBuilder.Configurations.Add(new RoleTypeMap());
             modelBuilder.Configurations.Add(new RuleConditionFieldMap());
             modelBuilder.Configurations.Add(new RuleNotificationTypeMap());
             modelBuilder.Configurations.Add(new RuleTypeMap());
@@ -387,7 +381,6 @@ namespace Simplog.Data.CommonDataModel
             modelBuilder.Configurations.Add(new CustomerMediatorByProductMap());
             modelBuilder.Configurations.Add(new CardExternalCodeByCurrencyMap());
             modelBuilder.Configurations.Add(new BusinessUnitMap());
-            modelBuilder.Configurations.Add(new FeatureAccessLevelMap());
             modelBuilder.Configurations.Add(new EmailProviderMap());
             modelBuilder.Configurations.Add(new RegionMap());
             modelBuilder.Configurations.Add(new CustomerSizeMap());
@@ -409,7 +402,6 @@ namespace Simplog.Data.CommonDataModel
             modelBuilder.Configurations.Add(new ComputingPartnerTranslationMap());
             modelBuilder.Configurations.Add(new CustomersDataViewMap());
             modelBuilder.Configurations.Add(new AllActiveGLAccountsViewMap());
-
             modelBuilder.Configurations.Add(new DocumentFolderMap());
             modelBuilder.Configurations.Add(new DocumentsDataProviderMap());
             modelBuilder.Configurations.Add(new DocumentTypeCategoryMap());
@@ -428,8 +420,6 @@ namespace Simplog.Data.CommonDataModel
             modelBuilder.Configurations.Add(new LogitudeMessagesTransmissionLogMap());
             //modelBuilder.Configurations.Add(new EntityChangesAutomationMap());
             modelBuilder.Configurations.Add(new EntityChangeMap());
-            modelBuilder.Configurations.Add(new FeaturePackageTypeMap());
-            modelBuilder.Configurations.Add(new PackageConnectedPackageMap());
             modelBuilder.Configurations.Add(new UserLicenseMap());
             modelBuilder.Configurations.Add(new TenantAddOnMap());
             modelBuilder.Configurations.Add(new AutomationResultEmailRecipientMap());
@@ -452,7 +442,6 @@ namespace Simplog.Data.CommonDataModel
             modelBuilder.Configurations.Add(new WarehouseTypeMap());
             modelBuilder.Configurations.Add(new ReportsTemplateMap());
             modelBuilder.Configurations.Add(new ReportsTemplatesVersionMap());
-            modelBuilder.Configurations.Add(new FeatureChangeMap());
             modelBuilder.Configurations.Add(new FilingInboxMap());
             modelBuilder.Configurations.Add(new FilingInboxAttachmentMap());
             modelBuilder.Configurations.Add(new FilingInboxAttachmentLogMap());
@@ -540,7 +529,6 @@ namespace Simplog.Data.CommonDataModel
         public IDbSet<Currency> Currencies { get; set; }
         public IDbSet<ContactTenant> ContactTenants { get; set; }
         public IDbSet<ContactTenantRole> ContactTenantRoles { get; set; }
-        public IDbSet<Role> Roles { get; set; }
         public IDbSet<PaymentTerm> PaymentTerms { get; set; }
         public IDbSet<VatType> VatTypes { get; set; }
         public IDbSet<Incoterm> Incoterms { get; set; }
@@ -602,16 +590,7 @@ namespace Simplog.Data.CommonDataModel
             get;
             set;
         }
-        public IDbSet<Feature> Features
-        {
-            get;
-            set;
-        }
-        public IDbSet<RoleFeature> RoleFeatures
-        {
-            get;
-            set;
-        }
+      
         public IDbSet<Restriction> Restrictions
         {
             get;
@@ -677,26 +656,8 @@ namespace Simplog.Data.CommonDataModel
             get;
             set;
         }
-        public IDbSet<FeatureType> FeatureTypes
-        {
-            get;
-            set;
-        }
-        public IDbSet<RoleType> RoleTypes
-        {
-            get;
-            set;
-        }
-        public IDbSet<Package> Packages
-        {
-            get;
-            set;
-        }
-        public IDbSet<PackageFeature> PackageFeatures
-        {
-            get;
-            set;
-        }
+       
+     
         public IDbSet<UserLastLogin> UserLastLogins
         {
             get;
@@ -849,7 +810,6 @@ namespace Simplog.Data.CommonDataModel
             set;
         }
         public IDbSet<BusinessUnit> BusinessUnits { get; set; }
-        public IDbSet<FeatureAccessLevel> FeatureAccessLevels { get; set; }
         public IDbSet<Region> Regions
         {
             get;
@@ -1005,8 +965,6 @@ namespace Simplog.Data.CommonDataModel
         public IDbSet<AirlineStatistics> AirlineStatistics { get; set; }
         public IDbSet<AWBDescriptionOfGoods> AWBDescriptionOfGoods { get; set; }
         public IDbSet<LogitudeMessagesTransmissionLog> LogitudeMessagesTransmissionLogs { get; set; }
-        public IDbSet<FeaturePackageType> FeaturePackageTypes { get; set; }
-        public IDbSet<PackageConnectedPackage> PackageConnectedPackages { get; set; }
         public IDbSet<UserLicense> UserLicenses { get; set; }
         public IDbSet<PaymentTermDateType> PaymentTermDateTypes { get; set; }
         public IDbSet<BlobFile> BlobFiles { get; set; }
@@ -1045,7 +1003,6 @@ namespace Simplog.Data.CommonDataModel
         public IDbSet<PostalCode> PostalCodes { get; set; }
         public IDbSet<ReportsTemplate> ReportsTemplates { get; set; }
         public IDbSet<ReportsTemplatesVersion> ReportsTemplatesVersions { get; set; }
-        public IDbSet<FeatureChange> FeatureChanges { get; set; }
         public IDbSet<FilingInbox> FilingInboxes { get; set; }
         public IDbSet<FilingInboxAttachment> FilingInboxAttachments { get; set; }
         public IDbSet<FilingInboxAttachmentLog> FilingInboxAttachmentLogs { get; set; }

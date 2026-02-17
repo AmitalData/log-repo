@@ -58,7 +58,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 scope.Complete();
             }
 
-            PackageRepository packageRepository = new PackageRepository(0);
+            PackageRepository packageRepository = new PackageRepository();
             List<Package> packages = packageRepository.GetPackages().ToList();
 
 
@@ -88,7 +88,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 GlobalTenantRepository globalTenantRepository = new GlobalTenantRepository();
                 TenantManagementRepository tenantManagementRep = new TenantManagementRepository();
 
-                GlobalDB database = GetActiveDatabaseNumber("0");
+                GlobalDB database = GetActiveDatabaseNumber();
                 int version = globalTenantRepository.GetCurrentVersion();
                 GlobalTenant globalTenant = new GlobalTenant()
                 {
@@ -301,13 +301,22 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             }
         }
 
-        public static GlobalDB GetActiveDatabaseNumber(string tenant)
+        public static GlobalDB GetActiveDatabaseNumber()
         {
             GlobalDBRepository globaldbRep = new GlobalDBRepository();
 
             List<GlobalDB> activeDbs = globaldbRep.GetActiveDataBases();
-
-            GlobalDB database = activeDbs.FirstOrDefault(db => db.Id == tenant);
+            GlobalDB database = null;
+            if (activeDbs.Count == 1)
+            {
+                database = activeDbs.FirstOrDefault();
+            }
+            if (activeDbs.Count > 1)
+            {
+                Random rand = new Random();
+                int number = rand.Next(activeDbs.Count);
+                database = activeDbs[number];
+            }
 
             return database;
         }

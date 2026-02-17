@@ -22,11 +22,13 @@ using WebFreight.Web.MetaDataUpdate.DetailClasses;
 using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.BL;
+using Simplog.Global.Data.GlobalModel.Repositories;
+
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class RevaluationUpdateClass
    {  		
-		public const string HashString = "f0539a4b59cb95fe77818df1e5fbb879";
+		public const string HashString = "be414a2e31e18a46b0fd6803e4e81965";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -45,7 +47,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    SupportSubEntity =  false,
 			      				    ApplyGenericCustomFields =  false,
 			      				    AvailableInDocumentTypes =  false,
-			      				    IsLock =  false,
 			      				    HasHelper =  false,
 			      				    HasShortTitle =  false,
 			      				    HasFiltersMenu =  false,
@@ -74,11 +75,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    NewWizardControlName =  "Logitude.Accounting.Views.Tabs.REV.NewRevaluationControlCommand",
-			      				    LocalDefaultTextBack_up =  "שערוך",
-			      				    LocalDefaultText =  "BS64:Itep16LXqNeV15oi",
+			      				    LocalDefaultText =  "שערוך",
 			      				    DefaultText =  "Revaluation",
-			      				    NewButtonLocalDefaultTextBack_up =  "שערוך חדש",
-			      				    NewButtonLocalDefaultText =  "BS64:Itep16LXqNeV15og15fXk9epIg==",
+			      				    NewButtonLocalDefaultText =  "שערוך חדש",
 			      				    NewButtonDefaultText =  "New Revaluation",
 			      				    Code =  "026a",
 			      				    Name =  "Revaluation Query Group",
@@ -88,7 +87,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    NoTS =  false,
 			      				    HasMenuButtons =  false,
 			      				    AllowedForComputingPartners =  false,
-			      				    ShowFastSearch =  false,
 			      				    CustomFieldsCount =  0,
 			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  false,
@@ -272,12 +270,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CreateDate",
 					  						DefaultText =  "Create Date",
-					  						FullLocalDefaultTextBack_up =  "תאריך יצירה",
-					  						FullLocalDefaultText =  "BS64:Iteq15DXqNeZ15og15nXpteZ16jXlCI=",
+					  						FullLocalDefaultText =  "תאריך יצירה",
 					  						ListFieldLable =  "CreateDateListLable",
 					  						ListLableDefaultText =  "Create Date",
-					  						ListLocalDefaultTextBack_up =  "תאריך יצירה",
-					  						ListLocalDefaultText =  "BS64:Iteq15DXqNeZ15og15nXpteZ16jXlCI=",
+					  						ListLocalDefaultText =  "תאריך יצירה",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -402,8 +398,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "SearchFields",
 					  						DefaultText =  "Search ...",
-					  						FullLocalDefaultTextBack_up =  "חיפוש",
-					  						FullLocalDefaultText =  "BS64:IteX15nXpNeV16ki",
+					  						FullLocalDefaultText =  "חיפוש",
 					  						ListFieldLable =  "SearchFieldsListLable",
 					  						ListLableDefaultText =  "Search ...",
 					  						IsForeignKey =  false,
@@ -468,12 +463,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "RevaluationNumber",
 					  						DefaultText =  "Revaluation Number",
-					  						FullLocalDefaultTextBack_up =  "מספר שערוך",
-					  						FullLocalDefaultText =  "BS64:Itee16HXpNeoINep16LXqNeV15oi",
+					  						FullLocalDefaultText =  "מספר שערוך",
 					  						ListFieldLable =  "RevaluationNumberListLable",
 					  						ListLableDefaultText =  "Revaluation Number",
-					  						ListLocalDefaultTextBack_up =  "מספר שערוך",
-					  						ListLocalDefaultText =  "BS64:Itee16HXpNeoINep16LXqNeV15oi",
+					  						ListLocalDefaultText =  "מספר שערוך",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -536,12 +529,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "RevaluationDate",
 					  						DefaultText =  "Revaluation Date",
-					  						FullLocalDefaultTextBack_up =  "תאריך שערוך",
-					  						FullLocalDefaultText =  "BS64:Iteq15DXqNeZ15og16nXoteo15XXmiI=",
+					  						FullLocalDefaultText =  "תאריך שערוך",
 					  						ListFieldLable =  "RevaluationDateListLable",
 					  						ListLableDefaultText =  "Revaluation Date",
-					  						ListLocalDefaultTextBack_up =  "תאריך שערוך",
-					  						ListLocalDefaultText =  "BS64:Iteq15DXqNeZ15og16nXoteo15XXmiI=",
+					  						ListLocalDefaultText =  "תאריך שערוך",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -605,12 +596,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ChartOfAccountsId",
 					  						DefaultText =  "Chart of account",
-					  						FullLocalDefaultTextBack_up =  "מזהה קבוצת מאזן",
-					  						FullLocalDefaultText =  "BS64:Itee15bXlNeUINen15HXldem16og157XkNeW158i",
+					  						FullLocalDefaultText =  "מזהה קבוצת מאזן",
 					  						ListFieldLable =  "ChartOfAccountsIdListLable",
 					  						ListLableDefaultText =  "Chart of account",
-					  						ListLocalDefaultTextBack_up =  "מזהה קבוצת מאזן",
-					  						ListLocalDefaultText =  "BS64:Itee15bXlNeUINen15HXldem16og157XkNeW158i",
+					  						ListLocalDefaultText =  "מזהה קבוצת מאזן",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "ChartOfAccount",
 					  						NavigationPropertyName =  "ChartOfAccount",
@@ -675,12 +664,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ChartOfAccountsName",
 					  						DefaultText =  "Chart of Accounts Name",
-					  						FullLocalDefaultTextBack_up =  "מזהה קבוצת מאזן",
-					  						FullLocalDefaultText =  "BS64:Itee15bXlNeUINen15HXldem16og157XkNeW158i",
+					  						FullLocalDefaultText =  "מזהה קבוצת מאזן",
 					  						ListFieldLable =  "ChartOfAccountsNameListLable",
 					  						ListLableDefaultText =  "Chart of Accounts Name",
-					  						ListLocalDefaultTextBack_up =  "מזהה קבוצת מאזן",
-					  						ListLocalDefaultText =  "BS64:Itee15bXlNeUINen15HXldem16og157XkNeW158i",
+					  						ListLocalDefaultText =  "מזהה קבוצת מאזן",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -744,12 +731,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "GLAccountId",
 					  						DefaultText =  "GL Account ",
-					  						FullLocalDefaultTextBack_up =  "כרטיס",
-					  						FullLocalDefaultText =  "BS64:Iteb16jXmNeZ16Ei",
+					  						FullLocalDefaultText =  "כרטיס",
 					  						ListFieldLable =  "GLAccountIdListLable",
 					  						ListLableDefaultText =  "GL Account ",
-					  						ListLocalDefaultTextBack_up =  "כרטיס",
-					  						ListLocalDefaultText =  "BS64:Iteb16jXmNeZ16Ei",
+					  						ListLocalDefaultText =  "כרטיס",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "GLAccount",
 					  						NavigationPropertyName =  "GLAccount",
@@ -814,12 +799,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "GLAccountName",
 					  						DefaultText =  "GL Account Name",
-					  						FullLocalDefaultTextBack_up =  "שם חשבון",
-					  						FullLocalDefaultText =  "BS64:Itep150g15fXqdeR15XXnyI=",
+					  						FullLocalDefaultText =  "שם חשבון",
 					  						ListFieldLable =  "GLAccountNameListLable",
 					  						ListLableDefaultText =  "GL Account Name",
-					  						ListLocalDefaultTextBack_up =  "שם חשבון",
-					  						ListLocalDefaultText =  "BS64:Itep150g15fXqdeR15XXnyI=",
+					  						ListLocalDefaultText =  "שם חשבון",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -882,12 +865,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "GLAccountNumber",
 					  						DefaultText =  "GL Account Number",
-					  						FullLocalDefaultTextBack_up =  "מספר חשבון",
-					  						FullLocalDefaultText =  "BS64:Itee16HXpNeoINeX16nXkdeV158i",
+					  						FullLocalDefaultText =  "מספר חשבון",
 					  						ListFieldLable =  "GLAccountNumberListLable",
 					  						ListLableDefaultText =  "GL Account Number",
-					  						ListLocalDefaultTextBack_up =  "מספר חשבון",
-					  						ListLocalDefaultText =  "BS64:Itee16HXpNeoINeX16nXkdeV158i",
+					  						ListLocalDefaultText =  "מספר חשבון",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -950,12 +931,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "RevaluationEnabled",
 					  						DefaultText =  "Revaluation Enabled",
-					  						FullLocalDefaultTextBack_up =  "מוגדר לשערוך אוטומטי",
-					  						FullLocalDefaultText =  "BS64:Itee15XXkteT16gg15zXqdei16jXldeaINeQ15XXmNeV157XmNeZIg==",
+					  						FullLocalDefaultText =  "מוגדר לשערוך אוטומטי",
 					  						ListFieldLable =  "RevaluationEnabledListLable",
 					  						ListLableDefaultText =  "Revaluation Enabled",
-					  						ListLocalDefaultTextBack_up =  "מוגדר לשערוך אוטומטי",
-					  						ListLocalDefaultText =  "BS64:Itee15XXkteT16gg15zXqdei16jXldeaINeQ15XXmNeV157XmNeZIg==",
+					  						ListLocalDefaultText =  "מוגדר לשערוך אוטומטי",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1018,12 +997,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CreatedByUserName",
 					  						DefaultText =  "Created by",
-					  						FullLocalDefaultTextBack_up =  "נוצר על ידי",
-					  						FullLocalDefaultText =  "BS64:Iteg15XXpteoINei15wg15nXk9eZIg==",
+					  						FullLocalDefaultText =  "נוצר על ידי",
 					  						ListFieldLable =  "CreatedByUserNameListLable",
 					  						ListLableDefaultText =  "Created by",
-					  						ListLocalDefaultTextBack_up =  "נוצר על ידי",
-					  						ListLocalDefaultText =  "BS64:Iteg15XXpteoINei15wg15nXk9eZIg==",
+					  						ListLocalDefaultText =  "נוצר על ידי",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1085,12 +1062,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Status",
 					  						DefaultText =  "Status",
-					  						FullLocalDefaultTextBack_up =  "קוד סטטוס",
-					  						FullLocalDefaultText =  "BS64:Iten15XXkyDXodeY15jXldehIg==",
+					  						FullLocalDefaultText =  "קוד סטטוס",
 					  						ListFieldLable =  "StatusListLable",
 					  						ListLableDefaultText =  "Status",
-					  						ListLocalDefaultTextBack_up =  "קוד סטטוס",
-					  						ListLocalDefaultText =  "BS64:Iten15XXkyDXodeY15jXldehIg==",
+					  						ListLocalDefaultText =  "קוד סטטוס",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "RevaluationStatus",
 					  						NavigationPropertyName =  "RevaluationStatus",
@@ -1154,12 +1129,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Message",
 					  						DefaultText =  "Message",
-					  						FullLocalDefaultTextBack_up =  "הודעה",
-					  						FullLocalDefaultText =  "BS64:IteU15XXk9ei15Qi",
+					  						FullLocalDefaultText =  "הודעה",
 					  						ListFieldLable =  "MessageListLable",
 					  						ListLableDefaultText =  "Message",
-					  						ListLocalDefaultTextBack_up =  "הודעה",
-					  						ListLocalDefaultText =  "BS64:IteU15XXk9ei15Qi",
+					  						ListLocalDefaultText =  "הודעה",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  true,
 					  						NoMetaDataField =  false,
@@ -1222,12 +1195,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "RevaluationsGLAccountId",
 					  						DefaultText =  "Revaluation GL Account",
-					  						FullLocalDefaultTextBack_up =  "כרטיס לשערוך",
-					  						FullLocalDefaultText =  "BS64:Iteb16jXmNeZ16Eg15zXqdei16jXldeaIg==",
+					  						FullLocalDefaultText =  "כרטיס לשערוך",
 					  						ListFieldLable =  "RevaluationsGLAccountIdListLable",
 					  						ListLableDefaultText =  "Revaluation GL Account",
-					  						ListLocalDefaultTextBack_up =  "כרטיס לשערוך",
-					  						ListLocalDefaultText =  "BS64:Iteb16jXmNeZ16Eg15zXqdei16jXldeaIg==",
+					  						ListLocalDefaultText =  "כרטיס לשערוך",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "GLAccount",
 					  						NavigationPropertyName =  "RevaluationGLAccount",
@@ -1291,12 +1262,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "RevaluationsGLAccountName",
 					  						DefaultText =  "Revaluations GL Account",
-					  						FullLocalDefaultTextBack_up =  "כרטיס לשערוך",
-					  						FullLocalDefaultText =  "BS64:Iteb16jXmNeZ16Eg15zXqdei16jXldeaIg==",
+					  						FullLocalDefaultText =  "כרטיס לשערוך",
 					  						ListFieldLable =  "RevaluationsGLAccountNameListLable",
 					  						ListLableDefaultText =  "Revaluations GL Account",
-					  						ListLocalDefaultTextBack_up =  "כרטיס לשערוך",
-					  						ListLocalDefaultText =  "BS64:Iteb16jXmNeZ16Eg15zXqdei16jXldeaIg==",
+					  						ListLocalDefaultText =  "כרטיס לשערוך",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1359,12 +1328,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "StatusName",
 					  						DefaultText =  "Status",
-					  						FullLocalDefaultTextBack_up =  "סטטוס",
-					  						FullLocalDefaultText =  "BS64:Iteh15jXmNeV16Ei",
+					  						FullLocalDefaultText =  "סטטוס",
 					  						ListFieldLable =  "StatusNameListLable",
 					  						ListLableDefaultText =  "Status",
-					  						ListLocalDefaultTextBack_up =  "סטטוס",
-					  						ListLocalDefaultText =  "BS64:Iteh15jXmNeV16Ei",
+					  						ListLocalDefaultText =  "סטטוס",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1407,7 +1374,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
    
 
-			   TextCode RevaluationTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Revaluation.Q.AllRevaluations", DefaultText = @"Revaluations",LocalDefaultText = "BS64:Itep16LXqNeV15vXmdedIg==", ObjectTableId = RevaluationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes,contextTenant);
+			   TextCode RevaluationTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Revaluation.Q.AllRevaluations", DefaultText = @"Revaluations",LocalDefaultText = "שערוכים", ObjectTableId = RevaluationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes,contextTenant);
 			   Feature RevaluationFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Revaluation.Q.AllRevaluations", ObjectTableId = RevaluationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Revaluation.Features.AllRevaluations", NameTextCodeDefaultText = "AllRevaluations", FeatureTypeCode = "QUER", Packagable = false }, TenantFeatures, textCodes,RevaluationObjectTable, addedFeatures, addedTextCodes,contextTenant);
 
 	        //TextCodeRepository.SubmitChanges();
@@ -1481,11 +1448,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   ObjectTable GeneralObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "General" && d.Tenant == 0).FirstOrDefault();   
 			   ObjectTable RevaluationObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Revaluation" && d.Tenant == 0).FirstOrDefault();  
                  
-			   TextCode RevaluationDetailsTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Revaluation.TH.Details", DefaultText = "Details",LocalDefaultText = "BS64:Itek16jXmNeZ150i", ObjectTableId = RevaluationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes,contextTenant);
+			   TextCode RevaluationDetailsTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Revaluation.TH.Details", DefaultText = "Details",LocalDefaultText = "פרטים", ObjectTableId = RevaluationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes,contextTenant);
 			   Feature RevaluationDetailsFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Revaluation.Tab.Details", ObjectTableId = RevaluationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Revaluation.Features.Details", NameTextCodeDefaultText = "Details", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,RevaluationObjectTable,contextTenant);
  
                  
-			   TextCode RevaluationEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Revaluation.TH.Events", DefaultText = "Events",LocalDefaultText = "BS64:IteQ15nXqNeV16LXmdedIg==", ObjectTableId = RevaluationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes,contextTenant);
+			   TextCode RevaluationEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Revaluation.TH.Events", DefaultText = "Events",LocalDefaultText = "אירועים", ObjectTableId = RevaluationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes,contextTenant);
 			   Feature RevaluationEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = RevaluationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Revaluation.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,RevaluationObjectTable,contextTenant);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
@@ -1590,21 +1557,21 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   ObjectTable RevaluationObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Revaluation" && d.Tenant == 0).FirstOrDefault(); 
 
- 		   TextCode RevaluationTextCode_GeneralMCACCRevaluations = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.ACC.Revaluations", DefaultText = "Revaluations",LocalDefaultText = @"BS64:Itep16LXqNeV15vXmdedIg==", ObjectTableId = RevaluationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode RevaluationTextCode_GeneralMCACCRevaluations = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.ACC.Revaluations", DefaultText = "Revaluations",LocalDefaultText = @"שערוכים", ObjectTableId = RevaluationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode RevaluationTextCode_RevaluationDetailsODetails = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = " Revaluation.Details.O.Details", DefaultText = "Details",LocalDefaultText = @"BS64:Itek16jXmNeZINep16LXqNeV15oi", ObjectTableId = RevaluationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode RevaluationTextCode_RevaluationDetailsODetails = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = " Revaluation.Details.O.Details", DefaultText = "Details",LocalDefaultText = @"פרטי שערוך", ObjectTableId = RevaluationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode RevaluationTextCode_RevaluationGeneralODetails = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = " Revaluation.General.O.Details", DefaultText = "General",LocalDefaultText = @"BS64:IteU15LXk9eo15XXqiDXqdei16jXldeaIg==", ObjectTableId = RevaluationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode RevaluationTextCode_RevaluationGeneralODetails = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = " Revaluation.General.O.Details", DefaultText = "General",LocalDefaultText = @"הגדרות שערוך", ObjectTableId = RevaluationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode RevaluationTextCode_RevaluationDetailsBCancelRevaluation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Revaluation.Details.B.CancelRevaluation", DefaultText = "Cancel Revaluation",LocalDefaultText = @"BS64:IteR15nXmNeV15wg16nXoteo15XXmiI=", ObjectTableId = RevaluationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode RevaluationTextCode_RevaluationDetailsBCancelRevaluation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Revaluation.Details.B.CancelRevaluation", DefaultText = "Cancel Revaluation",LocalDefaultText = @"ביטול שערוך", ObjectTableId = RevaluationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode RevaluationTextCode_GeneralMCACCCashBooks = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.ACC.CashBooks", DefaultText = "Cash Books",LocalDefaultText = @"BS64:Itep16LXqNeV15vXmdedIg==", ObjectTableId = RevaluationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode RevaluationTextCode_GeneralMCACCCashBooks = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.ACC.CashBooks", DefaultText = "Cash Books",LocalDefaultText = @"שערוכים", ObjectTableId = RevaluationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode RevaluationTextCode_RevaluationOGLAccountForRevaluation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Revaluation.O.GLAccountForRevaluation", DefaultText = "You must choose GL Accounts for revaluation",LocalDefaultText = @"BS64:IteX15XXkdeUINec15HXl9eV16gg15vXqNeY15nXodeZ150g15zXqdei16jXldeaIg==", ObjectTableId = RevaluationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode RevaluationTextCode_RevaluationOGLAccountForRevaluation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Revaluation.O.GLAccountForRevaluation", DefaultText = "You must choose GL Accounts for revaluation",LocalDefaultText = @"חובה לבחור כרטיסים לשערוך", ObjectTableId = RevaluationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode RevaluationTextCode_RevaluationOChartAccountForRevaluation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Revaluation.O.ChartAccountForRevaluation", DefaultText = "You must choose Chart of account for revaluation",LocalDefaultText = @"BS64:Itep15PXlCDXp9eR15XXpteqINee15DXltefINeU15XXkCDXqdeT15Qg15fXldeR15Qi", ObjectTableId = RevaluationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode RevaluationTextCode_RevaluationOChartAccountForRevaluation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Revaluation.O.ChartAccountForRevaluation", DefaultText = "You must choose Chart of account for revaluation",LocalDefaultText = @"שדה קבוצת מאזן הוא שדה חובה", ObjectTableId = RevaluationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode RevaluationTextCode_RevaluationOFutureDateIsNotAllowed = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Revaluation.O.FutureDateIsNotAllowed", DefaultText = "Future Date!",LocalDefaultText = @"BS64:IiHXqteQ16jXmdeaINei16rXmdeT15ki", ObjectTableId = RevaluationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode RevaluationTextCode_RevaluationOFutureDateIsNotAllowed = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Revaluation.O.FutureDateIsNotAllowed", DefaultText = "Future Date!",LocalDefaultText = @"!תאריך עתידי", ObjectTableId = RevaluationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
  		   TextCode RevaluationTextCode_RevaluationCHId = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Revaluation.CH.Id", DefaultText = "Revaluation Id",LocalDefaultText = null, ObjectTableId = RevaluationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "CH", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
@@ -1614,9 +1581,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode RevaluationTextCode_RevaluationCHRevaluationEnabled = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Revaluation.CH.RevaluationEnabled", DefaultText = "Revaluation Enabled",LocalDefaultText = null, ObjectTableId = RevaluationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "CH", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode RevaluationTextCode_RevaluationONewRevaluation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Revaluation.O.NewRevaluation", DefaultText = "New Revaluation",LocalDefaultText = @"BS64:Itep16LXqNeV15og15fXk9epIg==", ObjectTableId = RevaluationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode RevaluationTextCode_RevaluationONewRevaluation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Revaluation.O.NewRevaluation", DefaultText = "New Revaluation",LocalDefaultText = @"שערוך חדש", ObjectTableId = RevaluationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode RevaluationTextCode_RevaluationsONotOpen = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Revaluations.O.NotOpen", DefaultText = "Revaluation is not open",LocalDefaultText = @"BS64:Itep16LXqNeV15og15DXmdeg15Ug16TXqteV15ci", ObjectTableId = RevaluationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode RevaluationTextCode_RevaluationsONotOpen = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Revaluations.O.NotOpen", DefaultText = "Revaluation is not open",LocalDefaultText = @"שערוך אינו פתוח", ObjectTableId = RevaluationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
    
 	    

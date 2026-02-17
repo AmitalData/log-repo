@@ -4,7 +4,8 @@ using Logitude.Customs.BL.Validators;
 using Logitude.Customs.Data;
 using Logitude.Customs.Data.Repsitories;
 using Logitude.CustomsMessaging.MessagingServices;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; 
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using System;
@@ -25,7 +26,8 @@ using Unifreight.BL.EntityQueryServices;
 using Unifreight.Data.AmitalModel;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Customs.Data.EntityListQueryServices;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; 
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using System.Reflection;
 using Logitude.Customs.Data.EntityLists;
@@ -39,6 +41,7 @@ using Logitude.Customs.BL.BL;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using static Dropbox.Api.Sharing.ListFileMembersIndividualResult;
 using Microsoft.TeamFoundation.Build.WebApi;
+using Logitude.BL.GlobalModel.EntityQueries;
 
 namespace WebFreight.Web.Controllers.CustomsModel.Extended
 {
@@ -896,7 +899,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 DeclarationPM declaration = declarationQueryService.GetSingle(declarationId, true, false);
                 if (declaration != null && declaration.Consignments != null && declaration.Consignments.Count() > 0)
                 {
-                    FeatureQuery featureQuery = new FeatureQuery(tenant);
+                    FeatureQuery featureQuery = new FeatureQuery();
                     var features = featureQuery.GetAllowedFeaturesForLoggedUser(AuthenticationUtil.ResolveUserId(tenant), tenant);
                     var feature = features.Features.FirstOrDefault(x => x.Code == "CancelOldCommunication");
                     if (feature != null)

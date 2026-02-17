@@ -21,6 +21,8 @@ using WebFreight.Web.MetaDataUpdate.DetailClasses;
 
 using Simplog.Data.InvoiceModel.Repositories;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.Repositories;
+
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdateClasses
 {
    public class ExternalSystemsTablesCodeUpdateClass

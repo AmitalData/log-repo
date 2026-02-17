@@ -1,5 +1,6 @@
 ﻿using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.GlobalModel.EntityQueries;
 using Simplog.Data.CommonDataModel;
 using System;
 using System.Collections.Generic;
@@ -15,7 +16,7 @@ namespace Logitude.BL.CommonDataModel.Tools.Validating
 
             if (!entityPM.SignupRole && !entityPM.IsHybrid)
             {
-                RoleQuery roleQuery = new RoleQuery(entityPM.Tenant);
+                RoleQuery roleQuery = new RoleQuery();
                 List<RolePM> roles = new List<RolePM>();
 
                 if (isNew)

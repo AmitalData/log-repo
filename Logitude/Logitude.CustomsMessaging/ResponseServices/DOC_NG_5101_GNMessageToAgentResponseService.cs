@@ -22,7 +22,8 @@ using UnifreightIIG.Common.MessageLib.Storage;
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; 
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using UnifreightIIG.Common.MessageLib.Docs;
 using Logitude.Server.Tools.Models;
 using Logitude.Customs.BL.Models;
@@ -34,6 +35,7 @@ using Unifreight.BL.EntityQueryServices;
 using Unifreight.Data.AmitalModel;
 using Logitude.Server.Tools.Utils;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.GlobalModel.EntityQueries;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {  // moran 6.10.14 - Task 8066 -->
@@ -479,7 +481,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                   //  int[] myMsgCode = { 7, 8, 9, 16, 22, 23, 24, 25, 26, 27 };
                     
-                    FeatureQuery featureQuery = new FeatureQuery(requestParams.Tenant);
+                    FeatureQuery featureQuery = new FeatureQuery();
                     var features = featureQuery.GetAllowedFeaturesForLoggedUser(requestParams.LoggingUserId, requestParams.Tenant);
                     var feature = features.Features.FirstOrDefault(x => x.Code == "Pending900InDetainedOrPhysicalCheck");
                         if (feature != null && this._MyDeclarationPM.CourierCustomStatusCode == "2")

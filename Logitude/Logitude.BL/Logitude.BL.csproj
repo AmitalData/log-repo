@@ -82,14 +82,11 @@
     <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Azure.Core, Version=1.44.1.0, Culture=neutral, PublicKeyToken=92742159e12e44c8, processorArchitecture=MSIL">
-      <HintPath>..\packages\Azure.Core.1.44.1\lib\net472\Azure.Core.dll</HintPath>
+    <Reference Include="Azure.Core, Version=1.39.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8, processorArchitecture=MSIL">
+      <HintPath>..\packages\Azure.Core.1.39.0\lib\net472\Azure.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Azure.Identity, Version=1.13.1.0, Culture=neutral, PublicKeyToken=92742159e12e44c8, processorArchitecture=MSIL">
-      <HintPath>..\packages\Azure.Identity.1.13.1\lib\netstandard2.0\Azure.Identity.dll</HintPath>
-    </Reference>
-    <Reference Include="Azure.Security.KeyVault.Secrets, Version=4.2.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8, processorArchitecture=MSIL">
-      <HintPath>..\packages\Azure.Security.KeyVault.Secrets.4.2.0\lib\netstandard2.0\Azure.Security.KeyVault.Secrets.dll</HintPath>
+    <Reference Include="Azure.Identity, Version=1.11.3.0, Culture=neutral, PublicKeyToken=92742159e12e44c8, processorArchitecture=MSIL">
+      <HintPath>..\packages\Azure.Identity.1.11.3\lib\netstandard2.0\Azure.Identity.dll</HintPath>
     </Reference>
     <Reference Include="Confluent.Kafka, Version=2.4.0.0, Culture=neutral, PublicKeyToken=12c514ca49093d1e, processorArchitecture=MSIL">
       <HintPath>..\packages\Confluent.Kafka.2.4.0\lib\net462\Confluent.Kafka.dll</HintPath>
@@ -170,10 +167,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Library\Bin\Logitude.Customs.BL.dll</HintPath>
     </Reference>
-    <Reference Include="Logitude.Infrastructure.BL, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Library\Bin\Logitude.Infrastructure.BL.dll</HintPath>
-    </Reference>
     <Reference Include="Logitude.XSD">
       <HintPath>..\JustWebFreight\WebFreight.Web\bin\Logitude.XSD.dll</HintPath>
     </Reference>
@@ -243,26 +236,38 @@
     <Reference Include="Microsoft.Extensions.Primitives, Version=8.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Extensions.Primitives.8.0.0\lib\net462\Microsoft.Extensions.Primitives.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Identity.Client, Version=4.66.1.0, Culture=neutral, PublicKeyToken=0a613f4dd989e8ae, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Identity.Client.4.66.1\lib\net472\Microsoft.Identity.Client.dll</HintPath>
+    <Reference Include="Microsoft.Identity.Client, Version=4.61.2.0, Culture=neutral, PublicKeyToken=0a613f4dd989e8ae, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Identity.Client.4.61.2\lib\net462\Microsoft.Identity.Client.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Identity.Client.Extensions.Msal, Version=4.66.1.0, Culture=neutral, PublicKeyToken=0a613f4dd989e8ae, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Identity.Client.Extensions.Msal.4.66.1\lib\netstandard2.0\Microsoft.Identity.Client.Extensions.Msal.dll</HintPath>
+    <Reference Include="Microsoft.Identity.Client.Extensions.Msal, Version=4.61.2.0, Culture=neutral, PublicKeyToken=0a613f4dd989e8ae, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Identity.Client.Extensions.Msal.4.61.2\lib\netstandard2.0\Microsoft.Identity.Client.Extensions.Msal.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.Abstractions, Version=7.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.Abstractions.7.6.0\lib\net472\Microsoft.IdentityModel.Abstractions.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.8.0.0\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.IdentityModel.Abstractions, Version=6.35.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.IdentityModel.Abstractions.6.35.0\lib\net472\Microsoft.IdentityModel.Abstractions.dll</HintPath>
+    <Reference Include="Microsoft.IdentityModel.JsonWebTokens, Version=7.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.JsonWebTokens.7.6.0\lib\net472\Microsoft.IdentityModel.JsonWebTokens.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.IdentityModel.JsonWebTokens, Version=6.35.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.IdentityModel.JsonWebTokens.6.35.0\lib\net472\Microsoft.IdentityModel.JsonWebTokens.dll</HintPath>
+    <Reference Include="Microsoft.IdentityModel.Logging, Version=7.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.Logging.7.6.0\lib\net472\Microsoft.IdentityModel.Logging.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.IdentityModel.Logging, Version=6.35.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.IdentityModel.Logging.6.35.0\lib\net472\Microsoft.IdentityModel.Logging.dll</HintPath>
+    <Reference Include="Microsoft.IdentityModel.Tokens, Version=7.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.Tokens.7.6.0\lib\net472\Microsoft.IdentityModel.Tokens.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.IdentityModel.Tokens, Version=6.35.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.IdentityModel.Tokens.6.35.0\lib\net472\Microsoft.IdentityModel.Tokens.dll</HintPath>
+    <Reference Include="Microsoft.IdentityModel.Abstractions, Version=6.33.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.Abstractions.6.33.0\lib\net472\Microsoft.IdentityModel.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.JsonWebTokens, Version=6.33.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.JsonWebTokens.6.33.0\lib\net472\Microsoft.IdentityModel.JsonWebTokens.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.Logging, Version=6.33.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.Logging.6.33.0\lib\net472\Microsoft.IdentityModel.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.Tokens, Version=6.33.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.Tokens.6.33.0\lib\net472\Microsoft.IdentityModel.Tokens.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Practices.Unity, Version=2.1.505.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.1.0.0\lib\Net40\Microsoft.Practices.Unity.dll</HintPath>
@@ -365,8 +370,8 @@
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
     </Reference>
-    <Reference Include="System.ClientModel, Version=1.1.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.ClientModel.1.1.0\lib\netstandard2.0\System.ClientModel.dll</HintPath>
+    <Reference Include="System.ClientModel, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ClientModel.1.0.0\lib\netstandard2.0\System.ClientModel.dll</HintPath>
     </Reference>
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -389,8 +394,8 @@
     <Reference Include="System.DirectoryServices" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.IdentityModel" />
-    <Reference Include="System.IdentityModel.Tokens.Jwt, Version=6.35.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.IdentityModel.Tokens.Jwt.6.35.0\lib\net472\System.IdentityModel.Tokens.Jwt.dll</HintPath>
+    <Reference Include="System.IdentityModel.Tokens.Jwt, Version=7.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IdentityModel.Tokens.Jwt.7.6.0\lib\net472\System.IdentityModel.Tokens.Jwt.dll</HintPath>
     </Reference>
     <Reference Include="System.IO, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.IO.4.3.0\lib\net462\System.IO.dll</HintPath>
@@ -596,8 +601,8 @@
     <Compile Include="CommonDataModel\CloseTables\DetailsClassesGenerated\DimensionsUnitDetails.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\DetailsClassesGenerated\DocumentTypeCategoryDetails.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\DetailsClassesGenerated\DueTypeDetails.Generated.cs" />
-    <Compile Include="CommonDataModel\CloseTables\DetailsClassesGenerated\FeatureAccessLevelDetails.Generated.cs" />
-    <Compile Include="CommonDataModel\CloseTables\DetailsClassesGenerated\FeaturePackageTypeDetails.Generated.cs" />
+    <Compile Include="GlobalModel\CloseTables\DetailsClassesGenerated\FeatureAccessLevelDetails.Generated.cs" />
+    <Compile Include="GlobalModel\CloseTables\DetailsClassesGenerated\FeaturePackageTypeDetails.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\DetailsClassesGenerated\HorseGenderDetails.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\DetailsClassesGenerated\INTTRASettingModeDetails.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\DetailsClassesGenerated\LoginPolicyDetails.Generated.cs" />
@@ -634,8 +639,8 @@
     <Compile Include="CommonDataModel\CloseTables\EnumGenerated\DimensionsUnitStruct.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\EnumGenerated\DocumentTypeCategoryStruct.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\EnumGenerated\DueTypeStruct.Generated.cs" />
-    <Compile Include="CommonDataModel\CloseTables\EnumGenerated\FeatureAccessLevelStruct.Generated.cs" />
-    <Compile Include="CommonDataModel\CloseTables\EnumGenerated\FeaturePackageTypeStruct.Generated.cs" />
+    <Compile Include="GlobalModel\CloseTables\EnumGenerated\FeatureAccessLevelStruct.Generated.cs" />
+    <Compile Include="GlobalModel\CloseTables\EnumGenerated\FeaturePackageTypeStruct.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\EnumGenerated\HorseGenderStruct.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\EnumGenerated\INTTRASettingModeStruct.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\EnumGenerated\LoginPolicyStruct.Generated.cs" />
@@ -927,9 +932,9 @@
     <Compile Include="InfrastructureModel\EntityAMs\EntityStatusAM.cs" />
     <Compile Include="InfrastructureModel\EntityAMs\EventTypeAM.cs" />
     <Compile Include="InfrastructureModel\EntityLists\AdditionalCurrencyRateList.cs" />
+    <Compile Include="InfrastructureModel\EntityLists\DefaultAndConfigurationKeyList.cs" />
+    <Compile Include="InfrastructureModel\EntityLists\DefaultAndConfigurationList.cs" />
     <Compile Include="InfrastructureModel\EntityLists\GeneralLockList.cs" />
-    <Compile Include="GlobalModel\EntityLists\DefaultAndConfigurationKeyList.cs" />
-    <Compile Include="GlobalModel\EntityLists\DefaultAndConfigurationList.cs" />
     <Compile Include="InfrastructureModel\EntityLists\EventRemarkList.cs" />
     <Compile Include="InfrastructureModel\EntityLists\CustomFieldList.cs" />
     <Compile Include="InfrastructureModel\EntityLists\CustomFieldsMainObjectList.cs" />
@@ -946,8 +951,8 @@
     <Compile Include="InfrastructureModel\EntityPMs\AdditionalCurrencyRatePM.cs" />
     <Compile Include="InfrastructureModel\EntityPMs\ChildEntitiesCustomFieldPM.cs" />
     <Compile Include="InfrastructureModel\EntityPMs\CurrencyRatePM.cs" />
-    <Compile Include="GlobalModel\EntityPMs\DefaultAndConfigurationKeyPM.cs" />
-    <Compile Include="GlobalModel\EntityPMs\DefaultAndConfigurationPM.cs" />
+    <Compile Include="InfrastructureModel\EntityPMs\DefaultAndConfigurationKeyPM.cs" />
+    <Compile Include="InfrastructureModel\EntityPMs\DefaultAndConfigurationPM.cs" />
     <Compile Include="InfrastructureModel\EntityPMs\EventRemarkPM.cs" />
     <Compile Include="InfrastructureModel\EntityPMs\CustomChildEntity.cs" />
     <Compile Include="InfrastructureModel\EntityPMs\CustomChildObjectPM.cs" />
@@ -968,8 +973,8 @@
     <Compile Include="InfrastructureModel\EntityQueries\AdditionalCurrencyRateQuery.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\ChildEntitiesCustomFieldQuery.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\CurrencyRateQuery.cs" />
-    <Compile Include="GlobalModel\EntityQueries\DefaultAndConfigurationKeyQuery.cs" />
-    <Compile Include="GlobalModel\EntityQueries\DefaultAndConfigurationQuery.cs" />
+    <Compile Include="InfrastructureModel\EntityQueries\DefaultAndConfigurationKeyQuery.cs" />
+    <Compile Include="InfrastructureModel\EntityQueries\DefaultAndConfigurationQuery.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\EventRemarkQueryService.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\CustomChildObjectQuery.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\CustomFieldsMainObjectQuery.cs" />
@@ -984,39 +989,20 @@
     <Compile Include="InfrastructureModel\EntityQueries\QueueMessageQuery.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\QuoteChargesGroupQuery.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\ReferenceCustomObjectQuery.cs" />
-    <Compile Include="InvoiceModel\EntityLists\ExpenseAllocationFlowList.cs" />
-    <Compile Include="InvoiceModel\EntityLists\ExpenseAllocationSettingList.cs" />
-    <Compile Include="InvoiceModel\EntityPMs\ExpenseAllocationFlowPM.cs" />
-    <Compile Include="InvoiceModel\EntityPMs\ExpenseAllocationSettingPM.cs" />
-    <Compile Include="InvoiceModel\EntityQueries\ExpenseAllocationFlowQuery.cs" />
-    <Compile Include="InvoiceModel\EntityQueries\ExpenseAllocationSettingQuery.cs" />
-    <Compile Include="InvoiceModel\Tools\DataMapping\ExpenseAllocationFlowMapping.cs" />
-    <Compile Include="InvoiceModel\Tools\DataMapping\ExpenseAllocationSettingMapping.cs" />
-    <Compile Include="InvoiceModel\Tools\EntityService\ExpenseAllocationFlowService.cs" />
-    <Compile Include="InvoiceModel\Tools\EntityService\ExpenseAllocationSettingService.cs" />
-    <Compile Include="InvoiceModel\CloseTables\DetailsClassesGenerated\MasavInterfaceStatusDetails.Generated.cs" />
-    <Compile Include="InvoiceModel\CloseTables\EnumGenerated\MasavInterfaceStatusStruct.Generated.cs" />
-    <Compile Include="InvoiceModel\CoreBL\Batch\MasavBatchCancelTask.cs" />
-    <Compile Include="InvoiceModel\CoreBL\Batch\MasavBatchTransmissionTask.cs" />
-    <Compile Include="InvoiceModel\EntityLists\MasavInterfaceList.cs" />
-    <Compile Include="InvoiceModel\EntityLists\MasavInterfaceStatusList.cs" />
-    <Compile Include="InvoiceModel\EntityPMs\MasavInterfacePM.cs" />
-    <Compile Include="InvoiceModel\EntityPMs\MasavInterfaceStatusPM.cs" />
-    <Compile Include="InvoiceModel\EntityQueries\MasavInterfaceStatusQuery.cs" />
-    <Compile Include="InvoiceModel\EntityQueries\MasavInterfaceQuery.cs" />
-    <Compile Include="InvoiceModel\Tools\DataMapping\MasavInterfaceMapping.cs" />
-    <Compile Include="InvoiceModel\Tools\EntityService\MasavInterfaceService.cs" />
-    <Compile Include="InvoiceModel\Tools\Exceptions\InvoiceAlreadyApprovedException.cs" />
     <Compile Include="Security\ContactInfo.cs" />
     <Compile Include="ShipmentsModel\EntityLists\FreightForwarderReferenceList.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\FreightForwarderReferencePM.cs" />
-    <Compile Include="ShipmentsModel\EntityPMs\OceanCarrierStatusAPIconfigPM.cs" />
-    <Compile Include="ShipmentsModel\EntityQueries\OceanCarrierStatusAPIconfigQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\ReferenceTypeListQueryService.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\ScreenSectionQuery.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\SearchIndexQuery.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\SearchIndexTenantHistoryQuery.cs" />
     <Compile Include="InfrastructureModel\Services\CustomChildEntityService.cs" />
+    <Compile Include="InfrastructureModel\EntityLists\DefaultAndConfigurationList.cs" />
+    <Compile Include="InfrastructureModel\EntityLists\DefaultAndConfigurationKeyList.cs" />
+    <Compile Include="InfrastructureModel\EntityPMs\DefaultAndConfigurationPM.cs" />
+    <Compile Include="InfrastructureModel\EntityPMs\DefaultAndConfigurationKeyPM.cs" />
+    <Compile Include="InfrastructureModel\EntityQueries\DefaultAndConfigurationQuery.cs" />
+    <Compile Include="InfrastructureModel\EntityQueries\DefaultAndConfigurationKeyQuery.cs" />
     <Compile Include="InfrastructureModel\FieldShortNameGetters\ObjectFieldsShortNamesGetter.cs" />
     <Compile Include="GlobalModel\EntityLists\BluesnapTransactionList.cs" />
     <Compile Include="GlobalModel\EntityLists\HelpResourceList.cs" />
@@ -1065,8 +1051,8 @@
     <Compile Include="InfrastructureModel\Tools\DataMapping\CurrencyRateMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\CustomChildObjectMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\CustomFieldsMainObjectMapping.cs" />
-    <Compile Include="GlobalModel\Tools\DataMapping\DefaultAndConfigurationKeyMapping.cs" />
-    <Compile Include="GlobalModel\Tools\DataMapping\DefaultAndConfigurationMapping.cs" />
+    <Compile Include="InfrastructureModel\Tools\DataMapping\DefaultAndConfigurationKeyMapping.cs" />
+    <Compile Include="InfrastructureModel\Tools\DataMapping\DefaultAndConfigurationMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\DeploymentPackagesVersionMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\DeploymentPackageMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\DataCustomObjectMapping.cs" />
@@ -1082,12 +1068,14 @@
     <Compile Include="InfrastructureModel\Tools\DataMapping\MultiEntityUpdateLogMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\QuoteChargesGroupMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\ScreenSectionMapping.cs" />
+    <Compile Include="InfrastructureModel\Tools\DataMapping\DefaultAndConfigurationMapping.cs" />
+    <Compile Include="InfrastructureModel\Tools\DataMapping\DefaultAndConfigurationKeyMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\WorkerRoleNameMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\RuleUpdateHistoryMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\SchedulerProcedureMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\EntityService\CustomFieldsMainObjectService.cs" />
-    <Compile Include="GlobalModel\Tools\EntityService\DefaultAndConfigurationKeyService.cs" />
-    <Compile Include="GlobalModel\Tools\EntityService\DefaultAndConfigurationService.cs" />
+    <Compile Include="InfrastructureModel\Tools\EntityService\DefaultAndConfigurationKeyService.cs" />
+    <Compile Include="InfrastructureModel\Tools\EntityService\DefaultAndConfigurationService.cs" />
     <Compile Include="InfrastructureModel\Tools\EntityService\DeploymentPackagesVersionService.cs" />
     <Compile Include="InfrastructureModel\Tools\EntityService\DeploymentPackageService.cs" />
     <Compile Include="InfrastructureModel\Tools\EntityService\DataCustomObjectService.cs" />
@@ -1103,6 +1091,8 @@
     <Compile Include="InfrastructureModel\Tools\EntityService\TableTabMappingService.cs" />
     <Compile Include="InfrastructureModel\Tools\EntityService\TableTabModificationService.cs" />
     <Compile Include="InfrastructureModel\Tools\EntityService\ObjectTableTabTextCodeService.cs" />
+    <Compile Include="InfrastructureModel\Tools\EntityService\DefaultAndConfigurationService.cs" />
+    <Compile Include="InfrastructureModel\Tools\EntityService\DefaultAndConfigurationKeyService.cs" />
     <Compile Include="InfrastructureModel\Tools\EntityService\WorkerRoleNameService.cs" />
     <Compile Include="InfrastructureModel\Tools\EntityService\RuleUpdateHistoryService.cs" />
     <Compile Include="InfrastructureModel\Tools\TraceEvents\CurrencyRateTracing.cs" />
@@ -1214,14 +1204,17 @@
     <Compile Include="ShipmentsModel\EntityLists\LogBoxShipmentList.cs" />
     <Compile Include="ShipmentsModel\EntityOtherServices\ContainerShipmentUpdateService.cs" />
     <Compile Include="CommonDataModel\EntityPMs\ExternalLinkPM.cs" />
+    <Compile Include="ShipmentsModel\EntityPMs\OceanInsightsStatusLogPM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\ReferenceTypePM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\ShipmentReferancePM.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\ReferenceTypeQueryService.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\FreightForwarderReferenceQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\ShipmentReferanceQuery.cs" />
+    <Compile Include="ShipmentsModel\Tools\DataMapping\OceanInsightsStatusLogMapping.cs" />
     <Compile Include="ShipmentsModel\Tools\DataMapping\ShipmentMapping.FreightForwarderReference.cs" />
     <Compile Include="ShipmentsModel\Tools\DataMapping\ShipmentMapping.ShipmentReferance.cs" />
     <Compile Include="CommonDataModel\EntityQueries\ExternalLinkQuery.cs" />
+    <Compile Include="ShipmentsModel\Tools\EntityService\OceanInsightsStatusLogService.cs" />
     <Compile Include="ShipmentsModel\Tools\EntityService\FreightForwarderReferenceService.cs" />
     <Compile Include="ShipmentsModel\Tools\EntityService\ShipmentReferanceService.cs" />
     <Compile Include="ShipmentsModel\Tools\ExternalService\ShipmentAdditionalDataService.cs" />
@@ -1577,8 +1570,8 @@
     <Compile Include="CommonDataModel\EntityLists\DueTypeList.cs" />
     <Compile Include="CommonDataModel\EntityLists\EmailProviderList.cs" />
     <Compile Include="CommonDataModel\EntityLists\EntityChangeList.cs" />
-    <Compile Include="CommonDataModel\EntityLists\FeatureChangeList.cs" />
-    <Compile Include="CommonDataModel\EntityLists\FeaturePackageTypeList.cs" />
+    <Compile Include="GlobalModel\EntityLists\FeatureChangeList.cs" />
+    <Compile Include="GlobalModel\EntityLists\FeaturePackageTypeList.cs" />
     <Compile Include="CommonDataModel\EntityLists\FTPDetailList.cs" />
     <Compile Include="CommonDataModel\EntityLists\HybridPartnerList.cs" />
     <Compile Include="CommonDataModel\EntityLists\HybridTenantStateList.cs" />
@@ -1590,18 +1583,18 @@
     <Compile Include="CommonDataModel\EntityLists\RegistryDateTypeList.cs" />
     <Compile Include="CommonDataModel\EntityLists\ReportsTemplateList.cs" />
     <Compile Include="CommonDataModel\EntityLists\ReportsTemplatesVersionList.cs" />
-    <Compile Include="CommonDataModel\EntityLists\RoleList.cs" />
+    <Compile Include="GlobalModel\EntityLists\RoleList.cs" />
     <Compile Include="CommonDataModel\EntityLists\SharedFollowedShipmentList.cs" />
-    <Compile Include="CommonDataModel\EntityLists\FeatureAccessLevelList.cs" />
-    <Compile Include="CommonDataModel\EntityLists\FeatureList.cs" />
-    <Compile Include="CommonDataModel\EntityLists\FeatureTypeList.cs" />
+    <Compile Include="GlobalModel\EntityLists\FeatureAccessLevelList.cs" />
+    <Compile Include="GlobalModel\EntityLists\FeatureList.cs" />
+    <Compile Include="GlobalModel\EntityLists\FeatureTypeList.cs" />
     <Compile Include="CommonDataModel\EntityLists\GlobalZoneList.cs" />
     <Compile Include="CommonDataModel\EntityLists\IncotermList.cs" />
     <Compile Include="CommonDataModel\EntityLists\IndustryList.cs" />
     <Compile Include="CommonDataModel\EntityLists\LeadSourceList.cs" />
     <Compile Include="CommonDataModel\EntityLists\MeasurementList.cs" />
-    <Compile Include="CommonDataModel\EntityLists\PackageFeatureList.cs" />
-    <Compile Include="CommonDataModel\EntityLists\PackageList.cs" />
+    <Compile Include="GlobalModel\EntityLists\PackageFeatureList.cs" />
+    <Compile Include="GlobalModel\EntityLists\PackageList.cs" />
     <Compile Include="CommonDataModel\EntityLists\PackageTypeList.cs" />
     <Compile Include="CommonDataModel\EntityLists\PartnerTypeList.cs" />
     <Compile Include="CommonDataModel\EntityLists\PasswordPolicyList.cs" />
@@ -1615,8 +1608,8 @@
     <Compile Include="CommonDataModel\EntityLists\ReportGroupList.cs" />
     <Compile Include="CommonDataModel\EntityLists\ReportList.cs" />
     <Compile Include="CommonDataModel\EntityLists\RestrictionList.cs" />
-    <Compile Include="CommonDataModel\EntityLists\RoleFeatureList.cs" />
-    <Compile Include="CommonDataModel\EntityLists\RoleTypeList.cs" />
+    <Compile Include="GlobalModel\EntityLists\RoleFeatureList.cs" />
+    <Compile Include="GlobalModel\EntityLists\RoleTypeList.cs" />
     <Compile Include="CommonDataModel\EntityLists\ShippingAgentList.cs" />
     <Compile Include="CommonDataModel\EntityLists\ShippingLineList.cs" />
     <Compile Include="CommonDataModel\EntityLists\StateList.cs" />
@@ -1741,14 +1734,14 @@
     <Compile Include="CommonDataModel\EntityPMs\HybridPartnerPM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\LogitudeMessagesTransmissionLogPM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\MetodoPagoPM.cs" />
-    <Compile Include="CommonDataModel\EntityPMs\PackageConnectedPackagePM.cs" />
+    <Compile Include="GlobalModel\EntityPMs\PackageConnectedPackagePM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\ParticipantPM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\PaymentTermDateTypePM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\ReportsTemplatePM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\ReportsTemplatesVersionPM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\SharedFollowedShipmentPM.cs" />
-    <Compile Include="CommonDataModel\EntityPMs\FeaturePM.cs" />
-    <Compile Include="CommonDataModel\EntityPMs\FeatureTypePM.cs" />
+    <Compile Include="GlobalModel\EntityPMs\FeaturePM.cs" />
+    <Compile Include="GlobalModel\EntityPMs\FeatureTypePM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\FormCustomFieldPM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\GlobalZonePM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\IncotermPM.cs" />
@@ -1756,8 +1749,8 @@
     <Compile Include="CommonDataModel\EntityPMs\LeadSourcePM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\MAWBStackPM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\MeasurementPM.cs" />
-    <Compile Include="CommonDataModel\EntityPMs\PackageFeaturePM.cs" />
-    <Compile Include="CommonDataModel\EntityPMs\PackagePM.cs" />
+    <Compile Include="GlobalModel\EntityPMs\PackageFeaturePM.cs" />
+    <Compile Include="GlobalModel\EntityPMs\PackagePM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\PackageTypePM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\PartnersSearchClass.cs" />
     <Compile Include="CommonDataModel\EntityPMs\PartnerTypePM.cs" />
@@ -1773,9 +1766,9 @@
     <Compile Include="CommonDataModel\EntityPMs\ReportGroupPM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\ReportPM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\RestrictionPM.cs" />
-    <Compile Include="CommonDataModel\EntityPMs\RoleFeaturePM.cs" />
-    <Compile Include="CommonDataModel\EntityPMs\RolePM.cs" />
-    <Compile Include="CommonDataModel\EntityPMs\RoleTypePM.cs" />
+    <Compile Include="GlobalModel\EntityPMs\RoleFeaturePM.cs" />
+    <Compile Include="GlobalModel\EntityPMs\RolePM.cs" />
+    <Compile Include="GlobalModel\EntityPMs\RoleTypePM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\SharedLogisticContactPM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\SharedLogisticDocumentPM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\SharedLogisticsPM.cs" />
@@ -1805,7 +1798,7 @@
     <Compile Include="CommonDataModel\EntityPMs\UserPermittedBranchPM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\UserPermittedProductPM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\UserPM.cs" />
-    <Compile Include="CommonDataModel\EntityPMs\UserRolesPM.cs" />
+    <Compile Include="GlobalModel\EntityPMs\UserRolesPM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\UsoCFDIPM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\VatTypePercentagePM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\VatTypePM.cs" />
@@ -1900,7 +1893,7 @@
     <Compile Include="CommonDataModel\EntityQueries\DueTypeQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\EmailProviderQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\EntityChangeQuery.cs" />
-    <Compile Include="CommonDataModel\EntityQueries\FeaturePackageTypeQuery.cs" />
+    <Compile Include="GlobalModel\EntityQueries\FeaturePackageTypeQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\FTPDetailQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\HybridPartnerQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\HybridTenantStateQuery.cs" />
@@ -1908,15 +1901,15 @@
     <Compile Include="CommonDataModel\EntityQueries\ICurrencyQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\LogitudeMessagesTransmissionLogQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\MetodoPagoQuery.cs" />
-    <Compile Include="CommonDataModel\EntityQueries\PackageConnectedPackageQuery.cs" />
+    <Compile Include="GlobalModel\EntityQueries\PackageConnectedPackageQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\ParticipantQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\PaymentTermDateTypeQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\RegistryDateTypeQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\ReportsTemplateQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\ReportsTemplatesVersionQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\SharedFollowedShipmentQuery.cs" />
-    <Compile Include="CommonDataModel\EntityQueries\FeatureAccessLevelQuery.cs" />
-    <Compile Include="CommonDataModel\EntityQueries\FeatureQuery.cs" />
+    <Compile Include="GlobalModel\EntityQueries\FeatureAccessLevelQuery.cs" />
+    <Compile Include="GlobalModel\EntityQueries\FeatureQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\FormCustomFieldQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\GlobalZoneQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\IncotermQuery.cs" />
@@ -1924,8 +1917,8 @@
     <Compile Include="CommonDataModel\EntityQueries\LeadSourceQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\MAWBStackQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\MeasurementQuery.cs" />
-    <Compile Include="CommonDataModel\EntityQueries\PackageFeatureQuery.cs" />
-    <Compile Include="CommonDataModel\EntityQueries\PackageQuery.cs" />
+    <Compile Include="GlobalModel\EntityQueries\PackageFeatureQuery.cs" />
+    <Compile Include="GlobalModel\EntityQueries\PackageQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\PackageTypeQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\PartnerTypeQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\PasswordPolicyQuery.cs" />
@@ -1939,8 +1932,8 @@
     <Compile Include="CommonDataModel\EntityQueries\ReportGroupQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\ReportQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\RestrictionQuery.cs" />
-    <Compile Include="CommonDataModel\EntityQueries\RoleFeatureQuery.cs" />
-    <Compile Include="CommonDataModel\EntityQueries\RoleQuery.cs" />
+    <Compile Include="GlobalModel\EntityQueries\RoleFeatureQuery.cs" />
+    <Compile Include="GlobalModel\EntityQueries\RoleQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\SharedLogisticsQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\SharedManifestTranslationQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\ShippingAgentQuery.cs" />
@@ -2060,7 +2053,7 @@
     <Compile Include="CommonDataModel\Tools\DataMapping\DocumentTypeTemplateMapping.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\EmailProviderMapping.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\EntityChangeMapping.cs" />
-    <Compile Include="CommonDataModel\Tools\DataMapping\FeatureMapping.cs" />
+    <Compile Include="GlobalModel\Tools\DataMapping\FeatureMapping.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\FormCustomFieldMapping.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\GlobalZoneMapping.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\HybridPartnerMapping.cs" />
@@ -2070,8 +2063,8 @@
     <Compile Include="CommonDataModel\Tools\DataMapping\LeadSourceMapping.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\MAWBStackMapping.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\MeasurementMapping.cs" />
-    <Compile Include="CommonDataModel\Tools\DataMapping\PackageFeatureMapping.cs" />
-    <Compile Include="CommonDataModel\Tools\DataMapping\PackageMapping.cs" />
+    <Compile Include="GlobalModel\Tools\DataMapping\PackageFeatureMapping.cs" />
+    <Compile Include="GlobalModel\Tools\DataMapping\PackageMapping.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\PackageTypeMapping.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\ParticipantMapping.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\PaymentTermMapping.cs" />
@@ -2081,8 +2074,8 @@
     <Compile Include="CommonDataModel\Tools\DataMapping\RegionMapping.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\ReportMapping.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\RestrictionMapping.cs" />
-    <Compile Include="CommonDataModel\Tools\DataMapping\RoleFeatureMapping.cs" />
-    <Compile Include="CommonDataModel\Tools\DataMapping\RoleMapping.cs" />
+    <Compile Include="GlobalModel\Tools\DataMapping\RoleFeatureMapping.cs" />
+    <Compile Include="GlobalModel\Tools\DataMapping\RoleMapping.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\SharedManifestTranslationMapping.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\ShippingAgentMapping.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\ShippingLineMapping.cs" />
@@ -2172,7 +2165,7 @@
     <Compile Include="CommonDataModel\Tools\EntityService\DocumentTypeTemplateService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\EmailProviderService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\EntityChangeService.cs" />
-    <Compile Include="CommonDataModel\Tools\EntityService\FeatureService.cs" />
+    <Compile Include="GlobalModel\Tools\EntityService\FeatureService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\FormCustomFieldService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\GlobalZoneService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\HybridPartnerService.cs" />
@@ -2184,8 +2177,8 @@
     <Compile Include="CommonDataModel\Tools\EntityService\LogitudeMessagesTransmissionLogService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\MAWBStackService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\MeasurementService.cs" />
-    <Compile Include="CommonDataModel\Tools\EntityService\PackageFeatureService.cs" />
-    <Compile Include="CommonDataModel\Tools\EntityService\PackageService.cs" />
+    <Compile Include="GlobalModel\Tools\EntityService\PackageFeatureService.cs" />
+    <Compile Include="GlobalModel\Tools\EntityService\PackageService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\PackageTypeService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\ParticipantService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\PaymentTermService.cs" />
@@ -2195,8 +2188,8 @@
     <Compile Include="CommonDataModel\Tools\EntityService\RegionService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\ReportService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\RestrictionService.cs" />
-    <Compile Include="CommonDataModel\Tools\EntityService\RoleFeatureService.cs" />
-    <Compile Include="CommonDataModel\Tools\EntityService\RoleService.cs" />
+    <Compile Include="GlobalModel\Tools\EntityService\RoleFeatureService.cs" />
+    <Compile Include="GlobalModel\Tools\EntityService\RoleService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\ShippingAgentService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\ShippingLineService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\StateService.cs" />
@@ -2253,7 +2246,7 @@
     <Compile Include="CommonDataModel\Tools\TraceEvents\DocumentTypeCustomFieldTracing.cs" />
     <Compile Include="CommonDataModel\Tools\TraceEvents\DocumentTypeTemplateTracing.cs" />
     <Compile Include="CommonDataModel\Tools\TraceEvents\DocumentTypeTracing.cs" />
-    <Compile Include="CommonDataModel\Tools\TraceEvents\FeatureTracing.cs" />
+    <Compile Include="GlobalModel\Tools\TraceEvents\FeatureTracing.cs" />
     <Compile Include="CommonDataModel\Tools\TraceEvents\FormCustomFieldTracing.cs" />
     <Compile Include="CommonDataModel\Tools\TraceEvents\GlobalZoneTracing.cs" />
     <Compile Include="CommonDataModel\Tools\TraceEvents\IncotermTracing.cs" />
@@ -2261,7 +2254,7 @@
     <Compile Include="CommonDataModel\Tools\TraceEvents\LeadSourceTracing.cs" />
     <Compile Include="CommonDataModel\Tools\TraceEvents\MAWBStackTracing.cs" />
     <Compile Include="CommonDataModel\Tools\TraceEvents\MeasurementTracing.cs" />
-    <Compile Include="CommonDataModel\Tools\TraceEvents\PackageFeatureTracing.cs" />
+    <Compile Include="GlobalModel\Tools\TraceEvents\PackageFeatureTracing.cs" />
     <Compile Include="CommonDataModel\Tools\TraceEvents\PackageTypeTracing.cs" />
     <Compile Include="CommonDataModel\Tools\TraceEvents\ParticipantTracing.cs" />
     <Compile Include="CommonDataModel\Tools\TraceEvents\PaymentTermTracing.cs" />
@@ -2271,8 +2264,8 @@
     <Compile Include="CommonDataModel\Tools\TraceEvents\RegionTracing.cs" />
     <Compile Include="CommonDataModel\Tools\TraceEvents\ReportTracing.cs" />
     <Compile Include="CommonDataModel\Tools\TraceEvents\RestrictionTracing.cs" />
-    <Compile Include="CommonDataModel\Tools\TraceEvents\RoleFeatureTracing.cs" />
-    <Compile Include="CommonDataModel\Tools\TraceEvents\RoleTracing.cs" />
+    <Compile Include="GlobalModel\Tools\TraceEvents\RoleFeatureTracing.cs" />
+    <Compile Include="GlobalModel\Tools\TraceEvents\RoleTracing.cs" />
     <Compile Include="CommonDataModel\Tools\TraceEvents\ShippingAgentTracing.cs" />
     <Compile Include="CommonDataModel\Tools\TraceEvents\ShippingLineTracing.cs" />
     <Compile Include="CommonDataModel\Tools\TraceEvents\StateTracing.cs" />
@@ -2324,7 +2317,7 @@
     <Compile Include="CommonDataModel\Tools\Validating\DocumentTypeValidating.cs" />
     <Compile Include="CommonDataModel\Tools\Validating\DocumentValidating.cs" />
     <Compile Include="CommonDataModel\Tools\Validating\EmailProviderValidating.cs" />
-    <Compile Include="CommonDataModel\Tools\Validating\FeatureValidating.cs" />
+    <Compile Include="GlobalModel\Tools\Validating\FeatureValidating.cs" />
     <Compile Include="CommonDataModel\Tools\Validating\FormCustomFieldValidating.cs" />
     <Compile Include="CommonDataModel\Tools\Validating\GlobalZoneValidating.cs" />
     <Compile Include="CommonDataModel\Tools\Validating\IncotermValidating.cs" />
@@ -2332,9 +2325,9 @@
     <Compile Include="CommonDataModel\Tools\Validating\LeadSourceValidating.cs" />
     <Compile Include="CommonDataModel\Tools\Validating\MAWBStackValidating.cs" />
     <Compile Include="CommonDataModel\Tools\Validating\MeasurementValidating.cs" />
-    <Compile Include="CommonDataModel\Tools\Validating\PackageFeatureValidating.cs" />
+    <Compile Include="GlobalModel\Tools\Validating\PackageFeatureValidating.cs" />
     <Compile Include="CommonDataModel\Tools\Validating\PackageTypeValidating.cs" />
-    <Compile Include="CommonDataModel\Tools\Validating\PackageValidating.cs" />
+    <Compile Include="GlobalModel\Tools\Validating\PackageValidating.cs" />
     <Compile Include="CommonDataModel\Tools\Validating\ParticipantValidating.cs" />
     <Compile Include="CommonDataModel\Tools\Validating\PaymentTermValidating.cs" />
     <Compile Include="CommonDataModel\Tools\Validating\PortValidating.cs" />
@@ -2342,8 +2335,8 @@
     <Compile Include="CommonDataModel\Tools\Validating\RankValidating.cs" />
     <Compile Include="CommonDataModel\Tools\Validating\ReportValidating.cs" />
     <Compile Include="CommonDataModel\Tools\Validating\RestrictionValidating.cs" />
-    <Compile Include="CommonDataModel\Tools\Validating\RoleFeatureValidating.cs" />
-    <Compile Include="CommonDataModel\Tools\Validating\RoleValidating.cs" />
+    <Compile Include="GlobalModel\Tools\Validating\RoleFeatureValidating.cs" />
+    <Compile Include="GlobalModel\Tools\Validating\RoleValidating.cs" />
     <Compile Include="CommonDataModel\Tools\Validating\ShippingAgentValidating.cs" />
     <Compile Include="CommonDataModel\Tools\Validating\ShippingLineValidating.cs" />
     <Compile Include="CommonDataModel\Tools\Validating\StateValidating.cs" />

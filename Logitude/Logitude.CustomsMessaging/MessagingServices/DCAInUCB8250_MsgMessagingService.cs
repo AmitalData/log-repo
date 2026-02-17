@@ -23,6 +23,7 @@ using UnifreightIIG.Common.SystemTableServiceReference;
 using Logitude.Customs.Data.Repsitories;
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.GlobalModel.EntityQueries;
 
 namespace Logitude.CustomsMessaging.MessagingServices
 {
@@ -103,7 +104,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
             //{
             //var RequestInProgressList2 = customsRequestsSheetQS.GetRequestInProgressByIds(tenant, "8250", objectTableId2, Ids, false);
             List<CustomsRequestsSheetPM> RequestInProgressList2 ;
-            FeatureQuery featureQuery = new FeatureQuery(tenant);
+            FeatureQuery featureQuery = new FeatureQuery();
 
             var features = featureQuery.GetAllowedFeaturesForLoggedUser(LoggingUserId, tenant);
 

@@ -26,7 +26,8 @@ using System.Transactions;
 using Logitude.Customs.BL.Messaging.U2L.Scheduler;
 using Simplog.Server.Infrastructure.DataContracts;
 using Logitude.Customs.BL.BL;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; 
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.Server.Tools;
 using Logitude.BL.Security;
 using System.Net.Http;
@@ -47,6 +48,7 @@ using Logitude.Customs.Data.EntityMapping;
 using Logitude.Customs.BL.TraceEvents;
 using System.Runtime.CompilerServices;
 using System.Runtime.Remoting.Contexts;
+using Logitude.BL.GlobalModel.EntityQueries;
 
 namespace Logitude.Customs.BL.BL
 {
@@ -505,7 +507,7 @@ namespace Logitude.Customs.BL.BL
 					}
 				}
 			}
-			FeatureQuery featureQuery = new FeatureQuery(_tenant);
+			FeatureQuery featureQuery = new FeatureQuery();
 			var features = featureQuery.GetAllowedFeaturesForLoggedUser(AuthenticationUtil.ResolveUserId(_tenant), _tenant);
 			var featureBTPA = features.Features.FirstOrDefault(x => x.Code == "BTPA");
 			if ((_MyDeclarationPM.ImporterEntitlementTypeCode == "17" || _MyDeclarationPM.ImporterEntitlementTypeCode == "18") && featureBTPA != null)

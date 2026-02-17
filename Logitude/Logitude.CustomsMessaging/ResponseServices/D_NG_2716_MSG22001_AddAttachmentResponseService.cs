@@ -1,18 +1,28 @@
 ﻿using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
-using Logitude.Customs.Def.EntityPMs;
+using Logitude.BL.GlobalModel.EntityQueries;
+using Logitude.Customs.BL.BL;
 using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.BL.EntityUpdateServices;
 using Logitude.Customs.BL.Messaging.Customs;
+using Logitude.Customs.BL.Messaging.Customs.SignQueueBL;
 using Logitude.Customs.Data;
+using Logitude.Customs.Def.EntityPMs;
+using Logitude.Customs.Def.EntityQueryServicesExt;
 using Logitude.CustomsMessaging.Common.RequestParams;
 using Logitude.CustomsMessaging.Common.ResponseData;
 using Logitude.CustomsMessaging.Helpers;
 using Logitude.CustomsMessaging.MessagingServices;
+using Logitude.Server.Tools;
 using Logitude.Server.Tools.Helpers;
+using Logitude.Server.Tools.Utils;
+using Microsoft.Practices.Unity;
 using Simplog.Data.CommonDataModel;
+using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Global.Data.GlobalModel;
+using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
@@ -22,15 +32,8 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using UnifreightIIG.Common.GlobalScannedAttachmentToEntityServiceReference;
-using Logitude.Server.Tools.Utils;
-using Logitude.Customs.BL.BL;
-using Logitude.Customs.Def.EntityQueryServicesExt;
-using Logitude.Server.Tools;
-using Microsoft.Practices.Unity;
-using Simplog.Data.CommonDataModel.Repositories;
-using Logitude.Customs.BL.Messaging.Customs.SignQueueBL;
 using System.Transactions;
+using UnifreightIIG.Common.GlobalScannedAttachmentToEntityServiceReference;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -393,8 +396,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         private void SendAutomaticReadyDeclaration(DeclarationPM declaration)
         {
-            // determine if the export diamonds feature is enabled to allow autosending
-            ICommonDataContext myContextCommon = CommonDataContext.GetContext(declaration.Tenant);
+			// determine if the export diamonds feature is enabled to allow autosending
+			IGlobalContext myContextCommon = GlobalContext.GetContext();
             FeatureRepository myFeatureRepository = new FeatureRepository(myContextCommon);
             FeatureQuery featureQuery = new FeatureQuery(myFeatureRepository);
             var features = featureQuery.GetAllowedFeaturesForLoggedUser(AuthenticationUtil.ResolveUserId(declaration.Tenant), declaration.Tenant);
@@ -409,7 +412,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 var loggedUserId = string.Empty;
 
                 var objecttableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
-                if (signQueueHSMService.IsHSMSign_IsOn(declaration.Tenant, GetHsmStationContext(declaration)))
+                if (signQueueHSMService.IsHSMSign_IsOn(declaration.Tenant))
                 {
                     loggedUserId = AuthenticationUtil.ResolveUserId(declaration.Tenant);
                 }
@@ -444,7 +447,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             ForceCompanySign = false,
                             LoggingObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration"),
                             FutureSendDateTime = DateTime.Now.AddMinutes(5),
-                            HsmStationContext = GetHsmStationContext(declaration),
+
                         };
 
                         LogMessagingUtil.Instance.AppendLine("Send declaration to mehes");
@@ -470,7 +473,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             ForceCompanySign = false,
                             LoggingObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration"),
                             FutureSendDateTime = futureSendTime,
-                            HsmStationContext = GetHsmStationContext(declaration),
+
                         };
 
                         LogMessagingUtil.Instance.AppendLine("Send declaration to mehes");
@@ -546,16 +549,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             }
         }
-        private string GetHsmStationContext(DeclarationPM declarationPM)
-        {
-            if (declarationPM != null && declarationPM.IsCourierDeclaration == true)
-                return "Ecom";       
 
-            if (declarationPM != null && string.Equals(declarationPM.Direction, "E", StringComparison.OrdinalIgnoreCase))
-                return "MehesExport"; 
-
-            return "Customs";         
-        }
         //private void UpdateDeclarationCourierStatus(ICustomContext context, CustomsDocumentPM entityPM, string declaretionId)
         //{
 

@@ -33,6 +33,9 @@ using Simplog.Data.CommonDataModel;
 using System.IO;
 using System.Xml.Serialization;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Simplog.Global.Data.GlobalModel.Repositories;
+using Logitude.BL.GlobalModel.EntityQueries;
+using Simplog.Global.Data.GlobalModel;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -1207,7 +1210,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
         private void SendSoyStatusToUnifreight(DF_NG_2757_MSG10004_ExportDeclarationResponse customResponse, string userId, string additionalComment = null, DateTime? dateTime = null)
         {
             // determine if the export diamonds feature is enabled to allow autosending
-            ICommonDataContext myContextCommon = CommonDataContext.GetContext(this._MyDeclarationPM.Tenant);
+            IGlobalContext myContextCommon = GlobalContext.GetContext(this._MyDeclarationPM.Tenant);
             FeatureRepository myFeatureRepository = new FeatureRepository(myContextCommon);
             FeatureQuery featureQuery = new FeatureQuery(myFeatureRepository);
             var features = featureQuery.GetAllowedFeaturesForLoggedUser(AuthenticationUtil.ResolveUserId(this._MyDeclarationPM.Tenant), this._MyDeclarationPM.Tenant);

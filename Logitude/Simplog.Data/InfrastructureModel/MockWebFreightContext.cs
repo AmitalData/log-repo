@@ -10,6 +10,7 @@ using System.Data.Entity;
 using Simplog.Server.Infrastructure.Helpers;
 
 
+
 namespace Simplog.Data.InfrastructureModel
 {
     public class MockWebFreightContext : IWebFreightContext
@@ -127,10 +128,6 @@ namespace Simplog.Data.InfrastructureModel
             get { throw new NotImplementedException(); }
         }
 
-        public IDbSet<Role> Roles
-        {
-            get { throw new NotImplementedException(); }
-        }
 
         #region IWebFreightContext Members
 
@@ -1815,28 +1812,6 @@ namespace Simplog.Data.InfrastructureModel
             get { throw new NotImplementedException(); }
         }
 
-        public IDbSet<FeatureType> FeatureTypes
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        public IDbSet<RoleType> RoleTypes
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-
-        public IDbSet<Package> Packages
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-
-        public IDbSet<PackageFeature> PackageFeatures
-        {
-            get { throw new NotImplementedException(); }
-        }
-
 
         public IDbSet<RuleConditionField> RuleConditionFields
         {
@@ -2119,8 +2094,15 @@ namespace Simplog.Data.InfrastructureModel
         public IDbSet<DeploymentPackagesVersion> DeploymentPackagesVersions => throw new NotImplementedException();
         public IDbSet<CustomFieldsMainObject> CustomFieldsMainObjects => throw new NotImplementedException();
         public IDbSet<DeploymentPackageExecutionLog> DeploymentPackageExecutionLogs => throw new NotImplementedException();
+
         public IDbSet<EventRemark> EventRemarks => throw new NotImplementedException();
+
+        public IDbSet<DefaultAndConfiguration> DefaultAndConfigurations => throw new NotImplementedException();
+
+        public IDbSet<DefaultAndConfigurationKey> DefaultAndConfigurationKey => throw new NotImplementedException();
         public IDbSet<SearchIndex> SearchIndexes => throw new NotImplementedException();
         public IDbSet<SearchIndexTenantHistory> SearchIndexTenantHistories => throw new NotImplementedException();
+
+
     }
 }

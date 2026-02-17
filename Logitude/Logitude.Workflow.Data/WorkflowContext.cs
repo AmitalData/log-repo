@@ -1,7 +1,8 @@
 using Logitude.Workflow.Data.EntityMapping;
 using Logitude.Workflow.Data.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Mapping;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; 
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Mapping;
 using Simplog.Data.InvoiceModel.Mapping;
 using Simplog.Data.QuoteModel.Mapping;
@@ -12,6 +13,7 @@ using Simplog.Server.Infrastructure;
 using System.Data.Common;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
+using Simplog.Global.Data.GlobalModel.Mapping;
 
 namespace Logitude.Workflow.Data
 {

@@ -15,17 +15,17 @@ export type AmitalAPIDataListWindowParams = {
     template: `
             <h1>Partner {{data.clientAPIs[0].PartnerName}}</h1>
             <h1>Authentication Api: Get Access Token (Body params)</h1>
-            <p><span class='label'>address:</span> <span class='value'>{{data.amitalApiSettings.authAddress}}</span></p>
-            <p><span class='label'>client_id:</span> <span class='value'>{{data.azureClientId}}</span></p>
-            <p><span class='label'>client_secret:</span> <span class='value'>{{data.secretValue}}</span></p>
-            <p><span class='label'>scope:</span> <span class='value'>{{data.amitalApiSettings.AuthScope}}</span></p>
+            <p><span class='label'>Address:</span> <span class='value'>{{data.amitalApiSettings.authAddress}}</span></p>
+            <p><span class='label'>Client ID:</span> <span class='value'>{{data.azureClientId}}</span></p>
+            <p><span class='label'>Client Secret:</span> <span class='value'>{{data.secretValue}}</span></p>
+            <p><span class='label'>Scope:</span> <span class='value'>{{data.amitalApiSettings.AuthScope}}</span></p>
 
             <ng-container *ngFor="let clientapi of data.clientAPIs">
                 <h1>API Name: {{clientapi.ApiType}} (Header Params)</h1>
                 <p><span class='label'>address: </span><span class='value'>{{clientapi.Address}}</span></p>
-                <p><span class='label'>partner-token: </span><span class='value'>{{clientapi.PartnerToken}}</span></p>
+                <p><span class='label'>pratner-token: </span><span class='value'>{{clientapi.PartnerToken}}</span></p>
                 <p><span class='label'>api-token: </span><span class='value'>{{clientapi.Id}}</span></p>
-                <p><span class='label'>caller-objectid: </span><span class='value'>{{data.azureManagedApplObjId}}</span></p>
+                <p><span class='label'>caller-objectId: </span><span class='value'>{{data.azureManagedApplObjId}}</span></p>
             </ng-container>            
     `,
     styles: [`

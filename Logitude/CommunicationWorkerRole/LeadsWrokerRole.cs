@@ -236,19 +236,20 @@ namespace CommunicationWorkerRole
             int demoTenant = GetDemoTenant(lead);
 
             ICommonDataContext commonContext = CommonDataContext.GetContext(crmTenant);
+			IGlobalContext globalContext = GlobalContext.GetContext();
 
-            userRepository = new UserRepository(demoTenant);
+			userRepository = new UserRepository(demoTenant);
             UserQuery userQuery = new UserQuery(userRepository);
             BranchRepository branchRepository = new BranchRepository(demoTenant);
             DepartmentRepository departmentRepository = new DepartmentRepository(demoTenant);
-            RoleRepository roleRepository = new RoleRepository(demoTenant);
+            RoleRepository roleRepository = new RoleRepository();
 
 
             ICRMContext crmContext = CRMContext.GetContext(crmTenant);
 
             BranchRepository branchRep = new BranchRepository(commonContext);
             DepartmentRepository departmentRep = new DepartmentRepository(commonContext);
-            RoleRepository roleRep = new RoleRepository(commonContext);
+            RoleRepository roleRep = new RoleRepository(globalContext);
             ContactRepository contactRepository = new ContactRepository(commonContext);
 
             OpportunityUpdateService opportunityService = new OpportunityUpdateService(crmContext);
@@ -268,7 +269,7 @@ namespace CommunicationWorkerRole
             User ownerUser = userRepository.GetSingleUserByEmail(ownerEmail, crmTenant, false);
             Branch branch = branchRep.GetBranchByName("Main Office", crmTenant);
             Simplog.Data.CommonDataModel.EntityPOCOs.Department department = departmentRep.GetDepartmentByName("Management", crmTenant);
-            Simplog.Data.CommonDataModel.EntityPOCOs.Role role = roleRep.GetSingleByCode("ADMN", 0);
+            Simplog.Global.Data.GlobalModel.EntityPOCOs.Role role = roleRep.GetSingleByCode("ADMN", 0);
 
 
             ObjectTableRepository objectTableRepository = new ObjectTableRepository(0);
@@ -364,13 +365,10 @@ namespace CommunicationWorkerRole
                         country = countryRepository.GetSingleCountryByCode("--", crmTenant);
 
                     }
-                    Dictionary<string, string> counterAdditionalParameters = new Dictionary<string, string>() { { "[B]", "" }, { "[BranchName]", "" } };
 
-                    counterAdditionalParameters["[B]"] = "CS";
-                    counterAdditionalParameters["[BranchName]"] = "CS";
                     CustomerPM customerPM = new CustomerPM()
                     {
-                        Code = TableCounter.DoesCounterDefinitionExist("CADC",crmTenant, "CS") ? TableCounter.GetNumber(crmTenant, "CADC", "CS", null, counterAdditionalParameters, true): CodeCounter.GetNumber("Customer", crmTenant).ToString(),
+                        Code = CodeCounter.GetNumber("Customer", crmTenant).ToString(),
                         PartnerTypeId = "PO",
                         Tenant = crmTenant,
                         EnglishName = TruncateLongString(lead.CompanyName, 70),

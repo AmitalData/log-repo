@@ -261,7 +261,7 @@ namespace Logitude.BL.GlobalModel.Tools.TraceEvents
         private static string BuildPackagesNotes(TenantManagement poco, TenantManagementPM entityPM)
         {
             var notesTemp = "";
-            PackageRepository repo = new PackageRepository(0);
+            PackageRepository repo = new PackageRepository();
             Package entity_Pm = repo.GetSinglePackage(entityPM.PackageCode);
             Package package_Poco = repo.GetSinglePackage(poco.PackageCode);
 
@@ -329,7 +329,7 @@ namespace Logitude.BL.GlobalModel.Tools.TraceEvents
         private static string BuildAdditionalPackageNotes(List<TenantManagementLicensePM> additionalPackages)
         {
             var notes = "";
-            PackageRepository repo = new PackageRepository(0);
+            PackageRepository repo = new PackageRepository();
             Package package;
 
             foreach (var item in additionalPackages)

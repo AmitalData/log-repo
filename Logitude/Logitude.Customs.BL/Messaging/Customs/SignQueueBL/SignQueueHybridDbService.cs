@@ -16,6 +16,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Simplog.Global.Data.GlobalModel;
+using Simplog.Global.Data.GlobalModel.Repositories;
+using Logitude.BL.GlobalModel.EntityQueries;
 
 namespace Logitude.Customs.BL.Messaging.Customs.SignQueueBL
 {
@@ -120,9 +123,9 @@ namespace Logitude.Customs.BL.Messaging.Customs.SignQueueBL
             );
             return entityLists;
         }
-        public (string signCertificate, SignMethodByQueueEnum dSignMethodByQueue) GetAvailableSignServer(int tenant, SignQueueByType SignatureBy, string personId,bool isCloud = false, string OverrideSignStepName = null, string hsmStationContext = null)
+        public (string signCertificate, SignMethodByQueueEnum dSignMethodByQueue) GetAvailableSignServer(int tenant, SignQueueByType SignatureBy, string personId,bool isCloud = false)
         {
-			ICommonDataContext myContextCommon = CommonDataContext.GetContext(tenant);
+			IGlobalContext myContextCommon = GlobalContext.GetContext();
 			FeatureRepository myFeatureRepository = new FeatureRepository(myContextCommon);
 			FeatureQuery featureQuery = new FeatureQuery(myFeatureRepository);
 
@@ -132,9 +135,9 @@ namespace Logitude.Customs.BL.Messaging.Customs.SignQueueBL
 
             var hSMAllCertificates = new List<MySignStationList>();
             var hSMSignService = new SignQueueHSMService();
-            if (hSMSignService.IsHSMSign_IsOn(tenant, hsmStationContext))
+            if (hSMSignService.IsHSMSign_IsOn(tenant))
             {
-                hSMAllCertificates = hSMSignService.GetHSMAllCertificates(tenant, hsmStationContext: hsmStationContext);
+                hSMAllCertificates = hSMSignService.GetHSMAllCertificates(tenant);
             }
                 switch (SignatureBy)
             {

@@ -21,6 +21,7 @@ using Logitude.TariffModule.Data.EntityPOCOs;
 using Logitude.TariffModule.Data; 
 using Logitude.TariffModule.Data.EntityMapping;
 using Devart.Data.Oracle.Entity.Configuration;
+using Simplog.Global.Data.GlobalModel.Mapping;
 
 namespace Logitude.TariffModule.Data
 {

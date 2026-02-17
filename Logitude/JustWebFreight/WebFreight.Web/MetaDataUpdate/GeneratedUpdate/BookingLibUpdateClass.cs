@@ -8,10 +8,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; 
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; 
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using WebFreight.Web.MetaDataUpdate.AddClasses;
 using WebFreight.Web.MetaDataUpdate.DetailClasses;
@@ -20,6 +22,8 @@ using Logitude.Server.Tools.Helpers;
 using System.Transactions;
 using Simplog.Server.Infrastructure.Helpers;
 using WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses;
+using Simplog.Global.Data.GlobalModel.Repositories;
+using Simplog.Global.Data.GlobalModel;
 
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 {
@@ -90,7 +94,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 			EventTypeRepository = new EventTypeRepository(ObjectContext);
 			menuButtonRepository = new MenuButtonRepository(ObjectContext);
 			menuButtonGroupRepository = new MenuButtonGroupRepository(ObjectContext);
-			FeaturesRepository = new FeatureRepository(CommonContext);
+			FeaturesRepository = new FeatureRepository(GlobalContext.GetContext());
 			EntityStatusRepository = new EntityStatusRepository(context);
 
             TextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToDictionary(d => d.Code + d.Tenant.ToString() + d.ObjectTableId, a => a, StringComparer.OrdinalIgnoreCase);
@@ -157,7 +161,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 			EventTypeRepository = new EventTypeRepository(ObjectContext);
 			menuButtonRepository = new MenuButtonRepository(ObjectContext);
 			menuButtonGroupRepository = new MenuButtonGroupRepository(ObjectContext);
-			FeaturesRepository = new FeatureRepository(CommonContext);
+			FeaturesRepository = new FeatureRepository(GlobalContext.GetContext());
 			EntityStatusRepository = new EntityStatusRepository(context);
 
             ObjectTables = ObjectTableRepository.GetObjectsByTenant(0).ToDictionary(d => d.Name, a => a);

@@ -6,7 +6,8 @@ using System.ServiceModel;
 using System.ServiceModel.Activation;
 using System.Text;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; 
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using System.Transactions;
@@ -19,6 +20,9 @@ using Logitude.Server.Tools.Helpers;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
 using Logitude.BL.Validators;
 using Simplog.Server.Infrastructure;
+using Simplog.Global.Data.GlobalModel.Repositories;
+using Logitude.BL.GlobalModel.EntityQueries;
+using Simplog.Global.Data.GlobalModel;
 
 namespace WebFreight.Web.WcfApi
 {
@@ -52,10 +56,12 @@ namespace WebFreight.Web.WcfApi
                     }
 
                     ICommonDataContext objectContext = CommonDataContext.GetContext(entityPM.Tenant);
-                    UserRepository userRepository = new UserRepository(objectContext);
+					IGlobalContext globalContext = GlobalContext.GetContext(entityPM.Tenant);
+
+					UserRepository userRepository = new UserRepository(objectContext);
                     BranchRepository branchRepository = new BranchRepository(objectContext);
                     DepartmentRepository departmentRepository = new DepartmentRepository(objectContext);
-                    RoleRepository roleRepository = new RoleRepository(objectContext);
+                    RoleRepository roleRepository = new RoleRepository(globalContext);
                     CardRepository cardRepository = new CardRepository(objectContext);
                     RoleQuery rolesQuery = new RoleQuery(roleRepository);
                      
@@ -294,7 +300,7 @@ namespace WebFreight.Web.WcfApi
 
                 if (user != null)
                 {
-                    RoleQuery roleQuery = new RoleQuery(tenant);
+                    RoleQuery roleQuery = new RoleQuery();
                     List<RolePM> userRoles = roleQuery.GetRolesByUser(user.Id, tenant).Where(r => r.Exists).ToList();
                     user.Roles = new List<UserRolesPM>();
                     foreach (RolePM role in userRoles)

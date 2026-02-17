@@ -1,6 +1,7 @@
 ﻿using Logitude.BL.CommonDataModel.EntityLists;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.GlobalModel.EntityQueries;
 using Logitude.Server.Tools;
 using System;
 using System.Collections.Generic;
@@ -24,7 +25,7 @@ namespace WebFreight.Web.WcfApi
             List<RoleList> result = new List<RoleList>();
             try
             {
-                RoleQuery query = new RoleQuery(tenant);
+                RoleQuery query = new RoleQuery();
 
                 result = query.GetRoleListsByTenant(tenant).ToList();
             }

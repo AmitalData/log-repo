@@ -1,6 +1,7 @@
 ﻿using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.GlobalModel.EntityPMs;
+using Logitude.BL.GlobalModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Simplog.Data.CommonDataModel;
@@ -39,7 +40,7 @@ namespace Logitude.BL.GlobalModel.Tools.TraceEvents
             Tenant tenant = new TenantRepository(tenantId).GetSingleTenant(tenantId);
             LogBoxTenantSetting LBtenantsetting = new LogBoxTenantSettingRepository(tenantId).GetSingleLBTenant(tenantId);
 
-            PackageRepository packageRepository = new PackageRepository(tenantId);
+            PackageRepository packageRepository = new PackageRepository();
 
             foreach (PropertyInfo property in properties)
             {
@@ -53,8 +54,6 @@ namespace Logitude.BL.GlobalModel.Tools.TraceEvents
                     continue;
                 }
                 object pocoInstance;
-                if (tenant == null)
-                    continue;
                 if (LBtenantsetting == null)
                      pocoInstance = new object[] { poco, tenant, globalTenant }.FirstOrDefault(x => x.GetType().GetProperty(property.Name) != null);
                 else
@@ -226,7 +225,7 @@ namespace Logitude.BL.GlobalModel.Tools.TraceEvents
                 List<TenantAddOnPM> addOnsChanged = entityPM.AddOns.Where(a => a.ChangeSetOp != ChangeSetOperation.None).ToList();
                 addOnsChanged.ForEach(addOn =>
                 {
-                    PackagePM packege = new PackageQuery(entityPM.Id).GetSinglePM(addOn.PackageCode);
+                    PackagePM packege = new PackageQuery().GetSinglePM(addOn.PackageCode);
 
                     if (addOn.ChangeSetOp == ChangeSetOperation.Insert)
                         notes.AppendLine($"AddOn {addOn.Id} package {addOn.PackageCode} {packege.Name} was added");
@@ -235,7 +234,7 @@ namespace Logitude.BL.GlobalModel.Tools.TraceEvents
                     else if (addOn.ChangeSetOp == ChangeSetOperation.Update)
                     {
                         TenantAddOn oldAddOn = new TenantAddOnRepository(entityPM.Id).GetSingleTenantAddOn(addOn.Id);
-                        PackagePM oldPackege = new PackageQuery(entityPM.Id).GetSinglePM(oldAddOn.PackageCode);
+                        PackagePM oldPackege = new PackageQuery().GetSinglePM(oldAddOn.PackageCode);
                         notes.AppendLine($"AddOn {addOn.Id} update from package {oldAddOn.PackageCode} {oldPackege.Name} to {addOn.PackageCode} {packege.Name}");
                     }
                 });

@@ -23,6 +23,7 @@ using Logitude.CargoTracking.Data;
 using Logitude.CargoTracking.Data.EntityMapping;
 using System.Data.Entity.Infrastructure.Interception;
 using  Devart.Data.Oracle.Entity.Configuration;
+using Simplog.Global.Data.GlobalModel.Mapping;
 namespace Logitude.CargoTracking.Data
 {
     public  partial  class CargoTrackingContext: DbContextBase, ICargoTrackingContext

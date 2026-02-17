@@ -21,6 +21,8 @@ using WebFreight.Web.MetaDataUpdate.DetailClasses;
 
 using Simplog.Data.QuoteModel.Repositories;
 using Simplog.Data.QuoteModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.Repositories;
+
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateClasses
 {
    public class QuoteSalesAmountWithVATDetailsUpdateClass

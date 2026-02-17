@@ -6,13 +6,15 @@ using Logitude.BL.Helpers;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; 
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using Logitude.CRM.Data.EntityPOCOs;
 using Logitude.CRM.Data.Repsitories;
 using Logitude.BL.Security;
 using System.Runtime.Remoting.Contexts;
+using Simplog.Global.Data.GlobalModel.Repositories;
 
 namespace Logitude.BL.CommonDataModel.EntityQueries
 {
@@ -1379,7 +1381,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                  DocumentFilingInbox = a.DocumentFilingInbox,
                                  ShowLogBoxToolTip = a.ShowLogBoxToolTip,
                                  ShowInboxToolTip = a.ShowInboxToolTip,
-                                 BranchId = a.BranchId
                              }).FirstOrDefault();
 
             if (entity == null)
@@ -1830,7 +1831,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             if (HttpContext.Current != null && HttpContext.Current.User != null)
             {
                 string email = HttpContext.Current.User.Identity.Name;
-
                 User user = repository.GetSingleUserByEmail(email, 0, false);
                 if (user != null)
                 {
@@ -1849,7 +1849,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         private bool CheckIfIsHRUser(UserPM entity)
         {
             bool isHR = false;
-            RoleRepository roleRepository = new RoleRepository(entity.Tenant);
+            RoleRepository roleRepository = new RoleRepository();
             ContactTenantRepository contactTenantRepository = new ContactTenantRepository(entity.Tenant);
 
             Role role = roleRepository.GetSingleByCode("HRAD", 0);
@@ -1917,10 +1917,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
                 throw ex;
             }
-        }
-        public string GetPersonalIdByUserId(string userId, int tenant)
-        {
-            return repository.GetPersonalIdByUserId(userId, tenant);
         }
 
 

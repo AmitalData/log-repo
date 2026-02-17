@@ -12,6 +12,7 @@ using WebFreight.Web.DataContracts;
 using Logitude.Customs.BL.EntityQueryServices;
 
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.GlobalModel.EntityQueries;
 
 namespace WebFreight.Web.CustomWebServices.BL.XLSExport
 {
@@ -51,6 +52,7 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSExport
                     r.CourierSuspentionName,
                     r.SpecialActionStatus,
                     r.DeclarationStatusTypeName,
+                    r.CourierPendingReasonName,
                     r.LastMileStatusCode,
                     r.IsClosedForFollowUp,
                     r.CourierPendingReasonList,
@@ -62,7 +64,7 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSExport
             ;
 
             Boolean isExtendedReport = false;
-            FeatureQuery featureQuery = new FeatureQuery(tenant);
+            FeatureQuery featureQuery = new FeatureQuery();
             var features = featureQuery.GetAllowedFeaturesForLoggedUser(AuthenticationUtil.ResolveUserId(tenant), tenant);
             var feature = features.Features.FirstOrDefault(x => x.Code == "ExportMasterExtended");
             if (feature != null)

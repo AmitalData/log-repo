@@ -137,7 +137,6 @@
     <None Include="DBOthers\InfrastructureModel\Views\DBA_View_MobileNotificationLogs_ToBeDeleted.dxml" />
     <None Include="DBOthers\InfrastructureModel\Views\DBA_View_PerformanceLogs_ToBeDeleted.dxml" />
     <None Include="DBOthers\InfrastructureModel\Views\DBA_View_ReportsExecutionLogs_ToBeDeleted.dxml" />
-    <None Include="DBOthers\InvoiceModel\Views\BankAccountView.dxml" />
     <None Include="DBOthers\InvoiceModel\Views\ControlForInvoiceLinesDataView.dxml" />
     <None Include="DBOthers\InvoiceModel\Views\DigitalInvoicesCounterDataView.dxml" />
     <None Include="DBOthers\ShipmentsModel\Procedures\usp_UpdatePayablesData.dxml" />
@@ -205,11 +204,6 @@
     <None Include="DBScripts\InvoiceModel\202203021250_FillAPInvoicePaymentsNumbers.sxml" />
     <None Include="DBScripts\CommonModel\202208071040_FillCustomerGroupOnCardLevel.sxml" />
     <None Include="DBScripts\GlobalModel\AddStarWorkflowInstanceRetryWorkerBatchService.sxml" />
-    <None Include="DBTables\InvoiceModel\ExpenseAllocationFlow.dxml" />
-    <None Include="EntityFiles\InvoiceModel\ExpenseAllocationFlow.lxml" />
-    <None Include="DBTables\InvoiceModel\MasavInterface.dxml" />
-    <None Include="DBTables\InvoiceModel\MasavInterfaceStatus.dxml" />
-    <None Include="EntityFiles\InvoiceModel\MasavInterfaceStatus.lxml" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -320,8 +314,6 @@
     <None Include="DBScripts\ShipmentModel\202304051240_MarkDuplicatedShipmentsAsCancelled - logbox.sxml" />
     <None Include="DBScripts\ShipmentModel\FillContainersDataFromPackages.sxml" />
     <None Include="DBTables\CommonDataModel\DigitalContactLastSetting.dxml" />
-    <None Include="DBTables\InvoiceModel\ExpenseAllocationSetting.dxml" />
-    <None Include="DBTables\ShipmentsModel\OceanCarrierStatusAPIconfig.dxml" />
     <None Include="EntityFiles\CommonDataModel\DocumentTypeMetaData.lxml" />
     <None Include="DBTables\CommonDataModel\FreelancerGroupType.dxml" />
     <None Include="DBTables\CommonDataModel\ExternalLink.dxml" />
@@ -338,8 +330,8 @@
     <None Include="DBTables\InfrastructureModel\CurrencyRate.dxml" />
     <None Include="DBTables\InfrastructureModel\CustomChildObject.dxml" />
     <None Include="DBTables\InfrastructureModel\DataCustomObject.dxml" />
-    <None Include="DBTables\GlobalModel\DefaultAndConfiguration.dxml" />
-    <None Include="DBTables\GlobalModel\DefaultAndConfigurationKey.dxml" />
+    <None Include="DBTables\InfrastructureModel\DefaultAndConfiguration.dxml" />
+    <None Include="DBTables\InfrastructureModel\DefaultAndConfigurationKey.dxml" />
     <None Include="DBTables\InfrastructureModel\EventRemark.dxml" />
     <None Include="DBTables\InfrastructureModel\ReferenceCustomObject.dxml" />
     <None Include="DBTables\InfrastructureModel\SearchIndex.dxml" />
@@ -354,14 +346,13 @@
     <None Include="DBTables\ShipmentsModel\ContainerTrackingRequest.dxml" />
     <None Include="DBTables\ShipmentsModel\ContainerTrackingResponse.dxml" />
     <None Include="DBTables\ShipmentsModel\FreightForwarderReference.dxml" />
+    <None Include="DBTables\ShipmentsModel\OceanInsightsStatusLog.dxml" />
     <None Include="DBTables\ShipmentsModel\ReferenceType.dxml" />
     <None Include="DBTables\ShipmentsModel\ShipmentAnalytic.dxml" />
     <None Include="DBTables\ShipmentsModel\ShipmentDigitalField.dxml" />
     <None Include="DBTables\ShipmentsModel\ShipmentReferance.dxml" />
     <None Include="EntityFiles\CommonDataModel\CarrierServiceLine.lxml" />
     <None Include="EntityFiles\CommonDataModel\CustomerGroup.lxml" />
-    <None Include="EntityFiles\GlobalModel\DefaultAndConfiguration.lxml" />
-    <None Include="EntityFiles\GlobalModel\DefaultAndConfigurationKey.lxml" />
     <None Include="EntityFiles\CommonDataModel\DocumentsMetaDataType.lxml" />
     <None Include="EntityFiles\CommonDataModel\FreelancerGroupType.lxml" />
     <None Include="EntityFiles\CommonDataModel\Responsibility.lxml" />
@@ -370,6 +361,8 @@
     <None Include="EntityFiles\InfrastructureModel\AdditionalCurrencyRate.lxml" />
     <None Include="EntityFiles\InfrastructureModel\CurrencyRate.lxml" />
     <None Include="EntityFiles\CommonDataModel\SearchIndexEditHistory.lxml" />
+    <None Include="EntityFiles\InfrastructureModel\DefaultAndConfiguration.lxml" />
+    <None Include="EntityFiles\InfrastructureModel\DefaultAndConfigurationKey.lxml" />
     <None Include="EntityFiles\InfrastructureModel\DeploymentPackageExecutionLog.lxml" />
     <None Include="EntityFiles\CommonDataModel\HorseGender.lxml" />
     <None Include="EntityFiles\CommonDataModel\Mention.lxml" />
@@ -387,11 +380,9 @@
     <None Include="EntityFiles\InfrastructureModel\SearchIndex.lxml" />
     <None Include="EntityFiles\InfrastructureModel\SearchIndexTenantHistory.lxml" />
     <None Include="EntityFiles\InfrastructureModel\TabModification.lxml" />
-    <None Include="EntityFiles\InvoiceModel\ExpenseAllocationSetting.lxml" />
     <None Include="EntityFiles\InvoiceModel\ARInvoicesSignedStatus.lxml" />
     <None Include="EntityFiles\InvoiceModel\ConfirmationNumberDefault.lxml" />
     <None Include="EntityFiles\InvoiceModel\ConfirmationNumberStatus.lxml" />
-    <None Include="EntityFiles\InvoiceModel\MasavInterface.lxml" />
     <None Include="EntityFiles\QuoteModel\QuoteSalesAmountWithVATDetails.lxml" />
     <None Include="EntityFiles\QuoteModel\ValidByType.lxml" />
     <None Include="EntityFiles\ShipmentsModel\ContainerDiscrepancy.lxml" />
@@ -470,6 +461,7 @@
     <None Include="DBScripts\CommonModel\202105161305_AddCustomerProductItemEventTypesToTenants.sxml" />
     <None Include="DBScripts\CommonModel\202103161606_AddNewUOMPercentOForeignChargesLocalAmounts.sxml" />
     <None Include="DBScripts\CommonModel\202107071250_CopySCXChargesTypeToAllTenants.sxml" />
+    <None Include="DBScripts\CommonModel\UpdateTermsOfUsePrimaryKey.sxml" />
     <None Include="DBScripts\CommonModel\202104161424_UpdateTenantRatios.sxml" />
     <None Include="DBScripts\CommonModel\202104161425_UpdateTenantRatiosOnCloud.sxml" />
     <None Include="DBScripts\GlobalModel\202102161503_UpdateTenantManagmentPrivatLabelDomain.sxml" />
@@ -929,11 +921,11 @@
     <None Include="DBTables\CommonDataModel\EntityCasualData.dxml" />
     <None Include="DBTables\CommonDataModel\EntityChange.dxml" />
     <None Include="DBTables\CommonDataModel\EntityDate.dxml" />
-    <None Include="DBTables\CommonDataModel\Feature.dxml" />
-    <None Include="DBTables\CommonDataModel\FeatureAccessLevel.dxml" />
-    <None Include="DBTables\CommonDataModel\FeatureChange.dxml" />
-    <None Include="DBTables\CommonDataModel\FeaturePackageType.dxml" />
-    <None Include="DBTables\CommonDataModel\FeatureType.dxml" />
+    <None Include="DBTables\GlobalModel\Feature.dxml" />
+    <None Include="DBTables\GlobalModel\FeatureAccessLevel.dxml" />
+    <None Include="DBTables\GlobalModel\FeatureChange.dxml" />
+    <None Include="DBTables\GlobalModel\FeaturePackageType.dxml" />
+    <None Include="DBTables\GlobalModel\FeatureType.dxml" />
     <None Include="DBTables\CommonDataModel\FilingInbox.dxml" />
     <None Include="DBTables\CommonDataModel\FilingInboxAttachment.dxml" />
     <None Include="DBTables\CommonDataModel\FilingInboxAttachmentLog.dxml" />
@@ -958,9 +950,9 @@
     <None Include="DBTables\CommonDataModel\Measurement.dxml" />
     <None Include="DBTables\CommonDataModel\MetodoPago.dxml" />
     <None Include="DBTables\CommonDataModel\NumberFormat.dxml" />
-    <None Include="DBTables\CommonDataModel\Package.dxml" />
-    <None Include="DBTables\CommonDataModel\PackageConnectedPackage.dxml" />
-    <None Include="DBTables\CommonDataModel\PackageFeature.dxml" />
+    <None Include="DBTables\GlobalModel\Package.dxml" />
+    <None Include="DBTables\GlobalModel\PackageConnectedPackage.dxml" />
+    <None Include="DBTables\GlobalModel\PackageFeature.dxml" />
     <None Include="DBTables\CommonDataModel\PackageType.dxml" />
     <None Include="DBTables\CommonDataModel\Participant.dxml" />
     <None Include="DBTables\CommonDataModel\PartnerType.dxml" />
@@ -987,9 +979,9 @@
     <None Include="DBTables\CommonDataModel\ReportsTemplate.dxml" />
     <None Include="DBTables\CommonDataModel\ReportsTemplatesVersion.dxml" />
     <None Include="DBTables\CommonDataModel\Restriction.dxml" />
-    <None Include="DBTables\CommonDataModel\Role.dxml" />
-    <None Include="DBTables\CommonDataModel\RoleFeature.dxml" />
-    <None Include="DBTables\CommonDataModel\RoleType.dxml" />
+    <None Include="DBTables\GlobalModel\Role.dxml" />
+    <None Include="DBTables\GlobalModel\RoleFeature.dxml" />
+    <None Include="DBTables\GlobalModel\RoleType.dxml" />
     <None Include="DBTables\CommonDataModel\SharedFollowedShipment.dxml" />
     <None Include="DBTables\CommonDataModel\SharedLogisticsContactLastLogin.dxml" />
     <None Include="DBTables\CommonDataModel\SharedManifestsStatus.dxml" />
@@ -1555,10 +1547,10 @@
     <None Include="EntityFiles\CommonDataModel\DocumentTypeCopy.lxml" />
     <None Include="EntityFiles\CommonDataModel\DocumentTypeCustomField.lxml" />
     <None Include="EntityFiles\CommonDataModel\DocumentTypeTemplate.lxml" />
-    <None Include="EntityFiles\CommonDataModel\FeatureAccessLevel.lxml">
+    <None Include="EntityFiles\GlobalModel\FeatureAccessLevel.lxml">
       <SubType>Designer</SubType>
     </None>
-    <None Include="EntityFiles\CommonDataModel\FeaturePackageType.lxml" />
+    <None Include="EntityFiles\GlobalModel\FeaturePackageType.lxml" />
     <None Include="EntityFiles\CommonDataModel\FTPDetail.lxml" />
     <None Include="EntityFiles\CommonDataModel\GlobalZone.lxml" />
     <None Include="EntityFiles\CommonDataModel\HybridTenantThreshold.lxml" />
@@ -1572,8 +1564,8 @@
     </None>
     <None Include="EntityFiles\CommonDataModel\MAWBStack.lxml" />
     <None Include="EntityFiles\CommonDataModel\Measurement.lxml" />
-    <None Include="EntityFiles\CommonDataModel\Package.lxml" />
-    <None Include="EntityFiles\CommonDataModel\PackageConnectedPackage.lxml" />
+    <None Include="EntityFiles\GlobalModel\Package.lxml" />
+    <None Include="EntityFiles\GlobalModel\PackageConnectedPackage.lxml" />
     <None Include="EntityFiles\CommonDataModel\Participant.lxml" />
     <None Include="EntityFiles\CommonDataModel\PartnerType.lxml" />
     <None Include="EntityFiles\CommonDataModel\PasswordPolicy.lxml" />
@@ -1592,7 +1584,7 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="EntityFiles\CommonDataModel\Restriction.lxml" />
-    <None Include="EntityFiles\CommonDataModel\Role.lxml" />
+    <None Include="EntityFiles\GlobalModel\Role.lxml" />
     <None Include="EntityFiles\CommonDataModel\ShippingAgent.lxml">
       <SubType>Designer</SubType>
     </None>
@@ -1882,7 +1874,6 @@
     <None Include="EntityFiles\ShipmentsModel\InsideShipmentPackage.lxml" />
     <None Include="EntityFiles\ShipmentsModel\ManifestStatus.lxml" />
     <None Include="EntityFiles\ShipmentsModel\MessagingStockUsageHistory.lxml" />
-    <None Include="EntityFiles\ShipmentsModel\OceanCarrierStatusAPIconfig.lxml" />
     <None Include="EntityFiles\ShipmentsModel\OtherParticipantId.lxml" />
     <None Include="EntityFiles\ShipmentsModel\PayableProratedAmount.lxml" />
     <None Include="EntityFiles\ShipmentsModel\PickUpDeliveryFromToType.lxml" />

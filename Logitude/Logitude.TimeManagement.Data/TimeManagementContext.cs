@@ -20,6 +20,7 @@ using Simplog.Data.QuoteModel.Mapping;
 using Logitude.TimeManagement.Data.EntityPOCOs;
 using Logitude.TimeManagement.Data; 
 using Logitude.TimeManagement.Data.EntityMapping;
+using Simplog.Global.Data.GlobalModel.Mapping;
 
 namespace Logitude.TimeManagement.Data
 {

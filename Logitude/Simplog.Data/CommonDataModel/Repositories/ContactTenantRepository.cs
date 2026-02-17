@@ -47,8 +47,19 @@ namespace Simplog.Data.CommonDataModel.Repositories
             return (from record in context.ContactTenants.Include("Contact") 
                     where record.Id == id && record.TenantId == tenant select record).FirstOrDefault();
         }
+		public List<string> GetUserRolesIds(string userId, int tenant)
+		{
+			List<string> myResult = new List<string>();
 
-        public void Add(ContactTenant entity)
+			ContactTenant contactTenant = (from a in context.ContactTenants where a.ContactId == userId && a.TenantId == tenant select a).FirstOrDefault();
+			if (contactTenant != null)
+			{
+				myResult = (from a in context.ContactTenantRoles where a.ContactTenantId == contactTenant.Id && a.Tenant == tenant select a.RoleId).ToList();
+			}
+
+			return myResult;
+		}
+		public void Add(ContactTenant entity)
         {
             this.context.ContactTenants.Add(entity);
         }

@@ -18,13 +18,14 @@ using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using WebFreight.Web.MetaDataUpdate.AddClasses;
 using WebFreight.Web.MetaDataUpdate.DetailClasses;
+using Simplog.Global.Data.GlobalModel.Repositories;
 
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationReferantDataUpdateClass
    {  		
- 		public const string HashString = "69e397a206343c236fa46fbe1754ab2f";
- 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
+		public const string HashString = "490025dd4ee3bf7e1eb3b3529363bf2e";
+	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
             AddObjectsAndObjectFields.AddObjectTable(new ObjectTableDetails()
@@ -1315,7 +1316,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 						FieldName =  "TransportModeId",
 					  						ObjectTableName =  "Customs.DeclarationReferantData",
 					  						FieldsDataType =  "LookUp",
-					  						LookUpTableName =  "TransportMode",
+					  						LookUpTableName =  "Customs.CustomsTransportMode",
 					  						MinLength =  0,
 					  						MaxLength =  17,
 					  						IsRequired =  false,
@@ -4742,8 +4743,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						FullLocalDefaultText =  "FCL/LCL",
 					  						ListFieldLable =  "FclLclListLable",
 					  						ListLableDefaultText =  "FCL/LCL",
-					  						ListLocalDefaultTextBack_up =  "FCL/LCLקוד ",
-					  						ListLocalDefaultText =  "BS64:IkZDTC9MQ0zXp9eV15MgIg==",
+					  						ListLocalDefaultText =  "FCL/LCL",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "FclLclCode",
 					  						NavigationPropertyName =  "FclLclCodeTable",
@@ -6664,7 +6664,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  2,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						IsListFilter =  false,
 					  						MultiLine =  false,
@@ -6680,6 +6680,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Customs.DeclarationReferantData",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -6692,6 +6693,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DefaultText =  "Origin Country",
 					  						FullLocalDefaultTextBack_up =  "םרץ מוצם",
 					  						FullLocalDefaultText =  "BS64:IteQ16jXpSDXnteV16bXkCI=",
+					  						ListFieldLable =  "OriginCountryCodeListLable",
+					  						ListLableDefaultText =  "OriginCountryCode",
+					  						ListLocalDefaultTextBack_up =  "םרץ מוצם",
+					  						ListLocalDefaultText =  "BS64:IteQ16jXpSDXnteV16bXkCI=",
 					  						IsForeignKey =  false,
 					  						ForeignEntity =  "CustomsCountry",
 					  						NavigationPropertyName =  "OriginCountry",
@@ -6923,53 +6928,51 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 			 QueryColumn FilesInProcessQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.DeclarationReferantData.ListCounter" , ColumnWidth = 100 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn FilesInProcessQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.DeclarationReferantData.FlightVoyageNumber" , ColumnWidth = 58 }, addedQueryColumns,contextTenant);
+			 QueryColumn FilesInProcessQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.DeclarationReferantData.Favorite" , ColumnWidth = 80 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn FilesInProcessQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.DeclarationReferantData.Favorite" , ColumnWidth = 80 }, addedQueryColumns,contextTenant);
+			 QueryColumn FilesInProcessQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.DeclarationReferantData.CollectorUserName" , ColumnWidth = 100 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn FilesInProcessQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.DeclarationReferantData.CollectorUserName" , ColumnWidth = 100 }, addedQueryColumns,contextTenant);
+			 QueryColumn FilesInProcessQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.DeclarationReferantData.CustomFileNo" , ColumnWidth = 92 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn FilesInProcessQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.DeclarationReferantData.CustomFileNo" , ColumnWidth = 92 }, addedQueryColumns,contextTenant);
+			 QueryColumn FilesInProcessQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.DeclarationReferantData.CustomerName" , ColumnWidth = 146 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn FilesInProcessQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.DeclarationReferantData.CustomerName" , ColumnWidth = 146 }, addedQueryColumns,contextTenant);
+			 QueryColumn FilesInProcessQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.DeclarationReferantData.OrderNumber" , ColumnWidth = 87 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn FilesInProcessQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.DeclarationReferantData.OrderNumber" , ColumnWidth = 87 }, addedQueryColumns,contextTenant);
+			 QueryColumn FilesInProcessQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.DeclarationReferantData.TransportModeId" , ColumnWidth = 58 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn FilesInProcessQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Customs.DeclarationReferantData.TransportModeId" , ColumnWidth = 58 }, addedQueryColumns,contextTenant);
+			 QueryColumn FilesInProcessQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Customs.DeclarationReferantData.DeclarationOfficeName" , ColumnWidth = 157 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn FilesInProcessQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Customs.DeclarationReferantData.DeclarationOfficeName" , ColumnWidth = 157 }, addedQueryColumns,contextTenant);
+			 QueryColumn FilesInProcessQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Customs.DeclarationReferantData.VendorName" , ColumnWidth = 124 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn FilesInProcessQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Customs.DeclarationReferantData.VendorName" , ColumnWidth = 124 }, addedQueryColumns,contextTenant);
+			 QueryColumn FilesInProcessQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Customs.DeclarationReferantData.ArrivalDate" , ColumnWidth = 79 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn FilesInProcessQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "Customs.DeclarationReferantData.ArrivalDate" , ColumnWidth = 79 }, addedQueryColumns,contextTenant);
+			 QueryColumn FilesInProcessQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "Customs.DeclarationReferantData.Weight" , ColumnWidth = 75 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn FilesInProcessQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "Customs.DeclarationReferantData.Weight" , ColumnWidth = 75 }, addedQueryColumns,contextTenant);
+			 QueryColumn FilesInProcessQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "Customs.DeclarationReferantData.DeclarationStatusTypeName" , ColumnWidth = 255 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn FilesInProcessQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 12, ObjectFieldCode = "Customs.DeclarationReferantData.DeclarationStatusTypeName" , ColumnWidth = 255 }, addedQueryColumns,contextTenant);
+			 QueryColumn FilesInProcessQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 12, ObjectFieldCode = "Customs.DeclarationReferantData.PreClassification" , ColumnWidth = 58 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn FilesInProcessQueryColumn_13 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 13, ObjectFieldCode = "Customs.DeclarationReferantData.PreClassification" , ColumnWidth = 58 }, addedQueryColumns,contextTenant);
+			 QueryColumn FilesInProcessQueryColumn_13 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 13, ObjectFieldCode = "Customs.DeclarationReferantData.ClassificationStatus" , ColumnWidth = 55 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn FilesInProcessQueryColumn_14 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 14, ObjectFieldCode = "Customs.DeclarationReferantData.ClassificationStatus" , ColumnWidth = 55 }, addedQueryColumns,contextTenant);
+			 QueryColumn FilesInProcessQueryColumn_14 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 14, ObjectFieldCode = "Customs.DeclarationReferantData.ControllerStatus" , ColumnWidth = 44 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn FilesInProcessQueryColumn_15 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 15, ObjectFieldCode = "Customs.DeclarationReferantData.ControllerStatus" , ColumnWidth = 44 }, addedQueryColumns,contextTenant);
+			 QueryColumn FilesInProcessQueryColumn_15 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 15, ObjectFieldCode = "Customs.DeclarationReferantData.CollectionOfMoneyStatus" , ColumnWidth = 50 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn FilesInProcessQueryColumn_16 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 16, ObjectFieldCode = "Customs.DeclarationReferantData.CollectionOfMoneyStatus" , ColumnWidth = 50 }, addedQueryColumns,contextTenant);
+			 QueryColumn FilesInProcessQueryColumn_16 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 16, ObjectFieldCode = "Customs.DeclarationReferantData.OrderMoney" , ColumnWidth = 50 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn FilesInProcessQueryColumn_17 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 17, ObjectFieldCode = "Customs.DeclarationReferantData.OrderMoney" , ColumnWidth = 50 }, addedQueryColumns,contextTenant);
+			 QueryColumn FilesInProcessQueryColumn_17 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 17, ObjectFieldCode = "Customs.DeclarationReferantData.FollowUpDate" , ColumnWidth = 108 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn FilesInProcessQueryColumn_18 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 18, ObjectFieldCode = "Customs.DeclarationReferantData.FollowUpDate" , ColumnWidth = 108 }, addedQueryColumns,contextTenant);
+			 QueryColumn FilesInProcessQueryColumn_18 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 18, ObjectFieldCode = "Customs.DeclarationReferantData.AvailabilityDate" , ColumnWidth = 108 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn FilesInProcessQueryColumn_19 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 19, ObjectFieldCode = "Customs.DeclarationReferantData.AvailabilityDate" , ColumnWidth = 108 }, addedQueryColumns,contextTenant);
+			 QueryColumn FilesInProcessQueryColumn_19 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 19, ObjectFieldCode = "Customs.DeclarationReferantData.ExceptionReasonsList" , ColumnWidth = 34 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn FilesInProcessQueryColumn_20 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 20, ObjectFieldCode = "Customs.DeclarationReferantData.ExceptionReasonsList" , ColumnWidth = 34 }, addedQueryColumns,contextTenant);
+			 QueryColumn FilesInProcessQueryColumn_20 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 20, ObjectFieldCode = "Customs.DeclarationReferantData.WithPaper" , ColumnWidth = 69 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn FilesInProcessQueryColumn_21 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 21, ObjectFieldCode = "Customs.DeclarationReferantData.WithPaper" , ColumnWidth = 69 }, addedQueryColumns,contextTenant);
+			 QueryColumn FilesInProcessQueryColumn_21 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 21, ObjectFieldCode = "Customs.DeclarationReferantData.NewFile" , ColumnWidth = 69 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn FilesInProcessQueryColumn_22 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 22, ObjectFieldCode = "Customs.DeclarationReferantData.NewFile" , ColumnWidth = 69 }, addedQueryColumns,contextTenant);
+			 QueryColumn FilesInProcessQueryColumn_22 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 22, ObjectFieldCode = "Customs.DeclarationReferantData.IsCustomerLogBoxActivated" , ColumnWidth = 68 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn FilesInProcessQueryColumn_23 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 23, ObjectFieldCode = "Customs.DeclarationReferantData.IsCustomerLogBoxActivated" , ColumnWidth = 68 }, addedQueryColumns,contextTenant);
-
-			 QueryColumn FilesInProcessQueryColumn_24 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 24, ObjectFieldCode = "Customs.DeclarationReferantData.Actions" , ColumnWidth = 68 }, addedQueryColumns,contextTenant);
+			 QueryColumn FilesInProcessQueryColumn_23 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 23, ObjectFieldCode = "Customs.DeclarationReferantData.Actions" , ColumnWidth = 68 }, addedQueryColumns,contextTenant);
 
              AdvancedQueryFilter FilesInProcessQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.DeclarationReferantData.IsCancelled", PredefinedValue = "true",PredefinedValue2 = null, CustomPredefined = false, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, Tenant = 0,Operator = "NotEqual"}, addedQueryFilters,contextTenant);
 

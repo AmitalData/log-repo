@@ -1,14 +1,17 @@
 ﻿using Logitude.CRM.Data.EntityPOCOs;
 using Logitude.CRM.Data.Helpers;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; 
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; 
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Simplog.Global.Data.GlobalModel.Repositories;
 
 namespace Logitude.CRM.Data.BusinessUnitFilters
 {
@@ -60,18 +63,18 @@ namespace Logitude.CRM.Data.BusinessUnitFilters
         {
             List<RoleFeature> myFeatureRoles = new List<RoleFeature>();
 
-            if (loggedUserEmail != "support@amital.co.il")
+            if (loggedUserEmail != "admin@fnarsoft.com")
             {
                 ObjectTableRepository objectTabelRepository = new ObjectTableRepository(myCurrentTenant);
                 ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("Activity", 0, true);
 
-                FeatureRepository featureRepository = new FeatureRepository(myCurrentTenant);
+                FeatureRepository featureRepository = new FeatureRepository();
                 Feature myFeature = featureRepository.GetSingleFeatureByCode(objectTable.Id, "READ", myCurrentTenant);
                 if (myFeature != null)
                 {
-                    RoleRepository roleRepository = new RoleRepository(myCurrentTenant);
-                    RoleFeatureRepository roleFeatureRepository = new RoleFeatureRepository(myCurrentTenant);
-                    List<string> myRolesIds = roleRepository.GetUserRolesIds(loggedUser.Id, myCurrentTenant);
+					ContactTenantRepository contactTenantRepository = new ContactTenantRepository(myCurrentTenant);
+                    RoleFeatureRepository roleFeatureRepository = new RoleFeatureRepository();
+                    List<string> myRolesIds = contactTenantRepository.GetUserRolesIds(loggedUser.Id, myCurrentTenant);
 
                     if (myFeature.IsBusinessUnitEnabled)
                     {                        

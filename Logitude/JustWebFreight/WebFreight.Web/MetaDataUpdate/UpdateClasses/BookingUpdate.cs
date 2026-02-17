@@ -1,10 +1,12 @@
 ﻿using Logitude.BookingLib.Data;
 using Logitude.BookingLib.Data.Repositories;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; 
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; 
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
@@ -23,6 +25,8 @@ using WebFreight.Web.MetaDataUpdate.DetailClasses;
 using Logitude.Server.Tools.Counters;
 using Simplog.Server.Infrastructure.Helpers;
 using System.Configuration;
+using Simplog.Global.Data.GlobalModel;
+using Logitude.BL.GlobalModel.EntityQueries;
 
 namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
 {
@@ -134,7 +138,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             Dictionary<string, MenuButton> tenantMenuButtons = menuButtonRepository.GetMenuButtonsByTenant(tenant).ToDictionary(d => d.EventCode + d.MenuButtonGroupId, a => a);
             Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups = menuButtonGroupRepository.GetMenuButtonGroupsByTenant(tenant).ToDictionary(d => d.Name, a => a);
 
-            FeatureQuery featureQuery = new FeatureQuery(tenant);
+            FeatureQuery featureQuery = new FeatureQuery();
             List<FeaturePM> features = featureQuery.GetFeaturePMsByTenant(tenant).ToList();
 
 
@@ -230,8 +234,10 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
         private void LoadRolesAndFeatures(int tenant)
         {
             ICommonDataContext ObjectContext = CommonDataContext.GetContext(tenant);
-            FeatureRepository FeaturesRepository = new FeatureRepository(ObjectContext);
-            RoleFeatureRepository RoleFeaturesRepository = new RoleFeatureRepository(ObjectContext);
+			IGlobalContext globalContext = GlobalContext.GetContext(tenant);
+
+			FeatureRepository FeaturesRepository = new FeatureRepository(globalContext);
+            RoleFeatureRepository RoleFeaturesRepository = new RoleFeatureRepository(globalContext);
             TextCodeRepository textCodeRep = new TextCodeRepository(tenant);
             ObjectTableRepository objecttableRep = new ObjectTableRepository(tenant);
             objectTabelQuery = new ObjectTableQuery(objecttableRep);
@@ -336,7 +342,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             Dictionary<string, QueryColumn> tenantQueryColumns = queryColumnsRepository.GetQueryColumnsByTenant(0).ToDictionary(d => d.QueryId + d.ObjectFieldId, a => a);
             Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters = advancedQueryFiltersRepository.GetAdvancedQueryFiltersByTenant(0).ToDictionary(d => d.QueryId + d.ObjectFieldId, a => a);
 
-            FeatureRepository featureRepository = new FeatureRepository(0);
+            FeatureRepository featureRepository = new FeatureRepository();
             List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
            
             #region ObjectTables

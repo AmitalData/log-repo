@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -26,7 +27,6 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string FilterHtmlComponentUrl { get; set; }
         public string DefaultTemplateId { get; set; }
         public string DefaultMessageTemplateId { get; set; }
-        public string DefaultExcelNoStimId { get; set; }
         public string FeatureUniqeCode { get; set; }
         public bool AvailableForScheduling { get; set; }
         public bool DisablePreview { get; set; }
@@ -39,9 +39,6 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
 
         [ForeignKey("DefaultMessageTemplateId")]
         public ReportsTemplate ReportsTemplateDefaultMessage { get; set; }
-        
-        [ForeignKey("DefaultExcelNoStimId")]
-        public ReportsTemplate TemplateDefExcelNoStim { get; set; }
 
 
         [ForeignKey("DefaultTemplateId")]

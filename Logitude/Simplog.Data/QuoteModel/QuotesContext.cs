@@ -6,7 +6,8 @@ using System.Data.Entity.Core.Objects;
 using System.Data.SqlClient;
 using System.Transactions;
 using Simplog.Data.CommonDataModel.Mapping;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; 
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Mapping;
 using Simplog.Data.InvoiceModel.Mapping;
 using Simplog.Data.QuoteModel.EntityPOCOs;
@@ -17,6 +18,7 @@ using Simplog.Global.Data.GlobalModel.Helpers;
 using Simplog.Server.Infrastructure;
 using System;
 using System.Data.Entity.ModelConfiguration.Conventions;
+using Simplog.Global.Data.GlobalModel.Mapping;
 
 namespace Simplog.Data.QuoteModel
 {

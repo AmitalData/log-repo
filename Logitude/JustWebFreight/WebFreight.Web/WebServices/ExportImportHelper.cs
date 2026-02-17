@@ -1,20 +1,25 @@
 ﻿using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.GlobalModel.EntityQueries;
 using Logitude.Server.Tools.Counters;
 using Logitude.SystemLogs;
 using Logitude.TimeManagement.Data;
 using Logitude.TimeManagement.Data.EntityPOCOs;
+using Microsoft.Azure.Pipelines.WebApi;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; 
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; 
 using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Core.Objects;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -31,9 +36,9 @@ namespace WebFreight.Web.WebServices
 
             List<string> allUpdatedRolesIds = new List<string>();
 
-            RoleRepository roleRep = new RoleRepository(0);
-            RoleFeatureRepository rolefeaturerep = new RoleFeatureRepository(0);
-            FeatureRepository featurrep = new FeatureRepository(0);
+            RoleRepository roleRep = new RoleRepository();
+            RoleFeatureRepository rolefeaturerep = new RoleFeatureRepository();
+            FeatureRepository featurrep = new FeatureRepository();
             ObjectTableRepository objecttablerep = new ObjectTableRepository(0);
             List<Role> roles = roleRep.GetRoles(0).ToList();
             Dictionary<string, bool> roleFeatureDictionary = new Dictionary<string, bool>();
@@ -164,10 +169,10 @@ namespace WebFreight.Web.WebServices
                         {
                             email = HttpContext.Current.User.Identity.Name;
                         }
-                        
-                        string loggedUserId = this.GetLoggedUserId(email, tenant);
+						GlobalContactRepository repository = new GlobalContactRepository();
+						string loggedUserId = repository.GetGlobalContactByEmailAndTenant(email, tenant)?.Id;
 
-                        FeatureChangeRepository myRepository = new FeatureChangeRepository(tenant);
+						FeatureChangeRepository myRepository = new FeatureChangeRepository();
 
                         foreach (string myRoleId in allUpdatedRolesIds)
                         {
@@ -213,11 +218,11 @@ namespace WebFreight.Web.WebServices
 
             List<string> allUpdatedPackagesCodes = new List<string>();
 
-            PackageFeatureRepository packfeaturerep = new PackageFeatureRepository(0);
-            FeatureRepository featurrep = new FeatureRepository(0);
+            PackageFeatureRepository packfeaturerep = new PackageFeatureRepository();
+            FeatureRepository featurrep = new FeatureRepository();
             ObjectTableRepository objecttablerep = new ObjectTableRepository(0);
-            PackageFeatureRepository packageFeatureRep = new PackageFeatureRepository(0);
-            PackageRepository packageRepository = new PackageRepository(0);
+            PackageFeatureRepository packageFeatureRep = new PackageFeatureRepository();
+            PackageRepository packageRepository = new PackageRepository();
             List<Package> packages = packageRepository.GetPackages().ToList();
 
             using (StringReader reader = new StringReader(datastring))
@@ -342,9 +347,10 @@ namespace WebFreight.Web.WebServices
                     {
                         int tenant = 0;
                         string email = HttpContext.Current.User.Identity.Name;
-                        string loggedUserId = this.GetLoggedUserId(email, tenant);
+						GlobalContactRepository repository = new GlobalContactRepository();
+						string loggedUserId = repository.GetGlobalContactByEmailAndTenant(email, tenant)?.Id;
 
-                        FeatureChangeRepository myRepository = new FeatureChangeRepository(tenant);
+						FeatureChangeRepository myRepository = new FeatureChangeRepository();
 
                         foreach (string myPackageCode in allUpdatedPackagesCodes)
                         {

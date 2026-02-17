@@ -39,6 +39,7 @@ using DeclarationGoodsShipmentCustomsValuation = UnifreightIIG.Common.MessageLib
 using UnifreightIIG.Common.MessageLib.ID;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using UnifreightIIG.Common.MessageLib.Ransom;
+using Logitude.BL.GlobalModel.EntityQueries;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -73,7 +74,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                 return;
             }
-            FeatureQuery featureQuery = new FeatureQuery(requestParams.Tenant);
+            FeatureQuery featureQuery = new FeatureQuery();
             bool bFromMehes = false;
             var features = featureQuery.GetAllowedFeaturesForLoggedUser(requestParams.LoggingUserId, requestParams.Tenant);
 
@@ -105,10 +106,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
 
                 _MyDeclarationPM.DeclarationStatusTypeCode = customResponse.CancellationResponse.DeclarationStatusID.ToString();
-                if (_MyDeclarationPM.DeclarationStatusTypeCode == "1" && string.Equals(_MyDeclarationPM.Direction, "E", StringComparison.OrdinalIgnoreCase))
-                {
-                    _MyDeclarationPM.IsClose = true;
-                }
+
                 if (customResponse.AdditionalInformation!= null && customResponse.AdditionalInformation.Count()>0)
                 {
                     foreach (var item in customResponse.AdditionalInformation)

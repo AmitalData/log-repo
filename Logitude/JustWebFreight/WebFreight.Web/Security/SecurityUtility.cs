@@ -458,12 +458,12 @@ namespace WebFreight.Web.Security
                     {
                         ObjectTablePM objectTable = ObjectTableQuery.GetObjectTableByCode(objectTableName, tenant);
 
-                        FeatureRepository featureRepository = new FeatureRepository(tenant);
+                        FeatureRepository featureRepository = new FeatureRepository();
                         Feature myFeature = featureRepository.GetSingleFeatureByCode(objectTable.Id, featureCode, tenant);
 
                         if (myFeature != null)
                         {
-                            RoleFeatureRepository roleFeatureRepository = new RoleFeatureRepository(tenant);
+                            RoleFeatureRepository roleFeatureRepository = new RoleFeatureRepository();
 
                             if (myFeature.IsBusinessUnitEnabled)
                             {
@@ -593,7 +593,7 @@ namespace WebFreight.Web.Security
 
                             if (contact.Tenant == 0 && tenant != 0)
                             {
-                                UserRepository userRep = new UserRepository(tenant);
+                                UserRepository userRep = new UserRepository(0);
                                 User zeroUser = userRep.GetSingleUserByEmail(email, 0, true);
                                 if (zeroUser != null)
                                 {
@@ -628,7 +628,7 @@ namespace WebFreight.Web.Security
                                 }
                             }
 
-                            RoleQuery roleQuery = new RoleQuery(contact.Tenant);
+                            RoleQuery roleQuery = new RoleQuery();
                             List<RolePM> allRoles = roleQuery.GetRolesForContact(contact.Id, contact.Tenant).ToList();
 
                             List<string> allRolesIds = allRoles.Select(s => s.Id).ToList();
@@ -739,8 +739,9 @@ namespace WebFreight.Web.Security
             List<string> allPackagesCodes_PK = new List<string>();
             List<string> allPackagesCodes_BS = new List<string>();
             ICommonDataContext myCommonContext = CommonDataContext.GetContext(tenant);
+			IGlobalContext myGlobalContext = GlobalContext.GetContext();
 
-            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+			using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
                 #region
                 IGlobalContext globalContext = GlobalContext.GetContext();
@@ -829,7 +830,7 @@ namespace WebFreight.Web.Security
                     //}
                 }
 
-                List<string> allConnectedCodes_PK = (from a in myCommonContext.PackageConnectedPackages
+                List<string> allConnectedCodes_PK = (from a in myGlobalContext.PackageConnectedPackages
                                                      where allPackagesCodes_PK.Contains(a.PackageCode)
                                                      group a by a.ConnectedPackageCode into g
                                                      select g.Key).ToList();
@@ -847,7 +848,7 @@ namespace WebFreight.Web.Security
             {
                 isAddingAddOns = true;
 
-                Package myPackage = (from a in myCommonContext.Packages where a.Code == myPackageCode select a).FirstOrDefault();
+                Package myPackage = (from a in myGlobalContext.Packages where a.Code == myPackageCode select a).FirstOrDefault();
                 if (myPackage != null)
                 {
                     if (myPackage.FeaturePackageTypeCode == "BS")
@@ -860,7 +861,7 @@ namespace WebFreight.Web.Security
 
                     else
                     {
-                        var allCodes = (from a in myCommonContext.PackageConnectedPackages
+                        var allCodes = (from a in myGlobalContext.PackageConnectedPackages
                                         where a.PackageCode == myPackageCode
                                         group a by a.ConnectedPackageCode into g
                                         select g.Key).ToList();
@@ -880,7 +881,7 @@ namespace WebFreight.Web.Security
             {
                 if (allPackagesCodes_AD.Count > 0)
                 {
-                    List<string> allConnectedCodes_AD = (from a in myCommonContext.PackageConnectedPackages
+                    List<string> allConnectedCodes_AD = (from a in myGlobalContext.PackageConnectedPackages
                                                          where allPackagesCodes_AD.Contains(a.PackageCode)
                                                          group a by a.ConnectedPackageCode into g
                                                          select g.Key).ToList();
@@ -907,7 +908,7 @@ namespace WebFreight.Web.Security
 
             if (CacheManager.CacheWrapper.Get(roleKey) == null || forceAPIFeaturesCheck)
             {
-                FeatureQuery featuresQuery = new FeatureQuery(tenant);
+                FeatureQuery featuresQuery = new FeatureQuery();
                 List<FeaturePM> fet = featuresQuery.GetAllowedFeaturesForRole(roleId, allowedPackages, tenant, forceAPIFeaturesCheck);
                 features = fet.ToDictionary(d => d.Code + d.ObjectTableId, d => d);
                 CacheManager.CacheWrapper.Insert(roleKey, features, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
@@ -925,14 +926,14 @@ namespace WebFreight.Web.Security
             Dictionary<string, FeaturePM> features = null;
 
 
-            FeatureQuery featuresQuery = new FeatureQuery(tenant);
+            FeatureQuery featuresQuery = new FeatureQuery();
             List<FeaturePM> fet = featuresQuery.GetAllowedFeaturesForRole(roleId, allowedPackages, tenant);
             features = fet.ToDictionary(d => d.Code + d.ObjectTableId, d => d);
             return features;
         }
         private static bool CheckIfFeatureHasAccess(string roleId, List<string> allowedPackages, int tenant, string FeatureCode, string ObjectTableId)
         {
-            FeatureQuery featuresQuery = new FeatureQuery(tenant);
+            FeatureQuery featuresQuery = new FeatureQuery();
             bool fet = featuresQuery.CheckIfFeatureshasAccess(roleId, allowedPackages, tenant, FeatureCode, ObjectTableId);
 
             return fet;
@@ -1357,21 +1358,6 @@ namespace WebFreight.Web.Security
             return false;
 
         }
-        public static bool IsUserAdminOrCustomerCare(string email, int tenant, bool getFromCache = false)
-        {
-            var userRepository = new UserRepository(tenant);
-            var user = userRepository.GetSingleUserByCodeOrEmail(null, email, tenant, getFromCache);
-
-            if (user == null)
-                return false;
-
-            bool isAdmin = user.UserRoles?.Contains("Administrator") == true;
-            bool isCustomerCare = user.Tenant == 0;
-
-            return isAdmin || isCustomerCare;
-        }
-
-
 
         public static void AuthenticateDashboardReadFeatures(string objectTableName, string featureCode, int tenant)
         {

@@ -299,8 +299,7 @@ namespace WebFreight.Web.GlobalModelDB
                 throw new NotImplementedException();
             }
         }
-
-        public IDbSet<DefaultAndConfiguration> DefaultAndConfigurations
+        public IDbSet<AuthenticationToken> AuthenticationTokens
         {
             get
             {
@@ -308,14 +307,84 @@ namespace WebFreight.Web.GlobalModelDB
             }
         }
 
-        public IDbSet<DefaultAndConfigurationKey> DefaultAndConfigurationKeys
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-        }
+		public IDbSet<FeatureAccessLevel> FeatureAccessLevels
+		{
+			get
+			{
+				throw new NotImplementedException();
+			}
+		}
+		public IDbSet<Feature> Features
+		{
+			get
+			{
+				throw new NotImplementedException();
+			}
+		}
+		public IDbSet<FeatureType> FeatureTypes
+		{
+			get
+			{
+				throw new NotImplementedException();
+			}
+		}
+		public IDbSet<FeaturePackageType> FeaturePackageTypes
+		{
+			get
+			{
+				throw new NotImplementedException();
+			}
+		}
+		public IDbSet<FeatureChange> FeatureChanges
+		{
+			get
+			{
+				throw new NotImplementedException();
+			}
+		}
+		public IDbSet<PackageFeature> PackageFeatures
+		{
+			get
+			{
+				throw new NotImplementedException();
+			}
+		}
+		public IDbSet<Package> Packages
+		{
+			get
+			{
+				throw new NotImplementedException();
+			}
+		}
+		public IDbSet<PackageConnectedPackage> PackageConnectedPackages
+		{
+			get
+			{
+				throw new NotImplementedException();
+			}
+		}
+		public IDbSet<RoleFeature> RoleFeatures
+		{
+			get
+			{
+				throw new NotImplementedException();
+			}
+		}
+		public IDbSet<RoleType> RoleTypes
+		{
+			get
+			{
+				throw new NotImplementedException();
+			}
+		}
+		public IDbSet<Role> Roles
+		{
+			get
+			{
+				throw new NotImplementedException();
+			}
+		}
 
-        public IDbSet<AuthenticationToken> AuthenticationTokens => throw new NotImplementedException();
-    }
+
+	}
 }

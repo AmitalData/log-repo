@@ -37,6 +37,7 @@ using System.Transactions;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.GlobalModel.EntityQueries;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -123,7 +124,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 try
                 {
 
-                    FeatureQuery featureQuery = new FeatureQuery(requestParams.Tenant);
+                    FeatureQuery featureQuery = new FeatureQuery();
 
                     var features = featureQuery.GetAllowedFeaturesForLoggedUser(requestParams.LoggingUserId, requestParams.Tenant);
 

@@ -19,6 +19,7 @@ using Logitude.Customs.Data.Repsitories;
 using Logitude.CustomsMessaging.Utils;
 using Simplog.Server.Infrastructure.Helpers;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.GlobalModel.EntityQueries;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -31,7 +32,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         public override void Update(DCAInUCB8250WithResponseContentHeader customResponse, GenericRequestParams requestParams)
         {
-            FeatureQuery featureQuery = new FeatureQuery(requestParams.Tenant);
+            FeatureQuery featureQuery = new FeatureQuery();
 
             var features = featureQuery.GetAllowedFeaturesForLoggedUser(requestParams.LoggingUserId, requestParams.Tenant);
 

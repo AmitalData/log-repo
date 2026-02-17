@@ -21,6 +21,7 @@ using Logitude.CRM.Data.EntityPOCOs;
 using Logitude.CRM.Data; 
 using Logitude.CRM.Data.EntityMapping;
 using Devart.Data.Oracle.Entity.Configuration;
+using Simplog.Global.Data.GlobalModel.Mapping;
 
 namespace Logitude.CRM.Data
 {

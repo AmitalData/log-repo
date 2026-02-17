@@ -1,7 +1,8 @@
 ﻿using Logitude.AmitalMessaging.Utils;
 using Logitude.CustomsMessaging.Common.RequestParams;
 using Logitude.CustomsMessaging.RequestServices;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; 
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel.Repositories;
 using System;
@@ -32,6 +33,7 @@ using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.BL.BL;
 using System.Diagnostics;
 using Logitude.Customs.Data.EntityMapping;
+using Logitude.BL.GlobalModel.EntityQueries;
 
 namespace Logitude.CustomsMessaging.RequestServices
 {
@@ -90,7 +92,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             this.MyRequestSheetParam.RequestDescription = "מסר מניפסט";
 
             stopwatch = Stopwatch.StartNew();
-            FeatureQuery featureQuery = new FeatureQuery(_DeclarationPM.Tenant);
+            FeatureQuery featureQuery = new FeatureQuery();
             var features = featureQuery.GetAllowedFeaturesForLoggedUser(AuthenticationUtil.ResolveUserId(_DeclarationPM.Tenant), _DeclarationPM.Tenant);
             var feature = features.Features.FirstOrDefault(x => x.Code == "SendManifestEvent");
             LogMessagingUtil.Instance.AppendLine("GetAllowedFeaturesForLoggedUser:Elapsed:" + stopwatch.ElapsedMilliseconds);
@@ -264,7 +266,7 @@ namespace Logitude.CustomsMessaging.RequestServices
                 throw new BusinessErrorException("_DirtyDeclarationPaymentPM.DeclarationId could not convert to long ");
             }
             var myCCUFILEMRepository = new CCUFILEMRepository(declarationPM.Tenant);
-            var ccufilem = myCCUFILEMRepository.GetFILENOByCUSTOMFILENO(lCUSTOMFILENO, declarationPM.Tenant);
+            var ccufilem = myCCUFILEMRepository.GetFILENOByCUSTOMFILENO(lCUSTOMFILENO);
 
 
             var myCCUQUELOCKRepository = new CCUQUELOCKRepository(requestParams.Tenant);

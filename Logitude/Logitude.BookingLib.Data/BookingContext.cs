@@ -21,6 +21,7 @@ using Logitude.BookingLib.Data.EntityPOCOs;
 using Logitude.BookingLib.Data; 
 using Logitude.BookingLib.Data.EntityMapping;
 using Devart.Data.Oracle.Entity.Configuration;
+using Simplog.Global.Data.GlobalModel.Mapping;
 
 namespace Logitude.BookingLib.Data
 {

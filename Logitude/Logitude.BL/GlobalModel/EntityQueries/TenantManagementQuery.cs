@@ -38,7 +38,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
 
             domain = TrimDomainByRegex(domain);
             TenantManagementPM TenantManagement = (from a in repository.context.TenantManagements
-                                                   where a.EnableBranding && string.Equals(a.CustomerURL, domain) && a.Id != 0 && a.GlobalTenant.IsActive
+                                                   where a.EnableBranding && a.CustomerURL == domain && a.Id != 0 && a.GlobalTenant.IsActive
                                                    select new TenantManagementPM()
                                                    {
                                                        Id = a.Id,
@@ -555,7 +555,6 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                   ExportLoginCredintial=a.ExportLoginCredintial,
                                                   ExportTenant=a.ExportTenant,
 												  MinutsTimeOutSession = a.MinutsTimeOutSession,
-												  AmitalApiToken = a.AmitalApiToken
 											  }).FirstOrDefault();
 
                 if (tenant1 != null)
@@ -1144,7 +1143,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
 
                 if (entityPM.PackageCode != null)
                 {
-                    PackageRepository pckgRep = new PackageRepository(entityPM.Id);
+                    PackageRepository pckgRep = new PackageRepository();
                     Package pckg = pckgRep.GetSinglePackage(entityPM.PackageCode);
 
                     if (pckg.FeaturePackageTypeCode == "BS")
@@ -1156,7 +1155,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                     {
                         entityPM.PackagesCodes_PK.Add(pckg.Code);
 
-                        PackageConnectedPackageRepository connectedPackageRepository = new PackageConnectedPackageRepository(entityPM.Id);
+                        PackageConnectedPackageRepository connectedPackageRepository = new PackageConnectedPackageRepository();
                         List<string> myCodes = (from a in connectedPackageRepository.context.PackageConnectedPackages
                                                 where pckg.Code == a.PackageCode
                                                 group a by a.ConnectedPackageCode into g
@@ -1171,7 +1170,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                     List<string> licensesCodes = entityPM.TenantManagementLicenses.Select(s => s.PackageCode).ToList();
                     entityPM.PackagesCodes_PK.AddRange(licensesCodes);
 
-                    PackageConnectedPackageRepository connectedPackageRepository = new PackageConnectedPackageRepository(entityPM.Id);
+                    PackageConnectedPackageRepository connectedPackageRepository = new PackageConnectedPackageRepository();
                     entityPM.PackagesCodes_BS.AddRange((from a in connectedPackageRepository.context.PackageConnectedPackages
                                                         where licensesCodes.Contains(a.PackageCode)
                                                         group a by a.ConnectedPackageCode into g
@@ -1186,7 +1185,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                     List<string> licensesCodes = entityPM.TenantManagementLicenses.Select(s => s.PackageCode).ToList();
                     entityPM.PackagesCodes_PK = licensesCodes;
 
-                    PackageConnectedPackageRepository connectedPackageRepository = new PackageConnectedPackageRepository(entityPM.Id);
+                    PackageConnectedPackageRepository connectedPackageRepository = new PackageConnectedPackageRepository();
                     entityPM.PackagesCodes_BS = (from a in connectedPackageRepository.context.PackageConnectedPackages
                                                  where licensesCodes.Contains(a.PackageCode)
                                                  group a by a.ConnectedPackageCode into g
@@ -1196,7 +1195,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
 
                 if (entityPM.PackageCode != null)
                 {
-                    PackageRepository pckgRep = new PackageRepository(tenant);
+                    PackageRepository pckgRep = new PackageRepository();
                     Package pckg = pckgRep.GetSinglePackage(entityPM.PackageCode);
 
                     if (!entityPM.IsMultiPackage)
@@ -1220,7 +1219,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                         {
                             entityPM.PackagesCodes_PK.Add(pckg.Code);
 
-                            PackageConnectedPackageRepository connectedPackageRepository = new PackageConnectedPackageRepository(entityPM.Id);
+                            PackageConnectedPackageRepository connectedPackageRepository = new PackageConnectedPackageRepository();
                             List<string> myCodes = (from a in connectedPackageRepository.context.PackageConnectedPackages
                                                     where pckg.Code == a.PackageCode
                                                     group a by a.ConnectedPackageCode into g
@@ -1233,7 +1232,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
 
                 if (entityPM.TemporalPackageCode != null)
                 {
-                    PackageRepository pckgRep = new PackageRepository(entityPM.Id);
+                    PackageRepository pckgRep = new PackageRepository();
                     Package pckg = pckgRep.GetSinglePackage(entityPM.TemporalPackageCode);
                     entityPM.TemporalPackageName = pckg.Name;
                 }
@@ -1444,7 +1443,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                 tenantManagementLicensePMLists = tenantManagementLicenseQuery.GetTenantManagementLicenseByListids(tenantManagementIds).ToList();
 
             }
-            PackageRepository packageRepository = new PackageRepository(tenant);
+            PackageRepository packageRepository = new PackageRepository();
             List<Package> packageLists = packageRepository.GetPackages().ToList();
 
             foreach (TenantManagementDW item in result)
