@@ -1,14 +1,17 @@
 ﻿using System;
+using System.Threading.Tasks;
 namespace AmitalCustomsWindowsService.BL
 {
     interface IWorkerBaseWorkOnce
-    {
-        void ExecuteTask();
+	{
+		Task ExecuteTaskAsync();
+
+		void ExecuteTask();
         bool ServiceStarted { get; set; }
 
         void InvokeStatistics();
         string MyType { get; }
         bool WhileServiceStarted_IsOut { get; }
-        int ManagedThreadId { get; set; }        
+        int ManagedThreadId { get; set; }
     }
 }

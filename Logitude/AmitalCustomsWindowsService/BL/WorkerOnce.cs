@@ -49,7 +49,7 @@ namespace AmitalCustomsWindowsService.BL
             _TWorker.Tenant = Tenant;
             _TWorker.ThreadId = ///_TWorker.GetHashCode().ToString(); //
             Guid.NewGuid().ToString();
-            _TWorker.BatchServiceCode = this.QueueDefinitionCode != null ? this.QueueDefinitionCode : typeof(TWorker).Name;
+            _TWorker.BatchServiceCode = typeof(TWorker).Name;
             _intervalInSec =interval;
             this.MyType = _TWorker.NameOf();
             Simplog.Server.Infrastructure.WebFreightEntryPoint.UsingAzure = true; // For Log -ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "DCA Wroker role", log);
@@ -57,23 +57,20 @@ namespace AmitalCustomsWindowsService.BL
             _id = id;
         }
         ///public abstract void DoIt();
-        public void ExecuteTask()
+        public  async Task ExecuteTaskAsync()
         {
             DateTime lastRunTime = DateTime.MinValue;
             
             while (ServiceStarted && !WorkerRoleServiceLocator.PleaseShutDown)
             {
-                // check the current time against the last run plus interval
                 var lastRun = ((TimeSpan)(DateTime.UtcNow.Subtract(lastRunTime))).TotalSeconds;
             
                 if (lastRun >= _intervalInSec)
                 {
-                    // if time to do something, do so
-                    // exception handling omitted here for simplicity
                     
                     try
                     {
-                        _TWorker.WorkOnce();
+                       await _TWorker.WorkOnceAsync();
                     }
                     catch (Exception e)
                     {
@@ -96,7 +93,7 @@ namespace AmitalCustomsWindowsService.BL
                     _LastReprtAt = DateTime.Now;
                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug(typeof(TWorker).FullName + ":Still Alive");
                 }
-                Thread.Sleep(TimeSpan.FromSeconds(_intervalInSec));
+               await Task.Delay(TimeSpan.FromSeconds(_intervalInSec));
 
             }
 
@@ -107,10 +104,61 @@ namespace AmitalCustomsWindowsService.BL
             {
                 return;
             }
-            ///Thread.CurrentThread.Abort();
         }
+		public void ExecuteTask()
+		{
+			DateTime lastRunTime = DateTime.MinValue;
 
-        public void InvokeStatistics()
+			while (ServiceStarted && !WorkerRoleServiceLocator.PleaseShutDown)
+			{
+				// check the current time against the last run plus interval
+				var lastRun = ((TimeSpan)(DateTime.UtcNow.Subtract(lastRunTime))).TotalSeconds;
+
+				if (lastRun >= _intervalInSec)
+				{
+					// if time to do something, do so
+					// exception handling omitted here for simplicity
+
+					try
+					{
+						_TWorker.WorkOnce();
+					}
+					catch (Exception e)
+					{
+						//_TWorker.
+						NetCommonHelper.Logger.DevLog.Instance.WriteFatal(e);
+						Thread.Sleep(TimeSpan.FromMinutes(1));
+					}
+
+
+					// set new run time
+					lastRunTime = DateTime.UtcNow;
+				}
+				if (_TWorker.DebugMode && (Environment.UserInteractive || this.MyType == "LoadTestWR"))
+				{
+					NetCommonHelper.Logger.DevLog.Instance.WriteDebug("_TWorker.DebugMode && Environment.UserInteractive");
+					return;
+				}
+				if (DateTime.Now.Subtract(_LastReprtAt) > TimeSpan.FromHours(1))
+				{
+					_LastReprtAt = DateTime.Now;
+					NetCommonHelper.Logger.DevLog.Instance.WriteDebug(typeof(TWorker).FullName + ":Still Alive");
+				}
+				Thread.Sleep(TimeSpan.FromSeconds(_intervalInSec));
+
+			}
+
+			NetCommonHelper.Logger.DevLog.Instance.WriteDebug(typeof(TWorker).FullName + ":ServiceStarted=" + ServiceStarted.ToString());
+
+			WhileServiceStarted_IsOut = true;
+			if (_TWorker.DebugMode)
+			{
+				return;
+			}
+			///Thread.CurrentThread.Abort();
+		}
+
+		public void InvokeStatistics()
         {
             _TWorker.LogStatisticInDB();
         }

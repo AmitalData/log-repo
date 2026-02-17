@@ -1,43 +1,44 @@
 ﻿
+using CustomsWorkerRole.Queue;
+using CustomsWorkerRole.Utils;
+using Logitude.Customs.BL.CloseTables;
+using Logitude.Customs.BL.EntityQueryServices;
+using Logitude.Customs.BL.Messaging.Customs;
+using Logitude.Customs.BL.Messaging.Customs.PerformanceLogger;
+using Logitude.Customs.Def.EntityPMs;
+using Logitude.CustomsMessaging.MessagingServices;
+using Logitude.CustomsMessaging.RabbitMQ;
+using Logitude.Server.Tools;
+using Logitude.Server.Tools.Counters;
+using Logitude.Server.Tools.Helpers;
+using Logitude.Server.Tools.QueueService;
+using Logitude.Server.Tools.Utils;
 using Logitude.SystemLogs;
+using Microsoft.Practices.Unity;
 using Microsoft.ServiceBus.Messaging;
+using Newtonsoft.Json;
+using RabbitMQ.Client;
+using RabbitMQ.Client.Events;
+using Simplog.Server.Infrastructure;
 //using Microsoft.WindowsAzure.ServiceRuntime;
 using Simplog.Server.Infrastructure.Azure;
+using Simplog.Server.Infrastructure.Helpers;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Diagnostics;
+using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using CustomsWorkerRole.Queue;
-using UnifreightIIG.Common.Utils;
-using Logitude.Server.Tools;
-using Logitude.CustomsMessaging.MessagingServices;
-using Microsoft.Practices.Unity;
-using Logitude.Server.Tools.Counters;
-using Logitude.Server.Tools.Helpers;
-using Logitude.Customs.BL.Messaging.Customs;
-using System.Diagnostics;
-using System.IO;
-using System.Xml.Serialization;
-using System.Xml;
-using CustomsWorkerRole.Utils;
-using Simplog.Server.Infrastructure.Helpers;
-using Logitude.Server.Tools.QueueService;
-using Simplog.Server.Infrastructure;
 using System.Transactions;
-using Logitude.Server.Tools.Utils;
-using System.Configuration;
-using Logitude.Customs.BL.Messaging.Customs.PerformanceLogger;
-using Logitude.CustomsMessaging.RabbitMQ;
-using Logitude.Customs.BL.CloseTables;
-using RabbitMQ.Client.Events;
-using RabbitMQ.Client;
-using Logitude.Customs.BL.EntityQueryServices;
-using Logitude.Customs.Def.EntityPMs;
-using Newtonsoft.Json;
-using System.Globalization;
+using System.Xml;
+using System.Xml.Serialization;
+using UnifreightIIG.Common.Utils;
 
 namespace CustomsWorkerRole
 {
@@ -56,7 +57,7 @@ namespace CustomsWorkerRole
         QueueClient _QueueClient;
         private QueueClient _DeadletterQueueClient;
         protected CustomDbQueueService _CustomDbQueueService;
-        public override void Run()
+		public override void Run()
         {
 
             while (true)
@@ -139,8 +140,8 @@ namespace CustomsWorkerRole
                 //RoleEnvironment.Changing += RoleEnvironmentChanging;
             }
             else
-            {   
-				_CustomDbQueueService = new CustomDbQueueService(myClass, SettingUtil.GetTenantDBFromConfig(),queueDefinitionCode: this.BatchServiceCode);
+            {
+				_CustomDbQueueService = new CustomDbQueueService(myClass, SettingUtil.GetTenantDBFromConfig());
                 
             }
 
@@ -194,8 +195,49 @@ namespace CustomsWorkerRole
 
         DateTime _LastGC = DateTime.MinValue;
         private string _RabbitQueueCode;
+		public override async Task WorkOnceAsync()
+		{
+			try
+			{
+				if (DateTime.Now.Subtract(_LastGC) > TimeSpan.FromMinutes(10))//cache 20 min
+				{
+					_LastGC = DateTime.Now;
+					
+				}
 
-        public override void WorkOnce()
+				OnStart();				
+
+				switch (base.WorkerQueueType)
+				{
+
+					case WorkerQueueType.RabbitMQ:
+						WorkUntilPrcossesStop_RabbitMQ();
+						break;
+					case WorkerQueueType.DB:
+					default:
+						{
+							if (Logitude.Server.Tools.Helpers.FeatureToggleHelper.HasFeatureToggle("DQN", 0))
+							{
+								await WorkUntilQEmpty_Db_new();
+							}
+							else
+							{
+								 WorkUntilQEmpty_Db();
+							}
+						}
+						break;
+				}
+
+			}
+			catch (Exception e)
+			{
+				ExceptionHandler.HandleException(e, DateTime.Now, 0, "", "WorkerRole" + this.GetType().Name, " : Run() Method", null);
+				Thread.Sleep(TimeSpan.FromSeconds(1));
+				_OnStartDone = false;
+			}
+		}
+
+		public override void WorkOnce()
         {
             try
             {
@@ -229,7 +271,7 @@ namespace CustomsWorkerRole
                         {
                             if (Logitude.Server.Tools.Helpers.FeatureToggleHelper.HasFeatureToggle("DQN", 0))
                             {
-                                WorkUntilQEmpty_Db_new();
+                              WorkUntilQEmpty_Db_new();
                             }
                             else
                             {
@@ -638,16 +680,16 @@ namespace CustomsWorkerRole
 
 
 
-        // islam db queue service
-        void WorkUntilQEmpty_Db_new()
+		// islam db queue service
+		async Task WorkUntilQEmpty_Db_new()
         {
             //LogTime(className + " start all");
             List<CustomDBQueueMessage> responseList=null;
             List<long> deferredSequenceNumbers = new List<long>();
             bool proccesDone = false;
-            List<string> activeTasks = new List<string> { };
+			ConcurrentDictionary<string, byte> activeTasks = new ConcurrentDictionary<string, byte>();
 
-            int maxActiveTasks = 10;
+			int maxActiveTasks = 10;
             var num = ConfigurationManager.AppSettings.Get("CustomDbQueueNewReceiveSelectCount_" + className);
             if (!string.IsNullOrEmpty(num) && int.Parse(num) > 0)
             {
@@ -677,8 +719,8 @@ namespace CustomsWorkerRole
                     // as long as the max active tasks is reached, we should wait for few of them to finish
                     if (activeTasks.Count == maxActiveTasks)
                     {
-                        Thread.Sleep(1000);
-                        continue;
+						await Task.Delay(1000); // במקום Thread.Sleep
+						continue;
                     }
 
                     LogMessagingUtilWR.Instance.Clear();
@@ -691,13 +733,11 @@ namespace CustomsWorkerRole
                         if (activeTasks.Count < maxActiveTasks)
                         {
                             LogMessagingUtilWR.Instance.AppendLine("TransactionFactory.GetTransaction");
-                            //int transactionTimeOutInMin = Math.Max(10, CustomsWorkerRole.Utils.GenUtil.GetQueueTimeOutInMin());
-                            using (TransactionScope Queue_scope = TransactionFactory.GetTransaction())
-                            {
-                                using (TransactionScope scopeRecive = TransactionFactory.GetNewReadCommittedTransaction())
-                                {
-
-
+							//int transactionTimeOutInMin = Math.Max(10, CustomsWorkerRole.Utils.GenUtil.GetQueueTimeOutInMin());
+							using (TransactionScope Queue_scope = new TransactionScope(TransactionScopeOption.Required,	new TransactionOptions { IsolationLevel = IsolationLevel.ReadCommitted },TransactionScopeAsyncFlowOption.Enabled))		
+							{								
+								using (TransactionScope scopeRecive = new TransactionScope(TransactionScopeOption.RequiresNew,	new TransactionOptions { IsolationLevel = IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled))
+								{
                                     try
                                     {
                                         LogMessagingUtilWR.Instance.AppendLine("QRecive");
@@ -723,7 +763,7 @@ namespace CustomsWorkerRole
                                 {
                                     //LogTime(className + " queue is empty");
                                     QueueThreadStateService.Upsert(QueueThreadStateService.GetWRKey(this.GetType().Name), "No Work");
-                                    Thread.Sleep(TimeSpan.FromSeconds(CustomsWorkerRole.Utils.GenUtil.IfNoQueue_ServerWaitTimeInSec()));
+									await Task.Delay(TimeSpan.FromSeconds(CustomsWorkerRole.Utils.GenUtil.IfNoQueue_ServerWaitTimeInSec()));
 
                                     break;
                                 }
@@ -745,20 +785,21 @@ namespace CustomsWorkerRole
                                 {
                                     var stopwatch = Stopwatch.StartNew();
                                     //LogTime(className + " create new task for msg id: " + item.MessageId);
-                                    activeTasks.Add(item.MessageId);
+                                    activeTasks.TryAdd(item.MessageId, 0);
 
-                                    var t =
-                                    Task.Factory.StartNew(() =>
-                                    {
-                                        var createdElapsed = stopwatch.Elapsed.TotalSeconds;
+									var t = Task.Run(async () =>	                                  
+	                                {
+	                                 	var createdElapsed = stopwatch.Elapsed.TotalSeconds;
                                         // LogTime(className + " start task (created " + stopwatch.Elapsed.TotalSeconds + " seconds ago) for row MessageId: " + item.MessageId);
                                         LogTime(className + " start task for row MessageId: " + item.MessageId);
                                         var taskstopwatch = Stopwatch.StartNew();
+										//await DBWorkerService.SemaphoreSlimGlobal.WaitAsync();
 
-                                        try
-                                        {
+										try
+										{
                                             CustomsCommandBaseHelper helper = new CustomsCommandBaseHelper();
-                                            helper.RunTask(item, className);
+											await helper.RunTaskAsync(item, className);
+											//helper.RunTask(item, className);
                                             LogMessagingUtilWR.Instance.AppendLine("LogDoneItemInMemory();");
                                             LogDoneItemInMemory();
                                             LogMessagingUtilWR.Instance.AppendLine("LogDoneItemInMemory();AFTER");
@@ -766,16 +807,22 @@ namespace CustomsWorkerRole
                                         }
                                         finally
                                         {
-                                            activeTasks.Remove(item.MessageId);
-                                        }
-                                    });
+											activeTasks.TryRemove(item.MessageId, out _);
+										}
+									});
 
                                     taskLIst.Add(t);
-                                }
+									// אם יש מספר משימות יותר גבוה מהמקסימום, חכה למשימה שתסיים לפני שמתחילים משימה חדשה
+									if (taskLIst.Count >= maxActiveTasks)
+									{
+										var completedTask = await Task.WhenAny(taskLIst);
+										taskLIst.Remove(completedTask);
+									}
+								}
 
-                                Task.WaitAll(taskLIst.ToArray(), maxSleepAfterEachQueuePeekList);
-                                
-                                if (maxSleepAfterEachQueuePeekList < 0)
+								await Task.WhenAll(taskLIst);
+
+								if (maxSleepAfterEachQueuePeekList < 0)
                                 {
                                     LogTime(className + " end waiting for all of them (total elapsed: " + (int)totalStopwatch.Elapsed.TotalSeconds + " seconds)");
                                 }
@@ -787,7 +834,7 @@ namespace CustomsWorkerRole
                             // activeTasks.Count >= maxActiveTasks, so we need to wait for some time
                             if (maxSleepAfterEachQueuePeekList > 0)
                             {
-                                Thread.Sleep(maxSleepAfterEachQueuePeekList);
+								await Task.Delay(maxSleepAfterEachQueuePeekList);
                             }
                         }
                     }
@@ -797,9 +844,8 @@ namespace CustomsWorkerRole
                     }
                 }
             }
-            //LogTime(className + " end all");
         }
-        private void LogTime(string msg)
+		private void LogTime(string msg)
         {
             DateTime stopLogAt = new DateTime(2023, 06, 01);
             string UntilDateyyyyMMdd = ConfigurationManager.AppSettings["20230601T000000.LogUntilDateyyyyMMdd"];

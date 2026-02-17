@@ -8,6 +8,7 @@ using System.Web.Caching;
 using System.Threading;
 using System.Globalization;
 using Simplog.Server.Infrastructure.Helpers;
+using System.Threading.Tasks;
 
 namespace Logitude.Server.Tools
 {
@@ -116,8 +117,12 @@ namespace Logitude.Server.Tools
             }
         }
         public abstract void WorkOnce();
+        public virtual Task WorkOnceAsync()
+        {
+            return Task.CompletedTask;
+		}
 
-        public virtual void Run()
+		public virtual void Run()
         {
         }
 

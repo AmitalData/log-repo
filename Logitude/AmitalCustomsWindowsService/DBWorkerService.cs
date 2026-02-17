@@ -21,20 +21,19 @@ using System.Diagnostics;
 using CommunicationWorkerRole;
 using System.IO;
 using Logitude.CustomsMessaging.Dca;
-using System.Reflection;
 
 namespace AmitalCustomsWindowsService
 {
     class DBWorkerService
     {
 
-        List<Thread> _Threads;
+        List<Task> _WorkerTasks;
 
         List<IWorkerBaseWorkOnce> _Workers;
         private DateTime? _ThreadsStartAt;
         private bool _AllWorkerLoaded;
 
-        public bool HaveDB()
+		public bool HaveDB()
         {
             try
             {
@@ -150,8 +149,8 @@ namespace AmitalCustomsWindowsService
             for (Int32 iWorker = 0; iWorker < _Workers.Count; iWorker++)
             {
                 _Workers[iWorker].ServiceStarted = true;//startIt
-                if (!_Threads[iWorker].IsAlive)
-                {
+                if (!_WorkerTasks[iWorker].IsCompleted)
+				{
                     if (_Workers[iWorker].WhileServiceStarted_IsOut)
                     {
                         StartThread(iWorker);
@@ -168,34 +167,33 @@ namespace AmitalCustomsWindowsService
 
         }
 
-        private void StartThread(int iWorker)
-        {
-            _Workers[iWorker].ServiceStarted = true;//startIt
-            ThreadStart st = new ThreadStart(_Workers[iWorker].ExecuteTask);
-            var currThread = new Thread(st);
-            _Workers[iWorker].ManagedThreadId = currThread.ManagedThreadId;
-            currThread.Name = GetThreadName(iWorker);
-            //_Threads.Add(t);
-            _Threads[iWorker] = currThread;
-            _Threads[iWorker].Start();
-            NetCommonHelper.Logger.DevLog.Instance.WriteInfo(GetThreadName(iWorker));
-        }
+		private void StartThread(int iWorker)
+		{
+			_Workers[iWorker].ServiceStarted = true;
 
-        private string GetThreadName(int iWorker)
+			_Workers[iWorker].ManagedThreadId = Environment.CurrentManagedThreadId;
+			
+			var task = _Workers[iWorker].ExecuteTaskAsync();
+
+			_WorkerTasks[iWorker] = task;
+
+			NetCommonHelper.Logger.DevLog.Instance.WriteInfo(GetThreadName(iWorker));
+		}
+
+		private string GetThreadName(int iWorker)
         {
             return _Workers[iWorker].MyType + ":" + iWorker.ToString();
         }
 
-        
         private void LoadWorkerFromDB()
         {
             if (!_AllWorkerLoaded)
             {
                 _Workers = new List<IWorkerBaseWorkOnce>();
-                _Threads = new List<Thread>(_Workers.Count);
+				_WorkerTasks = new List<Task>(_Workers.Count);
                 List<BatchServicesDefinitionPM> BatchServicesDefinitions = GetBatchServicesDefinitions();
-             
                 LoadWorkerFromDB(BatchServicesDefinitions);
+
 
                 for (int iWorker = 0; iWorker < _Workers.Count; iWorker++)
                 {
@@ -221,7 +219,7 @@ namespace AmitalCustomsWindowsService
             var workerOnce = new WorkerOnce<TWorker>(1, _Workers.Count) { ServiceStarted = true , QueueDefinitionCode = queueDefinitionCode , WorkerQueueType  =workerQueueType };
 
             _Workers.Add(workerOnce);
-            _Threads.Add(null);
+			_WorkerTasks.Add(null);
 
 
         }
@@ -248,12 +246,9 @@ namespace AmitalCustomsWindowsService
             listOfWorkerEntryPoint.Add(new CustomsHSMSignWR());
             listOfWorkerEntryPoint.Add(new ReportExecutionLogWR());
             listOfWorkerEntryPoint.Add(new SyncRecordsCCUTableWR());
-			listOfWorkerEntryPoint.Add(new DocumentAzureQueueWR());
-			listOfWorkerEntryPoint.Add(new DocumentSFTPAnalyzeWR());
-            listOfWorkerEntryPoint.Add(new SiiStatusAzureQueueWR());
+			listOfWorkerEntryPoint.Add(new DocumentAzureQueueWR());      
 
-
-            bool testCustomsSchedularWR = false;
+			bool testCustomsSchedularWR = false;
             if (testCustomsSchedularWR)
             {
                 listOfWorkerEntryPoint = new List<Logitude.Server.Tools.WorkerEntryPoint>();
@@ -291,15 +286,14 @@ namespace AmitalCustomsWindowsService
                 var worker = listOfWorkerEntryPoint.FirstOrDefault(r => r.NameOf() == batchServicesDefinitionPM.Code);
                 if (worker != null)
                 {
-                    for (int i = 0; i < batchServicesDefinitionPM.NumberOfThreads; i++)
-                    {
+                    //for (int i = 0; i < batchServicesDefinitionPM.NumberOfThreads; i++)
+                    //{
                         var AddWorkerFromAppSettingGenericMethod = addWorkerFromAppSettingMethodInfoDB.MakeGenericMethod(new Type[] { worker.GetType() });
                         AddWorkerFromAppSettingGenericMethod.Invoke(this, new object[] { (object)suppresDoOnlyCheck, (object)queueDefinitionCode, (object)workerQueueType });
                     
-                    }
+                    //}
                 }
             }
-        
             ////FROM CONFIG !!! 
             SingletonFTPCommunicationLogQueue(listOfWorkerEntryPoint);
         }

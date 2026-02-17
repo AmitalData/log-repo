@@ -408,14 +408,6 @@ export class VendorPM extends ObjectCustomFieldPM {
     public get ExportLocalCustomerGroupId() { return this.exportLocalCustomerGroupId; }
     public set ExportLocalCustomerGroupId(newValue: string) { if (this.exportLocalCustomerGroupId != newValue) { this.exportLocalCustomerGroupId = newValue; this.MarkAsDirty("ExportLocalCustomerGroupId"); } }
        
-    private bankBranch: string;
-    public get BankBranch() { return this.bankBranch; }
-    public set BankBranch(newValue: string) { if (this.bankBranch != newValue) { this.bankBranch = newValue; this.MarkAsDirty("BankBranch"); } }
-       
-    private bankCodeId: boolean;
-    public get BankCodeId() { return this.bankCodeId; }
-    public set BankCodeId(newValue: boolean) { if (this.bankCodeId != newValue) { this.bankCodeId = newValue; this.MarkAsDirty("BankCodeId"); } }
-       
 	 
 
     public OldEntityPM: VendorPM;
@@ -444,4 +436,4 @@ export class VendorPM extends ObjectCustomFieldPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

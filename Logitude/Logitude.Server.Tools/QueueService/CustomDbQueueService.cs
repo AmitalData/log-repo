@@ -13,14 +13,13 @@ namespace Logitude.Server.Tools.QueueService
 
     public class CustomDbQueueService : DbQueueService
     {
-        QueueSendModel QueueSendModel = null;
 
         CustomDbQueueModel CustomDbQueueParams;
         public CustomDbQueueService(string queueCode, int tenant,
             int lockDurationInMin = 2,
             int maxDeliveryCount = 50,
-            int timeOutInHour = 24, string queueDefinitionCode = null)
-            : base(queueCode, tenant, queueDefinitionCode)
+            int timeOutInHour = 24)
+            : base(queueCode, tenant)
         {
             CustomDbQueueParams = new CustomDbQueueModel();
             CustomDbQueueParams.QueueCode = queueCode;
@@ -67,11 +66,10 @@ namespace Logitude.Server.Tools.QueueService
         new private void Complete(string messageId) { throw new NotImplementedException(); }
         new public List<CustomDBQueueMessage> Receive_new(int? nextRunDelayInSec = null, int? selectCount = null)
         {
-
             CurrentCustomQueueResponse = null;
             nextRunDelayInSec = nextRunDelayInSec ?? (int)(CustomDbQueueParams.LockDuration.TotalSeconds);
             base.CurrentMessageId = null;
-            var q = base.Receive_new(nextRunDelayInSec.Value, selectCount: selectCount, queueSendModel: QueueSendModel);
+            var q = base.Receive_new(nextRunDelayInSec.Value, selectCount: selectCount);
             if (q == null || q.Count == 0)
             {
                 return null;
@@ -132,7 +130,6 @@ namespace Logitude.Server.Tools.QueueService
         public int? Send(Dictionary<string, string> messageValues, int tenant, TimeSpan? delayTime, /*int tenantPriority, */
             QueueSendModel queueSendModel = null)
         {
-
             //int tenantPriority=8;
             //LogMessagingUtil.Instance.AppendLine($"SendCommunicationLogMessageToQueue(${queueName},UseRabbitMQ={UseRabbitMQ})");
             var queueId = base.SendReturnId(messageValues, tenant, delayTime, null, null, null, /*tenantPriority,*/ queueSendModel);
@@ -147,7 +144,14 @@ namespace Logitude.Server.Tools.QueueService
             LogMessagingUtil.Instance.AppendLine("CustomDbQueueService:SafeComplete:DbQueueName=" + CustomDbQueueParams.QueueCode + "QMId=" + base.CurrentMessageId);
 
         }
-        public bool SafeAbandon(bool isLockes = false)
+		public async Task SafeCompleteAsync()
+		{
+			 await this.CompleteAsync();
+			CurrentCustomQueueResponse.QueueStatus = QueueStatusEnum.Complete;
+			LogMessagingUtil.Instance.AppendLine("CustomDbQueueService:SafeComplete:DbQueueName=" + CustomDbQueueParams.QueueCode + "QMId=" + base.CurrentMessageId);
+
+		}
+		public bool SafeAbandon(bool isLockes = false)
         {
             bool safcomplete = false;
             if (CurrentCustomQueueResponse.Retries > 10)
@@ -195,7 +199,45 @@ namespace Logitude.Server.Tools.QueueService
             //this.Return();
             return safcomplete;
         }
-        public CustomDBQueueMessage CurrentCustomQueueResponse { get; set; }
+
+		public async Task<bool> SafeAbandonAsync(bool isLockes = false)
+		{
+			bool safcomplete = false;
+			if (CurrentCustomQueueResponse.Retries > 10)
+			{
+				await this.SafeCompleteAsync();
+				safcomplete = true;
+			}
+			else
+			{
+				if (CurrentCustomQueueResponse.MessageCreatedServerTime.HasValue)
+				{
+					if (DateTime.UtcNow.Subtract(CurrentCustomQueueResponse.MessageCreatedServerTime.GetValueOrDefault())
+						> TimeSpan.FromHours(12))
+					{
+						await this.SafeCompleteAsync();
+						safcomplete = true;
+					}
+				}
+			}
+			if (!safcomplete)
+			{
+				if (!isLockes && CurrentCustomQueueResponse.Retries < 8)
+				{
+					this.Delay(TimeSpan.FromMinutes(1));
+				}
+				else
+				{
+					this.Delay(TimeSpan.FromMinutes(10));
+				}
+
+			}
+		
+			CurrentCustomQueueResponse.QueueStatus = QueueStatusEnum.DeadLetter;
+			LogMessagingUtil.Instance.AppendLine("CustomDbQueueService:SafeAbandon:DbQueueName=" + CustomDbQueueParams.QueueCode + "QMId=" + base.CurrentMessageId);
+			return safcomplete;
+		}
+		public CustomDBQueueMessage CurrentCustomQueueResponse { get; set; }
 
         public CustomDBQueueMessage GetRabbitMQPseudoByMessageId(long messageId)
         {

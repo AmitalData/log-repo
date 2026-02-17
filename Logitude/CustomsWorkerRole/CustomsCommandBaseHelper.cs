@@ -104,8 +104,64 @@ namespace CustomsWorkerRole
                 }
             }
         }
+		public async Task RunTaskAsync(CustomDBQueueMessage item, string myClass)
+		{
+			using (TransactionScope Queue_scope = TransactionFactory.GetTransaction())
+			{
+				LogMessagingUtilWR.Instance.AppendLine("ProcessMessage_Db");
+				CustomDbQueueService _CustomDbQueueService = new CustomDbQueueService(myClass, SettingUtil.GetTenantDBFromConfig(), item);
+				bool successProcessMessage = true;
 
-        private void LogTime(string msg)
+				successProcessMessage = await ProcessMessage_DbAsync(item, myClass);
+
+				LogMessagingUtilWR.Instance.AppendLine("successProcessMessage");
+				if (successProcessMessage)
+				{
+					await _CustomDbQueueService.SafeCompleteAsync();
+					Queue_scope.Complete();
+					PerformanceM.LastInstance.QueueSuccessComplete = true;
+				}
+				else if (!successProcessMessage)/// IF FAILED USE NEW TRANS !!!!
+				{
+					try
+					{
+						Queue_scope.Complete();
+					}
+					catch (Exception)
+					{
+						//throw;
+					}
+					try
+					{
+						Queue_scope.Dispose();//remove lock !!
+					}
+					catch (Exception)
+					{
+
+					}
+
+					using (var Abandon_Queue_scope = new TransactionScope(TransactionScopeOption.RequiresNew, TransactionScopeAsyncFlowOption.Enabled))
+					{
+						await  _CustomDbQueueService.SafeAbandonAsync();//if (CurrentCustomQueueResponse.Retries > 10)
+						Abandon_Queue_scope.Complete();
+					}
+				}
+				PerformanceM.LastInstance.QueueEndDate = DateTime.Now;
+				PerformanceM.EnqueueLastInstance();
+
+				string logItMessagingUtilWR = ConfigurationManager.AppSettings.Get("LogMessagingUtilWR");
+
+				if (!string.IsNullOrWhiteSpace(logItMessagingUtilWR))
+				{
+					string morethan = "";
+					string str = LogMessagingUtilWR.Instance.GetString(out morethan);
+					NetCommonHelper.Logger.DevLog.Instance.WriteInfo(str);
+
+				}
+			}
+		}
+
+		private void LogTime(string msg)
         {
             DateTime stopLogAt = new DateTime(2023, 06, 01);
             string UntilDateyyyyMMdd = ConfigurationManager.AppSettings["20230601T000000.LogUntilDateyyyyMMdd"];
@@ -227,8 +283,118 @@ namespace CustomsWorkerRole
             }
         }
 
+		protected virtual async Task<bool> ProcessMessage_DbAsync(CustomDBQueueMessage msgResponse, string myClass)
+		{
+			LogMessagingUtilWR.Instance.AppendLine("ProcessMessage_Db");
+			try
+			{
+				//LogTime("start ProcessMessage_Db MessageId:" + msgResponse.MessageId + " at : ");
 
-    }
+				int tenant = -1;
+				string analyzeClass = msgResponse.Properties["InterfaceTypeCode"].ToString();
+
+
+
+
+				if (String.IsNullOrWhiteSpace(analyzeClass))
+				{
+					NetCommonHelper.Logger.DevLog.Instance.WriteError("analyzeClass is null" + ":" + "rabbitmq");
+					//_CustomDbQueueService.SafeAbandon();
+					ExceptionHandler.HandleException(null, DateTime.Now, 0, "", "WorkerRole", "CustomsMessagingSheetWR: ProcessMessage() Method :analyzeClass ==null", null);
+					//message.DeadLetter();
+					return false;//
+				}
+
+				//if (!ContainerAccessor.Container.IsRegistered<IMessagingServiceInterfaceType>(analyzeClass))
+				//{
+				//    //_CustomDbQueueService.SafeAbandon();
+				//    ExceptionHandler.HandleException(null, DateTime.Now, 0, "", "WorkerRole", "CustomsMessagingSheetWR: ProcessMessage():!ContainerAccessor.Container.IsRegistered :analyzeClass=" + analyzeClass, null);
+				//    //message.DeadLetter();
+				//    return false;
+				//}
+				//var tenant = message.GetProperty<int>(QueueExt.QueuePropertyNames.Tenant, -1);
+				int.TryParse(msgResponse.Properties["Tenant"].ToString(), out tenant);
+				if (tenant == -1)
+				{
+					NetCommonHelper.Logger.DevLog.Instance.WriteError("Tenant is null" + ":" + "rabbitmq");
+					ExceptionHandler.HandleException(null, DateTime.Now, 0, "", "WorkerRole", "CustomsMessagingSheetWR: ProcessMessage() Method :tenant==-1", null);
+					return false;
+				}
+
+				string correlationId = msgResponse.Properties["CorrelationId"].ToString();
+				LogMessagingUtilWR.Instance.AppendLine($"correlationId = {correlationId};analyzeClass={analyzeClass}");
+				// var correlationId = message.CorrelationId;
+				//LogMessagingUtil.Instance.AppendLine("receivedMessage.DeliveryCount =" + message.DeliveryCount.ToString());
+
+				var s = myClass;
+				CustomsCommandEnum myCustomsCommandEnum;
+				if (Enum.TryParse<CustomsCommandEnum>(s, out myCustomsCommandEnum))
+				{
+					//myCustomsCommandEnum
+				}
+				else
+				{
+					throw new Exception("Enum.TryParse<CustomsCommandEnum>(s, out myCustomsCommandEnum)");
+				}
+				PerformanceM.LastInstance.InterfaceTypeCode = analyzeClass;
+				PerformanceM.LastInstance.RequestSheetID = correlationId;
+				PerformanceM.LastInstance.QueueDefinitionCode = myCustomsCommandEnum.ToString();
+				LogMessagingUtilWR.Instance.AppendLine("ResolveAndExecute");
+				try
+				{
+					QueueThreadStateService.Upsert(
+		QueueThreadStateService.GetWRKey(s),
+		$"Interface:{analyzeClass},RequestSheetID:{correlationId},QId:{msgResponse?.MessageId},QDefinition:{PerformanceM.LastInstance?.QueueDefinitionCode}"
+		);
+
+				}
+				catch //(Exception)
+				{
+
+
+				}
+
+				MessagingServiceFactoryHelper.ResolveAndExecute(analyzeClass, tenant, correlationId, myCustomsCommandEnum);
+
+				//LogTime("end ProcessMessage_Db MessageId:" + msgResponse.MessageId + " at : ");
+
+
+				//_CustomDbQueueService.SafeComplete();
+				return true;
+
+			}
+			catch (CustomsRequestsSheetDomainModelServiceException customsRequestsSheetServiceException)
+			{
+
+				//ExceptionHandler.HandleException(customsRequestsSheetServiceException, DateTime.Now, 0, "", "WorkerRole", "CustomsMessagingSheetWR: ProcessMessage() Method/CustomsRequestsSheetServiceException ", null);
+
+				if (customsRequestsSheetServiceException.What2Do == CustomsRequestsSheetDomainModelServiceException.What2DoEnum.StopQueue)
+				{
+					//message.SafeComplete();
+					//_CustomDbQueueService.SafeComplete();
+					return true;
+				}
+				else
+				{
+					//_CustomDbQueueService.SafeAbandon();
+					return false;
+				}
+
+
+			}
+			catch (Exception ex)
+			{
+				ExceptionHandler.HandleException(ex, DateTime.Now, 0, "", "WorkerRole", "CustomsMessagingSheetWR: ProcessMessage() Method", null);
+				//message.SafeComplete();
+				//_CustomDbQueueService.SafeComplete();
+
+				//_CustomDbQueueService.SafeAbandon();// make try (in 5101 CRS was analyze *1000000)
+				return false;
+				//throw;
+			}
+		}
+
+	}
 
 
 }
