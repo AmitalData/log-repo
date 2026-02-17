@@ -34,25 +34,13 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                 tenant = iQueryable.FirstOrDefault().Tenant;
             }
 
-            string  creditLineNotes = "החזרת שיק ללקוח";
-            bool calculateWithTotalPastOpenCheques = FeatureToggleHelper.HasFeatureToggle("CTP", tenant);
+
             string multi = TranslateTextsClass.Translate("GLAccounts.Q.Multi", 0);
             string active = TranslateTextsClass.Translate("GLAccounts.Q.Active", 0);
             string inactive = TranslateTextsClass.Translate("GLAccounts.Q.Inactive", 0);
             FullAccountingSetting fullAccountingSettings = context.FullAccountingSettings.Where(a => a.Tenant == tenant).FirstOrDefault();
             IQueryable<GLAccountList> query;
-            var openChequesByAccount =
-                  context.AllARPaymentChequesViews
-                      .Where(a =>
-                          a.ValueDate <= DateTime.Now &&
-                          a.Notes != creditLineNotes &&
-                          a.Tenant == tenant)
-                      .GroupBy(a => a.AccountId)
-                      .Select(g => new
-                      {
-                        AccountId = g.Key,
-                        TotalOpenCheques = g.Sum(x => (decimal?)x.LocalAmountCredit) ?? 0
-                      });
+
             if (fullAccountingSettings != null && fullAccountingSettings.IsSecurityLevelActivated)
             {
                 query = (from a in iQueryable//.Include("ChartOfAccount").Include("ChartOfAccountsType")
@@ -78,10 +66,6 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                          join MoreDatas in context.GLAccountMoreDatas on a.Id equals MoreDatas.AccountId
 
                          from FollowUpDatas in FollowUpDatasjoin.DefaultIfEmpty()
-
-                         join oc in openChequesByAccount
-                         on a.Id equals oc.AccountId into ocJoin
-                         from oc in ocJoin.DefaultIfEmpty()
 
                          select new GLAccountList()
                          {
@@ -282,14 +266,12 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                       + (fullAccountingSettings.ThirdsPeriodsMonths.IndexOf("Period5") != -1 ? AgingDatas.Period5 : 0)
                                                       + (fullAccountingSettings.ThirdsPeriodsMonths.IndexOf("PeriodPast") != -1 ? AgingDatas.PeriodPast : 0) : 0,
                              TotalOpenChequesInLocalCur = ((fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel == null)
-                                      || (fullAccountingSettings.IsSecurityLevelActivated && (chartOfAccount.ChartOfAccountSecurityLevel <= (loggedUser.SecurityLevel ?? 0) || (loggedUser.Tenant == 0 && !loggedUser.IsDistributor)))) ? (oc != null ? oc.TotalOpenCheques : 0) : 0,
+                                      || (fullAccountingSettings.IsSecurityLevelActivated && (chartOfAccount.ChartOfAccountSecurityLevel <= (loggedUser.SecurityLevel ?? 0) || (loggedUser.Tenant == 0 && !loggedUser.IsDistributor)))) ? MoreDatas.TotalOpenChequesInLocalCur : 0,
                              TotFutureOpenChequesInLocalCur = ((fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel == null)
                                       || (fullAccountingSettings.IsSecurityLevelActivated && (chartOfAccount.ChartOfAccountSecurityLevel <= (loggedUser.SecurityLevel ?? 0) || (loggedUser.Tenant == 0 && !loggedUser.IsDistributor)))) ? MoreDatas.TotFutureOpenChequesInLocalCur : 0,
 
-                             Obligo = (MoreDatas.BalanceInLocalCurrency == null ? 0 : MoreDatas.BalanceInLocalCurrency)
-                                             + (MoreDatas.TotFutureOpenChequesInLocalCur ?? 0)
-                                             + (CardsDatas.TotalOpenShipments ?? 0) +
-                                              (calculateWithTotalPastOpenCheques ? (oc != null ? oc.TotalOpenCheques : 0) : 0),
+                             Obligo = (MoreDatas.BalanceInLocalCurrency == null ? 0 : MoreDatas.BalanceInLocalCurrency) + (MoreDatas.TotFutureOpenChequesInLocalCur ?? 0) + (CardsDatas.TotalOpenShipments ?? 0),
+
                              CreditUsed = -1 * ((((decimal)(long)((CardsDatas.CreditLimit == null ? 0 : CardsDatas.CreditLimit) * 10000)) / 10000) + (-1 * MoreDatas.BalanceInLocalCurrency) + (-1 * (MoreDatas.TotFutureOpenChequesInLocalCur ?? 0)) + (-1 * (CardsDatas.TotalOpenShipments ?? 0))),
 
                              InsuredCreditPercentage = (CardsDatas.CreditLimit == null || CardsDatas.CreditLimit == 0) ? 0 :
@@ -331,14 +313,6 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                          join MoreDatas in context.GLAccountMoreDatas on a.Id equals MoreDatas.AccountId
 
                          from FollowUpDatas in FollowUpDatasjoin.DefaultIfEmpty()
-
-                         join AllARPaymentCheque in context.AllARPaymentChequesViews on a.Id equals AllARPaymentCheque.AccountId
-
-                         into AllARPaymentChequeJoin
-
-                         join oc in openChequesByAccount
-                      on a.Id equals oc.AccountId into ocJoin
-                         from oc in ocJoin.DefaultIfEmpty()
 
                          select new GLAccountList()
                          {
@@ -429,7 +403,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                              Category4LocalName = a.Category4.LocalName,
                              Category5LocalName = a.Category5.LocalName,
 
-                             MarkDate = a.MarkDate,
+                             MarkDate= a.MarkDate,
                              ActiveForInterest = a.ActiveForInterest,
                              ActiveForInterestCreditInvoice = a.ActiveForInterestCreditInvoice,
                              MinimumInterestInvoiceBilling = a.MinimumInterestInvoiceBilling,
@@ -481,7 +455,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
                              IsSecurityLevelsEnabled = fullAccountingSettings.IsSecurityLevelActivated,
                              Access = !fullAccountingSettings.IsSecurityLevelActivated,
-
+                        
                              Period0 = AgingDatas.Period0,
                              Period1 = AgingDatas.Period1,
                              Period2 = AgingDatas.Period2,
@@ -518,25 +492,23 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                       + (fullAccountingSettings.ThirdsPeriodsMonths.IndexOf("Period4") != -1 ? AgingDatas.Period4 : 0)
                                                       + (fullAccountingSettings.ThirdsPeriodsMonths.IndexOf("Period5") != -1 ? AgingDatas.Period5 : 0)
                                                       + (fullAccountingSettings.ThirdsPeriodsMonths.IndexOf("PeriodPast") != -1 ? AgingDatas.PeriodPast : 0),
-                            
-                             TotalOpenChequesInLocalCur =oc != null ? oc.TotalOpenCheques : 0 ,
+                             TotalOpenChequesInLocalCur = MoreDatas.TotalOpenChequesInLocalCur,
                              TotFutureOpenChequesInLocalCur = MoreDatas.TotFutureOpenChequesInLocalCur,
-                             Obligo = (MoreDatas.BalanceInLocalCurrency == null ? 0 : MoreDatas.BalanceInLocalCurrency)
-                                           + (MoreDatas.TotFutureOpenChequesInLocalCur ?? 0)
-                                           + (CardsDatas.TotalOpenShipments ?? 0)
-                                           +  (calculateWithTotalPastOpenCheques ? (oc != null ? oc.TotalOpenCheques : 0) : 0),
+                             Obligo = (MoreDatas.BalanceInLocalCurrency == null ? 0 : MoreDatas.BalanceInLocalCurrency) + (MoreDatas.TotFutureOpenChequesInLocalCur ?? 0) + (CardsDatas.TotalOpenShipments ?? 0),
+
+
                              CreditUsed = -1 * ((((decimal)(long)((CardsDatas.CreditLimit == null ? 0 : CardsDatas.CreditLimit) * 10000)) / 10000) + (-1 * MoreDatas.BalanceInLocalCurrency) + (-1 * (MoreDatas.TotFutureOpenChequesInLocalCur ?? 0)) + (-1 * (CardsDatas.TotalOpenShipments ?? 0))),
 
                              InsuredCreditPercentage = (CardsDatas.CreditLimit == null || CardsDatas.CreditLimit == 0) ? 0 :
                              ((CardsDatas.InsuredcreditLimit ?? 0) / CardsDatas.CreditLimit * 100),
-                             ContactId = a.ContactId,
+                              ContactId = a.ContactId,
                              ContactName = a.ContactId != null ? (a.Contact.LocalName ?? a.Contact.EnglishName) : null,
                              ContactPhone = a.Contact != null ? a.Contact.BusinessPhone : null,
                              ContactEmail = a.Contact != null ? a.Contact.Email : null,
                              SalesmanName = a.SalesmanUserId != null ? (a.SalesmanUser.Contact != null ? (a.SalesmanUser.Contact.LocalName == null ? a.SalesmanUser.Contact.EnglishName : a.SalesmanUser.Contact.LocalName) : null) : null,
                              CollectorName = a.CollectorId != null ? (a.CollectorUser.Contact != null ? (a.CollectorUser.Contact.LocalName == null ? a.CollectorUser.Contact.EnglishName : a.CollectorUser.Contact.LocalName) : null) : null,
                              SalesmanUserId = a.SalesmanUserId,
-
+ 
                          });
             }
 
