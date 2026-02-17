@@ -425,9 +425,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<ServersName> ServersNames { get; }
 		 IDbSet<SignatureType> SignatureTypes { get; }
 		 IDbSet<SignStation> SignStations { get; }
-		 IDbSet<SIIDocumentType> SIIDocumentTypes { get; }
 		 IDbSet<SIIRequest> SIIRequests { get; }
-		 IDbSet<SIIRequestLineStatus> SIIRequestLineStatuses { get; }
 		 IDbSet<SIIRequestStatus> SIIRequestStatuses { get; }
 		 IDbSet<SiteLookup> SiteLookups { get; }
 		 IDbSet<SiteType> SiteTypes { get; }

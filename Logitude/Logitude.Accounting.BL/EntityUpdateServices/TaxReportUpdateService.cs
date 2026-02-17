@@ -36,11 +36,6 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 {
     public partial class TaxReportUpdateService
     {
-        private static HashSet<string> BlockedStatuses = new HashSet<string>
-        {
-            TaxReportLineTransmitStatusValues.NotForTransmitAtAll,
-            TaxReportLineTransmitStatusValues.NotForTransmitForThisReport
-        };
    
          private string[] _InputsTaxReportLineTypes = new[]
         {
@@ -50,6 +45,11 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             InputsTaxReportLineTypes.ImportCustomsInputs,
             InputsTaxReportLineTypes.PalestinianVendorsInputs,
             InputsTaxReportLineTypes.LawDefinedDocumentInputs
+        };
+         private static HashSet<string> BlockedStatuses = new HashSet<string>
+        {
+            TaxReportLineTransmitStatusValues.NotForTransmitAtAll,
+            TaxReportLineTransmitStatusValues.NotForTransmitForThisReport
         };
  
         protected override void OnCreating(TaxReportPM entityPM, EntityPM entityParentPM)
@@ -290,7 +290,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
             if (taxReportPM.StatusCode != VatReportStatusValues.TransmittedAndAClosingJournalWasCreated &&  taxReportPM.StatusCode != VatReportStatusValues.Cancelled && taxReportPM.StatusCode != VatReportStatusValues.Transmitted && taxReportPM.StatusCode != VatReportStatusValues.CancelationInProgress && taxReportPM.StatusCode != VatReportStatusValues.CancelationFailed && !(taxReportPM.StatusCode == VatReportStatusValues.InProgress && taxReportPM.RecalculateData))
             {
-                bool hasErrors = lines.Any(ln => ln.StatusCode != TaxReportLineStatusValues.ReadyForTransmit && !BlockedStatuses.Contains(ln.TransmitStatusCode));
+                bool hasErrors = lines.Any(ln => ln.StatusCode != TaxReportLineStatusValues.ReadyForTransmit && !BlockedStatuses.Contains(ln.TransmitStatusCode)); 
                 if (hasErrors && taxReportPM.StatusCode != VatReportStatusValues.Error)
                 {
                     taxReportPM.StatusCode = VatReportStatusValues.Error;

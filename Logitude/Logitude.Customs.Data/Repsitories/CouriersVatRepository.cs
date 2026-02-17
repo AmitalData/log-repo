@@ -21,17 +21,15 @@ namespace Logitude.Customs.Data.Repsitories
 			throw new NotImplementedException();
         }
 
-        public CouriersVat GetByVatNumber(string code, string entityId,int tenant = 0)
+        public CouriersVat GetByVatNumber(string code, string entityId)
         {
+
             var vat = (from a in context.CouriersVats
                     where a.VatNumber == code 
-                        && a.Id != entityId
-                        select a);
-            
-            if (tenant > 0)
-                vat = vat.Where(a => a.Tenant == tenant);
+                       && a.Id != entityId
+                       select a).FirstOrDefault();
 
-            return vat.FirstOrDefault();  
+            return vat;
         }
 
     }
