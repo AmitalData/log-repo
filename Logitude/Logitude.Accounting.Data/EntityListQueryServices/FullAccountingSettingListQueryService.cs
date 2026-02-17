@@ -71,7 +71,6 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                                VATOutputGLAccountId = a.VATOutputGLAccountId,
                                                                TaxInstitutionGLAccountId = a.TaxInstitutionGLAccountId,
                                                                OppositeAccountNumber = a.OppositeAccountNumber,
-                                                               PrepaidExpensesGLAccountId = a.PrepaidExpensesGLAccountId
                                                            });
             return query;
         }
