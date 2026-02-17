@@ -88,7 +88,8 @@ namespace CommunicationWorkerRole
                 {
                     return true;
                 }
-                _DbQueueService = new DbQueueService("ARInvoiceApproveWR", SettingUtil.GetTenantDBFromConfig());
+
+                _DbQueueService = new DbQueueService("ARInvoiceApproveWR", 0);
 
 
             }
@@ -165,7 +166,7 @@ namespace CommunicationWorkerRole
                 }
                 try
                 {
-                    _DbQueueService = new DbQueueService(selectedQueue, SettingUtil.GetTenantDBFromConfig());
+                    _DbQueueService = new DbQueueService(selectedQueue, 0);
                     if (DateTime.Now.Subtract(_freeTenantsDateTime) >= TimeSpan.FromMinutes(10))
                     {
                         _freeTenantsDateTime = DateTime.Now;
@@ -226,7 +227,8 @@ namespace CommunicationWorkerRole
                                                                                  ? response.MessageValues["invoiceApiCommunicationLogId"]?.ToString()
                                                                                   : null;
 
-                     aRInvoicePM.SetApproved = true;
+
+                    aRInvoicePM.SetApproved = true;
                     aRInvoicePM.IsApprovalFailed = false;
                     if (aRInvoicePM.StatusCode == "AC")
                         aRInvoicePM.SetApprovedAutoCredit = true;
@@ -253,6 +255,7 @@ namespace CommunicationWorkerRole
                             UpdateInvoiceApiCommunication(tenant, Logitude.Accounting.BL.CloseTables.InvoiceApiStepEnum.PrintOrSendInvoice, Logitude.Accounting.BL.CloseTables.InvoiceApiStatusEnum.Failed, invoiceApiCommunicationLogId, e.Message );
                         }
                     }
+
 
                     ARInvoice invoice = invoiceRepository.GetSingle(arinvoiceId, tenant);
                     invoice.ApprovalInProgress = true;
@@ -331,12 +334,7 @@ namespace CommunicationWorkerRole
                 }
                 catch (Exception ex)
                 {
-                    if (!string.IsNullOrEmpty(invoiceApiCommunicationLogId))
-                    {
-                        UpdateInvoiceApiCommunication(tenant,Logitude.Accounting.BL.CloseTables.InvoiceApiStepEnum.ApproveInvoice,Logitude.Accounting.BL.CloseTables.InvoiceApiStatusEnum.Failed, arinvoiceId, ex.Message);
-
-
-                    }
+                    
                     ARInvoice invoice = invoiceRepository.GetSingle(arinvoiceId, tenant);
                   
                     if (!string.IsNullOrEmpty(aRInvoicePM.InvoiceNumber) && aRInvoicePM.InvoiceNumber != aRInvoicePM.Id)
@@ -483,7 +481,8 @@ namespace CommunicationWorkerRole
                 Notes = exception
             });
         }
+
      
-     
+
     }
 }

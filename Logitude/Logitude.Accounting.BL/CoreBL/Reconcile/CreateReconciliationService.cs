@@ -57,7 +57,6 @@ namespace Logitude.Accounting.BL.CoreBL
                 myReconciliationLinePM.TransactionId = currLedgerTrans.Id;
                 myReconciliationLinePM.ReconciliationAmount = 
                             currLedgerTrans.AmountToReconcile;
-                myReconciliationLinePM.CurrencyRate = currLedgerTrans.ExchangeRate;
 
                 myReconciliationLinePM.GroupNumber = currLedgerTrans.GroupMatch;
 
