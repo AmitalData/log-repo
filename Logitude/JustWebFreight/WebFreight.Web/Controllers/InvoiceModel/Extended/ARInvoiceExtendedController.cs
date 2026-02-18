@@ -108,14 +108,14 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Extended
                 dt.Columns.Add(new DataColumn() { Caption = TextCodesTranslator.TranslateText("ARInvoice.F.SequenceStatus", tenant, true), ColumnName = "SequenceStatus", DataType = "".GetType() });
 
 
-            InvoiceSequence.ForEach(r =>
-            {
-                var newrow = dt.NewRow();
-                newrow[0] = r.InvoiceSeries ?? "";
-                newrow[1] = r.InvoiceNumberPart ?? "";
-                newrow[2] = r.InvoiceDate == null ? DBNull.Value : (object)r.InvoiceDate;
-                newrow[3] = r.InvoiceNumber ?? "";
-                newrow[4] = r.SequenceStatus ?? "";
+                InvoiceSequence.ForEach(r =>
+                {
+                    var newrow = dt.NewRow();
+                    newrow[0] = r.InvoiceSeries;
+                    newrow[1] = r.InvoiceNumberPart;
+                    newrow[2] = r.InvoiceDate;
+                    newrow[3] = r.InvoiceNumber;
+                    newrow[4] = r.SequenceStatus;
 
                     dt.Rows.Add(newrow);
                 });
@@ -146,29 +146,6 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Extended
                 repo.SubmitChanges();
 
                 return Request.CreateResponse(HttpStatusCode.OK, "Field updated successfully.");
-            }
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
-
-        public HttpResponseMessage GetCanBeReconciled(string arInvoiceId)
-        {
-            try
-            {
-                string logKey = PerformanceLogger.LogCurrentTime();
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                int tenant = authToken.Tenant;
-
-                ARInvoiceQuery service = new ARInvoiceQuery(tenant);
-                var result = service.CheckIfArInvoiceCanBeReconcilied(arInvoiceId, tenant);
-                ServiceResponse response = new ServiceResponse();
-                response.Result = result;
-                PerformanceLogger.AddServerExecutionTimeHeader(logKey);
-                return Request.CreateResponse(HttpStatusCode.OK, result );
             }
             catch (Exception ex)
             {

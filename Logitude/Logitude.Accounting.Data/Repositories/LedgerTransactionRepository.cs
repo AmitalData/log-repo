@@ -1,34 +1,32 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Accounting.Data.EntityKeys;
+using Simplog.Server.Infrastructure;
+using System.Data.Entity.Core.Objects;
+using System.Linq.Expressions;
+using System.Reflection;
+using System.Threading;
+using System.Reflection.Emit;
 //using Simplog.Server.Infrastructure.Helpers;
 
 using Logitude.Accounting.Data.DataContract;
-using Logitude.Accounting.Data.EntityKeys;
-using Logitude.Accounting.Data.EntityListQueryServices;
 using Logitude.Accounting.Data.EntityLists;
-using Logitude.Accounting.Data.EntityPOCOs;
-using Logitude.Accounting.Data.Enums;
-using Logitude.Server.Tools;
-using Logitude.Server.Tools.Helpers;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
-using Simplog.Data.InvoiceModel.EntityPOCOs;
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Simplog.Server.Infrastructure;
+using Logitude.Accounting.Data.EntityListQueryServices;
 using Simplog.Server.Infrastructure.DataContracts;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Data.Entity; 
-using System.Data.Entity.Core.Objects;
-using System.Data.Entity.Infrastructure;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Reflection;
-using System.Reflection.Emit;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
+using Logitude.Server.Tools;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Logitude.Accounting.Data.Enums;
+using System.Data.Entity.Infrastructure;
+using System.Data.Entity; 
 
 
 namespace Logitude.Accounting.Data.Repositories
@@ -194,10 +192,10 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
 
             if (!filters.UseTaxreportFilter)
             {
-                transactionsQuery = FilterByFromAndToDate(filters.DateTypeCode, filters.From, filters.To, transactionsQuery, false);
+                transactionsQuery = FilterByFromAndToDate(filters.DateTypeCode, filters.From, filters.To, transactionsQuery);
             }
             if (filters.Date2TypeCode != null && filters.FromDate2 != null && filters.ToDate2 != null)
-                transactionsQuery = FilterByFromAndToDate(filters.Date2TypeCode, filters.FromDate2.Value, filters.ToDate2.Value, transactionsQuery, false);
+                transactionsQuery = FilterByFromAndToDate(filters.Date2TypeCode, filters.FromDate2.Value, filters.ToDate2.Value, transactionsQuery);
             transactionsQuery = FilterByTax(filters, transactionsQuery);
             return transactionsQuery;
         }
@@ -258,7 +256,9 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
             }
             return query;
         }
-        private IQueryable<LedgerTransactionList> FilterByFromAndToDate(string DateTypeCode, DateTime from, DateTime to, IQueryable<LedgerTransactionList> q, bool order = true)
+        private IQueryable<LedgerTransactionList> FilterByFromAndToDate(
+        string DateTypeCode, DateTime from, DateTime to, IQueryable<LedgerTransactionList> q
+        )
         {
             if (context.ToString().StartsWith("Fake"))
             {
@@ -312,49 +312,50 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
             }
             else
             {
+
                 switch (DateTypeCode)
                 {
-                    case "2":
+                    case "2"://GLAccountTotalDateTypeValues.DueDate:
                         {
                             q = (from rec in q
                                  where EntityFunctions.TruncateTime(rec.DueDate) >= @from
                                  where EntityFunctions.TruncateTime(rec.DueDate) <= to
                                  select rec);
-                            if (order)
-                                q = (from rec in q
-                                     orderby rec.DueDate, rec.Id
-                                     select rec);
+                            q = (from rec in q
+                                 orderby rec.DueDate, rec.Id
+                                 select rec);
                         }
                         break;
-
-                    case "3":
+                    case "3":// GLAccountTotalDateTypeValues.DocumentDate:
                         {
+                            //return null;
                             q = (from rec in q
                                  where EntityFunctions.TruncateTime(rec.DocumentDate) >= @from
                                  where EntityFunctions.TruncateTime(rec.DocumentDate) <= to
+                                 select rec
+                     );
+                            q = (from rec in q
+                                 orderby rec.DocumentDate, rec.Id
                                  select rec);
-                            if (order)
-                                q = (from rec in q
-                                     orderby rec.DocumentDate, rec.Id
-                                     select rec);
                         }
                         break;
-
-                    case "1":
+                    case "1": //Accountingdate = "1"
                     default:
                         {
                             q = (from rec in q
                                  where EntityFunctions.TruncateTime(rec.AccountingDate) >= @from
                                  where EntityFunctions.TruncateTime(rec.AccountingDate) <= to
+                                 select rec
+                     );
+                            q = (from rec in q
+                                 orderby rec.AccountingDate, rec.Id
                                  select rec);
-                            if (order)
-                                q = (from rec in q
-                                     orderby rec.AccountingDate, rec.Id
-                                     select rec);
                         }
                         break;
                 }
+
             }
+
             return q;
         }
 
@@ -785,7 +786,7 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
             return qYeartransferLedgerTransaction;
         }
 
-        public List<GLAccountTotalByMonth> CalcGLAccountTotalByMonthByDateType(string DateTypeCode, DateTime fromDate, DateTime accoutingDateUntillNotInclude, int tenant, IQueryable<string> listOfAccId = null,LedgerTransactionBalanceFilter _param = null)
+        public List<GLAccountTotalByMonth> CalcGLAccountTotalByMonthByDateType(string DateTypeCode, DateTime fromDate, DateTime accoutingDateUntillNotInclude, int tenant, IQueryable<string> listOfAccId = null)
         {
             LedgerTransactionListQueryService ledgerTransactionListQueryService = new LedgerTransactionListQueryService(context);
 
@@ -815,16 +816,8 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
             //     select rec);
 
             //}
-            if (_param == null || !_param.UseTaxreportFilter)
-            {
-                ledgerTransactionsByAccountingDate = FilterByFromAndToDate(DateTypeCode, fromDateOnlyDate, DateUntillNotIncludeOnlyDate, ledgerTransactionsByAccountingDate);
-            }
-            else if (_param.Date2TypeCode != null && _param.FromDate2 != null && _param.ToDate2 != null)
-            {
-                ledgerTransactionsByAccountingDate = FilterByFromAndToDate(_param.Date2TypeCode, _param.FromDate2.Value, _param.ToDate2.Value, ledgerTransactionsByAccountingDate);
-                ledgerTransactionsByAccountingDate = FilterByTax(_param, ledgerTransactionsByAccountingDate);
-            }
-                
+            ledgerTransactionsByAccountingDate = FilterByFromAndToDate(DateTypeCode, fromDateOnlyDate, DateUntillNotIncludeOnlyDate, ledgerTransactionsByAccountingDate);
+
 
             var lTransByAccountingDateFilterByListOfAccId = ledgerTransactionsByAccountingDate;
             if (listOfAccId != null)
@@ -1696,8 +1689,7 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
 
             int days = DateTime.DaysInMonth(taxReportMonth.Value.Year, taxReportMonth.Value.Month);
             DateTime endOfTaxReportDate = new DateTime(taxReportMonth.Value.Year, taxReportMonth.Value.Month, days, 23, 59, 59);
-            bool useAccountingDateForAPTax = FeatureToggleHelper.HasFeatureToggle("UAT", tenant);
-            string apInvoice = "4";
+
             FullAccountingSettingRepository fullAccountingSettingRepository = new FullAccountingSettingRepository(tenant);
             FullAccountingSetting setting = fullAccountingSettingRepository.GetSingleFullAccountingSetting(tenant);
 
@@ -1706,8 +1698,7 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
                     join m in context.JournalAdditionalDatas on new { ledger.JournalId, ledger.JournalLineNumber } equals new { m.JournalId, m.JournalLineNumber }
 
                     where (m.TaxReportId == null || m.TaxReportTransmitStatusCode == "2" || m.TaxReportTransmitStatusCode == null || j.IsVoided == true)
-                       && ( (j.AccountingEntityCode != apInvoice ? ledger.DocumentDate
-                                   : (useAccountingDateForAPTax ? ledger.AccountingDate  : ledger.DocumentDate ) )  <= endOfTaxReportDate)
+                            && ledger.DocumentDate <= endOfTaxReportDate
                             && ledger.AccountId == setting.VATInputsGLAccountId
                             && ledger.Tenant == tenant
                             && ledger.LocalAmountDebit != 0
@@ -1923,31 +1914,6 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
 
         }
 
-
-        public LedgerTransactionList GetSingleAsLiteForReco(string transactionId)
-        {
-            var transaction = context.LedgerTransactions.Include("JournalLine").Include("Currency").Include("Journal")
-                .Where(t => t.Id == transactionId)
-                .Select(t => new LedgerTransactionList
-                {
-                    Id = t.Id,
-                    CreateDate = t.CreateDate,
-                    DueDate = t.DueDate,
-                    ForeignAmountDebit = t.ForeignAmountDebit,
-                    ForeignAmountCredit = t.ForeignAmountCredit,
-                    Reference1 = t.Reference1,
-                    Reference2 = t.Reference2,
-                    Reference3 = t.Reference3,
-                    Notes = t.Notes,
-                    JournalNumber = t.JournalLine.Journal.JournalNumber,
-                    JournalId = t.JournalId,
-                    JournalLineNumber = t.JournalLineNumber,
-                    OpenAmountCurrencySign = t.Currency!=null?t.Currency.Sign:String.Empty,
-                    SearchFields = t.SearchFields,
-                }).FirstOrDefault();
-            return transaction;
-        }
-
         public List<GLAccountTotalByMonthsDTO> GetControllerTotalDateType1(int tenant)
         {
             return (from a in context.LedgerTransactions
@@ -2019,6 +1985,5 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
     public struct JournalStatuses
     {
         public const string Voided = "3";
-        public const string Cancelled = "5";
     }
 }

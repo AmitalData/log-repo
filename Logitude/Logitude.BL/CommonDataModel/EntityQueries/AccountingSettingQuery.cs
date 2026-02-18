@@ -416,52 +416,5 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                        };
             return result;
         }
-
-        public void CopyFromTenant0(int tenant, int tenantToCopy)
-        {
-            AccountingSetting accountingSettingTenantZero = repository.GetSingleAccountSetting(tenant);
-            if (accountingSettingTenantZero == null)
-            {
-                throw new Exception("Accounting Setting not found for tenant " + tenant);
-            }
-
-            AccountingSetting accountingSetting = repository.GetSingleAccountSetting(tenantToCopy);
-
-            // ar
-            accountingSetting.AllowVoidARI = accountingSettingTenantZero.AllowVoidARI;
-            accountingSetting.AllowVoidARP = accountingSettingTenantZero.AllowVoidARP;
-            accountingSetting.IsVatNumberMandatoryInAR = accountingSettingTenantZero.IsVatNumberMandatoryInAR;
-            accountingSetting.AllowMinusInvoicelines = accountingSettingTenantZero.AllowMinusInvoicelines;
-            accountingSetting.AllowPositiveAmountsInTheCreditNote = accountingSettingTenantZero.AllowPositiveAmountsInTheCreditNote;
-            accountingSetting.AllowManualInvoiceNumber = accountingSettingTenantZero.AllowManualInvoiceNumber;
-            accountingSetting.IsARInvoiceChronologicalDates = accountingSettingTenantZero.IsARInvoiceChronologicalDates;
-            accountingSetting.IsARPaymentChronologicalDates = accountingSettingTenantZero.IsARPaymentChronologicalDates;
-            accountingSetting.IsSingleTaxPerInvoice = accountingSettingTenantZero.IsSingleTaxPerInvoice;
-
-            // ar advanced settings
-            accountingSetting.EnableMultiPercentageVATTypes = accountingSettingTenantZero.EnableMultiPercentageVATTypes;
-            accountingSetting.NotifyPastDateOnInvoiceEdit = accountingSettingTenantZero.NotifyPastDateOnInvoiceEdit;
-            accountingSetting.EnableNegativeOffsetARPayments = accountingSettingTenantZero.EnableNegativeOffsetARPayments;
-            accountingSetting.EnableInvoiceStocksManagement = accountingSettingTenantZero.EnableInvoiceStocksManagement;
-            accountingSetting.AllowManualARPaymentNumber = accountingSettingTenantZero.AllowManualARPaymentNumber;
-            accountingSetting.AllowRegionalTaxManagement = accountingSettingTenantZero.AllowRegionalTaxManagement;
-            accountingSetting.BlockSendInvoiceOriginalCopy = accountingSettingTenantZero.BlockSendInvoiceOriginalCopy;
-
-            // ap
-            accountingSetting.AllowVoidAPI = accountingSettingTenantZero.AllowVoidAPI;
-            accountingSetting.AllowVoidAPP = accountingSettingTenantZero.AllowVoidAPP;
-            accountingSetting.IsVatNumberMandatoryInAP = accountingSettingTenantZero.IsVatNumberMandatoryInAP;
-            accountingSetting.AllowClosureWithoutPayables = accountingSettingTenantZero.AllowClosureWithoutPayables;
-            accountingSetting.EnableMultiRateAPInvoices = accountingSettingTenantZero.EnableMultiRateAPInvoices;
-            accountingSetting.EnableNegativeOffsetAPPayments = accountingSettingTenantZero.EnableNegativeOffsetAPPayments;
-            accountingSetting.EnableMultiCurrencyAPPayments = accountingSettingTenantZero.EnableMultiCurrencyAPPayments;
-
-            // ap advanced settings
-            accountingSetting.EnableAPPaymentExternalPayment = accountingSettingTenantZero.EnableAPPaymentExternalPayment;
-            accountingSetting.EnableEnteringTotalVAT = accountingSettingTenantZero.EnableEnteringTotalVAT;
-
-            repository.Update(accountingSetting);
-            repository.SubmitChanges();
-        }
     }
 }

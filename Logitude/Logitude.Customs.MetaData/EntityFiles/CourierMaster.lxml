@@ -7127,15 +7127,6 @@
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
     <Feature
-      Code="&quot;SendPaymentOn902Close&quot;"
-      FeatureTypeCode="&quot;ACT&quot;"
-      FeatureTextCodeCode="&quot;Customs.CourierMaster.Features.SendPaymentOn902Close&quot;"
-      FeatureDefaultText="&quot;Send Payment On Closing 902&quot;"
-      IsPackagable="true"
-      IsOld="false"
-      IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
-    <Feature
       Code="&quot;RaiseStatusOnLandingDate&quot;"
       FeatureTypeCode="&quot;ACT&quot;"
       FeatureTextCodeCode="&quot;Customs.CourierMaster.Features.RaiseStatusOnLandingDate&quot;"
