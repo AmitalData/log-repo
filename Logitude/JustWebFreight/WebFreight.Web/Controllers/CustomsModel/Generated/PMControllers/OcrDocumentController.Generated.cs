@@ -54,8 +54,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 			    string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.CheckContactFeature("Customs.OcrDocument", "READ", authToken.Tenant);
-	                
+                
                 ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
                 OcrDocumentQueryService ocrDocumentQuery = new OcrDocumentQueryService(MyContext);
 				ocrDocumentQuery.InitializeSettings();
@@ -87,9 +86,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                        SecurityUtility.CheckContactFeature("Customs.OcrDocument", "NEW", authToken.Tenant);
-	                        SecurityUtility.AuthenticationOnEntityTenant("OcrDocument", entityPM.Tenant, authToken.Tenant);
-	                    
+                    
                         ICustomContext MyContext = CustomContext.GetContext(entityPM.Tenant);
                         OcrDocumentUpdateService service = new OcrDocumentUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
                         entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
@@ -135,9 +132,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                        SecurityUtility.CheckContactFeature("Customs.OcrDocument", "UPDATE", authToken.Tenant);
-	                        SecurityUtility.AuthenticationOnEntityTenant("OcrDocument", entityPM.Tenant, authToken.Tenant);
-	
+
                         ICustomContext MyContext = CustomContext.GetContext(entityPM.Tenant);
                         OcrDocumentUpdateService service = new OcrDocumentUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
 						service.InitializeEntityPM(entityPM);
