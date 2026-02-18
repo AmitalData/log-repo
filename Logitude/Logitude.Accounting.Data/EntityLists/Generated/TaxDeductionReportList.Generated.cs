@@ -57,8 +57,6 @@ namespace Logitude.Accounting.Data.EntityLists
        public bool ByMonth  { get; set; }
        [DataMember]
        public DateTime? Month  { get; set; }
-       [DataMember]
-       public DateTime? FromMonth  { get; set; }
    }
 
 }

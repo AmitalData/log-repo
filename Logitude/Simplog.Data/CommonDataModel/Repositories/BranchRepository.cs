@@ -13,7 +13,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
     {
         ICommonDataContext commonDataContext;
 
-
+        public BranchRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
 
         public BranchRepository(ICommonDataContext context)
         {

@@ -16,7 +16,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         CommodityRepository repository;
 
-
+        public CommodityQuery()
+        {
+            this.repository = new CommodityRepository(); 
+        }
 
         public CommodityQuery(int tenant)
         {
