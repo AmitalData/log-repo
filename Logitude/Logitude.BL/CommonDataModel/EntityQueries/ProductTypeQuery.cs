@@ -18,7 +18,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         ProductTypeRepository repository;
 
-
+        public ProductTypeQuery()
+        {
+            repository = new ProductTypeRepository();             
+        }
 
         public ProductTypeQuery(int tenant)
         {
