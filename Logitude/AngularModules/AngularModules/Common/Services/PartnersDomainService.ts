@@ -334,6 +334,7 @@ export class PartnersDomainService {
                             confirmWindow.Show(TextCodeTranslator.Translate("Accounting.General.O.VatNumberExisted")+": "+response);
                             confirmWindow.WindowClosed.subscribe(c => {
                                 if (confirmWindow.Yes) {
+                                    this.CurrentSession.StartBusyIndicatorSaving();
                                     resolve(false);
                                 } else {
                                     resolve(true);

@@ -51,19 +51,35 @@ export class BtatchPrintConfirmComponent implements OnInit    {
     }
  
     DownloadButtonClicked() {
-        var a = document.createElement("a");
-        a.href = this.URL;
-        a.download = "InterestInvoices.pdf"; 
-        a.click();
-        window.URL.revokeObjectURL(this.URL); 
-        this.CurrentSession.CloseCurrentWindowEmit("Download");           
+        this.interestReportExtendedListService.PrintDocuments(this.interestReportArgs).subscribe((response: ServiceResponse) => {
+            if (response.HasError) {
+                alert(response.ErrorsArray[0]);
+            }else{
+                var a = document.createElement("a");
+                a.href = this.URL;
+                a.download = "InterestInvoices.pdf"; 
+                a.click();
+                 window.URL.revokeObjectURL(this.URL); 
+                this.CurrentSession.CloseCurrentWindowEmit("Download");
+            }
+    });
     }
 
-    ViewButtonClicked() { 
-           this.newWindow = window.open('', '_blank');//OPEN WINDOW FIRST ON SUBMIT THEN POPULATE PDF
-           this.newWindow.location.href = this.URL;
-           this.CurrentSession.CloseCurrentWindowEmit("View");
+    ViewButtonClicked() {
 
+        //OPEN WINDOW FIRST ON SUBMIT THEN POPULATE PDF  
+        // window.open(this.URL,  '_blank');
+        this.interestReportExtendedListService.PrintDocuments(this.interestReportArgs).subscribe((response: ServiceResponse) => {
+                if (response.HasError) {
+                    alert(response.ErrorsArray[0]);
+                }else{
+                    this.newWindow = window.open('', '_blank');//OPEN WINDOW FIRST ON SUBMIT THEN POPULATE PDF
+                    this.newWindow.location.href = this.URL;
+                    this.CurrentSession.CloseCurrentWindowEmit("View");
+
+                }
+        });
+         
     }
    
 }

@@ -7,8 +7,6 @@ using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.Data.Repositories;
 using System;
-using Logitude.Accounting.Data.EntityLists;
-
 
 namespace Logitude.Accounting.BL.EntityDataMappings
 {
@@ -64,11 +62,12 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 }
             }
 
-            // This property exists only to be shown on the Reconciliation OPC
+            // This properties only to view it on Reconciliatio OPC
             if (entityPOCO.TransactionId != null)
             {
                 LedgerTransactionQueryService queryService = new LedgerTransactionQueryService(entityPOCO.Tenant);
-                LedgerTransactionList transaction = queryService.GetSingleAsLiteForReco(entityPOCO.TransactionId);
+                LedgerTransactionPM transaction = queryService.GetSingle(entityPOCO.TransactionId, false,false);
+
                 if (transaction != null)
                 {
                     entityPM.CreateDate = transaction.CreateDate ?? DateTime.Now;
@@ -86,7 +85,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 }
             }
 
-            // This property exists only to be shown on the Reconciliation OPC
+            // This properties only to view it on Reconciliatio OPC
             if (entityPOCO.ReconciliationId != null)
             {
                 ReconciliationRepository recoRepo = new ReconciliationRepository(entityPOCO.Tenant);
