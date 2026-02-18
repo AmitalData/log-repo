@@ -25,7 +25,6 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             report.FilterHtmlComponentUrl = reportPM.FilterHtmlComponentUrl;
             report.DefaultTemplateId = reportPM.DefaultTemplateId;
             report.DefaultMessageTemplateId = reportPM.DefaultMessageTemplateId;
-            report.DefaultExcelNoStimId = reportPM.DefaultExcelNoStimId;
             report.FeatureUniqeCode = reportPM.FeatureUniqeCode;
             report.DisablePreview = reportPM.DisablePreview;
             report.DefaultExcelTemplateId = reportPM.DefaultExcelTemplateId;

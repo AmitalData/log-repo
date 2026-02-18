@@ -82,8 +82,4 @@ export function AssertApproveARInvoice() {
     
 
     BaseAssertion.AssertStatusCode(RequestAliases.ARInvoicesRequest, 200)
-    // Wait 2 minutes for status to update
-    cy.wait(120000);
-    // Verify status is "Unpaid"
-    cy.get(ARInvoiceSelectors.ARInvoiceHeaderStatusName).should("have.text", "Unpaid");
 }

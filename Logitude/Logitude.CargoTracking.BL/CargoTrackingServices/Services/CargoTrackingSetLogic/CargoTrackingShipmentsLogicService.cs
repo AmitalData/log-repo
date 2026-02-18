@@ -1,4 +1,4 @@
-﻿using Logitude.CargoTracking.BL.Enums;
+﻿using Logitude.CargoTracking.BL.CloseTables;
 using Logitude.CargoTracking.Data.EntityLists;
 using Logitude.CargoTracking.BL.CargoTrackingServices.HelperClasses;
 using System;
@@ -145,7 +145,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
         {
             var tableRow = args.TableRow;
             var tenant = (int)tableRow["Tenant"];
-            if (!CheckIfUserHasAccessToMilestone(args.NotPermittedMilestones, CargoTrackingMilestoneValues.DeliveryOnTheWay, tenant))
+            if (!CheckIfUserHasAccessToMilestone(args.NotPermittedMilestones, CargoTrackingMilestoneValues.DeliveryOut, tenant))
             {
                 tableRow.SetField("DeliveryEstimationDate", (DBNull)null);
                 tableRow.SetField("DeliveryDate", (DBNull)null);
@@ -220,7 +220,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
         {
             var tableRow = args.TableRow;
             var tenant = (int)tableRow["Tenant"];
-            if (!CheckIfUserHasAccessToMilestone(args.NotPermittedMilestones, CargoTrackingMilestoneValues.DestinationWarehouse, tenant))
+            if (!CheckIfUserHasAccessToMilestone(args.NotPermittedMilestones, CargoTrackingMilestoneValues.ToWarehouse, tenant))
             {
                 tableRow.SetField("ToWarehouseDate", (DBNull)null);
                 tableRow.SetField("ToWarehouseNotes", (DBNull)null);
@@ -240,7 +240,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
         {
             var tableRow = args.TableRow;
             var tenant = (int)tableRow["Tenant"];
-            if (!CheckIfUserHasAccessToMilestone(args.NotPermittedMilestones, CargoTrackingMilestoneValues.OriginWarehouse, tenant))
+            if (!CheckIfUserHasAccessToMilestone(args.NotPermittedMilestones, CargoTrackingMilestoneValues.FromWarehouse, tenant))
             {
                 tableRow.SetField("FromWarehouseDate", (DBNull)null);
                 tableRow.SetField("FromWarehouseEstimationDate", (DBNull)null);
@@ -346,7 +346,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
                             CheckMilestone(currentMilestoneArgs);
                         }
                         break;
-                    case CargoTrackingMilestoneValues.OriginWarehouse:
+                    case CargoTrackingMilestoneValues.FromWarehouse:
                         if (!IsFieldNullOrEmpty(tableRow, "FromWarehouseDone") && !tableRow["FromWarehouseDone"].Equals("False"))
                         {
                             currentMilestoneArgs.date = tableRow["FromWarehouseDate"];
@@ -367,7 +367,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
                             CheckMilestone(currentMilestoneArgs);
                         }
                         break;
-                    case CargoTrackingMilestoneValues.DestinationWarehouse:
+                    case CargoTrackingMilestoneValues.ToWarehouse:
                         if (!IsFieldNullOrEmpty(tableRow, "ToWarehouseDone") && !tableRow["ToWarehouseDone"].Equals("False"))
                         {
                             currentMilestoneArgs.date = tableRow["ToWarehouseDate"];
@@ -437,7 +437,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
                             CheckMilestone(currentMilestoneArgs);
                         }
                         break;
-                    case CargoTrackingMilestoneValues.DeliveryOnTheWay:
+                    case CargoTrackingMilestoneValues.DeliveryOut:
                         if (!IsFieldNullOrEmpty(tableRow, "DeliveryDone") && !tableRow["DeliveryDone"].Equals("False"))
                         {
                             currentMilestoneArgs.date = tableRow["DeliveryDate"];
@@ -451,7 +451,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
                             CheckMilestone(currentMilestoneArgs);
                         }
                         break;
-                    case CargoTrackingMilestoneValues.InvoiceIssued:
+                    case CargoTrackingMilestoneValues.Invoiced:
                         if (!IsFieldNullOrEmpty(tableRow, "InvoicedDone") && !tableRow["InvoicedDone"].Equals("False"))
                         {
                             currentMilestoneArgs.date = tableRow["InvoicedDate"];
@@ -837,7 +837,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
         {
             var tableRow = args.TableRow;
             var tenant = (int)tableRow["Tenant"];
-            if (!CheckIfUserHasAccessToMilestone(args.NotPermittedMilestones, CargoTrackingMilestoneValues.InvoiceIssued, tenant))
+            if (!CheckIfUserHasAccessToMilestone(args.NotPermittedMilestones, CargoTrackingMilestoneValues.Invoiced, tenant))
             {
                 tableRow.SetField("InvoicedDate", (DBNull)null);
                 tableRow.SetField("InvoicedDone", false);
