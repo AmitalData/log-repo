@@ -40,7 +40,6 @@ import { ChargesTypeListService } from 'Common/Services/StandardLists/ChargesTyp
 import { ChargesTypePMService } from 'Common/Services/StandardPMs/ChargesTypePMService';
 import { ChargesTypePM } from 'Common/EntityPMs/ChargesTypePM';
 import { ChargesTypePMInitService } from 'Common/EntityPMInitServices/ChargesTypePMInitService';
-import { BankAccountPM } from 'Accounting/EntityPMs/BankAccountPM';
 const DebtorsAndCreditorsChartOfAccountTypeCode = '7';
 @Component({
 
@@ -76,8 +75,6 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
     private indexHyphenSholudInHSMTokken = [8,13,18,23];
     _chargesTypeListService = new ChargesTypeListService();
     _chargesTypePMService = new ChargesTypePMService();
-    public BankAccountFilterItems: ApiQueryFilters;
-
 
     constructor(public serviceArgs: ServiceArgs, private _entityResourceService: EntityResourceService, private cd: ChangeDetectorRef) {
         super();
@@ -241,8 +238,7 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
         if (UsingSecurityLevelFeatureToggle) this.activateSecurityLevel = true;
         this.UIProperties.SetEnabled("IsSecurityLevelActivated", this.ObjectTableName, (this.enableAllFields && this.activateSecurityLevel));
         this.UIProperties.SetEnabled("OppositeAccountNumber", this.ObjectTableName, this.enableAllFields);
-        this.BankAccountFilterItems = new ApiQueryFilters();
-        this.BankAccountFilterItems.addAdditionalFilter("MasavGLAcccountId", "", null, null, "IsNotNull", false, false, false, "string");
+
     }
 
     //#region Full Accounting Setting Properties
@@ -278,13 +274,6 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
 
             this.ReloadTenantPM();
             this.SetUIProperties();
-        }
-    }
-
-    get HebrewTenant() { return this.EntityPM.HebrewTenant; }
-    set HebrewTenant(value: boolean) {
-        if (this.EntityPM.HebrewTenant != value) {
-            this.EntityPM.HebrewTenant = value;
         }
     }
 
@@ -360,18 +349,7 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
             this.EntityPM.TaxWithholdingGLAccountId = value;
         }
     }
-    get MasavBankId() { return this.EntityPM.MasavBankId; }
-    set MasavBankId(value: string) {
-        if (this.EntityPM.MasavBankId != value) {
-            this.EntityPM.MasavBankId = value;
-        }
-    }
-    get MasavCode() { return this.EntityPM.MasavCode; }
-    set MasavCode(value: string) {
-        if (this.EntityPM.MasavCode != value) {
-            this.EntityPM.MasavCode = value;
-        }
-    }
+
     get ConsolidationVAT() { return this.EntityPM.ConsolidationVAT; }
     set ConsolidationVAT(value: string) {
         if (this.EntityPM.ConsolidationVAT != value) {
@@ -542,13 +520,7 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
             this.ValidateMulticurrencyAccounts();
         }
     }
-    masavBank: BankAccountPM;
-    get MasavBank() { return this.MasavBank; }
-    set MasavBank(value: BankAccountPM) {
-        if (this.masavBank != value) {
-            this.masavBank = value;           
-        }
-    }
+
     get SoftwareVersion() { return this.EntityPM.SoftwareVersion; }
     set SoftwareVersion(value: string) {
         if (this.EntityPM.SoftwareVersion != value) {
@@ -651,12 +623,6 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
         }
     }
 
-    get PrepaidExpensesGLAccountId() { return this.EntityPM.PrepaidExpensesGLAccountId; }
-    set PrepaidExpensesGLAccountId(value: string) {
-        if (this.EntityPM.PrepaidExpensesGLAccountId != value) {
-            this.EntityPM.PrepaidExpensesGLAccountId = value;
-        }
-    }
 
 
 
@@ -867,7 +833,6 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
                 if (SessionLocator.TenantPM.IsHybrid) {
                     this.AddOtherChargeType();
                 }
-                SessionLocator.TenantPM.HebrewTenant = this.HebrewTenant;
             }
             else {
                 this.ValidationErrorsList = mm.ErrorsArray;
