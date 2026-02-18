@@ -16,7 +16,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         CustomerProductLocationRepository repository;
 
-
+        public CustomerProductLocationQuery()
+        {
+               repository = new CustomerProductLocationRepository(); 
+        }
 
         public CustomerProductLocationQuery(int tenant)
         {

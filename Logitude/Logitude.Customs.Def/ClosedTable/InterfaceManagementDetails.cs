@@ -3512,20 +3512,6 @@ namespace Logitude.Customs.Def.ClosedTable
             });
             all.Add(new InterfaceManagementDetails()
             {
-                Code = "DOC8318",
-                InOut = InOutEnum.O.ToString(),
-                Description = "קובץ תדפיסי חקיקה (מקח''ים) - ספר סיווג",
-                DefaultSendOptionsCode = null,
-                DefaultPriority = CONST_DefaultPriority,
-                DcaPrefixName = "",
-                DcaPrefixName2 = "",
-                AllowRestore = true,
-                Active = true,
-                SendAsDual = false,
-                ResponseInterfaceCode = null,
-            });
-            all.Add(new InterfaceManagementDetails()
-            {
                 Code = "UCB8373",
                 InOut = InOutEnum.I.ToString(),
                 Description = "שחזור הצהרה בלדר",
@@ -3549,7 +3535,7 @@ namespace Logitude.Customs.Def.ClosedTable
                 //{
                 //    //ObjectTableId = item.Id,
                 //    //AlternativeUserTenant = 0,
-                //    AlternativeUserId = "1-1" ///in oracle  //"support@amital.co.il"=1-1
+                //    AlternativeUserId = "1-1" ///in oracle  //"admin@fnarsoft.com"=1-1
 
                 //});
             }

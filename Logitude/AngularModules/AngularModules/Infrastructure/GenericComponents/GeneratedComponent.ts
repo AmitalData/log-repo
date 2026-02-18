@@ -53,7 +53,7 @@ export class GeneratedComponent extends BaseComponent implements AfterContentIni
         super();
         this.IsCustomerCare = SessionLocator.LoggedUserPM.IsCustomerCare;
         this.IsCustomerCareOrDistributor = SessionLocator.LoggedUserPM.IsCustomerCare || SessionLocator.LoggedUserPM.IsDistributor;
-   }
+    }
 
     public Run(entityPM: any, objectTableName: string, screenCode: string, isNewEntityCall: boolean = false, showTitle: boolean = false, childObjectTableName: string = null) {
         this.EntityPM = entityPM;
@@ -170,7 +170,7 @@ export class GeneratedComponent extends BaseComponent implements AfterContentIni
                 screenSection.Number = 0;
                 screenSection.Name = this.ShowTitle ? TextCodeTranslationPipe.apply(this.generalTextCode) : "";
                 this.ScreenSections.push(new ScreenSection(screenSection, this.ScreenColumns))
-                this.SetEnabled(!myScreen?.IsReadOnly)
+                
                 if (fireEmit) {
                     this.LoadCompleted.emit(true);
                 }

@@ -20,7 +20,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         
            TwoFactorAuthenticationDeviceRepository repository;
 
-
+        public TwoFactorAuthenticationDeviceQuery()
+        {
+            repository = new TwoFactorAuthenticationDeviceRepository();
+        }
 
         public TwoFactorAuthenticationDeviceQuery(int tenant)
         {

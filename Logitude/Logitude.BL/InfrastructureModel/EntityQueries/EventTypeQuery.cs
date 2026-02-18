@@ -743,8 +743,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                          from er in erGroup.Where(e => e.PartnerTypeId == "CS").DefaultIfEmpty()
                          where te.Deleted == false && et.InActive == false && (IsFroMilstone || et.IsCustomerView == true) && et.Tenant == tenant && (te.EntityId == ShipmentId || te.EntityId == forwardingShipmentHeaderId) && et.Code != "EXCE"
                          select new Event()
-                         {   
-                             EventTypeId=et.Id,
+                         {
 							 Code = et.Code,
 							 LocalName = et.LocalName,
 							 EventDatetime = EntityFunctions.AddSeconds(te.EventDateTime, -te.EventDateTime.Second),
@@ -765,7 +764,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             public bool? IsChoose { get; set; }
             public string PartnerTypeId { get; set; }
 			public string EntityType { get; set; }
-            public string EventTypeId { get; set;  }
 
 		}
 	}

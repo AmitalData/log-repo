@@ -1,6 +1,5 @@
 ﻿using CHAMP17;
 using Logitude.Accounting.BL.CoreBL.Reports;
-using Logitude.Accounting.BL.DataContract;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.Repositories;
 using Logitude.BL.CommonDataModel.EntityPMs;
@@ -8,7 +7,6 @@ using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.Resolvers;
 using Logitude.Server.Tools.Helpers;
 using NPOI.SS.Formula.Functions;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
@@ -59,42 +57,11 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             AgingDataLine= FilterByObligo(GetFilterValue<string>("Obligo"), AgingDataLine);
             AgingDataLine =FilterByBalance(GetFilterValue<string>("BalanceFilter"), AgingDataLine);
 
-            dataProvider.AgingPeriods = SortAccountingAgingDataLines(AgingDataLine);
-            SetColumnTitles(dataProvider);
+            dataProvider.AgingPeriods = SortAccountingAgingDataLines(AgingDataLine); 
+           
             return dataProvider;
          }
-        private void SetColumnTitles(NewAccountingAgingDataProvider dataProvider)
-        {
-            DateTime AgingForDate = GetFilterValue<DateTime>("AgingForDate");
-            string reportTypeCode =GetFilterValue<string> ("ReportTypeCode");
-            string transactionsText = TextCodesTranslator.TranslateText("Accounting.General.O.Transactions", tenant, true);
-            string transactionsBeforeText = TextCodesTranslator.TranslateText("Accounting.General.O.TransactionsBefore", tenant, true);
-            string transactionsAfterText = TextCodesTranslator.TranslateText("Accounting.General.O.TransactionsAfter", tenant, true);
 
-            bool monthlyAging = reportTypeCode == "2";
-            if (monthlyAging) {
-                dataProvider.Past1 = $"{transactionsText}{Environment.NewLine} {AgingForDate.Month}/{AgingForDate.Year}";
-
-                dataProvider.Past2 = $"{transactionsText}{Environment.NewLine} {AgingForDate.AddMonths(-1).Month}/{AgingForDate.AddMonths(-1).Year}";
-                dataProvider.Past3 = $"{transactionsText}{Environment.NewLine} {AgingForDate.AddMonths(-2).Month}/{AgingForDate.AddMonths(-2).Year}";
-                dataProvider.Past4 = $"{transactionsText}{Environment.NewLine} {AgingForDate.AddMonths(-3).Month}/{AgingForDate.AddMonths(-3).Year}";
-                dataProvider.Past5 = $"{transactionsText}{Environment.NewLine} {AgingForDate.AddMonths(-4).Month}/{AgingForDate.AddMonths(-4).Year}";
-                dataProvider.Past6 = $"{transactionsText}{Environment.NewLine} {AgingForDate.AddMonths(-5).Month}/{AgingForDate.AddMonths(-5).Year}";
-                var pastStartDate = AgingForDate.AddMonths(-5);
-                dataProvider.Past = $"{transactionsBeforeText}{Environment.NewLine} 1/{pastStartDate.Month}/{pastStartDate.Year}";
-
-
-                // Future
-                dataProvider.Future1 = $"{transactionsText}{Environment.NewLine} {AgingForDate.AddMonths(1).Month}/{AgingForDate.AddMonths(1).Year}";
-                dataProvider.Future2 = $"{transactionsText}{Environment.NewLine} {AgingForDate.AddMonths(2).Month}/{AgingForDate.AddMonths(2).Year}";
-                dataProvider.Future3 = $"{transactionsText}{Environment.NewLine} {AgingForDate.AddMonths(3).Month}/{AgingForDate.AddMonths(3).Year}";
-                var lastFutureMonth = AgingForDate.AddMonths(3);
-                var lastDayOfFutureMonth = new DateTime(lastFutureMonth.Year, lastFutureMonth.Month, DateTime.DaysInMonth(lastFutureMonth.Year, lastFutureMonth.Month));
-                dataProvider.Future = $"{transactionsAfterText}{Environment.NewLine}{lastDayOfFutureMonth:dd/MM/yyyy}";
-            }
-           
-
-        }
         private List<NewAgingPeriod> GetAccountingAgingDataLineByFilter()
         {
             try
@@ -107,7 +74,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     var command = connection.CreateCommand();
                     command.CommandText = "usp_NewAgingReport";
                     command.CommandType = System.Data.CommandType.StoredProcedure;
-                    command.CommandTimeout = 300;
+                   
 
 
                     command.Parameters.AddWithValue("@AccountID", GetFilterValue<string>( "CustomerId"));
@@ -123,8 +90,6 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     command.Parameters.AddWithValue("@CurrencyId", GetFilterValue<string>("CurrencyId"));
                     command.Parameters.AddWithValue("@Tenant", tenant);
                     command.Parameters.AddWithValue("@GroupMultiAccounts", GetFilterValue<bool>("IsGroupMultiAccounts"));
-                    command.Parameters.AddWithValue("@ReportDateTypeCode", GetFilterValue<string>("ReportDateTypeCode"));
-                    command.Parameters.AddWithValue("@ReportTypeCode", GetFilterValue<string>("ReportTypeCode"));
 
 
                     using (var reader = command.ExecuteReader())
@@ -137,7 +102,6 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                                 AccountEnglishName = reader["EnglishName"] != DBNull.Value ? (string)reader["EnglishName"] : null,
                                 AccountLocalName = reader["LocalName"] != DBNull.Value ? (string)reader["LocalName"] : null,
                                AccountDisplayNumber = reader["DisplayNumber"] != DBNull.Value ? (string)reader["DisplayNumber"] : null,
-                                AccountVatNumber = reader["VatNumber"] != DBNull.Value ? (string)reader["VatNumber"] : null,
                                 CreditLimit = reader["CreditLimit"] != DBNull.Value ? (decimal?)Convert.ToDecimal(reader["CreditLimit"]) : 0,
                                 InsuredCreditLimit = reader["InsuredCreditLimit"] != DBNull.Value ? (decimal?)reader["InsuredCreditLimit"] : 0,
                                 TotalOpenShipments = reader[ "TotalOpenShipments"] != DBNull.Value ? (decimal?)reader["TotalOpenShipments"] : 0,
@@ -149,9 +113,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                               AccountSalesmanLocalName = reader["AccountSalesmanLocalName"] != DBNull.Value ? (string)reader["AccountSalesmanLocalName"] : null,
                                AccountCollectorName = reader["AccountCollectorName"] != DBNull.Value ? (string)reader["AccountCollectorName"] : null,
                                 AccountCollectorLocalName = reader["AccountCollectorLocalName"] != DBNull.Value ? (string)reader["AccountCollectorLocalName"] : null,
-                                ContactPhoneOrEmail = reader["ContactPhoneOrEmail"] != DBNull.Value ? (string)reader["ContactPhoneOrEmail"] : null,
-                                ContactLocalName = reader["ContactLocalName"] != DBNull.Value ? (string)reader["ContactLocalName"] : null,
-                                ContactEnglishName = reader["ContactEnglishName"] != DBNull.Value ? (string)reader["ContactEnglishName"] : null,
+                                AccountBusinessPhone = reader["AccountBusinessPhone"] != DBNull.Value ? (string)reader["AccountBusinessPhone"] : null,
                                 MinimumInterestInvoiceBilling = reader["MinimumInterestInvoiceBilling"] != DBNull.Value ? (string)reader["MinimumInterestInvoiceBilling"] : null,
                                 CreditAllotmentPercentage = reader["CreditAllotmentPercentage"] != DBNull.Value ? (string)reader["CreditAllotmentPercentage"] : null,
                                 PaymentTermLocalName = reader["PaymnetTermLocalName"] != DBNull.Value ? (string)reader["PaymnetTermLocalName"] : null,
@@ -173,7 +135,6 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                                 BalanceInLocalCurrency = reader["BalanceInLocalCurrency"] != DBNull.Value ? (decimal?)reader["BalanceInLocalCurrency"] : 0,
                                 AccountingBalance = reader["BalanceInForeignCurrency"] != DBNull.Value ? (decimal?)reader["BalanceInForeignCurrency"] : 0,
                                 TotalForeign = reader["TotalForeign"] != DBNull.Value ? (decimal?)reader["TotalForeign"] : 0,
-                                TotalToCollect = reader["TotalToCollect"] != DBNull.Value ? (decimal?)Convert.ToDecimal(reader["TotalToCollect"]) : 0,
 
                             };
                             result.TotalLocal = result.BalanceInLocalCurrency;

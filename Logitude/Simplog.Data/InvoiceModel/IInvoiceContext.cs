@@ -1,6 +1,5 @@
 using System.Data.Entity;
 using System.Data.Entity.Core.Objects;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 
@@ -39,9 +38,6 @@ namespace Simplog.Data.InvoiceModel
         IDbSet<ExternalSystemsTablesCode> ExternalSystemsTablesCodes { get; }
         IDbSet<ExternalSystemsMissingTranslation> ExternalSystemsMissingTranslations { get; }
         IDbSet<ExternalSystemsSyncStatus> ExternalSystemsSyncStatuses { get; set; }
-        IDbSet<ExpenseAllocationSetting> ExpenseAllocationSettings { get; set; }
-        IDbSet<ExpenseAllocationFlow> ExpenseAllocationFlows { get; set; }
-
         IDbSet<AccountingSystemsSetting> AccountingSystemsSettings { get; set; }
         IDbSet<AccountingSystemsSyncStatus> AccountingSystemsSyncStatuses { get; set; }
         IDbSet<QuickbooksSyncRequestTicket> QuickbooksSyncRequestTickets { get; set; }
@@ -65,13 +61,11 @@ namespace Simplog.Data.InvoiceModel
         IDbSet<ARPaymentBankTranfer> ARPaymentBankTranfers { get; }
         IDbSet<DigitalInvoicesCounterDataView> DigitalInvoicesCounterDataView { get; }
         IDbSet<ControlForInvoiceLinesDataView> ControlForInvoiceLinesDataView { get; }
-        IDbSet<BankAccountView> BankAccountView { get; }
+
         IDbSet<ARInvoicesSignedStatus> ARInvoicesSignedStatuses { get; }
         IDbSet<ConfirmationNumberStatus> ConfirmationNumberStatuses { get; }
 
         IDbSet<ConfirmationNumberDefault> ConfirmationNumberDefaults { get; }
-        IDbSet<MasavInterface> MasavInterfaces { get; }
-        IDbSet<MasavInterfaceStatus> MasavInterfaceStatuses { get; }
 
         void SetAsModified(object entity);
         void DetectChanges();

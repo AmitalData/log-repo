@@ -63,7 +63,7 @@
             <td>
                 <table>
                     <tr>
-                        <td [style.width]="IsForeignCurrency ? '800px' : '570px'">
+                        <td style="width: 570px;">
                             <table>
                                 <tr>
                                     <td>
@@ -272,45 +272,6 @@
                                                 <td>
                                                     <div></div>
                                                 </td>
-
-                                            </tr>
-                                            <tr><td></td></tr>
-                                        </table>
-                                    </td>
-                                    <td style="width:20px;">
-                                        <div></div>
-                                    </td>
-                                    <td *ngIf="IsForeignCurrency">
-                                        <table>
-                                            <tr class="FormFieldRow">
-
-                                                <td style="width: 130px;">
-                                                    <table>
-                                                        <tr style="height:15px;">
-                                                            <LogLabel [ObjectFieldName]="'ReportCurrencyCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                        </tr>
-                                                        
-                                                     
-                                                    </table>
-                                                </td>
-                                                <td>
-                                                    <table>
-                                                        <tr style="height:5px;">
-                                                            <LogTextBox [Text]="ReportCurrencyCode" [ObjectFieldName]="'ReportCurrencyCode'" [HideColumns]="true" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                                        </tr>
-                                                       
-                                                    
-                                                    </table>
-                                                </td>
-                                                <td>
-                                                    <div></div>
-                                                </td>
-
-                                            </tr>
-                                            
-
-                                            <tr class="FormFieldRow">
-
 
                                             </tr>
                                             <tr><td></td></tr>

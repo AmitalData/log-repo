@@ -25,7 +25,7 @@ namespace Logitude.Customs.BL.Messaging.Customs
             {
                 return null;
             }
-            if (objectTableId != ObjectTableRepository.GetObjectTableByName("Customs.Declaration", tenant))
+            if (objectTableId != ObjectTableRepository.GetObjectTableByName("Customs.Declaration"))
             {
                 return null;
             }
