@@ -264,12 +264,14 @@ namespace WebFreight.Web
                     IsMobileLogin = logintokenparam.IsMobileLogin,
                     MobileVersion = logintokenparam.MobileVersion,
                 };
-             
+                if (LogitudeSettings.IsCostomsDeploy)
+                {
                     IGlobalContext globalContext = GlobalContext.GetContext();
                     var contactPasswordRepository = new ContactPasswordRepository(globalContext);
 
                     var dbcontact =
-                         contactPasswordRepository.GetSingleContactPassword(auttoken.Email);
+                        //globalContext.ContactPasswords.Where(c => c.Email == auttoken.Email).FirstOrDefault();
+                        contactPasswordRepository.GetSingleContactPassword(auttoken.Email);
                     if (dbcontact != null)
                     {
                         dbcontact = dbcontact ?? new ContactPassword();
@@ -277,7 +279,8 @@ namespace WebFreight.Web
                         {
                             if (dbcontact.Password != loginParameters.Password)
                             {
-                                 loginParameters.Password = dbcontact.Password;
+                               NetCommonHelper.Logger.DevLog.Instance.WriteDebug(@"ihab(@Itzik):SSO:the Hash Password from token irrelevant Allow Login even though HashPass  not match");
+                                loginParameters.Password = dbcontact.Password;
                             }
                         }
                         if (dbcontact.MustChangePassword)
@@ -287,7 +290,8 @@ namespace WebFreight.Web
                             globalContext.SaveChanges();
                         }
                     }
- 
+                }
+
                 userdata = PostUserValidation(loginParameters);
 
                 if (!userdata.HasError)
@@ -617,10 +621,7 @@ namespace WebFreight.Web
 
             HttpCookie cookie1 = new HttpCookie(FormsAuthentication.FormsCookieName, "");
             cookie1.Expires = DateTime.Now.AddYears(-1);
-			cookie1.HttpOnly = true;               
-			cookie1.Secure = true;                 
-			cookie1.SameSite = SameSiteMode.Lax; 
-			HttpContext.Current.Response.Cookies.Add(cookie1);
+            HttpContext.Current.Response.Cookies.Add(cookie1);
             HttpContext.Current.Response.Cache.SetExpires(DateTime.UtcNow.AddMinutes(-1));
             HttpContext.Current.Response.Cache.SetCacheability(HttpCacheability.NoCache);
             HttpContext.Current.Response.Cache.SetNoStore();
@@ -647,14 +648,6 @@ namespace WebFreight.Web
 
             return true;
         }
-        public HttpResponseMessage GetIsAppServiceData()
-        {
-            var isAppServiceENV = Environment.GetEnvironmentVariable("IsAppService") == "true";
-            bool isAppService = ConfigurationManager.AppSettings["IsAppService"] == "true";
-            return (isAppServiceENV || isAppService) ? 
-                Request.CreateResponse(HttpStatusCode.OK, true) :
-                Request.CreateResponse(HttpStatusCode.OK, false);
-        }
 
         public HttpResponseMessage getLoggedDomain()
         {
@@ -680,6 +673,10 @@ namespace WebFreight.Web
 
             try
             {
+                if (!IsValidEmailInput(loginParameters.Email))
+                {
+                    throw new ArgumentException("Invalid email format or contains forbidden characters.");
+                }
                 TenantManagmentPrivateLabelsPM privatelabel = null;
                 var url = SecurityUtility.getLoggedDomain();
                 
@@ -1590,7 +1587,10 @@ namespace WebFreight.Web
             {
                 DateTime DateBeforePostLoginData = DateTime.Now;
                 if (!string.IsNullOrEmpty(parameters.Email)) parameters.Email = parameters.Email.ToLower();
-
+                if (!IsValidEmailInput(parameters.Email))
+                {
+                    throw new ArgumentException("Invalid email format or contains forbidden characters.");
+                }
                 string email = parameters.Email;
                 string password = parameters.Password;
                 bool isUser = parameters.IsUser;
@@ -1686,9 +1686,7 @@ namespace WebFreight.Web
 
                                 string encryptedTicket = FormsAuthentication.Encrypt(ticket);
                                 HttpCookie authCookie = new HttpCookie(FormsAuthentication.FormsCookieName, encryptedTicket);
-								authCookie.HttpOnly = true;          
-								authCookie.Secure = true;								
-								authCookie.SameSite = SameSiteMode.None;
+                                authCookie.SameSite = SameSiteMode.None;
                                 HttpContext.Current.Response.Cookies.Add(authCookie);
 
                             }
@@ -1800,6 +1798,7 @@ namespace WebFreight.Web
                     }
 
                     user.HtmlVersion = GetHtmlVersion();
+                    user.IsAdmin = SecurityUtility.isUserAdmin(email, tenant) || customerCare;
                 }
 
                 int executionTime = (int)((DateTime.Now.Ticks - DateBeforePostLoginData.Ticks) / TimeSpan.TicksPerMillisecond);
@@ -3184,7 +3183,7 @@ namespace WebFreight.Web
             else HttpContext.Current.Response.Headers.Add("ServerTime", executionTime.ToString());
 
         }
-        
+
 
 
         //   [OperationContract]
@@ -3493,8 +3492,27 @@ namespace WebFreight.Web
         }
 
 
+        public  bool IsValidEmailInput(string email)
+        {
+            if (string.IsNullOrWhiteSpace(email))
+                return false;
 
+            if (email.Count(c => c == '@') != 1)
+                return false;
 
+            string emailPattern = @"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$";
+            if (!Regex.IsMatch(email, emailPattern))
+                return false;
+
+            string forbiddenChars = @"<>&""\/()";
+            foreach (char c in forbiddenChars)
+            {
+                if (email.Contains(c))
+                    return false;
+            }
+
+            return true;
+        }
     }
     public class LoginTokenParameter
     {

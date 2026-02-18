@@ -34,8 +34,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             tenant = _tenant;
             showLocals = LoggedContactResolver.GetLoggedContactShowLocal(_tenant);
             dataProvider = new CustomerStatusDataProvider();
-            accountingContext = AccountingContext.GetContext(tenant);
-           splitAccountsIds = new List<string>();
+             accountingContext = AccountingContext.GetContext(tenant);
+          splitAccountsIds = new List<string>();
         }
         public CustomerStatusDataProvider LoadFromXML(byte[] xmlFilters)
         {
@@ -223,7 +223,6 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             CustomerStatus customerStatus = new CustomerStatus()
             {
                 // account details
-                Tenant = tenant,
                 CustomerName = customerPeriods.First().AccountEnglishName,
                 CustomerLocalName = customerPeriods.First().AccountLocalName,
                 CustomerDisplayNumber = customerPeriods.First().AccountDisplayNumber,
