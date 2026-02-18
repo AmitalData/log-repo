@@ -109,10 +109,10 @@
                     </div>
                 </div>
 
-                <div *ngIf="FieldName == 'InOut'" style="display: flex; align-items: center; justify-content: center;">
-                    <img *ngIf="FieldValue == 'O' || FieldValue == 'Out'" style="vertical-align:middle; margin: auto;margin-top:-2px; width:48px ;margin-left: 44px;"  [attr.src]="'./Images/Icons/OutArrow.png'" [title]="'Out'" />
+                <div *ngIf="FieldName == 'InOut'">
+                    <img *ngIf="FieldValue == 'O' || FieldValue == 'Out'" style="vertical-align:middle; margin: auto;margin-top:-2px" [attr.src]="'./Images/Icons/ArrowRight.png'" [title]="'Out'" />
 
-                    <img *ngIf="FieldValue == 'I' || FieldValue == 'In' " style="vertical-align:middle; margin: auto;margin-top:-2px; width:48px;"  [attr.src]="'./Images/Icons/InArrow.png'" [title]="'In'" />
+                    <img *ngIf="FieldValue == 'I' || FieldValue == 'In' " style="vertical-align:middle; margin: auto;margin-top:-2px" [attr.src]="'./Images/Icons/ArrowLeft.png'" [title]="'In'" />
                 </div>
 
                 <div *ngIf="FieldName == 'EnglishName'" class="TextTrimming">
