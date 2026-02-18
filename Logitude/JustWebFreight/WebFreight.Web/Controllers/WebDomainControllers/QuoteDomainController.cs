@@ -7,23 +7,26 @@ using Logitude.BL.QuoteModel.EntityLists;
 using Logitude.BL.QuoteModel.EntityPMs;
 using Logitude.BL.QuoteModel.EntityQueries;
 using Logitude.BL.QuoteModel.Tools.EntityService;
+using Logitude.BL.ShipmentsModel.EntityLists;
+using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.CRM.Data;
 using Logitude.CRM.Data.EntityListQueryServices;
 using Logitude.CRM.Data.EntityLists;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; 
+using Simplog.Data.Helpers;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.QuoteModel;
 using Simplog.Data.QuoteModel.EntityPOCOs;
 using Simplog.Data.QuoteModel.Repositories;
 using Simplog.Data.ShipmentsModel;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.Repositories;
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -521,10 +524,10 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                 IShipmentsContext shipmentContext = ShipmentsContext.GetContext(tenant);
                 ShipmentRepository shipmentRepository = new ShipmentRepository(shipmentContext);
-
-                var shipments = shipmentRepository
-                    .GetShipmentsByQuoteId(quoteId, tenant)
-                    .Select(item => new QuoteConnectedEntity
+                IQueryable<ShipmentDataView> myShipments = shipmentRepository.GetShipmentsByQuoteId(quoteId, tenant);
+                foreach (ShipmentDataView item in myShipments)
+                {
+                    myResult.Add(new QuoteConnectedEntity()
                     {
                         EntityId = item.Id,
                         EntityNumber = item.ShipmentNumber,
@@ -539,10 +542,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         To = item.ShipmentLevelCode == "H" ? item.ToPortCode : item.MainCarriageFinalDestinationPortCode,
                         GrossWeight = item.GrossWeight,
                         VolumeInKG = item.Volume,
-                    })
-                    .ToList();
-
-                myResult.AddRange(shipments);
+                    });
+                }
 
                 ICRMContext crmContext = CRMContext.GetContext(tenant);
                 TicketListQueryService listService = new TicketListQueryService(crmContext);
