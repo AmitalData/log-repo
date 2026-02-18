@@ -43,17 +43,15 @@ export class ServiceHelper {
                 || apiException.ErrorType == "SecurityException") {
 
                     var errorMessage: string = apiException.ShortErrorMessage;
-                    if (!AppTool.IsNullOrEmpty(apiException.ShortErrorMessage)) {
+                    if (apiException.ShortErrorMessage) {
                         errorMessage = apiException.ShortErrorMessage;
-                    }
-                    else if (!AppTool.IsNullOrEmpty(apiException.ErrorMessage)) {
-                        errorMessage = apiException.ErrorMessage;
-
+                        // response.ErrorsArray.push(apiException.ShortErrorMessage);
                     }
                     else {
                         errorMessage = apiException.ExceptionMessage;
-
+                        //response.ErrorsArray.push(apiException.ExceptionMessage);
                     }
+
                     if (errorMessage) {
                         if (errorMessage.indexOf('session expiration') == -1) {
                             if (errorMessage.indexOf(';') != -1) {
@@ -66,7 +64,6 @@ export class ServiceHelper {
                                 response.ErrorsArray.push(errorMessage);
                             }
                         }
-                     
                     }
 
                 }
