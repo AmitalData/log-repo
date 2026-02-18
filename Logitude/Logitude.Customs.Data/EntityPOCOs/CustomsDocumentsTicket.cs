@@ -35,8 +35,11 @@ namespace Logitude.Customs.Data.EntityPOCOs
         public virtual DocumentsFiling DocumentsFiling { get; set; }
         [Column("Tenant")]
 	    public int Tenant { get; set; }
+        [ForeignKey("CustomDocumentType")]
         [Column("DocumentTypeCode")]
 	    public string DocumentTypeCode { get; set; }
+	      
+        public virtual CustomDocumentType CustomDocumentType { get; set; }
         [Column("RequestedCustomsDocId")]
 	    public string RequestedCustomsDocId { get; set; }
         [Column("Remarks")]
