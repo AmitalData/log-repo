@@ -3,33 +3,44 @@ using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Simplog.Data.CommonDataModel.Repositories
 {
     public class ExternalLinkRepository : IRepository<ExternalLink>
     {
-        public readonly ICommonDataContext Context;
+        ICommonDataContext iContext;
 
         public ExternalLinkRepository(int tenant)
         {
-            Context = CommonDataContext.GetContext(tenant);
+            iContext = CommonDataContext.GetContext(tenant);
         }
 
         public ExternalLinkRepository(ICommonDataContext context)
         {
-            Context = context;
+            iContext = context;
         }
 
-        public ExternalLink GetSingleExternalLink(string id, int tenant) =>
-            Context.ExternalLinks.FirstOrDefault(x => x.Id == id && x.Tenant == tenant);
+        public ExternalLink GetSingleExternalLink(string id, int tenant) => GetSingle(id);
+        public ExternalLink GetSingleExternalLink(string id) => GetSingle(id);
 
-        public ExternalLink GetSingleExternalLinkByRef(string reference, int tenant) =>
-            Context.ExternalLinks.FirstOrDefault(x => x.Ref == reference && x.Tenant == tenant);
+        public ExternalLink GetSingleExternalLinkByRef(string referenceId) => 
+            Context.ExternalLinks.FirstOrDefault(a => a.Ref == referenceId);
 
-        public IQueryable<ExternalLink> GetExternalLinks(int tenant) =>
-            Context.ExternalLinks.Where(x => x.Tenant == tenant || x.Tenant == 0)
-                .GroupBy(x => x.Ref)
-                .Select(g => g.FirstOrDefault(x => x.Tenant == tenant) ?? g.FirstOrDefault(x => x.Tenant == 0));
+        public ExternalLink GetSingle(string id) =>
+            Context.ExternalLinks.FirstOrDefault(a => a.Id == id);
+
+        public IQueryable<ExternalLink> GetExternalLinks(int tenant) => GetExternalLinks();
+        public IQueryable<ExternalLink> GetExternalLinks()
+        {
+            return (from a in Context.ExternalLinks select a);
+        }
+
+        public IQueryable<ExternalLink> GetAll()
+        {
+            return (from a in Context.ExternalLinks select a);
+        }
 
         public void Add(ExternalLink entity)
         {
@@ -51,6 +62,11 @@ namespace Simplog.Data.CommonDataModel.Repositories
         public List<ExternalLink> All()
         {
             return Context.ExternalLinks.ToList();
+        }
+
+        public ICommonDataContext Context
+        {
+            get { return iContext; }
         }
 
         public bool SubmitChanges()

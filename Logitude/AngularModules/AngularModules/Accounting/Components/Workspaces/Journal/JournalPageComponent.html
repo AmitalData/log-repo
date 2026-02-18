@@ -26,12 +26,10 @@
 
                     <td style="width: 45px; vertical-align:middle; font-size:11px; color : #6E7172;">{{'Accounting.General.O.Search' | TextCodeTranslationPipe}}:</td>
 
-                    <td style="width: 300px;" *ngIf="enableFastSearch">
-                        <SearchTextBox  [AutoComplete]="'off'" (optionSelected)="searchDropdownSelected($event)" (click)="showRecentSearches()" (ItemClicked)="EditJournal($event)"  [appSearchListDDL]="searchDropdownOptions" [DDLsettings]="fastSearchSettings" [SearchText]="searchFields" [ObjectTableName]="'Journal'"  (SearchTextChangeEvent)="onSearchTextChangeEvent($event)"></SearchTextBox>
-                    </td>
-                    <td style="width: 300px;" *ngIf="!enableFastSearch">
+                    <td style="width: 300px;">
                         <SearchBox [ObjectTableName]="'Journal'" [IsQuickSearch]="true" (ItemClicked)="EditJournal($event)"></SearchBox>
                     </td>
+
                     <td>
                         <div></div>
                     </td>
@@ -156,12 +154,6 @@
                                                         <tr *ngIf="LoadCVS_JournalsVisibility">
                                                             <td style="width:190px;" (click)="LoadJournalFromFile()">
                                                                 <span class="QueryLink" >{{'Journal.Features.LOADJOURNALCSV' | TextCodeTranslationPipe}}</span><span><img src="./Images/Buttons/excelicon.png" /></span>
-                                                                
-                                                            </td>
-                                                        </tr>
-                                                        <tr *ngIf="LoadMichpal_JournalsVisibility">
-                                                            <td style="width:190px;" (click)="LoadJournalFromMichpalFile()">
-                                                                <span class="QueryLink" >{{'Journal.Features.LOADJOURNALMICHPAL' | TextCodeTranslationPipe}}</span><span><img src="./Images/Buttons/Notepad.png" /></span>
                                                                 
                                                             </td>
                                                         </tr>
