@@ -12,12 +12,10 @@ using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
 using Logitude.SystemLogs;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; 
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; 
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel.Repositories;
@@ -54,7 +52,6 @@ using Logitude.Accounting.Data.EntityPOCOs;
 using Customer = Simplog.Data.CommonDataModel.EntityPOCOs.Customer;
 using Microsoft.TeamFoundation.Common;
 using Logitude.Accounting.Data.Repositories;
-using CreateDocumentOutArgs = Logitude.BL.Helpers.CreateDocumentOutArgs;
 
 namespace WebFreight.Web.App_Code.AngularJS_App_Code
 {
@@ -296,7 +293,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
 
                 Authentication(createDocumentOutArgs.Tenant);
                 DocumentHelper documentHelper = new DocumentHelper();
-                DocumentOutPM documentOutPM =  documentHelper.PutCreateDocumentOut(createDocumentOutArgs).document;
+                DocumentOutPM documentOutPM =  documentHelper.PutCreateDocumentOut(createDocumentOutArgs);
 
                 return Request.CreateResponse(HttpStatusCode.OK, documentOutPM);
             }

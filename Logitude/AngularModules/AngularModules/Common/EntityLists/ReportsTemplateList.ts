@@ -27,6 +27,5 @@ export class ReportsTemplateList {
 		Subject: string;
 		ObjectTableId: string;
 		EntityId: string;
-		UseStimul: boolean;
 	
-}
+}
