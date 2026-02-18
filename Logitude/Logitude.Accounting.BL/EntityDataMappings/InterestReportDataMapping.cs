@@ -73,7 +73,6 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 customerPM = customerQuery.GetBasicSinglePM(entityPM.CustomerId, entityPM.Tenant, true);
                 entityPM.CustomerName = customerPM.EnglishName;
                 entityPM.CustomerLocalName = customerPM.LocalName;
-                entityPM.VatNumber = customerPM.VatNumber;
 
             }
            
