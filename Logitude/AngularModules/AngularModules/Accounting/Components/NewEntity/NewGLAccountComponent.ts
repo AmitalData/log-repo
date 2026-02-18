@@ -354,56 +354,6 @@ export class NewGLAccountComponent extends BaseComponent {
         }
     }
 
-    get FollowupDate() { return this.EntityPM.FollowupDate; }
-    set FollowupDate(value: Date) {
-        if (this.EntityPM.FollowupDate != value) {
-            this.EntityPM.FollowupDate = value;
-        }
-    }
-
-    get FollowupNotes() { return this.EntityPM.FollowupNotes; }
-    set FollowupNotes(value: string) {
-        if (this.EntityPM.FollowupNotes != value) {
-            this.EntityPM.FollowupNotes = value;
-        }
-    }
-
-    get PaymentTerms() { return this.EntityPM.PaymentTerms; }
-    set PaymentTerms(value: string) {
-        if (this.EntityPM.PaymentTerms != value) {
-            this.EntityPM.PaymentTerms = value;
-        }
-    }
-
-    get IsEquipmentVendor() { return this.EntityPM.IsEquipmentVendor }
-    set IsEquipmentVendor(value: boolean) {
-        if (this.EntityPM.IsEquipmentVendor != value) {
-            this.EntityPM.IsEquipmentVendor = value;
-        }
-    }
-
-    get ExcludeFromDeductionReport() { return this.EntityPM.ExcludeFromDeductionReport }
-    set ExcludeFromDeductionReport(value: boolean) {
-        if (this.EntityPM.ExcludeFromDeductionReport != value) {
-            this.EntityPM.ExcludeFromDeductionReport = value;
-
-        }
-    }
-
-    get ExchangeRateId() { return this.EntityPM.ExchangeRateId; }
-    set ExchangeRateId(value: string) {
-        if (this.EntityPM.ExchangeRateId != value) {
-            this.EntityPM.ExchangeRateId = value;
-        }
-    }
-
-    get AllowEditChequePayToName() { return this.EntityPM.AllowEditChequePayToName; }
-    set AllowEditChequePayToName(value: boolean) {
-        if (this.EntityPM.AllowEditChequePayToName != value) {
-            this.EntityPM.AllowEditChequePayToName = value;
-        }
-    }
-
     get RevenueExpenseType() { return this.EntityPM.RevenueExpenseType; }
     set RevenueExpenseType(value: string) {
         if (this.EntityPM.RevenueExpenseType != value) {

@@ -58,7 +58,6 @@ namespace WebFreight.Web.CustomModel
             ContainerAccessor.Container.RegisterType<IDIUnifreightTaskService, Logitude.Customs.BL.Messaging.Amital.UnifreightTaskService.DIUnifreightTaskService >("DIUnifreightTaskService", new InjectionFactory(c => new Logitude.Customs.BL.Messaging.Amital.UnifreightTaskService.DIUnifreightTaskService()));
 			ContainerAccessor.Container.RegisterType<ICustomsAutoDecClosing, CustomsAutoDecClosing>("CustomsAutoDecClosing", new InjectionFactory(c => new CustomsAutoDecClosing()));
 			ContainerAccessor.Container.RegisterType<ICustomCreateTicket, CustomCreateTicket>("CustomCreateTicket", new InjectionFactory(c => new CustomCreateTicket()));
-			ContainerAccessor.Container.RegisterType<ICustomsConnectDocumentToDeclarationCourier, ConnectDocumentToDeclarationCourier>("ConnectDocumentToDeclarationCourier", new InjectionFactory(c => new ConnectDocumentToDeclarationCourier()));
 
 		}
 	}

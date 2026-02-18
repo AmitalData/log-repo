@@ -627,8 +627,7 @@ export class TrailBalanceFiltersComponent extends BaseComponent
 
         return this.ValidationErrorsList.length == 0;
     }
-
-    RunReport(isInteractive: boolean)
+    RunReport()
     {
        
         if (this.ValidateSelectedFilters()) {
@@ -652,7 +651,7 @@ export class TrailBalanceFiltersComponent extends BaseComponent
 
 
 
-            this.ReportsPreview.GenerateReport(this.reportFliter, isInteractive);
+            this.ReportsPreview.GenerateReport(this.reportFliter, true);
 
 
         }
