@@ -35,8 +35,8 @@ namespace Logitude.Server.Tools.Helpers
                 else
                 {
                     ObjectTableRepository objectTabelRepository = new ObjectTableRepository(objectContext);
-                    ObjectTable objectTable = objectTabelRepository.GetObjectTableByName(args.ObjectTableName, tenant, true, tenant);
-                    ObjectTable childObjectTable = objectTabelRepository.GetObjectTableByName(args.ChildObjectTableName, tenant, true, tenant);
+                    ObjectTable objectTable = objectTabelRepository.GetObjectTableByName(args.ObjectTableName, 0, true);
+                    ObjectTable childObjectTable = objectTabelRepository.GetObjectTableByName(args.ChildObjectTableName, 0, true);
 
                     #region User
                     string myUserId = null;
@@ -161,7 +161,6 @@ namespace Logitude.Server.Tools.Helpers
                     traceEventRepository.Add(myTraceEvent);
                     traceEventRepository.SubmitChanges();
                     objectContext.SaveChanges();
-
                     
 
                     if (eventType.IsCustomerView)
@@ -190,7 +189,7 @@ namespace Logitude.Server.Tools.Helpers
             EntityStatusRepository entityStatusRepository = new EntityStatusRepository(objectContext);
 
             Tenant tenantEntity = TenantRepository.GetSingleTenant(tenant, true);
-            ObjectTable objectTable = objectTableRepository.GetObjectTableByName(objectTableName, tenant, true);
+            ObjectTable objectTable = objectTableRepository.GetObjectTableByName(objectTableName, 0, true);
 
             List<EventType> eventTypes = eventTypesRepository.GetEventTypesByTenantAndObjectTableId(tenant, objectTable.Id).ToList();
             List<EntityStatus> statusList = entityStatusRepository.GetEntityStatusByTenant(tenant).ToList();
@@ -212,7 +211,6 @@ namespace Logitude.Server.Tools.Helpers
 
                 if (traceEventParams.Tenant != 0)
                 {
-
                     UserRepository userRepository = new UserRepository(traceEventParams.Tenant);
                     User user = userRepository.GetSingleUser(traceEventParams.UserId, 0, false);
                     if (user != null)
@@ -335,7 +333,7 @@ namespace Logitude.Server.Tools.Helpers
 			ObjectTableRepository objectTabelRepository = new ObjectTableRepository(objectContext);
 			TraceEventRepository traceEventRepository = new TraceEventRepository(objectContext);
 			EventTypeRepository eventTypeRepository = new EventTypeRepository(objectContext);
-			ObjectTable objectTable = objectTabelRepository.GetObjectTableByName(objectTableName, tenant, true);
+			ObjectTable objectTable = objectTabelRepository.GetObjectTableByName(objectTableName, 0, true);
 			string objectTableId = objectTable.Id;
 			List<EventType> allEventTypes = eventTypeRepository.GetEventTypesByTenantAndObjectTableId(tenant, objectTableId).ToList();
 			if (!string.IsNullOrEmpty(eventTypeCode))
