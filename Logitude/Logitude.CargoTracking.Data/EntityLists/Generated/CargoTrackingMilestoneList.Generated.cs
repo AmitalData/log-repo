@@ -36,13 +36,9 @@ namespace Logitude.CargoTracking.Data.EntityLists
        [DataMember]
        public int? ExportWeight  { get; set; }
        [DataMember]
+       public int? Tenant  { get; set; }
+       [DataMember]
        public string EventTypeId  { get; set; }
-       [DataMember]
-       public string Notes  { get; set; }
-       [DataMember]
-       public int? TenantId  { get; set; }
-       [DataMember]
-       public string ExternalCode  { get; set; }
    }
 
 }

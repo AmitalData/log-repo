@@ -1,6 +1,5 @@
 using System.Data.Common;
 using System.Data.Entity;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Mapping;
 using Simplog.Data.InfrastructureModel.Mapping;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
@@ -326,10 +325,6 @@ namespace Simplog.Data.InvoiceModel
             modelBuilder.Configurations.Add(new ControlForInvoiceLinesDataViewMap());
             modelBuilder.Configurations.Add(new ConfirmationNumberStatusMap());
             modelBuilder.Configurations.Add(new ConfirmationNumberDefaultMap());
-            modelBuilder.Configurations.Add(new ExpenseAllocationSettingMap());
-            modelBuilder.Configurations.Add(new ExpenseAllocationFlowMap());
-            modelBuilder.Configurations.Add(new MasavInterfaceMap());
-            modelBuilder.Configurations.Add(new MasavInterfaceStatusMap());
 
             base.OnModelCreating(modelBuilder);
         }
@@ -456,9 +451,6 @@ namespace Simplog.Data.InvoiceModel
         public IDbSet<ExternalSystemsTablesCode> ExternalSystemsTablesCodes { get; set; }
         public IDbSet<ExternalSystemsMissingTranslation> ExternalSystemsMissingTranslations { get; set; }
         public IDbSet<ExternalSystemsSyncStatus> ExternalSystemsSyncStatuses { get; set; }
-        public IDbSet<ExpenseAllocationSetting> ExpenseAllocationSettings { get; set; }
-        public IDbSet<ExpenseAllocationFlow> ExpenseAllocationFlows { get; set; }
-
         public IDbSet<AccountingSystemsSetting> AccountingSystemsSettings { get; set; }
         public IDbSet<AccountingSystemsSyncStatus> AccountingSystemsSyncStatuses { get; set; }
         public IDbSet<QuickbooksSyncRequestTicket> QuickbooksSyncRequestTickets { get; set; }
@@ -485,11 +477,9 @@ namespace Simplog.Data.InvoiceModel
         public IDbSet<APInvoiceAnalytic> APInvoiceAnalytics { get; set; }
         public IDbSet<DigitalInvoicesCounterDataView> DigitalInvoicesCounterDataView { get; set; }
         public IDbSet<ControlForInvoiceLinesDataView> ControlForInvoiceLinesDataView { get; set; }
-        public IDbSet<BankAccountView> BankAccountView { get; set; }
         public IDbSet<ConfirmationNumberStatus> ConfirmationNumberStatuses { get; set; }
         public IDbSet<ConfirmationNumberDefault> ConfirmationNumberDefaults { get; set; }
-        public IDbSet<MasavInterface> MasavInterfaces { get; set; }
-        public IDbSet<MasavInterfaceStatus> MasavInterfaceStatuses { get; set; }
+
         public void DetectChanges()
         {
             ChangeTracker.DetectChanges();
