@@ -15,12 +15,5 @@
         public string addAsteriskToNumberSearch { get; set; }
         public string DDLWidth { get; set; }
         public int? minimumSearchQueryLength { get; set; }
-        public bool? showSeparator { get; set; }
-        public bool? showHeader { get; set; }
-        public bool? descending { get; set; }
-        public string orderByField { get; set; }
-        public bool highlightSearchResults { get; set; }
-
-
     }
 }
