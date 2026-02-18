@@ -169,7 +169,7 @@ export class CustomsSettingListService {
             return this.getSingle(id);
         }
 	    
-		var exists = CustomsSettingListService.CachedData.filter(a => a.Id === id).length;
+		var exists = CustomsSettingListService.CachedData.filter(a => a.Tenant.toString() === id).length;
 
         var serviceResponse: ServiceResponse = new ServiceResponse(); 
 

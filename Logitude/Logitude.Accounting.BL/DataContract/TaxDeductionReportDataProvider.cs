@@ -101,11 +101,9 @@ namespace Logitude.Accounting.BL.DataContract
             }
             else
             {
-                startDate = taxDeductionReport.ByMonth && taxDeductionReport.FromMonth.HasValue ? new DateTime((int)taxDeductionReport.TaxYear, (int)taxDeductionReport.FromMonth.Value.Month, 1, 0, 0, 0) :
-                    taxDeductionReport.ByMonth ? new DateTime((int)taxDeductionReport.TaxYear, (int)taxDeductionReport.Month.Value.Month, 1, 0, 0, 0) :
-                        new DateTime((int)taxDeductionReport.TaxYear, 1, 1, 0, 0, 0);
-
+                startDate = taxDeductionReport.ByMonth ? new DateTime((int)taxDeductionReport.TaxYear, (int)taxDeductionReport.Month.Value.Month, 1, 0, 0, 0) : new DateTime((int)taxDeductionReport.TaxYear, 1, 1, 0, 0, 0);
                 endDate = taxDeductionReport.ByMonth ? new DateTime((int)taxDeductionReport.TaxYear, (int)taxDeductionReport.Month.Value.Month, DateTime.DaysInMonth((int)taxDeductionReport.TaxYear, taxDeductionReport.Month.Value.Month), 23, 59, 59) : new DateTime((int)taxDeductionReport.TaxYear, 12, 31, 23, 59, 59);
+
             }
         }
         TaxDeductionReportData taxDeductionReportData;
@@ -1079,15 +1077,19 @@ namespace Logitude.Accounting.BL.DataContract
         private List<ByMonthList> FillGroupedByMonthList(List<TaxDeductionReportLine> deductionLines, TaxDeductionReportData taxDeduction)
         {
             List<ByMonthList> groupedByMonthLines = new List<ByMonthList>();
-
-            int start = taxDeductionReport.ByMonth && taxDeductionReport.FromMonth.HasValue ? taxDeductionReport.FromMonth.Value.Month: taxDeductionReport.ByMonth ? taxDeductionReport.Month.Value.Month : 1;
-            int end = taxDeductionReport.ByMonth ? taxDeductionReport.Month.Value.Month : 12;
-
-            for (int month = start; month <= end; month++)
+            if (taxDeductionReport.ByMonth)
             {
-                groupedByMonthLines = FillGroupByMonthData(month, groupedByMonthLines);
+                groupedByMonthLines= FillGroupByMonthData(taxDeductionReport.Month.Value.Month, groupedByMonthLines);
             }
+            else
+            {
+                for (int i = 1; i < 13; i++)
+                {
+                    var month = i;
+                    groupedByMonthLines= FillGroupByMonthData(month, groupedByMonthLines);
 
+                }
+            }
             return groupedByMonthLines;
         }
         private List<ByMonthList> FillGroupByMonthData(int month, List<ByMonthList> groupedByMonthLines) // 80
