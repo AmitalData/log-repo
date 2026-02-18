@@ -18,6 +18,7 @@ IS
 -- Declare a collection to hold the non-existing strings
 TYPE not_found_list IS TABLE OF VARCHAR(4000) INDEX BY PLS_INTEGER;
 non_existing_strings not_found_list;
+v_dummy VARCHAR2(4000);
 v_cursor SYS_REFCURSOR; -- Declare a cursor variable
 -- Declare a nested table type to hold the not found strings
 TYPE string_table IS TABLE OF VARCHAR(4000) INDEX BY PLS_INTEGER;
@@ -29,6 +30,10 @@ delete from CourierHawbFromExcels where tenant=v_Tenant and createdbyuserid=v_us
 FOR i IN 1..v_courierhawbList.COUNT LOOP
 -- Check if the string exists in TableA
 BEGIN
+SELECT id
+INTO   v_dummy
+FROM   declarations
+WHERE  courierhawb = v_courierhawbList(i) and AmendmentDontDisplayInList=0;
 -- If the string exists, insert the selected column value into TableB
 INSERT INTO CourierHawbFromExcels (tenant, CREATEDBYUSERID, declarationid,CustomFileNo)
 SELECT v_Tenant, v_userid, id,CustomFileNo

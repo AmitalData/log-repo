@@ -167,8 +167,7 @@ end
     v_MessageCreatedServerTime OUT QUEUEMESSAGES.CREATEDATETIME%TYPE ,
     v_QueueDefinitionCode IN VARCHAR2 ,
     v_NextRunDelayInSec IN NUMBER,
-    v_WatingStatus IN NUMBER,
-    v_QueueCodes IN VARCHAR2)
+    v_WatingStatus IN NUMBER)
 AS
   --DECLARE @NextId INTEGER
   v_frequency NUMBER(10,0);
@@ -185,15 +184,7 @@ BEGIN
     WHERE qt.NextRunDateTime <= SYSDATE
      --ROWNUM<2  AND  --do not use rownum due  http://stackoverflow.com/questions/6117254/force-oracle-to-return-top-n-rows-with-skip-locked/6649586#6649586
     AND qt.Status             = v_WatingStatus
- 
-
-    AND qt.QueueDefinitionCode IN (
-        SELECT TRIM(REGEXP_SUBSTR(v_QueueCodes, '[^,]+', 1, LEVEL)) 
-        FROM DUAL 
-        CONNECT BY LEVEL <= REGEXP_COUNT(v_QueueCodes, ',') + 1
-    )
-
-    
+    AND QueueDefinitionCode = v_QueueDefinitionCode
 	AND qt.UseRabbitMQ =0
     ORDER BY qt.tenantpriority ASC ,qt.NextRunDateTime ASC
     FOR UPDATE SKIP LOCKED;
