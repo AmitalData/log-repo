@@ -96,7 +96,6 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                              ChartOfAccountsId = a.GLAccount != null ? a.GLAccount.ChartOfAccountsId : null,
 											 ChartOfAccountsName= a.GLAccount != null ? a.GLAccount.ChartOfAccount.LocalName : null,
                                              ChartOfAccountsCode = a.GLAccount != null ? a.GLAccount.ChartOfAccount.Code : null,
-                                             ReportCurrencyCode = a.Currency != null ? a.Currency.Code : null,
 
 
                                                 });

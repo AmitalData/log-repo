@@ -2,14 +2,14 @@
 -- run only for amital cloud version
 
 
---select * from contacts where email = 'support@amital.co.il' and Tenant = 0
+--select * from contacts where email = 'admin@fnarsoft.com' and Tenant = 0
 --select Contacts.* from Users,Contacts where Contacts.Id = Users.Id and Contacts.Signature is null and usertype != 'S'
 --------------------------------------------------------------------------------------------------
 --declare @Tenant as int
 --declare @ContactId as varchar(15)
 --declare @AdminSignature as varbinary(max)
 
---set @AdminSignature = (select [signature] from Contacts where email = 'support@amital.co.il' and Tenant = 0)
+--set @AdminSignature = (select [signature] from Contacts where email = 'admin@fnarsoft.com' and Tenant = 0)
 
 --begin
 --declare ContactsCursor cursor read_only
