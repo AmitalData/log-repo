@@ -30,7 +30,6 @@ export class AccountingTab_ChargesType extends BaseComponent implements OnDestro
     constructor(private entityArgs: EntityArgs) {
         super();
         this.EntityPM = entityArgs.EntityPM;
-        this.EntityPM.DisableMarkAsDirty = SessionLocator.TenantPM.IsHybrid && this.EntityPM.Code == "OTHC";
         this.IsAccountingActivated = SessionLocator.TenantPM.AccountingActivated;
         this.ObjectTableName = entityArgs.ObjectTableName;
         this.SetUIProperties();

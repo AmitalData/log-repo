@@ -4,8 +4,7 @@ using System.Linq;
 using System.Web;
 using Simplog.Server.Infrastructure.Helpers;
 
-using Simplog.Data.CommonDataModel.EntityPOCOs; 
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel.Repositories;
@@ -17,8 +16,6 @@ using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Accounting.Data;
-using Logitude.Accounting.Data.Repositories;
-using Logitude.Accounting.Data.EntityPOCOs;
 
 namespace Logitude.BL.InvoiceModel.EntityQueries
 {
@@ -134,7 +131,6 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                               IsExpense = a.IsExpense,
                                               PrepaidCollectId = a.PrepaidCollectId,
                                               IsRegionalTax = a.IsRegionalTax,
-                                              ReceivableCreditGLAccountId = a.ReceivableCreditGLAccountId,
                                           }).ToList();
 
             ShipmentReceivableRepository receivableRepository = new ShipmentReceivableRepository(tenant);
@@ -169,13 +165,6 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                 {
                     invoiceLinePM.ViewOrder = charge.ViewOrder;
                     invoiceLinePM.IsCustomsCharge = charge.IsCustoms;
-                }
-
-                GLAccountRepository gLAccountRepository = new GLAccountRepository(tenant);
-                GLAccount receivableCreditGLAcount = gLAccountRepository.GetSingle(invoiceLinePM.ReceivableCreditGLAccountId, tenant);
-                if (receivableCreditGLAcount != null)
-                {
-                    invoiceLinePM.ReceivableCreditGLAccountName = receivableCreditGLAcount.LocalName;
                 }
 
                 ARInvoiceEntity invoiceEntity = arInvoiceEntityRepository.GetSingleInvoiceEntityByInvoiceAndEntity(invoiceLinePM.ARInvoiceId, invoiceLinePM.EntityId, invoiceLinePM.Tenant);
@@ -236,7 +225,6 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                             IsExpense = a.IsExpense,
                                             PrepaidCollectId = a.PrepaidCollectId,
                                             IsRegionalTax = a.IsRegionalTax,
-                                            ReceivableCreditGLAccountId = a.ReceivableCreditGLAccountId,
                                         }).FirstOrDefault();
 
             ShipmentReceivableRepository receivableRepository = new ShipmentReceivableRepository(tenant);
@@ -268,13 +256,6 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             if (charge != null)
             {
                 myResult.ViewOrder = charge.ViewOrder;
-            }
-
-            GLAccountRepository gLAccountRepository = new GLAccountRepository(tenant);
-            GLAccount receivableCreditGLAcount = gLAccountRepository.GetSingle(myResult.ReceivableCreditGLAccountId, tenant);
-            if (receivableCreditGLAcount != null)
-            {
-                myResult.ReceivableCreditGLAccountName = receivableCreditGLAcount.LocalName;
             }
 
             ARInvoiceEntity invoiceEntity = arInvoiceEntityRepository.GetSingleInvoiceEntityByInvoiceAndEntity(myResult.ARInvoiceId, myResult.EntityId, tenant);

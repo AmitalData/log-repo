@@ -45,7 +45,7 @@ namespace WebFreight.Web.WcfApi
             try
             {
                 SecurityUtility.AuthenticationOnTenant(entityPM.Tenant);
-                // SecurityUtility.CheckContactFeature("OcrDocument", "UPDATE", entityPM.Tenant);//UPDATE//READ
+                SecurityUtility.CheckContactFeature("OcrDocument", "UPDATE", entityPM.Tenant);//UPDATE//READ
                 
 
                     ClassLevelValidator validationClass = new ClassLevelValidator("OcrDocument", entityPM.Tenant);

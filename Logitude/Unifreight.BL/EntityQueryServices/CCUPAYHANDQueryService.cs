@@ -23,15 +23,15 @@ namespace Unifreight.BL.EntityQueryServices
             this.mapping = new CCUPAYHANDDataMapping();
         }
 
-        public CCUPAYHANDPM GetSingle(int FILENO, bool getComposition, int tenant, bool getFromCache)
+        public CCUPAYHANDPM GetSingle(int FILENO, bool getComposition, bool getFromCache)
         {
-            var EntityKeys = new CCUPAYHANDKeys() { FILENO = FILENO , Tenant=tenant };
+            var EntityKeys = new CCUPAYHANDKeys() { FILENO = FILENO };
             return base.GetSingle(EntityKeys, getComposition, getFromCache);
         }
 
         protected override Simplog.Server.Infrastructure.EntityKeyFields GetKeys(CCUPAYHAND entityPOCO)
         {
-            return new CCUPAYHANDKeys() { FILENO = entityPOCO.FILENO, Tenant = entityPOCO.TENANT };
+            return new CCUPAYHANDKeys() { FILENO = entityPOCO.FILENO};
         }
 
         public override void GetComposition(EntityKeyFields entityKeys, CCUPAYHANDPM entityPM)
