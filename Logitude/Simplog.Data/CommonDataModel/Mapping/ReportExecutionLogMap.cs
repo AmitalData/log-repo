@@ -93,6 +93,9 @@ namespace Simplog.Data.CommonDataModel.Mapping
              .WithMany()
              .HasForeignKey(d => d.CreatedByUserId);
 
+            this.HasRequired(t => t.ReportsTemplate)
+             .WithMany()
+             .HasForeignKey(d => d.ReportTemplateId);
 
             this.HasRequired(t => t.Report)
              .WithMany()

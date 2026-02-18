@@ -101,7 +101,7 @@ namespace Logitude.Customs.BL.TraceEvents
             return mytransmission;
 
         }
-        public void Send(UnifreightHybridQueueTaskParam unifreightHybridQueueTasParam ,bool  withTransmission=true,bool alreadySerialized=false,string SystemId=null)
+        public void Send(UnifreightHybridQueueTaskParam unifreightHybridQueueTasParam ,bool  withTransmission=true,bool alreadySerialized=false)
         {
             CustomsSettingPM setting = CustomsSettingQueryService.GetSettingByTenant(_CommunicationModel.Tenant);
             if (setting != null && setting.StandAlone)
@@ -180,10 +180,6 @@ namespace Logitude.Customs.BL.TraceEvents
                     }
 
                 };
-                if (!string.IsNullOrWhiteSpace(SystemId))
-                {
-                    myEnvelope.SystemId = SystemId;  
-                }
                 _CommunicationsParams.ByteData = LogitudeXmlSerializer.SerializeObject(myEnvelope);
             }
            
