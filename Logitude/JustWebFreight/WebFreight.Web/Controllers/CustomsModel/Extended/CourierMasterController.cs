@@ -896,7 +896,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 DeclarationPM declaration = declarationQueryService.GetSingle(declarationId, true, false);
                 if (declaration != null && declaration.Consignments != null && declaration.Consignments.Count() > 0)
                 {
-                    FeatureQuery featureQuery = new FeatureQuery(tenant);
+                    FeatureQuery featureQuery = new FeatureQuery();
                     var features = featureQuery.GetAllowedFeaturesForLoggedUser(AuthenticationUtil.ResolveUserId(tenant), tenant);
                     var feature = features.Features.FirstOrDefault(x => x.Code == "CancelOldCommunication");
                     if (feature != null)

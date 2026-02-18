@@ -6,8 +6,7 @@ using Logitude.Customs.Data.Repsitories;
 using Logitude.CustomsMessaging.Common.RequestParams;
 using Logitude.CustomsMessaging.Common.ResponseData;
 using Logitude.CustomsMessaging.MessagingServices;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using System;
 using System.Collections.Generic;
@@ -55,7 +54,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
             }
         }
 
-        public HttpResponseMessage GetDocumentPage(string documentId, int currPage, bool isConnectedToUni, int? angle = 0)
+        public HttpResponseMessage GetDocumentPage(string documentId, int currPage, bool isConnectedToUni, int? angle=0)
         {
             string TiffPageLines;
             string ErrorMessage;
@@ -65,7 +64,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
                 var pm = CustomsSettingQueryService.GetSettingByTenant(tenant);
-
+                
 
                 var pageObj = new CustomDocumentPageObject();
                 if (isConnectedToUni || !String.IsNullOrWhiteSpace(pm.OnPremiseFillingService))
@@ -75,10 +74,10 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                     Uploader up = new Uploader();
                     byte[] imageBytes = null;
                     imageBytes = up.GetPageTiffAsB64FromTarByTenantComIdPage(documentId, tenant, currPage, out TiffPageLines, out ErrorMessage);
-                    if (imageBytes != null)
+					if (imageBytes != null)
                     {
                         Bitmap bmp = GetBitmap(imageBytes);
-                        RotateBitmap(bmp, angle);
+                        RotateBitmap(bmp,angle);
 
                         byte[] newBytes = GetImageBytes(bmp);
                         pageObj.Page = Resize(new MemoryStream(newBytes));
@@ -88,10 +87,10 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                         var TiffPages = new List<string>(TiffPageLines.Split(new char[] { '\n' }));
                         pageObj.Count = TiffPages.Count - 1;
                     }
-                    pageObj.ErrorMessage = ErrorMessage;
+					pageObj.ErrorMessage = ErrorMessage;
 
-                }
-                else
+				}
+				else
                 {
                     currPage = currPage + 1;
                     Uploader up = new Uploader();
@@ -101,7 +100,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                     var pdfDocumentFillingId = externalDocumentRepository.GetSingleDocumentsFilingIdByDocumentId(documentId, tenant);
                     if (pdfDocumentFillingId != null)
                     {
-                        var TarDocumentId = documentRepository.GetDocumentIdByFileName(pdfDocumentFillingId, "tar", tenant);
+                        var TarDocumentId = documentRepository.GetDocumentIdByFileName(pdfDocumentFillingId, "tar",tenant);
                         if (TarDocumentId != null)
                         {
                             string documentExtension = up.GetFileExtension(TarDocumentId, tenant);
@@ -145,62 +144,77 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        public byte[] GetTiffPageFromTar(byte[] tarBytes, int pageRequest, out string TiffList)
+        public byte[] GetTiffPageFromTar(byte[] tarBytes, int pageRequest, out String TiffList)
         {
             StringBuilder sbTiffList = new StringBuilder();
+            bool asciiTranslate = false;
+            TarInputStream tarIn = null;
+            MemoryStream tarMemoryStream = null;
             byte[] byteArr = null;
-
+            //using (FileStream fsIn = new FileStream(tarFileName, FileMode.Open, FileAccess.Read))
             try
             {
-                using (MemoryStream tarMemoryStream = new MemoryStream(tarBytes))
-                using (TarInputStream tarIn = new TarInputStream(tarMemoryStream))
+                tarMemoryStream = new MemoryStream(tarBytes);
+                tarIn = new TarInputStream(tarMemoryStream);
+                TarEntry tarEntry;
+                int i = 1;
+                while ((tarEntry = tarIn.GetNextEntry()) != null)
                 {
-                    TarEntry tarEntry;
-                    int i = 1;
 
+                    if (tarEntry.IsDirectory)
+                    {
+                        //i++;
+                        continue;
+                    }
+                    // Converts the unix forward slashes in the filenames to windows backslashes
+                    //
+                    string name = tarEntry.Name.Replace('/', Path.DirectorySeparatorChar);
 
-                    while ((tarEntry = tarIn.GetNextEntry()) != null)
+                    // Remove any root e.g. '\' because a PathRooted filename defeats Path.Combine
+                    if (Path.IsPathRooted(name))
+                    {
+                        name = name.Substring(Path.GetPathRoot(name).Length);
+                    }
+                    var fi = new FileInfo(name);
+                    if (fi.Extension.Equals(".tiff", StringComparison.OrdinalIgnoreCase) || fi.Extension.Equals(".tif", StringComparison.OrdinalIgnoreCase))
                     {
 
-                        if (tarEntry.IsDirectory)
+                        sbTiffList.AppendLine(fi.Name);
+                        if (pageRequest == i)
                         {
-                            continue;
-                        }
-                        string name = tarEntry.Name.Replace('/', Path.DirectorySeparatorChar);
-
-                        if (Path.IsPathRooted(name))
-                        {
-                            name = name.Substring(Path.GetPathRoot(name).Length);
-                        }
-                        var fi = new FileInfo(name);
-                        if (fi.Extension.Equals(".tiff", StringComparison.OrdinalIgnoreCase) || fi.Extension.Equals(".tif", StringComparison.OrdinalIgnoreCase))
-                        {
-                            sbTiffList.AppendLine(fi.Name);
-                            if (pageRequest == i)
+                            using (var ms = new MemoryStream())
                             {
-                                using (MemoryStream ms = new MemoryStream())
-                                {
-                                    tarIn.CopyEntryContents(ms);
-                                    byteArr = ms.ToArray();
-                                }
+                                tarIn.CopyEntryContents(ms);
+                                byteArr = ms.ToArray();
+                                //string binStr = Convert.ToBase64String(byteArr);
                             }
 
-                            i++;
                         }
+
+
+                        i++;
                     }
+
                 }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error while processing TAR file: {ex.Message}");
-                byteArr = null;  // Ensure byteArr is null if an error occurs
+
             }
 
-            TiffList = sbTiffList.ToString();
+            finally
+            {
+                if (tarIn != null)
+                {
+                    tarIn.Close();
+                }
+                if (tarMemoryStream != null)
+                {
+                    tarMemoryStream.Close();
+                }
+                TiffList = sbTiffList.ToString();
+            }
             return byteArr;
         }
 
-        private static Bitmap RotateBitmap(Bitmap bmp, int? angle)
+        private static Bitmap RotateBitmap(Bitmap bmp,int? angle)
         {
             switch (angle)
             {
@@ -228,7 +242,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 return stream.ToArray();
             }
         }
-        public Bitmap GetBitmap(byte[] imageBytes)
+        public Bitmap GetBitmap(byte [] imageBytes)
         {
             MemoryStream st = new MemoryStream(imageBytes);
             Bitmap bmp = (Bitmap)Image.FromStream(st);
@@ -281,7 +295,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 
                 }
 
-                if (scaleFactor != 1 && (scaleFactor < .6 || scaleFactor > 1.4))
+                if (scaleFactor != 1 && (scaleFactor < .6 || scaleFactor > 1.4) )
                 {
                     var newWidth = (int)(srcImage.Width * scaleFactor);
                     var newHeight = (int)(srcImage.Height * scaleFactor);
@@ -361,7 +375,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 
             return image;
         }
-
+   
 
     }
 
