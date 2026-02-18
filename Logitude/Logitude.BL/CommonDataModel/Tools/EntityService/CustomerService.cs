@@ -76,7 +76,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         private ProductItemRepository productItemRepository;
         private HTSCodeRepository hTSCodeRepository;
         private CardService cardService;
-        public const string DONT_CARE = "[DONT_CARE]"; // Used for Hybrid Customers to avoid clearing the ContactForAccounting of a contact when updating the customer    
         ContactService contactService;
         HybridPartnerPM CurrentHybridPartner;
         CustomerTenantAccessCardRepository customerTenantAccessCardRepository;
@@ -537,7 +536,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
         private void AddCustomerToQueue()
         {
-            if (LogitudeSettings.EnableHybridQueue && (CurrentHybridPartner != null && !CurrentHybridPartner.IsExternalPartner)) 
+            if (LogitudeSettings.EnableHybridQueue && (CurrentHybridPartner != null && !CurrentHybridPartner.IsExternalPartner))
             {
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                 {
@@ -574,7 +573,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
         private void AddLogboxCustomerToQueue()
         {
-            if (LogitudeSettings.EnableHybridQueue && (CurrentHybridPartner != null && !CurrentHybridPartner.IsExternalPartner) )
+            if (LogitudeSettings.EnableHybridQueue && (CurrentHybridPartner != null && !CurrentHybridPartner.IsExternalPartner))
             {
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                 {
@@ -625,13 +624,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
                 if (!entityPM.IsHybrid && (string.IsNullOrEmpty(entityPM.Code) || entityPM.Code == "new"))
                 {
-                    var counterAdditionalParameters = new Dictionary<string, string>
-                    {
-                        ["[B]"] = "CS",
-                        ["[BranchName]"] = "CS"
-                    };
                     NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"CustomerService InitializeComponent entityPM.Code:{entityPM.Code} tenant:{entityPM.Tenant}");
-                    entityPM.Code = TableCounter.DoesCounterDefinitionExist("CADC", tenant, "CS") ? TableCounter.GetNumber(entityPM.Tenant, "CADC", "CS", null, counterAdditionalParameters, true) : CodeCounter.GetNumber("Customer", tenant).ToString();
+                    entityPM.Code = CodeCounter.GetNumber("Customer", tenant).ToString();
                     NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"CustomerService InitializeComponent entityPM.Code:{entityPM.Code} tenant:{entityPM.Tenant}");
 
                 }
@@ -734,7 +728,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     entityCard.Address2 = entityPM.Address2_Potential;
                     entityCard.Phone = entityPM.PhoneNumber;
                     entityCard.ZipCode = entityPM.ZipCode_Potential;
-                    
+
 
                     if (entityPM.CountryId_Potential != null)
                     {
@@ -1254,7 +1248,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             string oldContactForAccounting = null;
             foreach (var item in myResult)
             {
-                if (entityPM.ContactForAccounting != DONT_CARE && item.ContactForAccounting == true && item.Id != entityPM.ContactForAccounting)
+                if (item.ContactForAccounting == true && item.Id != entityPM.ContactForAccounting)
                 {
                     var entity = repository.GetSingleContact(item.Id, entityPM.Tenant);
 
@@ -1277,8 +1271,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     }
                 }
             }
-            if (entityPM.ContactForAccounting == DONT_CARE) entityPM.ContactForAccounting = String.Empty;
-
             repository.SubmitChanges();
             if (string.IsNullOrEmpty(entityPM.Card.GLAccountId))
                 entityPM.Card.GLAccountId = cardRepository.GetSingleCard(entityPM.Card.Id, tenant)?.GLAccountId;
@@ -1286,7 +1278,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.UpdateGLAccountWithOldAndNewContactForAccounting(oldContactForAccounting, newContactForAccounting);
 
         }
-        private void UpdateGLAccountWithOldAndNewContactForAccounting(string excludeContactId , string includeContactId)
+        private void UpdateGLAccountWithOldAndNewContactForAccounting(string excludeContactId, string includeContactId)
         {
             IGLAccountUpdateServiceExt glaccountUpdate = ContainerAccessor.Container.Resolve(typeof(IGLAccountUpdateServiceExt), "GLAccountUpdateServiceExt", new ParameterOverride("", 1)) as IGLAccountUpdateServiceExt;
             glaccountUpdate.UpdateGLAccountWithAdditionalData(entityPM.Card.GLAccountId, entityPM.Card.Tenant, null, excludeContactId, includeContactId);
