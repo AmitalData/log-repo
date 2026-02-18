@@ -7,6 +7,7 @@ namespace WebFreight.Web.DataProviders
 {
     public class LedgerTransactionsDataProvider : BaseDataProvider
     {
+        // Filter values
         public DateTime FromDate { get; set; }
         public DateTime ToDate { get; set; }
         public string AccountNumber { get; set; }
@@ -17,21 +18,25 @@ namespace WebFreight.Web.DataProviders
         public string AccountCurrencyCode { get; set; }
         public string AccountReconcileMethod { get; set; }
 
+        // Others
         public string PrintedByUser { get; set; }
         public string UserEnglishName { get; set; }
         public DateTime PrintDate { get; set; }
         public string TenantCurrencyCode { get; set; }
         public string TenantCurrencySign { get; set; }
 
+        // Data
         public decimal LocalOpenBalance { get; set; }
         public decimal LocalClosedBalance { get; set; }
         public decimal ForeignOpenBalance { get; set; }
         public decimal ForeignClosedBalance { get; set; }
         public decimal LastCumulativeOpenAmount { get; set; }
 
+
+        // List
         public List<ReportLedgerTransaction> Transactions { get; set; }
 
-       
+        // Balance
         public List<GLAccountBalanceList> LocalOpenBalanceList { get; set; }
         public List<GLAccountBalanceList> LocalClosedBalanceList { get; set; }
         public decimal StartTotalOpenAmount { get; set; }
@@ -84,7 +89,7 @@ namespace WebFreight.Web.DataProviders
         public string OppositeAccountDisplayNumber { get; set; }
         public string OppositeAccountLocalName { get; set; }
         public string OppositeAccountEnglishName { get; set; }
-        public string PaymentNotes { get; set; }
+
         // foreign fields
         public string GLAccountRecoMethodCode { get; set; }
         public string TenantCurrencySign { get; set; }

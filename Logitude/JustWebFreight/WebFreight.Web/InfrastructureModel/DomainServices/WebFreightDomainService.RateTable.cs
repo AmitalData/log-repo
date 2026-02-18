@@ -247,11 +247,7 @@ namespace WebFreight.Web.InfrastructureModel.DomainServices
                     lastRate.BaseCurrencyCode = baseCurrency.Code;
 
                     CurrencyRateRepository currencyRateRepository = new CurrencyRateRepository(tenant);
-                    lastRate.CurrencyRates = currencyRateRepository.GetSingleByExchangeRateId(lastRate.Id)?.Select(r =>
-                    {
-                        r.Rate *= lastRate.Unit ?? 1;
-                        return r;
-                    }).ToList();
+                    lastRate.CurrencyRates = currencyRateRepository.GetSingleByExchangeRateId(lastRate.Id);
 
                     resultList.Add(lastRate);
                 }
