@@ -239,20 +239,11 @@ export class AppTool {
 			logitude_url = 'http://localhost:9996/'; //test.logitudeworld.com/test/';//
 		}
 		else {
-			logitude_url = this.getAppBaseUrl(logitude_url);
+			logitude_url = logitude_url.replace("/customs-book", "");
 			logitude_url = logitude_url.replace("login", "");
 		}
 		return logitude_url;
 	}
-
-	public static getAppBaseUrl(fullUrl: string): string {
-		const match = fullUrl.match(/^(.*?\/customs-book)/i);
-		if (!match) {
-			throw new Error('customs-book not found in URL');
-		}
-		return match[1].replace(/\/customs-book$/i, '/') ;
-	}
-
 
 	public static GetQuickbooksPageBasedOnAuth() {
 		SessionLocator.TenantManagementJS;

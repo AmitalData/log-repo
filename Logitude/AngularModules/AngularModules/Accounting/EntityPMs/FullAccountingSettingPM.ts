@@ -341,23 +341,9 @@ export class FullAccountingSettingPM {
     public set InterestInvoiceNotes(newValue: string) { if (this.interestInvoiceNotes != newValue) { this.interestInvoiceNotes = newValue; this.MarkAsDirty("InterestInvoiceNotes"); } }
        
 	 
-    private prepaidExpensesGLAccountId: string;
-    public get PrepaidExpensesGLAccountId() { return this.prepaidExpensesGLAccountId; }
-    public set PrepaidExpensesGLAccountId(newValue: string) { if (this.prepaidExpensesGLAccountId != newValue) { this.prepaidExpensesGLAccountId = newValue; this.MarkAsDirty("PrepaidExpensesGLAccountId"); } }
-
     private hebrewTenant: boolean;
     public get HebrewTenant() { return this.hebrewTenant; }
     public set HebrewTenant(newValue: boolean) { if (this.hebrewTenant != newValue) { this.hebrewTenant = newValue; this.MarkAsDirty("HebrewTenant"); } }
-       
-	 
-    private masavBankId: string;
-    public get MasavBankId() { return this.masavBankId; }
-    public set MasavBankId(newValue: string) { if (this.masavBankId != newValue) { this.masavBankId = newValue; this.MarkAsDirty("MasavBankId"); } }
-       
-	 
-    private masavCode: string;
-    public get MasavCode() { return this.masavCode; }
-    public set MasavCode(newValue: string) { if (this.masavCode != newValue) { this.masavCode = newValue; this.MarkAsDirty("MasavCode"); } }
        
 	 
 
@@ -390,4 +376,4 @@ export class FullAccountingSettingPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

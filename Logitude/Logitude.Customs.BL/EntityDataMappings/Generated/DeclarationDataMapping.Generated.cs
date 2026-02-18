@@ -191,7 +191,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         UNFCourier, 
 	         AutoSending, 
 	         SystemConnection, 
-	         ShipmentId,
+	         ShipmentId, 
 	      }
 
 
@@ -456,8 +456,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ShipmentId, 
 	         CooStatusName, 
 	         CooStatusCode, 
-	         UpdateTaxationDateTime, 
-	         FromCancelDeclaration,
+	         UpdateTaxationDateTime,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
