@@ -373,7 +373,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                     long lCUSTOMFILENO;
                     if (long.TryParse(customFileNo, out lCUSTOMFILENO))
                     {
-                        int? FILENO = myCCUFILEMQueryService.GetFILENOByCUSTOMFILENO(lCUSTOMFILENO, tenant);
+                        int? FILENO = myCCUFILEMQueryService.GetFILENOByCUSTOMFILENO(lCUSTOMFILENO);
                         if (FILENO.HasValue)
                         {
                             declaration.Id = FILENO.ToString();
