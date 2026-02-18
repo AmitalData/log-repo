@@ -18,7 +18,8 @@ import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator'
 import { Guid } from '../../../Infrastructure/Utilities/Guid';
 import { ImageParameter } from '../../../Infrastructure/DataContracts/ImageParameter';
 import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
-import { DefaultAndConfigurationExtendedService } from 'Infrastructure/Services/ExtendedPMs/DefaultAndConfigurationExtendedService';
+import { DefaultAndConfigurationListService } from 'Infrastructure/Services/StandardLists/DefaultAndConfigurationListService';
+import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
 declare var attachmentUploader, ResultAsArray: any;
 
 
@@ -52,7 +53,7 @@ export class JournalCSVLoadComponent extends BaseComponent implements OnInit {
     _JournalPMService: JournalPMService = new JournalPMService();
 
     _JournalExtendedPMService: JournalExtendedPMService = new JournalExtendedPMService();
-    _DefaultAndConfigurationExtendedService: DefaultAndConfigurationExtendedService = new DefaultAndConfigurationExtendedService();
+    _DefaultAndConfigurationListService: DefaultAndConfigurationListService = new DefaultAndConfigurationListService();
     _CurrencyPMService: CurrencyPMService = new CurrencyPMService();
     currencyListService: CurrencyListService = new CurrencyListService();
 
@@ -90,7 +91,10 @@ export class JournalCSVLoadComponent extends BaseComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this._DefaultAndConfigurationExtendedService.GetBySetKey("JournalCsvExampleUrl").subscribe((myResponse:any) => {
+        var filters = new ApiQueryFilters(true);
+        filters.addAdditionalFilter("SetKey", "JournalCsvExampleUrl", null, null, "Equals", false, false, false, "string");
+
+        this._DefaultAndConfigurationListService.getByFilters(filters).subscribe((myResponse:any) => {
             if (!myResponse.HasError) {
                 const myResult = myResponse.Result;
                 if (myResult.length > 0) {

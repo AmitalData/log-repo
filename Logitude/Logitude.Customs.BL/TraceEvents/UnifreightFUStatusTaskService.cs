@@ -112,7 +112,7 @@ namespace Logitude.Customs.BL.TraceEvents
                     var myCCUQUELOCKUpdateService = new CCUQUELOCKUpdateService(_AmitalContext);
                     var myGGGQUpdateService = new GGGQUpdateService(_AmitalContext);
 
-                    EnsureLockExist4Entity(myCCUQUELOCKQueryService, myCCUQUELOCKUpdateService, myUnifreightFUStatusParam,tenant);
+                    EnsureLockExist4Entity(myCCUQUELOCKQueryService, myCCUQUELOCKUpdateService, myUnifreightFUStatusParam);
                     
                      InsertGGGQ4Entity(myUnifreightFUStatusParam.Entname, myUnifreightFUStatusParam.PrimaryNum, myGGGQUpdateService, isConnectedToUniFreight, tenant);
                     
@@ -147,9 +147,10 @@ namespace Logitude.Customs.BL.TraceEvents
                 DONEOPERATION = "D",
 
             };
-            
-            myGGGQPM_Packs.Tenant = tenant;
-            
+            if(!isConnectedToUniFreight)
+            {
+                myGGGQPM_Packs.Tenant = tenant;
+            }
             myGGGQUpdateService.DontAddTransaction = true;//we cant add a transaction with 
             myGGGQUpdateService.Update(myGGGQPM_Packs, true);
         }
@@ -157,6 +158,7 @@ namespace Logitude.Customs.BL.TraceEvents
         private static void InsertEventTask4Entity(UnifreightFUStatusParam myUnifreightEventParam, string unfreightUserId, int tenant, string requestData)
         {
 
+            var isConnectedToUniFreight = CustomsSettingQueryService.GetSettingByTenant(tenant).IsConnectedToUniFreight;
 
 
             var myYCULTASKPM_Packs = new YCULTASKPM()
@@ -173,9 +175,10 @@ namespace Logitude.Customs.BL.TraceEvents
                 ARCHIVE = "F",
 
             };
-            
-            myYCULTASKPM_Packs.Tenant = tenant;
-            
+            if (!isConnectedToUniFreight) 
+            {
+                myYCULTASKPM_Packs.Tenant = tenant;
+            }
 
             AmitalContext _AmitalContext = AmitalContext.GetContext(tenant);
             var myYCULTASKUpdateService = new YCULTASKUpdateService(_AmitalContext);
@@ -259,9 +262,9 @@ namespace Logitude.Customs.BL.TraceEvents
             return unfreightUserId;
         }
 
-        private static void EnsureLockExist4Entity(CCUQUELOCKQueryService myCCUQUELOCKQueryService, CCUQUELOCKUpdateService myCCUQUELOCKUpdateService, UnifreightFUStatusParam myUnifreightEventParam,int tenant)
+        private static void EnsureLockExist4Entity(CCUQUELOCKQueryService myCCUQUELOCKQueryService, CCUQUELOCKUpdateService myCCUQUELOCKUpdateService, UnifreightFUStatusParam myUnifreightEventParam)
         {
-            CCUQUELOCKPM myCCUQUELOCK = myCCUQUELOCKQueryService.GetSingle(myUnifreightEventParam.Entname, myUnifreightEventParam.PrimaryNum,tenant,  false);
+            CCUQUELOCKPM myCCUQUELOCK = myCCUQUELOCKQueryService.GetSingle(myUnifreightEventParam.Entname, myUnifreightEventParam.PrimaryNum, false);
             if (myCCUQUELOCK == null)
             {
                 var myCCUQUELOCKPM = new CCUQUELOCKPM()
