@@ -66,12 +66,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                  };
             return result;
         }
-
-
-        public IQueryable<AdditionalCurrencyRate> GetAllAdditionalCurrencyRates(int tenant)
-        {
-               return repository.GetAdditionalCurrencyRate(tenant);
-        }
     }
    
 }

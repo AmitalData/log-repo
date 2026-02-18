@@ -1,23 +1,16 @@
 ﻿using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.BL.InterestService;
-using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.EntityListQueryServices;
 using Logitude.Accounting.Data.EntityLists;
-using Logitude.Accounting.Data.EntityMapping;
-using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.Enums;
 using Logitude.Accounting.Def.EntityPMs;
-using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
-using Logitude.BL.CommonDataModel.EntityPMs;
-using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Helpers;
 using Microsoft.Practices.Unity;
-using Microsoft.TeamFoundation.Work.WebApi;
-using Simplog.Data.CommonDataModel.EntityPOCOs; 
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Stimulsoft.Report;
 using Stimulsoft.Report.Dictionary;
 using System;
@@ -49,30 +42,22 @@ using WebFreight.Web.Helpers;
             decimal? lastTotal = ProcessInterestTransactions(interestReportDP, interestReportPeriods, tenant);
 
             SetInterestReportMetadata(interestReportDP, interestReportPeriods, lastTotal, tenant);
-            interestReportDP.InterestTotals = GetInterestTotals(interestReportDP, _InterestReportPM, tenant);
+
             return interestReportDP;
         }
-
-
         private InterestDataProvider InitializeInterestDataProvider(string entityId, int tenant)
         {
             InterestDataProvider interestReportDP = new InterestDataProvider
             {
                 InterestReportFlatLineList = new List<InterestReportFlatLine>()
             };
-            if (String.IsNullOrWhiteSpace(_InterestReportPM.VatNumber) && !String.IsNullOrEmpty(_InterestReportPM.CustomerId))
-            {
-                CardQuery cardQuery = new CardQuery(tenant);
-                var card = cardQuery.GetSinglePM(_InterestReportPM.CustomerId, tenant);
-                if (card != null && !String.IsNullOrWhiteSpace(card.VatNumber)) _InterestReportPM.VatNumber = card.VatNumber;
-            }
 
 
             InterestReportQueryService interestReportQuery = new InterestReportQueryService(tenant);
             _InterestReportPM = interestReportQuery.GetSingle(entityId, true, false);
 
             interestReportDP.InterestReportFlatLineList.Add(FirstFlatLine(_InterestReportPM));
-            interestReportDP.OpenBalance = _InterestReportPM.OpenBalance;
+
             return interestReportDP;
         }
 
@@ -81,16 +66,9 @@ using WebFreight.Web.Helpers;
             InterestReportService interestReportService = new InterestReportService();
             List<InterestTransactionList> interestTransactionLists = interestReportService.GetAllInterestTransactionByDate(entityId, null, tenant, null).interestTransactionLists;
 
-            HashSet<InterestReportLinesByDateProvider> InterestReportPeriods = _InterestReportPM.InterestReportLinesByDates
-                .Where(l =>
-                    l.IsOpenBalanceLine != true
-                    ||
-                    interestTransactionLists.Any(s =>
-                        s.InterestValueDate.Date == l.FromDate.Date &&
-                        s.InterestEntityTypeCode != InterestEntityTypes.OpenBalance))
-                .Select(d => new InterestReportLinesByDateProvider
-                {
-                    FromDate = d.FromDate,
+            HashSet<InterestReportLinesByDateProvider> InterestReportPeriods = _InterestReportPM.InterestReportLinesByDates.Select(d => new InterestReportLinesByDateProvider
+            {
+                FromDate = d.FromDate,
                 ToDate = d.ToDate,
                 AccumulatedAmount = d.AccumulatedAmount,
                 TotalAmount = d.TotalAmount,
@@ -115,10 +93,9 @@ using WebFreight.Web.Helpers;
 
 
                 TotalInterest = d.CalculatedCreditInterestAmount + d.CalculatedExcepInterestAmount + d.CalculatedStandInterestAmount,
-                TotalLocalAmount = d.StandardInterestAmount + d.ExceptionalInterestAmount + d.CreditInterestAmount,
+                TotalLocalAmount = interestTransactionLists.Sum(s => s.LocalAmount),
 
-                InterestTransactionList = interestTransactionLists.Where(s => s.InterestValueDate.Date == d.FromDate.Date &&
-                                                                              s.InterestEntityTypeCode != InterestEntityTypes.OpenBalance)
+                InterestTransactionList = interestTransactionLists.Where(s => s.InterestValueDate.Date == d.FromDate.Date)
                 .Select(a =>
                 new InterestTransactionProvider
                 {
@@ -132,8 +109,7 @@ using WebFreight.Web.Helpers;
                     Notes = a.Notes,
                 }).ToList(),
 
-                GroupedInterestTransactionList = interestTransactionLists.Where(s => s.InterestValueDate.Date == d.FromDate.Date &&
-                                                                              s.InterestEntityTypeCode != InterestEntityTypes.OpenBalance)
+                GroupedInterestTransactionList = interestTransactionLists.Where(s => s.InterestValueDate.Date == d.FromDate.Date)
                 .GroupBy(x => new { x.InterestEntityNumber, x.InterestEntityIconCode, x.CurrencyCode, x.InterestValueDate })
                 .Select(a =>
                    new InterestTransactionProvider
@@ -147,10 +123,7 @@ using WebFreight.Web.Helpers;
                    }).ToList(),
             }).ToHashSet();
 
-
-
-
-
+            
             return InterestReportPeriods.OrderBy(s => s.FromDate).ToList<InterestReportLinesByDateProvider>();
 
         }
@@ -172,14 +145,11 @@ using WebFreight.Web.Helpers;
                         InterestReportFlatLine line = new InterestReportFlatLine();
                         line.LineNo = ++flatLineCounter;
                         line.LineType = InterestPeriodLineTypes.Transaction;
-                        line.Date = transactionDP.InterestValueDate.Value.Date;
-                        totalLocalInPeriod += _InterestReportPM.IsForeignCurrency ? (transactionDP.ForeignAmount ?? 0m)  : (transactionDP.LocalAmount);
-                        line.LocalAmount = transactionDP.LocalAmount ; 
-                        line.ForeignAmount = transactionDP.ForeignAmount;
-                        line.AmountInCurrencyReport = _InterestReportPM.IsForeignCurrency ? transactionDP.ForeignAmount : transactionDP.LocalAmount;
+                        line.Date = transactionDP.InterestValueDate;
+                        totalLocalInPeriod += transactionDP.LocalAmount;
+                        line.LocalAmount = transactionDP.LocalAmount;
                         line.Reference1 = GetReference1(transactionDP);
                         line.Notes = GetNotes(transactionDP);
-                        line.IsOpenBalanceLine = false;
 
                         periodLineList.Add(line);
                     }
@@ -187,15 +157,14 @@ using WebFreight.Web.Helpers;
                     {
                         // First in a period
                         var firstLineInPeriod = periodLineList[0];
-                        firstLineInPeriod.Date = period.FromDate.Value.Date;
-                        firstLineInPeriod.NumberOfDays = null;
+                        firstLineInPeriod.Date = period.FromDate;
+                        firstLineInPeriod.NumberOfDays = period.TotalInterestDays;
                         firstLineInPeriod.LineType = InterestPeriodLineTypes.FirstInPeriod;
-                        
 
                         // Last in a period
                         var lastLineInPeriod = periodLineList.Last();
-                        lastLineInPeriod.Date = period.FromDate.Value.Date;
-                        lastLineInPeriod.NumberOfDays = period.TotalInterestDays;
+                        lastLineInPeriod.Date = period.FromDate;
+                        lastLineInPeriod.Notes = TranslateTextsClass.Translate("Accounting.General.O.TotalInterest", tenant);
                         lastLineInPeriod.LineType = InterestPeriodLineTypes.LastInPeriod;
 
                         lastLineInPeriod.TotalLocalInPeriod = totalLocalInPeriod;
@@ -234,10 +203,9 @@ using WebFreight.Web.Helpers;
             decimal? lastTotal, int tenant)
         {
             GetGLAccountDisplayNumber(tenant, interestReportDP, _InterestReportPM);
-            GetCurrency(tenant,_InterestReportPM.ReportCurrencyId  ,  interestReportDP);
+
 
             interestReportDP.CustomerName = _InterestReportPM.CustomerName;
-            interestReportDP.VatNumber = _InterestReportPM.VatNumber;
             interestReportDP.InterestCalculationDate = _InterestReportPM.InterestCalculationDate;
             interestReportDP.InvoiceNumber = _InterestReportPM.ARInvoiceNumber;
             interestReportDP.InterestReportLinesByDateList = interestReportPeriods;
@@ -251,116 +219,9 @@ using WebFreight.Web.Helpers;
             interestReportDP.CountPostponedCheques = CalcCountPostponedCheques(interestReportDP.CalculatedPostponedChequesCommision, interestReportDP.PostponedChequesCommission);
             interestReportDP.TotalAmountWithPostponedCheques = _InterestReportPM?.TotalAmount + _InterestReportPM?.CalculatedPostponedChequesCommision;
 
-            Reorder(interestReportDP);
+            interestReportDP.InterestReportFlatLineList.Add(EndFlatLine(_InterestReportPM, lastTotal));
 
 
-
-        }
-
-        private void Reorder(InterestDataProvider interestReportDP)
-        {
-            // Find the open balance line
-            var openBalanceLine = interestReportDP.InterestReportFlatLineList
-                .FirstOrDefault(ln => ln.IsOpenBalanceLine);
-
-            if (openBalanceLine != null)
-            {
-                DateTime openBalanceLineDate = openBalanceLine.Date;
-
-                // Partition lines into Group A and Others
-                var groupA = interestReportDP.InterestReportFlatLineList
-                    .Where(ln => !ln.IsOpenBalanceLine && ln.Date.Date < openBalanceLineDate)
-                    .ToList();
-
-                var others = interestReportDP.InterestReportFlatLineList
-                    .Where(ln => !(!ln.IsOpenBalanceLine && ln.Date.Date < openBalanceLineDate))
-                    .ToList();
-
-                // Rebuild list: everything before openBalanceLine (except Group A), then Group A, then openBalanceLine, then rest
-                var reordered = new List<InterestReportFlatLine>();
-
-                foreach (var ln in others)
-                {
-                    if (ln == openBalanceLine)
-                    {
-                        // insert Group A right before the openBalanceLine
-                        reordered.AddRange(groupA);
-                        reordered.Add(openBalanceLine);
-                    }
-                    else
-                    {
-                        reordered.Add(ln);
-                    }
-
-
-                }
-
-                int count = 1;
-                decimal runningTotal = 0m;
-                foreach (var line in reordered)
-                {
-                    if (line.TotalLocalInPeriod.HasValue)
-                    {
-                        runningTotal += line.TotalLocalInPeriod.Value;
-                        line.TotalToDate = runningTotal;
-                    }
-                    else
-                        line.TotalToDate = null;
-
-                    line.LineNo = count++;
-                }
-                // Replace original list
-                interestReportDP.InterestReportFlatLineList = reordered;
-            }
-
-        }
-
-
-        private InterestReportTotalProvider GetInterestTotals(InterestDataProvider interestReportDP, InterestReportPM interestReportPM , int tenant)
-        {
-            InterestReportTotalProvider rv = new InterestReportTotalProvider();
-
-            /* a */
-            rv.CalculatedStdInterestAmount =
-                    (interestReportPM.InterestReportLinesByDates == null ||
-                     !interestReportPM.InterestReportLinesByDates.Any())
-                        ? (decimal?)null  // for a null collection, but --IMPORTANTLY-- for an empty collection (because CalculatedStandInterestAmount is decimal [not a decimal?])
-                        : Math.Round(interestReportPM.InterestReportLinesByDates.Sum(l => l.CalculatedStandInterestAmount), 2, MidpointRounding.AwayFromZero);
-
-            /* b */
-            rv.CalculatedExcInterestAmount =
-                    (interestReportPM.InterestReportLinesByDates == null ||
-                     !interestReportPM.InterestReportLinesByDates.Any())
-                        ? (decimal?)null  
-                        : Math.Round(interestReportPM.InterestReportLinesByDates.Sum(l => l.CalculatedExcepInterestAmount), 2, MidpointRounding.AwayFromZero);
-
-            /* c = a + b */
-            var sum = (rv.CalculatedStdInterestAmount ?? 0m) +
-                      (rv.CalculatedExcInterestAmount ?? 0m);
-
-            rv.TotalReportInterestAmount = sum == 0m ? (decimal?)null : sum;
-
-            /* d */
-            rv.CreditAllocationFee = interestReportDP.CalCreditAllotmentCommission != null? Math.Round((decimal)interestReportDP.CalCreditAllotmentCommission, 2, MidpointRounding.AwayFromZero): 0;
-
-            /* e */
-            rv.PostponedChequeFee = interestReportDP.CalculatedPostponedChequesCommision != null? Math.Round((decimal)interestReportDP.CalculatedPostponedChequesCommision, 2, MidpointRounding.AwayFromZero): 0;
-
-            /* f = c + d + e */
-            var sum_f = (rv.TotalReportInterestAmount ?? 0m) +
-                        (rv.CreditAllocationFee ?? 0m) +
-                        (rv.PostponedChequeFee ?? 0m);
-
-            rv.TotalForInvoice = sum_f == 0m ? (decimal?)null : sum_f;
-
-            /* e */
-            rv.TotalFutureTransactions =
-                    (interestReportDP.FutureInterestTransactions == null ||
-                     !interestReportDP.FutureInterestTransactions.Any())
-                        ? (decimal?)null  
-                        : Math.Round(interestReportDP.FutureInterestTransactions.Sum(l => l.LocalAmount), 2, MidpointRounding.AwayFromZero);
-
-            return rv;
         }
 
 
@@ -370,7 +231,7 @@ using WebFreight.Web.Helpers;
             IAccountingContext context = AccountingContext.GetContext(tenant);
             InterestTransactionListQueryService interestTransactionQueryService = new InterestTransactionListQueryService(context);
             DateTime reportMonthLastDay = DateTimeStaticExtention.GetLastDayOfMonth(_InterestReportPM.InterestCalculationDate.Date);
-            IQueryable<InterestTransactionList> futureQuery =
+            IQueryable<InterestTransactionList> futureQuery = 
                 interestTransactionQueryService.GetFutureInterestTransactionsByInterestReportMonth(reportMonthLastDay,
                 _InterestReportPM.GLAccountId, tenant);
             if (futureQuery != null)
@@ -407,7 +268,6 @@ using WebFreight.Web.Helpers;
                             SourceType = transactionList.SourceType,
                             SourceTypeCode = transactionList.SourceTypeCode,
                             Tenant = transactionList.Tenant,
-                            AmountInCurrencyReport = _InterestReportPM.IsForeignCurrency ? transactionList.ForeignAmount : transactionList.LocalAmount,
                             Reference1 = GetReference1FromITList(transactionList),
                         };
                         futureInterestTransactions.Add(futureInterestTransactionProvider);
@@ -416,6 +276,7 @@ using WebFreight.Web.Helpers;
             }
             return futureInterestTransactions;
         }
+
 
 
         /// Creates and returns the first flat line of the interest report.
@@ -429,7 +290,6 @@ using WebFreight.Web.Helpers;
                 rv.Date = interestReportPM.InterestCalculationDate;
                 rv.Notes = TranslateTextsClass.Translate("Accounting.General.O.OpenAmount", interestReportPM.Tenant);
                 rv.LocalAmount = interestReportPM.OpenBalance ?? 0m;
-                rv.AmountInCurrencyReport = interestReportPM.OpenBalance ?? 0m;
                 rv.TotalToDate = rv.LocalAmount;
                 rv.TotalLocalInPeriod = rv.LocalAmount;
 
@@ -448,7 +308,6 @@ using WebFreight.Web.Helpers;
                     rv.TotalCrdInterest = openline.CreditInterestAmount;
                     rv.CalculationDetails = openline.CalculationDetails;
                     rv.Date = openline.FromDate;
-                    rv.IsOpenBalanceLine = true;
                 }
 
             }
@@ -470,13 +329,26 @@ using WebFreight.Web.Helpers;
             return rv;
         }
 
-
         private string GetReference1(InterestTransactionProvider interestTransactionDP)
         {
+            string rv = string.Empty;
 
-            return interestTransactionDP.EntityType == InterestEntityTypeCodes.Journal
-                                                        ? interestTransactionDP.Reference1
-                                                        : interestTransactionDP.EntityNumber;
+
+            switch (interestTransactionDP.EntityType)   // InterestEntityIconCode
+            {
+                case InterestEntityTypeCodes.ARInvoice:
+                case InterestEntityTypeCodes.ARPayment:
+                case InterestEntityTypeCodes.Adjustments:
+                case InterestEntityTypeCodes.InterestReport:
+                    rv = interestTransactionDP.EntityNumber;
+                    break;
+                case InterestEntityTypeCodes.Journal:
+                    rv = interestTransactionDP.Reference1;
+                    break;
+                default:
+                    break;
+            }
+            return rv;
 
         }
 
@@ -486,6 +358,7 @@ using WebFreight.Web.Helpers;
                                             ? interestTransactionList.Reference1
                                             : interestTransactionList.Source;
         }
+
 
         private string GetNotes(InterestTransactionProvider interestTransactionDP)
         {
@@ -510,35 +383,18 @@ using WebFreight.Web.Helpers;
 
         }
 
-        private static void GetGLAccountDisplayNumber(int tenant, InterestDataProvider interestReportDP, InterestReportPM InterestReportPM)
+        private static void GetGLAccountDisplayNumber(int tenant, InterestDataProvider InterestReportDP, InterestReportPM interestReportPM)
         {
             GLAccountQueryService glAccountQuery = new GLAccountQueryService(tenant);
-            GLAccountPM gLAccount = glAccountQuery.GetSinglePM(InterestReportPM.GLAccountId, tenant);
-            if (!string.IsNullOrWhiteSpace(InterestReportPM.GLAccountId))
-            {
-                interestReportDP.GLAccountDisplayNumber = gLAccount.DisplayNumber;
-            }
+            GLAccountPM gLAccount = glAccountQuery.GetSinglePM(interestReportPM.GLAccountId, tenant);
+            InterestReportDP.GLAccountDisplayNumber = gLAccount.DisplayNumber;
         }
 
-
-        private static void GetCurrency(int tenant,string currencyId, InterestDataProvider InterestReportDP)
+        private static string SetAllotmentCalculationEquation(InterestDataProvider InterestReportDP, InterestReportPM interestReportPM)
         {
-            CurrencyQuery currencyQuery = new CurrencyQuery(tenant);
-            CurrencyPM currencyPM = currencyQuery.GetSinglePM(currencyId, tenant);
-
-            InterestReportDP.ReportCurrencyCode = currencyPM?.Code;
-            InterestReportDP.ReportCurrencyName = currencyPM?.EnglishName ;
-            InterestReportDP.ReportCurrencyLocalName = currencyPM?.LocalName;
-
-        }
-
-
-
-        private static string SetAllotmentCalculationEquation(InterestDataProvider InterestReportDP, InterestReportPM InterestReportPM)
-        {
-            if (InterestReportPM.CreditAllotmentPercentage != null)
+            if (interestReportPM.CreditAllotmentPercentage != null)
             {
-                return string.Concat(InterestReportPM.GLAccountInterestCreditLimit, " * ", '(', InterestReportPM.CreditAllotmentPercentage, " / 100)");
+                return string.Concat(interestReportPM.GLAccountInterestCreditLimit, " * ", '(', interestReportPM.CreditAllotmentPercentage, " / 100)");
             }
             return null;
         }
