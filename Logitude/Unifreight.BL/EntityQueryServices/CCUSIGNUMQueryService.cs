@@ -30,7 +30,7 @@ namespace Unifreight.BL.EntityQueryServices
 
         protected override Simplog.Server.Infrastructure.EntityKeyFields GetKeys(CCUSIGNUM entityPOCO)
         {
-            return new CCUSIGNUMKeys() { FILENO = entityPOCO.FILENO, LINENOMSHGR = entityPOCO.LINENOMSHGR, LINENOSIGN = entityPOCO.LINENOSIGN, Tenant = entityPOCO.TENANT };
+            return new CCUSIGNUMKeys() { FILENO = entityPOCO.FILENO, LINENOMSHGR = entityPOCO.LINENOMSHGR, LINENOSIGN = entityPOCO.LINENOSIGN };
         }
     }
 }

@@ -138,8 +138,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reconcile
                         Line = lineCounter++,
                         CurrencyId = currentLedger.OpenAmountCurrencyId,
                         TransactionId = currentLedger.Id,
-                        CurrencyRate = currentLedger.ExchangeRate,
-
+                     
                     };
 
 

@@ -872,20 +872,9 @@ export class APInvoicePM {
     private confirmationNumberStatus: string;
     public get ConfirmationNumberStatus() { return this.confirmationNumberStatus; }
     public set ConfirmationNumberStatus(newValue: string) { if (this.confirmationNumberStatus != newValue) { this.confirmationNumberStatus = newValue; this.MarkAsDirty("ConfirmationNumberStatus"); } }
-
-    private isPrepaidExpenses: boolean;
-    public get IsPrepaidExpenses() { return this.isPrepaidExpenses; }
-    public set IsPrepaidExpenses(newValue: boolean) { if (this.isPrepaidExpenses != newValue) { this.isPrepaidExpenses = newValue; this.MarkAsDirty("IsPrepaidExpenses"); } }
        
 	 
-    private hasExpenseAllocationSetting: boolean;
-    public get HasExpenseAllocationSetting() { return this.hasExpenseAllocationSetting; }
-    public set HasExpenseAllocationSetting(newValue: boolean) { if (this.hasExpenseAllocationSetting != newValue) { this.hasExpenseAllocationSetting = newValue; this.MarkAsDirty("HasExpenseAllocationSetting"); } }
-       
-    private expenseAllocationStartDate: Date;
-    public get ExpenseAllocationStartDate() { return this.expenseAllocationStartDate; }
-    public set ExpenseAllocationStartDate(newValue: Date) { if (this.expenseAllocationStartDate != newValue) { this.expenseAllocationStartDate = newValue; this.MarkAsDirty("ExpenseAllocationStartDate"); } }
-     
+
     public OldEntityPM: APInvoicePM;
 		
     public IsDirty: boolean;
@@ -913,4 +902,4 @@ export class APInvoicePM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}
