@@ -1,15 +1,13 @@
-﻿using Logitude.Customs.BL.EntityQueryServices;
-using Logitude.Customs.BL.EntityUpdateServices;
-using Logitude.Customs.BL.Messaging.Customs;
-using Logitude.Customs.Data;
-using Logitude.Customs.Def.EntityPMs;
-using Logitude.CustomsMessaging.Common.RequestParams;
-using Logitude.Server.Tools.Helpers;
-using Simplog.Data.InfrastructureModel.Repositories;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Logitude.CustomsMessaging;
-
+using Logitude.Customs.BL.EntityUpdateServices;
+using Logitude.Customs.Data;
+using Logitude.CustomsMessaging.Common.RequestParams;
+using Logitude.Server.Tools.Helpers;
+using Logitude.Customs.BL.EntityQueryServices;
+using Logitude.Customs.BL.Messaging.Customs;
+using Simplog.Data.InfrastructureModel.Repositories;
 
 namespace Logitude.Customs.BL.BL
 {
@@ -118,69 +116,6 @@ namespace Logitude.Customs.BL.BL
             requestList = fail.ToString();
             return ok.ToString();
         }
-        public IList<DeclarationRestoreRequestParams> BuildDeclarationRestoreRequests(
-                    int tenant,
-                    IEnumerable<string> declarationIds,
-                    out string requestList)
-        {
-            int fail = 0;
-            requestList = string.Empty;
-
-            var ids = (declarationIds ?? Enumerable.Empty<string>())
-                      .Where(s => !string.IsNullOrWhiteSpace(s))
-                      .Distinct()
-                      .ToList();
-
-            var loggingUserId = AuthenticationUtil.ResolveUserId(tenant);
-            var declQuery = new DeclarationQueryService(tenant);
-
-            var result = new List<DeclarationRestoreRequestParams>();
-
-            foreach (var id in ids)
-            {
-                try
-                {
-                    var decl = declQuery.GetSingle(id, true, false);
-                    if (decl == null)
-                    {
-                        fail++;
-                        continue;
-                    }
-
-                    var request = BuildDeclarationRestoreRequestParams(tenant, loggingUserId, decl);
-                    result.Add(request);
-                }
-                catch
-                {
-                    fail++;
-                }
-            }
-
-            requestList = fail.ToString();
-            return result;
-        }
-        private DeclarationRestoreRequestParams BuildDeclarationRestoreRequestParams(
-           int tenant,
-           string loggingUserId,
-           DeclarationPM decl)
-        {
-            return new DeclarationRestoreRequestParams
-            {
-                LoggingEnabled = true,
-                LoggingUserId = loggingUserId,
-                Tenant = tenant,
-                LoggingEntityReference = decl.Direction,
-                AppicationId = decl.Id,
-                DeclarationId = decl.Id,
-                DeclarationNumber = decl.DeclarationNumber,
-                CustomsFile = decl.CustomFileNo,
-                RequestVIA = SendRequestVIA.WebServiceBatch,
-                ResponseName = "9079",
-                RequestName = "Declaration Restore From BatchAction"
-            };
-        }
-
 
     }
-
 }

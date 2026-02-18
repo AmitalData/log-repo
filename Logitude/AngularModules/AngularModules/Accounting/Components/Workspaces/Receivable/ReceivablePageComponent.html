@@ -178,7 +178,11 @@
                                                                           <p class="QueryLink" (click)="ViewInvoiceQuery('ARPayment:Draft Payments')"> {{'Accounting.General.O.DraftPayments' | TextCodeTranslationPipe}} ({{ARPaymentsDraftsCount}})</p>
                                                                         </td>
                                                                     </tr>-->
-                                                                   
+                                                                    <tr>
+                                                                        <td style="width:190px;">
+                                                                            <p class="QueryLink" (click)="ViewInvoiceQuery('ARPayment:Open Payments')"> {{'Accounting.General.O.OpenPayments' | TextCodeTranslationPipe}} </p>
+                                                                        </td>
+                                                                    </tr>
                                                                     <tr>
                                                                         <td style="width:190px;">
                                                                           <p class="QueryLink" (click)="ViewInvoiceQuery('ARPayment:All Payments')"> {{'Accounting.General.O.AllPayments' | TextCodeTranslationPipe}}</p>
