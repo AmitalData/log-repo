@@ -32,12 +32,12 @@ export class SupplierInvoiceItemsReqListListService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/supplierinvoiceitemsreqlistviews';  
     }
 
-	getSingle(declarationid: string, linenumber: number, siirequestid: string, invoicecounterkey: number, invoiceitemlinenumber: number) {
+	getSingle(declarationid: string, linenumber: number, invoicecounterkey: number, invoiceitemlinenumber: number) {
 	   
 		var callTime = new Date();
 
 		return defer(() => {
-			return this._http.get(this._apiUrl + '/getsingle/?' + 'declarationid=' + declarationid+'&'+'linenumber=' + linenumber+'&'+'siirequestid=' + siirequestid+'&'+'invoicecounterkey=' + invoicecounterkey+'&'+'invoiceitemlinenumber=' + invoiceitemlinenumber, ServiceHelper.GetHttpFullHeaders())
+			return this._http.get(this._apiUrl + '/getsingle/?' + 'declarationid=' + declarationid+'&'+'linenumber=' + linenumber+'&'+'invoicecounterkey=' + invoicecounterkey+'&'+'invoiceitemlinenumber=' + invoiceitemlinenumber, ServiceHelper.GetHttpFullHeaders())
 				.pipe(			
 					map((response: HttpResponse<any>) => {
 
@@ -52,7 +52,7 @@ export class SupplierInvoiceItemsReqListListService {
 						serviceResponse.CallTime = callTime;
 
 						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "SupplierInvoiceItemsReqList", "GetSingleList", 'declarationid=' + declarationid+'&'+'linenumber=' + linenumber+'&'+'siirequestid=' + siirequestid+'&'+'invoicecounterkey=' + invoicecounterkey+'&'+'invoiceitemlinenumber=' + invoiceitemlinenumber); 
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "SupplierInvoiceItemsReqList", "GetSingleList", 'declarationid=' + declarationid+'&'+'linenumber=' + linenumber+'&'+'invoicecounterkey=' + invoicecounterkey+'&'+'invoiceitemlinenumber=' + invoiceitemlinenumber); 
 
 						return serviceResponse;
 					}),

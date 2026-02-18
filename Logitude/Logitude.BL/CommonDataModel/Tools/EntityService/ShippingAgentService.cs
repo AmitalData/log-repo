@@ -206,12 +206,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
                 if (!entityPM.IsHybrid)
                 {
-                    var counterAdditionalParameters = new Dictionary<string, string>
-                    {
-                        ["[B]"] = "SG",
-                        ["[BranchName]"] = "SG"
-                    };
-                    entityPM.Code = TableCounter.DoesCounterDefinitionExist("CADC", tenant, "SG") ? TableCounter.GetNumber(tenant, "CADC", "SG", null, counterAdditionalParameters, true) : CodeCounter.GetNumber("ShippingAgent", tenant).ToString();
+                    entityPM.Code = CodeCounter.GetNumber("ShippingAgent", tenant).ToString();
                 }
             }
 
