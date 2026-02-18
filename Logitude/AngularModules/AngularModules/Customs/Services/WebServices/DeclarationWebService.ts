@@ -2228,16 +2228,6 @@ export class DeclarationWebService {
         });
     }
 
-    public FetchAmendmentMessage(declarationId: string): Promise<AmendmentMessageResponse> {
-        if (!declarationId) {
-            return Promise.resolve(new AmendmentMessageResponse());
-        }
-        const ajax: Observable<any> = this._http.get(this._apiUrl + "/GetAmendmentMessage/?declarationId=" + encodeURIComponent(declarationId),
-            { headers: ServiceHelper.GetHttpHeaders().headers }
-        );
-        return this.logtuideTableDataService.sendAjaxAndGetDataStandart(ajax);
-    }
-
 }
 
 
@@ -2271,8 +2261,4 @@ export interface SendExportDeclarationsBatchRequestParams {
     SelectedIds: string[];
     IsAllSelected: boolean;
     QueryOperations?: any; 
-}
-export class AmendmentMessageResponse {
-    public AmendmentMessage: string;
-    public IsAmendmentDisplayOnly: boolean;
 }
