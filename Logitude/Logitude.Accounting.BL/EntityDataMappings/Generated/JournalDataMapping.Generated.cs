@@ -56,8 +56,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         DocumentDate, 
 	         DueDate, 
 	         CurrencyId, 
-	         SecurityLevel, 
-	         InvoicesXml,
+	         SecurityLevel,
 	      }
 
 
@@ -109,8 +108,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         CopiedFrom, 
 	         SecurityLevel, 
 	         ConfirmationNumber, 
-	         IsExternalEntity, 
-	         InvoicesXml,
+	         IsExternalEntity,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -257,11 +255,6 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SecurityLevel))
             {
 				entityPOCO.SecurityLevel = entityPM.SecurityLevel;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.InvoicesXml))
-            {
-				entityPOCO.InvoicesXml = entityPM.InvoicesXml;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -415,11 +408,6 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.SecurityLevel = entityPOCO.SecurityLevel;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.InvoicesXml))
-            {
-					entityPM.InvoicesXml = entityPOCO.InvoicesXml;
-            }
-
 		}
 
 		public void PMToOldPM(JournalPM entityPM, JournalPM oldEntityPM)
@@ -566,11 +554,6 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 oldEntityPM.SecurityLevel = entityPM.SecurityLevel;
             }
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.InvoicesXml))
-            {
-                oldEntityPM.InvoicesXml = entityPM.InvoicesXml;
-            }
-			
 		}
 
 	    public void EncodeBase64NVARCHARFields(JournalPM entityPM)
@@ -587,10 +570,6 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             if (!String.IsNullOrWhiteSpace(entityPM.ExternalSystem)) //T4 find type == nText 
             {
                 entityPM.ExternalSystem = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.ExternalSystem));
-            }
-            if (!String.IsNullOrWhiteSpace(entityPM.InvoicesXml)) //T4 find type == nText 
-            {
-                entityPM.InvoicesXml = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.InvoicesXml));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}

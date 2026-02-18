@@ -25,7 +25,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 {
    public class APInvoiceLineUpdateClass
    {  		
-		public const string HashString = "e274cd95811c69b09d78f7c2ee32ac56";
+		public const string HashString = "a274cd95811c69b09d78f7c2ee32ac56";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -439,7 +439,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						IsListFilter =  false,
-					  						Operator =  "Equals",
+					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -647,7 +647,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
 					  						IsListFilter =  false,
-					  						Operator =  "Equals",
+					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -788,7 +788,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
 					  						IsListFilter =  false,
-					  						Operator =  "Equals",
+					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -1100,7 +1100,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "VatPercentage",
 					  						DefaultText =  "VAT Percentage",
-					  						FullLocalDefaultTextBack_up =  "םחוז מע''מ",
+					  						FullLocalDefaultTextBack_up =  "אחוז מע''מ",
 					  						FullLocalDefaultText =  "BS64:IteQ15fXldeWINee16InJ9eeIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
@@ -1379,11 +1379,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Description",
 					  						DefaultText =  "Description",
-					  						FullLocalDefaultTextBack_up =  "תיםור",
+					  						FullLocalDefaultTextBack_up =  "תיאור",
 					  						FullLocalDefaultText =  "BS64:Iteq15nXkNeV16gi",
 					  						ListFieldLable =  "DescriptionListLable",
 					  						ListLableDefaultText =  "Description",
-					  						ListLocalDefaultTextBack_up =  "תיםור",
+					  						ListLocalDefaultTextBack_up =  "תיאור",
 					  						ListLocalDefaultText =  "BS64:Iteq15nXkNeV16gi",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
@@ -1451,7 +1451,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "LocalDescription",
 					  						DefaultText =  "Local Description",
-					  						FullLocalDefaultTextBack_up =  "תיםור ",
+					  						FullLocalDefaultTextBack_up =  "תיאור ",
 					  						FullLocalDefaultText =  "BS64:Iteq15nXkNeV16ggIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
@@ -3259,11 +3259,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ExcludeFromTaxReport",
 					  						DefaultText =  "Exclude From Tax Report",
-					  						FullLocalDefaultTextBack_up =  "לם לדיווח מע\"מ",
+					  						FullLocalDefaultTextBack_up =  "לא לדיווח מע\"מ",
 					  						FullLocalDefaultText =  "BS64:Itec15Ag15zXk9eZ15XXldeXINee16Ii154i",
 					  						ListFieldLable =  "ExcludeFromTaxReportListLable",
 					  						ListLableDefaultText =  "Exclude From Tax Report",
-					  						ListLocalDefaultTextBack_up =  "לם לדיווח מע\"מ",
+					  						ListLocalDefaultTextBack_up =  "לא לדיווח מע\"מ",
 					  						ListLocalDefaultText =  "BS64:Itec15Ag15zXk9eZ15XXldeXINee16Ii154i",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
@@ -3326,11 +3326,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "PayableDebitGLAcountId",
 					  						DefaultText =  "PayableDebitGLAcountId",
-					  						FullLocalDefaultTextBack_up =  "חשבון הוצםה",
+					  						FullLocalDefaultTextBack_up =  "חשבון הוצאה",
 					  						FullLocalDefaultText =  "BS64:IteX16nXkdeV158g15TXldem15DXlCI=",
 					  						ListFieldLable =  "PayableDebitGLAcountIdListLable",
 					  						ListLableDefaultText =  "PayableDebitGLAcountId",
-					  						ListLocalDefaultTextBack_up =  "חשבון הוצםה",
+					  						ListLocalDefaultTextBack_up =  "חשבון הוצאה",
 					  						ListLocalDefaultText =  "BS64:IteX16nXkdeV158g15TXldem15DXlCI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
@@ -3393,11 +3393,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "PayableDebitGLAcountName",
 					  						DefaultText =  "PayableDebitGLAcountName",
-					  						FullLocalDefaultTextBack_up =  "שם חשבון הוצםה",
+					  						FullLocalDefaultTextBack_up =  "שם חשבון הוצאה",
 					  						FullLocalDefaultText =  "BS64:Itep150g15fXqdeR15XXnyDXlNeV16bXkNeUIg==",
 					  						ListFieldLable =  "PayableDebitGLAcountNameListLable",
 					  						ListLableDefaultText =  "PayableDebitGLAcountName",
-					  						ListLocalDefaultTextBack_up =  "שם חשבון הוצםה",
+					  						ListLocalDefaultTextBack_up =  "שם חשבון הוצאה",
 					  						ListLocalDefaultText =  "BS64:Itep150g15fXqdeR15XXnyDXlNeV16bXkNeUIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
@@ -3415,76 +3415,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
+ 
+	    }
 
-
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
-			   {
-
-										    FieldName = "IsPrepaidExpenses",
-											ObjectTableName = "APInvoiceLine",
-											FieldsDataType = "Boolean",
-											MinLength = 0,
-											MaxLength = 0,
-											IsRequired = false,
-											CopyToDW = false,
-											DisplayOnLookUp = false,
-											DisplayOnLookUpLocal = false,
-											CanFilter = false,
-											DisplayOnly = false,
-											SystemRequired = false,
-											SystemMaxLength = 0,
-											DisplayInList = true,
-											IsCustomFilter = false,
-											IsListFilter = false,
-											MultiLine = false,
-											IsTimeFrameFilter = false,
-											DisplayInSearchWindowList = false,
-											PMPropertyPath = "IsPrepaidExpenses",
-											ListPropertyPath = "IsPrepaidExpenses",
-											AutomaticField = false,
-											UniqueField = false,
-											DisplayInSearchWindowListIndex = 0,
-											IsMulti = false,
-											DependencyFilter1IsList = false,
-											DependencyFilter2IsList = false,
-											DependencyFilter3IsList = false,
-											ValidForQuerySection1 = "APInvoiceLine",
-											IsRestrictable = false,
-											DisplayInEntityVariables = false,
-											AllowedInCustomerFieldsSettings = false,
-											DisplayInSearchWindowFilters = false,
-											DisplayInSearchWindowFiltersIndex = 0,
-											DisplayInDocumentReferences = false,
-											InActive = false,
-											DisplayLongName = false,
-											FullFieldLable = "IsPrepaidExpenses",
-											DefaultText = "Is Prepaid Expenses",
-											FullLocalDefaultTextBack_up = "×¤×¨×™×¡×ª ×”×•×¦×�×•×ª",
-											FullLocalDefaultText = "BS64:Itek16jXmdeh16og15TXldem15DXldeqIg==",
-											ListFieldLable = "IsPrepaidExpensesListLable",
-											ListLableDefaultText = "Is Prepaid Expenses",
-											ListLocalDefaultTextBack_up = "×¤×¨×™×¡×ª ×”×•×¦×�×•×ª",
-											ListLocalDefaultText = "BS64:Itek16jXmdeh16og15TXldem15DXldeqIg==",
-											IsForeignKey = false,
-											IsMaxLength = false,
-											NoMetaDataField = false,
-											IsFixedLength = false,
-											EnableAutoFill = false,
-											IncludeInSearchField = false,
-											AllowedinAutomationConditions = false,
-											AutomationEmailRecipient = false,
-											CanAutomateSetValue = false,
-											DisplayInAutomationAsEnitity = false,
-											DisplayInRequiredFields = false,
-											HasTemplate = false,
-											IsCustom = false,
-											EnableFullscreenTextBox = false,
-
-            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes, objectTables, addedFields, addedTextCodes, contextTenant);
-
-        }
-
-        public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups ,int contextTenant)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups ,int contextTenant)
 	    {    
 	    }
 

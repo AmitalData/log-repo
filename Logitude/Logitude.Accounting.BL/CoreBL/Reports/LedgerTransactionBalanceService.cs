@@ -444,7 +444,6 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             var sw = Stopwatch.StartNew();
             bool includeChildAccounts = false;
 
-
             var qGperiod = (from r in QOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId
                             group r by 1 into g
                             select new
@@ -708,7 +707,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                 _Param.DateTypeCode, To,
                 _Param.CheckHaveAccountingQueued,
                 includeAccoutingDateLTransaction, false,
-                false, false, _Param);
+                false, false);
             var endAccountBalance = endAccountBalanceService.AccountBalance;
             return endAccountBalance;
         }
@@ -728,7 +727,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                 _Param.DateTypeCode /*GLAccountTotalDateTypeValues.Accountingdate*/, _Param.From,
                 _Param.CheckHaveAccountingQueued,
                 includeAccoutingDateLTransaction, false,
-                _Param.ClacOpenReconciledAmount_OnlyWithout_IncludeRelatedCurrenciesAccount_IncludeChildAccounts, false, _Param);
+                _Param.ClacOpenReconciledAmount_OnlyWithout_IncludeRelatedCurrenciesAccount_IncludeChildAccounts, false);
             var startAccountBalance = startAccountBalanceService.AccountBalance;
             return startAccountBalance;
         }
