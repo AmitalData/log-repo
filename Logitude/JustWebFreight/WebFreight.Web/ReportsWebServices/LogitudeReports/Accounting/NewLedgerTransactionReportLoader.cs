@@ -306,16 +306,13 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             var contact = AuthenticationUtil.AuthenticatedUserEmail != null
                 ? GetContactByEmail(AuthenticationUtil.AuthenticatedUserEmail)
                 : GetLoggedContact();
-            var isReconciledFilter = GetFilterValue<bool?>("IsReconciled");
 
             transactionsDataProvider.PrintedByUser = GetContactName(contact);
             transactionsDataProvider.UserEnglishName = contact.EnglishName;
             transactionsDataProvider.PrintDate = TenantServerConfigration.GetCurrentDateTime(tenant);
-            transactionsDataProvider.WithClosedTransactions = isReconciledFilter == null;
-
         }
 
-        private ContactPM GetLoggedContact() => LoggedContactResolver.GetLoggedContact(tenant);
+         private ContactPM GetLoggedContact() => LoggedContactResolver.GetLoggedContact(tenant);
         private ContactPM GetContactByEmail(string email) => new ContactQuery(tenant).GetContactByEmailOnly(email, tenant);
         private string GetContactName(ContactPM contact) => contact.DontShowLocal ? contact.EnglishName : contact.LocalName;
    
