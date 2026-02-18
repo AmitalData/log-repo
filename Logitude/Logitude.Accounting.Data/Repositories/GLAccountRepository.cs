@@ -4,11 +4,10 @@ using Logitude.Accounting.Data.EntityKeys;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Server.Tools;
 using System.Data.Entity.Infrastructure;
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using System.Runtime.Remoting.Contexts;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -1351,19 +1350,6 @@ namespace Logitude.Accounting.Data.Repositories
                     return rv;
                 }
             }
-        }
-
-        public decimal GetTotalOpenChequesInLocalCurById(String glaccountId, int tenant)
-        {                           
-           var now = DateTime.UtcNow;
-           
-           return context.AllARPaymentChequesViews
-               .Where(a => a.AccountId == glaccountId
-                        && a.Tenant == tenant
-                        && a.Notes != "החזרת שיק ללקוח"
-                        && a.ValueDate <= now)
-               .Sum(a => (decimal?)a.LocalAmountCredit) ?? 0m;        
-            
         }
 
         public List<GLAccount> GetByDisplayNumberEnding(String displayNumberEnding, int tenant)

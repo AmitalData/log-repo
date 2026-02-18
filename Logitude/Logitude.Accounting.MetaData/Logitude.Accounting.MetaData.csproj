@@ -74,6 +74,7 @@
     <None Include="DBOthers\SProcedures\usp_SetTenantIdleProcedure.dxml" />
     <None Include="DBOthers\SProcedures\usp_Queue_Peek_ThreadPerTenant.dxml" />
     <None Include="DBOthers\SProcedures\usp_UpdateJournalLinesSequence.dxml" />
+    <None Include="DBOthers\SProcedures\usp_UpdateJournalLinesSequence.dxml" />
     <None Include="DBOthers\SProcedures\usp_FixFailedReconcileJournals.dxml" />
     <None Include="DBOthers\SProcedures\usp_OpenTransaction.dxml" />
     <None Include="DBOthers\SProcedures\usp_MonthlyBalancesReport.dxml" />
