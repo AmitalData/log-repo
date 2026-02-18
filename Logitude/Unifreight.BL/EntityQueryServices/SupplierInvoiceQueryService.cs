@@ -27,12 +27,19 @@ namespace Unifreight.BL.EntityQueryServices
 
         }
 
-     
+        public SupplierInvoicePM GetSingle(int FILENO, int LINENO, bool getComposition)
+        {
+
+            var EntityKeys = new CCUACCSUPKeys() { FILENO = FILENO, LINENO = LINENO };
+
+            return base.GetSingle(EntityKeys, getComposition, false);
+
+        }
 
 
         protected override Simplog.Server.Infrastructure.EntityKeyFields GetKeys(CCUACCSUP entityPOCO)
         {
-            return new CCUACCSUPKeys() { FILENO = entityPOCO.FILENO, LINENO = entityPOCO.LINENO , Tenant=entityPOCO.TENANT};
+            return new CCUACCSUPKeys() { FILENO = entityPOCO.FILENO, LINENO = entityPOCO.LINENO };
         }
 
         public override void GetComposition(Simplog.Server.Infrastructure.EntityKeyFields entityKeys, SupplierInvoicePM entityPM)

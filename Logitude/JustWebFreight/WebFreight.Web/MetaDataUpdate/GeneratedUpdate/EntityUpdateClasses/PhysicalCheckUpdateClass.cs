@@ -23,7 +23,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class PhysicalCheckUpdateClass
    {  		
-		public const string HashString = "9d9d0a49efcc9283e663f1cd2f45d244";
+		public const string HashString = "c46aba2a72a5fce9142a9bd8cb84a0fb";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -41,7 +41,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    SupportSubEntity =  false,
 			      				    ApplyGenericCustomFields =  false,
 			      				    AvailableInDocumentTypes =  false,
-			      				    IsLock =  false,
 			      				    HasHelper =  false,
 			      				    HasShortTitle =  false,
 			      				    HasFiltersMenu =  true,
@@ -58,7 +57,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    IsMain =  true,
 			      				    IsAutoComplete =  false,
 			      				    EnableEditFromLOV =  false,
-			      				    SortingByObjectField =  "OpenDate",
+			      				    SortingByObjectField =  "Id",
 			      				    InActive =  false,
 			      				    IsSaveButtonVisible =  true,
 			      				    IsComposition =  false,
@@ -67,8 +66,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
-			      				    LocalDefaultTextBack_up =  "בדיקה פיזית",
-			      				    LocalDefaultText =  "BS64:IteR15PXmden15Qg16TXmdeW15nXqiI=",
+			      				    LocalDefaultText =  "בדיקה פיזית",
 			      				    DefaultText =  "Physical Check",
 			      				    Code =  "PHCK",
 			      				    Name =  "Customs.PhysicalCheck",
@@ -78,7 +76,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    NoTS =  false,
 			      				    HasMenuButtons =  true,
 			      				    AllowedForComputingPartners =  false,
-			      				    ShowFastSearch =  false,
 			      				    CustomFieldsCount =  0,
 			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  false,
@@ -338,12 +335,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "StorageSiteCode",
 					  						DefaultText =  "Storage Site",
-					  						FullLocalDefaultTextBack_up =  "אתר אחסון",
-					  						FullLocalDefaultText =  "BS64:IteQ16rXqCDXkNeX16HXldefIg==",
+					  						FullLocalDefaultText =  "אתר אחסון",
 					  						ListFieldLable =  "StorageSiteCodeListLable",
 					  						ListLableDefaultText =  "Storage Site ",
-					  						ListLocalDefaultTextBack_up =  "קוד אתר אחסון",
-					  						ListLocalDefaultText =  "BS64:Iten15XXkyDXkNeq16gg15DXl9eh15XXnyI=",
+					  						ListLocalDefaultText =  "אתר אחסון",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "SiteLookup",
 					  						NavigationPropertyName =  "StorageSite",
@@ -409,12 +404,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "StorageSiteName",
 					  						DefaultText =  "Storage Site Name",
-					  						FullLocalDefaultTextBack_up =  "אתר אחסון",
-					  						FullLocalDefaultText =  "BS64:IteQ16rXqCDXkNeX16HXldefIg==",
+					  						FullLocalDefaultText =  "אתר אחסון",
 					  						ListFieldLable =  "StorageSiteNameListLable",
 					  						ListLableDefaultText =  "Storage Site Name",
-					  						ListLocalDefaultTextBack_up =  "אתר אחסון",
-					  						ListLocalDefaultText =  "BS64:IteQ16rXqCDXkNeX16HXldefIg==",
+					  						ListLocalDefaultText =  "אתר אחסון",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -479,12 +472,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CheckSiteCode",
 					  						DefaultText =  "Check Site",
-					  						FullLocalDefaultTextBack_up =  "אתר בדיקה",
-					  						FullLocalDefaultText =  "BS64:IteQ16rXqCDXkdeT15nXp9eUIg==",
+					  						FullLocalDefaultText =  "אתר בדיקה",
 					  						ListFieldLable =  "CheckSiteCodeListLable",
 					  						ListLableDefaultText =  "Check Site ",
-					  						ListLocalDefaultTextBack_up =  "קוד אתר בדיקה",
-					  						ListLocalDefaultText =  "BS64:Iten15XXkyDXkNeq16gg15HXk9eZ16fXlCI=",
+					  						ListLocalDefaultText =  "אתר בדיקה",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "SiteLookup",
 					  						NavigationPropertyName =  "CheckSite",
@@ -550,12 +541,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CheckSiteName",
 					  						DefaultText =  "Check Site Name",
-					  						FullLocalDefaultTextBack_up =  "אתר בדיקה",
-					  						FullLocalDefaultText =  "BS64:IteQ16rXqCDXkdeT15nXp9eUIg==",
+					  						FullLocalDefaultText =  "אתר בדיקה",
 					  						ListFieldLable =  "CheckSiteNameListLable",
 					  						ListLableDefaultText =  "Check Site Name",
-					  						ListLocalDefaultTextBack_up =  "אתר בדיקה",
-					  						ListLocalDefaultText =  "BS64:IteQ16rXqCDXkdeT15nXp9eUIg==",
+					  						ListLocalDefaultText =  "אתר בדיקה",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -620,12 +609,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "QueueTypeCode",
 					  						DefaultText =  "Queue Type",
-					  						FullLocalDefaultTextBack_up =  "סוג תור",
-					  						FullLocalDefaultText =  "BS64:Iteh15XXkiDXqteV16gi",
+					  						FullLocalDefaultText =  "סוג תור",
 					  						ListFieldLable =  "QueueTypeCodeListLable",
 					  						ListLableDefaultText =  "Queue Type ",
-					  						ListLocalDefaultTextBack_up =  "סוג תור",
-					  						ListLocalDefaultText =  "BS64:Iteh15XXkiDXqteV16gi",
+					  						ListLocalDefaultText =  "סוג תור",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "CheckQueueType",
 					  						NavigationPropertyName =  "CheckQueueType",
@@ -691,12 +678,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "QueueTypeName",
 					  						DefaultText =  "Queue Type Name",
-					  						FullLocalDefaultTextBack_up =  "סוג תור",
-					  						FullLocalDefaultText =  "BS64:Iteh15XXkiDXqteV16gi",
+					  						FullLocalDefaultText =  "סוג תור",
 					  						ListFieldLable =  "QueueTypeNameListLable",
 					  						ListLableDefaultText =  "Queue Type Name",
-					  						ListLocalDefaultTextBack_up =  "סוג תור",
-					  						ListLocalDefaultText =  "BS64:Iteh15XXkiDXqteV16gi",
+					  						ListLocalDefaultText =  "סוג תור",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -761,12 +746,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "OperationCode",
 					  						DefaultText =  "Operation",
-					  						FullLocalDefaultTextBack_up =  "קוד פעולה",
-					  						FullLocalDefaultText =  "BS64:Iten15XXkyDXpNei15XXnNeUIg==",
+					  						FullLocalDefaultText =  "קוד פעולה",
 					  						ListFieldLable =  "OperationCodeListLable",
 					  						ListLableDefaultText =  "Operation ",
-					  						ListLocalDefaultTextBack_up =  "קוד פעולה",
-					  						ListLocalDefaultText =  "BS64:Iten15XXkyDXpNei15XXnNeUIg==",
+					  						ListLocalDefaultText =  "קוד פעולה",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "PhysicalCheckOperation",
 					  						NavigationPropertyName =  "Operation",
@@ -832,12 +815,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CheckId",
 					  						DefaultText =  "Check ",
-					  						FullLocalDefaultTextBack_up =  "מספר בדיקה",
-					  						FullLocalDefaultText =  "BS64:Itee16HXpNeoINeR15PXmden15Qi",
+					  						FullLocalDefaultText =  "מספר בדיקה",
 					  						ListFieldLable =  "CheckIdListLable",
 					  						ListLableDefaultText =  "Check ",
-					  						ListLocalDefaultTextBack_up =  "מספר בדיקה",
-					  						ListLocalDefaultText =  "BS64:Itee16HXpNeoINeR15PXmden15Qi",
+					  						ListLocalDefaultText =  "מספר בדיקה",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -966,12 +947,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ContainerNubmer",
 					  						DefaultText =  "Container Nubmer",
-					  						FullLocalDefaultTextBack_up =  "מספר מכולה",
-					  						FullLocalDefaultText =  "BS64:Itee16HXpNeoINee15vXldec15Qi",
+					  						FullLocalDefaultText =  "מספר מכולה",
 					  						ListFieldLable =  "ContainerNubmerListLable",
 					  						ListLableDefaultText =  "Container Nubmer",
-					  						ListLocalDefaultTextBack_up =  "מספר מכולה",
-					  						ListLocalDefaultText =  "BS64:Itee16HXpNeoINee15vXldec15Qi",
+					  						ListLocalDefaultText =  "מספר מכולה",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1036,12 +1015,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "OpenDate",
 					  						DefaultText =  "Open Date",
-					  						FullLocalDefaultTextBack_up =  "תאריך הפניה לבדיקה",
-					  						FullLocalDefaultText =  "BS64:Iteq15DXqNeZ15og15TXpNeg15nXlCDXnNeR15PXmden15Qi",
+					  						FullLocalDefaultText =  "תאריך הפניה לבדיקה",
 					  						ListFieldLable =  "OpenDateListLable",
 					  						ListLableDefaultText =  "Open Date",
-					  						ListLocalDefaultTextBack_up =  "תאריך הפניה לבדיקה",
-					  						ListLocalDefaultText =  "BS64:Iteq15DXqNeZ15og15TXpNeg15nXlCDXnNeR15PXmden15Qi",
+					  						ListLocalDefaultText =  "תאריך הפניה לבדיקה",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1106,12 +1083,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "LimitDate",
 					  						DefaultText =  "Limit Date",
-					  						FullLocalDefaultTextBack_up =  "תאריך הבדיקה",
-					  						FullLocalDefaultText =  "BS64:Iteq15DXqNeZ15og15TXkdeT15nXp9eUIg==",
+					  						FullLocalDefaultText =  "תאריך הבדיקה",
 					  						ListFieldLable =  "LimitDateListLable",
 					  						ListLableDefaultText =  "Limit Date",
-					  						ListLocalDefaultTextBack_up =  "תאריך הבדיקה",
-					  						ListLocalDefaultText =  "BS64:Iteq15DXqNeZ15og15TXkdeT15nXp9eUIg==",
+					  						ListLocalDefaultText =  "תאריך הבדיקה",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1175,12 +1150,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CargoIdentifierKey1",
 					  						DefaultText =  "Cargo Identifier Key1",
-					  						FullLocalDefaultTextBack_up =  "מזהה מטען 1",
-					  						FullLocalDefaultText =  "BS64:Itee15bXlNeUINee15jXotefIDEi",
+					  						FullLocalDefaultText =  "מזהה מטען 1",
 					  						ListFieldLable =  "CargoIdentifierKey1ListLable",
 					  						ListLableDefaultText =  "Cargo Identifier Key1",
-					  						ListLocalDefaultTextBack_up =  "מזהה מטען 1",
-					  						ListLocalDefaultText =  "BS64:Itee15bXlNeUINee15jXotefIDEi",
+					  						ListLocalDefaultText =  "מזהה מטען 1",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1244,12 +1217,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CargoIdentifierKey2",
 					  						DefaultText =  "Cargo Identifier Key2",
-					  						FullLocalDefaultTextBack_up =  "מזהה מטען 2",
-					  						FullLocalDefaultText =  "BS64:Itee15bXlNeUINee15jXotefIDIi",
+					  						FullLocalDefaultText =  "מזהה מטען 2",
 					  						ListFieldLable =  "CargoIdentifierKey2ListLable",
 					  						ListLableDefaultText =  "Cargo Identifier Key2",
-					  						ListLocalDefaultTextBack_up =  "מזהה מטען 2",
-					  						ListLocalDefaultText =  "BS64:Itee15bXlNeUINee15jXotefIDIi",
+					  						ListLocalDefaultText =  "מזהה מטען 2",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1313,12 +1284,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CargoIdentifierKey3",
 					  						DefaultText =  "Cargo Identifier Key3",
-					  						FullLocalDefaultTextBack_up =  "מזהה מטען 3",
-					  						FullLocalDefaultText =  "BS64:Itee15bXlNeUINee15jXotefIDMi",
+					  						FullLocalDefaultText =  "מזהה מטען 3",
 					  						ListFieldLable =  "CargoIdentifierKey3ListLable",
 					  						ListLableDefaultText =  "Cargo Identifier Key3",
-					  						ListLocalDefaultTextBack_up =  "מזהה מטען 3",
-					  						ListLocalDefaultText =  "BS64:Itee15bXlNeUINee15jXotefIDMi",
+					  						ListLocalDefaultText =  "מזהה מטען 3",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1382,12 +1351,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "RowNumber",
 					  						DefaultText =  "Row Number",
-					  						FullLocalDefaultTextBack_up =  "סידורי במטען",
-					  						FullLocalDefaultText =  "BS64:Iteh15nXk9eV16jXmSDXkdee15jXotefIg==",
+					  						FullLocalDefaultText =  "סידורי במטען",
 					  						ListFieldLable =  "RowNumberListLable",
 					  						ListLableDefaultText =  "Row Number",
-					  						ListLocalDefaultTextBack_up =  "סידורי במטען",
-					  						ListLocalDefaultText =  "BS64:Iteh15nXk9eV16jXmSDXkdee15jXotefIg==",
+					  						ListLocalDefaultText =  "סידורי במטען",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1451,12 +1418,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CheckEssence",
 					  						DefaultText =  "Check Essence",
-					  						FullLocalDefaultTextBack_up =  "מהות הבדיקה",
-					  						FullLocalDefaultText =  "BS64:Itee15TXldeqINeU15HXk9eZ16fXlCI=",
+					  						FullLocalDefaultText =  "מהות הבדיקה",
 					  						ListFieldLable =  "CheckEssenceListLable",
 					  						ListLableDefaultText =  "Check Essence",
-					  						ListLocalDefaultTextBack_up =  "מהות הבדיקה",
-					  						ListLocalDefaultText =  "BS64:Itee15TXldeqINeU15HXk9eZ16fXlCI=",
+					  						ListLocalDefaultText =  "מהות הבדיקה",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1522,12 +1487,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsClosed",
 					  						DefaultText =  "Is Closed",
-					  						FullLocalDefaultTextBack_up =  "סגורה",
-					  						FullLocalDefaultText =  "BS64:Iteh15LXldeo15Qi",
+					  						FullLocalDefaultText =  "סגורה",
 					  						ListFieldLable =  "IsClosedListLable",
 					  						ListLableDefaultText =  "Is Closed",
-					  						ListLocalDefaultTextBack_up =  "סגורה",
-					  						ListLocalDefaultText =  "BS64:Iteh15LXldeo15Qi",
+					  						ListLocalDefaultText =  "סגורה",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1592,14 +1555,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "SearchFields",
 					  						DefaultText =  "Search ",
-					  						FullLocalDefaultTextBack_up =  "מס' תיק / הצהרה ,  בדיקה , מכולה , מזהי מטען",
-					  						FullLocalDefaultText =  "BS64:Itee16EnINeq15nXpyAvINeU16bXlNeo15QgLCAg15HXk9eZ16fXlCAsINee15vXldec15QgLCDXnteW15TXmSDXnteY16LXnyI=",
+					  						FullLocalDefaultText =  "מס' תיק / הצהרה ,  בדיקה , מכולה , מזהי מטען",
 					  						ListFieldLable =  "SearchFieldsListLable",
 					  						ListLableDefaultText =  "Search Field",
 					  						HelpTextCode =  "SearchFields",
 					  						HelpTextDefaultText =  "Searching by :\n1:  Declaration No \n2: Customer Name \n3: Container No ",
-					  						HelpLocalDefaultTextBack_up =  "חיפוש על ידי :\n1: הצהרה לא \n2: שם לקוח \n3: המכל לא",
-					  						HelpLocalDefaultText =  "BS64:IteX15nXpNeV16kg16LXnCDXmdeT15kgOgoxOiDXlNem15TXqNeUINec15AgCjI6INep150g15zXp9eV15cgCjM6INeU157Xm9ecINec15Ai",
+					  						HelpLocalDefaultText =  "חיפוש על ידי :\n1: הצהרה לא \n2: שם לקוח \n3: המכל לא",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1664,12 +1625,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "StatusMessageCode",
 					  						DefaultText =  "Status Message",
-					  						FullLocalDefaultTextBack_up =  "סוג הודעה",
-					  						FullLocalDefaultText =  "BS64:Iteh15XXkiDXlNeV15PXoteUIg==",
+					  						FullLocalDefaultText =  "סוג הודעה",
 					  						ListFieldLable =  "StatusMessageCodeListLable",
 					  						ListLableDefaultText =  "Status Message ",
-					  						ListLocalDefaultTextBack_up =  "קוד סוג הודעה",
-					  						ListLocalDefaultText =  "BS64:Iten15XXkyDXodeV15Ig15TXldeT16LXlCI=",
+					  						ListLocalDefaultText =  "סוג הודעה",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "PhysicalCheckStatusMessage",
 					  						NavigationPropertyName =  "StatusMessage",
@@ -1736,12 +1695,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CargoTypeCode",
 					  						DefaultText =  "Cargo Type",
-					  						FullLocalDefaultTextBack_up =  "סוג מטען",
-					  						FullLocalDefaultText =  "BS64:Iteh15XXkiDXnteY16LXnyI=",
+					  						FullLocalDefaultText =  "סוג מטען",
 					  						ListFieldLable =  "CargoTypeCodeListLable",
 					  						ListLableDefaultText =  "Cargo Type ",
-					  						ListLocalDefaultTextBack_up =  "סוג מטען",
-					  						ListLocalDefaultText =  "BS64:Iteh15XXkiDXnteY16LXnyI=",
+					  						ListLocalDefaultText =  "סוג מטען",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "CheckEntityType",
 					  						NavigationPropertyName =  "CheckEntityType",
@@ -1808,12 +1765,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "InitiatorTypeCode",
 					  						DefaultText =  "Initiator Type",
-					  						FullLocalDefaultTextBack_up =  "יוזם הבדיקה",
-					  						FullLocalDefaultText =  "BS64:IteZ15XXltedINeU15HXk9eZ16fXlCI=",
+					  						FullLocalDefaultText =  "יוזם הבדיקה",
 					  						ListFieldLable =  "InitiatorTypeCodeListLable",
 					  						ListLableDefaultText =  "Initiator Type ",
-					  						ListLocalDefaultTextBack_up =  "יוזם הבדיקה",
-					  						ListLocalDefaultText =  "BS64:IteZ15XXltedINeU15HXk9eZ16fXlCI=",
+					  						ListLocalDefaultText =  "יוזם הבדיקה",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "CheckRepresentativeType",
 					  						NavigationPropertyName =  "CheckRepresentativeType",
@@ -1879,12 +1834,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ImporterNumber",
 					  						DefaultText =  "Importer Number",
-					  						FullLocalDefaultTextBack_up =  "מספר יבואן",
-					  						FullLocalDefaultText =  "BS64:Itee16HXpNeoINeZ15HXldeQ158i",
+					  						FullLocalDefaultText =  "מספר יבואן",
 					  						ListFieldLable =  "ImporterNumberListLable",
 					  						ListLableDefaultText =  "Importer Number",
-					  						ListLocalDefaultTextBack_up =  "מספר יבואן",
-					  						ListLocalDefaultText =  "BS64:Itee16HXpNeoINeZ15HXldeQ158i",
+					  						ListLocalDefaultText =  "מספר יבואן",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1949,12 +1902,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CargoIdentifierTypeCode",
 					  						DefaultText =  "Cargo Identifier Type",
-					  						FullLocalDefaultTextBack_up =  "מזהה מטען",
-					  						FullLocalDefaultText =  "BS64:Itee15bXlNeUINee15jXotefIg==",
+					  						FullLocalDefaultText =  "מזהה מטען",
 					  						ListFieldLable =  "CargoIdentifierTypeCodeListLable",
 					  						ListLableDefaultText =  "Cargo Identifier Type ",
-					  						ListLocalDefaultTextBack_up =  "מזהה מטען",
-					  						ListLocalDefaultText =  "BS64:Itee15bXlNeUINee15jXotefIg==",
+					  						ListLocalDefaultText =  "מזהה מטען",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "CargoIdentifireType",
 					  						NavigationPropertyName =  "CargoIdentifireType",
@@ -2020,12 +1971,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "OperationName",
 					  						DefaultText =  "Operation Name",
-					  						FullLocalDefaultTextBack_up =  "קוד פעולה",
-					  						FullLocalDefaultText =  "BS64:Iten15XXkyDXpNei15XXnNeUIg==",
+					  						FullLocalDefaultText =  "קוד פעולה",
 					  						ListFieldLable =  "OperationNameListLable",
 					  						ListLableDefaultText =  "Operation Name",
-					  						ListLocalDefaultTextBack_up =  "קוד פעולה",
-					  						ListLocalDefaultText =  "BS64:Iten15XXkyDXpNei15XXnNeUIg==",
+					  						ListLocalDefaultText =  "קוד פעולה",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -2089,12 +2038,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DeclarationNo",
 					  						DefaultText =  "Declaration No",
-					  						FullLocalDefaultTextBack_up =  "מספר הצהרה",
-					  						FullLocalDefaultText =  "BS64:Itee16HXpNeoINeU16bXlNeo15Qi",
+					  						FullLocalDefaultText =  "מספר הצהרה",
 					  						ListFieldLable =  "DeclarationNoListLable",
 					  						ListLableDefaultText =  "Declaration No",
-					  						ListLocalDefaultTextBack_up =  "מספר הצהרה",
-					  						ListLocalDefaultText =  "BS64:Itee16HXpNeoINeU16bXlNeo15Qi",
+					  						ListLocalDefaultText =  "מספר הצהרה",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -2158,12 +2105,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CargoIdentifierTypeName",
 					  						DefaultText =  "Cargo Identifier Type Name",
-					  						FullLocalDefaultTextBack_up =  "סוג מזהה מטען",
-					  						FullLocalDefaultText =  "BS64:Iteh15XXkiDXnteW15TXlCDXnteY16LXnyI=",
+					  						FullLocalDefaultText =  "סוג מזהה מטען",
 					  						ListFieldLable =  "CargoIdentifierTypeNameListLable",
 					  						ListLableDefaultText =  "Cargo Identifier Type Name",
-					  						ListLocalDefaultTextBack_up =  "סוג מזהה מטען",
-					  						ListLocalDefaultText =  "BS64:Iteh15XXkiDXnteW15TXlCDXnteY16LXnyI=",
+					  						ListLocalDefaultText =  "סוג מזהה מטען",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -2292,12 +2237,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CustomerCode",
 					  						DefaultText =  "Customer ",
-					  						FullLocalDefaultTextBack_up =  "קוד לקוח",
-					  						FullLocalDefaultText =  "BS64:Iten15XXkyDXnNen15XXlyI=",
+					  						FullLocalDefaultText =  "קוד לקוח",
 					  						ListFieldLable =  "CustomerCodeListLable",
 					  						ListLableDefaultText =  "Customer ",
-					  						ListLocalDefaultTextBack_up =  "קוד לקוח",
-					  						ListLocalDefaultText =  "BS64:Iten15XXkyDXnNen15XXlyI=",
+					  						ListLocalDefaultText =  "קוד לקוח",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -2360,12 +2303,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CustomerName",
 					  						DefaultText =  "Customer Name",
-					  						FullLocalDefaultTextBack_up =  "שם לקוח",
-					  						FullLocalDefaultText =  "BS64:Itep150g15zXp9eV15ci",
+					  						FullLocalDefaultText =  "שם לקוח",
 					  						ListFieldLable =  "CustomerNameListLable",
 					  						ListLableDefaultText =  "Customer Name",
-					  						ListLocalDefaultTextBack_up =  "שם לקוח",
-					  						ListLocalDefaultText =  "BS64:Itep150g15zXp9eV15ci",
+					  						ListLocalDefaultText =  "שם לקוח",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -2428,12 +2369,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CustomFileNo",
 					  						DefaultText =  "Custom File No",
-					  						FullLocalDefaultTextBack_up =  "תיק עמילות/מכס",
-					  						FullLocalDefaultText =  "BS64:Iteq15nXpyDXotee15nXnNeV16ov157Xm9ehIg==",
+					  						FullLocalDefaultText =  "תיק עמילות/מכס",
 					  						ListFieldLable =  "CustomFileNoListLable",
 					  						ListLableDefaultText =  "Custom File No",
-					  						ListLocalDefaultTextBack_up =  "תיק עמילות/מכס",
-					  						ListLocalDefaultText =  "BS64:Iteq15nXpyDXotee15nXnNeV16ov157Xm9ehIg==",
+					  						ListLocalDefaultText =  "תיק עמילות/מכס",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -2495,12 +2434,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "StatusMessageName",
 					  						DefaultText =  "Status Message Name",
-					  						FullLocalDefaultTextBack_up =  "סוג הודעה",
-					  						FullLocalDefaultText =  "BS64:Iteh15XXkiDXlNeV15PXoteUIg==",
+					  						FullLocalDefaultText =  "סוג הודעה",
 					  						ListFieldLable =  "StatusMessageNameListLable",
 					  						ListLableDefaultText =  "Status Message Name",
-					  						ListLocalDefaultTextBack_up =  "סוג הודעה",
-					  						ListLocalDefaultText =  "BS64:Iteh15XXkiDXlNeV15PXoteUIg==",
+					  						ListLocalDefaultText =  "סוג הודעה",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -2683,12 +2620,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsComprehensiveCheck",
 					  						DefaultText =  "Is Comprehensive Check",
-					  						FullLocalDefaultTextBack_up =  "בדיקה מקיפה",
-					  						FullLocalDefaultText =  "BS64:IteR15PXmden15Qg157Xp9eZ16TXlCI=",
+					  						FullLocalDefaultText =  "בדיקה מקיפה",
 					  						ListFieldLable =  "IsComprehensiveCheckListLable",
 					  						ListLableDefaultText =  "Is Comprehensive Check",
-					  						ListLocalDefaultTextBack_up =  "בדיקה מקיפה",
-					  						ListLocalDefaultText =  "BS64:IteR15PXmden15Qg157Xp9eZ16TXlCI=",
+					  						ListLocalDefaultText =  "בדיקה מקיפה",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -2752,12 +2687,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CheckTypeCode",
 					  						DefaultText =  "Check Type",
-					  						FullLocalDefaultTextBack_up =  "סוג בדיקה",
-					  						FullLocalDefaultText =  "BS64:Iteh15XXkiDXkdeT15nXp9eUIg==",
+					  						FullLocalDefaultText =  "סוג בדיקה",
 					  						ListFieldLable =  "CheckTypeCodeListLable",
 					  						ListLableDefaultText =  "Check Type",
-					  						ListLocalDefaultTextBack_up =  "קוד סוג בדיקה",
-					  						ListLocalDefaultText =  "BS64:Iten15XXkyDXodeV15Ig15HXk9eZ16fXlCI=",
+					  						ListLocalDefaultText =  "סוג בדיקה",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "CheckTypeLookup",
 					  						NavigationPropertyName =  "CheckTypeLookup",
@@ -2821,12 +2754,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CheckTypeName",
 					  						DefaultText =  "Check Type Name",
-					  						FullLocalDefaultTextBack_up =  "סוג בדיקה",
-					  						FullLocalDefaultText =  "BS64:Iteh15XXkiDXkdeT15nXp9eUIg==",
+					  						FullLocalDefaultText =  "סוג בדיקה",
 					  						ListFieldLable =  "CheckTypeNameListLable",
 					  						ListLableDefaultText =  "Check Type Name",
-					  						ListLocalDefaultTextBack_up =  "סוג בדיקה",
-					  						ListLocalDefaultText =  "BS64:Iteh15XXkiDXkdeT15nXp9eUIg==",
+					  						ListLocalDefaultText =  "סוג בדיקה",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -2890,12 +2821,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CustomerId",
 					  						DefaultText =  "Customer ",
-					  						FullLocalDefaultTextBack_up =  "לקוח",
-					  						FullLocalDefaultText =  "BS64:Itec16fXldeXIg==",
+					  						FullLocalDefaultText =  "לקוח",
 					  						ListFieldLable =  "CustomerIdListLable",
 					  						ListLableDefaultText =  "Customer",
-					  						ListLocalDefaultTextBack_up =  "לקוח",
-					  						ListLocalDefaultText =  "BS64:Itec16fXldeXIg==",
+					  						ListLocalDefaultText =  "לקוח",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "Card",
 					  						NavigationPropertyName =  "CustomerCard",
@@ -2960,12 +2889,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "NoEscortRequired",
 					  						DefaultText =  "No Escort Required",
-					  						FullLocalDefaultTextBack_up =  "ללא נוכחות בודק",
-					  						FullLocalDefaultText =  "BS64:Itec15zXkCDXoNeV15vXl9eV16og15HXldeT16ci",
+					  						FullLocalDefaultText =  "ללא נוכחות בודק",
 					  						ListFieldLable =  "NoEscortRequiredListLable",
 					  						ListLableDefaultText =  "No Escort Required",
-					  						ListLocalDefaultTextBack_up =  "ללא נוכחות בודק",
-					  						ListLocalDefaultText =  "BS64:Itec15zXkCDXoNeV15vXl9eV16og15HXldeT16ci",
+					  						ListLocalDefaultText =  "ללא נוכחות בודק",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -3028,12 +2955,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "VehicleChassisNumber",
 					  						DefaultText =  "Vehicle Chassis Number",
-					  						FullLocalDefaultTextBack_up =  "מס' שלדה",
-					  						FullLocalDefaultText =  "BS64:Itee16EnINep15zXk9eUIg==",
+					  						FullLocalDefaultText =  "מס' שלדה",
 					  						ListFieldLable =  "VehicleChassisNumberListLable",
 					  						ListLableDefaultText =  "Vehicle Chassis Number",
-					  						ListLocalDefaultTextBack_up =  "מס' שלדה",
-					  						ListLocalDefaultText =  "BS64:Itee16EnINep15zXk9eUIg==",
+					  						ListLocalDefaultText =  "מס' שלדה",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -3095,8 +3020,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "EndDate",
 					  						DefaultText =  "End Date",
-					  						FullLocalDefaultTextBack_up =  "מועד סיום הבדיקה",
-					  						FullLocalDefaultText =  "BS64:Itee15XXoteTINeh15nXldedINeU15HXk9eZ16fXlCI=",
+					  						FullLocalDefaultText =  "מועד סיום הבדיקה",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -3160,12 +3084,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "SearchResult",
 					  						DefaultText =  "SearchResult",
-					  						FullLocalDefaultTextBack_up =  "תוצאות קוד הבדיקה",
-					  						FullLocalDefaultText =  "BS64:Iteq15XXpteQ15XXqiDXp9eV15Mg15TXkdeT15nXp9eUIg==",
+					  						FullLocalDefaultText =  "תוצאות קוד הבדיקה",
 					  						ListFieldLable =  "SearchResultListLable",
 					  						ListLableDefaultText =  "SearchResult",
-					  						ListLocalDefaultTextBack_up =  "תוצאות קוד הבדיקה",
-					  						ListLocalDefaultText =  "BS64:Iteq15XXpteQ15XXqiDXp9eV15Mg15TXkdeT15nXp9eUIg==",
+					  						ListLocalDefaultText =  "תוצאות קוד הבדיקה",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "PhysicalCheckSearchResultType",
 					  						NavigationPropertyName =  "SearchResultType",
@@ -3230,12 +3152,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "SealNumber",
 					  						DefaultText =  "Seal Number",
-					  						FullLocalDefaultTextBack_up =  "מס' סגר",
-					  						FullLocalDefaultText =  "BS64:Itee16EnINeh15LXqCI=",
+					  						FullLocalDefaultText =  "מס' סגר",
 					  						ListFieldLable =  "SealNumberListLable",
 					  						ListLableDefaultText =  "Seal Number",
-					  						ListLocalDefaultTextBack_up =  "מס' סגר",
-					  						ListLocalDefaultText =  "BS64:Itee16EnINeh15LXqCI=",
+					  						ListLocalDefaultText =  "מס' סגר",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -3299,12 +3219,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CheckAuthorityAttenderTypeID",
 					  						DefaultText =  "Check Authority Attender Type ID",
-					  						FullLocalDefaultTextBack_up =  "רשות מוסמכת",
-					  						FullLocalDefaultText =  "BS64:Iteo16nXldeqINee15XXodee15vXqiI=",
+					  						FullLocalDefaultText =  "רשות מוסמכת",
 					  						ListFieldLable =  "CheckAuthorityAttenderTypeIDListLable",
 					  						ListLableDefaultText =  "CheckAuthorityAttenderTypeID",
-					  						ListLocalDefaultTextBack_up =  "רשות מוסמכת",
-					  						ListLocalDefaultText =  "BS64:Iteo16nXldeqINee15XXodee15vXqiI=",
+					  						ListLocalDefaultText =  "רשות מוסמכת",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "Authority",
 					  						NavigationPropertyName =  "CheckAuthorityAttenderType",
@@ -3368,12 +3286,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CheckAuthorityAttenderTypeName",
 					  						DefaultText =  "CheckAuthorityAttenderTypeName",
-					  						FullLocalDefaultTextBack_up =  "שם נציג רשות מוסמכת",
-					  						FullLocalDefaultText =  "BS64:Itep150g16DXpteZ15Ig16jXqdeV16og157Xldeh157Xm9eqIg==",
+					  						FullLocalDefaultText =  "שם נציג רשות מוסמכת",
 					  						ListFieldLable =  "CheckAuthorityAttenderTypeNameListLable",
 					  						ListLableDefaultText =  "CheckAuthorityAttenderTypeName",
-					  						ListLocalDefaultTextBack_up =  "שם נציג רשות מוסמכת",
-					  						ListLocalDefaultText =  "BS64:Itep150g16DXpteZ15Ig16jXqdeV16og157Xldeh157Xm9eqIg==",
+					  						ListLocalDefaultText =  "שם נציג רשות מוסמכת",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -3435,12 +3351,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CheckAnwserStatus",
 					  						DefaultText =  "CheckAnwserStatus",
-					  						FullLocalDefaultTextBack_up =  "סטטוס בקשה",
-					  						FullLocalDefaultText =  "BS64:Iteh15jXmNeV16Eg15HXp9ep15Qi",
+					  						FullLocalDefaultText =  "סטטוס בקשה",
 					  						ListFieldLable =  "CheckAnwserStatusListLable",
 					  						ListLableDefaultText =  "CheckAnwserStatus",
-					  						ListLocalDefaultTextBack_up =  "סטטוס בקשה",
-					  						ListLocalDefaultText =  "BS64:Iteh15jXmNeV16Eg15HXp9ep15Qi",
+					  						ListLocalDefaultText =  "סטטוס בקשה",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -3502,12 +3416,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "MyCloseCheckBox",
 					  						DefaultText =  "Mark for bulk closure",
-					  						FullLocalDefaultTextBack_up =  "סימון לסגירה גורפת",
-					  						FullLocalDefaultText =  "BS64:Iteh15nXnteV158g15zXodeS15nXqNeUINeS15XXqNek16oi",
+					  						FullLocalDefaultText =  "סימון לסגירה גורפת",
 					  						ListFieldLable =  "MyCloseCheckBoxListLable",
 					  						ListLableDefaultText =  "MyCloseCheckBox",
-					  						ListLocalDefaultTextBack_up =  "סימון לסגירה גורפת",
-					  						ListLocalDefaultText =  "BS64:Iteh15nXnteV158g15zXodeS15nXqNeUINeS15XXqNek16oi",
+					  						ListLocalDefaultText =  "סימון לסגירה גורפת",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -3573,8 +3485,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DefaultText =  "Transport Mode ",
 					  						ListFieldLable =  "TransportModeIdListLable",
 					  						ListLableDefaultText =  "Transport Mode ",
-					  						ListLocalDefaultTextBack_up =  "סוג הובלה",
-					  						ListLocalDefaultText =  "BS64:Iteh15XXkiDXlNeV15HXnNeUIg==",
+					  						ListLocalDefaultText =  "סוג הובלה",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -3639,8 +3550,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DefaultText =  "Direction",
 					  						ListFieldLable =  "DirectionListLable",
 					  						ListLableDefaultText =  "Direction",
-					  						ListLocalDefaultTextBack_up =  "כיוון ",
-					  						ListLocalDefaultText =  "BS64:Iteb15nXldeV158gIg==",
+					  						ListLocalDefaultText =  "כיוון ",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -3703,12 +3613,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DeclarationOfficeName",
 					  						DefaultText =  "Declaration Office ",
-					  						FullLocalDefaultTextBack_up =  "בית מכס",
-					  						FullLocalDefaultText =  "BS64:IteR15nXqiDXnteb16Ei",
+					  						FullLocalDefaultText =  "בית מכס",
 					  						ListFieldLable =  "DeclarationOfficeNameListLable",
 					  						ListLableDefaultText =  "Declaration Office Name",
-					  						ListLocalDefaultTextBack_up =  "בית מכס",
-					  						ListLocalDefaultText =  "BS64:IteR15nXqiDXnteb16Ei",
+					  						ListLocalDefaultText =  "בית מכס",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -3772,12 +3680,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IntegratorCode",
 					  						DefaultText =  "Integrator",
-					  						FullLocalDefaultTextBack_up =  "אינטגרטור",
-					  						FullLocalDefaultText =  "BS64:IteQ15nXoNeY15LXqNeY15XXqCI=",
+					  						FullLocalDefaultText =  "אינטגרטור",
 					  						ListFieldLable =  "IntegratorCodeListLable",
 					  						ListLableDefaultText =  "Integrator",
-					  						ListLocalDefaultTextBack_up =  "קוד אינטגרטור",
-					  						ListLocalDefaultText =  "BS64:Iten15XXkyDXkNeZ16DXmNeS16jXmNeV16gi",
+					  						ListLocalDefaultText =  "קוד אינטגרטור",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -3843,8 +3749,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DefaultText =  "Availability Date",
 					  						ListFieldLable =  "AvailabilityDateListLable",
 					  						ListLableDefaultText =  "Availability Date",
-					  						ListLocalDefaultTextBack_up =  "תאריך זמינות",
-					  						ListLocalDefaultText =  "BS64:Iteq15DXqNeZ15og15bXnteZ16DXldeqIg==",
+					  						ListLocalDefaultText =  "תאריך זמינות",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -3908,8 +3813,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DefaultText =  "Integrator",
 					  						ListFieldLable =  "IntegratorNameListLable",
 					  						ListLableDefaultText =  "Integrator",
-					  						ListLocalDefaultTextBack_up =  "שם אינטגרטור",
-					  						ListLocalDefaultText =  "BS64:Itep150g15DXmdeg15jXkteo15jXldeoIg==",
+					  						ListLocalDefaultText =  "שם אינטגרטור",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -3972,12 +3876,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "SearchResultName",
 					  						DefaultText =  "Search Result Name",
-					  						FullLocalDefaultTextBack_up =  "תוצאות הבדיקה",
-					  						FullLocalDefaultText =  "BS64:Iteq15XXpteQ15XXqiDXlNeR15PXmden15Qi",
+					  						FullLocalDefaultText =  "תוצאות הבדיקה",
 					  						ListFieldLable =  "SearchResultNameListLable",
 					  						ListLableDefaultText =  "Search Result Name",
-					  						ListLocalDefaultTextBack_up =  "תוצאות הבדיקה",
-					  						ListLocalDefaultText =  "BS64:Iteq15XXpteQ15XXqiDXlNeR15PXmden15Qi",
+					  						ListLocalDefaultText =  "תוצאות הבדיקה",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -4040,12 +3942,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "RequestToAdvanceAQueue",
 					  						DefaultText =  "Request To Advance A Queue",
-					  						FullLocalDefaultTextBack_up =  "סיבת הקדמת תור",
-					  						FullLocalDefaultText =  "BS64:Iteh15nXkdeqINeU16fXk9ee16og16rXldeoIg==",
+					  						FullLocalDefaultText =  "סיבת הקדמת תור",
 					  						ListFieldLable =  "RequestToAdvanceAQueueListLable",
 					  						ListLableDefaultText =  "Request To Advance A Queue",
-					  						ListLocalDefaultTextBack_up =  "סיבת הקדמת תור",
-					  						ListLocalDefaultText =  "BS64:Iteh15nXkdeqINeU16fXk9ee16og16rXldeoIg==",
+					  						ListLocalDefaultText =  "סיבת הקדמת תור",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "RequestToAdvanceAQueue",
 					  						NavigationPropertyName =  "RequestToAdvanceQueue",
@@ -4109,12 +4009,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "RequestDetails",
 					  						DefaultText =  "Request Details",
-					  						FullLocalDefaultTextBack_up =  "פירוט הבקשה",
-					  						FullLocalDefaultText =  "BS64:Itek15nXqNeV15gg15TXkden16nXlCI=",
+					  						FullLocalDefaultText =  "פירוט הבקשה",
 					  						ListFieldLable =  "RequestDetailsListLable",
 					  						ListLableDefaultText =  "Request Details",
-					  						ListLocalDefaultTextBack_up =  "פירוט הבקשה",
-					  						ListLocalDefaultText =  "BS64:Itek15nXqNeV15gg15TXkden16nXlCI=",
+					  						ListLocalDefaultText =  "פירוט הבקשה",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -4177,12 +4075,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "BringQueueForwardIndicatorS",
 					  						DefaultText =  "Bring Queue Forward Indicator Status",
-					  						FullLocalDefaultTextBack_up =  "סטטוס בקשה להקדמת תור",
-					  						FullLocalDefaultText =  "BS64:Iteh15jXmNeV16Eg15HXp9ep15Qg15zXlNen15PXnteqINeq15XXqCI=",
+					  						FullLocalDefaultText =  "סטטוס בקשה להקדמת תור",
 					  						ListFieldLable =  "BringQueueForwardIndicatorSListLable",
 					  						ListLableDefaultText =  "Bring Queue Forward Indicator Status",
-					  						ListLocalDefaultTextBack_up =  "סטטוס בקשה להקדמת תור",
-					  						ListLocalDefaultText =  "BS64:Iteh15jXmNeV16Eg15HXp9ep15Qg15zXlNen15PXnteqINeq15XXqCI=",
+					  						ListLocalDefaultText =  "סטטוס בקשה להקדמת תור",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -4225,22 +4121,22 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
    
 
-			   TextCode PhysicalCheckTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.Q.OpenChecks", DefaultText = @"Open Checks",LocalDefaultText = "BS64:IteR15PXmden15XXqiDXpNeq15XXl9eV16oi", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes,contextTenant);
+			   TextCode PhysicalCheckTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.Q.OpenChecks", DefaultText = @"Open Checks",LocalDefaultText = "בדיקות פתוחות", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes,contextTenant);
 			   Feature PhysicalCheckFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PhysicalCheck.Q.OpenChecks", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, NameTextCodeCode = "PhysicalCheckFeatures.OpenChecks", NameTextCodeDefaultText = "OpenChecks", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,PhysicalCheckObjectTable, addedFeatures, addedTextCodes,contextTenant);
  
 
-			   TextCode PhysicalCheckTextCode_1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.Q.ClosedChecks", DefaultText = @"Closed Checks",LocalDefaultText = "BS64:IteR15PXmden15XXqiDXodeS15XXqNeV16oi", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes,contextTenant);
+			   TextCode PhysicalCheckTextCode_1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.Q.ClosedChecks", DefaultText = @"Closed Checks",LocalDefaultText = "בדיקות סגורות", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes,contextTenant);
 			   Feature PhysicalCheckFeature_1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PhysicalCheck.Q.ClosedChecks", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, NameTextCodeCode = "PhysicalCheckFeatures.ClosedChecks", NameTextCodeDefaultText = "ClosedChecks", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,PhysicalCheckObjectTable, addedFeatures, addedTextCodes,contextTenant);
  
 
-			   TextCode PhysicalCheckTextCode_2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.Q.AllChecks", DefaultText = @"All Checks",LocalDefaultText = "BS64:Iteb15wg15TXkdeT15nXp9eV16oi", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes,contextTenant);
+			   TextCode PhysicalCheckTextCode_2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.Q.AllChecks", DefaultText = @"All Checks",LocalDefaultText = "כל הבדיקות", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes,contextTenant);
 			   Feature PhysicalCheckFeature_2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PhysicalCheck.Q.ByUpcomingChecks", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, NameTextCodeCode = "PhysicalCheckFeatures.ByUpcomingChecks", NameTextCodeDefaultText = "By Upcoming Checks", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,PhysicalCheckObjectTable, addedFeatures, addedTextCodes,contextTenant);
 
 	        //TextCodeRepository.SubmitChanges();
 	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query OpenChecksQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = PhysicalCheckTextCode_0.Id, NameTextCodeCode = PhysicalCheckTextCode_0.Code, ObjectTableName = "Customs.PhysicalCheck", Code = "OpenChecks",  QueryGroupCode = "PHCK", IndexOrder = 0, Tenant = 0, ObjectTableId = PhysicalCheckObjectTable.Id, QuerySection = "Customs.PhysicalCheck", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = PhysicalCheckFeature_0.Id,FeatureUniqeCode= PhysicalCheckFeature_0.FeatureUniqeCode, DefaultSortName = "OpenDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries,contextTenant);
+			  Query OpenChecksQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = PhysicalCheckTextCode_0.Id, NameTextCodeCode = PhysicalCheckTextCode_0.Code, ObjectTableName = "Customs.PhysicalCheck", Code = "OpenChecks",  QueryGroupCode = "PHCK", IndexOrder = 0, Tenant = 0, ObjectTableId = PhysicalCheckObjectTable.Id, QuerySection = "Customs.PhysicalCheck", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = PhysicalCheckFeature_0.Id,FeatureUniqeCode= PhysicalCheckFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries,contextTenant);
 	
 			 QueryColumn OpenChecksQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenChecksQuery.Id,QueryCode = OpenChecksQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.PhysicalCheck.MyCloseCheckBox" , ColumnWidth = 40 }, addedQueryColumns,contextTenant);
 
@@ -4281,7 +4177,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
   
 	      
 
-			  Query ClosedChecksQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = PhysicalCheckTextCode_1.Id, NameTextCodeCode = PhysicalCheckTextCode_1.Code, ObjectTableName = "Customs.PhysicalCheck", Code = "ClosedChecks",  QueryGroupCode = "PHCK", IndexOrder = 1, Tenant = 0, ObjectTableId = PhysicalCheckObjectTable.Id, QuerySection = "Customs.PhysicalCheck", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = PhysicalCheckFeature_1.Id,FeatureUniqeCode= PhysicalCheckFeature_1.FeatureUniqeCode, DefaultSortName = "OpenDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries,contextTenant);
+			  Query ClosedChecksQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = PhysicalCheckTextCode_1.Id, NameTextCodeCode = PhysicalCheckTextCode_1.Code, ObjectTableName = "Customs.PhysicalCheck", Code = "ClosedChecks",  QueryGroupCode = "PHCK", IndexOrder = 1, Tenant = 0, ObjectTableId = PhysicalCheckObjectTable.Id, QuerySection = "Customs.PhysicalCheck", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = PhysicalCheckFeature_1.Id,FeatureUniqeCode= PhysicalCheckFeature_1.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries,contextTenant);
 	
 			 QueryColumn ClosedChecksQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedChecksQuery.Id,QueryCode = ClosedChecksQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.PhysicalCheck.CustomFileNo" , ColumnWidth = 90 }, addedQueryColumns,contextTenant);
 
@@ -4320,7 +4216,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
   
 	      
 
-			  Query ByUpcomingChecksQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = PhysicalCheckTextCode_2.Id, NameTextCodeCode = PhysicalCheckTextCode_2.Code, ObjectTableName = "Customs.PhysicalCheck", Code = "By Upcoming Checks",  QueryGroupCode = "PHCK", IndexOrder = 2, Tenant = 0, ObjectTableId = PhysicalCheckObjectTable.Id, QuerySection = "Customs.PhysicalCheck", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = PhysicalCheckFeature_2.Id,FeatureUniqeCode= PhysicalCheckFeature_2.FeatureUniqeCode, DefaultSortName = "OpenDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries,contextTenant);
+			  Query ByUpcomingChecksQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = PhysicalCheckTextCode_2.Id, NameTextCodeCode = PhysicalCheckTextCode_2.Code, ObjectTableName = "Customs.PhysicalCheck", Code = "By Upcoming Checks",  QueryGroupCode = "PHCK", IndexOrder = 2, Tenant = 0, ObjectTableId = PhysicalCheckObjectTable.Id, QuerySection = "Customs.PhysicalCheck", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = PhysicalCheckFeature_2.Id,FeatureUniqeCode= PhysicalCheckFeature_2.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries,contextTenant);
 	
 			 QueryColumn ByUpcomingChecksQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ByUpcomingChecksQuery.Id,QueryCode = ByUpcomingChecksQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.PhysicalCheck.CustomFileNo" , ColumnWidth = 90 }, addedQueryColumns,contextTenant);
 
@@ -4417,23 +4313,23 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   ObjectTable GeneralObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "General" && d.Tenant == 0).FirstOrDefault();   
 			   ObjectTable PhysicalCheckObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.PhysicalCheck" && d.Tenant == 0).FirstOrDefault();  
                  
-			   TextCode PhysicalCheckGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.TH.General", DefaultText = "General",LocalDefaultText = "BS64:Iteb15zXnNeZIg==", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes,contextTenant);
+			   TextCode PhysicalCheckGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.TH.General", DefaultText = "General",LocalDefaultText = "כללי", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes,contextTenant);
 			   Feature PhysicalCheckGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.PhysicalCheck.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,PhysicalCheckObjectTable,contextTenant);
  
                  
-			   TextCode PhysicalCheckSearchReasultTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.TH.Answer", DefaultText = "Search Reasult",LocalDefaultText = "BS64:Iteq15XXpteQ15XXqiDXkdeT15nXp9eUIg==", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes,contextTenant);
+			   TextCode PhysicalCheckSearchReasultTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.TH.Answer", DefaultText = "Search Reasult",LocalDefaultText = "תוצאות בדיקה", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes,contextTenant);
 			   Feature PhysicalCheckSearchReasultFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PhysicalCheck.Tab.SearchReasult", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, NameTextCodeCode = "PhysicalCheckFeatures.ANPC", NameTextCodeDefaultText = "Search Reasult", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,PhysicalCheckObjectTable,contextTenant);
  
                  
-			   TextCode PhysicalCheckEventsTextCode_TH2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.TH.Events", DefaultText = "Events",LocalDefaultText = "BS64:IteQ15nXqNeV16LXmdedIg==", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes,contextTenant);
+			   TextCode PhysicalCheckEventsTextCode_TH2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.TH.Events", DefaultText = "Events",LocalDefaultText = "אירועים", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes,contextTenant);
 			   Feature PhysicalCheckEventsFeature_TH2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.PhysicalCheck.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,PhysicalCheckObjectTable,contextTenant);
  
                  
-			   TextCode PhysicalCheckCommunicationsTextCode_TH3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.TH.Communications", DefaultText = "Communications",LocalDefaultText = "BS64:Iteq16fXqdeV16jXqiI=", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes,contextTenant);
+			   TextCode PhysicalCheckCommunicationsTextCode_TH3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.TH.Communications", DefaultText = "Communications",LocalDefaultText = "תקשורת", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes,contextTenant);
 			   Feature PhysicalCheckCommunicationsFeature_TH3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "COMMUNICATIONS", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.PhysicalCheck.Features.Communication", NameTextCodeDefaultText = "Communication", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,PhysicalCheckObjectTable,contextTenant);
  
                  
-			   TextCode PhysicalCheckRequestSheetsTextCode_TH4 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.TH.RequestSheets", DefaultText = "Request Sheets",LocalDefaultText = "BS64:IteS15nXnNeZ15XXnyDXkden16nXlCI=", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes,contextTenant);
+			   TextCode PhysicalCheckRequestSheetsTextCode_TH4 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.TH.RequestSheets", DefaultText = "Request Sheets",LocalDefaultText = "גיליון בקשה", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes,contextTenant);
 			   Feature PhysicalCheckRequestSheetsFeature_TH4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "REQUESTSHEET", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.PhysicalCheck.Features.RequestSheets", NameTextCodeDefaultText = "Request Sheets", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,PhysicalCheckObjectTable,contextTenant);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
@@ -4476,8 +4372,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "PCI",
                 EnglishName =  "Limit date change",
-                LocalNameBack_up =  "התקבלו הנחיות לבדיקה פיזית",
-                LocalName =  "BS64:IteU16rXp9eR15zXlSDXlNeg15fXmdeV16og15zXkdeT15nXp9eUINek15nXlteZ16oi",
+                LocalName =  "התקבלו הנחיות לבדיקה פיזית",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",
@@ -4496,8 +4391,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "PCE",
                 EnglishName =  "Inspection End Notice",
-                LocalNameBack_up =  "הודעה על סיום בדיקה פיזית",
-                LocalName =  "BS64:IteU15XXk9ei15Qg16LXnCDXodeZ15XXnSDXkdeT15nXp9eUINek15nXlteZ16oi",
+                LocalName =  "הודעה על סיום בדיקה פיזית",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",
@@ -4516,8 +4410,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "PUI",
                 EnglishName =  "Physical Checks Updated",
-                LocalNameBack_up =  "בדיקה פיזית עודכנה",
-                LocalName =  "BS64:IteR15PXmden15Qg16TXmdeW15nXqiDXoteV15PXm9eg15Qi",
+                LocalName =  "בדיקה פיזית עודכנה",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",
@@ -4536,8 +4429,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "PUC",
                 EnglishName =  "Physical Check Cancelled",
-                LocalNameBack_up =  "בדיקה פיזית בוטלה",
-                LocalName =  "BS64:IteR15PXmden15Qg16TXmdeW15nXqiDXkdeV15jXnNeUIg==",
+                LocalName =  "בדיקה פיזית בוטלה",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",
@@ -4556,8 +4448,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "PCF",
                 EnglishName =  "Physical Checks Created",
-                LocalNameBack_up =  "בדיקה פיזית נוצרה",
-                LocalName =  "BS64:IteR15PXmden15Qg16TXmdeW15nXqiDXoNeV16bXqNeUIg==",
+                LocalName =  "בדיקה פיזית נוצרה",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",
@@ -4576,8 +4467,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "STC",
                 EnglishName =  "Physical Checks Updated",
-                LocalNameBack_up =  "שונה מועד זימון למשקף",
-                LocalName =  "BS64:Itep15XXoNeUINee15XXoteTINeW15nXnteV158g15zXntep16fXoyI=",
+                LocalName =  "שונה מועד זימון למשקף",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",
@@ -4596,8 +4486,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "SRF",
                 EnglishName =  "Inspection End Notice",
-                LocalNameBack_up =  "החזרת מטען מאתר משקף לאחסון",
-                LocalName =  "BS64:IteU15fXlteo16og157XmNei158g157XkNeq16gg157Xqden16Mg15zXkNeX16HXldefIg==",
+                LocalName =  "החזרת מטען מאתר משקף לאחסון",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",
@@ -4616,8 +4505,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "SPR",
                 EnglishName =  "Inspection End Notice",
-                LocalNameBack_up =  "מטען שוחרר מאתר משקף ללקוח",
-                LocalName =  "BS64:Itee15jXotefINep15XXl9eo16gg157XkNeq16gg157Xqden16Mg15zXnNen15XXlyI=",
+                LocalName =  "מטען שוחרר מאתר משקף ללקוח",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",
@@ -4674,8 +4562,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "SFC",
                 EnglishName =  "file summoned for screening site",
-                LocalNameBack_up =  "תיק זומן לבדיקה באתר משקף",
-                LocalName =  "BS64:Iteq15nXpyDXlteV157XnyDXnNeR15PXmden15Qg15HXkNeq16gg157Xqden16Mi",
+                LocalName =  "תיק זומן לבדיקה באתר משקף",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",
@@ -4694,8 +4581,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "PCB",
                 EnglishName =  "Queue Advance Denied",
-                LocalNameBack_up =  "הקדמת תור נדחתה",
-                LocalName =  "BS64:IteU16fXk9ee16og16rXldeoINeg15PXl9eq15Qi",
+                LocalName =  "הקדמת תור נדחתה",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,
@@ -4745,7 +4631,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "dropdownbutton",
 						FeatureId = PhysicalCheckFeature_MB0.Id,
 						Style = null,
-						LocalDefaultText = "BS64:Itek16LXldec15XXqiI=",
+						LocalDefaultText = "פעולות",
 						FeatureUniqeCode = PhysicalCheckFeature_MB0.FeatureUniqeCode,
 						HtmlComponentPath = null,
 						Width = 0,
@@ -4765,7 +4651,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "menuitem",
 						FeatureId=  PhysicalCheckFeature_MB00.Id,
 						Style = null,
-						LocalDefaultText = "BS64:Iteh15LXmdeo16og15HXk9eZ16fXlCI=",
+						LocalDefaultText = "סגירת בדיקה",
                         HtmlComponentPath=null,
                         Width=0,
 						FeatureUniqeCode=  PhysicalCheckFeature_MB00.FeatureUniqeCode,
@@ -4780,103 +4666,103 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   ObjectTable PhysicalCheckObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.PhysicalCheck" && d.Tenant == 0).FirstOrDefault(); 
 
- 		   TextCode PhysicalCheckTextCode_CustomsPhysicalCheckOCustomsQueries = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.CustomsQueries", DefaultText = "Customs Queries",LocalDefaultText = @"BS64:Itep15DXmdec16rXldeqINee15vXoSI=", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode PhysicalCheckTextCode_CustomsPhysicalCheckOCustomsQueries = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.CustomsQueries", DefaultText = "Customs Queries",LocalDefaultText = @"שאילתות מכס", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode PhysicalCheckTextCode_CustomsPhysicalCheckOPhysicalChecks = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.PhysicalChecks", DefaultText = "Physical Checks",LocalDefaultText = @"BS64:IteR15PXmden15XXqiDXpNeZ16HXmdeV16oi", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode PhysicalCheckTextCode_CustomsPhysicalCheckOPhysicalChecks = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.PhysicalChecks", DefaultText = "Physical Checks",LocalDefaultText = @"בדיקות פיסיות", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode PhysicalCheckTextCode_CustomsPhysicalCheckODeclarations = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.Declarations", DefaultText = "Declarations",LocalDefaultText = @"BS64:IteU16bXlNeo15XXqiI=", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode PhysicalCheckTextCode_CustomsPhysicalCheckODeclarations = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.Declarations", DefaultText = "Declarations",LocalDefaultText = @"הצהרות", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode PhysicalCheckTextCode_CustomsPhysicalCheckOFromDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.FromDate", DefaultText = "From Date",LocalDefaultText = @"BS64:IiA6157XqteQ16jXmdeaIg==", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode PhysicalCheckTextCode_CustomsPhysicalCheckOFromDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.FromDate", DefaultText = "From Date",LocalDefaultText = @" :מתאריך", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode PhysicalCheckTextCode_CustomsPhysicalCheckOToDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.ToDate", DefaultText = "To Date",LocalDefaultText = @"BS64:IiA616LXkyDXqteQ16jXmdeaIg==", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode PhysicalCheckTextCode_CustomsPhysicalCheckOToDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.ToDate", DefaultText = "To Date",LocalDefaultText = @" :עד תאריך", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode PhysicalCheckTextCode_CustomsPhysicalCheckOGetAutomaticDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.GetAutomaticDate", DefaultText = "Get Automatic Date",LocalDefaultText = @"BS64:Iten15HXnCDXqteQ16jXmdeaINeQ15XXmNeV157XmNeZIg==", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode PhysicalCheckTextCode_CustomsPhysicalCheckOGetAutomaticDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.GetAutomaticDate", DefaultText = "Get Automatic Date",LocalDefaultText = @"קבל תאריך אוטומטי", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode PhysicalCheckTextCode_CustomsPhysicalCheckOGetAvailableTimeList = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.GetAvailableTimeList", DefaultText = "Get Available Time List",LocalDefaultText = @"BS64:Iten15HXnCDXqNep15nXnteqINeq15DXqNeZ15vXmdedINeW157Xmdeg15nXnSI=", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode PhysicalCheckTextCode_CustomsPhysicalCheckOGetAvailableTimeList = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.GetAvailableTimeList", DefaultText = "Get Available Time List",LocalDefaultText = @"קבל רשימת תאריכים זמינים", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode PhysicalCheckTextCode_CustomsPhysicalCheckOXRayAvailableTimes = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.XRayAvailableTimes", DefaultText = "Available Times",LocalDefaultText = @"BS64:IteW157Xmdeg15XXqiI=", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode PhysicalCheckTextCode_CustomsPhysicalCheckOXRayAvailableTimes = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.XRayAvailableTimes", DefaultText = "Available Times",LocalDefaultText = @"זמינות", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode PhysicalCheckTextCode_CustomsPhysicalCheckOResponse = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.Response", DefaultText = "Response",LocalDefaultText = @"BS64:Iteq16nXldeR15Qi", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode PhysicalCheckTextCode_CustomsPhysicalCheckOResponse = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.Response", DefaultText = "Response",LocalDefaultText = @"תשובה", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode PhysicalCheckTextCode_CustomsPhysicalCheckORequest = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.Request", DefaultText = "Request",LocalDefaultText = @"BS64:IteR16fXqdeUIg==", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode PhysicalCheckTextCode_CustomsPhysicalCheckORequest = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.Request", DefaultText = "Request",LocalDefaultText = @"בקשה", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode PhysicalCheckTextCode_CustomsPhysicalCheckOSend = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.Send", DefaultText = "Send",LocalDefaultText = @"BS64:Itep15zXlyI=", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode PhysicalCheckTextCode_CustomsPhysicalCheckOSend = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.Send", DefaultText = "Send",LocalDefaultText = @"שלח", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode PhysicalCheckTextCode_CustomsPhysicalCheckOChoose = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.Choose", DefaultText = "Choose",LocalDefaultText = @"BS64:IteR15fXqCI=", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode PhysicalCheckTextCode_CustomsPhysicalCheckOChoose = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.Choose", DefaultText = "Choose",LocalDefaultText = @"בחר", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode PhysicalCheckTextCode_CustomsPhysicalCheckFAvailableTimesMessage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.F.AvailableTimesMessage", DefaultText = "Getting Available Times List Completed Successfully",LocalDefaultText = @"BS64:Iten15HXnNeqINeo16nXmdee16og15bXnteZ16DXldeqINeU15XXqdec157XlCDXkdeU16bXnNeX15Qi", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode PhysicalCheckTextCode_CustomsPhysicalCheckFAvailableTimesMessage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.F.AvailableTimesMessage", DefaultText = "Getting Available Times List Completed Successfully",LocalDefaultText = @"קבלת רשימת זמינות הושלמה בהצלחה", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode PhysicalCheckTextCode_CustomsPhysicalCheckFAutomaticDateMessage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.F.AutomaticDateMessage", DefaultText = "Getting Automatic Date Completed Successfully",LocalDefaultText = @"BS64:Iten15HXnNeqINeq15DXqNeZ15og15DXldeY15XXnteY15kg15TXldep15zXnteUINeR15TXptec15fXlCI=", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode PhysicalCheckTextCode_CustomsPhysicalCheckFAutomaticDateMessage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.F.AutomaticDateMessage", DefaultText = "Getting Automatic Date Completed Successfully",LocalDefaultText = @"קבלת תאריך אוטומטי הושלמה בהצלחה", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode PhysicalCheckTextCode_CustomsPhysicalCheckFChooseDateMessage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.F.ChooseDateMessage", DefaultText = "New Limit Date Is Chosen Successfully",LocalDefaultText = @"BS64:Iteq15DXqNeZ15og15TXkteR15zXlCDXl9eT16kg16DXkdeX16gg15HXlNem15zXl9eUIg==", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode PhysicalCheckTextCode_CustomsPhysicalCheckFChooseDateMessage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.F.ChooseDateMessage", DefaultText = "New Limit Date Is Chosen Successfully",LocalDefaultText = @"תאריך הגבלה חדש נבחר בהצלחה", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode PhysicalCheckTextCode_CustomsPhysicalCheckOCheckIdRequierd = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.CheckIdRequierd", DefaultText = "Please Select a check id to request check times",LocalDefaultText = @"BS64:IteQ16DXkCDXkdeX16ggaWQg16HXmdee15XXnyDXm9eT15kg15zXkden16kg16TXotee15nXnSDXodeZ157XldefIg==", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode PhysicalCheckTextCode_CustomsPhysicalCheckOCheckIdRequierd = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.CheckIdRequierd", DefaultText = "Please Select a check id to request check times",LocalDefaultText = @"אנא בחר id סימון כדי לבקש פעמים סימון", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode PhysicalCheckTextCode_CustomsPhysicalCheckOCheckSiteRequierd = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.CheckSiteRequierd", DefaultText = "Please Select a check site to request check times",LocalDefaultText = @"BS64:IteQ16DXkCDXkdeX16gg15DXqteoINeU157Xl9eQ15Qg15zXkden16kg16TXotee15nXnSDXodeZ157XldefIg==", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode PhysicalCheckTextCode_CustomsPhysicalCheckOCheckSiteRequierd = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.CheckSiteRequierd", DefaultText = "Please Select a check site to request check times",LocalDefaultText = @"אנא בחר אתר המחאה לבקש פעמים סימון", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode PhysicalCheckTextCode_CustomsPhysicalCheckOQueueTypeRequierd = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.QueueTypeRequierd", DefaultText = "Please Select a queue type to request check times",LocalDefaultText = @"BS64:IteQ16DXkCDXkdeX16gg16HXldeSINeU16rXldeoINec15HXp9epINek16LXnteZ150g16HXmdee15XXnyI=", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode PhysicalCheckTextCode_CustomsPhysicalCheckOQueueTypeRequierd = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.QueueTypeRequierd", DefaultText = "Please Select a queue type to request check times",LocalDefaultText = @"אנא בחר סוג התור לבקש פעמים סימון", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode PhysicalCheckTextCode_CustomsPhysicalCheckOFromDateLess = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.FromDateLess", DefaultText = "From date must be less than to date",LocalDefaultText = @"BS64:Itee157Xldei15Mg15fXmdeZ15Eg15zXlNeZ15XXqiDXpNeX15XXqiDXniDXoteTINeb15Qi", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode PhysicalCheckTextCode_CustomsPhysicalCheckOFromDateLess = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.FromDateLess", DefaultText = "From date must be less than to date",LocalDefaultText = @"ממועד חייב להיות פחות מ עד כה", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode PhysicalCheckTextCode_CustomsPhysicalCheckOByUpComingChecks = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.ByUpComingChecks", DefaultText = "By UpComing Checks",LocalDefaultText = @"BS64:IteR15PXmden15XXqiDXpNeZ15bXmdeV16oi", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode PhysicalCheckTextCode_CustomsPhysicalCheckOByUpComingChecks = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.ByUpComingChecks", DefaultText = "By UpComing Checks",LocalDefaultText = @"בדיקות פיזיות", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode PhysicalCheckTextCode_CustomsPhysicalCheckOWaitingResponse = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.WaitingResponse", DefaultText = "Waiting Response...",LocalDefaultText = @"BS64:Itee15fXm9eUINeq15LXldeR15QgLi4uIg==", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode PhysicalCheckTextCode_CustomsPhysicalCheckOWaitingResponse = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.WaitingResponse", DefaultText = "Waiting Response...",LocalDefaultText = @"מחכה תגובה ...", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode PhysicalCheckTextCode_CustomsPhysicalCheckOSelectFromAvailableTimes = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.SelectFromAvailableTimes", DefaultText = "Please Select a date from the available times",LocalDefaultText = @"BS64:IteQ16DXkCDXkdeX16gg16rXkNeo15nXmiDXnteq15XXmiDXpNei157XmdedINeU15bXnteZ16DXldeqIg==", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode PhysicalCheckTextCode_CustomsPhysicalCheckOSelectFromAvailableTimes = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.SelectFromAvailableTimes", DefaultText = "Please Select a date from the available times",LocalDefaultText = @"אנא בחר תאריך מתוך פעמים הזמינות", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode PhysicalCheckTextCode_CustomsPhysicalCheckOAskForAnEarlierDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.AskForAnEarlierDate", DefaultText = "Ask for an earlier date",LocalDefaultText = @"BS64:Iten15HXnCDXqteQ16jXmdeaINee15XXp9eT150g15nXldeq16gi", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode PhysicalCheckTextCode_CustomsPhysicalCheckOAskForAnEarlierDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.AskForAnEarlierDate", DefaultText = "Ask for an earlier date",LocalDefaultText = @"קבל תאריך מוקדם יותר", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode PhysicalCheckTextCode_CustomsPhysicalCheckOAskForAnLaterDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.AskForAnLaterDate", DefaultText = "Ask for an later date",LocalDefaultText = @"BS64:Iten15HXnCDXqteQ16jXmdeaINee15DXldeX16gg15nXldeq16gi", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode PhysicalCheckTextCode_CustomsPhysicalCheckOAskForAnLaterDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.AskForAnLaterDate", DefaultText = "Ask for an later date",LocalDefaultText = @"קבל תאריך מאוחר יותר", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode PhysicalCheckTextCode_CustomsPhysicalCheckOPhysicalCheck = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.PhysicalCheck", DefaultText = "Physical Check",LocalDefaultText = @"BS64:IteR15PXmden15Qg16TXmdeW15nXqiI=", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode PhysicalCheckTextCode_CustomsPhysicalCheckOPhysicalCheck = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.PhysicalCheck", DefaultText = "Physical Check",LocalDefaultText = @"בדיקה פיזית", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode PhysicalCheckTextCode_CustomsPhysicalCheckOCargoIdentifier = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.CargoIdentifier", DefaultText = "Cargo Identifier",LocalDefaultText = @"BS64:Iteg16rXldeg15kg157XmNei158i", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode PhysicalCheckTextCode_CustomsPhysicalCheckOCargoIdentifier = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.CargoIdentifier", DefaultText = "Cargo Identifier",LocalDefaultText = @"נתוני מטען", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode PhysicalCheckTextCode_CustomsPhysicalCheckOcargoIdentifierType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.cargoIdentifierType", DefaultText = "Cargo Identifier Type",LocalDefaultText = @"BS64:Itee15bXlNeUINee15jXotefIg==", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode PhysicalCheckTextCode_CustomsPhysicalCheckOcargoIdentifierType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.cargoIdentifierType", DefaultText = "Cargo Identifier Type",LocalDefaultText = @"מזהה מטען", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode PhysicalCheckTextCode_CustomsPhysicalCheckOCargoIdentifierKey1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.CargoIdentifierKey1", DefaultText = "Cargo Identifier Key1",LocalDefaultText = @"BS64:Itee15bXlNeUINee15jXotefINeo15DXqdeV158i", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode PhysicalCheckTextCode_CustomsPhysicalCheckOCargoIdentifierKey1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.CargoIdentifierKey1", DefaultText = "Cargo Identifier Key1",LocalDefaultText = @"מזהה מטען ראשון", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode PhysicalCheckTextCode_CustomsPhysicalCheckOCargoIdentifierKey2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.CargoIdentifierKey2", DefaultText = "Cargo Identifier key2",LocalDefaultText = @"BS64:Itee15bXlNeUINee15jXotefINep16DXmSI=", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode PhysicalCheckTextCode_CustomsPhysicalCheckOCargoIdentifierKey2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.CargoIdentifierKey2", DefaultText = "Cargo Identifier key2",LocalDefaultText = @"מזהה מטען שני", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode PhysicalCheckTextCode_CustomsPhysicalCheckOContainerNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.ContainerNumber", DefaultText = "Container Number",LocalDefaultText = @"BS64:Itee16HXpNeoINee15vXldec15Qi", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode PhysicalCheckTextCode_CustomsPhysicalCheckOContainerNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.ContainerNumber", DefaultText = "Container Number",LocalDefaultText = @"מספר מכולה", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode PhysicalCheckTextCode_CustomsPhysicalCheckOPhysicalData = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.PhysicalData", DefaultText = "Physical Data",LocalDefaultText = @"BS64:Iteg16rXldeg15kg15HXk9eZ16fXlCDXpNeZ15bXmdeqIg==", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode PhysicalCheckTextCode_CustomsPhysicalCheckOPhysicalData = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.PhysicalData", DefaultText = "Physical Data",LocalDefaultText = @"נתוני בדיקה פיזית", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode PhysicalCheckTextCode_CustomsPhysicalCheckOCheckId = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.CheckId", DefaultText = "Check Id ",LocalDefaultText = @"BS64:Itee16HXpNeoINeR15PXmden15Qi", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode PhysicalCheckTextCode_CustomsPhysicalCheckOCheckId = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.CheckId", DefaultText = "Check Id ",LocalDefaultText = @"מספר בדיקה", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode PhysicalCheckTextCode_CustomsPhysicalCheckOOperationCode = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.OperationCode", DefaultText = "Operation Code",LocalDefaultText = @"BS64:Iten15XXkyDXpNei15XXnNeUIg==", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode PhysicalCheckTextCode_CustomsPhysicalCheckOOperationCode = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.OperationCode", DefaultText = "Operation Code",LocalDefaultText = @"קוד פעולה", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode PhysicalCheckTextCode_CustomsPhysicalCheckOStatusMessage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.StatusMessage", DefaultText = "Status Message",LocalDefaultText = @"BS64:Iteh15XXkiDXlNeV15PXoteUIg==", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode PhysicalCheckTextCode_CustomsPhysicalCheckOStatusMessage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.StatusMessage", DefaultText = "Status Message",LocalDefaultText = @"סוג הודעה", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode PhysicalCheckTextCode_CustomsPhysicalCheckOImporterNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.ImporterNumber", DefaultText = "Importer Number",LocalDefaultText = @"BS64:Itec16fXldeXIg==", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode PhysicalCheckTextCode_CustomsPhysicalCheckOImporterNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.ImporterNumber", DefaultText = "Importer Number",LocalDefaultText = @"לקוח", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode PhysicalCheckTextCode_CustomsPhysicalCheckOStorageSiteNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.StorageSiteNumber", DefaultText = "Storage Site Number",LocalDefaultText = @"BS64:IteQ16rXqCDXkNeX16HXldefIg==", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode PhysicalCheckTextCode_CustomsPhysicalCheckOStorageSiteNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.StorageSiteNumber", DefaultText = "Storage Site Number",LocalDefaultText = @"אתר אחסון", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode PhysicalCheckTextCode_CustomsPhysicalCheckOCheckSiteNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.CheckSiteNumber", DefaultText = "Check Site Number",LocalDefaultText = @"BS64:IteQ16rXqCDXkdeT15nXp9eUIg==", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode PhysicalCheckTextCode_CustomsPhysicalCheckOCheckSiteNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.CheckSiteNumber", DefaultText = "Check Site Number",LocalDefaultText = @"אתר בדיקה", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode PhysicalCheckTextCode_CustomsPhysicalCheckOCargoTypeCode = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.CargoTypeCode", DefaultText = "Cargo Type Code",LocalDefaultText = @"BS64:Iteh15XXkiDXnteY16LXnyI=", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode PhysicalCheckTextCode_CustomsPhysicalCheckOCargoTypeCode = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.CargoTypeCode", DefaultText = "Cargo Type Code",LocalDefaultText = @"סוג מטען", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode PhysicalCheckTextCode_CustomsPhysicalCheckOQueueType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.QueueType", DefaultText = "Queue Type",LocalDefaultText = @"BS64:Iteh15XXkiDXqteV16gi", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode PhysicalCheckTextCode_CustomsPhysicalCheckOQueueType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.QueueType", DefaultText = "Queue Type",LocalDefaultText = @"סוג תור", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode PhysicalCheckTextCode_CustomsPhysicalCheckOLimitDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.LimitDate", DefaultText = "Limit Date",LocalDefaultText = @"BS64:Iteq15DXqNeZ15og15TXkdeT15nXp9eUIg==", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode PhysicalCheckTextCode_CustomsPhysicalCheckOLimitDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.LimitDate", DefaultText = "Limit Date",LocalDefaultText = @"תאריך הבדיקה", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode PhysicalCheckTextCode_CustomsPhysicalCheckOOpenData = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.OpenData", DefaultText = "Open Data",LocalDefaultText = @"BS64:Iteq15DXqNeZ15og15bXmdee15XXnyDXlNeR15PXmden15Qi", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode PhysicalCheckTextCode_CustomsPhysicalCheckOOpenData = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.OpenData", DefaultText = "Open Data",LocalDefaultText = @"תאריך זימון הבדיקה", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode PhysicalCheckTextCode_CustomsPhysicalCheckOCheckType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.CheckType", DefaultText = "Check Type",LocalDefaultText = @"BS64:Iteh15XXkiDXlNeR15PXmden15Qi", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode PhysicalCheckTextCode_CustomsPhysicalCheckOCheckType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.CheckType", DefaultText = "Check Type",LocalDefaultText = @"סוג הבדיקה", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode PhysicalCheckTextCode_CustomsPhysicalCheckOConnectedEntity = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.ConnectedEntity", DefaultText = "Connected Entity",LocalDefaultText = @"BS64:IteZ16nXldeZ15XXqiDXp9ep15XXqNeV16oi", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode PhysicalCheckTextCode_CustomsPhysicalCheckOConnectedEntity = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.ConnectedEntity", DefaultText = "Connected Entity",LocalDefaultText = @"ישויות קשורות", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode PhysicalCheckTextCode_CustomsPhysicalCheckODeclarationId = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.DeclarationId", DefaultText = "Declaration ID",LocalDefaultText = @"BS64:Itee16HXpNeoINeU16bXlNeo15Qi", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode PhysicalCheckTextCode_CustomsPhysicalCheckODeclarationId = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.DeclarationId", DefaultText = "Declaration ID",LocalDefaultText = @"מספר הצהרה", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode PhysicalCheckTextCode_CustomsPhysicalCheckOCustomFileNo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.CustomFileNo", DefaultText = "Custom File No.",LocalDefaultText = @"BS64:Iteq15nXpyDXotee15nXnNeV16oi", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode PhysicalCheckTextCode_CustomsPhysicalCheckOCustomFileNo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.CustomFileNo", DefaultText = "Custom File No.",LocalDefaultText = @"תיק עמילות", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode PhysicalCheckTextCode_CustomsPhysicalCheckOEndDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.EndDate", DefaultText = "End Date",LocalDefaultText = @"BS64:Itee15XXoteTINeh15nXldedINeU15HXk9eZ16fXlCI=", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode PhysicalCheckTextCode_CustomsPhysicalCheckOEndDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.EndDate", DefaultText = "End Date",LocalDefaultText = @"מועד סיום הבדיקה", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode PhysicalCheckTextCode_CustomsPhysicalCheckOGeneralDetails = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.GeneralDetails", DefaultText = "General Details",LocalDefaultText = @"BS64:Iteg16rXldeg15kg15HXk9eZ16fXlCDXpNeZ15bXmdeqIg==", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode PhysicalCheckTextCode_CustomsPhysicalCheckOGeneralDetails = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.GeneralDetails", DefaultText = "General Details",LocalDefaultText = @"נתוני בדיקה פיזית", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode PhysicalCheckTextCode_CustomsPhysicalCheckORequestToAdvanceAQueue = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.RequestToAdvanceAQueue", DefaultText = "Request To Advance A Queue",LocalDefaultText = @"BS64:Iteh15nXkdeqINeU16fXk9ee16og16rXldeoIg==", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode PhysicalCheckTextCode_CustomsPhysicalCheckORequestToAdvanceAQueue = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.RequestToAdvanceAQueue", DefaultText = "Request To Advance A Queue",LocalDefaultText = @"סיבת הקדמת תור", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode PhysicalCheckTextCode_CustomsPhysicalCheckORequestDetails = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.RequestDetails", DefaultText = "Request Details",LocalDefaultText = @"BS64:Itek15nXqNeV15gg15TXkden16nXlCI=", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode PhysicalCheckTextCode_CustomsPhysicalCheckORequestDetails = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.RequestDetails", DefaultText = "Request Details",LocalDefaultText = @"פירוט הבקשה", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
    
 	    
