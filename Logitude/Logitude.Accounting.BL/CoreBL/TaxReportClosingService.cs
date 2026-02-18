@@ -81,7 +81,7 @@ namespace Logitude.Accounting.BL.CoreBL
             int reco_cancelled = 0;
             TaxReportQueryService taxReportQueryService = new TaxReportQueryService(tenant);
             List<TaxReportLineForErrors> reconciledLines = null;
-            var canHaveClosingJournal = taxReportQueryService.CheckIfTaxReportCanHaveClosingJournal(taxReportId, fullAccountingSettings.VATOutputGLAccountId, tenant, ref reconciledLines);
+            var canHaveClosingJournal = taxReportQueryService.CheckIfTaxReportCanHaveClosingJournal(taxReportId, fullAccountingSettings.VATOutputGLAccountId, fullAccountingSettings.VATInputsGLAccountId, tenant, ref reconciledLines);
             if (!canHaveClosingJournal)
             {
                 if (reconciledLines != null && reconciledLines.Count > 0)
@@ -143,7 +143,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 if (reco_cancelled > 0)
                 {
                     reconciledLines = null;
-                    canHaveClosingJournal = taxReportQueryService.CheckIfTaxReportCanHaveClosingJournal(taxReportId, fullAccountingSettings.VATOutputGLAccountId, tenant, ref reconciledLines);
+                    canHaveClosingJournal = taxReportQueryService.CheckIfTaxReportCanHaveClosingJournal(taxReportId, fullAccountingSettings.VATOutputGLAccountId, fullAccountingSettings.VATInputsGLAccountId, tenant, ref reconciledLines);
                 }
                 if (!canHaveClosingJournal)
                 {
