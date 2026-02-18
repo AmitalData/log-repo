@@ -1,47 +1,47 @@
 declare var window: any;
-import { Component, AfterViewInit, ChangeDetectorRef, Output, Input } from '@angular/core';
-import { EntityArgs } from '../../../../../Infrastructure/DataContracts/EntityArgs';
-import { AppTool } from '../../../../../Infrastructure/Tools';
-import { SessionLocator } from '../../../../../Infrastructure/Utilities/SessionLocator';
-import { TextCodeTranslator } from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
-import { BaseComponent } from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import { ObservableCollection } from '../../../../../Infrastructure/Utilities/ObservableCollection';
-import { ConfirmWindow } from '../../../../../Controls/Windows/ConfirmWindow';
-import { MessageWindow } from '../../../../../Controls/Windows/MessageWindow';
-import { ServiceResponse } from '../../../../../Infrastructure/DataContracts/ServiceResponse';
-import { LogitudeWindow } from '../../../../../Controls/Windows/LogitudeWindow';
-import { DeclarationDisplayOnlyChecks, DisplayOnlyCheckResult } from '../../../../../Customs/Utilities/DeclarationDisplayOnlyChecks';
-import { DeclarationPM } from '../../../../../Customs/EntityPMs/DeclarationPM';
-import { SupplierInvoicePM } from '../../../../../Customs/EntityPMs/SupplierInvoicePM';
-import { DeclarationErrorView } from '../../../../../Customs/EntityPMs/Extended/DeclarationErrorView';
-import { DeclarationConstraintPM } from '../../../../../Customs/EntityPMs/DeclarationConstraintPM';
-import { DeclarationEventManager } from '../../../../../Customs/Utilities/DeclarationEventManager';
-import { DeclarationWebService } from '../../../../../Customs/Services/WebServices/DeclarationWebService';
-import { DeclarationPMService } from '../../../../../Customs/Services/StandardPMs/DeclarationPMService';
-import { ConstraintApprovalRequestParams } from '../../../../../Customs/DataContract/RequestParams/ConstraintApprovalRequestParams';
-declare var UploadLogoFile, HideImage, SetImage, ArrayBufferToBase64: any;
+import {Component, AfterViewInit, ChangeDetectorRef, Output, Input}  from '@angular/core';
+import {EntityArgs} from '../../../../../Infrastructure/DataContracts/EntityArgs';
+import {AppTool} from '../../../../../Infrastructure/Tools';
+import {SessionLocator} from '../../../../../Infrastructure/Utilities/SessionLocator';
+import {TextCodeTranslator} from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
+import {BaseComponent} from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import {ObservableCollection} from '../../../../../Infrastructure/Utilities/ObservableCollection';
+import {ConfirmWindow} from '../../../../../Controls/Windows/ConfirmWindow';
+import {MessageWindow} from '../../../../../Controls/Windows/MessageWindow';
+import {ServiceResponse} from '../../../../../Infrastructure/DataContracts/ServiceResponse';
+import {LogitudeWindow} from '../../../../../Controls/Windows/LogitudeWindow';
+import {DeclarationDisplayOnlyChecks, DisplayOnlyCheckResult} from '../../../../../Customs/Utilities/DeclarationDisplayOnlyChecks';
+import {DeclarationPM} from '../../../../../Customs/EntityPMs/DeclarationPM';
+import {SupplierInvoicePM} from '../../../../../Customs/EntityPMs/SupplierInvoicePM';
+import {DeclarationErrorView} from '../../../../../Customs/EntityPMs/Extended/DeclarationErrorView';
+import {DeclarationConstraintPM} from '../../../../../Customs/EntityPMs/DeclarationConstraintPM';
+import {DeclarationEventManager} from '../../../../../Customs/Utilities/DeclarationEventManager';
+import {DeclarationWebService} from '../../../../../Customs/Services/WebServices/DeclarationWebService';
+import {DeclarationPMService} from '../../../../../Customs/Services/StandardPMs/DeclarationPMService';
+import {ConstraintApprovalRequestParams} from '../../../../../Customs/DataContract/RequestParams/ConstraintApprovalRequestParams';
+declare var UploadLogoFile, HideImage , SetImage, ArrayBufferToBase64: any;
 
 // Send Request
-import { INF_MSG_GenericResponseData } from '../../../../../Customs/DataContract/ResponseData/INF_MSG_GenericResponseData';
+import {INF_MSG_GenericResponseData} from '../../../../../Customs/DataContract/ResponseData/INF_MSG_GenericResponseData';
 import { CustomMessageProgressComponent } from '../../../../../CustomsModules/CustomsControls/Components/CustomMessageProgressComponent';
-import { DeclarationMessagesService } from '../../../../../Customs/Services/WebServices/DeclarationMessagesService';
-import { SendRequestVIA } from '../../../../../Customs/DataContract/RequestParams/RequestParamsBase';
-import { EntityResourceService } from '../../../../../Infrastructure/Services/EntityResourceService';
+import {DeclarationMessagesService} from '../../../../../Customs/Services/WebServices/DeclarationMessagesService';
+import {SendRequestVIA} from '../../../../../Customs/DataContract/RequestParams/RequestParamsBase';
+import {EntityResourceService} from '../../../../../Infrastructure/Services/EntityResourceService';
 import { DeclarationEditComponentController } from '../../../../../Customs/Controller/DeclarationEditComponentController';
 import { CustomsSettingExtendedListService } from '../../../../../Customs/Services/ExtendedLists/CustomsSettingExtendedListService';
 import { DeclarationExtendedListService } from '../../../../../Customs/Services/ExtendedLists/DeclarationExtendedListService';
 import { SessionInfo } from 'Infrastructure/Utilities/SessionInfo';
 import { ImageLibraryService } from 'Common/Services/Others/ImageLibraryService';
 import { Guid } from 'Infrastructure/Utilities/Guid';
-
-@Component({
+ 
+@Component({    
     templateUrl: './CustomsAnswersComponent.html',
-    providers: [DeclarationExtendedListService, ImageLibraryService],
-    selector: "CustomsAnswer"
+    providers: [DeclarationExtendedListService,ImageLibraryService],
+    selector:"CustomsAnswer"
 })
 
 export class CustomsAnswersComponent extends BaseComponent implements AfterViewInit {
-    public AnswerType = AnswerType;
+    public AnswerType= AnswerType; 
     public EntityPM: DeclarationPM;
     public ObjectTableName: string = "Customs.Declaration";
     public DataContext: any = this;
@@ -69,10 +69,10 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
     @Input() IsAmendmentErrors: boolean;
     @Input() IsExportCloseErrors: boolean;
     public get DepositionStatusCode(): string {
-        if (this.EntityPM == null) return null;
+        if (this.EntityPM == null) return null; 
         return this.EntityPM.DepositionStatusCode;
     }
-
+    
     DepositionStatusCodeIcon: string = "";
     IsDepositionStatusCodeButton: boolean = false;
     IsDepositionStatusCodeSendDigital: boolean = false;
@@ -82,27 +82,27 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
     private declarationWebService: DeclarationWebService = new DeclarationWebService;
     private declarationMessagesService: DeclarationMessagesService = new DeclarationMessagesService;
     private declarationPMService: DeclarationPMService = new DeclarationPMService;
-    src: string = "";
+    src:string="";
     //#region TextCodes translations
-    textcode_CollateralRequest: string;
-    textcode_RequestedAmount: string;
-    textcode_CollateralRequestStatusCode: string;
-    textcode_PaymentNumber: string;
-    textcode_AgentObjection: string;
-    textcode_DenialReason: string;
+    textcode_CollateralRequest: string           ;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
+    textcode_RequestedAmount: string             ;
+    textcode_CollateralRequestStatusCode: string ;
+    textcode_PaymentNumber: string               ;
+    textcode_AgentObjection: string              ;
+    textcode_DenialReason: string                ;
     textcode_ApprovalReason: string;
 
 
     //#endregion
     private CurrentSession = SessionLocator.SelectedSession;
-    constructor(public entityArgs: EntityArgs, public cd: ChangeDetectorRef, private EntityResourceService: EntityResourceService, public declarationExtendedListService: DeclarationExtendedListService, public _imageLibraryService: ImageLibraryService) {
+    constructor(public entityArgs: EntityArgs, public cd: ChangeDetectorRef, private EntityResourceService: EntityResourceService, public declarationExtendedListService: DeclarationExtendedListService,public _imageLibraryService: ImageLibraryService) {
         super();
         this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsCollateralsAnswer").subscribe();
-        this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response: any) => {
-            this.EntityResourceService.getEntityResourceByTableName("Customs.DeclarationConstraint").subscribe((response: any) => {
-                this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsCollateral").subscribe((response: any) => {
-                    this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsCollateralsCondition").subscribe((response: any) => {
-                        this.EntityResourceService.getEntityResourceByTableName("Customs.PaymentOrder").subscribe((response: any) => {
+        this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response:any) => {
+            this.EntityResourceService.getEntityResourceByTableName("Customs.DeclarationConstraint").subscribe((response:any) => {
+                this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsCollateral").subscribe((response:any) => {
+                    this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsCollateralsCondition").subscribe((response:any) => {
+                        this.EntityResourceService.getEntityResourceByTableName("Customs.PaymentOrder").subscribe((response:any) => {                          
                             this.EntityPM = this.entityArgs.EntityPM;
                             this.IsCourierDeclaration = this.EntityPM.IsCourierDeclaration;
                             //this.DepositionStatusCode = this.EntityPM.DepositionStatusCode;
@@ -140,38 +140,38 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
             this.SetScreenFieldsEditability();
         }
 
-
+        
 
     }
 
-    ngAfterViewInit() {
-
+     ngAfterViewInit() {
+        
         this.LoadLogo()
         this.SetFilter();
     }
-    LoadLogo() {
-
+    LoadLogo(){
+       
         this._imageLibraryService.DownloadFile("minilogo" + SessionInfo.LoggedUserTenant, "png", "logos", SessionInfo.LoggedUserTenant).subscribe((res: any) => {
             var pmResponse: ServiceResponse = res;
-
+            
             this.CurrentSession.StopBusyIndicator();
 
             if (!pmResponse.HasError) {
                 var result = pmResponse.Result;
-
+                
                 if (result) {
-                    this.src = result;
-                }
+                    this.src=result;
+                } 
 
-            }
-
+            } 
+          
         });
-
+      
     }
 
 
 
-    SetFilter() {
+     SetFilter() {
         var myDeclarationEditComponentController = this.CurrentSession.CurrentEditComponent.EditComponentController as DeclarationEditComponentController;
         if (myDeclarationEditComponentController.CustomsAnswersShowManifest) {
             this.CourierFilterSelectedValue = 'Manifest';
@@ -187,8 +187,8 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
         }
     }
 
-    private Listen() {
-
+    private   Listen() {
+        
         if (this.CurrentSession.CurrentEditComponent != null) {
 
             this.CurrentEditComponentId = this.CurrentSession.CurrentEditComponent.ComponentId;
@@ -223,7 +223,7 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
                 })
             );
         }
-
+        
     }
 
     SetScreenFieldsEditability() {
@@ -258,7 +258,7 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
         this.IsDisplayOnly = this.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayMode;
         if (this.EntityPM.AmendmentMessage != null && this.EntityPM.AmendmentMessage != "") {
             {
-                this.IsDisplayMessage = true;
+            this.IsDisplayMessage = true;
 
                 this.DisplayOnlyMessage = this.EntityPM.AmendmentMessage;
                 if (this.EntityPM.IsAmendmentDisplayOnly) this.IsDisplayOnly = this.EntityPM.IsAmendmentDisplayOnly;
@@ -275,14 +275,14 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
             this.ShowStorageStatusMessage = true;
             this.DisplayOnlyMessage = TextCodeTranslator.Translate("Customs.Declaration.O.StorageRequestStatus") + " " + this.EntityPM.StorageStatusName;
         }
-
+        
         var declarationDisplayOnlyChecks: DeclarationDisplayOnlyChecks = new DeclarationDisplayOnlyChecks();
         declarationDisplayOnlyChecks.DeclarationViewDisplayOnlyChecks(this.EntityPM).subscribe((response: ServiceResponse) => {
             var displayOnlyCheckResult: DisplayOnlyCheckResult = response.Result;
             this.IsDisplayOnly = displayOnlyCheckResult.IsDisplayOnly;
             if (this.EntityPM.AmendmentMessage != null && this.EntityPM.AmendmentMessage != "") {
                 {
-                    this.IsDisplayMessage = true;
+                this.IsDisplayMessage = true;
 
                     this.DisplayOnlyMessage = this.EntityPM.AmendmentMessage;
                     if (this.EntityPM.IsAmendmentDisplayOnly) this.IsDisplayOnly = this.EntityPM.IsAmendmentDisplayOnly;
@@ -290,16 +290,13 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
             }
 
             else if (this.IsDisplayOnly) {
-                const prefix = (TextCodeTranslator.Translate("Customs.Declaration.O.DisplayOnly") || "").trim();
-                const msg = (displayOnlyCheckResult.DisplayOnlyMessage || "").trim();
-
-                this.DisplayOnlyMessage = msg.startsWith(prefix) ? msg : (prefix + msg);
+                this.DisplayOnlyMessage = TextCodeTranslator.Translate("Customs.Declaration.O.DisplayOnly") + displayOnlyCheckResult.DisplayOnlyMessage;
             }
             else if (this.EntityPM.StorageStatusCode) {
                 this.ShowStorageStatusMessage = true;
                 this.DisplayOnlyMessage = TextCodeTranslator.Translate("Customs.Declaration.O.StorageRequestStatus") + " " + this.EntityPM.StorageStatusName;
             }
-
+       
             this.SetScreenFieldsEditability();
             this.SendConstraintDisplayOnly();
             DeclarationEventManager.DisplayModeChanged.emit(this.IsDisplayOnly);
@@ -322,7 +319,7 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
             });
         }
     }
-
+ 
     //#region Filter Methods
     IsErrorsVisible: boolean = true;
     IsConstraintsVisible: boolean = true;
@@ -412,7 +409,7 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
     AllConstraintCount: number = 0;
     // get errors code
     ReloadDeclarationErrors() {
-        this.CurrentSession.StartBusyIndicatorLoading();
+         this.CurrentSession.StartBusyIndicatorLoading();
 
         //[1] GetDeclarationConstraints();
         this.declarationWebService.GetDeclarationConstraintsByDeclrationId(this.EntityPM.Id)
@@ -474,16 +471,17 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
         //var declarationConstraints = [];
         for (var constraint of constraints) {
             var error = decErrors.find(d => d.ConstraintId == constraint.ConstraintNumber);
+        
+            var item = new ConstraintLineModel(error, constraint,this);
 
-            var item = new ConstraintLineModel(error, constraint, this);
+            if (this.EntityPM.Direction=="E" &&  constraint.ConstraintStatusCode != "5" && constraint.ConstraintStatusCode != "8" && constraint.ConstraintStatusCode != "7")
+          {
+            item.isDisplayOfSecound=true;
+            item.displayOnly=false;
+            
+          }  
 
-            if (this.EntityPM.Direction == "E" && constraint.ConstraintStatusCode != "5" && constraint.ConstraintStatusCode != "8" && constraint.ConstraintStatusCode != "7") {
-                item.isDisplayOfSecound = true;
-                item.displayOnly = false;
-
-            }
-
-
+                     
 
             this.ConstraintsList.push(item);
         }
@@ -518,7 +516,7 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
     }
     errorsForDeclaration;
     LoadDeclarationErrors() {
-        //[2] GetDeclarationErrors();
+         //[2] GetDeclarationErrors();
         this.CurrentSession.StartBusyIndicatorLoading();//Avoiding ReSend !!
         this.declarationWebService.GetDeclarationErrors(this.EntityPM.Id, this.ListVersionId, this.CourierFilterSelectedValue, this.IsAmendmentErrors, this.IsExportCloseErrors)
             .subscribe((myServiceResponse: ServiceResponse) => {
@@ -582,7 +580,7 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
             if (error.ListVersionId == "1") {
                 // var item = new ErrorModel(error);
                 //this.Errorslist.Insert(error);
-                errorsList.push(error);
+                errorsList.push(error); 
             }
             else if (error.ListVersionId == "4" || error.ListVersionId == "5") {
                 //this.Warninglist.Insert(error);
@@ -628,17 +626,17 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
         }
 
         this.CurrentSession.StopBusyIndicator();
-
-        var currentError = this.SelectedRowsByType.get(AnswerType.Error);
-        if (currentError) {
-            var newMatchedError = (this.Errorslist.Collection as unknown as DeclarationErrorView[]).filter(d => d.Field == currentError.Field && d.LineNumber == currentError.LineNumber)[0];
-            this.SelectedRowsByType.set(AnswerType.Error, newMatchedError);
+    
+        var currentError=this.SelectedRowsByType.get(AnswerType.Error);
+        if(currentError){
+            var newMatchedError=(this.Errorslist.Collection as unknown as DeclarationErrorView[]).filter(d => d.Field == currentError.Field && d.LineNumber == currentError.LineNumber)[0];
+            this.SelectedRowsByType.set(AnswerType.Error,newMatchedError);
         }
 
-        var currentWarning = this.SelectedRowsByType.get(AnswerType.Warning);
-        if (currentWarning) {
-            var newMatchedWarning = (this.Warninglist.Collection as unknown as DeclarationErrorView[]).filter(d => d.Field == currentWarning.Field && d.LineNumber == currentWarning.LineNumber)[0];
-            this.SelectedRowsByType.set(AnswerType.Warning, newMatchedWarning);
+        var currentWarning=this.SelectedRowsByType.get(AnswerType.Warning);
+        if(currentWarning){
+            var newMatchedWarning=(this.Warninglist.Collection as unknown as DeclarationErrorView[]).filter(d => d.Field == currentWarning.Field && d.LineNumber == currentWarning.LineNumber)[0];
+            this.SelectedRowsByType.set(AnswerType.Warning,newMatchedWarning);  
         }
     }
 
@@ -673,12 +671,12 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
     }
 
     GetResourceForTableName(tableName: string, errors: DeclarationErrorView[]) {
-
+        
         // var tableName = tables.pop();
         if (tableName == 'Customs.SupplierInvioceItemsCertificate') {
             tableName = 'Customs.SupplierInvioceItemCertificat';
         }
-        this.EntityResourceService.getEntityResourceByTableName(tableName).subscribe((response: any) => {
+        this.EntityResourceService.getEntityResourceByTableName(tableName).subscribe((response:any) => {
             // this.GetResourceForTableName(tables);
             if (this.errorsLength != 1) {
                 this.errorsLength--;
@@ -696,7 +694,7 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
         if (this.EntityPM.IsDirty) {
             this.CurrentSession.CurrentEditComponent.SaveChanges();
 
-            var event: any = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+            var event:any = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
 
                 if (event) {
                     event.unsubscribe();
@@ -749,7 +747,7 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
         requestParams.RequestVIA = this.RequestVIA;
 
 
-        CustomMessageProgressComponent.ShowProgressBar(this.CurrentSession, requestParams.PBId, TextCodeTranslator.Translate("Customs.Declaration.O.SendRrquestConsstraintApproval"), true).then((res) => {
+        CustomMessageProgressComponent.ShowProgressBar(this.CurrentSession,requestParams.PBId, TextCodeTranslator.Translate("Customs.Declaration.O.SendRrquestConsstraintApproval"), true).then((res) => {
 
             this.ResponseData = res;
             console.log("Response/ShowProgressBar : ", this.ResponseData);
@@ -775,14 +773,14 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
 
     //#region XML Errors
     public SelectedConstraint: DeclarationErrorView;
-    public SelectedRowsByType = new Map<AnswerType, DeclarationErrorView>();
-    EditEntity(error: any, answerType: AnswerType) {
-        let declarationError = error;
+    public SelectedRowsByType= new Map<AnswerType, DeclarationErrorView>();
+    EditEntity(error: any,answerType:AnswerType) {
+        let declarationError=error;
 
-        if (answerType == AnswerType.Constraint) {
-            declarationError = error.hasNoError ? null : error.declarationError;
-            this.SelectedConstraint = error;
-        } else {
+        if(answerType==AnswerType.Constraint){
+            declarationError=error.hasNoError? null: error.declarationError;
+            this.SelectedConstraint=error;
+        }else{
             this.SelectedRowsByType.set(answerType, declarationError);
         }
         if (AppTool.IsNullOrEmpty(declarationError)) {
@@ -819,7 +817,7 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
                             this.cd.reattach();
                             var timertoken = setTimeout(() => {
                                 this.cd.detectChanges();
-                            }, 100);
+                            },100);
                         });
 
                         break;
@@ -875,7 +873,7 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
                                         this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                                     }
                                 });
-                                logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/AddEditSupplierInvoiceComponent');
+                              logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/AddEditSupplierInvoiceComponent');
                                 this.CurrentSession.StopBusyIndicator();
 
                                 // Remove DetectChanges from answer tab
@@ -884,8 +882,7 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
                                     this.cd.reattach();
                                     var timertoken = setTimeout(() => {
                                         this.cd.detectChanges();
-                                    }, 100);
-                                });
+                                    }, 100);                                });
 
                             }
                             else {
@@ -916,10 +913,10 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
 
 
                                 var supplierInvoicePM = response.Result;
-
+                             
 
                                 if (!AppTool.IsNullOrEmpty(supplierInvoicePM)) {
-
+                               
 
 
                                     this.CurrentSession.StartBusyIndicatorLoading();
@@ -958,7 +955,7 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
                                             this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                                         }
                                     });
-                                    logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/AddEditSupplierInvoiceComponent');
+                                  logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/AddEditSupplierInvoiceComponent');
                                     this.CurrentSession.StopBusyIndicator();
 
                                     // Remove DetectChanges from answer tab
@@ -967,8 +964,7 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
                                         this.cd.reattach();
                                         var timertoken = setTimeout(() => {
                                             this.cd.detectChanges();
-                                        }, 100);
-                                    });
+                                        }, 100);                                    });
                                 }
                                 else {
                                     var window = new MessageWindow();
@@ -1036,7 +1032,7 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
                                                 this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                                             }
                                         });
-                                        logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/SupplierInvoiceItem/SupplierInvoiceItemCertificatesComponent');
+                                      logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/SupplierInvoiceItem/SupplierInvoiceItemCertificatesComponent');
                                         //end open certificate
 
                                         // Remove DetectChanges from answer tab
@@ -1045,8 +1041,7 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
                                             this.cd.reattach();
                                             var timertoken = setTimeout(() => {
                                                 this.cd.detectChanges();
-                                            }, 100);
-                                        });
+                                            }, 100);                                        });
                                     }
                                     this.CurrentSession.StopBusyIndicator();
 
@@ -1106,7 +1101,7 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
                 {
                     if (this.EntityPM.Direction == "E")
                         title = TextCodeTranslator.Translate("Customs.Declaration.O.Export");
-                    else
+                        else
                         title = TextCodeTranslator.Translate("Customs.Declaration");
 
 
@@ -1156,7 +1151,7 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
     currenctPageIndex: number = 1;
     currenctStartIndex: number = 0;
     currenctEndIndex: number = this.pageSize;
-
+    
     ConstraintNavigationButtonClicked(dir: string) {
 
         if (dir == "next") {
@@ -1233,14 +1228,14 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
     private GetDepositionDefaults(CustomerCode: string) {
         var myCustomsSettingExtendedListService = new CustomsSettingExtendedListService();
         myCustomsSettingExtendedListService.GetDefault("ISRAEL", "CGG_SHARE_DESPO", "NON", "NON", SessionLocator.Tenant)
-            .subscribe((response: any) => {
+            .subscribe((response:any) => {
                 this.IsDepositionStatusCodeButton = false;
                 this.IsDepositionStatusCodeSendDigital = false;
                 if (!response.HasError && response.Result != null && response.Result.DefaultValue == "Y") {
 
 
                     myCustomsSettingExtendedListService.GetDefault("ISRAEL", "GGG_BOX_ACTIVAT", "NON", CustomerCode, SessionLocator.Tenant)
-                        .subscribe((response: any) => {
+                        .subscribe((response:any) => {
                             this.IsDepositionStatusCodeButton = false;
                             this.IsDepositionStatusCodeSendDigital = false;
                             //this.DepositionStatusCodeIcon = "./Images/LogBox/DSV/U_LOGBOX.png";
@@ -1249,8 +1244,8 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
                                 this.IsDepositionStatusCodeButton = true;
                             }
                             myCustomsSettingExtendedListService.GetDefault("ISRAEL", "GGG_LBL_ACTIVAT", "NON", CustomerCode, SessionLocator.Tenant)
-                                .subscribe((res: any) => {
-
+                                .subscribe((res:any) => {
+                                    
                                     if (!res.HasError && res.Result != null && res.Result.DefaultValue == "Y") {
                                         this.IsDepositionStatusCodeButton = true;
                                         this.IsDepositionStatusCodeSendDigital = true;
@@ -1285,7 +1280,7 @@ export enum AnswerType {
 export class ConstraintLineModel extends BaseComponent {
 
     private declarationWebService: DeclarationWebService = new DeclarationWebService;
-    isDisplayOfSecound = null;
+   isDisplayOfSecound=null;
     lineHeight: number = 62;
     hasNoError: boolean = false;
     parent: CustomsAnswersComponent;
@@ -1293,7 +1288,7 @@ export class ConstraintLineModel extends BaseComponent {
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(private declarationError: DeclarationErrorView, private constraintPM: DeclarationConstraintPM, Parent: CustomsAnswersComponent) {
         super();
-
+       
         this.parent = Parent;
         if (AppTool.IsNullOrEmpty(this.declarationError)) {
             this.hasNoError = true;
@@ -1301,8 +1296,8 @@ export class ConstraintLineModel extends BaseComponent {
         }
 
         this.textcode_TableNameTextCode = TextCodeTranslator.Translate(this.declarationError.TableNameTextCode);
-        if (this.isDisplayOfSecound != null)
-            this.UIProperties.SetEnabled("AgentExplanation", "Customs.DeclarationConstraint", !this.parent.IsDisplayOnly);
+        if(this.isDisplayOfSecound!=null)
+        this.UIProperties.SetEnabled("AgentExplanation", "Customs.DeclarationConstraint", !this.parent.IsDisplayOnly);
         this.ManageScreensVisibility();
 
         this.displayOnly = this.parent.IsDisplayOnly;
@@ -1313,7 +1308,7 @@ export class ConstraintLineModel extends BaseComponent {
             this.UIProperties.SetEnabled("AgentExplanation", "Customs.DeclarationConstraint", true);
             this.displayOnly = false;
         }
-
+        
     }
 
 
@@ -1646,7 +1641,7 @@ export class ConstraintLineModel extends BaseComponent {
     ApprovalDenaialTitle = "";
 
     ViewConstraintDetails() {
-
+       
         var constraint = this.constraintPM;
 
         if (constraint.ApprovalDecision == "2") {
@@ -1724,7 +1719,7 @@ export class ConstraintLineModel extends BaseComponent {
                     cmpRef.instance.BackCompleted.subscribe(($event: any) => {
                     });
                 });
-
+                
         }
 
     }
@@ -1738,7 +1733,7 @@ export class ConstraintLineModel extends BaseComponent {
             logitudeWindow.WindowArgs = { CurrentEntity: this.Collateral };
             logitudeWindow.Height = 730;
             logitudeWindow.Width = 660;
-            logitudeWindow.Show('./CustomsModules/CustomsCollateral/Components/CustomsCollateralComponent');
+          logitudeWindow.Show('./CustomsModules/CustomsCollateral/Components/CustomsCollateralComponent');
             // Remove DetectChanges from answer tab
             this.parent.cd.detach();
             logitudeWindow.WindowClosed.subscribe(() => {

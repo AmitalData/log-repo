@@ -2805,20 +2805,6 @@ this.quantityTypeMessageService.GetQuantityType(code, this.declarationPM.Directi
         if (this.IsDisplayOnly)
             return; // go back -_-
 
-        if (!this.EntityPM.SupplierInvoiceItems) {
-            this.EntityPM.SupplierInvoiceItems = [];
-        }
-
-        let maxLine = 0;
-        for (const x of this.EntityPM.SupplierInvoiceItems) {
-            const ln = Number((x as any).LineNumber ?? (x as any).lineNumber) || 0;
-            if (ln > maxLine) maxLine = ln;
-        }
-
-        if (isNaN(this.EntityPM.InvoiceItemLastLineNumber) || this.EntityPM.InvoiceItemLastLineNumber < maxLine) {
-            this.EntityPM.InvoiceItemLastLineNumber = maxLine;
-        }
-
         var line: number = 0;
         var sequence: number = 0;
         if (this.EntityPM.SupplierInvoiceItems.length > 0) {
@@ -2831,14 +2817,22 @@ this.quantityTypeMessageService.GetQuantityType(code, this.declarationPM.Directi
             line = 0;
         }
 
-        var items = this.EntityPM.SupplierInvoiceItems.sort((a, b) => {
-            return (a.SequenceNumeric === b.SequenceNumeric) ? 0 : (a.SequenceNumeric < b.SequenceNumeric) ? -1 : 1
-        });
 
+        //if (this.EntityPM.FullItemsCount < 500 || AppTool.IsNullOrEmpty(this.EntityPM.FullItemsCount)) {
+
+        // var items = this.EntityPM.SupplierInvoiceItems..sort(d => d.SequenceNumeric);
+        var items = this.EntityPM.SupplierInvoiceItems.sort((a, b) => { return (a.SequenceNumeric === b.SequenceNumeric) ? 0 : (a.SequenceNumeric < b.SequenceNumeric) ? -1 : 1 });
         if (items.length == 0) sequence = 0;
         else {
-            sequence = items[items.length - 1].SequenceNumeric;
+            sequence = items[this.EntityPM.SupplierInvoiceItems.length - 1].SequenceNumeric;
         }
+
+
+        //}
+        //else {
+        //    sequence = this.EntityPM.FullItemsCount;
+
+        //}
 
         line += 1;
         sequence += 1;
@@ -2851,17 +2845,15 @@ this.quantityTypeMessageService.GetQuantityType(code, this.declarationPM.Directi
         item.OrderByLineNo = line.toString();
         item.SequenceNumeric = sequence;
         item.LastCopyFromOrderNo = "10000";
-
-        if (isNaN(this.EntityPM.FullChildrenCount)) this.EntityPM.FullChildrenCount = 0;
-        if (isNaN(this.EntityPM.FullItemsCount)) this.EntityPM.FullItemsCount = 0;
-        if (isNaN(this.EntityPM.MaxSequence)) this.EntityPM.MaxSequence = 0;
-
         this.EntityPM.FullChildrenCount++;
         this.ChildrenCount = "(" + this.EntityPM.FullChildrenCount + ")";
+
 
         if (!this.EntityPM.SupplierInvoiceItems.includes(item)) {
             this.EntityPM.AddSupplierInvoiceItem(item);
             this.ItemsSource.Insert(new SupplierInvoiceItemLine(item, this, this.allowExport));
+            //this.CurrentSession.ResetRowIndex();
+            if (isNaN(this.EntityPM.FullItemsCount)) this.EntityPM.FullItemsCount = 0;
 
             this.EntityPM.FullItemsCount = this.EntityPM.FullItemsCount + 1;
             this.EntityPM.MaxSequence = this.EntityPM.MaxSequence + 1;

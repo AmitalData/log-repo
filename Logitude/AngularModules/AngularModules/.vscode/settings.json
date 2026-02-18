@@ -1,9 +1,4 @@
 {
     "typescript.tsdk": "node_modules\\typescript\\lib",
-    "editor.minimap.maxColumn": 50,
-    "workbench.colorCustomizations": {
-        "activityBar.background": "#2B2E33",
-        "titleBar.activeBackground": "#3C4048",
-        "titleBar.activeForeground": "#FAFAFB"
-    }
+    "editor.minimap.maxColumn": 50
 }
