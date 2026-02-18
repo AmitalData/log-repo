@@ -28,13 +28,8 @@ namespace Simplog.Global.Data.GlobalModel.Repositories
                     where a.Status == "W" && a.From == fromSide
                     select a).OrderBy(d => d.Retries).FirstOrDefault();
         }
-		public AnalyzeQueue GetOpenAnalyzeQueueBySubject(string subject)
-		{
-			return (from a in context.AnalyzeQueues.Include("AnalyzeQueueStatus").Include("TenantManagement")
-					where a.Status == "W" && a.Subject == subject
-					select a).OrderBy(d => d.Retries).FirstOrDefault();
-		}
-		public AnalyzeQueue GetSingleAnalyzeQueue(string id, int tenant)
+
+        public AnalyzeQueue GetSingleAnalyzeQueue(string id, int tenant)
         {
             return (from a in context.AnalyzeQueues.Include("AnalyzeQueueStatus").Include("TenantManagement")
                     where a.Id == id 

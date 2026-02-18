@@ -80,13 +80,15 @@ namespace CustomsWorkerRole
                                                                                                                                            //if (StorageAcountDetails.NameSpaceManager.QueueExists(emailQueueName))
                                                                                                                                            //{
                                                                                                                                            //    StorageAcountDetails.NameSpaceManager.DeleteQueue(emailQueueName);
+                                                                                                                                           //}
+
 
                 myClass = this.GetType().Name;
-                _CustomDbQueueService = new CustomDbQueueService(SBQueueNames.SendDataToExternalServicesBQ.ToString(), SettingUtil.GetTenantDBFromConfig(), queueDefinitionCode: this.BatchServiceCode );
+				_CustomDbQueueService = new CustomDbQueueService(SBQueueNames.SendDataToExternalServicesBQ.ToString(), SettingUtil.GetTenantDBFromConfig());
 
-                int tenantConfig = SettingUtil.GetTenantDBFromConfig();
-                var customsEnvironmentSettingQueryService = new CustomsEnvironmentSettingQueryService(tenantConfig);
-                var customsEnvironmentSettingPM = customsEnvironmentSettingQueryService.GetEnvironmentSettingPM(tenantConfig) ?? new CustomsEnvironmentSettingPM();
+
+                var customsEnvironmentSettingQueryService = new CustomsEnvironmentSettingQueryService(1);
+                var customsEnvironmentSettingPM = customsEnvironmentSettingQueryService.GetEnvironmentSettingPM() ?? new CustomsEnvironmentSettingPM();
 
                 if (CustomDbQueueService.SupportedRabbitMQList.Contains(SBQueueNames.SendDataToExternalServicesBQ.ToString()) && CustomDbQueueService.IsFeatureOnRABBITMQ_Communication() && customsEnvironmentSettingPM.UseRabbitMQ)
                 {
@@ -163,7 +165,7 @@ namespace CustomsWorkerRole
                 else
                 {
                     var myClass = this.GetType().Name;
-                    _CustomDbQueueService = new CustomDbQueueService(SBQueueNames.SendDataToExternalServicesBQ.ToString(), SettingUtil.GetTenantDBFromConfig(), queueDefinitionCode: this.BatchServiceCode);
+                    _CustomDbQueueService = new CustomDbQueueService(SBQueueNames.SendDataToExternalServicesBQ.ToString(), SettingUtil.GetTenantDBFromConfig());
                 }
             }
             catch (Exception ex)

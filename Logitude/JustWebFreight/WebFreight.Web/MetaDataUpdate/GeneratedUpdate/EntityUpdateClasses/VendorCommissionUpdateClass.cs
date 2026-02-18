@@ -23,7 +23,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class VendorCommissionUpdateClass
    {  		
-		public const string HashString = "ce1877401e905dd336054eaae8fcac41";
+		public const string HashString = "452cd24d6c31498ab3c2a02ca4052c73";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -58,13 +58,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    InActive =  false,
 			      				    IsSaveButtonVisible =  false,
 			      				    IsComposition =  false,
-			      				    EnableSecurity =  true,
+			      				    EnableSecurity =  false,
 			      				    AllowCustomFields =  false,
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "VendorCommission",
-			      				    Code =  "8124",
+			      				    Code =  "e490",
 			      				    Name =  "Customs.VendorCommission Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",

@@ -11,7 +11,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
     {
         ICommonDataContext commonDataContext;
 
-
+        public DWHSettingRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
 
         public DWHSettingRepository(ICommonDataContext context)
         {
