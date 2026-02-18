@@ -209,13 +209,6 @@
         background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
     }
 
-    .search-spinner{
-        width: 15px;
-        position: absolute;
-        left: 1px;
-        top: 4px;
-    }
-
 </style>
 
 <div style="position: absolute; top:0px; bottom:0px; left:0px; right:0px;margin:auto; background:white;" *ngIf="IsDemoTenant">
@@ -511,7 +504,6 @@
                         </ng-container>
 
                          <td style="width: 250px; vertical-align: middle;" [class.DeclarationsTable]="DeclarationsTable">
-                              <img class="search-spinner" src="./Images/LoginScreen/indicator.gif" *ngIf="searchRun">
                               <SearchTextBox (click)="showRecentSearches()" [appSearchListDDL]="searchDropdownOptions" (optionSelected)="searchDropdownSelected($event)" [DDLsettings]="fastSearchSettings" [IsDisabled]="SeachBoxIsDisabled || !SelectedQuery" [SearchText]="searchFields" [ObjectTableName]="ObjectTableName" (SearchTextChangeEvent)="onSearchTextChangeEvent($event)" [DataCy]="'Search' + ObjectTableName" [QuerySection] = "SelectedQuery?.QuerySection"></SearchTextBox>
                         </td>
 
