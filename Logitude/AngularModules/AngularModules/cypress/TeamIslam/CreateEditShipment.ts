@@ -13,8 +13,8 @@ export class CreateEditShipment {
   }
 }
 
-describe('CreateEditShipment Tests', () => {
-  it('Create Shipment Successfully', () => {
+
+it('Create Shipment Successfully', () => {
   cy.get('#GeneralMHOperations').click()
   cy.get('.DefaultMenuItem:first').click();
   cy.contains('Operation').click()
@@ -67,8 +67,6 @@ describe('CreateEditShipment Tests', () => {
 
 
 
-
-})
 
 })
 

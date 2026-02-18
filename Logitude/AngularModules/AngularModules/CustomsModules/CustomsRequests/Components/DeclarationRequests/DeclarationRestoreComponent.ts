@@ -19,7 +19,6 @@ import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
 import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 import { DeclarationDisplayOnlyChecks, DisplayOnlyCheckResult } from '../../../../Customs/Utilities/DeclarationDisplayOnlyChecks';
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
-import { DeclarationPMService } from 'Customs/Services/StandardPMs/DeclarationPMService';
 
 @Component({
     selector: 'DeclarationRestoreComponent',    
@@ -36,7 +35,6 @@ export class DeclarationRestoreComponent
     public CustomFileLable ="תיק עמילת / מכס";
     _DeclarationExtendedListService: DeclarationExtendedListService = new DeclarationExtendedListService();
     _DeclarationMessagesService: DeclarationMessagesService = new DeclarationMessagesService();
-    declarationPMService: DeclarationPMService = new DeclarationPMService();
 
     _MyResponseObjectToShow: any = null;
     _UserMessagehidden: boolean = true;
@@ -66,9 +64,9 @@ export class DeclarationRestoreComponent
     SetMenuArg(MenuArg) {
         this.RequestParams = MenuArg;
         this.OnMassageDisplayMethod();
-        this.checkExistDeclarationData();
+        //this.CustomFileNo = MenuArg.CustomFileNo;
+        //this.DeclarationNumber= MenuArg.DeclarationNumber;
     }
-
     DueChangeClearChildField(sourceIsCostomFile: boolean): void {
         this.UIProperties.SetValidity("CustomFileNo", this.ObjectTableName, true, "");
         this.UIProperties.SetValidity("DeclarationNumber", this.ObjectTableName, true, "");
@@ -96,10 +94,7 @@ export class DeclarationRestoreComponent
                 return;
             }
         }
-        
-        if(!this.disableEditDeclarationNumber)
-            this.DueChangeClearChildField(true);
-        
+        this.DueChangeClearChildField(true);
         this.CurrentSession.StartBusyIndicator("");
         this._DeclarationExtendedListService.GetSingleDeclarationByCustomFileNo(this.CustomFileNo)
             .subscribe((myResponse: ServiceResponse) => {
@@ -122,10 +117,8 @@ export class DeclarationRestoreComponent
                 return;
             }
         }
+        this.DueChangeClearChildField(false);
 
-        if(!this.disableEditCustomFileNo)
-            this.DueChangeClearChildField(false);
-        
         this.CurrentSession.StartBusyIndicator("")
         this._DeclarationExtendedListService.GetSingleDeclarationByNumber(this.DeclarationNumber, SessionLocator.Tenant)
             .subscribe((myResponse: ServiceResponse) => {
@@ -167,19 +160,7 @@ export class DeclarationRestoreComponent
         this.UIProperties.SetValidity("CustomFileNo", this.ObjectTableName, false, msg);
     }
 
-    disableEditDeclarationNumber:boolean = false;
-    disableEditCustomFileNo:boolean = false;
-    originalDeclarationNumber: string = "";
-
-    checkExistDeclarationData() {
-        this.originalDeclarationNumber = this.DeclarationNumber;
-        this.disableEditDeclarationNumber = !AppTool.IsNullOrEmpty(this.DeclarationNumber) ? true : false;
-        this.disableEditCustomFileNo = !AppTool.IsNullOrEmpty(this.CustomFileNo) ? true : false;
-        this.UIProperties.SetEnabled("DeclarationNumber", this.ObjectTableName, !this.disableEditDeclarationNumber);
-        this.UIProperties.SetEnabled("CustomFileNo", this.ObjectTableName, !this.disableEditCustomFileNo);
-        this.UIProperties.SetValidity("CustomFileNo", this.ObjectTableName, true, "");
-        this.UIProperties.SetValidity("DeclarationNumber", this.ObjectTableName, true, "");
-    }
+    
 
     get CustomFileNo() { return this.RequestParams ? this.RequestParams.CustomsFile : null; }
     set CustomFileNo(value: string) {
@@ -252,25 +233,6 @@ export class DeclarationRestoreComponent
         }
     }
 
-    declarationPM: DeclarationPM = null;
-
-    saveDeclarationNuber() {
-        if(AppTool.IsNullOrEmpty(this.DeclarationNumber) || this.originalDeclarationNumber === this.DeclarationNumber)
-            return;
-
-        this.declarationPMService.get(this.DeclarationId).subscribe((response: ServiceResponse) => {
-            if (response.HasError || response?.Result === null)
-                return;
-            this.declarationPM = response?.Result;
-            this.declarationPM.DeclarationNumber = this.DeclarationNumber;
-
-            this.declarationPMService.update(this.declarationPM).subscribe((response: ServiceResponse) => {
-                this.declarationPM = response?.Result;                
-                this.originalDeclarationNumber = this.DeclarationNumber;
-                this.checkExistDeclarationData();
-            });
-        });
-    }
 
     OnCustomSendOptionsButtonClick(customSendOptionsArgs: CustomSendOptionsArgs) {
 
@@ -313,7 +275,7 @@ export class DeclarationRestoreComponent
 
             return;
         }
-        
+
         if (!AppTool.IsNullOrEmpty(this.CustomFileNo)) {
             var declarationDisplayOnlyChecks: DeclarationDisplayOnlyChecks = new DeclarationDisplayOnlyChecks();
             declarationDisplayOnlyChecks.CheckIfRequestInProgress("2715", this.CustomFileNo, SessionLocator.Tenant)
@@ -392,8 +354,6 @@ async FullDeclarationRestore(){
   return res;
 }
     async SendDeclarationRestoreRequest(customSendOptionsArgs: CustomSendOptionsArgs) {
-        this.saveDeclarationNuber();
-
         var IsUpdateDB=false
         var IsDeclarationRestoreUpdate = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "DRU")[0]? true : false;
 

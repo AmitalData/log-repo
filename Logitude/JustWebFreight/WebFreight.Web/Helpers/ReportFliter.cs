@@ -25,7 +25,6 @@ namespace WebFreight.Web.Helpers
         public string ReportName { get; set; }
         public string ReportKey { get; set; }
         public string DefaultTemplateId { get; set; }
-        public string DefaultExcelNoStimId { get; set; }
         public int DefaultTemplateVsersion { get; set; }
         public int PageCount { get; set; }
         public bool ReportsRunUsingWR { get; set; }

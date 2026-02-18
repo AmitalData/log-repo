@@ -9,16 +9,5 @@
         public const string Banks = "5";
         public const string Works = "6";
         public const string DebtorsAndCreditors = "7";
-
-        public static readonly string[] All =
-        {
-            Revenues,
-            Expenses,
-            Customers,
-            Vendors,
-            Banks,
-            Works,
-            DebtorsAndCreditors
-        };
     }
 }
