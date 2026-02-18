@@ -26,7 +26,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class LedgerTransactionUpdateClass
    {  		
-		public const string HashString = "145b3298568f4a1d6ae994cb2eca6ada";
+		public const string HashString = "21b3fe9dbe2e8c0e63ed5869b09c1685";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -965,12 +965,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CurrencyId",
 					  						DefaultText =  "Currency",
-					  						FullLocalDefaultTextBack_up =  "מזהה מטבע",
-					  						FullLocalDefaultText =  "BS64:Itee15bXlNeUINee15jXkdeiIg==",
+					  						FullLocalDefaultTextBack_up =  "מטבע",
+					  						FullLocalDefaultText =  "BS64:Itee15jXkdeiIg==",
 					  						ListFieldLable =  "CurrencyIdListLable",
 					  						ListLableDefaultText =  "Currency",
-					  						ListLocalDefaultTextBack_up =  "מזהה מטבע",
-					  						ListLocalDefaultText =  "BS64:Itee15bXlNeUINee15jXkdeiIg==",
+					  						ListLocalDefaultTextBack_up =  "מטבע",
+					  						ListLocalDefaultText =  "BS64:Itee15jXkdeiIg==",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "Currency",
 					  						NavigationPropertyName =  "Currency",
@@ -2742,12 +2742,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CurrencySign",
 					  						DefaultText =  "Currency",
-					  						FullLocalDefaultTextBack_up =  "סימן מטבע",
-					  						FullLocalDefaultText =  "BS64:Iteh15nXntefINee15jXkdeiIg==",
+					  						FullLocalDefaultTextBack_up =  "מטבע",
+					  						FullLocalDefaultText =  "BS64:Itee15jXkdeiIg==",
 					  						ListFieldLable =  "CurrencySignListLable",
 					  						ListLableDefaultText =  "Currency",
-					  						ListLocalDefaultTextBack_up =  "סימן מטבע",
-					  						ListLocalDefaultText =  "BS64:Iteh15nXntefINee15jXkdeiIg==",
+					  						ListLocalDefaultTextBack_up =  "מטבע",
+					  						ListLocalDefaultText =  "BS64:Itee15jXkdeiIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -2809,12 +2809,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "OpenAmountCurrencySign",
 					  						DefaultText =  "Open Amount Currency Sign",
-					  						FullLocalDefaultTextBack_up =  "סימן מטבע סכום פתוח",
-					  						FullLocalDefaultText =  "BS64:Iteh15nXntefINee15jXkdeiINeh15vXldedINek16rXldeXIg==",
+					  						FullLocalDefaultTextBack_up =  "מטבע",
+					  						FullLocalDefaultText =  "BS64:Itee15jXkdeiIg==",
 					  						ListFieldLable =  "OpenAmountCurrencySignListLable",
 					  						ListLableDefaultText =  "Open Amount Currency Sign",
-					  						ListLocalDefaultTextBack_up =  "סימן מטבע סכום פתוח",
-					  						ListLocalDefaultText =  "BS64:Iteh15nXntefINee15jXkdeiINeh15vXldedINek16rXldeXIg==",
+					  						ListLocalDefaultTextBack_up =  "מטבע",
+					  						ListLocalDefaultText =  "BS64:Itee15jXkdeiIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -4772,7 +4772,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						IsListFilter =  false,
-					  						Operator =  "StartsWith",
+					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -5872,10 +5872,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode LedgerTransactionTextCode_LedgerTransactionOVatRreporting = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.VatRreporting", DefaultText = "VAT Reporting",LocalDefaultText = @"BS64:IteT15XXldeXINeU157XoiLXniI=", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
  		   TextCode LedgerTransactionTextCode_LedgerTransactionOReconciledInDraft = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.ReconciledInDraft", DefaultText = "There are lines that have been reconciled, the references must be disconnected from the draft: ",LocalDefaultText = @"BS64:IteZ16nXoNedINep15XXqNeV16og16nXlNeV16rXkNee15UgLNeZ16kg15zXoNeq16cg15DXqiDXlNeQ16HXnteb16rXkNeV16og157XlNeY15nXldeY15Q6ICI=", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
-
- 		   TextCode LedgerTransactionTextCode_LedgerTransactionOTotalLocalAmount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.TotalLocalAmount", DefaultText = "TotalLocalAmount",LocalDefaultText = @"BS64:Iteh15vXldedINeR16ki15ci", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
-
- 		   TextCode LedgerTransactionTextCode_LedgerTransactionOTotalForeignAmount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.TotalForeignAmount", DefaultText = "Total Foreign Amount",LocalDefaultText = @"BS64:Iteh15vXldedINeR157XmCLXliI=", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
    
 	    

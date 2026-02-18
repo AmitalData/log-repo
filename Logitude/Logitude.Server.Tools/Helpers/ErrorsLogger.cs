@@ -1,11 +1,24 @@
-﻿using Logitude.SystemLogs;
+﻿using Logitude.CRM.Data.EntityPOCOs;
+using Logitude.SystemLogs;
 using Logitude.SystemLogs.POCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.Helpers;
+using Simplog.Global.Data.GlobalModel;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Server.Infrastructure;
+using Simplog.Server.Infrastructure.Helpers;
 using System;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.Common;
 using System.Data.SqlClient;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Transactions;
 using System.Web;
 
 namespace Logitude.Server.Tools.Helpers

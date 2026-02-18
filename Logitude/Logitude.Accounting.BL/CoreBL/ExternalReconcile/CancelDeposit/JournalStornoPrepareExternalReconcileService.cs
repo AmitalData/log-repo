@@ -69,11 +69,26 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile.CancelDeposit
             }
             var orginalJornalLedgerTransactions = FetchlTransactionOfOriginalJournal(_JournalToVoidPM.Id, _JournalToVoidPM.Tenant);
 
-           
+            //IN DEPOSIT - WE debit bank  CREDIT THE KUPA
+            List<JournalLinePM> journalLinePMs = _JournalToVoidPM.JournalLines.Where(r => r.ActionTypeCodeEnum == JournalActionTypeEnum.Debit).ToList();
+            if (journalLinePMs.Count!=1)
+            {
+                throw new ApplicationException("IN DEPOSIT - WE debit bank  CREDIT THE cashbook - only one debit allowed");
+                return false;
+            }
             var journalLineDebitBank = _JournalToVoidPM.JournalLines.Where(r => r.ActionTypeCodeEnum == JournalActionTypeEnum.Debit).First();
             var theStornoDebitLines = theStorno.JournalLines.Where(r => r.ActionTypeCodeEnum == JournalActionTypeEnum.Debit).ToList();
             var theVoidDebitLines = _JournalToVoidPM.JournalLines.Where(r => r.ActionTypeCodeEnum == JournalActionTypeEnum.Debit).ToList();
-          
+            if (
+                theStornoDebitLines.Count != 1
+                ||
+                theVoidDebitLines.Count != 1
+                
+                )
+            {
+                throw new ApplicationException("IN DEPOSIT - WE debit bank  CREDIT THE cashbook - only one debit allowed");
+                return false;
+            }
             if (
                 theStornoDebitLines.First().DebitAccountId 
                 !=
