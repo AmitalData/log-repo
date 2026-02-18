@@ -163,8 +163,8 @@ export class HomeComponent implements OnDestroy{
         this.LayoutDirection = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
 
         if (ObjectsLocator.GlobalSetting) {
-          // if (ObjectsLocator.GlobalSetting?.WorkEnvironment == "customs") {
-            if (ObjectsLocator.GlobalSetting?.WorkEnvironment == "customs" || !ObjectsLocator.LoggedUserPM.DontShowLocal) {
+          // if (ObjectsLocator.GlobalSetting.WorkEnvironment == "customs") {
+            if (ObjectsLocator.GlobalSetting.WorkEnvironment == "customs" || !ObjectsLocator.LoggedUserPM.DontShowLocal) {
                 this.SystemFontFamily = 'Arial'; //'OpenSans-Regular';
                 isNewSignupTenant = false;
             }
@@ -189,7 +189,7 @@ export class HomeComponent implements OnDestroy{
     InitializeProcess(){
         this.processMenuService.LoadMenuItems();
         this.processMenuService.processCount$.subscribe(count => {
-            if (this.countCompletedProcesses != null && count > this.countCompletedProcesses ) {
+            if (this.countCompletedProcesses != null && count > this.countCompletedProcesses) {
                 this.setCountBlink = true;
             }
             this.countCompletedProcesses  = count;
@@ -330,7 +330,7 @@ export class HomeComponent implements OnDestroy{
             this.IsDataBackupVisible = true;
         }
 
-        if (SessionLocator.LoggedUserPM.IsCustomerCare || ObjectsLocator.GlobalSetting?.DeploymentStage == "Dev") {
+        if (SessionLocator.LoggedUserPM.IsCustomerCare || ObjectsLocator.GlobalSetting.DeploymentStage == "Dev") {
             this.IsFillLocalStorageVisible = true;
         }
 
@@ -348,7 +348,7 @@ export class HomeComponent implements OnDestroy{
             this.IfBlueSnapContracts = true;
         }
 
-        if (SessionLocator.LoggedUserPM.IsCustomerCare || ObjectsLocator.GlobalSetting?.DeploymentStage === "Dev" ) {
+        if (SessionLocator.LoggedUserPM.IsCustomerCare || ObjectsLocator.GlobalSetting.DeploymentStage === "Dev" ) {
             this.IsSetWorkerRoleNameVisible = true;
         }
 
@@ -843,7 +843,7 @@ export class HomeComponent implements OnDestroy{
     get IsProcessMenuVisible() { return this.isProcessMenuVisible; }
     set IsProcessMenuVisible(newValue: boolean) {
        
-        this.setCountBlink = false;
+       
         this.isProcessMenuVisible = newValue;
         
         if(!newValue){
@@ -2214,8 +2214,7 @@ export class HomeComponent implements OnDestroy{
         d.setTime(d.getTime() + expireDays * 24 * 60 * 60 * 1000);
         let expires: string = `expires=${d.toUTCString()}`;
         let cpath: string = path ? `; path=${path}` : '';
-        const isSecure = (window.location.protocol === "https:");
-        document.cookie = `${name}=${value}; ${expires}${cpath}${isSecure ? "; Secure" : ""}; SameSite=Lax`;
+        document.cookie = `${name}=${value}; ${expires}${cpath}`;
     }
 
     ViewReleaseNotes() {

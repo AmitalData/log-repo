@@ -120,7 +120,7 @@ namespace Logitude.Customs.BL.Messaging.Customs.SignQueueBL
             );
             return entityLists;
         }
-        public (string signCertificate, SignMethodByQueueEnum dSignMethodByQueue) GetAvailableSignServer(int tenant, SignQueueByType SignatureBy, string personId,bool isCloud = false, string OverrideSignStepName = null, string hsmStationContext = null)
+        public (string signCertificate, SignMethodByQueueEnum dSignMethodByQueue) GetAvailableSignServer(int tenant, SignQueueByType SignatureBy, string personId,bool isExport=false)
         {
 			ICommonDataContext myContextCommon = CommonDataContext.GetContext(tenant);
 			FeatureRepository myFeatureRepository = new FeatureRepository(myContextCommon);
@@ -132,9 +132,9 @@ namespace Logitude.Customs.BL.Messaging.Customs.SignQueueBL
 
             var hSMAllCertificates = new List<MySignStationList>();
             var hSMSignService = new SignQueueHSMService();
-            if (hSMSignService.IsHSMSign_IsOn(tenant, hsmStationContext))
+            if (hSMSignService.IsHSMSign_IsOn(tenant))
             {
-                hSMAllCertificates = hSMSignService.GetHSMAllCertificates(tenant, hsmStationContext: hsmStationContext);
+                hSMAllCertificates = hSMSignService.GetHSMAllCertificates(tenant);
             }
                 switch (SignatureBy)
             {
@@ -191,7 +191,7 @@ namespace Logitude.Customs.BL.Messaging.Customs.SignQueueBL
 					
 					var features = featureQuery.GetAllowedFeaturesForLoggedUser(AuthenticationUtil.ResolveUserId(tenant), tenant);
 					var featureIsExportSign = features.Features.FirstOrDefault(x => x.Code == "IsExportSign");
-					if (featureIsExportSign != null && isCloud)
+					if (featureIsExportSign != null && isExport)
 					{
 						return (availableSignServer.SignCertificate, SignMethodByQueueEnum.HybridDbSignQueue);
 					}
@@ -203,7 +203,7 @@ namespace Logitude.Customs.BL.Messaging.Customs.SignQueueBL
                         }
                         return (null, SignMethodByQueueEnum.None); ;
                     }
-                    else if(isCloud)
+                    else if(isExport)
                     {
                         return (availableSignServer.SignCertificate, SignMethodByQueueEnum.HybridDbSignQueue);
                     }
@@ -226,11 +226,7 @@ namespace Logitude.Customs.BL.Messaging.Customs.SignQueueBL
             return (availableSignServer.SignCertificate, SignMethodByQueueEnum.HybridDbSignQueue);
         }
 
-        public static bool IsCloudExport(int tenant, string Direction = null)
-        {
-            return (!CustomsSettingQueryService.GetSettingByTenant(tenant).IsConnectedToUniFreight && Direction != "I");
-        }
-        public static bool IsCloud(int tenant)
+        public static bool IsCloudExport(int tenant)
         {
             return (!CustomsSettingQueryService.GetSettingByTenant(tenant).IsConnectedToUniFreight);
         }

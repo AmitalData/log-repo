@@ -12,7 +12,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
     {
         ICommonDataContext commonDataContext;
 
-
+        public HybridTenantThresholdRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
 
         public HybridTenantThresholdRepository(ICommonDataContext context)
         {

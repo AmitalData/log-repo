@@ -412,9 +412,8 @@
   </Column>
 	<Column
 	  Name="FileDataMD5Hash"
-
 	  Type="varchar"
-    Size="36">
+      Size="35">
     <Constraints
       Nullable="true" />
   </Column>

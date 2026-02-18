@@ -22,41 +22,28 @@ import '../../../Base/cypress/commands/Elements';
 import '../../../Base/cypress/commands/AliasDefinitions';
 
 import addContext from 'mochawesome/addContext';
-// Add screenshot to report on test failure
 Cypress.on('test:after:run', (test, runnable) => {
-  if (test.state === 'failed') {
-    let item = runnable
-    const nameParts = [runnable.title]
-
-    // Iterate through all parents and grab the titles
-    while (item.parent) {
-      nameParts.unshift(item.parent.title)
-      item = item.parent
+    if (test.state === 'failed') {
+      let item = runnable
+      const nameParts = [runnable.title]
+  
+      // Iterate through all parents and grab the titles
+      // while (item.parent) {
+      //   nameParts.unshift(item.parent.title)
+      //   item = item.parent
+      // }
+  
+      // const fullTestName = nameParts
+      //         .filter(Boolean)
+      //         .join('--')           // this is how cypress joins the test title fragments
+  
+      const imageUrl = `SH/${
+        Cypress.spec.name
+      }/${nameParts}.png`
+  
+      addContext({ test }, imageUrl)
     }
-
-    const fullTestName = nameParts
-      .filter(Boolean)
-      .join(' -- ') // how Cypress joins test title fragments
-
-    const imageUrl = `screenshots/${
-      Cypress.spec.name
-    }/${fullTestName} (failed).png`
-
-    addContext({ test }, imageUrl)
-  }
-})
-
-// Ignore known uncaught cross-origin / non-critical errors
-Cypress.on('uncaught:exception', (err) => {
-  if (
-    err.message.includes('Script error') ||
-    err.message.includes('cross-origin') ||
-    err.message.includes('ResizeObserver')
-  ) {
-    return false
-  }
-})
-
+  })
 /*Cypress.on('test:after:run', (test, runnable) => {
   if (test.state === 'failed') {
     const screenshot = `${Cypress.config('screenshotsFolder')}/${
