@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="DefaultAndConfigurationKeys"
+  Schema="dbo"
+  DBType="Main"
+  Module="Infrastructure">
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="CreateDate"
+    Type="datetime">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="SetType1"
+    OldNames="SetType"
+    Type="varchar"
+    Size="128">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="SetKey"
+    Type="varchar"
+    Size="36">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ShortDescription"
+    Type="nvarchar"
+    Size="4000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="FullDesctiption"
+    Type="nvarchar"
+    Size="4000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="SetType2"
+    Type="varchar"
+    Size="128">
+    <Constraints
+      Nullable="true" />
+  </Column>
+</Table>

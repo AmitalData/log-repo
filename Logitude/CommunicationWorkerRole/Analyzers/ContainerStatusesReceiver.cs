@@ -25,14 +25,15 @@ namespace CommunicationWorkerRole.Analyzers
         private string communicationId;
         private List<QueueTask> externalTasksQueueTasksEnvelope;
         private AnalyzeQueueRepository analyzeQueueReposiory;
-        public async Task RunAsync()
+        public void Run()
         {
-            var loginToExternalServiceResponse = await LoginToExternalService();
-            if (loginToExternalServiceResponse != null && loginToExternalServiceResponse.HasError)
+            var loginToExternalServiceTask = LoginToExternalService();
+            loginToExternalServiceTask.Wait();
+            if (loginToExternalServiceTask.Result != null && loginToExternalServiceTask.Result.HasError)
             {
-                throw new ApplicationException(loginToExternalServiceResponse.ErrorMessage);
+                throw new ApplicationException(loginToExternalServiceTask.Result.ErrorMessage);
             }
-            token = loginToExternalServiceResponse.Result;
+            token = loginToExternalServiceTask.Result.Result;
             this.ReadContainerStatusRequestToOceanInsightSevice();
         }
 
