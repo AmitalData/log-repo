@@ -16,7 +16,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         MAWBStackRepository repository;
 
-
+        public MAWBStackQuery()
+        {
+            repository = new MAWBStackRepository(); 
+        }
 
         public MAWBStackQuery(int tenant)
         {
