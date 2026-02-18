@@ -141,13 +141,6 @@
     <Constraints
       Nullable="false" />
   </Column>
-  <Column
-    Name="DefaultExcelNoStimId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
   <Relation
     ForeignKeyColumn="ReportGroupId"
     ReferencedTable="ReportGroups"
@@ -176,11 +169,6 @@
     ReferencedTableSchema="dbo" />
   <Relation
     ForeignKeyColumn="DefaultExcelTemplateId"
-    ReferencedTable="ReportsTemplates"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="DefaultExcelNoStimId"
     ReferencedTable="ReportsTemplates"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />

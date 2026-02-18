@@ -19,7 +19,5 @@ namespace Logitude.BL.QuoteModel.EntityPMs
         public double? EstimatedReceivablesInLocal { get; set; }
         public double? EstimatedReceivablesInSales { get; set; }
         public double? MarkupPercentage { get; set; }
-		public string CostChargeGroupVal { get; set; }
-
-	}
+    }
 }

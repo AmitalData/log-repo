@@ -212,76 +212,6 @@
         padding: 2px 8px;
         overflow: hidden;
     }
-
-    #periodNumber {
-        width: 35px;
-        border: none;
-        height: 15px !important;
-        box-shadow: none;
-        min-height: 15px;
-    }
-
-    .periodText {
-        font-size: 11px;
-        color: #45494A;
-    }
-
-    #periodUnit {
-        appearance: none;
-        -webkit-appearance: none;
-        -moz-appearance: none;
-        background-image: url(Images/ToggleIcon.png);
-        background-repeat: no-repeat;
-        background-position: right 3px center;
-        padding-right: 10px;
-        width: 52px;
-        cursor: pointer;
-        border: none !important;
-    }
-
-    .offset-popup {
-        position: fixed;
-        position-area: left;
-        width: 170px;
-        background: #fff;
-        border: 1px solid #ccc;
-        box-shadow: 0 6px 12px rgba(0,0,0,0.15);
-        z-index: 99999999;
-    }
-
-    .offset-row {
-        height: 20px;
-        display: flex;
-        margin: 5px 10px;
-    }
-
-    .units {
-      padding: 10px;
-      display: flex;
-      flex-direction: column;
-      direction: ltr;
-    }
-
-    .unit {
-        box-shadow: none;
-        width: initial;
-        float: left;
-        margin-right: 5px;
-    }
-
-    .result {
-        margin: 0px 10px;
-        direction: ltr;
-    }
-    .result-v {
-        float: right;
-    }
-    .result-v:hover {
-        color: limegreen;
-        cursor: pointer;
-        font-weight: bold;
-    }
-
 </style>
 <div style="width:100%;height:100%" *ngIf="DataContext">
     <div [id]="ErrorPopUpId"
@@ -316,7 +246,7 @@
                                     </td>
                                     <td>
                                         <div class="FillParent">
-                                            <input *ngIf="!IsRelativeperiodDropDownOpen" [id]="AdvancedDatePickerInputId"
+                                            <input [id]="AdvancedDatePickerInputId"
                                                    [(ngModel)]="InputValue"
                                                    (focus)="OnInputFocus()"
                                                    (blur)="OnInputBlur()"
@@ -327,16 +257,6 @@
                                                    [placeholder]="AdvancedDatePickerPlaceHolder"
                                                    ondrop="return false"
                                                    title="{{ShowToolTip ? InputValue:''}}"/>
-                                            
-                                            <select *ngIf="IsRelativeperiodDropDownOpen"
-                                                id="periodUnit" class="periodText"
-                                                [(ngModel)]="selectedPeriodUnit"
-                                                (change)="updateSelectedPeriodUnit()">
-                                                <option *ngFor="let period of PeriodUnitList" [value]="period" [selected]="selectedPeriodUnit == period" class="periodText">{{ period }}</option>
-                                            </select>
-
-                                            <input *ngIf="IsRelativeperiodDropDownOpen" type="number" [(ngModel)]="periodNumber" id="periodNumber" (keyup)="updateSelectedPeriodUnit($event)">
-
                                         </div>
                                     </td>
                                     <td style="width: 2px;">
@@ -375,18 +295,17 @@
                                 style="width:200px;">
                                 <li *ngFor="let item of ItemsSource;"
                                     class="DropDownListItem"
-                                    (mousedown)="OnDropDownSelectedMouse($event, item)"
-                                    (mouseover)="OnLiMouseOver($event, item)"
+                                    (mousedown)="OnDropDownSelected(item)"
+                                    (mouseover)="OnLiMouseOver($event)"
                                     (mouseleave)="OnLiMouseLeave($event)">
                                     <div
                                          class="AdvancedDatePickerDropdownItem"
-                                         (mouseover)="OnLiMouseOver($event, item)"
+                                         (mouseover)="OnLiMouseOver($event)"
                                          (mouseleave)="OnLiMouseLeave($event)">
-                                         <div
+                                        <div
                                              class="AdvancedDatePickerDropdownInnerItem"
-                                             (mouseover)="OnLiMouseOver($event, item)"
+                                             (mouseover)="OnLiMouseOver($event)"
                                              (mouseleave)="OnLiMouseLeave($event)">
-                                            <span style="padding: 4px;" id="setOffset" *ngIf="hoveredItem === item && hoveredItem.Code != 'SPD' && hoveredItem.Code != 'PER'" >&lt;</span>
                                             {{item.Name}}
                                         </div>
                                     </div>
@@ -403,26 +322,5 @@
          [id]="LogCalendarId" *ngIf="IsCalendarDateDropDownOpen && IsDropDownVisible" (mouseover)="OnCalendarMouseOver()" (mouseout)="OnCalendarMouseOut()" (blur)="OnCalendarBlur()"
          tabindex="-1" class="DatePickerCalendar" [ComponentType]="'datepicker'">
         <LogCalendar [ToggleOpened]="IsCalendarOpen" [SelectedDate]="SelectedCalendarDate" (SelectedDateChanged)="OnSelectedCalendarDateChanged($event)"></LogCalendar>
-    </div>
-
-    <div class="offset-popup periodText" *ngIf="isOffsetOpen">
-        <div style="cursor: pointer; margin-top: 5px; margin-right: 5px; width: 10px; height: 10px;" (click)="isOffsetOpen = false">X</div>
-
-        <div class="result">Offset from selection:</div>
-        <div class="offset-row">
-            <button (click)="Offset = Offset - 1" style="cursor: pointer;">−</button>
-            <input style="direction: ltr;" type="number" min="1" [(ngModel)]="Offset">
-            <button (click)="Offset = Offset + 1" style="cursor: pointer;">+</button>
-        </div>
-
-        <div class="units">
-            <span class="FieldRow">Units:</span>
-            <RadioButton class="unit FieldRow" *ngFor="let u of units" [Name]="u" [IsChecked]="selectedUnit == u" (Checked)="$event? selectedUnit = u: null; recalculate()" [Text]="u"></RadioButton>
-        </div>
-
-        <div class="result FieldRow">
-            <span>Result: {{ result | date:'dd/MM/yyyy' }}</span>
-            <span class="result-v" (click)="SaveOffsetDate()">V</span>
-        </div>
     </div>
 </div>
