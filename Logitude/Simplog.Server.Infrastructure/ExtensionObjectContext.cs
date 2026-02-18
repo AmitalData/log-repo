@@ -73,7 +73,7 @@ using Simplog.Server.Infrastructure;
 
         if (!queryFilter.Take(1).Any()) 
 		{
-			return new List<T>(); 
+			return null; 
 		}
 		var query = queryFilter as ObjectQuery;
 
