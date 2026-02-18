@@ -1,4 +1,5 @@
-﻿using Logitude.Accounting.BL.CloseTables;
+﻿using Logitude.Accounting.BL.APIDataContract.ApiV1;
+using Logitude.Accounting.BL.CloseTables;
 using Logitude.Accounting.BL.CoreBL;
 using Logitude.Accounting.BL.CoreBL.Reports;
 using Logitude.Accounting.BL.EntityDataMappings;
@@ -16,6 +17,8 @@ using Logitude.BL.InvoiceModel.EntityQueries;
 using Logitude.BL.InvoiceModel.Tools.EntityService;
 using Logitude.BL.Resolvers;
 using Logitude.BL.Security;
+using Logitude.Customs.BL.EntityQueryServices;
+
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
@@ -25,10 +28,22 @@ using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.InvoiceModel;
 using Simplog.Data.InvoiceModel.Repositories;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics;
+  using Logitude.Accounting.BL.CoreBL.ExternalReconcile;
+using Logitude.Accounting.BL.CoreBL.Reports;
+using Simplog.Data.CommonDataModel;
+using Logitude.Accounting.Data.EntityMapping;
+using System.Transactions;
+using Logitude.BL.ShipmentsModel.APIDataContract;
+using Logitude.Customs.BL.EntityQueryServices;
+using Simplog.Data.InvoiceModel.Repositories;
+using Logitude.BL.Security;
+using Logitude.Server.Tools.Utils;
 using System.Linq;
 using System.ServiceModel.DomainServices.Server;
 using GLAccountQueryService = Logitude.Accounting.BL.EntityQueryServices.GLAccountQueryService;
@@ -62,13 +77,14 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 ContactRepository contactRep = new ContactRepository(entityPM.Tenant);
                 string resolveLoggingUserId = AuthenticationUtil.ResolveUserIdentityName(entityPM.Tenant);
                 Contact contact = contactRep.GetSingleContactByEmail(resolveLoggingUserId, entityPM.Tenant);
+
                 entityPM.CreatedByUserId = contact.Id;
             }
 
             if (entityPM.Number == "get") entityPM.Number = CodeCounter.GetNumber("Reconciliation.Number", entityPM.Tenant).ToString();
             entityPM.CreateDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
 
-            entityPM.SearchFields = ///Task:25238 GetentityPM.AccountId + "," + 
+            entityPM.SearchFields = ///Task:25238 
                 entityPM.Number + ",";
 
         }
@@ -230,25 +246,26 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 }
 
 
-
-                if (entityPM.RevalOnForeignReco == true  && FeatureToggleHelper.HasFeatureToggle("RFR", entityPM.Tenant))
+                if (FeatureToggleHelper.HasFeatureToggle("RFR", entityPM.Tenant))
                 {
+
+
+
+
                     var glaccountQueryService = new GLAccountQueryService(entityPM.Tenant);
-                    var glAccountPM = glaccountQueryService.GetSingle(entityPM.AccountId, false, true);
-                    if (glAccountPM != null
-                        && glAccountPM.ReconcileMethodCode == ReconcileMethodValues.ForeignCurrency)
+                    var glAccount = glaccountQueryService.GetAccountControlAndRecoMethods(entityPM.AccountId, entityPM.Tenant);
+                    if (glAccount != null 
+                        && glAccount.ReconcileMethodCode == ReconcileMethodValues.ForeignCurrency)
                     {
                         if (Math.Round(entityPM.ReconciliationLines
                             .Where(x => x.CurrencyRate != null)
                             .Sum(x => x.ReconciliationAmount * x.CurrencyRate) ?? 0, 2) != 0)
                         {
-                            TenantQuery tenantQuery = new TenantQuery(entityPM.Tenant);
-                            var tenantCurrencyId = tenantQuery.GetLocalCurrencyFromTenant(entityPM.Tenant);
-                            CreateRevaluationJournal(entityPM, glAccountPM.ControlAccountId, tenantCurrencyId, entityPM.RevalJrnlRef1);
+                            var tenantCurrencyId = GetTenantCurrencyId(entityPM.Tenant);
+                            CreateRevaluationJournal(entityPM, glAccount.ControlAccountId, tenantCurrencyId);
                         }
                     }
                 }
-
 
 
                 if (entityPM.Number == "get")
@@ -263,8 +280,14 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         }
 
+        private static string GetTenantCurrencyId(int tenant)
+        {
+            TenantQuery tenantQuery = new TenantQuery(tenant);
+            var tenantPM = tenantQuery.GetSinglePM(tenant);
+            return tenantPM.CurrencyId;
+        }
 
-        public void CreateRevaluationJournal(ReconciliationPM reconciliationPM, string controlAccountId, string tenantCurrencyId, string revalJrnlRef1)
+        private void CreateRevaluationJournal(ReconciliationPM reconciliationPM, string controlAccountId, string tenantCurrencyId)
         {
             try
             {
@@ -281,9 +304,9 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
                 newJournal.Tenant = reconciliationPM.Tenant;
                 newJournal.CreateDate = DateTime.Now;
-                newJournal.AccountingDate = DateTime.Now.Date;
+                newJournal.AccountingDate = reconciliationPM.CreateDate.Date;
                 newJournal.TypeCode = JournalTypeValues.Regular;
-                newJournal.StatusCode = JournalStatusTypeValues.InProcessing;
+                newJournal.StatusCode = JournalStatusTypeValues.InProcessing; 
                 newJournal.CreatedByUserId = reconciliationPM.CreatedByUserId;
                 newJournal.AccountingEntityId = reconciliationPM.Id;
                 newJournal.AccountingEntityReference = reconciliationPM.Number.ToString();
@@ -314,9 +337,6 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                         {
                             Tenant = reconciliationPM.Tenant,
                             Line = ++lineCounter,
-                            AccountingDate = DateTime.Now.Date,
-                            DocumentDate = DateTime.Now.Date,
-                            DueDate = DateTime.Now.Date,
                             ActionTypeCode = JournalActionTypes.Debit,
                             DebitAccountId = reconciliationPM.AccountId,
                             CreditAccountId = diffAccountId,
@@ -325,18 +345,14 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                             LocalAmount = groupLocalRecoAmount,
                             ForeignAmount = 0,
                             CurrencyId = group.Key,
-                            Reference1 = revalJrnlRef1,
-                            Notes = TranslateTextsClass.Translate("Revaluations.Q.Revaluation", 0, true),
                             ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
+                            Notes = "Revaluation on Foreign Currency Reco.",
                         });
 
                         newJournal.JournalLines.Add(new JournalLinePM()
                         {
                             Tenant = reconciliationPM.Tenant,
                             Line = ++lineCounter,
-                            AccountingDate = DateTime.Now.Date,
-                            DocumentDate = DateTime.Now.Date,
-                            DueDate = DateTime.Now.Date,
                             ActionTypeCode = JournalActionTypes.Credit,
                             DebitAccountId = null,
                             CreditAccountId = diffAccountId,
@@ -345,10 +361,26 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                             LocalAmount = groupLocalRecoAmount,
                             ForeignAmount = 0,
                             CurrencyId = group.Key,
-                            Reference1 = revalJrnlRef1,
-                            Notes = TranslateTextsClass.Translate("Revaluations.Q.Revaluation", 0, true),
                             ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
+                            Notes = "Revaluation on Foreign Currency Reco.",
                         });
+
+
+                        List<ReconciliationLinePM> recoLines = reconciliationPM.ReconciliationLines
+                            .Where(x => x.CurrencyId == group.Key)
+                            .ToList();
+                        newJournalReconcilesHS.Union(from item in recoLines
+                                                     select new JournalReconcilePM()
+                                                     {
+                                                         ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
+                                                         Tenant = reconciliationPM.Tenant,
+                                                         LedgerTransactionId = item.TransactionId,
+                                                         Line = item.Line,
+                                                         CurrencyId = tenantCurrencyId,
+                                                         ReconciliationAmount = groupLocalRecoAmount,
+                                                         IsPartial = item.IsPartial,
+
+                                                     }).ToHashSet();
 
                     }
                 }
@@ -358,17 +390,14 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 journalUpdateService.Update(newJournal, true);
 
 
+
+
             }
             catch (Exception ex)
             {
                 throw new ApplicationException("Unable to create revaluation journal", ex);
             }
         }
-
-
-
-
-
         private static IQueryable<String> GetReconcileTransactionJournalIds(List<string> ledgerTransactionIds, int tenant)
         {
             LedgerTransactionQueryService transactionQueryService = new LedgerTransactionQueryService(tenant);
@@ -472,7 +501,6 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     throw new ApplicationException("Updating Reconciliation allowed only to cancel");
                 }
             }
-
 
             this.GLAccountRecocileDataUpSert(_CancelledAction, entityPM);
             base.OnUpdating(entityPM, entityPOCO);
@@ -605,7 +633,6 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 var ledgerTransactionPM = LedgerTransactionPMsUpdated.First(r => r.Id == reconciliationLine.TransactionId);
 
                 ledgerTransactionPM.ChangeSetOp = ChangeSetOperation.Update;
-
                 if (this._CancelledAction)
                 {
                     ledgerTransactionPM.OpenAmount = ledgerTransactionPM.OpenAmount + reconciliationLine.ReconciliationAmount;
@@ -616,7 +643,6 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
                     if (entityPM.CreatedByReconciliationAfterConversion)
                     {
-                        
                         var repo = new JournalLineRepository(entityPM.Tenant);
                         var jlList = repo.GetJournalLineByLedgerTransactionIdList(transactionIdList, entityPM.Tenant);
                         List<string> errorsList = new List<string>();
@@ -703,7 +729,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             ledgerTransactionUpdateService._CancelledAction = this._CancelledAction;
             ledgerTransactionUpdateService.UpdateMulti(LedgerTransactionPMsUpdated, new List<LedgerTransactionPM>(), entityPM, false);
 
-            if (this._CancelledAction || !updateGLAccountAgingDataUsingWR)
+            bool getNewContextWhileStreamingLedger = true;
+            if (getNewContextWhileStreamingLedger && (this._CancelledAction || !updateGLAccountAgingDataUsingWR))
             {
                 UpdateGLaccountAgingData(entityPM);
             }
@@ -735,7 +762,6 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         protected override void AfterUpdating(ReconciliationPM entityPM, EntityPM entityParentPM)
         {
             // Draft reconciliation
-            //
 
             // incase insert changeset: the accountCurrencyId is null, so I will fill it 
             if (entityPM.ChangeSetOp == ChangeSetOperation.Insert && entityPM.AccountId != null)

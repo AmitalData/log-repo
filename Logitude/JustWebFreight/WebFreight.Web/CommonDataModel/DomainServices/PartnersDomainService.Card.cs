@@ -479,7 +479,6 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
                                                CASSCode = card.Agent == null ? null : card.Agent.CASSCode,
                                                IATACode = card.Agent == null ? null : card.Agent.IATACode,
                                                RegulatedAgentCode = card.Agent == null ? null : card.Agent.RegulatedAgentCode,
-                                               IsCustomer = card.IsCustomer,
                                            });
 
             CustomerBusinessUnitFilter myFilter = new CustomerBusinessUnitFilter(tenant);
@@ -579,7 +578,6 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
                                                CASSCode = card.Agent == null ? null : card.Agent.CASSCode,
                                                IATACode = card.Agent == null ? null : card.Agent.IATACode,
                                                RegulatedAgentCode = card.Agent == null ? null : card.Agent.RegulatedAgentCode,
-                                               
                                            });
 
             CustomerBusinessUnitFilter myFilter = new CustomerBusinessUnitFilter(tenant);
@@ -767,7 +765,6 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
                                                CASSCode = card.Agent == null ? null : card.Agent.CASSCode,
                                                IATACode = card.Agent == null ? null : card.Agent.IATACode,
                                                RegulatedAgentCode = card.Agent == null ? null : card.Agent.RegulatedAgentCode,
-                                               IsCustomer = card.IsCustomer,
                                            });
 
             CustomerBusinessUnitFilter myFilter = new CustomerBusinessUnitFilter(tenant);
@@ -911,7 +908,6 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
                                                CASSCode = card.Agent == null ? null : card.Agent.CASSCode,
                                                IATACode = card.Agent == null ? null : card.Agent.IATACode,
                                                RegulatedAgentCode = card.Agent == null ? null : card.Agent.RegulatedAgentCode,
-                                                  IsCustomer = card.IsCustomer,
                                            });
 
 

@@ -114,7 +114,6 @@ export class CutsomerTenantAccessManagementComponent implements OnInit {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
                 this.LastCustomerRequestList = pmResponse.Result;
-                this.ItemsSource.Clear();
                 this.LastCustomerRequestList.forEach((item) => {
                     this.ItemsSource.Insert(item);
                 });
