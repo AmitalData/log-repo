@@ -1,10 +1,17 @@
 
 using System.Data.Common;
 using System.Data.Entity;
+using System.Data.Entity.Core.EntityClient;
+using System.Data.Entity.Core.Objects;
+using System.Data.SqlClient;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Mapping;
 using Simplog.Server.Infrastructure;
+using System.Data.Entity.Migrations;
+using System.Data.Entity.Infrastructure;
+using System.Data;
 using Simplog.Global.Data.GlobalModel;
+using Logitude.Global.OracleMigration.Migrations;
 using System.Configuration;
 using System;
 using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
@@ -152,9 +159,9 @@ namespace Logitude.Global.OracleMigration.GlobalModel
         public IDbSet<InvalidEmailResetPassword> InvalidEmailResetPasswords { get; set; }
         public IDbSet<WebhookKeys> WebhookKeys { get; set; }
         public IDbSet<BluesnapContractType> BluesnapContractTypes { get; set; }
+
         public IDbSet<BluesnapTransaction> BluesnapTransactions { get; set; }
-        public IDbSet<DefaultAndConfiguration> DefaultAndConfigurations { get; set; }
-        public IDbSet<DefaultAndConfigurationKey> DefaultAndConfigurationKeys { get; set; }
+
         public IDbSet<AuthenticationToken> AuthenticationTokens { get; set; }
     }
 }

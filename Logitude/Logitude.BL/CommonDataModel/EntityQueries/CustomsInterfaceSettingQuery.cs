@@ -15,7 +15,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         CustomsInterfaceSettingRepository repository;
 
-
+        public CustomsInterfaceSettingQuery()
+        {
+            repository = new CustomsInterfaceSettingRepository();
+        }
 
         public CustomsInterfaceSettingQuery(int tenant)
         {

@@ -16,12 +16,7 @@ export class ObjectsLocator {
     public static SharedLogisticsSettingPM: SharedLogisticsSettingPM = new SharedLogisticsSettingPM()
 
     public static LoggedUserId: string;
-    public static GlobalSetting: any = {
-        DeploymentStage: null,
-        WorkEnvironment: null,
-        LogitudeDemoTenants: null,
-        LayoutDirection: null
-    };
+    public static GlobalSetting: any;
     public static PrivateLableSettings: any;
 
     private static creditLimitSettingPM: CreditLimitSettingPM;
