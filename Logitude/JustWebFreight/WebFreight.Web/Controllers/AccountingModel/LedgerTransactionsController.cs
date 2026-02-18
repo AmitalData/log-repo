@@ -57,7 +57,6 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 {
                     response.Count = LTBFilter.TaxReportTotalCount ?? ledgerTransactionBalanceService.Response.TotalRowCount.Value;
                 }
-
                 response.Result = ledgerTransactionBalanceService.Response.MyLedgerTransactionList;
                 response.TookMS = ledgerTransactionBalanceService.Response.TookMS;
                 PerformanceLogger.AddServerExecutionTimeHeader(logKey);

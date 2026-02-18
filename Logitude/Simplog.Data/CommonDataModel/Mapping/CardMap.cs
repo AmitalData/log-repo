@@ -71,8 +71,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.ConsolidationInvoiceTemplateId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.ManifestInvoiceTemplateId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.EmailForSendingSingArinvoice).HasMaxLength(40).IsUnicode(false);
-            this.Property(t => t.BankBranch).HasMaxLength(30).IsUnicode(false);
-            this.Property(t => t.BankCodeId).HasMaxLength(30).IsUnicode(false);
+
             // Table & Column Mappings
             this.ToTable("Cards");
             this.Property(t => t.Id).HasColumnName("Id");
@@ -143,8 +142,6 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.ConsolidationInvoiceTemplateId).HasColumnName("ConsolidationInvoiceTemplateId");
             this.Property(t => t.ManifestInvoiceTemplateId).HasColumnName("ManifestInvoiceTemplateId");
             this.Property(t => t.EmailForSendingSingArinvoice).HasColumnName("EmailForSendingSingArinvoice");
-            this.Property(t => t.BankBranch).HasColumnName("BankBranch");
-            this.Property(t => t.BankCodeId).HasColumnName("BankCodeId");
 
             //#if ORACLE_DB
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");

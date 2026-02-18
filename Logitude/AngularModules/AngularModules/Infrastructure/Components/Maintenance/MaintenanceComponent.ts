@@ -6,18 +6,24 @@ import { FeatureLocator } from '../../Utilities/FeatureLocator';
 import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
+import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { ListComponentArgs } from '../../../Infrastructure/Args';
 import { AppTool, DateTool } from '../../../Infrastructure/Tools';
 import { EntityResourceService } from '../../../Infrastructure/Services/EntityResourceService';
+//import {CustomsSettingExtendedListService} from '../../../Customs/Services/ExtendedLists/CustomsSettingExtendedListService';
 import { ObjectsLocator } from '../../Locators/ObjectsLocator';
 import { DeclarationRemarksService } from '../../../Common/Services/ExtendedPMs/DeclarationRemarksService';
+import { DeclarationRemarks } from '../../../Customs/EntityPMs/Extended/DeclarationRemarks';
 import { SessionInfo } from '../../Utilities/SessionInfo';
 import { AmitalGatewayUtil } from '../../Utilities/AmitalGatewayUtil';
 import { ShaamSettingsArgs } from 'CustomsModules/CustomsMaintenance/Components/ShaamSettings/ShaamSettingsComponent';
+//import {RecallClientsForCutoms} from '../../../Customs/Components/CustomsRequests/GeneralRequests/RecallClientsForCutoms';
 import { ObjectTablePM } from '../../EntityPMs/ObjectTablePM';
+//import {RecallClientsForCutoms} from '../../../Customs/Components/CustomsRequests/GeneralRequests/RecallClientsForCutoms';
 import { TextCodeTranslationPipe } from '../../../Controls/Pipes/TextCodeTranslationPipe';
 import { CustomizationPermissionService } from '../../../InfrastructureModules/InfrastructureCustomization/ExternalService/CustomizationPermissionService';
 import { ThresholdTypes } from 'InfrastructureModules/InfrastructureOthers/Components/CustomizeLogitude/HybridTenantThresholdComponent';
+import { HostScreenService } from 'Common/Components/HostScreen/HostScreenService';
 import { CustomsCloudComponentArgs } from 'InfrastructureModules/InfrastructureOthers/Components/CustomsCloud/CustomsCloudComponent';
 import {
     HomeScreenEvent,
@@ -1130,25 +1136,6 @@ export class MaintenanceComponent {
             )[0].Id;
             this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
         }
-        if (SessionLocator.LoggedUserPM.IsCustomerCare &&
-            FeatureLocator.HasFeaturePermession(
-                'Customs.Declaration',
-                'ExportDeclarationsBatchActions')) {
-            this._entityResourceService.getEntityResourceByTableName("Customs.Declaration", 0).subscribe((response: any) => {
-                var item = new MenusTablePM();
-                item.CategoryTypeCode = 'CSM';
-                item.Icon = 'Settings';
-                item.Code = 'EDBA';
-                item.ObjectTableName = 'Customs.Declaration';
-                item.ObjectTableId = window.ObjectTables.filter(
-                    (d) => d.Name == 'Customs.Declaration'
-                )[0].Id;
-                item.TranslatedName = TextCodeTranslator.Translate(
-                    'Customs.ExportDeclarations.BatchActions.T.Title'
-                );
-                this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
-            });
-        }
 
         //let LoggedUserPMCode = SessionLocator.LoggedUserPM.Code || "";
         //LoggedUserPMCode = LoggedUserPMCode.toLowerCase();
@@ -1195,18 +1182,24 @@ export class MaintenanceComponent {
                 item.ObjectTableName = 'Chart Of Accounts Types Order';
                 this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
             }
-
-            if (FeatureLocator.HasFeaturePermession("General", "General.Features.CustomerDebtNotification")) {
-                this._entityResourceService.getEntityResourceByTableName("CustomerDebtNotification", 0).subscribe((response: any) => {
-                  var item = new MenusTablePM();
-                  item.CategoryTypeCode = "ACC";
-                  item.Icon = "Settings"
-                  item.Code = "DNTC";
-                  item.TranslatedName  = TextCodeTranslator.Translate("CustomerDebtNotification.O.DebtNotificationToCustomers");
-                  item.ObjectTableName = 'CustomerDebtNotification' 
-                  this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
-               });
-            }
+            //if (FeatureLocator.HasFeaturePermession("General", "General.Features.YearTransfer")) {
+            //    var item = new MenusTablePM();
+            //    item.CategoryTypeCode = "ACC";
+            //    item.Icon = "Settings"
+            //    item.Code = "ACYT";
+            //    item.ObjectTableName = "Year Transfer";
+            //    this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+            //}
+            //if (FeatureLocator.HasFeaturePermession("General", "General.Features.AccountingPeriods")) {
+            //    var item = new MenusTablePM();
+            //    item.CategoryTypeCode = "ACC";
+            //    item.Icon = "Settings"
+            //    item.Code = "ACPD";
+            //    item.ObjectTableName = "AccountingPeriod";
+            //    var ObjectTable = window.ObjectTables.filter(d => d.Name == "AccountingPeriod")[0];
+            //    item.ObjectTableId = ObjectTable.Id;
+            //    this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+            //}
         }
     }
     private BuildOtherMenus() {
@@ -1849,16 +1842,6 @@ export class MaintenanceComponent {
                     );
                     break;
                 }
-                case 'EDBA': {
-                    const windowTitle = TextCodeTranslator.Translate('Customs.ExportDeclarations.BatchActions.T.Title');
-                    let logWindow = new LogitudeWindow();
-                    logWindow.Width = 750;
-                    logWindow.Height = 800;
-                    logWindow.Title = windowTitle;
-                    logWindow.IsShowCloseButton = true;
-                    logWindow.Show('./CustomsModules/CustomsMaintenance/Components/BatchActions/ExportDeclarationsBatchActionsComponent');
-                    break;
-                }
                 case 'CSRA': {
                     let test = true;
                     let strict = true;
@@ -2079,7 +2062,7 @@ export class MaintenanceComponent {
                         .subscribe((response: any) => {
                             var logitudeWindow = new LogitudeWindow();
                             logitudeWindow.Width = 900;
-                            logitudeWindow.Height = 700;
+                            logitudeWindow.Height = 600;
                             logitudeWindow.Title = TextCodeTranslator.Translate(
                                 'Accounting.O.FullAccountingSettings'
                             ); // "Full Accounting Settings";
@@ -2096,27 +2079,12 @@ export class MaintenanceComponent {
                             var logitudeWindow = new LogitudeWindow();
                             logitudeWindow.Width = 500;
                             logitudeWindow.Height = 400;
-
-                        logitudeWindow.Title = 'Chart Of Accounts Types Order';//TextCodeTranslator.Translate("Accounting.General.O.ChartOfAccountsTypesOrder");
-                        logitudeWindow.Show('./Accounting/Components/Maintenance/ChartOfAccountsTypesOrderComponent');
-                    });
-                    break;
-                }
-                case "DNTC": {
-                    var windowArgs: any = {};
-                    windowArgs.IsFromMaintenance = true;
-                  
-                    this._entityResourceService.getEntityResourceByTableName("CustomerDebtNotification", 0).subscribe((resp: any) => {
-                        var logitudeWindow = new LogitudeWindow();
-                        logitudeWindow.Width = 900;
-                        logitudeWindow.Height = 600;
-                        logitudeWindow.WindowArgs = windowArgs;
-                        logitudeWindow.Title = TextCodeTranslator.Translate("CustomerDebtNotification.O.DebtNotificationToCustomers");
-                        logitudeWindow.Show('./Accounting/Components/Maintenance/CustomerDebtNotificationComponent');
-                        logitudeWindow.Title = TextCodeTranslator.Translate("CustomerDebtNotification.O.DebtNotificationToCustomers");
-                        logitudeWindow.Show('./Accounting/Components/Maintenance/CustomerDebtNotificationComponent');
-
-                    });
+                            logitudeWindow.Title =
+                                'Chart Of Accounts Types Order'; //TextCodeTranslator.Translate("Accounting.General.O.ChartOfAccountsTypesOrder");
+                            logitudeWindow.Show(
+                                './Accounting/Components/Maintenance/ChartOfAccountsTypesOrderComponent'
+                            );
+                        });
                     break;
                 }
                 case 'ACYT': {
