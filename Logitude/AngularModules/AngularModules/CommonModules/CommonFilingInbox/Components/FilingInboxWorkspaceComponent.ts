@@ -158,7 +158,7 @@ export class FilingInboxWorkspaceComponent extends BaseComponent implements OnIn
         objecttabel = window.ObjectTables.filter(x => x.Name === "Quote")[0];
         this.QuoteObjectTableId = objecttabel.Id;
 
-        if (ObjectsLocator.GlobalSetting?.DeploymentStage == "logboxwe1" || ObjectsLocator.GlobalSetting?.DeploymentStage == "Test2" && this.EntityObjectTableName == "Shipment") {
+        if (ObjectsLocator.GlobalSetting.DeploymentStage == "logboxwe1" || ObjectsLocator.GlobalSetting.DeploymentStage == "Test2" && this.EntityObjectTableName == "Shipment") {
             this.IsLogBox = true;
         }
 
@@ -857,7 +857,7 @@ export class FilingInboxWorkspaceComponent extends BaseComponent implements OnIn
             case "S": {
                 this.ConnectToFilterLabel = "Shipment";
                 this.EntityObjectTableName = "Shipment";
-                if (ObjectsLocator.GlobalSetting?.DeploymentStage == "logboxwe1" || ObjectsLocator.GlobalSetting?.DeploymentStage == "Test2") {
+                if (ObjectsLocator.GlobalSetting.DeploymentStage == "logboxwe1" || ObjectsLocator.GlobalSetting.DeploymentStage == "Test2") {
                     this.IsLogBox = true;
                 }
                 this.ObjectTableId = this.ShipmentObjectTableId; break;
@@ -1286,7 +1286,7 @@ export class FilingInboxWorkspaceComponent extends BaseComponent implements OnIn
                         item.IsSingleTick = false;
                         summary.Attaches.push(attach);
                         isValid = true;
-                        if (ObjectsLocator.GlobalSetting?.DeploymentStage == "logboxwe1" || ObjectsLocator.GlobalSetting?.DeploymentStage == "Test2" && this.EntityObjectTableName == "Shipment") {
+                        if (ObjectsLocator.GlobalSetting.DeploymentStage == "logboxwe1" || ObjectsLocator.GlobalSetting.DeploymentStage == "Test2" && this.EntityObjectTableName == "Shipment") {
                             if (AppTool.IsNullOrEmpty(item.Description)) {
                                 isDescriptionFilled = false;
                             }
@@ -1327,7 +1327,7 @@ export class FilingInboxWorkspaceComponent extends BaseComponent implements OnIn
                 else {
                     this.CurrentSession.StopBusyIndicator();
                     var msg = "";
-                    if (ObjectsLocator.GlobalSetting?.DeploymentStage == "logboxwe1" || ObjectsLocator.GlobalSetting?.DeploymentStage == "Test2" && this.EntityObjectTableName == "Shipment") {
+                    if (ObjectsLocator.GlobalSetting.DeploymentStage == "logboxwe1" || ObjectsLocator.GlobalSetting.DeploymentStage == "Test2" && this.EntityObjectTableName == "Shipment") {
                         if (!isDescriptionFilled) {
                             msg += "Please fill Description fields for all attachments. ";
                         }
@@ -1381,7 +1381,7 @@ export class FilingInboxWorkspaceComponent extends BaseComponent implements OnIn
                         item.IsSingleTick = false;
                         summary.Attaches.push(attach);
                         isValid = true;
-                        if (ObjectsLocator.GlobalSetting?.DeploymentStage == "logboxwe1" || ObjectsLocator.GlobalSetting?.DeploymentStage == "Test2" && this.EntityObjectTableName == "Shipment") {
+                        if (ObjectsLocator.GlobalSetting.DeploymentStage == "logboxwe1" || ObjectsLocator.GlobalSetting.DeploymentStage == "Test2" && this.EntityObjectTableName == "Shipment") {
                             if (AppTool.IsNullOrEmpty(item.Description)) {
                                 isDescriptionFilled = false;
                             }
@@ -1423,7 +1423,7 @@ export class FilingInboxWorkspaceComponent extends BaseComponent implements OnIn
                 else {
                     this.CurrentSession.StopBusyIndicator();
                     var msg = "";
-                    if (ObjectsLocator.GlobalSetting?.DeploymentStage == "logboxwe1" || ObjectsLocator.GlobalSetting?.DeploymentStage == "Test2" && this.EntityObjectTableName == "Shipment") {
+                    if (ObjectsLocator.GlobalSetting.DeploymentStage == "logboxwe1" || ObjectsLocator.GlobalSetting.DeploymentStage == "Test2" && this.EntityObjectTableName == "Shipment") {
                         if (!isDescriptionFilled) {
                             msg += "Please fill Description fields for all attachments. ";
                         }
@@ -1509,7 +1509,7 @@ export class FilingInboxWorkspaceComponent extends BaseComponent implements OnIn
             var windowArgs: any = {};
             windowArgs.IsNew = true;
             newWindow.WindowArgs = windowArgs;
-            if (SessionLocator.PrivateLableSettings || ObjectsLocator.GlobalSetting?.DeploymentStage == "logboxwe1" || ObjectsLocator.GlobalSetting?.DeploymentStage == "Test2") {
+            if (SessionLocator.PrivateLableSettings || ObjectsLocator.GlobalSetting.DeploymentStage == "logboxwe1" || ObjectsLocator.GlobalSetting.DeploymentStage == "Test2") {
                 this.OpenNewLogboxShipment();
             }
             else {
@@ -1531,7 +1531,7 @@ export class FilingInboxWorkspaceComponent extends BaseComponent implements OnIn
                 var shipment = s.EntityPM;
                 if (shipment != null) {
                     this.EntityId = shipment.Id;
-                    if ((ObjectsLocator.GlobalSetting?.DeploymentStage == "logboxwe1" || ObjectsLocator.GlobalSetting?.DeploymentStage == "Test2") || SessionLocator.PrivateLableSettings) {
+                    if ((ObjectsLocator.GlobalSetting.DeploymentStage == "logboxwe1" || ObjectsLocator.GlobalSetting.DeploymentStage == "Test2") || SessionLocator.PrivateLableSettings) {
                         this.EntityNumber = AppTool.IsNullOrEmpty(shipment.ForwarderShipmentNumber) ? shipment.CustomerReference1 : shipment.ForwarderShipmentNumber;
                         if (AppTool.IsNullOrEmpty(shipment.ForwarderShipmentNumber) && !AppTool.IsNullOrEmpty(shipment.StatusName) && shipment.StatusName.toLocaleLowerCase() != "in progress") {
                             this.IsDSVConnectEnable = true;
@@ -1698,7 +1698,7 @@ export class FilingInboxAttachment extends BaseComponent {
     }
 
     SetDescriptionUIProperties() {
-        if (ObjectsLocator.GlobalSetting?.DeploymentStage == "logboxwe1" || ObjectsLocator.GlobalSetting?.DeploymentStage == "Test2" && this.father.EntityObjectTableName == "Shipment") {
+        if (ObjectsLocator.GlobalSetting.DeploymentStage == "logboxwe1" || ObjectsLocator.GlobalSetting.DeploymentStage == "Test2" && this.father.EntityObjectTableName == "Shipment") {
             // var isreq = AppTool.IsNullOrEmpty(this.Description);
             //this.UIProperties.SetRequired("Description", null, isreq);
         }

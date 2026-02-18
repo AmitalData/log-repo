@@ -863,26 +863,6 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Common
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-
-        public HttpResponseMessage GetIsUserAdmin()
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                int tenant = authToken.Tenant;
-                string email = authToken.Email;
-
-                bool isAdmin = SecurityUtility.IsUserAdminOrCustomerCare(email, tenant, true);
-              
-                return Request.CreateResponse(HttpStatusCode.OK, isAdmin);
-            }
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
-
     }
 }
 

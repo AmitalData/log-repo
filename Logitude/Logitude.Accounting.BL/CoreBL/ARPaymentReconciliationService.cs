@@ -9,14 +9,12 @@ using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.BL.InvoiceModel.EntityQueries;
 using Logitude.BL.InvoiceModel.Tools.EntityService;
 using Logitude.Server.Tools.Helpers;
-using Simplog.Data.CommonDataModel.EntityPOCOs; 
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InvoiceModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Simplog.Data.Helpers;
 
 namespace Logitude.Accounting.BL.CoreBL
 {
@@ -90,7 +88,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 // get invoices
                 List<ARInvoicePM> paymentInvoices = GetPaymentInvoicesLT(entityPM, paymentTransaction);
 
-                foreach (ARInvoicePM invoice in paymentInvoices.Where(inv => inv.StatusCode != ARInvoiceStatusValues.Void))
+                foreach (ARInvoicePM invoice in paymentInvoices)
                 {
                     LedgerTransactionJournalLineLT transaction = recoTransactions.Where(d => d.SourceId == invoice.Id).FirstOrDefault();
                     double? old_amountDueInLocalCurrency = invoice.AmountDueInLocalCurrency;
@@ -109,27 +107,15 @@ namespace Logitude.Accounting.BL.CoreBL
                         {
                             LedgerTransactionQueryService transQuery = new LedgerTransactionQueryService(entityPM.Tenant);
                             var arinvoiceTransactions = transQuery.GetByJournalIdAndForeignAmountDebitNotEqualZero(invoice.JournalId, invoice.Tenant).ToList();
-                            
+
                             if (arinvoiceTransactions.All(x => x.OpenAmount == 0))
                             {
                                 invoice.StatusCode = ARInvoiceStatusValues.Paid;
-                                invoice.IsClosed = true;
-                                if (invoice.PaidDate == null)
-                                {
-                                    invoice.PaidDate = TenantServerConfigration.GetCurrentDateTime(invoice.Tenant).Date;
-                                }
                             }
                             else if (arinvoiceTransactions.Any(x => x.ForeignAmountDebit != 0 && x.OpenAmount != x.ForeignAmountDebit))
                             {
-                                invoice.IsClosed = false;
                                 invoice.StatusCode = ARInvoiceStatusValues.PartiallyPaid;
                             }
-                            else
-                            {
-                                invoice.IsClosed = false;
-                                invoice.StatusCode = ARInvoiceStatusValues.Unpaid;
-                            }
-                           
                         }
                     }
                     invoiceService.Update(invoice);
@@ -240,23 +226,16 @@ namespace Logitude.Accounting.BL.CoreBL
                 {
                     invoice.IsClosed = true;
                     invoice.StatusCode = ARInvoiceStatusValues.Paid;
-                    if (invoice.PaidDate == null)
-                    {
-                        invoice.PaidDate = TenantServerConfigration.GetCurrentDateTime(invoice.Tenant).Date;
-                    }
                 }
                 else if (transaction.OpenAmount < transactionAmount)
                  {
                     invoice.IsClosed = false;
                     invoice.StatusCode = ARInvoiceStatusValues.PartiallyPaid;
-                    invoice.PaidDate = null;
                 }
                 else
                 {
                     invoice.IsClosed = false;
-                    if (invoice.StatusCode != ARInvoiceStatusValues.Draft)
-                        invoice.StatusCode = ARInvoiceStatusValues.Unpaid;
-                    invoice.PaidDate = null;
+                    invoice.StatusCode = ARInvoiceStatusValues.Unpaid;
                 }
             }
             else
@@ -266,23 +245,16 @@ namespace Logitude.Accounting.BL.CoreBL
                 {
                     invoice.IsClosed = true;
                     invoice.StatusCode = ARInvoiceStatusValues.Paid;
-                    if (invoice.PaidDate == null)
-                    {
-                        invoice.PaidDate = TenantServerConfigration.GetCurrentDateTime(invoice.Tenant).Date;
-                    }
                 }
                 else if (invoice.AmountDue < invoiceAmount)
                 {
                     invoice.IsClosed = false;
                     invoice.StatusCode = ARInvoiceStatusValues.PartiallyPaid;
-                    invoice.PaidDate = null;
                 }
                 else
                 {
                     invoice.IsClosed = false;
-                    if (invoice.StatusCode != ARInvoiceStatusValues.Draft)
-                        invoice.StatusCode = ARInvoiceStatusValues.Unpaid;
-                    invoice.PaidDate = null;
+                    invoice.StatusCode = ARInvoiceStatusValues.Unpaid;
 
                 }
             }
