@@ -180,15 +180,6 @@ namespace CustomsWorkerRole
 								UnifreightFillingService.CreateNewFiling(inParams, filedata, tenant, out outParams, out fatal_error, out message,isFromCloud: true);
 								logs += "after CreateNewFiling  fatal_error: " + fatal_error.ToString() + " message: " + message + "take time: " + DocumentApiExecutionService.GetFormatedElapsedTime(stopwatch.Elapsed) + "date: " + DateTime.Now.ToString();
 							}
-							else
-							{
-								var guid = Guid.NewGuid();
-								var base64string = Convert.ToBase64String(guid.ToByteArray()).ToLower();
-								base64string = base64string.Substring(0, 22);
-								base64string = base64string.Replace("/", "_");
-								base64string = base64string.Replace("+", "-");
-								outParams["COM_ID"] = base64string;
-							}
 							#endregion
 							if (!fatal_error)
 							{
@@ -253,7 +244,7 @@ namespace CustomsWorkerRole
 
 			return processor;
 		}
-		public static bool CheckIsDocumentPDF(byte[] fileBytes)
+		private bool CheckIsDocumentPDF(byte[] fileBytes)
 		{
 			try
 			{
@@ -288,9 +279,8 @@ namespace CustomsWorkerRole
 			string fileName = Path.GetFileName(filePath);
 			long fileSize = new System.IO.FileInfo(filePath).Length;
 			string fileExtension = Path.GetExtension(fileName).Substring(1);
-			string val = null, val1 = null;
-			string customsDocumentTypeCode = AzureQueueMessageApi.Params?.TryGetValue("documentType", out  val) == true && !string.IsNullOrWhiteSpace(val) ? val : fileName?.Split('_')[1];
-			string hawb = AzureQueueMessageApi.Params?.TryGetValue("parcelTrackingNumber", out  val1) == true && !string.IsNullOrWhiteSpace(val1) ? val1 : fileName?.Split('_')[2].Split('.')[0];
+			string customsDocumentTypeCode = fileName?.Split('_')[1];
+			string hawb = fileName?.Split('_')[2].Split('.')[0];
 			string PartnerCode = AzureQueueMessageApi.PartnerName;
 			string code = CodeCounter.GetNumber("DocumentsFiling", tenant, false).ToString();//> CUS - 26043 </ Code >  //TODO 
 

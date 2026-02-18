@@ -130,16 +130,6 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                 }).FirstOrDefault();
             return glAccountPM;
         }
-
-        public GLAccount GetAccountControlAndRecoMethods(string accountId, int tenant)
-        {
-            return (from a in context.GLAccounts
-                    where a.Tenant == tenant && a.Id == accountId
-                    select a).FirstOrDefault();
-        }
-
-
-
         public IQueryable<string> GetQGLAccIdBySalesmanId(int tenant, string SalesmanId, string AccountTypeCode)
         {
             IQueryable<string> q = (
@@ -334,7 +324,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         }
 
         public IQueryable<string> GetAllIdAccountsTypeCat(int tenant, string GLAccountId, string cat1, string cat2, string cat3, string cat4, string cat5, string gLAccountType, string chartOfAccountsId,
-    bool IncludeChildAccounts, string ChartOfAccountsTypeCode, string salesmanId, bool includeControlAccount, bool useSecurityLevel, string collectorId,List<string> listGLAccounts,string fromGLAccountDisplayNumber , string toGLAccountDisplayNumber)
+    bool IncludeChildAccounts, string ChartOfAccountsTypeCode, string salesmanId, bool includeControlAccount, bool useSecurityLevel, string collectorId)
         {
             int? securityLevel = GetSecurityLevel(useSecurityLevel, tenant);
             // List<String> allIdAccounts = new List<string>() { GLAccountId };
@@ -342,7 +332,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             if (!String.IsNullOrWhiteSpace(cat1) || !String.IsNullOrWhiteSpace(cat2) || !String.IsNullOrWhiteSpace(cat3) || !String.IsNullOrWhiteSpace(cat4)
                 || !String.IsNullOrWhiteSpace(cat5) || !String.IsNullOrWhiteSpace(gLAccountType) || !String.IsNullOrWhiteSpace(chartOfAccountsId)
                 || !String.IsNullOrWhiteSpace(ChartOfAccountsTypeCode)
-                || !String.IsNullOrWhiteSpace(salesmanId) || !String.IsNullOrWhiteSpace(collectorId) || (listGLAccounts != null && listGLAccounts.Count > 0 || (!String.IsNullOrWhiteSpace(fromGLAccountDisplayNumber)  && !String.IsNullOrWhiteSpace(toGLAccountDisplayNumber)))
+                || !String.IsNullOrWhiteSpace(salesmanId) || !String.IsNullOrWhiteSpace(collectorId)
                 )
             {
 
@@ -350,7 +340,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                     IAccountingContext context = AccountingContext.GetContext(tenant);
                     GLAccountRepository repository = new GLAccountRepository(context);
                                       
-                   allIdAccounts = repository.GetQAccIdByAcountIdTypeCategories(tenant, GLAccountId, cat1, cat2, cat3, cat4, cat5, gLAccountType, chartOfAccountsId, ChartOfAccountsTypeCode, salesmanId, includeControlAccount, collectorId, securityLevel, listGLAccounts, fromGLAccountDisplayNumber, toGLAccountDisplayNumber);
+                   allIdAccounts = repository.GetQAccIdByAcountIdTypeCategories(tenant, GLAccountId, cat1, cat2, cat3, cat4, cat5, gLAccountType, chartOfAccountsId, ChartOfAccountsTypeCode, salesmanId, includeControlAccount, collectorId, securityLevel);
                     if (IncludeChildAccounts && allIdAccounts != null && allIdAccounts.ToList().Count > 0)
                     {
                         IQueryable<String> ChildAccounts = repository.GetChildAccountsQ(allIdAccounts, tenant, securityLevel)
@@ -697,42 +687,6 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
 
 
-
-        public Dictionary<string, List<GLAccountCurrencyBalance>> GetCurrencyBalancesByIdsV2(IEnumerable<string> gLAccountIds, DateTime revaluationDate, int tenant)
-        {
-            DateTime revDate = revaluationDate.Date;
-
-            var ids = gLAccountIds.Where(id => !string.IsNullOrEmpty(id)).Distinct().ToList();
-            if (!ids.Any()) return new Dictionary<string, List<GLAccountCurrencyBalance>>();
-
-            LedgerTransactionQueryService ledgerTransactionQueryService = new LedgerTransactionQueryService(context);
-            // single DB hit for all accounts (up to revDate)
-            var allSums = ledgerTransactionQueryService
-                .GetLedgerTransactionTotalLocalAmountFromToV2(ids, DateTime.MinValue, revDate, tenant);
-
-            var result = allSums
-                .GroupBy(s => s.AccountId)
-                .ToDictionary(
-                    g => g.Key,
-                    g => g.Select(item => new GLAccountCurrencyBalance
-                    {
-                        AccountId = item.AccountId,
-                        CurrencyId = item.CurrencyId,
-                        ForeignAmount = item.ForeignAmountDebit - item.ForeignAmountCredit,
-                        LocalAmount = item.LocalAmountDebit - item.LocalAmountCredit
-                    }).ToList()
-                );
-
-            // Ensure all requested IDs are in the result dictionary, even if they have no balances.
-            foreach (var accId in ids.Where(id => !result.ContainsKey(id)))
-            {
-                result[accId] = new List<GLAccountCurrencyBalance>();
-            }
-
-            return result;
-        }
-
-
         public List<GLAccountCurrencyBalance> GetCurrencyBalances(GLAccount gLAccountPM, DateTime revaluationDate, int tenant)
         {
             if (gLAccountPM == null)
@@ -843,10 +797,6 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         {
             List<GLAccount> pocos = this.repository.GetByDisplayNumber(displayNumber, tenant);
             return pocos.Select(rec => this.GetEntityPM(rec)).ToList();
-        }
-        public decimal GetTotalOpenChequesInLocalCurById(string Id, int tenant)
-        {
-            return this.repository.GetTotalOpenChequesInLocalCurById(Id, tenant);
         }
         public List<GLAccountPM> GetByDisplayNumberEnding(string displayNumberEnding, int tenant)
         {
