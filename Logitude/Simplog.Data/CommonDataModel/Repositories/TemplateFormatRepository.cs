@@ -14,7 +14,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
             commonDataContext = context;
         }
 
-
+        public TemplateFormatRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
 
         public TemplateFormatRepository(int tenant)
         {

@@ -22,6 +22,9 @@ namespace Logitude.DBMigrations
             ToolArguments.Arguments = args;
             MigrationTool migrationTool = new MigrationTool(runSettings);
             migrationTool.RunTool();
+#if DEBUG
+            Console.ReadLine();
+#endif
         }
     }
 }

@@ -22,7 +22,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
             commonDataContext = CommonDataContext.GetContext(tenant);
         }
 
-
+        public CarrierServiceLineRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
 
         public IQueryable<CarrierServiceLine> GetCarrierServiceLines(int tenant)
         {

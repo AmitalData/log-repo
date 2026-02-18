@@ -2,544 +2,492 @@
 
 </style>
 <table *ngIf="DecalarationData != null && IsLoaded">
-    <tr>
+    <tr style="height: 100%;">
         <td style="vertical-align:top">
-            <div class="SiiRequestBody">
-                <div *ngIf="ErrorsList?.length > 0">
-                    <ValidationSummary [ItemsSource]="ErrorsList" [SingleLine]="true"></ValidationSummary>
-                </div>
-                <div style="vertical-align:top; margin:5px">
-                    <!-- Section One -->
-                    <table>
-                        <!-- First Row -->
-                        <tr class="FieldRow">
-                            <td style="width:50px">
-                            </td>
-                            <td style="width:88px">
-                                <LogLabel [TextCode]="'Customs.SIIRequest.F.ContactName'"
-                                    [ObjectFieldName]="'ContactId'" [ObjectTableName]="ObjectTableNameSiiRequest"
-                                    [DataContext]="DataContext"></LogLabel>
-                            </td>
-                            <td style="width:200px">
-                                <LogLov [ObjectFieldName]="'ContactId'" [ObjectTableName]="ObjectTableNameSiiRequest"
-                                    [DataContext]="DataContext" [LookUpTableName]="'Contact'"
-                                    [SelectedValue]="ContactId" [HideColumns]="true" [CustomizedWidth]="300">
-                                </LogLov>
-                            </td>
-                            <td style="width:90px">
-                            </td>
-                            <td style="width:88px">
-                                <LogLabel [TextCode]="'Customs.SIIRequest.F.ManifestNumber'"
-                                    [ObjectFieldName]="'ManifestNumber'" [ObjectTableName]="ObjectTableNameSiiRequest"
-                                    [DataContext]="DataContext"></LogLabel>
-                            </td>
-                            <td style="width:200px">
-                                <LogTextBox [ObjectFieldName]="'ManifestNumber'" [DataContext]="DataContext"
-                                    [ObjectTableName]="ObjectTableNameSiiRequest" [HideColumns]="true"></LogTextBox>
-                            </td>
-                            <td style="width:90px">
-                            </td>
-                            <td style="width:88px">
-                                <LogLabel [TextCode]="'Customs.SIIRequest.F.WareHouseAddress'"
-                                    [ObjectFieldName]="'WareHouseAddress'" [ObjectTableName]="ObjectTableNameSiiRequest"
-                                    [DataContext]="DataContext"></LogLabel>
-                            </td>
-                            <td style="width:200px">
-                                <LogTextBox [ObjectFieldName]="'WareHouseAddress'" [DataContext]="DataContext"
-                                    [ObjectTableName]="ObjectTableNameSiiRequest" [HideColumns]="true"></LogTextBox>
-                            </td>
-                            <td style="width:90px">
-                            </td>
-                        </tr>
-                        <!-- Second Row -->
-                        <tr class="FieldRow">
-                            <td style="width:50px">
-                            </td>
-                            <td style="width:88px">
-                                <LogLabel [TextCode]="'Customs.SIIRequest.F.ContactEmail'"
-                                    [ObjectFieldName]="'ContactEmail'" [ObjectTableName]="ObjectTableNameSiiRequest"
-                                    [DataContext]="DataContext"></LogLabel>
-                            </td>
-                            <td style="width:200px">
-                                <LogTextBox [ObjectFieldName]="'ContactEmail'" [DataContext]="DataContext"
-                                    [ObjectTableName]="ObjectTableNameSiiRequest" [HideColumns]="true"
-                                    [Text]="ContactEmail"></LogTextBox>
-                            </td>
-                            <td style="width:90px">
-                            </td>
-                            <td style="width:88px">
-                                <LogLabel [TextCode]="'Customs.SIIRequest.F.UnloadDate'"
-                                    [ObjectFieldName]="'UnloadDate'" [ObjectTableName]="ObjectTableNameSiiRequest"
-                                    [DataContext]="DataContext"></LogLabel>
-                            </td>
-                            <td style="width:200px">
-                                <LogDatePicker [ObjectFieldName]="'UnloadDate'" [ObjectTableName]="ObjectTableName"
-                                    [DataContext]="DataContext" [HideColumns]="true" [ForceDisabled]="true">
-                                </LogDatePicker>
-                            </td>
-                            <td style="width:90px">
-                            </td>
-                            <td style="width:88px">
-                                <LogLabel [TextCode]="'Customs.SIIRequest.F.WareHouseCity'"
-                                    [ObjectFieldName]="'WareHouseCity'" [ObjectTableName]="ObjectTableNameSiiRequest"
-                                    [DataContext]="DataContext"></LogLabel>
-                            </td>
-                            <td style="width:200px">
-                                <LogLov [ObjectFieldName]="'WareHouseCity'"
-                                    [ObjectTableName]="ObjectTableNameSiiRequest" [SelectedValue]="WareHouseCity"
-                                    [DataContext]="DataContext" [LookUpTableName]="'Customs.City'" [HideColumns]="true"
-                                    [CustomizedWidth]="180"
-                                    (SelectedItemChanged)="SetLocalName($event, 'WareHouseCityName')">
-                                </LogLov>
-                            </td>
-                            <td style="width:90px">
-                            </td>
-                        </tr>
-                        <!-- Third Row -->
-                        <tr class="FieldRow">
-                            <td style="width:50px">
-                            </td>
-                            <td style="width:88px">
-                                <LogLabel [TextCode]="'Customs.SIIRequest.F.ContactTel'"
-                                    [ObjectFieldName]="'ContactTel'" [ObjectTableName]="ObjectTableNameSiiRequest"
-                                    [DataContext]="DataContext"></LogLabel>
-                            </td>
-                            <td style="width:200px">
-                                <LogTextBox [ObjectFieldName]="'ContactTel'" [DataContext]="DataContext"
-                                    [ObjectTableName]="ObjectTableNameSiiRequest" [HideColumns]="true"
-                                    [Text]="ContactTel">
-                                </LogTextBox>
-                            </td>
-                            <td style="width:90px">
-                            </td>
-                            <td style="width:88px">
-                                <LogLabel [TextCode]="'Customs.SIIRequest.F.VesselName'"
-                                    [ObjectFieldName]="'VesselName'" [ObjectTableName]="ObjectTableNameSiiRequest"
-                                    [DataContext]="DataContext"></LogLabel>
-                            </td>
-                            <td style="width:200px">
-                                <LogTextBox [ObjectFieldName]="'VesselName'" [DataContext]="DataContext"
-                                    [ObjectTableName]="ObjectTableNameSiiRequest" [HideColumns]="true"></LogTextBox>
-                            </td>
-                            <td style="width:90px">
-                            </td>
-                            <td style="width:88px">
-                                <LogLabel [TextCode]="'Customs.SIIRequest.F.Remarks'" [ObjectFieldName]="'Remarks'"
-                                    [ObjectTableName]="ObjectTableNameSiiRequest" [DataContext]="DataContext">
-                                </LogLabel>
-                            </td>
-                            <td style="width:200px" class="LogTextBoxMultiLine">
-                                <LogTextBox style="width:240px;max-height: 50px;" [IsMultiline]="true" [Text]="Remarks"
-                                    [ObjectFieldName]="'Remarks'" [HideColumns]="true"
-                                    [ObjectTableName]="ObjectTableNameSiiRequest" [InputType]="'nText'"
-                                    [DataContext]="DataContext" [Direction]="'RTL'">
-                                </LogTextBox>
-                            </td>
-                            <td style="width:90px">
-                            </td>
-                        </tr>
-                        <!-- Fourth Row -->
-                        <tr class="FieldRow">
-                            <td style="width:50px">
-                            </td>
-                            <td style="width:88px">
-                                <LogLabel [TextCode]="'Customs.SIIRequest.F.ContactCellPhone'"
-                                    [ObjectFieldName]="'ContactCellPhone'" [ObjectTableName]="ObjectTableNameSiiRequest"
-                                    [DataContext]="DataContext"></LogLabel>
-                            </td>
-                            <td style="width:200px">
-                                <LogTextBox [ObjectFieldName]="'ContactCellPhone'" [DataContext]="DataContext"
-                                    [ObjectTableName]="ObjectTableNameSiiRequest" [Text]="ContactCellPhone"
-                                    [HideColumns]="true"></LogTextBox>
-                            </td>
-                            <td style="width:90px">
-                            <td style="width:88px">
-                                <LogLabel [TextCode]="'Customs.SIIRequest.O.ProcessType'" [DataContext]="DataContext">
-                                </LogLabel>
-                            </td>
+            <div style="vertical-align:top; margin:5px">
+                <!-- Section One -->
+                <table>
+                    <!-- First Row -->
+                    <tr class="FieldRow">
+                        <td style="width:50px">
+                        </td>
+                        <td style="width:88px">
+                            <LogLabel [TextCode]="'Customs.SIIRequest.F.ContactName'" [ObjectFieldName]="'ContactId'"
+                                [ObjectTableName]="ObjectTableNameSiiRequest" [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width:200px">
+                            <LogLov [ObjectFieldName]="'ContactId'" [ObjectTableName]="ObjectTableNameSiiRequest"
+                                [DataContext]="DataContext" [LookUpTableName]="'User'" [SelectedValue]="ContactId"
+                                [HideColumns]="true" [CustomizedWidth]="300">
+                            </LogLov>
+                        </td>
+                        <td style="width:90px">
+                        </td>
+                        <td style="width:88px">
+                            <LogLabel [TextCode]="'Customs.SIIRequest.F.ManifestNumber'"
+                                [ObjectFieldName]="'ManifestNumber'" [ObjectTableName]="ObjectTableNameSiiRequest"
+                                [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width:200px">
+                            <LogTextBox [ObjectFieldName]="'ManifestNumber'" [DataContext]="DataContext"
+                                [ObjectTableName]="ObjectTableNameSiiRequest" [HideColumns]="true"></LogTextBox>
+                        </td>
+                        <td style="width:90px">
+                        </td>
+                        <td style="width:88px">
+                            <LogLabel [TextCode]="'Customs.SIIRequest.F.WareHouseAddress'"
+                                [ObjectFieldName]="'WareHouseAddress'" [ObjectTableName]="ObjectTableNameSiiRequest"
+                                [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width:200px">
+                            <LogTextBox [ObjectFieldName]="'WareHouseAddress'" [DataContext]="DataContext"
+                                [ObjectTableName]="ObjectTableNameSiiRequest" [HideColumns]="true"></LogTextBox>
+                        </td>
+                        <td style="width:90px">
+                        </td>
+                    </tr>
+                    <!-- Second Row -->
+                    <tr class="FieldRow">
+                        <td style="width:50px">
+                        </td>
+                        <td style="width:88px">
+                            <LogLabel [TextCode]="'Customs.SIIRequest.F.ContactEmail'"
+                                [ObjectFieldName]="'ContactEmail'" [ObjectTableName]="ObjectTableNameSiiRequest"
+                                [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width:200px">
+                            <LogTextBox [ObjectFieldName]="'ContactEmail'" [DataContext]="DataContext"
+                                [ObjectTableName]="ObjectTableNameSiiRequest" [HideColumns]="true"
+                                [Text]="ContactEmail"></LogTextBox>
+                        </td>
+                        <td style="width:90px">
+                        </td>
+                        <td style="width:88px">
+                            <LogLabel [TextCode]="'Customs.SIIRequest.F.UnloadDate'" [ObjectFieldName]="'UnloadDate'"
+                                [ObjectTableName]="ObjectTableNameSiiRequest" [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width:200px">
+                            <LogDatePicker [ObjectFieldName]="'UnloadDate'" [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                        </td>
+                        <td style="width:90px">
+                        </td>
+                        <td style="width:88px">
+                            <LogLabel [TextCode]="'Customs.SIIRequest.F.WareHouseCity'"
+                                [ObjectFieldName]="'WareHouseCity'" [ObjectTableName]="ObjectTableNameSiiRequest"
+                                [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width:200px">
+                            <LogLov [ObjectFieldName]="'WareHouseCity'" [ObjectTableName]="ObjectTableNameSiiRequest"
+                                [SelectedValue]="WareHouseCity" [DataContext]="DataContext"
+                                [LookUpTableName]="'Customs.City'" [HideColumns]="true" [CustomizedWidth]="180"
+                                (SelectedItemChanged)="SetLocalName($event, 'WareHouseCityName')">
+                            </LogLov>
+                        </td>
+                        <td style="width:90px">
+                        </td>
+                    </tr>
+                    <!-- Third Row -->
+                    <tr class="FieldRow">
+                        <td style="width:50px">
+                        </td>
+                        <td style="width:88px">
+                            <LogLabel [TextCode]="'Customs.SIIRequest.F.ContactTel'" [ObjectFieldName]="'ContactTel'"
+                                [ObjectTableName]="ObjectTableNameSiiRequest" [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width:200px">
+                            <LogTextBox [ObjectFieldName]="'ContactTel'" [DataContext]="DataContext"
+                                [ObjectTableName]="ObjectTableNameSiiRequest" [HideColumns]="true" [Text]="ContactTel">
+                            </LogTextBox>
+                        </td>
+                        <td style="width:90px">
+                        </td>
+                        <td style="width:88px">
+                            <LogLabel [TextCode]="'Customs.SIIRequest.F.VesselName'" [ObjectFieldName]="'VesselName'"
+                                [ObjectTableName]="ObjectTableNameSiiRequest" [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width:200px">
+                            <LogTextBox [ObjectFieldName]="'VesselName'" [DataContext]="DataContext"
+                                [ObjectTableName]="ObjectTableNameSiiRequest" [HideColumns]="true"></LogTextBox>
+                        </td>
+                        <td style="width:90px">
+                        </td>
+                        <td style="width:88px">
+                            <LogLabel [TextCode]="'Customs.SIIRequest.F.Remarks'" [ObjectFieldName]="'Remarks'"
+                                [ObjectTableName]="ObjectTableNameSiiRequest" [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width:200px" class="LogTextBoxMultiLine">
+                            <LogTextBox style="width:240px;max-height: 50px;" [IsMultiline]="true" [Text]="Remarks"
+                                [ObjectFieldName]="'Remarks'" [HideColumns]="true"
+                                [ObjectTableName]="ObjectTableNameSiiRequest" [InputType]="'nText'"
+                                [DataContext]="DataContext" [Direction]="'RTL'">
+                            </LogTextBox>
+                        </td>
+                        <td style="width:90px">
+                        </td>
+                    </tr>
+                    <!-- Fourth Row -->
+                    <tr class="FieldRow">
+                        <td style="width:50px">
+                        </td>
+                        <td style="width:88px">
+                            <LogLabel [TextCode]="'Customs.SIIRequest.F.ContactCellPhone'"
+                                [ObjectFieldName]="'ContactCellPhone'" [ObjectTableName]="ObjectTableNameSiiRequest"
+                                [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width:200px">
+                            <LogTextBox [ObjectFieldName]="'ContactCellPhone'" [DataContext]="DataContext"
+                                [ObjectTableName]="ObjectTableNameSiiRequest" [Text]="ContactCellPhone"
+                                [HideColumns]="true"></LogTextBox>
+                        </td>
+                    </tr>
+                    <tr class="FieldRow"> </tr>
+                </table>
+                <table>
+                    <tr>
+                        <td class="headerRow" style="width:180px">
+                            {{'Customs.SIIRequest.O.RequiredCertificates' | TextCodeTranslationPipe}}
+                        </td>
+                    </tr>
+                </table>
 
-                            <td style="width:200px">
-                                <ComboBox style="width:180px;" [ItemsSource]="ProcessTypeOptions" [Binding]="'Name'"
-                                    [SelectedItem]="SelectedProcessType"
-                                    (SelectedItemChanged)="OnProcessTypeChanged($event)">
-                                </ComboBox>
-                            </td>
-                            <td style="width:90px">
-                            </td>
-                            <td style="width:90px">
-                            </td>
-                        </tr>
-                        <tr class="FieldRow"> </tr>
-                    </table>
-                    <table>
-                        <tr>
-                            <td class="headerRow" style="width:180px">
-                                {{'Customs.SIIRequest.O.RequiredCertificates' | TextCodeTranslationPipe}}
-                            </td>
-                        </tr>
-                    </table>
-              
-                    <!-- Section Two -->
-                    <table style="width:1000px">
-                        <tr class="FieldRow" style="width:100%">
-                            <td style="width:100%">
-                                <!-- Filters Area -->
-                                <div class="GrayBox">
-                                    <table>
-                                        <tr>
-                                            <!-- DemandState Filter Methods -->
-                                            <td style="width: 240px;">
-                                                <ul class="FiltersMenu">
-                                                    <li id="withResponse"
-                                                        (click)="DemandStateFilterItemClicked(filterOptionsWithResponse)"
-                                                        style="width: 80px; height: 22px;"
-                                                        [class.SelectedFilter]="DemandStateFilterSelectedValue === filterOptionsWithResponse"
-                                                        class="noselect">
-                                                        {{'Customs.Declaration.O.DemandState' |
-                                                        TextCodeTranslationPipe}}
-                                                    </li>
-                                                    <li id="All"
-                                                        (click)="DemandStateFilterItemClicked(filterOptionsAll)"
-                                                        style="width: 80px; height: 22px;"
-                                                        [class.SelectedFilter]="DemandStateFilterSelectedValue === filterOptionsAll"
-                                                        class="noselect">
-                                                        {{'Customs.General.O.All' | TextCodeTranslationPipe}}
-                                                    </li>
-                                                </ul>
-                                            </td>
-                                            <td style="width: 10px;"></td>
-                                            <!-- LevelSelection Filter Methods -->
-                                            <td style="width: 30px;">
-                                                {{'Customs.Declaration.O.Level' | TextCodeTranslationPipe}}
-                                            </td>
-                                            <td style="width: 160px;">
-                                                <ul class="FiltersMenu">
-                                                    <li id="LevelSelectionDeclarationConect"
-                                                        (click)="LevelSelectionFilterItemClicked(filterOptionsDeclarationConect)"
-                                                        style="width: 80px; height: 22px;"
-                                                        [class.SelectedFilter]="LevelSelectionFilterSelectedValue === filterOptionsDeclarationConect"
-                                                        class="noselect">
-                                                        {{'Customs.ImporterDeclarationQuery.O.DeclarationConect.Declaration'
-                                                        | TextCodeTranslationPipe}}
-                                                    </li>
-                                                    <li id="Invoice"
-                                                        (click)="LevelSelectionFilterItemClicked(filterOptionsInvoice)"
-                                                        style="width: 80px; height: 22px;"
-                                                        [class.SelectedFilter]="LevelSelectionFilterSelectedValue === filterOptionsInvoice"
-                                                        class="noselect">
-                                                        {{'Customs.Declaration.O.Invoice' | TextCodeTranslationPipe}}
-                                                    </li>
-                                                </ul>
-                                            </td>
-                                            <td style="width:5px"></td>
-                                            <td style="width: 160px;">
-                                                <ComboBox
-                                                    *ngIf="LevelSelectionFilterSelectedValue === filterOptionsInvoice"
-                                                    style="width:150px;" [ItemsSource]="InvoicesNumbersList"
-                                                    (SelectedItemChanged)="InvoicesSelectionChanged($event)"
-                                                    [Binding]="'InvoiceNumber'"></ComboBox>
-                                            </td>
-                                            <td style="width:80px"></td>
-                                            <td style="width:80px">
-                                            </td>
+                <!-- Section Two -->
+                <table style="width:1000px">
+                    <tr class="FieldRow" style="width:100%">
+                        <td style="width:100%">
+                            <!-- Filters Area -->
+                            <div class="GrayBox">
+                                <table>
+                                    <tr>
+                                        <!-- DemandState Filter Methods -->
+                                        <td style="width: 240px;">
+                                            <ul class="FiltersMenu">
+                                                <li id="withResponse"
+                                                    (click)="DemandStateFilterItemClicked(filterOptionsWithResponse)"
+                                                    style="width: 80px; height: 22px;"
+                                                    [class.SelectedFilter]="DemandStateFilterSelectedValue === filterOptionsWithResponse"
+                                                    class="noselect">
+                                                    {{'Customs.Declaration.O.DemandState' | TextCodeTranslationPipe}}
+                                                </li>
+                                                <li id="All" (click)="DemandStateFilterItemClicked(filterOptionsAll)"
+                                                    style="width: 80px; height: 22px;"
+                                                    [class.SelectedFilter]="DemandStateFilterSelectedValue === filterOptionsAll"
+                                                    class="noselect">
+                                                    {{'Customs.General.O.All' | TextCodeTranslationPipe}}
+                                                </li>
+                                            </ul>
+                                        </td>
+                                        <td style="width: 10px;"></td>
+                                        <!-- LevelSelection Filter Methods -->
+                                        <td style="width: 30px;">
+                                            {{'Customs.Declaration.O.Level' | TextCodeTranslationPipe}}
+                                        </td>
+                                        <td style="width: 160px;">
+                                            <ul class="FiltersMenu">
+                                                <li id="LevelSelectionDeclarationConect"
+                                                    (click)="LevelSelectionFilterItemClicked(filterOptionsDeclarationConect)"
+                                                    style="width: 80px; height: 22px;"
+                                                    [class.SelectedFilter]="LevelSelectionFilterSelectedValue === filterOptionsDeclarationConect"
+                                                    class="noselect">
+                                                    {{'Customs.ImporterDeclarationQuery.O.DeclarationConect.Declaration'
+                                                    | TextCodeTranslationPipe}}
+                                                </li>
+                                                <li id="Invoice"
+                                                    (click)="LevelSelectionFilterItemClicked(filterOptionsInvoice)"
+                                                    style="width: 80px; height: 22px;"
+                                                    [class.SelectedFilter]="LevelSelectionFilterSelectedValue === filterOptionsInvoice"
+                                                    class="noselect">
+                                                    {{'Customs.Declaration.O.Invoice' | TextCodeTranslationPipe}}
+                                                </li>
+                                            </ul>
+                                        </td>
+                                        <td style="width:5px"></td>
+                                        <td style="width: 160px;">
+                                            <ComboBox *ngIf="LevelSelectionFilterSelectedValue === filterOptionsInvoice"
+                                                style="width:150px;" [ItemsSource]="InvoicesNumbersList"
+                                                (SelectedItemChanged)="InvoicesSelectionChanged($event)"
+                                                [Binding]="'InvoiceNumber'"></ComboBox>
+                                        </td>
+                                        <td style="width:80px"></td>
+                                        <td style="width:80px">
+                                        </td>
 
-                                            <td style="width:160px">
-                                                <SearchTextBox
-                                                    [PlaceHolder]="'Customs.SIIRequest.O.SivugSearchFields' | TextCodeTranslationPipe"
-                                                    (SearchTextChangeEvent)="Search($event)"></SearchTextBox>
-                                            </td>
-                                            <!-- <td style="width: 30px;">
+                                        <td style="width:160px">
+                                            <SearchTextBox
+                                                [PlaceHolder]="'Customs.SIIRequest.O.SivugSearchFields' | TextCodeTranslationPipe"
+                                                (SearchTextChangeEvent)="Search($event)"></SearchTextBox>
+                                        </td>
+                                        <!-- <td style="width: 30px;">
                                             <IconButton [Name]="'Refresh'" (click)="RefreshEntity()"></IconButton>
                                         </td> -->
-                                        </tr>
-                                        <tr style="height:5px"></tr>
+                                    </tr>
+                                    <tr style="height:5px"></tr>
 
-                                    </table>
-                                </div>
-                            </td>
-                        </tr>
+                                </table>
+                            </div>
+                        </td>
+                    </tr>
 
-                        <!-- Section Classification items -->
-                        <tr style="border-radius:4px; vertical-align: top;">
-                            <table>
-                                <tr>
-                                    <td style="height:25px;width:35px; ">
-                                        <div *ngIf="IsCheckBoxVisible && !IsDisplayOnly">
-                                            <div class="Button" style="width: 29px;height:25px;">
-                                                <CheckBox style="right:3px; top:1.5px" [IsChecked]="IsSelected"
-                                                    [IsEnabled]="!IsDisplayOnly" (Checked)="IsSelected = $event ">
-                                                </CheckBox>
-                                            </div>
+                    <!-- Section Classification items -->
+                    <tr style="border-radius:4px; vertical-align: top;">
+                        <table>
+                            <tr>
+                                <td style="height:25px;width:35px; ">
+                                    <div *ngIf="IsCheckBoxVisible">
+                                        <div class="Button" style="width: 29px;height:25px;">
+                                            <CheckBox style="right:3px; top:1.5px" [IsChecked]="IsSelected"
+                                                [IsEnabled]="!IsDisplayOnly" (Checked)="IsSelected = $event ">
+                                            </CheckBox>
                                         </div>
-                                    </td>
-                                </tr>
-                                <tr class="ClassificationListContainter">
-                                    <td>
-                                        <div class="CellContent">
-                                            <div class="GeneratedGridContainer SiiRequestItemsScrollable"
-                                                style="padding:5px;vertical-align:top;">
-                                                <table style="width:1000px"
-                                                    *ngIf="supplierInvoiceItemsForSIIRequest?.length > 0">
-                                                    <tr class="FieldRow" style="height : 120px">
-                                                        <td colspan="6">
-                                                            <div class="GeneratedGridContainer" style="height : 100%;">
-                                                                <logitude-edit-grid GridWidth="100%" GridHeight="100%"
-                                                                    (SelectedItemChanged)="OnRowSelected($event)"
-                                                                    [SelectedRow]="SelectedRow"
-                                                                    [ItemSource]="supplierInvoiceItemsCollection"
-                                                                    [SelectedRows]="SelectedInvoiceItemsReqList.Collection">
-                                                                    <log-column *ngIf="!IsDisplayOnly" [header]=""
-                                                                        [binding]="" [width]="'30'"
-                                                                        [Alignment]="'right'">
-                                                                        <ng-template let-item>
-                                                                            <log-cell-template [IgnoreMods]="true"
-                                                                                [IsEnabled]="!IsDisplayOnly">
-                                                                                <CheckBox style="right:3px; top:1.5px"
-                                                                                    [IsChecked]="item.IsSelected"
-                                                                                    (Checked)="item.OnRowSelected(item, $event)">
-                                                                                </CheckBox>
-                                                                            </log-cell-template>
-                                                                        </ng-template>
-                                                                    </log-column>
-                                                                    <log-column
-                                                                        [header]="'Customs.SupplierInvoiceItemsReqList.F.LineNumber' | TextCodeTranslationPipe"
-                                                                        [binding]="'LineNumber'" [width]="'30'"
-                                                                        [Alignment]="'right'">
-                                                                        <ng-template let-item>
-                                                                            <log-cell-template [IgnoreMods]="true">
-                                                                                <div style="text-align:right">
-                                                                                    <span>{{item.Counter}}</span>
-                                                                                </div>
-                                                                            </log-cell-template>
-                                                                        </ng-template>
-                                                                    </log-column>
-                                                                    <log-column
-                                                                        [header]="'Customs.SupplierInvoiceItem.F.InvoiceNumber' | TextCodeTranslationPipe"
-                                                                        [binding]="'InvoiceNumber'" [width]="'75'"
-                                                                        [Alignment]="'right'">
-                                                                        <ng-template let-item>
-                                                                            <log-cell-template [IgnoreMods]="true">
-                                                                                <div style="text-align:right">
-                                                                                    <span>{{item.InvoiceNumber}}</span>
-                                                                                </div>
-                                                                            </log-cell-template>
-                                                                        </ng-template>
-                                                                    </log-column>
-                                                                    <log-column
-                                                                        [header]="'Customs.SupplierInvoiceItem.F.ClassificationCode' | TextCodeTranslationPipe"
-                                                                        [binding]="'ClassificationCode'" [width]="'80'"
-                                                                        [Alignment]="'right'">
-                                                                        <ng-template let-item>
-                                                                            <log-cell-template [IgnoreMods]="true">
-                                                                                <div style="text-align:right">
-                                                                                    <span>{{item.ClassificationCode}}</span>
-                                                                                </div>
-                                                                            </log-cell-template>
-                                                                        </ng-template>
-                                                                    </log-column>
-                                                                    <log-column
-                                                                        [header]="'Customs.SupplierInvoiceItem.F.ItemCode' | TextCodeTranslationPipe"
-                                                                        [binding]="'ItemCode'" [width]="'75'"
-                                                                        [Alignment]="'right'">
-                                                                        <ng-template let-item>
-                                                                            <log-cell-template [IgnoreMods]="true">
-                                                                                <div style="text-align:right">
-                                                                                    <span>{{item.ItemCode}}</span>
-                                                                                </div>
-                                                                            </log-cell-template>
-                                                                        </ng-template>
-                                                                    </log-column>
-                                                                    <log-column
-                                                                        [header]="'Customs.SupplierInvoiceItem.F.ItemDescription' | TextCodeTranslationPipe"
-                                                                        [binding]="'ItemDescription'" [width]="'90'"
-                                                                        [Alignment]="'right'">
-                                                                        <ng-template let-item>
-                                                                            <log-cell-template [IgnoreMods]="true">
-                                                                                <div style="text-align:right">
-                                                                                    <span>{{item.ItemDescription}}</span>
-                                                                                </div>
-                                                                            </log-cell-template>
-                                                                        </ng-template>
-                                                                    </log-column>
-                                                                    <log-column
-                                                                        [header]="'Customs.SupplierInvoiceItem.F.OriginCountryName' | TextCodeTranslationPipe"
-                                                                        [binding]="'OriginCountryName'" [width]="'75'"
-                                                                        [Alignment]="'right'">
-                                                                        <ng-template let-item>
-                                                                            <log-cell-template [IgnoreMods]="true">
-                                                                                <div style="text-align:right">
-                                                                                    <span>{{item.OriginCountryName}}</span>
-                                                                                </div>
-                                                                            </log-cell-template>
-                                                                        </ng-template>
-                                                                    </log-column>
-                                                                    <log-column
-                                                                        [header]="'Customs.SupplierInvoiceItem.F.TradeAgreementName' | TextCodeTranslationPipe"
-                                                                        [binding]="'TradeAgreementName'" [width]="'75'"
-                                                                        [Alignment]="'right'">
-                                                                        <ng-template let-item>
-                                                                            <log-cell-template [IgnoreMods]="true">
-                                                                                <div style="text-align:right">
-                                                                                    <span>{{item.TradeAgreementName}}</span>
-                                                                                </div>
-                                                                            </log-cell-template>
-                                                                        </ng-template>
-                                                                    </log-column>
-                                                                    <log-column
-                                                                        [header]="'Customs.SupplierInvoiceItem.F.InvoiceQuantityTypeName' | TextCodeTranslationPipe"
-                                                                        [binding]="'InvoiceQuantityTypeName'"
-                                                                        [width]="'80'" [Alignment]="'right'">
-                                                                        <ng-template let-item>
-                                                                            <log-cell-template [IgnoreMods]="true">
-                                                                                <div style="text-align:right">
-                                                                                    <span>{{item.InvoiceQuantityTypeName}}</span>
-                                                                                </div>
-                                                                            </log-cell-template>
-                                                                        </ng-template>
-                                                                    </log-column>
-                                                                    <log-column
-                                                                        [header]="'Customs.SupplierInvoiceItem.F.InvoiceQuantity' | TextCodeTranslationPipe"
-                                                                        [binding]="'InvoiceQuantity'" [width]="'75'"
-                                                                        [Alignment]="'right'">
-                                                                        <ng-template let-item>
-                                                                            <log-cell-template [IgnoreMods]="true">
-                                                                                <div style="text-align:right">
-                                                                                    <span>{{item.InvoiceQuantity}}</span>
-                                                                                </div>
-                                                                            </log-cell-template>
-                                                                        </ng-template>
-                                                                    </log-column>
-                                                                    <log-column
-                                                                        [header]="'Customs.SupplierInvoiceItem.F.ItemPrice' | TextCodeTranslationPipe"
-                                                                        [binding]="'ItemPrice'" [width]="'75'"
-                                                                        [Alignment]="'right'">
-                                                                        <ng-template let-item>
-                                                                            <log-cell-template [IgnoreMods]="true">
-                                                                                <div style="text-align:right">
-                                                                                    <span>{{item.ItemPrice}}</span>
-                                                                                </div>
-                                                                            </log-cell-template>
-                                                                        </ng-template>
-                                                                    </log-column>
-                                                                    <log-column *ngIf="IsDisplayOnly"
-                                                                        [header]="'Customs.SupplierInvoiceItemsReqList.F.StatusName' | TextCodeTranslationPipe"
-                                                                        [binding]="'StatusName'" [width]="'150'"
-                                                                        [Alignment]="'right'">
-                                                                        <ng-template let-item>
-                                                                            <log-cell-template [IgnoreMods]="true">
-                                                                                <div style="text-align:right">
-                                                                                    <span>{{ item.StatusName }}</span>
-                                                                                </div>
-                                                                            </log-cell-template>
-                                                                        </ng-template>
-                                                                    </log-column>
-                                                                    <log-column *ngIf="IsDisplayOnly"
-                                                                        [header]="'Customs.SupplierInvoiceItemsReqList.F.DistApprovalAttachmentPath' | TextCodeTranslationPipe"
-                                                                        [binding]="'DistApprovalAttachmentPath'"
-                                                                        [width]="'60'" [Alignment]="'right'">
-                                                                        <ng-template let-item>
-                                                                            <log-cell-template [IgnoreMods]="true">
-                                                                                <div
-                                                                                    style="justify-content:center;align-items:flex-end;">
-                                                                                    <button class="Button"
-                                                                                        style="height:20px; width:18px; padding:0; color:#000; opacity:1; filter:none; min-width:18px;"
-                                                                                        *ngIf="item.DistApprovalAttachmentPath"
-                                                                                        (click)="openDistApprovalAttachment(item)">
-                                                                                        🔗
-                                                                                    </button>
-                                                                                </div>
-                                                                            </log-cell-template>
-                                                                        </ng-template>
-                                                                    </log-column>
-                                                                    <log-column [width]="'35'" [Editable]="true"
-                                                                        [Alignment]="'right'" [visibility]="'visibile'">
-                                                                        <ng-template let-item>
-                                                                            <log-cell-template [IgnoreMods]="true"
-                                                                                #logcelltemplate>
-                                                                                <span
-                                                                                    class="CellSeparator floatRight"></span>
-                                                                                <div class="editButtonContainer">
-                                                                                    <IconButton [Name]="'Edit'"
-                                                                                        [IsSmall]="true"
-                                                                                        *ngIf="item.RequestRequiredStatus === isUnCompleted || item?.RequestRequiredStatus === null"
-                                                                                        (click)="onEditSupplierInvoiceItemRequest(item)">
-                                                                                        <img class="tickImg"
-                                                                                            src="./Images/Buttons/EditWithGreenTick.png" />
-                                                                                    </IconButton>
-                                                                                    <button class="Button"
-                                                                                        style="height:18px; width: 18px;"
-                                                                                        id="Edit_Additional"
-                                                                                        *ngIf="item.RequestRequiredStatus === isFullyCompleted"
-                                                                                        (click)="onEditSupplierInvoiceItemRequest(item)"
-                                                                                        tabindex="-1">
-                                                                                        <img class="tickImg"
-                                                                                            src="./Images/Buttons/EditWithGreenTick.png" />
-                                                                                    </button>
-                                                                                    <button class="Button"
-                                                                                        style="height:18px; width: 18px;"
-                                                                                        id="Edit_Additional"
-                                                                                        *ngIf="item.RequestRequiredStatus === isPartiallyCompleted"
-                                                                                        (click)="onEditSupplierInvoiceItemRequest(item)"
-                                                                                        tabindex="-1">
-                                                                                        <img class="tickImg"
-                                                                                            src="./Images/Buttons/EditWithX.png" />
-                                                                                    </button>
-                                                                                </div>
-                                                                            </log-cell-template>
-                                                                        </ng-template>
-                                                                    </log-column>
-                                                                </logitude-edit-grid>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                            </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="ClassificationListContainter">
+                                <td>
+                                    <div class="CellContent">
+                                        <div class="GeneratedGridContainer"
+                                            style="padding:5px;vertical-align:top;top:0;position:absolute">
+                                            <table style="width:1000px"
+                                                *ngIf="supplierInvoiceItemsForSIIRequest?.length > 0">
+                                                <tr class="FieldRow" style="height : 120px">
+                                                    <td colspan="6">
+                                                        <div class="GeneratedGridContainer" style="height : 100%;">
+                                                            <logitude-edit-grid GridWidth="100%" GridHeight="100%"
+                                                                (SelectedItemChanged)="OnRowSelected($event)"
+                                                                [SelectedRow]="SelectedRow"
+                                                                [ItemSource]="supplierInvoiceItemsCollection"
+                                                                [SelectedRows]="SelectedInvoiceItemsReqList.Collection"
+                                                                [Disabled]="IsDisplayOnly">
+                                                                <log-column [header]="" [binding]="" [width]="'30'"
+                                                                    [Alignment]="'right'">
+                                                                    <ng-template let-item>
+                                                                        <log-cell-template [IgnoreMods]="true"
+                                                                            [IsEnabled]="!IsDisplayOnly">
+                                                                            <CheckBox style="right:3px; top:1.5px"
+                                                                                [IsChecked]="item.IsSelected"
+                                                                                [IsEnabled]="!IsDisplayOnly"
+                                                                                (Checked)="item.OnRowSelected(item, $event)">
+                                                                            </CheckBox>
+                                                                        </log-cell-template>
+                                                                    </ng-template>
+                                                                </log-column>
+                                                                <log-column
+                                                                    [header]="'Customs.SupplierInvoiceItem.F.LineNumber' | TextCodeTranslationPipe"
+                                                                    [binding]="'LineNumber'" [width]="'30'"
+                                                                    [Alignment]="'right'">
+                                                                    <ng-template let-item>
+                                                                        <log-cell-template [IgnoreMods]="true"
+                                                                            [IsEnabled]="!IsDisplayOnly">
+                                                                            <div style="text-align:right">
+                                                                                <span>{{item.LineNumber}}</span>
+                                                                            </div>
+                                                                        </log-cell-template>
+                                                                    </ng-template>
+                                                                </log-column>
+                                                                <log-column
+                                                                    [header]="'Customs.SupplierInvoiceItem.F.InvoiceNumber' | TextCodeTranslationPipe"
+                                                                    [binding]="'InvoiceNumber'" [width]="'75'"
+                                                                    [Alignment]="'right'">
+                                                                    <ng-template let-item>
+                                                                        <log-cell-template [IgnoreMods]="true"
+                                                                            [IsEnabled]="!IsDisplayOnly">
+                                                                            <div style="text-align:right">
+                                                                                <span>{{item.InvoiceNumber}}</span>
+                                                                            </div>
+                                                                        </log-cell-template>
+                                                                    </ng-template>
+                                                                </log-column>
+                                                                <log-column
+                                                                    [header]="'Customs.SupplierInvoiceItem.F.ClassificationCode' | TextCodeTranslationPipe"
+                                                                    [binding]="'ClassificationCode'" [width]="'80'"
+                                                                    [Alignment]="'right'">
+                                                                    <ng-template let-item>
+                                                                        <log-cell-template [IgnoreMods]="true"
+                                                                            [IsEnabled]="!IsDisplayOnly">
+                                                                            <div style="text-align:right">
+                                                                                <span>{{item.ClassificationCode}}</span>
+                                                                            </div>
+                                                                        </log-cell-template>
+                                                                    </ng-template>
+                                                                </log-column>
+                                                                <log-column
+                                                                    [header]="'Customs.SupplierInvoiceItem.F.ItemCode' | TextCodeTranslationPipe"
+                                                                    [binding]="'ItemCode'" [width]="'75'"
+                                                                    [Alignment]="'right'">
+                                                                    <ng-template let-item>
+                                                                        <log-cell-template [IgnoreMods]="true"
+                                                                            [IsEnabled]="!IsDisplayOnly">
+                                                                            <div style="text-align:right">
+                                                                                <span>{{item.ItemCode}}</span>
+                                                                            </div>
+                                                                        </log-cell-template>
+                                                                    </ng-template>
+                                                                </log-column>
+                                                                <log-column
+                                                                    [header]="'Customs.SupplierInvoiceItem.F.ItemDescription' | TextCodeTranslationPipe"
+                                                                    [binding]="'ItemDescription'" [width]="'90'"
+                                                                    [Alignment]="'right'">
+                                                                    <ng-template let-item>
+                                                                        <log-cell-template [IgnoreMods]="true"
+                                                                            [IsEnabled]="!IsDisplayOnly">
+                                                                            <div style="text-align:right">
+                                                                                <span>{{item.ItemDescription}}</span>
+                                                                            </div>
+                                                                        </log-cell-template>
+                                                                    </ng-template>
+                                                                </log-column>
+                                                                <log-column
+                                                                    [header]="'Customs.SupplierInvoiceItem.F.OriginCountryName' | TextCodeTranslationPipe"
+                                                                    [binding]="'OriginCountryName'" [width]="'75'"
+                                                                    [Alignment]="'right'">
+                                                                    <ng-template let-item>
+                                                                        <log-cell-template [IgnoreMods]="true"
+                                                                            [IsEnabled]="!IsDisplayOnly">
+                                                                            <div style="text-align:right">
+                                                                                <span>{{item.OriginCountryName}}</span>
+                                                                            </div>
+                                                                        </log-cell-template>
+                                                                    </ng-template>
+                                                                </log-column>
+                                                                <log-column
+                                                                    [header]="'Customs.SupplierInvoiceItem.F.TradeAgreementName' | TextCodeTranslationPipe"
+                                                                    [binding]="'TradeAgreementName'" [width]="'75'"
+                                                                    [Alignment]="'right'">
+                                                                    <ng-template let-item>
+                                                                        <log-cell-template [IgnoreMods]="true"
+                                                                            [IsEnabled]="!IsDisplayOnly">
+                                                                            <div style="text-align:right">
+                                                                                <span>{{item.TradeAgreementName}}</span>
+                                                                            </div>
+                                                                        </log-cell-template>
+                                                                    </ng-template>
+                                                                </log-column>
+                                                                <log-column
+                                                                    [header]="'Customs.SupplierInvoiceItem.F.InvoiceQuantityTypeName' | TextCodeTranslationPipe"
+                                                                    [binding]="'InvoiceQuantityTypeName'" [width]="'80'"
+                                                                    [Alignment]="'right'">
+                                                                    <ng-template let-item>
+                                                                        <log-cell-template [IgnoreMods]="true"
+                                                                            [IsEnabled]="!IsDisplayOnly">
+                                                                            <div style="text-align:right">
+                                                                                <span>{{item.InvoiceQuantityTypeName}}</span>
+                                                                            </div>
+                                                                        </log-cell-template>
+                                                                    </ng-template>
+                                                                </log-column>
+                                                                <log-column
+                                                                    [header]="'Customs.SupplierInvoiceItem.F.InvoiceQuantity' | TextCodeTranslationPipe"
+                                                                    [binding]="'InvoiceQuantity'" [width]="'75'"
+                                                                    [Alignment]="'right'">
+                                                                    <ng-template let-item>
+                                                                        <log-cell-template [IgnoreMods]="true"
+                                                                            [IsEnabled]="!IsDisplayOnly">
+                                                                            <div style="text-align:right">
+                                                                                <span>{{item.InvoiceQuantity}}</span>
+                                                                            </div>
+                                                                        </log-cell-template>
+                                                                    </ng-template>
+                                                                </log-column>
+                                                                <log-column
+                                                                    [header]="'Customs.SupplierInvoiceItem.F.ItemPrice' | TextCodeTranslationPipe"
+                                                                    [binding]="'ItemPrice'" [width]="'75'"
+                                                                    [Alignment]="'right'">
+                                                                    <ng-template let-item>
+                                                                        <log-cell-template [IgnoreMods]="true"
+                                                                            [IsEnabled]="!IsDisplayOnly">
+                                                                            <div style="text-align:right">
+                                                                                <span>{{item.ItemPrice}}</span>
+                                                                            </div>
+                                                                        </log-cell-template>
+                                                                    </ng-template>
+                                                                </log-column>
+                                                                <log-column
+                                                                    [header]="'Customs.SupplierInvoiceItem.F.ItemPriceCurrencyCode' | TextCodeTranslationPipe"
+                                                                    [binding]="'ItemPriceCurrencyCode'" [width]="'100'"
+                                                                    [Alignment]="'right'">
+                                                                    <ng-template let-item>
+                                                                        <log-cell-template [IgnoreMods]="true"
+                                                                            [IsEnabled]="!IsDisplayOnly">
+                                                                            <div style="text-align:right">
+                                                                                <span>{{item.ItemPriceCurrencyCode}}</span>
+                                                                            </div>
+                                                                        </log-cell-template>
+                                                                    </ng-template>
+                                                                </log-column>
+                                                                <log-column [width]="'35'" [Editable]="true"
+                                                                    [Alignment]="'right'" [visibility]="'visibile'">
+                                                                    <ng-template let-item>
+                                                                        <log-cell-template [IgnoreMods]="true"
+                                                                            #logcelltemplate>
+                                                                            <span
+                                                                                class="CellSeparator floatRight"></span>
+                                                                            <div class="editButtonContainer">
+                                                                                <IconButton [Name]="'Edit'"
+                                                                                    [IsSmall]="true"
+                                                                                    *ngIf="item.IsCompletedStatus === isUnCompleted"
+                                                                                    (click)="onEditSupplierInvoiceItemRequest(item)">
+                                                                                    <img class="tickImg"
+                                                                                        src="./Images/Buttons/EditWithGreenTick.png" />
+                                                                                </IconButton>
+                                                                                <button class="Button"
+                                                                                    style="height:18px; width: 18px;right:2px;"
+                                                                                    id="Edit_Additional"
+                                                                                    *ngIf="item.IsCompletedStatus === isFullyCompleted"
+                                                                                    (click)="onEditSupplierInvoiceItemRequest(item)"
+                                                                                    tabindex="-1">
+                                                                                    <img class="tickImg"
+                                                                                        src="./Images/Buttons/EditWithGreenTick.png" />
+                                                                                </button>
+                                                                                <button class="Button"
+                                                                                    style="height:18px; width: 18px;right:2px;"
+                                                                                    id="Edit_Additional"
+                                                                                    *ngIf="item.IsCompletedStatus === isPartiallyCompleted"
+                                                                                    (click)="onEditSupplierInvoiceItemRequest(item)"
+                                                                                    tabindex="-1">
+                                                                                    <img class="tickImg"
+                                                                                        src="./Images/Buttons/EditWithX.png" />
+                                                                                </button>
+                                                                            </div>
+                                                                        </log-cell-template>
+                                                                    </ng-template>
+                                                                </log-column>
+                                                            </logitude-edit-grid>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </table>
                                         </div>
-                                    </td>
-                                </tr>
-                            </table>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
 
-                        </tr>
-                    </table>
-                </div>
+                    </tr>
+                </table>
             </div>
         </td>
         <td></td>
     </tr>
-    <tr>
-        <td style="height:10px"></td>
-    </tr>
-
-    <tr>
-        <td style="width: 100%; padding-top: 5px; display: flex; justify-content: space-between;">
-            <div style="display: flex;">
+    <tr style="height:10px"></tr>
+    <tr style="height: 100%; display: flex; justify-content: flex-end; align-items: flex-end;">
+        <td style="width: 235px;position: absolute;bottom: 5px;">
+            <div style="display: flex; align-items: flex-end; justify-content: space-around;">
                 <div style="width: 57px;vertical-align: bottom;">
-                    <button class="Button" (click)="ViewDocumentsComponent()" [disabled]="IsDisplayOnly">
-                        {{'Customs.Declaration.TH.Documents' | TextCodeTranslationPipe}}
-                    </button>
-                </div>
-            </div>
-
-            <div
-                style="display: flex; align-items: flex-end; justify-content: space-around; width: 225px; margin-left: 3vh;">
-                <div style="width: 57px;vertical-align: bottom;">
-                    <button class="Button" (click)="CancelSiiRequest()">
-                        {{'Customs.General.B.Cancel' |TextCodeTranslationPipe}}
-                    </button>
+                    <button class="Button" (click)="CancelSaveSiiRequest()">{{'Customs.General.B.Cancel'
+                        |TextCodeTranslationPipe}}</button>
                 </div>
                 <div style="width: 57px;vertical-align: bottom;">
-                    <button class="RedButton" (click)="onSaveClick()" [disabled]="IsDisplayOnly">
-                        {{'General.B.Save' | TextCodeTranslationPipe}}
-                    </button>
+                    <button class="RedButton" (click)="SaveSiiRequest()" [disabled]="IsDisplayOnly">{{'General.B.Save' |
+                        TextCodeTranslationPipe}}</button>
                 </div>
 
-                <div style="width: 57px;vertical-align: bottom;">
-                    <button class="x-button x-button-main" (click)="SendSiiRequest()" [disabled]="IsDisplayOnly">
-                        {{'Customs.Declaration.O.Send' | TextCodeTranslationPipe}}
-                    </button>
+                <div style="width: 110px;vertical-align: bottom;">
+                    <custom-send-options [IsDisabled]="IsDisplayOnly" [AvoidDoubleClick]="true"
+                        #MyCustomSendOptionsComponent (SendButtonClicked)="SendSiiRequest($event)">
+                    </custom-send-options>
                 </div>
+
             </div>
         </td>
     </tr>
-
 </table>

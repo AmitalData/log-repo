@@ -593,7 +593,7 @@ namespace WebFreight.Web.Security
 
                             if (contact.Tenant == 0 && tenant != 0)
                             {
-                                UserRepository userRep = new UserRepository(tenant);
+                                UserRepository userRep = new UserRepository(0);
                                 User zeroUser = userRep.GetSingleUserByEmail(email, 0, true);
                                 if (zeroUser != null)
                                 {
@@ -1357,21 +1357,6 @@ namespace WebFreight.Web.Security
             return false;
 
         }
-        public static bool IsUserAdminOrCustomerCare(string email, int tenant, bool getFromCache = false)
-        {
-            var userRepository = new UserRepository(tenant);
-            var user = userRepository.GetSingleUserByCodeOrEmail(null, email, tenant, getFromCache);
-
-            if (user == null)
-                return false;
-
-            bool isAdmin = user.UserRoles?.Contains("Administrator") == true;
-            bool isCustomerCare = user.Tenant == 0;
-
-            return isAdmin || isCustomerCare;
-        }
-
-
 
         public static void AuthenticateDashboardReadFeatures(string objectTableName, string featureCode, int tenant)
         {
