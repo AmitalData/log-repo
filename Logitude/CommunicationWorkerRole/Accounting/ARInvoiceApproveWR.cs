@@ -31,7 +31,6 @@ using Logitude.Infrastructure.BL.EntityQueryServices;
 using Logitude.Infrastructure.BL.EntityPMs;
 using Logitude.Infrastructure.BL.EntityUpdateServices;
 using Logitude.Server.Tools;
-using Logitude.BL.InvoiceModel.Tools.Exceptions;
 
 namespace CommunicationWorkerRole
 {
@@ -43,7 +42,7 @@ namespace CommunicationWorkerRole
         private DbQueueService _DbQueueService;
         private string _ObjectTable = "ARInvoice";
         private static DateTime _freeTenantsDateTime = DateTime.Now;
-        private bool TenantIdled = false;
+
 
         public override void Run()
         {
@@ -88,7 +87,8 @@ namespace CommunicationWorkerRole
                 {
                     return true;
                 }
-                _DbQueueService = new DbQueueService("ARInvoiceApproveWR", SettingUtil.GetTenantDBFromConfig());
+
+                _DbQueueService = new DbQueueService("ARInvoiceApproveWR", 0);
 
 
             }
@@ -165,7 +165,7 @@ namespace CommunicationWorkerRole
                 }
                 try
                 {
-                    _DbQueueService = new DbQueueService(selectedQueue, SettingUtil.GetTenantDBFromConfig());
+                    _DbQueueService = new DbQueueService(selectedQueue, 0);
                     if (DateTime.Now.Subtract(_freeTenantsDateTime) >= TimeSpan.FromMinutes(10))
                     {
                         _freeTenantsDateTime = DateTime.Now;
@@ -186,25 +186,35 @@ namespace CommunicationWorkerRole
 
                 if (response != null && response.Tenant != 0)
                 {
-                    this.TenantIdled = false;
                     try
                     {
-                        this.UpdateInvoice(response);
+
+                        if (response.MessageValues.ContainsKey("ARInvoiceId"))
+                        {
+                            this.UpdateInvoice(response);
+                        }
+
+                    }
+                    catch
+                    {
+                        throw;
                     }
                     finally
                     {
                         SetTenantIdle(response.Tenant);
                     }
                 }
+
+
+
                 Thread.Sleep(10);
             }
         }
-
         private void UpdateInvoice(QueueResponse response)
         {
+
             string arinvoiceId = response.MessageValues["ARInvoiceId"].ToString();
             int tenant = 0;
-            string invoiceApiCommunicationLogId = null;
             int.TryParse(response.MessageValues["Tenant"].ToString(), out tenant);
             string interestReportId = response.MessageValues.ContainsKey("InterestReportId") && response.MessageValues["InterestReportId"] != null
                         ? response.MessageValues["InterestReportId"].ToString()
@@ -222,11 +232,11 @@ namespace CommunicationWorkerRole
             {
                 try
                 {
-                    invoiceApiCommunicationLogId = response.MessageValues.ContainsKey("invoiceApiCommunicationLogId")
-                                                                                 ? response.MessageValues["invoiceApiCommunicationLogId"]?.ToString()
-                                                                                  : null;
+                    bool isInvoiceApi = response.MessageValues.ContainsKey("IsInvoiceApi")
+                        ? response.MessageValues["IsInvoiceApi"].ToString() == "true" 
+                        : false;
 
-                     aRInvoicePM.SetApproved = true;
+                    aRInvoicePM.SetApproved = true;
                     aRInvoicePM.IsApprovalFailed = false;
                     if (aRInvoicePM.StatusCode == "AC")
                         aRInvoicePM.SetApprovedAutoCredit = true;
@@ -235,24 +245,19 @@ namespace CommunicationWorkerRole
                     invoiceService.Update(aRInvoicePM, true);
                    
                     _DbQueueService.Complete();
-                    SetTenantIdle(tenant);
-
-                    if (!string.IsNullOrEmpty(invoiceApiCommunicationLogId))
+                    if (isInvoiceApi)
                     {
                         try
                         {
-                            UpdateInvoiceApiCommunication(tenant, Logitude.Accounting.BL.CloseTables.InvoiceApiStepEnum.ApproveInvoice, Logitude.Accounting.BL.CloseTables.InvoiceApiStatusEnum.Done, invoiceApiCommunicationLogId, null);
-                            UpdateInvoiceApiCommunication(tenant, Logitude.Accounting.BL.CloseTables.InvoiceApiStepEnum.PrintOrSendInvoice, Logitude.Accounting.BL.CloseTables.InvoiceApiStatusEnum.InProgress, invoiceApiCommunicationLogId, null);
-
-                            invoiceService.PrintOrSendInvoice(aRInvoicePM.Id, aRInvoicePM.InvoiceNumber, tenant, aRInvoicePM.CreatedByUserId);
-                            UpdateInvoiceApiCommunication(tenant, Logitude.Accounting.BL.CloseTables.InvoiceApiStepEnum.PrintOrSendInvoice, Logitude.Accounting.BL.CloseTables.InvoiceApiStatusEnum.Done, invoiceApiCommunicationLogId, null);
+                            invoiceService.PrintOrSendInvoice(null, tenant);
 
                         }
                         catch (Exception e)
                         {
-                            UpdateInvoiceApiCommunication(tenant, Logitude.Accounting.BL.CloseTables.InvoiceApiStepEnum.PrintOrSendInvoice, Logitude.Accounting.BL.CloseTables.InvoiceApiStatusEnum.Failed, invoiceApiCommunicationLogId, e.Message );
+
                         }
                     }
+
 
                     ARInvoice invoice = invoiceRepository.GetSingle(arinvoiceId, tenant);
                     invoice.ApprovalInProgress = true;
@@ -305,10 +310,6 @@ namespace CommunicationWorkerRole
                     }
 
                 }
-                catch (InvoiceAlreadyApprovedException) 
-                {
-                    _DbQueueService.CompleteAsFailed();
-                }
                 catch (BusinessErrorException ex)
                 {
                     
@@ -331,12 +332,6 @@ namespace CommunicationWorkerRole
                 }
                 catch (Exception ex)
                 {
-                    if (!string.IsNullOrEmpty(invoiceApiCommunicationLogId))
-                    {
-                        UpdateInvoiceApiCommunication(tenant,Logitude.Accounting.BL.CloseTables.InvoiceApiStepEnum.ApproveInvoice,Logitude.Accounting.BL.CloseTables.InvoiceApiStatusEnum.Failed, arinvoiceId, ex.Message);
-
-
-                    }
                     ARInvoice invoice = invoiceRepository.GetSingle(arinvoiceId, tenant);
                   
                     if (!string.IsNullOrEmpty(aRInvoicePM.InvoiceNumber) && aRInvoicePM.InvoiceNumber != aRInvoicePM.Id)
@@ -346,12 +341,7 @@ namespace CommunicationWorkerRole
                     if (response.RetryNumber >= 4 || invoice.StatusCode == "AD")
                     {
                         InvoiceApprovalFailed(invoice, ex.Message, invoiceRepository);
-                        if (!string.IsNullOrEmpty(invoiceApiCommunicationLogId))
-                        {
-                            UpdateInvoiceApiCommunication(tenant, Logitude.Accounting.BL.CloseTables.InvoiceApiStepEnum.ApproveInvoice, Logitude.Accounting.BL.CloseTables.InvoiceApiStatusEnum.Failed, invoiceApiCommunicationLogId, ex.Message);
 
-
-                        }
                         if (aRInvoicePM.ARInvoiceTypeCode == "IT")
                         {
                             UpdateInterestReportsStatues(interestReportId, tenant, "9", aRInvoicePM.CreatedByUserId, null, ex.Message);
@@ -367,17 +357,14 @@ namespace CommunicationWorkerRole
 
         private void SetTenantIdle(int tenant)
         {
-            if (!this.TenantIdled)
-            {
-                TenantIdleStatusRepository tenantRepository = new TenantIdleStatusRepository(tenant);
-                TenantIdleStatus tenantObj = tenantRepository.GetAllByObjectTable(tenant, _ObjectTable).FirstOrDefault();
-                if (tenantObj == null) return;
-                tenantObj.Idle = false;
-                tenantObj.UpdateDate = DateTime.Now;
-                tenantRepository.Update(tenantObj);
-                tenantRepository.SubmitChanges();
-                this.TenantIdled = true;
-            }
+            TenantIdleStatusRepository tenantRepository = new TenantIdleStatusRepository(tenant);
+            TenantIdleStatus tenantObj = tenantRepository.GetAllByObjectTable(tenant, _ObjectTable).FirstOrDefault();
+            if (tenantObj == null) return;
+            tenantObj.Idle = false;
+            tenantObj.UpdateDate = DateTime.Now;
+            tenantRepository.Update(tenantObj);
+            tenantRepository.SubmitChanges();
+
         }
 
 
@@ -407,6 +394,9 @@ namespace CommunicationWorkerRole
             {
                 aRInvoice.InvoiceNumber = aRInvoice.Id;
                 UpdateARInvoiceInRepository(aRInvoice, repository);
+               
+
+
             }
         }
 
@@ -436,21 +426,6 @@ namespace CommunicationWorkerRole
             InterestReportUpdateService service = new InterestReportUpdateService(accountingContext, new Dictionary<string, IContext>(), tenant);
             interestReportPM.IsUpdatedFromBatch = true;
             service.Update(interestReportPM, true);
-        }
-
-     
-        public void UpdateInvoiceApiCommunication(int tenant , string step, string status,string arInvoiceId, string exception = null)
-        {
-            InvoiceApiCommunicationLogQueryService invoiceApiCommunicationLogQueryService = new InvoiceApiCommunicationLogQueryService(tenant);
-            InvoiceApiCommunicationLogPM invoiceApiCommunicationLog = invoiceApiCommunicationLogQueryService.GetSingle(arInvoiceId, false,false);
-            if (invoiceApiCommunicationLog != null && !string.IsNullOrEmpty(status) && !string.IsNullOrEmpty(step))
-            {
-                IAccountingContext accountingContext = AccountingContext.GetContext(tenant);
-                InvoiceApiCommunicationLogUpdateService invoiceApiCommunicationLogUpdateService = new InvoiceApiCommunicationLogUpdateService(accountingContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), tenant);
-               
-                invoiceApiCommunicationLogUpdateService.UpdateCommunicationStatus(invoiceApiCommunicationLog, tenant, step, status, exception);
-
-            }
 
         }
 
@@ -483,7 +458,9 @@ namespace CommunicationWorkerRole
                 Notes = exception
             });
         }
+
+
      
-     
+
     }
 }
