@@ -17,7 +17,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
 {
     public class ExcelReportController : ApiController
     {
-        public HttpResponseMessage GetDataProviderFields(string reportId, string reportsTemplateId, int maxSubLevels = 1)
+        public HttpResponseMessage GetDataProviderFields(string reportId, string reportsTemplateId)
         {
             try
             {
@@ -27,7 +27,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                 SecurityUtility.CheckContactFeature("ReportsTemplate", "REPORTTEMPLATEEXCEL", authToken.Tenant);
 
                 ExcelReportService reportsTemplateQuery = new ExcelReportService(authToken.Tenant);
-                ExcelReportResult myResult = reportsTemplateQuery.GetDataProviderFields(reportId, reportsTemplateId, maxSubLevels);
+                ExcelReportResult myResult = reportsTemplateQuery.GetDataProviderFields(reportId, reportsTemplateId);
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
             }
 

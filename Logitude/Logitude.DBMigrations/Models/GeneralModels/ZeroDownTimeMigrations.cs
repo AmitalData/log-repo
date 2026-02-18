@@ -42,11 +42,6 @@ namespace Logitude.DBMigrations.Models
 
         protected void StartZeroDownTimeForDataScripts(bool preScripts)
         {
-            bool isDontRunOnlineArgumentProvided = ToolArguments.IsArgumentProvided(Arguments.DONTRUNONLINE);
-            if (isDontRunOnlineArgumentProvided)
-            {
-                return;
-            }
             List<string> dataScriptsStatuses = !ServiceMode ? new List<string>() { "Waiting", "FullBuild" } : new List<string>() { "IncrementalBuild" };
             List<DBMigrationsDataScript> dbMigrationsDataScripts = GetDBMigrationsDataScripts(preScripts, dataScriptsStatuses);
 

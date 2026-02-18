@@ -17,7 +17,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
             commonDataContext = context;
         }
 
-
+        public LogitudeMessagesTransmissionLogRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
 
         public LogitudeMessagesTransmissionLogRepository(int tenant)
         {
