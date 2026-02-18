@@ -45,7 +45,7 @@ namespace CommunicationWorkerRole.Services
 {
     public class ReportSchedulerTaskService
     {
-        public bool IsCUstomerDebitNotification = false;
+
         int trackerCounter = 0;
         string[,] trackerLogs = new string[,] //tracker(Step, DateTime)
         {
@@ -93,29 +93,24 @@ namespace CommunicationWorkerRole.Services
                 string errorMessage = new StringBuilder().Append(logsMessage).AppendLine().ToString();
                 errorMessage += new StringBuilder().Append("Exception Message: ").AppendLine().Append(ex.Message).AppendLine().ToString();
                 errorMessage += new StringBuilder().Append("Stack Trace:").AppendLine().Append(ex.StackTrace).AppendLine().ToString();
-                NetCommonHelper.Logger.DevLog.Instance.WriteError($"Failed to run task in ReportSchedulerTaskService for task scheduler id: {reportTask.Id}, errorMessage: {errorMessage}");
 
                 throw new Exception(errorMessage);
             }
         }
 
-        public void SendReportToFTP(TasksSchedulerPM reportTask, SchedulerDetails schedulerDetails, ReportFliter reportFilter)
+        private void SendReportToFTP(TasksSchedulerPM reportTask, SchedulerDetails schedulerDetails, ReportFliter reportFilter)
         {
             this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("Preparing report data"));
             MemoryStream memoryStream = GetMemoryStreamAfterExportDocument(reportTask, reportFilter);
-            if (!IsCUstomerDebitNotification)
-            {
-                this.trackerLogs[trackerCounter, 1] = DateTime.Now.ToString();
-                this.trackerCounter += 1;
-            }
+            this.trackerLogs[trackerCounter, 1] = DateTime.Now.ToString();
+            this.trackerCounter += 1;
             if (memoryStream != null && schedulerDetails.FTPDetails != null)
             {
-                if (!IsCUstomerDebitNotification)
-                {
-                    this.trackerLogs[trackerCounter, 0] = "Uploading report to ftp";
-                    this.trackerLogs[trackerCounter, 1] = DateTime.Now.ToString();
-                    this.trackerCounter += 1;
-                }
+
+                this.trackerLogs[trackerCounter, 0] = "Uploading report to ftp";
+                this.trackerLogs[trackerCounter, 1] = DateTime.Now.ToString();
+                this.trackerCounter += 1;
+
                 string p_message = "";
                 string p_status = "";
                 string schedulerFormatExtension = reportTask.Format == "PDF" ? "pdf" : "xlsx";
@@ -160,7 +155,7 @@ namespace CommunicationWorkerRole.Services
             return memoryStream;
         }
 
-        public void SendPdfReportToReceipent(TasksSchedulerPM reportTask, SchedulerDetails schedulerDetails, ReportFliter reportFilter)
+        private void SendPdfReportToReceipent(TasksSchedulerPM reportTask, SchedulerDetails schedulerDetails, ReportFliter reportFilter)
         {
             this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("Preparing report data"));
             schedulerDetails.ReportDetails.Recepients = GetReportPermittedContacts(reportTask, schedulerDetails);
@@ -172,34 +167,16 @@ namespace CommunicationWorkerRole.Services
 
         private void TryToSendReportAfterMeetACertainConditions(TasksSchedulerPM reportTask, SchedulerDetails schedulerDetails, ReportFliter reportFilter)
         {
-            bool isValid = true;
-            bool powerBi = reportFilter.ReportCode?.ToUpper()?.StartsWith("PBI") == true;
-            var reportRecepients = schedulerDetails.ReportDetails.Recepients;
-            StiReport stiReport = null;
-
-            if (!powerBi)
+            StiReport stiReport = GetStimulReportByReportFilter(reportFilter);
+            if (stiReport == null)
             {
-                stiReport = GetStimulReportByReportFilter(reportFilter);
-                if (stiReport == null)
-                {
-                    this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("Report Is Empty"));
-                    return;
-                }
+                this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("Report Is Empty"));
             }
-
-            this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("Exporting report to pdf file"));
-            string documentId = GetDocumentIdAfterExport(stiReport, reportTask.Name, reportTask.Tenant, schedulerDetails, reportFilter, reportTask);
-
-            if (stiReport != null)
+            else
             {
-                (isValid, reportRecepients) = ValidateStiReport(reportTask, schedulerDetails, stiReport);
-            }
-
-            if (isValid)
-            {
-                this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("Sending report to reciepents"));
-                SendHtmlDocument(new SendHtmlDocumentArgs() { documentId = documentId, recepients = reportRecepients, reportTask = reportTask, stiReport = stiReport });
-                this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("Sending report to reciepents finished successfully"));
+                this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("Exporting report to pdf file"));
+                string documentId = GetDocumentIdAfterExport(stiReport, reportTask.Name, reportTask.Tenant, schedulerDetails, reportFilter, reportTask);
+                SendPdfReportIfIsValid(reportTask, schedulerDetails, documentId, stiReport);
             }
         }
 
@@ -214,7 +191,7 @@ namespace CommunicationWorkerRole.Services
             return recepients;
         }
 
-        private (bool, ReportSchedulerRecepients) ValidateStiReport(TasksSchedulerPM reportTask, SchedulerDetails schedulerDetails, StiReport stiReport)
+        private void SendPdfReportIfIsValid(TasksSchedulerPM reportTask, SchedulerDetails schedulerDetails, string documentId, StiReport stiReport)
         {
             AdditionalValidate additionalValidate = new AdditionalValidate();
             ReportSchedulerRecepients reportRecepients = schedulerDetails.ReportDetails.Recepients;
@@ -231,13 +208,15 @@ namespace CommunicationWorkerRole.Services
 
             if (result.IsValid && gLAccountBalanceInLocalValidateResult.IsValid && gLAccountLocalBalanceInDueValidateResult.IsValid)
             {
-                return (true, reportRecepients);
+                this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("Sending report to reciepents"));
+                SendHtmlDocument(new SendHtmlDocumentArgs() { documentId = documentId, recepients = reportRecepients, reportTask = reportTask, stiReport = stiReport });
+                this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("Sending report to reciepents finished successfully"));
             }
             else
             {
                 LogErrorMessage(result, gLAccountBalanceInLocalValidateResult);
-                return (false, null);
             }
+
         }
 
         private void LogErrorMessage(ValidateResult result, ValidateResult gLAccountBalanceInLocalValidateResult) {
@@ -252,18 +231,15 @@ namespace CommunicationWorkerRole.Services
             }
         }
 
-        public SchedulerDetails GetSchedulerDetails(TasksSchedulerPM reportTask)
+        private SchedulerDetails GetSchedulerDetails(TasksSchedulerPM reportTask)
         {
             SchedulerDetails schedulerDetails = LogitudeXmlSerializer.DeserializeObject<SchedulerDetails>(reportTask.SchedulerDetailsXML);
             schedulerDetails.Tenant = reportTask.Tenant;
             schedulerDetails = ModifyNullFilters(schedulerDetails);
 
-			if (!IsCUstomerDebitNotification)
-			{
-				this.trackerLogs[trackerCounter, 1] = DateTime.Now.ToString();
-				this.trackerCounter += 1;
-			}
-			return schedulerDetails;
+            this.trackerLogs[trackerCounter, 1] = DateTime.Now.ToString();
+            this.trackerCounter += 1;
+            return schedulerDetails;
         }
 
         private string GetFilterFieldValueByName(List<QueryFilterItem> reportFilterItems, string fieldName)
@@ -423,7 +399,7 @@ namespace CommunicationWorkerRole.Services
             return schedulerDetails;
         }
 
-        public ReportFliter GetReportFilters(TasksSchedulerPM reportTask, SchedulerDetails schedulerDetails)
+        private ReportFliter GetReportFilters(TasksSchedulerPM reportTask, SchedulerDetails schedulerDetails)
         {
             ReportQuery reportQuery = new ReportQuery(reportTask.Tenant);
             string reportCode = reportQuery.GetReportCodeById(reportTask.EntityId, reportTask.Tenant);
@@ -440,11 +416,9 @@ namespace CommunicationWorkerRole.Services
                 IsSchedulerReport = true,
                 SendIfEmpty = schedulerDetails.SendIfEmpty,
             };
-			if (!IsCUstomerDebitNotification) 
-            {
-				this.trackerLogs[trackerCounter, 1] = DateTime.Now.ToString();
-                this.trackerCounter += 1;
-            }
+
+            this.trackerLogs[trackerCounter, 1] = DateTime.Now.ToString();
+            this.trackerCounter += 1;
             return reportFilter;
         }
 
@@ -460,11 +434,9 @@ namespace CommunicationWorkerRole.Services
                 ReportHelper reportHelper = new ReportHelper();
                 stiReport = reportHelper.GetStimulReportByReportFilter(reportFilter);
             }
-            if (!IsCUstomerDebitNotification)
-            {
-                this.trackerLogs[trackerCounter, 1] = DateTime.Now.ToString();
-                this.trackerCounter += 1;
-            }
+
+            this.trackerLogs[trackerCounter, 1] = DateTime.Now.ToString();
+            this.trackerCounter += 1;
             return stiReport;
         }
 
@@ -479,21 +451,13 @@ namespace CommunicationWorkerRole.Services
                 reportTask.Format = "Excel";
                 memoryStream = GetMemoryStreamAfterExportDocument(reportTask, reportFilter);
             }
-            else if (reportFilter.ReportCode.ToUpper().StartsWith("PBI"))
-            {
-                PowerBIReportHelper powerBIReportHelper = new PowerBIReportHelper(reportTask.Tenant);
-                memoryStream = powerBIReportHelper.GetReportFile(reportFilter.ReportCode);
-            }
             else
             {
                 stiReport.ExportDocument(StiExportFormat.Pdf, memoryStream);
             }
-			if (!IsCUstomerDebitNotification) 
-            { 
-				this.trackerLogs[trackerCounter, 1] = DateTime.Now.ToString();
-                this.trackerCounter += 1;
-			}
-			if (memoryStream == null)
+            this.trackerLogs[trackerCounter, 1] = DateTime.Now.ToString();
+            this.trackerCounter += 1;
+            if (memoryStream == null)
             {
                 return documentId;
             }
@@ -528,11 +492,9 @@ namespace CommunicationWorkerRole.Services
             documentRepository.Add(document);
             documentRepository.SubmitChanges();
             StoredDocumentInBlob(document, reportScedulerDocumentArgs.Tenant, reportScedulerDocumentArgs.ByteData);
-			if (!IsCUstomerDebitNotification) 
-            { 
-				this.trackerLogs[trackerCounter, 1] = DateTime.Now.ToString();
-                this.trackerCounter += 1;
-            }
+            this.trackerLogs[trackerCounter, 1] = DateTime.Now.ToString();
+            this.trackerCounter += 1;
+
             return document.Id;
         }
 
@@ -761,12 +723,9 @@ namespace CommunicationWorkerRole.Services
             EmailDetails emailDetails = GetEmailDetailsByMessageTemplateId(new GetEmailDetailsByMessageTemplateIdArgs() { messageTemplateId = schedulerDetails.ReportDetails.MessageTemplateId, tenant = args.reportTask.Tenant, userId = args.reportTask.CreatedBy, stiReport = args.stiReport });
             string reportTableId = GetReportTableId(args.reportTask.Tenant);
             string subject = !string.IsNullOrEmpty(emailDetails.Subject) ? emailDetails.Subject : args.reportTask.Name;
-            htmlEditorHelper.SendHtmlDocument(emailDetails.Body, null, null, args.reportTask.Tenant, args.recepients.To , subject, (string.IsNullOrEmpty(args.recepients.Cc) || string.IsNullOrWhiteSpace(args.recepients.Cc))  ? emailDetails.Cc : args.recepients.Cc, args.recepients.Bcc, args.reportTask.CreatedBy, args.reportTask.EntityId, reportTableId, args.documentId + ",", "",  emailDetails.From,  emailDetails.ReplyTo);
-			if (!IsCUstomerDebitNotification) 
-            { 
-				this.trackerLogs[trackerCounter, 1] = DateTime.Now.ToString();
-               this.trackerCounter += 1;
-            }
+            htmlEditorHelper.SendHtmlDocument(emailDetails.Body, null, null, args.reportTask.Tenant, args.recepients.To, subject, args.recepients.Cc, args.recepients.Bcc, args.reportTask.CreatedBy, args.reportTask.EntityId, reportTableId, args.documentId + ",", "", "", "");
+            this.trackerLogs[trackerCounter, 1] = DateTime.Now.ToString();
+            this.trackerCounter += 1;
         }
         public EmailDetails GetEmailDetailsByMessageTemplateId(GetEmailDetailsByMessageTemplateIdArgs args)
         {
@@ -790,10 +749,9 @@ namespace CommunicationWorkerRole.Services
 
             HtmlEditorHelper htmlEditorHelper = new HtmlEditorHelper();
             string subject = reportsTemplatePM != null ? reportsTemplatePM.Subject : null;
-            string from = reportsTemplatePM != null ? reportsTemplatePM.From : null; ;
-            string replyTo = reportsTemplatePM != null ? reportsTemplatePM.ReplyTo : null; ;
-            string cc = reportsTemplatePM != null ? reportsTemplatePM.CC : null;
-
+            string from = null;
+            string replyTo = null;
+            string cc = null;
             UTF8Encoding utf8Encoding = new UTF8Encoding();
 
             object dataProvider = GetDataProviderFromStiReport(args.stiReport);
@@ -803,9 +761,6 @@ namespace CommunicationWorkerRole.Services
             string htmlstring = htmlEditorHelper.ResolveSystemDataHtml(html, args.userId, ref subject, ref from, ref replyTo, ref cc, args.tenant);     
             emailDetails.Body = utf8Encoding.GetBytes(htmlstring);
             emailDetails.Subject = subject;
-            emailDetails.From = from;
-            emailDetails.ReplyTo = replyTo;
-            emailDetails.Cc = cc;
             return emailDetails;
         }
 
@@ -927,12 +882,6 @@ namespace CommunicationWorkerRole.Services
     {
         public byte[] Body;
         public string Subject;
-        public string From;
-        public string ReplyTo;
-        public string Cc;
-
-        
-
     }
 }
 
