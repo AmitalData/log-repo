@@ -31,11 +31,9 @@ using Unifreight.BL.EntityPMs.UGenerated;
 using Logitude.Customs.BL.Validators;
 using System.Data.Entity.Infrastructure;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.Customs.Def.Messaging.LogitudeClient.DeclarationErrorPointer;
 using Simplog.Server.Infrastructure.DataContracts;
 using Logitude.CustomsMessaging.Common.ResponseData;
@@ -43,8 +41,7 @@ using Logitude.BL.Security;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.Customs.Data.CustomFilters;
 using Logitude.BL.CommonDataModel.EntityLists;
-using Logitude.Server.Tools.Helpers;
-using General = Logitude.Customs.BL.Messaging.LogitudeClient.DeclarationCorrection.General;
+//using Logitude.Server.Tools.Helpers;
 
 namespace Logitude.Customs.BL.EntityQueryServices
 {
@@ -1326,12 +1323,6 @@ namespace Logitude.Customs.BL.EntityQueryServices
             if (String.IsNullOrWhiteSpace(declarationId)) return "";
             return repository.GetCustomFileNoByDeclarationId(declarationId, tenant);
         }
-        
-        public (string CustomFileNo, string DeclarationNumber) GetCustomFileNoAndDecNoByDeclarationId(string declarationId, int tenant)
-        {
-            if (String.IsNullOrWhiteSpace(declarationId)) return ("","");
-            return repository.GetCustomFileNoAndDecNoByDeclarationId(declarationId, tenant);
-        }
         public Declaration GetDeclarationByConsignment(int tenant, string cargoTypeCode, string manifestNumber, string secondCargoID, string thirdCargoID)
         {
             return repository.GetDeclarationByConsignment(tenant, cargoTypeCode, manifestNumber, secondCargoID, thirdCargoID);
@@ -2343,12 +2334,6 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return declarationPM;
         }
 
-        public Declaration GetDataForSIIRequest(string declarationId, int tenant)
-        {
-            Declaration declaration = repository.GetDataForSIIRequest(declarationId, tenant);
-            return declaration;
-        }
-
         public List<Declaration> GetDeclarationById(int tenant, string id)
         {
             List<Declaration> declarations = repository.GetDeclarationById(tenant, id);
@@ -2496,7 +2481,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
 
 
-        public DateTime? GetHatraDateForDecId(string decId, int tenant)
+        public string GetHatraDateForDecId(string decId, int tenant)
         {
             return repository.GetHatraDateForDecId(decId, tenant);
         }
@@ -2597,172 +2582,11 @@ namespace Logitude.Customs.BL.EntityQueryServices
 			}
 			return declarationPM;
 		}
-        public AmendmentMessageResponse GetAmendmentMessageResponse(string declarationId, int tenant)
-        {
-            var current = this.GetSingle(declarationId, false, false);
-
-            var res = new AmendmentMessageResponse();
-
-            if (current == null)
-            {
-                return res;
-            }
-
-            string tIsAmendment = null;
-            string tExistsAmendments = null;
-            string tExistsClosingAmendments = null;
-            string tClosingProcessStatus = null;
-
-            Func<string> TIsAmendment = () =>
-            {
-                if (tIsAmendment == null)
-                    tIsAmendment = TranslateTextsClass.Translate("Customs.Declaration.O.IsAmendment", tenant, true);
-                return tIsAmendment;
-            };
-
-            Func<string> TExistsAmendments = () =>
-            {
-                if (tExistsAmendments == null)
-                    tExistsAmendments = TranslateTextsClass.Translate("Customs.Declaration.O.ExistsAmendments", tenant, true);
-                return tExistsAmendments;
-            };
-
-            Func<string> TExistsClosingAmendments = () =>
-            {
-                if (tExistsClosingAmendments == null)
-                    tExistsClosingAmendments = TranslateTextsClass.Translate("Customs.Declaration.O.ExistsClosingAmendments", tenant, true);
-                return tExistsClosingAmendments;
-            };
-
-            Func<string> TClosingProcessStatus = () =>
-            {
-                if (tClosingProcessStatus == null)
-                    tClosingProcessStatus = TranslateTextsClass.Translate("Customs.General.O.ClosingProcessStatus", tenant, true);
-                return tClosingProcessStatus;
-            };
-
-            if (current.IsAmendment == true && current.AmendmentStatus != "2" && current.AmendmentStatus != null)
-            {
-                if (current.AmedmentType == "2")
-                {
-                    res.AmendmentMessage = "לתצוגה בלבד - " + TIsAmendment() + " מסוג סגירה " + current.AmendmentStatusName;
-                }
-                else
-                {
-                    res.AmendmentMessage = "לתצוגה בלבד - " + TIsAmendment() + " " + current.AmendmentStatusName;
-                }
-                res.IsAmendmentDisplayOnly = true;
-            }
-            else if (current.IsAmendment == true && current.AmendmentStatus == "2")
-            {
-                if (current.AmedmentType == "2")
-                {
-                    res.AmendmentMessage = TIsAmendment() + " מסוג סגירה " + current.AmendmentStatusName;
-                }
-                else
-                {
-                    res.AmendmentMessage = TIsAmendment() + " " + current.AmendmentStatusName;
-                }
-            }
-            else if (current.IsAmendment != true)
-            {
-                var declarations = this.GetAllDeclarationPOCOs(tenant, current.CustomFileNo, current.Direction)
-                                   ?? new List<DeclarationList>();
-
-                DeclarationList declaration = null;
-
-                foreach (var x in declarations)
-                {
-                    if (x == null) continue;
-                    if (x.Id == current.Id) continue;
-
-                    if (x.AmendmentStatus == "1" || x.AmendmentStatus == "3" || x.AmendmentStatus == "6")
-                    {
-                        declaration = x;
-                        break;
-                    }
-                }
-
-                if (declaration != null)
-                {
-                    if (declaration.AmedmentType == "2")
-                    {
-                        res.AmendmentMessage = TExistsClosingAmendments() + " " + declaration.AmendmentStatusName;
-                    }
-                    else
-                    {
-                        res.AmendmentMessage = TExistsAmendments() + " " + declaration.AmendmentStatusName;
-                    }
-                    res.IsAmendmentDisplayOnly = true;
-                }
-                else
-                {
-                    foreach (var x in declarations)
-                    {
-                        if (x == null) continue;
-                        if (x.Id == current.Id) continue;
-
-                        if (x.AmendmentStatus == "2" || x.AmendmentStatus == "4")
-                        {
-                            declaration = x;
-                            break;
-                        }
-                    }
-
-                    if (declaration != null)
-                    {
-                        bool isShowTheMessage = true;
-
-                        if (current.DeclarationNumber != null &&
-                            declaration.AmendmentStatus == "4" &&
-                            ((current.Direction != "E" && current.PaymentDate == null) ||
-                             (current.Direction == "E" && current.IsSubmitDeclaration == false)))
-                        {
-                            isShowTheMessage = false;
-                        }
-
-                        if (isShowTheMessage)
-                        {
-                            if (declaration.AmedmentType == "2")
-                            {
-                                res.AmendmentMessage = TExistsClosingAmendments() + " " + declaration.AmendmentStatusName;
-                            }
-                            else
-                            {
-                                res.AmendmentMessage = TExistsAmendments() + " " + declaration.AmendmentStatusName;
-                            }
-                            res.IsAmendmentDisplayOnly = true;
-                        }
-                    }
-                }
-            }
-
-            if (current.ExportCloseAmendmentStatus == "6" ||
-                current.ExportCloseAmendmentStatus == "7" ||
-                current.ExportCloseAmendmentStatus == "8" ||
-                current.ExportCloseAmendmentStatus == "10" ||
-                current.ExportCloseAmendmentStatus == "11")
-            {
-                if (!string.IsNullOrEmpty(res.AmendmentMessage))
-                    res.AmendmentMessage += ", ";
-
-                res.AmendmentMessage += TClosingProcessStatus() + " " + current.ExportCloseAmendStatusName;
-                res.IsAmendmentDisplayOnly = true;
-            }
-
-            return res;
-        }
-
-    }
+	}
 
     public class DiamondsDeclarationSummary
     {
         public Dictionary<string, int> Counts { get; set; }
         public int TotalCount { get; set; }
-    }
-    public class AmendmentMessageResponse
-    {
-        public string AmendmentMessage { get; set; }
-        public bool IsAmendmentDisplayOnly { get; set; }
     }
 }
