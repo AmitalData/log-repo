@@ -59,7 +59,7 @@
   </Column>
   <Column
     Name="Company"
-    Type="nvarchar"
+    Type="varchar"
     Size="100">
     <Constraints
       Nullable="false" />
