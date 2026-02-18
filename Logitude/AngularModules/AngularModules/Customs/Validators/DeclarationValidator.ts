@@ -37,7 +37,7 @@ export class DeclarationValidator {
         var errors = [];
 
         Validator.TryValidateObject(supplierInvoiceItemPM, "Customs.SupplierInvoiceItem", errors);
-
+        
         for (let item of supplierInvoiceItemPM.SupplierInvoiceItemsPrices) {
             Validator.TryValidateObject(item, "Customs.SupplierInvoiceItemsPrice", errors);
 
@@ -46,7 +46,7 @@ export class DeclarationValidator {
             }
 
             if (AppTool.IsNullOrEmpty(item.AdditionalPrice)) {
-                errors.push(this.GetRequierdFieldErrorText("Customs.SupplierInvoiceItemsPrice.F.AdditionalPrice"));
+                errors.push(this.GetRequierdFieldErrorText("Customs.SupplierInvoiceItemsPrice.F.AdditionalPrice")); 
 
             }
         }
@@ -297,9 +297,9 @@ export class DeclarationValidator {
                         else {
                             //Check if ImporterName & ImporterAddrress has value
                             if (!this._DeclarationPM.ShortProcedure && AppTool.IsNullOrEmpty(importerName) && AppTool.IsNullOrEmpty(importerAddress)) {
-                                errorMessage = "יש להזין נתוני יבואן " + importerField + " לפני שליחה";
+                                 errorMessage = "יש להזין נתוני יבואן " + importerField + " לפני שליחה";
                             }
-                            else if (this._DeclarationPM.ShortProcedure && (AppTool.IsNullOrEmpty(importerName) || AppTool.IsNullOrEmpty(importerAddress))) {
+                            else if(this._DeclarationPM.ShortProcedure && (AppTool.IsNullOrEmpty(importerName) || AppTool.IsNullOrEmpty(importerAddress))){
                                 errorMessage = "יש להזין נתוני יצואן " + importerField + " לפני שליחה";
 
                             }
@@ -355,7 +355,7 @@ export class DeclarationValidator {
             //             this.ValidationErrorMessageCodes.push(errorMessage);
             //         }
             //     }
-
+                
             // }
 
 
@@ -522,7 +522,7 @@ export class DeclarationValidator {
     public CheckIsConvertedDeclaration() {
 
         if (this._DeclarationPM != null) {
-            if (this._DeclarationPM.IsConvertedDeclaration == true && this._DeclarationPM.IsAmendment != true) {
+            if (this._DeclarationPM.IsConvertedDeclaration == true && this._DeclarationPM.IsAmendment !=true) {
                 var errorMessage = "Customs.General.O.IsConvertedDeclaration";
                 if (!AppTool.IsNullOrEmpty(errorMessage)) {
                     this.ValidationErrorMessageCodes.push(errorMessage);
@@ -536,13 +536,13 @@ export class DeclarationValidator {
         var errorMessage: string = "";
 
         if (this._DeclarationPM != null) {
-            if (this._DeclarationPM.IsClose && this._DeclarationPM.Direction != "E") {
+            if (this._DeclarationPM.IsClose && this._DeclarationPM.Direction!="E") {
                 errorMessage = "Customs.Declaration.O.Closed";
                 if (!AppTool.IsNullOrEmpty(errorMessage)) {
                     this.ValidationErrorMessageCodes.push(errorMessage);
                 }
             }
-            if (this._DeclarationPM.IsClose && this._DeclarationPM.Direction == "E") {
+            if (this._DeclarationPM.IsClose && this._DeclarationPM.Direction=="E") {
                 errorMessage = "Customs.Declaration.O.OperationallyClosed";
                 if (!AppTool.IsNullOrEmpty(errorMessage)) {
                     this.ValidationErrorMessageCodes.push(errorMessage);
@@ -655,19 +655,14 @@ export class DeclarationValidator {
 
 
             if (this._DeclarationPM.ImporterCode.length < 9) {
-                if (this._DeclarationPM.Direction != "E")
+                if(this._DeclarationPM.Direction != "E")
                     this.ValidationErrorMessageCodes.push(TextCodeTranslator.Translate("Customs.Declaration.O.ImporterIsTooShort"));
                 else
                     this.ValidationErrorMessageCodes.push(TextCodeTranslator.Translate("Customs.Declaration.O.ExporterIsTooShort"));
-
+    
             }
             else if (this._DeclarationPM.ImporterCode.length > 9) {
-                if (this._DeclarationPM.Direction != "E")
-                    this.ValidationErrorMessageCodes.push(TextCodeTranslator.Translate("Customs.Declaration.O.TooLongCode"));
-                else
-                    this.ValidationErrorMessageCodes.push(TextCodeTranslator.Translate("Customs.Declaration.O.TooLongExporterCode"));
-
-
+                this.ValidationErrorMessageCodes.push(TextCodeTranslator.Translate("Customs.Declaration.O.TooLongCode"));
             }
             else {
                 var digit: string = this._DeclarationPM.ImporterCode.toString().substring(8);
@@ -682,7 +677,7 @@ export class DeclarationValidator {
     }
 
     public Validate(entityPM: DeclarationPM) {
-
+        
         var result = [];
         this._DeclarationPM = entityPM;
         this.EmptyConsignmentPackageCheck();
