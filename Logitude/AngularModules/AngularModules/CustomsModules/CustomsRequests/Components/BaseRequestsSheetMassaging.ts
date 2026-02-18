@@ -93,12 +93,9 @@ export class BaseRequestsSheetMassaging
         }
     }
 
-    public MessageDisplayWithNoData(){
-        this.CallOnMassageDisplayMethod();
-    }
     public MassageDisplay(RequestParamsXml: string, ResponseDataXml: string): void {
 
-       
+
         this._RequestParamsXml = RequestParamsXml;
         this._ResponseDataXml = ResponseDataXml;
         if (AppTool.IsNullOrEmpty(this._RequestParamsXml)) {

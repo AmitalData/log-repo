@@ -42,7 +42,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
 
         public void Create(EntityStatusPM theEntityPm)
         {
-            EntityStatus entity = entityRepository.GetSingleEntityStatusByCodeTableId(theEntityPm.Code, theEntityPm.ObjectTableId, theEntityPm.Tenant);
+            EntityStatus entity = entityRepository.GetSingleEntityStatusByCodeTableId(entityPM.Code, entityPM.ObjectTableId, entityPM.Tenant);
             if (entity != null)
             {
                 theEntityPm.Id = entity.Id;

@@ -372,7 +372,7 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
     TotalDebit: any;
     IsMultiWithReconcileMethodCodeEqualOne: boolean = false;
     TotalLocalDifference: number = null;
-    ReconcileCurrencyId : string = null;
+
     SetWindowArgs(winArgs) {
         this.SelectedLines = winArgs.SelectedLines;
         this.SourceGLAccountPM = winArgs.SourceGLAccountPM;
@@ -380,8 +380,6 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
         this.TotalCredit = winArgs.TotalCredit;
         this.TotalDebit = winArgs.TotalDebit;
         this.IsMultiWithReconcileMethodCodeEqualOne = winArgs.IsMultiWithReconcileMethodCodeEqualOne && this.SelectedLines.Collection[0].CurrencyId != this.defaultCurrencyId;
-        this.ReconcileCurrencyId = winArgs.ReconcileCurrencyId;
-
     }
     async FillErrors(isSplitJournal: boolean) {
         this.ValidationErrorsList = [];
@@ -408,9 +406,8 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
             newLine.ReconciliationId = 'new';
             newLine.Tenant = SessionLocator.Tenant;
             newLine.Line = i;
-            newLine.CurrencyId = this.ReconcileCurrencyId ?? selectedTransaction.OpenAmountCurrencyId;
+            newLine.CurrencyId = selectedTransaction.OpenAmountCurrencyId;
             newLine.TransactionId = selectedTransaction.Id;
-            newLine.CurrencyRate = selectedTransaction.ExchangeRate;
             newLine.ReconciliationAmount = selectedTransaction.AmountToReconcile;
             newLine.IsPartial = selectedTransaction.IsPartial;
             newLine.Reference1 = selectedTransaction.Reference1;
