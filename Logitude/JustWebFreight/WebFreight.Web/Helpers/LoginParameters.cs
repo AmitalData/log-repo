@@ -26,7 +26,6 @@ namespace WebFreight.Web.Helpers
         public bool IsFromPLSignApp { get; set; }
         public int Tenant { get; set; }
         public bool IsCustomsBook { get; set; }
-        public bool IgnoreMFA { get; set; }
 
     }
 }

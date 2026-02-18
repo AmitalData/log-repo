@@ -220,8 +220,7 @@ namespace CustomsWorkerRole.Test
             myYCULTASKRepository.GetStatisticWeekly(
 out totalTasks,
 //out over30sectoanalyze,out over30secfromlog2start,
-out problemTasks,
-1
+out problemTasks
 );
 
             

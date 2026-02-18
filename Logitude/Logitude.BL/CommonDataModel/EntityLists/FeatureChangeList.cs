@@ -17,6 +17,7 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public string UserId { get; set; }
         public string RoleId { get; set; }
         public string PackageCode { get; set; }
+        public string Notes { get; set; }
         public string SearchFields { get; set; }
         public string UserName { get; set; }
     }

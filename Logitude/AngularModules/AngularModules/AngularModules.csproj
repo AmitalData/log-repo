@@ -73,8 +73,6 @@
     <Content Include="Accounting\Components\EditTabs\Journal\JournalDetailsTabComponent.html" />
     <Content Include="Accounting\Components\EditTabs\Revaluation\RevaluationDetailsComponent.html" />
     <Content Include="Accounting\Components\EditTabs\TaxDeductionReport\TaxDeductionReportGeneralTabComponent.html" />
-    <Content Include="Accounting\Components\EditTabs\TaxDeductionReport\TaxDeductionReportGeneralTabNotCompletedComponent.html" />
-    <Content Include="Accounting\Components\EditTabs\TaxDeductionReport\TaxDeductionReportGeneralTabCompletedComponent.html" />
     <Content Include="Accounting\Components\EditTabs\TaxDeductionReport\TaxDeductionReportLogTabComponent.html" />
     <Content Include="Accounting\Components\EditTabs\TaxReport\EditTaxReportLine\EditTaxReportLineComponent.html" />
     <Content Include="Accounting\Components\EditTabs\TaxReport\TaxReportDetailsTabComponent.html" />
@@ -135,7 +133,6 @@
     <Content Include="Accounting\Components\Others\CargoTrackingService\CargoTrackingServiceComponent.html" />
     <Content Include="Accounting\Components\Others\InterestInvoiceAutoCreditComponent.html" />
     <Content Include="Accounting\Components\Others\JournalReconcileComponent.html" />
-    <Content Include="Accounting\Components\Others\JournalRevaluationComponent.html" />
     <Content Include="Accounting\Components\Others\ExternalReconcileComponent.html" />
     <Content Include="Accounting\Components\Others\ReconcileComponent.html" />
     <Content Include="Accounting\Components\Others\ReconcileExternalPage\ExternalPagesTabComponent.html" />
@@ -1237,8 +1234,6 @@
     <TypeScriptCompile Include="Accounting\Components\EditTabs\Interest\DetailsTab\InterestBasesTypeDetailsTabComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\EditTabs\OpenFormatReport\OpenFormatReportLogTabComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\EditTabs\TaxDeductionReport\TaxDeductionReportGeneralTabComponent.ts" />
-    <TypeScriptCompile Include="Accounting\Components\EditTabs\TaxDeductionReport\TaxDeductionReportGeneralTabNotCompletedComponent.ts" />
-    <TypeScriptCompile Include="Accounting\Components\EditTabs\TaxDeductionReport\TaxDeductionReportGeneralTabCompletedComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\EditTabs\TaxDeductionReport\TaxDeductionReportLogTabComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\ListTemplates\CashBookLineListTemplate.ts" />
     <TypeScriptCompile Include="Accounting\Components\ListTemplates\InterestReportLinesByDateListTemplate.ts" />
@@ -1272,7 +1267,6 @@
     <TypeScriptCompile Include="Accounting\Components\Workspaces\GLAccounts\GLAccountsPageComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\Workspaces\Main\MainPageComponent.ts" />
     <TypeScriptCompile Include="Accounting\DataContracts\InterestReportArgs.ts" />
-    <TypeScriptCompile Include="Accounting\DataContracts\TaxDeductionReportData.ts" />
     <TypeScriptCompile Include="Accounting\EntityLists\AccountingIntegrityCheckList.ts" />
     <TypeScriptCompile Include="Accounting\EntityLists\IntegrityCheckStatusList.ts" />
     <TypeScriptCompile Include="Accounting\EntityLists\JournalAdditionalDataList.ts" />
@@ -4979,7 +4973,6 @@
     <TypeScriptCompile Include="Accounting\Components\Others\Aging4CustomerChartWindowComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\Others\CancelChequeComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\Others\JournalReconcileComponent.ts" />
-    <TypeScriptCompile Include="Accounting\Components\Others\JournalRevaluationComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\Others\ExternalReconcileComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\Others\ReconciledMessage.ts" />
     <TypeScriptCompile Include="Accounting\Components\Others\ReconcileComponent.ts" />

@@ -159,7 +159,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return pm;
         }
 
-        public bool IsHSMSign_IsOn(int tenant,string hsmStationContext=null)
+        public bool IsHSMSign_IsOn(int tenant)
         {
             var customsEnvironmentSettingQueryService = new CustomsEnvironmentSettingQueryService(tenant);
             var environmentSettingPM = customsEnvironmentSettingQueryService.GetEnvironmentSettingPM(tenant);
@@ -184,7 +184,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
             if (fromEnvSetting && fromTenantSetting)
             {
                 var signQueueHSMService = new SignQueueHSMService();
-                hasValidHsm = (bool)(signQueueHSMService.GetHSMAllCertificates(tenant, false, hsmStationContext)?.Any(i => i.IsOk == true));
+                hasValidHsm = (bool)(signQueueHSMService.GetHSMAllCertificates(tenant, false)?.Any(i => i.IsOk == true));
 
             }
 
@@ -257,11 +257,6 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
             return poco.LastRunningDCAWS;
 
-        }
-        public DateTime? GetCustomsBookLastUpdateDateByTenant(int tenant)
-        {
-            DateTime? CB_LastUpdateDate = repository.GetCB_LastUpdateDate(tenant);
-            return CB_LastUpdateDate;
         }
 
         public int GetTheFirstTenantWithCustomsAgentId()
