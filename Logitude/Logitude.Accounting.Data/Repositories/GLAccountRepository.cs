@@ -4,11 +4,10 @@ using Logitude.Accounting.Data.EntityKeys;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Server.Tools;
 using System.Data.Entity.Infrastructure;
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using System.Runtime.Remoting.Contexts;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -840,7 +839,7 @@ namespace Logitude.Accounting.Data.Repositories
 
         public List<GLAccount> GetByRevaluationEnabled_OtherParams(bool? revaluationEnabled, string chartOfAccountsTypeCode, string chartOfAccountsId, string accountTypeCode, string gLAccountId, string accountingCurrencyId, int tenant)
         {
-            if (revaluationEnabled == true && String.IsNullOrEmpty(chartOfAccountsId))
+            if (revaluationEnabled.HasValue && revaluationEnabled.Value)
             {
                 List<GLAccount> rv1;
                 IQueryable<GLAccount> rec1 =
@@ -870,7 +869,6 @@ namespace Logitude.Accounting.Data.Repositories
                                     && (record.Id == gLAccountId || String.IsNullOrEmpty(gLAccountId)
                                     && (record.CurrencyId != accountingCurrencyId || (record.IsMultiCurrency.HasValue && record.IsMultiCurrency.Value) || String.IsNullOrEmpty(accountingCurrencyId))
                                     && (!record.IsControlAccount.HasValue || record.IsControlAccount == false)
-                                    && (revaluationEnabled != true || record.RevaluationEnabled == true) 
                )
                  select record;
                 if (rec2 != null)
@@ -1353,19 +1351,6 @@ namespace Logitude.Accounting.Data.Repositories
             }
         }
 
-        public decimal GetTotalOpenChequesInLocalCurById(String glaccountId, int tenant)
-        {                           
-           var now = DateTime.UtcNow;
-           
-           return context.AllARPaymentChequesViews
-               .Where(a => a.AccountId == glaccountId
-                        && a.Tenant == tenant
-                        && a.Notes != "החזרת שיק ללקוח"
-                        && a.ValueDate <= now)
-               .Sum(a => (decimal?)a.LocalAmountCredit) ?? 0m;        
-            
-        }
-
         public List<GLAccount> GetByDisplayNumberEnding(String displayNumberEnding, int tenant)
         {
             if (String.IsNullOrEmpty(displayNumberEnding))
@@ -1712,21 +1697,9 @@ namespace Logitude.Accounting.Data.Repositories
 
             return accounts;
         }
-
-		public List<GLAccount> GetGLAccountByTenantAndCustomerDebtNotification(int tenant)
-		{
-			List<GLAccount> accounts = ((from account in context.GLAccounts
-										 join notification in context.CustomerDebtNotifications 
-                                         on new { account.Tenant, Id = account.Id} equals new { notification.Tenant, Id = notification.AccountId } into moreDataJoin
-										 from joinedNotification in moreDataJoin.DefaultIfEmpty()
-										 where account.Tenant == tenant && account.Inactive == false  && account.AccountTypeCode == "2" && joinedNotification == null
-										 select account).ToList());
-
-			return accounts;
-		}
     }
 
-		public class GLAccountAndMoreDTO//: GLAccount
+    public class GLAccountAndMoreDTO//: GLAccount
     {
         
         public string Id { get; set; }

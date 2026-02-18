@@ -409,7 +409,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 var loggedUserId = string.Empty;
 
                 var objecttableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
-                if (signQueueHSMService.IsHSMSign_IsOn(declaration.Tenant, GetHsmStationContext(declaration)))
+                if (signQueueHSMService.IsHSMSign_IsOn(declaration.Tenant))
                 {
                     loggedUserId = AuthenticationUtil.ResolveUserId(declaration.Tenant);
                 }
@@ -444,7 +444,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             ForceCompanySign = false,
                             LoggingObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration"),
                             FutureSendDateTime = DateTime.Now.AddMinutes(5),
-                            HsmStationContext = GetHsmStationContext(declaration),
+
                         };
 
                         LogMessagingUtil.Instance.AppendLine("Send declaration to mehes");
@@ -470,7 +470,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             ForceCompanySign = false,
                             LoggingObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration"),
                             FutureSendDateTime = futureSendTime,
-                            HsmStationContext = GetHsmStationContext(declaration),
+
                         };
 
                         LogMessagingUtil.Instance.AppendLine("Send declaration to mehes");
@@ -546,16 +546,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             }
         }
-        private string GetHsmStationContext(DeclarationPM declarationPM)
-        {
-            if (declarationPM != null && declarationPM.IsCourierDeclaration == true)
-                return "Ecom";       
 
-            if (declarationPM != null && string.Equals(declarationPM.Direction, "E", StringComparison.OrdinalIgnoreCase))
-                return "MehesExport"; 
-
-            return "Customs";         
-        }
         //private void UpdateDeclarationCourierStatus(ICustomContext context, CustomsDocumentPM entityPM, string declaretionId)
         //{
 

@@ -1,21 +1,30 @@
 
 
 declare var window: any;
+import { UserPM } from '../../Common/EntityPMs/UserPM';
 import { SessionLocator } from './SessionLocator';
 import { AppTool } from '../Tools';
 import { EventEmitter } from '@angular/core';
 import { EditComponent } from '../Components/EditComponent/EditComponent';
 import { DeclarationEditComponentController } from '../../Customs/Controller/DeclarationEditComponentController';
 import { LogitudeWindow } from '../../Controls/Windows/LogitudeWindow';
+import { MessageWindow } from '../../Controls/Windows/MessageWindow';
 
 import { IIGGeneralMessagesService} from '../../Customs/Services/WebServices/IIGGeneralMessagesService';
+//import { CustomsRequestMenuService} from '../../Customs/Services/Others/CustomsRequestMenuService';
 import { ObservableCollection } from './ObservableCollection';
 import { SupplierInvoiceItemList } from "../../Customs/EntityLists/Extended/SupplierInvoiceItemList";
 import { TextCodeTranslator } from './TextCodeTranslator';
 import { ClientPM } from '../../Customs/EntityPMs/ClientPM';
 
+//import { ClientMessagesService } from '../../Customs/Services/WebServices/ClientMessagesService';
+//import { CustDocMetaDataValuesWebService } from '../../Customs/Services/WebServices/CustDocMetaDataValuesWebService';
+//import { DeclarationMenuButtonsHandler } from '../../Customs/Components/MenuButtons/DeclarationMenuButtonsHandler';
+//import { DeclarationPMService } from '../../Customs/Services/StandardPMs/DeclarationPMService';                                       
 import { DeclarationPM } from '../../Customs/EntityPMs/DeclarationPM';
+import { ConsignmentPM } from '../../Customs/EntityPMs/ConsignmentPM';
 import { EntityResourceService } from '../Services/EntityResourceService';
+import { EntityPMService } from '../Services/EntityPMService';
 import { CourierMasterPMService } from '../../Customs/Services/StandardPMs/CourierMasterPMService';
 import { ServiceResponse } from '../DataContracts/ServiceResponse';
 import { DeclarationWebService } from '../../Customs/Services/WebServices/DeclarationWebService';
@@ -23,7 +32,8 @@ import { MaintenanceComponent } from 'Infrastructure/Components/Maintenance/Main
 
 
 export class AmitalGatewayUtil {
-
+    //private CurrentSession = SessionLocator.SelectedSession;
+    //private constructor() { }
     private static _Instance: AmitalGatewayUtil;
     public static get Instance(): AmitalGatewayUtil {
         this._Instance = this._Instance || new AmitalGatewayUtil();
@@ -106,7 +116,7 @@ export class AmitalGatewayUtil {
             "CFIHMAIN.LogitudeTask",
             "ShowDeclarationCertificatesByGroupsUnifreightCallBack",
             unifreightMessageM,
-            " םישורים נדרשים");
+            " אישורים נדרשים");
     }
 
     public ShowDocumentsSharing(
@@ -732,7 +742,7 @@ export class AmitalGatewayUtil {
                     
                     if (unifreightMessage.UnifreightEntity == "BFIFILE" /*|| myEditComponent.EntityPM?.Direction == "E"*/)
                     {
-                        BackButtonLabel = TextCodeTranslator.Translate("Customs.Declaration.O.exportFileHeader");
+                        BackButtonLabel = "תיק יצוא"
                     }
                     if(!AmitalGatewayUtil.Instance.AmitalBrowserInUse){
                         
@@ -1046,8 +1056,6 @@ export class AmitalGatewayUtil {
         public static get ResponseEntityAlreadyLockKey() { return "Response.EntityAlreadyLock"; }
         public static get ResponseEntityAlreadyLockMessage() { return "Response.EntityAlreadyLockMessage"; }
         public static get RaiseUnlockIIGEntityMessageId() { return "RaiseUnlockIIGEntityMessage"; }
-        public static get ShowOpenFiles() { return "ShowOpenFiles"; }
-
         
         
         public static get RaiseLockIIGEntReturnEntityAlreadyLockMessage() { return "RaiseLockIIGEntReturnEntityAlreadyLockMessage"; }
@@ -1150,7 +1158,7 @@ export class AmitalGatewayUtil {
                 "CFIHMAIN.LogitudeTask",
                 AmitalGatewayUtil.Instance.DeclarationMessaging.RaiseInstructionReturnCanIContinueMessage,
                 unifreightMessageM,
-                "AMI-49615 - הפעלת Instructions מתוך הצהרת יבום");
+                "AMI-49615 - הפעלת Instructions מתוך הצהרת יבוא");
         }
 
         public static RaiseCheckInsuranseReturnIsNeededAmount(
@@ -1172,7 +1180,7 @@ export class AmitalGatewayUtil {
                 "CFIHMAIN.LogitudeTask",
                 "RaiseCheckInsuranseReturnIsNeededAmount",
                 unifreightMessageM,
-                "AMI-49619 - ביטוח שער עולמי - פיתוח ממשק לבדיקה הםם נדרש לתיק ביטוח");
+                "AMI-49619 - ביטוח שער עולמי - פיתוח ממשק לבדיקה האם נדרש לתיק ביטוח");
         }
 
         public static RaiseOpenNewBrowser(url: string) {
@@ -1307,7 +1315,7 @@ export class AmitalGatewayUtil {
                 "CFIHMAIN.LogitudeTask",
                 "ShowDeclarationCertificatesByGroupsUnifreightCallBack",
                 unifreightMessageM,
-                " םישורים נדרשים");
+                " אישורים נדרשים");
         }
 
         public ShowDocumentsSharingUnifreightCallBack(

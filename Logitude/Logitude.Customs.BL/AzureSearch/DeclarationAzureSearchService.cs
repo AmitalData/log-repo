@@ -2,7 +2,6 @@
 using Logitude.Customs.Data.EntityListQueryServices;
 using Logitude.Customs.Data.EntityPOCOs;
 using Simplog.Server.Infrastructure.DataContracts;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -45,16 +44,5 @@ namespace Logitude.Customs.BL.AzureSearch
         private static readonly Dictionary<string, string> FieldNameMappings = new Dictionary<string, string>() {
             { "TransportModeForExport", "TransportModeId" }
         };
-
-        protected override string GetIndexBaseName(List<QueryFilterItem> additionalFilters, string finalFilters, int tenant, string requestedIndex)
-        {
-            bool isExport = !string.IsNullOrEmpty(finalFilters) &&
-                            finalFilters.IndexOf("(direction eq 'E')", StringComparison.OrdinalIgnoreCase) >= 0;
-
-            return isExport ? "declarations" : "declarations-customs";
-        }
-
-
-
     }
 }
