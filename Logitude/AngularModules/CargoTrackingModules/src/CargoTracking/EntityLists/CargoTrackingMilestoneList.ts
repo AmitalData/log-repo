@@ -15,10 +15,8 @@ export class CargoTrackingMilestoneList {
 	Inactive: boolean;
 	Weight: number;
 	ExportWeight: number;
+	Tenant: number;
 	EventTypeId: string;
-	Notes: string;
-	TenantId: number;
-	ExternalCode: string;
 	
 }
  
