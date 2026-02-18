@@ -325,16 +325,16 @@ User/Pass",
                     }
                     return input;
                 };
-                var allTenant= repo.GetRealAll()
+                var allTenant = repo.GetRealAll()
                 .ToList()
                 .Where(r => !string.IsNullOrWhiteSpace(r.UnfConnectionString))
-                .Select(t=>t.Tenant)
+                .Select(t => t.Tenant)
                 ;
                 foreach (var currTenant in allTenant)
                 {
                     Logitude.Customs.BL.Utils.GrantCCUTableUtil.GrantCCUTo(currTenant, GetConnetionStringFunc);
                 }
-                
+
             }
             );
             thread.IsBackground = true;
@@ -1360,7 +1360,7 @@ User/Pass",
                     {
                         if (tenant.Id != 0)
                         {
-                           // DocumentTypeUpdateClass.UpdateDataForTenant(tenant.Id, "");
+                            // DocumentTypeUpdateClass.UpdateDataForTenant(tenant.Id, "");
                             label1.Text = "Update tenant" + tenant.Id + "completed successfully";
                         }
                     }
@@ -1893,7 +1893,7 @@ User/Pass",
                 SetControlPropertyValue(CustZibFilesLbl, "Text", "Building...");
                 generalLabel = CustZibFilesLbl; // timer
             }
-          
+
             else
             {
                 SetControlPropertyValue(BuildZipFileslbl, "Text", "Building...");
@@ -2951,7 +2951,7 @@ User/Pass",
         private void RunAddingWarehouse(List<WarehouseItem> allDataLines)
         {
             allDataLines = allDataLines.Where(d => !string.IsNullOrEmpty(d.Code) && !string.IsNullOrEmpty(d.Name) && !string.IsNullOrEmpty(d.Address1) && !string.IsNullOrEmpty(d.City)).ToList();
-            int tenant = 0; 
+            int tenant = 0;
             if (allDataLines.Count > 0)
             {
                 ICommonDataContext myCommonContext = CommonDataContext.GetContext(0);
@@ -4707,7 +4707,7 @@ User/Pass",
         }
 
         private int packagesTypesCount = 0;
- 
+
         private void AddPackagesTypesByTenant(List<dynamic> allPackagesTypes, int tenant)
         {
             ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
@@ -4783,7 +4783,7 @@ User/Pass",
                 ExchangeRatesFromExternalLinkUpdateService ratesUpdateService = new ExchangeRatesFromExternalLinkUpdateService(tenant);
                 ratesUpdateService.UpdateRatesByExternalXml();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw ex;
             }
@@ -4800,12 +4800,12 @@ User/Pass",
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
- 
+
         }
 
-       
 
-      
+
+
 
         private void tESTToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -4826,7 +4826,7 @@ User/Pass",
             var PendingByKeywordUpdateService = new PendingByKeywordUpdateService(context, new Dictionary<string, IContext>(), 1);
 
             var list = PendingByKeywordRepository.GetAll(1).ToList();
-            foreach(var item in list)
+            foreach (var item in list)
             {
                 if (!string.IsNullOrWhiteSpace(item.KeywordsList))
                 {
@@ -4849,7 +4849,7 @@ User/Pass",
                 }
             }
         }
- 
+
 
 
         private void UpdateTable1344_Click(object sender, EventArgs e)
@@ -4877,8 +4877,8 @@ User/Pass",
                 MessageBox.Show(log);
             }
         }
- 
-         
+
+
         private void CreateBackup()
         {
             int tenant = 0;
@@ -6777,7 +6777,7 @@ User/Pass",
                 Stream stream = openFileDialog.OpenFile();
                 StreamReader streamReader = new StreamReader(stream);
                 this.ReadInvoicesMethod(streamReader);
-             }
+            }
         }
         private List<ExcelInvoice> invoiceItems;
         private IInvoiceContext invoiceContext;
@@ -6874,7 +6874,7 @@ User/Pass",
 
                     excelListView.Items.Add(new ListViewItem(invoicesArray));
                 }
-            }          
+            }
 
             stopWatch.Stop();
             TimeSpan ts = stopWatch.Elapsed;
@@ -6998,9 +6998,6 @@ User/Pass",
                 if (ofd.ShowDialog() != DialogResult.OK) return;
 
                 List<string> customsFiles = ReadColumnFromCsv(ofd.FileName, 0);
-                List<string> actions = null;
-                try { actions = ReadColumnFromCsv(ofd.FileName, 1); } catch { }
-
 
                 var declarationQueryService = new DeclarationQueryService(1);
 
@@ -7011,130 +7008,79 @@ User/Pass",
 
                 MessagingServiceFactoryHelper.InitContainer(); ContainerAccessor.InitContainer();
                 FillAppSettings();
-                for (int i = 0; i < customsFiles.Count; i++)
+                foreach (string customsFile in customsFiles)
                 {
+                    try
                     {
-                        string customsFile = customsFiles[i];
-                        string action = (actions != null && i < actions.Count && !string.IsNullOrWhiteSpace(actions[i]))
-                            ? actions[i].Trim().ToLowerInvariant()
-                            : "status"; // default
-
-                        try
-                        {
-                            string decId = declarationQueryService.GetIdByCustomFileNo(customsFile, 1);
-                            if (string.IsNullOrEmpty(decId))
-                            {
-                                MessageBox.Show(
-                                    $"No declaration ID found for Customs File: {customsFile}",
-                                    "Not Found",
-                                    MessageBoxButtons.OK,
-                                    MessageBoxIcon.Information);
-                                continue;
-                            }
-
-                            var declarationPM = declarationQueryService.GetAcceptDeclarationAmendment(decId, 1);
-                            if (declarationPM == null)
-                            {
-                                MessageBox.Show(
-                                    $"Declaration object is NULL for ID {decId} (Customs File {customsFile}).",
-                                    "Not Found",
-                                    MessageBoxButtons.OK,
-                                    MessageBoxIcon.Information);
-                                continue;
-                            }
-
-                            if (action == "restore")
-                            {
-                                SendDeclarationRestoreRequest(declarationPM);
-                            }
-                            else
-                            {
-                                SendDeclarationStatusRequest(declarationPM); // existing behavior
-                            }
-                        }
-                        catch (Exception ex)
+                        string decId = declarationQueryService.GetIdByCustomFileNo(customsFile, 1);
+                        if (string.IsNullOrEmpty(decId))
                         {
                             MessageBox.Show(
-                                $"ERROR while processing Customs File {customsFile}.\n\n{ex}",
-                                "Error",
+                                $"No declaration ID found for Customs File: {customsFile}",
+                                "Not Found",
                                 MessageBoxButtons.OK,
-                                MessageBoxIcon.Error);
+                                MessageBoxIcon.Information);
+                            continue;
                         }
-                    }
 
+                        var declarationPM = declarationQueryService.GetAcceptDeclarationAmendment(decId, 1);
+                        if (declarationPM == null)
+                        {
+                            MessageBox.Show(
+                                $"Declaration object is NULL for ID {decId} (Customs File {customsFile}).",
+                                "Not Found",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Information);
+                            continue;
+                        }
+                        SendDeclarationStatusRequest(declarationPM);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(
+                            $"ERROR while processing Customs File {customsFile}.\n\n{ex}",
+                            "Error",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Error);
+                    }
                 }
 
             }
-            void SendDeclarationRestoreRequest(DeclarationPM myDeclarationPM)
+
+        }
+        void SendDeclarationStatusRequest(DeclarationPM myDeclarationPM)
+        {
+
+
+            var newSearchDeclarationStatusRequestParams = new DeclarationStatusRequestParams()
             {
-                var restoreParams = new DeclarationRestoreRequestParams
-                {
-                    LoggingEnabled = true,
-                    LoggingUserId = AuthenticationUtil.ResolveUserId(myDeclarationPM.Tenant),
-                    Tenant = myDeclarationPM.Tenant,
-                    LoggingEntityReference = myDeclarationPM.Direction,
-                    LoggingObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration"),
-                    AppicationId = myDeclarationPM.Id,
-                    DeclarationId = myDeclarationPM.Id,
-                    DeclarationNumber = myDeclarationPM.DeclarationNumber,
-                    CustomsFile = myDeclarationPM.CustomFileNo,
-                    RequestVIA = SendRequestVIA.WebServiceBatch,
-                    InterfaceTypeCode = "8373",
-                    ResponseName = "8373",
-                    RequestName = "Restore From ResetDeclaration",
-                };
-                try
-                {
-                    SBQMessageService.CreateSheetSBQMessage<DeclarationRestoreRequestParams>(restoreParams, false);
-                }
-                catch (CustomsRequestsSheetDomainModelServiceException ex)
-                {
-                    if (ex.Where == CustomsRequestsSheetDomainModelServiceException.WhereEnum.SameRequestInProgress)
-                    {
-                        Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance
-                            .AppendLine("Restore (8373) RequestInProgress – skipping new one.");
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
+                LoggingEnabled = true,
+                CustomFileNo = myDeclarationPM.CustomFileNo,
+                DeclarationNumber = myDeclarationPM.DeclarationNumber,
+                Tenant = myDeclarationPM.Tenant,
+                RequestName = "Declaration Status " + myDeclarationPM.DeclarationNumber,
+                ResponseName = "Declaration Status " + myDeclarationPM.DeclarationNumber,
+                RequestVIA = SendRequestVIA.WebServiceBatch,
+                InterfaceTypeCode = "8250",
+                LoggingEntityId = myDeclarationPM.Id,
+                LoggingObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration"),
+                LoggingUserId = AuthenticationUtil.ResolveUserId(myDeclarationPM.Tenant),
+            };
+
+
+
+            try
+            {
+                SBQMessageService.CreateSheetSBQMessage<Logitude.CustomsMessaging.Common.RequestParams.DeclarationStatusRequestParams>(newSearchDeclarationStatusRequestParams
+                    , false
+                    );
+
             }
-
-            void SendDeclarationStatusRequest(DeclarationPM myDeclarationPM)
+            catch (CustomsRequestsSheetDomainModelServiceException myCustomsRequestsSheetServiceException)
             {
-
-
-                var newSearchDeclarationStatusRequestParams = new DeclarationStatusRequestParams()
+                if (myCustomsRequestsSheetServiceException.Where == CustomsRequestsSheetDomainModelServiceException.WhereEnum.SameRequestInProgress)
                 {
-                    LoggingEnabled = true,
-                    CustomFileNo = myDeclarationPM.CustomFileNo,
-                    DeclarationNumber = myDeclarationPM.DeclarationNumber,
-                    Tenant = myDeclarationPM.Tenant,
-                    RequestName = "Declaration Status " + myDeclarationPM.DeclarationNumber,
-                    ResponseName = "Declaration Status " + myDeclarationPM.DeclarationNumber,
-                    RequestVIA = SendRequestVIA.WebServiceBatch,
-                    InterfaceTypeCode = "8250",
-                    LoggingEntityId = myDeclarationPM.Id,
-                    LoggingObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration"),
-                    LoggingUserId = AuthenticationUtil.ResolveUserId(myDeclarationPM.Tenant),
-                };
-
-
-
-                try
-                {
-                    SBQMessageService.CreateSheetSBQMessage<Logitude.CustomsMessaging.Common.RequestParams.DeclarationStatusRequestParams>(newSearchDeclarationStatusRequestParams
-                        , false
-                        );
-
-                }
-                catch (CustomsRequestsSheetDomainModelServiceException myCustomsRequestsSheetServiceException)
-                {
-                    if (myCustomsRequestsSheetServiceException.Where == CustomsRequestsSheetDomainModelServiceException.WhereEnum.SameRequestInProgress)
-                    {
-                        Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("8250 RequestInProgress stop create a new one !! ");
-                    }
+                    Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("8250 RequestInProgress stop create a new one !! ");
                 }
             }
         }
@@ -7234,9 +7180,97 @@ User/Pass",
             LogitudeSettings.TempStorageConnection = setting.TempStorageConnection;
 
         }
-    }
 
-    public class TimeZoneExcelItem
+        private void AddAutokeywo_Click(object sender, EventArgs e)
+        {
+            using (var ofd = new OpenFileDialog())
+            {
+                ofd.Filter = "CSV files (*.csv)|*.csv";
+                ofd.Title = "Choose CSV file";
+                if (ofd.ShowDialog() != DialogResult.OK) return;
+
+                List<string> rows = ReadColumnFromCsv(ofd.FileName, 1);
+                if (rows == null) rows = new List<string>();
+
+                var rawItems = new List<string>();
+                foreach (var row in rows)
+                {
+                    if (string.IsNullOrWhiteSpace(row)) continue;
+
+                    var parts = row.Split(',');
+                    foreach (var p in parts)
+                    {
+                        var kw = (p ?? string.Empty).Replace(",", "").Trim();
+                        if (!string.IsNullOrWhiteSpace(kw))
+                            rawItems.Add(kw);
+                    }
+                }
+
+                var seenCsv = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+                var distinctCsv = new List<string>();
+                int dupInCsv = 0;
+                foreach (var kw in rawItems)
+                {
+                    if (seenCsv.Contains(kw)) { dupInCsv++; continue; }
+                    seenCsv.Add(kw);
+                    distinctCsv.Add(kw);
+                }
+
+                const int tenant = 1;
+                const string typeCode = "4";
+
+                ICustomContext context = CustomContext.GetContext(tenant);
+
+                var repo = new CustomsAutonomyKeywordRepository(context);
+                var updateService = new CustomsAutonomyKeywordUpdateService(context, new Dictionary<string, IContext>(), tenant);
+
+                var existingSet = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+
+                var existing = repo
+                    .GetAll(tenant)
+                    .Where(x => x.KeywordtypeCode == typeCode)
+                    .Select(x => new { x.KeywordtypeCode, x.KeywordsList })
+                    .ToList();
+
+                foreach (var x in existing)
+                {
+                    var key = (x.KeywordtypeCode ?? "") + "|" + (x.KeywordsList ?? "");
+                    if (!existingSet.Contains(key)) existingSet.Add(key);
+                }
+
+                int inserted = 0, skippedExisting = 0;
+
+                foreach (var kw in distinctCsv)
+                {
+                    var key = typeCode + "|" + kw;
+                    if (existingSet.Contains(key)) { skippedExisting++; continue; }
+
+                    var pm = new CustomsAutonomyKeywordPM();
+                    pm.Tenant = tenant;
+                    pm.KeywordtypeCode = typeCode;
+                    pm.KeywordsList = kw;
+                    pm.SearchFields = kw + typeCode;
+                    pm.ChangeSetOp = ChangeSetOperation.Insert;
+
+                    updateService.Update(pm, true);
+                    inserted++;
+                }
+                MessageBox.Show(
+           "CustomsAutonomyKeywords import finished.\n" +
+           "CSV total: " + rawItems.Count + "\n" +
+           "CSV duplicates removed: " + dupInCsv + "\n" +
+           "Unique from CSV: " + distinctCsv.Count + "\n" +
+           "Inserted: " + inserted + "\n" +
+           "Skipped (already in DB): " + skippedExisting,
+           "Import Summary",
+           MessageBoxButtons.OK,
+           MessageBoxIcon.Information
+       );
+            }
+        }
+    } 
+
+        public class TimeZoneExcelItem
     {
         public string Name { get; set; }
         public string UTCOffset { get; set; }

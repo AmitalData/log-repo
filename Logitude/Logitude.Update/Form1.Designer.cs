@@ -305,9 +305,10 @@
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.timer2 = new System.Windows.Forms.Timer(this.components);
             this.OITimer = new System.Windows.Forms.Timer(this.components);
+            this.AddAutokeywo = new System.Windows.Forms.Button();
             this.button57 = new System.Windows.Forms.Button();
             this.invoiceDueDateLabel = new System.Windows.Forms.Label();
-             this.UpdateTable1344 = new System.Windows.Forms.Button();
+            this.UpdateTable1344 = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
@@ -2006,6 +2007,7 @@
             // tabPage2
             // 
             this.tabPage2.BackColor = System.Drawing.Color.Transparent;
+            this.tabPage2.Controls.Add(this.AddAutokeywo);
             this.tabPage2.Controls.Add(this.button57);
             this.tabPage2.Controls.Add(this.button53);
             this.tabPage2.Controls.Add(this.UpdateTable1344);
@@ -3881,16 +3883,16 @@
             this.OITimer.Interval = 1000;
             this.OITimer.Tick += new System.EventHandler(this.OITimer_Tick);
             // 
-            // invoiceDueDateLabel
+            // AddAutokeywo
             // 
-            this.invoiceDueDateLabel.AutoSize = true;
-            this.invoiceDueDateLabel.Location = new System.Drawing.Point(7, 65);
-            this.invoiceDueDateLabel.Name = "invoiceDueDateLabel";
-            this.invoiceDueDateLabel.Size = new System.Drawing.Size(16, 13);
-            this.invoiceDueDateLabel.TabIndex = 4;
-            this.invoiceDueDateLabel.Text = "...";
-
-            this.button57.Location = new System.Drawing.Point(271, 550);
+            this.AddAutokeywo.Location = new System.Drawing.Point(750, 351);
+            this.AddAutokeywo.Name = "AddAutokeywo";
+            this.AddAutokeywo.Size = new System.Drawing.Size(200, 23);
+            this.AddAutokeywo.TabIndex = 118;
+            this.AddAutokeywo.Text = "Add AutoKeyword Excel";
+            this.AddAutokeywo.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.AddAutokeywo.UseVisualStyleBackColor = true;
+            this.AddAutokeywo.Click += new System.EventHandler(this.AddAutokeywo_Click);
             this.button57.Name = "RetrieveImportDeclarationsFromCSV";
             this.button57.Size = new System.Drawing.Size(184, 23);
             this.button57.TabIndex = 117;
@@ -4250,7 +4252,7 @@
         private System.Windows.Forms.Label label29;
         private System.Windows.Forms.Label invoiceDueDateLabel;
         private System.Windows.Forms.Button button57;
-
+        private System.Windows.Forms.Button AddAutokeywo;
     }
 }
 

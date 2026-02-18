@@ -13,7 +13,7 @@ export class SearchListDDLDirective implements  AfterViewInit {
   @Input() set appSearchListDDL(options: any[]) {
     if (this.componentRef && options) {
       this.componentRef.instance.dropdownOptions = options;
-      this.componentRef.instance.showDropdown = true;
+      this.componentRef.instance.showDropdown = options.length > 0;
     }
   }
 
@@ -23,13 +23,7 @@ export class SearchListDDLDirective implements  AfterViewInit {
     if (this.componentRef && val)
       this.componentRef.instance.settings = this._settings;
   }
-  @Input() set SearchText(val: string) {
-    if (this.componentRef && val !== undefined && val !== null && this._settings && this._settings.minimumSearchQueryLength <= val.length) 
-      this.componentRef.instance.searchText = val;  
-    else
-      if(this.componentRef)
-         this.componentRef.instance.searchText = "";
-  }
+
   @Output() optionSelected: EventEmitter<any> = new EventEmitter<any>();
   componentRef!: ComponentRef<SearchListDDLComponent>;
 

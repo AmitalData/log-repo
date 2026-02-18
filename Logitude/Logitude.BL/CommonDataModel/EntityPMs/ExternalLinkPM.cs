@@ -7,6 +7,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         [Key]
         public string Id { get; set; }
         public string Ref { get; set; }
+        public string Link { get; set; }
         public int ExpirationDate { get; set; }
         public bool ActivityLog { get; set; }
         public string Params { get; set; }

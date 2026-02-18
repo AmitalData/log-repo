@@ -28,8 +28,7 @@
               "favicon.ico",
               "_Resources",
               "Js",
-              "Images",
-			  "nl-files"
+              "Images"
             ],
             "styles": [              
               "styles.css",
