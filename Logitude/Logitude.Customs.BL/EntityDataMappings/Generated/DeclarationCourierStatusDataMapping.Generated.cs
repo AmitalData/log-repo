@@ -688,10 +688,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
             {
                 entityPM.CourierPendingReasonList = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.CourierPendingReasonList));
             }
-            if (!String.IsNullOrWhiteSpace(entityPM.LastMileStatusName)) //T4 find type == nText 
-            {
-                entityPM.LastMileStatusName = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.LastMileStatusName));
-            }
             if (!String.IsNullOrWhiteSpace(entityPM.DistributionArea)) //T4 find type == nText 
             {
                 entityPM.DistributionArea = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.DistributionArea));

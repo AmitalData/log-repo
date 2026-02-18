@@ -220,20 +220,6 @@ export class CompanyAddressSettingsComponent extends BaseComponent implements On
         }
     }
 
-    get InvoicePrintNotes() { return this.TenantPm.InvoicePrintNotes; }
-    set InvoicePrintNotes(value: string) {
-        if (this.TenantPm.InvoicePrintNotes != value) {
-            this.TenantPm.InvoicePrintNotes = value;
-        }
-    }
-
-    get InvoicePrintNotesLocal() { return this.TenantPm.InvoicePrintNotesLocal; }
-    set InvoicePrintNotesLocal(value: string) {
-        if (this.TenantPm.InvoicePrintNotesLocal != value) {
-            this.TenantPm.InvoicePrintNotesLocal = value;
-        }
-    }
-
     get Name()
     {
         return this.TenantAddress.Name;

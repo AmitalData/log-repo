@@ -68,7 +68,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             if (entityPOCO.CreatedByUserId != null)
             {
                 ContactQuery query = new ContactQuery(entityPOCO.Tenant);
-                ContactPM contact = query.GetSingleContactPM(entityPOCO.CreatedByUserId);
+                ContactPM contact = query.GetSinglePM(entityPOCO.CreatedByUserId, entityPOCO.Tenant);
 
                 if (contact != null)
                 {
