@@ -23,8 +23,6 @@ namespace Logitude.Accounting.BL.CloseTables
         public const string Reference2 = "6";
         public const string Reference3 = "7";
         public const string ReferenceDate = "2";
-        public const string FIFOAccountingDate = "8";
-        public const string FIFODueDate = "9";
     }
  }
  
