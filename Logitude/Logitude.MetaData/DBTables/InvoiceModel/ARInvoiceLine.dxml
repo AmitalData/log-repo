@@ -225,13 +225,6 @@
     <Constraints
       Nullable="true" />
   </Column>
-  <Column
-    Name="ReceivableCreditGLAccountId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
   <Relation
     ForeignKeyColumn="ARInvoiceId"
     ReferencedTable="ARInvoices"

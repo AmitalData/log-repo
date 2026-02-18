@@ -26,15 +26,15 @@ namespace Unifreight.BL.EntityQueryServices
             this.mapping = new CCUFILEMDataMapping();
         }
 
-        public CCUFILEMPM GetSingle(int FILENO,int tenant,  bool getComposition, bool getFromCache )
+        public CCUFILEMPM GetSingle(int FILENO, bool getComposition, bool getFromCache )
         {
-            var EntityKeys = new CCUFILEMKeys() { FILENO = FILENO , TENANT= tenant};
+            var EntityKeys = new CCUFILEMKeys() { FILENO = FILENO};
             return base.GetSingle(EntityKeys, getComposition, getFromCache);
         }
 
         protected override Simplog.Server.Infrastructure.EntityKeyFields GetKeys(CCUFILEM entityPOCO)
         {
-            return new CCUFILEMKeys() { FILENO = entityPOCO.FILENO, TENANT = entityPOCO.TENANT };
+            return new CCUFILEMKeys() { FILENO = entityPOCO.FILENO  };
         }
 
         public override void GetComposition(EntityKeyFields entityKeys, CCUFILEMPM entityPM)
@@ -68,9 +68,9 @@ namespace Unifreight.BL.EntityQueryServices
             base.GetComposition(entityKeys, entityPM);
         }
 
-        public int? GetFILENOByCUSTOMFILENO(long lCUSTOMFILENO, int tenant)
+        public int? GetFILENOByCUSTOMFILENO(long lCUSTOMFILENO)
         {
-            return (this.Repository as CCUFILEMRepository).GetFILENOByCUSTOMFILENO(lCUSTOMFILENO, tenant);
+            return (this.Repository as CCUFILEMRepository).GetFILENOByCUSTOMFILENO(lCUSTOMFILENO);
         }
 
         public int? GetFILENOByCUSTOMFILENO_forUpdateNOWAIT(long lCUSTOMFILENO,int tenant)
@@ -80,15 +80,15 @@ namespace Unifreight.BL.EntityQueryServices
 		
             if (mySetting.IsConnectedToUniFreight)
             {
-                return (this.Repository as CCUFILEMRepository).LockByCUSTOMFILENO_forUpdateNOWAIT(lCUSTOMFILENO, tenant);
+                return (this.Repository as CCUFILEMRepository).LockByCUSTOMFILENO_forUpdateNOWAIT(lCUSTOMFILENO);
             }
             return 0; 
         }
 
         //<--- Yuval Chalup 19.11.2015 TASK-17450        
-        public CCUFILEM GetCCUFILEMByRESHIMONNO(string reshimonNumber, int tenant)
+        public CCUFILEM GetCCUFILEMByRESHIMONNO(string reshimonNumber)
         {
-            return (this.Repository as CCUFILEMRepository).GetCCUFILEMByRESHIMONNO(reshimonNumber, tenant);
+            return (this.Repository as CCUFILEMRepository).GetCCUFILEMByRESHIMONNO(reshimonNumber);
         }
         //Yuval Chalup 19.11.2015 TASK-17450 --->
 
@@ -102,7 +102,7 @@ namespace Unifreight.BL.EntityQueryServices
                 throw new BusinessErrorException("declaration_CustomFileNo could not convert to long ");
             }
             var myCCUFILEMRepository = new CCUFILEMRepository(tenant);
-            var ccufilem = myCCUFILEMRepository.GetFILENOByCUSTOMFILENO(lCUSTOMFILENO, tenant);
+            var ccufilem = myCCUFILEMRepository.GetFILENOByCUSTOMFILENO(lCUSTOMFILENO);
 
 
             var myCCUQUELOCKRepository = new CCUQUELOCKRepository(tenant);
