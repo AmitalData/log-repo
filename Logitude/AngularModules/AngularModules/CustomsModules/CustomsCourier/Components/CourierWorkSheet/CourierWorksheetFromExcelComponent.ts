@@ -69,9 +69,6 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
     public set SelectedRow(value: any) {
         this._SelectedRow = value;
     }
-
-    minValPay: number = 75;
-    MinValPayDisplay: string = '75';
     _CourierMasterValidator: CourierMasterValidator = new CourierMasterValidator();
     _CourierMasterService: CourierMasterService = new CourierMasterService();
     _DeclarationCourierStatusListService: DeclarationCourierStatusListService = new DeclarationCourierStatusListService();
@@ -152,7 +149,6 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
                         this._TabFilterList.push(new TabFilter("HOLD", "Pending", null, null));
                         this._TabFilterList.push(new TabFilter("ACC", "מסוף", null, null));
                         this.GetMamanPUR();
-                        this.GetMinValInvoiceDefault();
                         this.GetIsSendDocumentsFromQueueButton();
                         this.isAllowAccounting = FeatureLocator.HasFeaturePermession("Customs.CourierMaster", "AllowAccounting")
                         this.isAllowBulkPendind = FeatureLocator.HasFeaturePermession("Customs.CourierMaster", "AllowBulkPendind")
@@ -1688,12 +1684,12 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
         }
 
         switch (this._SelectedTotalInvoiceValue) {
-            case "minValPay": {
-                filters.addAdditionalFilter("TotalInvoiceAmountInUSD", this.minValPay , null, null, "LessThanOrEqual", false, false, false, "number");
+            case "75": {
+                filters.addAdditionalFilter("TotalInvoiceAmountInUSD", 75, null, null, "LessThanOrEqual", false, false, false, "number");
                 break;
             }
             case "500": {
-                filters.addAdditionalFilter("TotalInvoiceAmountInUSD",this.minValPay + 0.01, 500, null, "Between", false, false, false, "number", false);
+                filters.addAdditionalFilter("TotalInvoiceAmountInUSD", 75.01, 500, null, "Between", false, false, false, "number", false);
                 break;
             }
             case "1000": {
@@ -2170,7 +2166,7 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
         if (this.DataSource.rowCount > 0) this.CourierHawbsFromExcelUploaded = true;
 
         var logitudeWindow = new LogitudeWindow();
-        logitudeWindow.Title = "הטענת אקסל למסך עבודה";
+        logitudeWindow.Title = "הטענת םקסל למסך עבודה";
         logitudeWindow.ShowCloseButton = true;
         logitudeWindow.Height = 600;
         logitudeWindow.Width = 700;
@@ -2218,7 +2214,7 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
     SendDelayForm() {
 
         var titleText = "הפקת תעודת עיכוב";
-        var questionText = "אשר שליחת מסר פעולה מיוחדת של תעודת עיכוב למסוף";
+        var questionText = "םשר שליחת מסר פעולה מיוחדת של תעודת עיכוב למסוף";
         var confirm = new ConfirmWindow();
         confirm.Width = 350;
         confirm.Height = 200;
@@ -2398,11 +2394,11 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
         currRequestParams.IsWorkSheetFromExcel = true;
 
         currRequestParams.PendingCode = [];
-        let text = "נא אשר אישור פנדינג גורף";
+        let text = "נם םשר םישור פנדינג גורף";
         currRequestParams.PendingCode.push(this.SelectedPendingCodeFilter.Key);
         if (this._CourierWorksheetSharedDataService._SelectedItems != null && this._CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0) {
             currRequestParams.DeclarationsList = this._CourierWorksheetSharedDataService._SelectedItems.Collection;
-            text = "נא אשר ביצוע אישור רק לשורות שסומנו";
+            text = "נם םשר לבצע םישור רק לשורות שסומנו";
         }
 
         var confirmWindow = new ConfirmWindow();
@@ -2600,30 +2596,6 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
                         }
                     });
 
-            }
-        });
-    }
-
-    private GetMinValInvoiceDefault() {
-        let svc = new CustomsSettingExtendedListService();
-
-        svc.GetDefault(
-            "ISRAEL",
-            "CGO_MINVAL_PAY",
-            "NON",
-            "NON",
-            SessionLocator.Tenant
-        ).subscribe((response: any) => {
-
-            const obj = response.Result;
-            if (obj) {
-                const val = obj['DefaultValue'];
-                const parsed = Number(val);
-
-                if (!AppTool.IsNullOrEmpty(val) && !isNaN(parsed) && parsed > 0) {
-                    this.minValPay = parsed;
-                    this.MinValPayDisplay = '' + parsed;
-                }
             }
         });
     }

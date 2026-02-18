@@ -55,7 +55,7 @@ namespace Logitude.Customs.BL.TraceEvents
 
 
 
-                    EnsureLockExist4Entity(myCCUQUELOCKQueryService, myCCUQUELOCKUpdateService, myUnifreightEventParam,tenant);
+                    EnsureLockExist4Entity(myCCUQUELOCKQueryService, myCCUQUELOCKUpdateService, myUnifreightEventParam);
 
                     
                     InsertGGGQ4Entity(myUnifreightEventParam.Entname, myUnifreightEventParam.PrimaryNum, myGGGQUpdateService, mySetting.IsConnectedToUniFreight, tenant);
@@ -98,15 +98,17 @@ namespace Logitude.Customs.BL.TraceEvents
 
             };
             myGGGQUpdateService.DontAddTransaction = true;//we cant add a transaction with 
-            
-            myGGGQPM_Packs.Tenant = tenant;
-            
+            if (!isConnectedToUniFreight)
+            {
+                myGGGQPM_Packs.Tenant = tenant;
+            }
             myGGGQUpdateService.Update(myGGGQPM_Packs, true);
         }
 
         private static void InsertEventTask4Entity(UnifreightEventParam myUnifreightEventParam, string unfreightUserId, int tenant, string requestData)
         {
 
+            var mySetting = EntityQueryServices.CustomsSettingQueryService.GetSettingByTenant(tenant);
            
 
 
@@ -124,9 +126,10 @@ namespace Logitude.Customs.BL.TraceEvents
                 ARCHIVE = "F",
 
             };
-           
-            myYCULTASKPM_Packs.Tenant = tenant;
-            
+            if (!mySetting.IsConnectedToUniFreight)
+            {
+                myYCULTASKPM_Packs.Tenant = tenant;
+            }
             AmitalContext  _AmitalContext = AmitalContext.GetContext(tenant);
             var myYCULTASKUpdateService = new YCULTASKUpdateService(_AmitalContext);
             myYCULTASKUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
@@ -251,9 +254,9 @@ namespace Logitude.Customs.BL.TraceEvents
             return unfreightUserId;
         }
 
-        private static void EnsureLockExist4Entity(CCUQUELOCKQueryService myCCUQUELOCKQueryService, CCUQUELOCKUpdateService myCCUQUELOCKUpdateService, UnifreightEventParam myUnifreightEventParam,int tenant)
+        private static void EnsureLockExist4Entity(CCUQUELOCKQueryService myCCUQUELOCKQueryService, CCUQUELOCKUpdateService myCCUQUELOCKUpdateService, UnifreightEventParam myUnifreightEventParam)
         {
-            CCUQUELOCKPM myCCUQUELOCK = myCCUQUELOCKQueryService.GetSingle(myUnifreightEventParam.Entname, myUnifreightEventParam.PrimaryNum,tenant, false);
+            CCUQUELOCKPM myCCUQUELOCK = myCCUQUELOCKQueryService.GetSingle(myUnifreightEventParam.Entname, myUnifreightEventParam.PrimaryNum, false);
             if (myCCUQUELOCK == null)
             {
                 var myCCUQUELOCKPM = new CCUQUELOCKPM()

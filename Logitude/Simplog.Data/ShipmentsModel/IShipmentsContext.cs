@@ -71,8 +71,6 @@ namespace Simplog.Data.ShipmentsModel
         IDbSet<ShipmentDigitalField> ShipmentDigitalFields { get; }
         IDbSet<ContainersExternalData> ContainersExternalDatas { get; }
         IDbSet<OceanInsightsRequest> OceanInsightsRequests { get; }
-        IDbSet<OceanCarrierStatusAPIconfig> OceanCarrierStatusAPIconfigs { get; }
-
         IDbSet<LogitudeOceanInsightsRequest> LogitudeOceanInsightsRequests { get; }
         IDbSet<LogitudeOceanInsightsResponse> LogitudeOceanInsightsResponses { get; }
         IDbSet<OceanInsightsRequestsCount> OceanInsightsRequestsCounts { get; }
@@ -110,6 +108,8 @@ namespace Simplog.Data.ShipmentsModel
         IDbSet<ShipmentAnalytic> ShipmentAnalytics { get; set; }
         IDbSet<ContainerAnalytic> ContainerAnalytics { get; set; }
         IDbSet<ContainerDiscrepancy> ContainerDiscrepancies { get; set; }
+        IDbSet<OceanInsightsStatusLog> OceanInsightsStatusLogs { get; set; }
+
         IQueryable<TOutput> FunctionTableValue<TOutput>(string functionName, SqlParameter[] parameters);
         IQueryable<ShipmentDataView> ShipmentSearch(string SearchFields);
 

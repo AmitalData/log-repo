@@ -39,7 +39,8 @@ namespace Simplog.Global.Data.GlobalModel.Repositories
         {
             return this.context.TenantManagements.Include("GlobalTenant");
         }
-		public TenantManagement GetSingleTenantManagement(int id, bool getFromCache = true)
+
+        public TenantManagement GetSingleTenantManagement(int id, bool getFromCache = true)
 		{
 			string cacheKey = $"TenantManagement{id}";
 

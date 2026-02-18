@@ -52,15 +52,11 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public bool IsClosed { get; set; }
         [Column("Remarks")]
 	    public string Remarks { get; set; }
-        [ForeignKey("Contact")]
+        [ForeignKey("User")]
         [Column("ContactId")]
 	    public string ContactId { get; set; }
 	      
-        public virtual Contact Contact { get; set; }
-        [Column("FromApplicationId")]
-	    public string FromApplicationId { get; set; }
-        [Column("RequestDate")]
-	    public DateTime RequestDate { get; set; }
+        public virtual User User { get; set; }
     }
 }
 	 
