@@ -9,7 +9,6 @@ using Logitude.Server.Tools.Helpers;
 using Simplog.Data.Helpers;
 using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
-
 using Logitude.Accounting.Data.EntityListQueryServices;
 using Logitude.Accounting.Data.EntityLists;
 using Logitude.Accounting.Data.EntityPOCOs;
@@ -608,7 +607,6 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             {
 			  entityPM.CustomerDebtNotification = GetCustomerDebtNotificationByAccountId(entityPM);
             }
-
         }
 
         private CustomerDebtNotificationPM GetCustomerDebtNotificationByAccountId(GLAccountPM accountPM)
@@ -617,6 +615,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			CustomerDebtNotificationQueryService customerDebtNotificationQueryServiceQuery = new CustomerDebtNotificationQueryService(MyContext);
 			return customerDebtNotificationQueryServiceQuery.GetCustomerDebtNotificationByAccountId(accountPM.Tenant, accountPM.Id);
 		}
+
 		private static void ResetAccountBalances(GLAccountPM account)
         {
             account.BalanceInForeignCurrency = 0;
@@ -668,6 +667,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             GLAccountFollowUpDataQueryService accountFollowUpDataQueryService = new GLAccountFollowUpDataQueryService(account.Tenant);
             return accountFollowUpDataQueryService.GetSinglePMByAccountId(account.Id, account.Tenant);
         }
+
+       
         private  void SetPaymentTermToMulti(List<CardList> CardLists, string FirstPaymentTermId)
         {
             if (CardLists.Count > 1)
