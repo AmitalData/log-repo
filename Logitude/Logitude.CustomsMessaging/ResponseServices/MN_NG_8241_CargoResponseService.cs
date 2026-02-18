@@ -823,6 +823,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         private void OpenUnifreighTask()
         {
+            bool isConnectedToUniFreight = CustomsSettingQueryService.GetSettingByTenant(_MyDeclarationPM.Tenant).IsConnectedToUniFreight;
            
 
             TransactionScope scope = null;
@@ -867,7 +868,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
              
                     var myCCUQUELOCKQueryService = new CCUQUELOCKQueryService(_AmitalContext);
-                    CCUQUELOCKPM myCCUQUELOCK = myCCUQUELOCKQueryService.GetSingle("CFIFILEM", _MyDeclarationPM.CustomFileNo, _MyDeclarationPM.Tenant, false);
+                    CCUQUELOCKPM myCCUQUELOCK = myCCUQUELOCKQueryService.GetSingle("CFIFILEM", _MyDeclarationPM.CustomFileNo, false);
                     if (myCCUQUELOCK == null)
                     {
                         var myCCUQUELOCKPM = new CCUQUELOCKPM()
@@ -893,7 +894,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         var xmlCFIPACKS = XmlGenericUtil<CFIPACKS>.SerializeObject(myCFIPACKS, true);
                         myCCUQUELOCKQueryService = new CCUQUELOCKQueryService(_AmitalContext);
 
-                            CCUQUELOCKPM myCCUQUELOCK_Packs = myCCUQUELOCKQueryService.GetSingle("CFIFILEM", myCFIPACKS.CFIPACKS_DATA[0].FILE_NO,_MyDeclarationPM.Tenant, false);
+                            CCUQUELOCKPM myCCUQUELOCK_Packs = myCCUQUELOCKQueryService.GetSingle("CFIFILEM", myCFIPACKS.CFIPACKS_DATA[0].FILE_NO, false);
                             if (myCCUQUELOCK_Packs == null)
                             {
                                 var myCCUQUELOCKPM = new CCUQUELOCKPM()
@@ -936,9 +937,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             //LOGTIME = (new DualQueryService(MainContext as AmitalContext)).GetServerDateTime() ?? DateTime.Now,
                         };
                         //myYCULTASKPM.TASKID = CommCounterUtil.GetUnique30(myYCULTASKPM.LOGTIME);
-                        
-                        myYCULTASKPM_Packs.Tenant = _MyDeclarationPM.Tenant;
-                        
+                        if (!isConnectedToUniFreight) 
+                        {
+                            myYCULTASKPM_Packs.Tenant = _MyDeclarationPM.Tenant;
+                        }
                         var myYCULTASKUpdateService = new YCULTASKUpdateService(_AmitalContext);
                         myYCULTASKUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
                         myYCULTASKUpdateService.Update(myYCULTASKPM_Packs, true);
@@ -961,9 +963,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             DONEOPERATION = "D",
                             //GSTRING1 = myYCULTASKPM.TASKID,
                         };
-                        
-                        myGGGQPM_Packs.Tenant = _MyDeclarationPM.Tenant;
-                        
+                        if(!isConnectedToUniFreight)
+                        {
+                            myGGGQPM_Packs.Tenant = _MyDeclarationPM.Tenant;
+                        }
                         var myGGGQUpdateService = new GGGQUpdateService(_AmitalContext);
                         myGGGQUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
                         myGGGQUpdateService.Update(myGGGQPM_Packs, true);
@@ -1066,17 +1069,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 {
                                     seal = cargoItem.SealDetails[0].sealNumber;
                                 }
-                                CustomsSettingQueryService settingService = new CustomsSettingQueryService(_MyDeclarationPM.Tenant);
-                                CustomsSettingPM setting = settingService.GetSettingByTenantN(_MyDeclarationPM.Tenant);
-                                if (setting.IsConnectedToUniFreight)
-                                {
-                                    packingType = GetTranslationP2L("IIGC", "ITBPCKTY", cargoItem.characteristicCode);
-                                }
-                                else
-                                {
-                                    packingType = cargoItem.characteristicCode;
-                                }
-
+                                packingType = GetTranslationP2L("IIGC", "ITBPCKTY", cargoItem.characteristicCode);
 
                                 CFIPACKS_DATA myCFIPACKS_DATA = new CFIPACKS_DATA
                                 {

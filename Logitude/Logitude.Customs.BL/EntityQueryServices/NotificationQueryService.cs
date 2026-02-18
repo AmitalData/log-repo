@@ -126,20 +126,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
             declarationPMsByID.ForEach(x => directions.Add(x.Direction));
 
             var allNotifications = (this.repository as NotificationRepository).GetAll(tenant)
-                .Where(rec =>
-                rec.ObjectTableId == ObjectTableId &&
-                entityIds.Contains(rec.EntityId) &&
-                (
-                directions.Contains("E") ||
-                ((
-                (rec.NotificationDefinitionCode == "5101N" && !string.IsNullOrEmpty(rec.Reference2Number)) ||
-                rec.NotificationDefinitionCode == "5101E" ||
-                rec.NotificationDefinitionCode == "5101D" ||
-                rec.NotificationDefinitionCode == "5101R" ||
-                rec.NotificationDefinitionCode == "5101A"
-                )
-                || rec.ResponseToMessage != null && rec.ResponseToMessage.Trim() != ""
-                ))).ToList();
+                .Where(rec => rec.ObjectTableId == ObjectTableId && entityIds.Contains(rec.EntityId) && (directions.Contains("E") || (rec.ResponseToMessage != null && rec.ResponseToMessage.Trim() != "")))
+                .ToList();
                 var result = allNotifications.ToList().Select(rec => this.GetEntityPM(rec,true , new NotificationKeys() { Id = rec.Id })).ToList();
                 return result;
            

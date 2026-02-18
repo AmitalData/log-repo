@@ -12,7 +12,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
     {
         ICommonDataContext commonDataContext;
 
-
+        public PortTimeZoneRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
 
         public PortTimeZoneRepository(ICommonDataContext context)
         {

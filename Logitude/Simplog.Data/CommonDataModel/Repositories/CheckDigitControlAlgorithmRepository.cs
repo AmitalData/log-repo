@@ -11,7 +11,11 @@ namespace Simplog.Data.CommonDataModel.Repositories
     public class CheckDigitControlAlgorithmRepository: IRepository<CheckDigitControlAlgorithm>
     {
         ICommonDataContext Context;
+        public CheckDigitControlAlgorithmRepository()
+        {
+            Context = new CommonDataContext();
 
+        }
         public CheckDigitControlAlgorithmRepository(ICommonDataContext context)
         {
             Context = context;

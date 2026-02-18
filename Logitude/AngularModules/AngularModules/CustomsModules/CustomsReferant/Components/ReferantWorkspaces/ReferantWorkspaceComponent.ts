@@ -115,7 +115,7 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
             }
             if (AdditionalFilters.length > 0) {
                 listArgs.QuerySection = myResult[0].QueryId;
-            } else {
+            }else{
                 this.applyQueriesCount();
             }
             listArgs.Filters = AdditionalFilters;
@@ -126,8 +126,8 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
 
     constructor(public _declarationReferantDataWebService: DeclarationReferantDataWebService) {
         this.CurrentSession.StartBusyIndicatorLoading();
+        this.setFilters();
         this._entityResourceService.getEntityResourceByTableName("Customs.DeclarationReferantData").subscribe((response: any) => {
-            this.setFilters();
         });
 
     }
@@ -485,7 +485,7 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
                 SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                     .then(cmpRef => {
                         cmpRef.instance.ComponentRef = cmpRef;
-
+               
                         cmpRef.instance.Run(listArgs);
                         cmpRef.instance.BackCompleted.subscribe(($event: any) => {
                             this.UpdateOnReturnFromQuery();
