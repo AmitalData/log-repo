@@ -1,6 +1,8 @@
 ﻿using CustomsWorkerRole.Utils;
 using Logitude.Server.Tools.Utils;
+using Logitude.BL.Helpers;
 using Logitude.Customs.BL.EntityQueryServices;
+using Microsoft.Practices.ObjectBuilder2;
 using NetCommonHelper.Logger;
 using System;
 using System.Collections.Generic;
@@ -70,8 +72,7 @@ namespace CustomsWorkerRole
                     DevLog.Instance.WriteDebug("SendSyncRecoredToUnifreightQueue start run");
 
                     List<SyncRecord> syncRecordsInQueueList = new List<SyncRecord>();
-                    int tenantForSyncRecord = mainTennat == 0 ? SyncRecordQuery.GetTenantOfSyncRecord() : mainTennat;
-                    SyncRecordQuery syncRecordQuery = new SyncRecordQuery(tenantForSyncRecord);
+                    SyncRecordQuery syncRecordQuery = new SyncRecordQuery();
 
                     Lock();
 
@@ -188,9 +189,8 @@ namespace CustomsWorkerRole
         {
             DevLog.Instance.WriteDebug("ReturnToQueue start run");
 
-            int tenantForSyncRecord = mainTennat == 0 ? SyncRecordQuery.GetTenantOfSyncRecord() : mainTennat;
-            SyncRecordQuery syncRecordQuery = new SyncRecordQuery(tenantForSyncRecord);
-            List<SyncRecord> records = syncRecordQuery.GetNeedToReturnToQueue();
+            SyncRecordQuery syncRecordQuery = new SyncRecordQuery();
+            List<SyncRecord> records = new SyncRecordQuery().GetNeedToReturnToQueue();
 
             if (records == null || records.Count == 0)
             {

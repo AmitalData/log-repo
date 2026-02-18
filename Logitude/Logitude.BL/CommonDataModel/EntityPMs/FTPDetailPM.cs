@@ -23,9 +23,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public string CreatedByUserId { get; set; }        
         public string UpdatedByUserId { get; set; }
         public bool UseSFTP { get; set; }
-		public string PrivateKey { get; set; }
-		public string Port { get; set; }
 
-		public ChangeSetOperation ChangeSetOp { get; set; }
+        public ChangeSetOperation ChangeSetOp { get; set; }
     }
 }
