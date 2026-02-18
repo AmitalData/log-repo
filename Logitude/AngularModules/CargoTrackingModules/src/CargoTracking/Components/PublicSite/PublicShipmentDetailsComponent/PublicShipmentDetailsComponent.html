@@ -158,47 +158,6 @@
                             </div>
                         </div>
                   </div>
-                  <div class="steps-panel-body">
-                        <div *ngIf="IsShowEvents" class="events-section">
-                            <div style="display:flex;align-items:center;">
-                                <div class="tag">Events</div>
-                            </div>
-
-                            <div class="no-data-available" *ngIf="Events?.length === 0">
-                                No Events defined for this shipment
-                            </div>
-
-                            <ul *ngIf="Events?.length > 0" class="steps-list">
-                                <li *ngFor="let item of Events | StopLoopPipe: showMoreEvents : 3">
-                                <ng-container>
-                                    <div class="tick"><img src="./assets/images/icons/tick.png" alt=""></div>
-
-                                    <div class="caption" style="width:205px;">
-                                    {{ item.LocalName }}
-                                    <span *ngIf="item.EntityType"> ({{ item.EntityType }})</span>
-                                    </div>
-
-                                    <div class="date" style="width:130px;">
-                                    {{ item.EventDatetime | date:'dd/MM/yyyy, HH:mm' | dateTimeFormat }}
-                                    </div>
-
-                                    <div class="desc"
-                                        *ngIf="item.IsChoose && item.PartnerTypeId === 'CS'"
-                                        style="width: calc(100% - 450px); padding: 0;">
-                                    <custom-label [width]="430">{{ item.Notes }}</custom-label>
-                                    </div>
-                                </ng-container>
-                                </li>
-                                &nbsp;
-                            </ul>
-
-                            <div class="buttonShowMoreDiv" *ngIf="Events?.length > 3">
-                                <button class="buttonShowMore" (click)="showMoreEvents = !showMoreEvents">
-                                {{ showMoreEvents ? 'Show Less' : 'Show More' }}
-                                </button>
-                            </div>
-                        </div> 
-                    </div>
             </div>
             <div class="steps-panel-body" *ngIf="!hasMilestoneWithTenant">
                 <div class="shipment-timeline">
