@@ -39,9 +39,7 @@ export class ExportDeclarationsBatchActionsComponent extends BaseComponent {
                 this.Ready = true;
                 this.Actions = [
                     { code: 'CheckStatus', Name: this.t.transform('Customs.ExportDeclarations.BatchActions.O.CheckStatus') as string },
-                    { code: 'OperationalClose', Name: this.t.transform('Customs.ExportDeclarations.BatchActions.O.CloseOperational') as string },
-                    { code: 'DeclarationRestore', Name: this.t.transform('Customs.Declaration.B.DeclarationRestore') as string },
-
+                    { code: 'OperationalClose', Name: this.t.transform('Customs.ExportDeclarations.BatchActions.O.CloseOperational') as string }
                 ];
                 this.ws = new DeclarationWebService();
             });
