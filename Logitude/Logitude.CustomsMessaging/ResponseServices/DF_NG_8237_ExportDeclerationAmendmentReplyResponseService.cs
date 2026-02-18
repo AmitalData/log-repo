@@ -83,37 +83,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                 if (customResponse.ResponseContentHeader != null && customResponse.ResponseContentHeader.Exception != null && customResponse.ResponseContentHeader.Exception.Count() > 0)
                 {
-                    DeclarationPM declarationPM = null;
                     if (requestParams.IsFromAutoClosing)
                     {
-                        declarationPM = myDeclarationQueryService.GetSingle(requestParams.AppicationId, true, false);
+                        var declarationPM = myDeclarationQueryService.GetSingle(requestParams.AppicationId, false, false);
                         var comments = "";
                         customResponse.ResponseContentHeader.Exception.ForEach(x => comments += x.ExeptionDescription);
                         RaiseEvent(declarationPM, null, "CF2", comments);
-                    }
-                    if (requestParams.IsExportClose)
-                    {
-                        DeclarationError declarationError = new DeclarationError();
-                        declarationError.Entitites = new List<Entity>();
-                        foreach (var item in customResponse.ResponseContentHeader?.Exception)
-                        {
-                            Entity entity = new Entity();
-                            entity.FieldErrors = new List<field>();
-                            entity.FieldErrors.Add(new field()
-                            {
-                                MessageError = item.ExeptionDescription,
-                                Code = "Exception",
-                                ListVersionID = "1"
-
-                            });
-                            declarationError.Entitites.Add(entity);
-                        }
-                        var myDeclaretionErrorXml = XmlGenericUtil<DeclarationError>.SerializeObject(declarationError);
-                        if(declarationPM == null)
-                            declarationPM = myDeclarationQueryService.GetSingle(requestParams.AppicationId, true, false);
-                        declarationPM.ExportClosedErrorXML = myDeclaretionErrorXml;
-                        declarationPM.ChangeSetOp = ChangeSetOperation.Update;
-                        myDeclarationUpdateService.Update(declarationPM, true);
                     }
                     this.MyResponseData.ApplicationID = requestParams.AppicationId;
                     this.MyResponseData.Succeeded = true;
@@ -962,7 +937,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
         {
             try
             {
-            if (declaration.Direction == "E" && requestVIA != SendRequestVIA.WebServiceInteractive)
+            if (declaration.Direction == "E" && declaration.AutoSending && declaration.IsDiamondDeclaration && requestVIA != SendRequestVIA.WebServiceInteractive)
             {
                 logger.Debug("Starting To Handle Customs Errors.");
                 if (customResponse?.Response?.Error == null) return;
@@ -1432,27 +1407,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             new DF_MSG8235_TransshipmentDeclarationAmendmentMessagingService().Send(requestParamsData) :
                             new DF_MSG8235_ExportDeclarationAmendmentMessagingService().Send(requestParamsData);
                     LogitudeSettings.HandleLogMe("ICustomsAutoDecClosing AFTER SEND", false, "sendClosing", stopLogAt);
-					if (responseData.HasException == true)
-					{
-						throw new System.Exception("Ex" + responseData.UserMessage);
-
-					}
-				}
+                }
                 
             }
             catch (System.Exception ex)
             {
                 LogitudeSettings.HandleLogMe("ICustomsAutoDecClosing ex" + ex.Message.ToString(), false, "sendClosing", stopLogAt);
-				NetCommonHelper.Logger.DevLog.Instance.WriteError(
-				   "ICustomsAutoDecClosing failed | " +
-				   "Tenant=" + decPm?.Tenant + " | " +
-				   "DeclarationId=" + decPm?.Id + " | " +
-				   "loggedUserId=" + loggedUserId + " | " +
-				   "Exception=" + ex.Message.ToString()
-				   );
-                throw ex;
 
-			}
+            }
             LogitudeSettings.HandleLogMe("ICustomsAutoDecClosing FINISH SEND", false, "sendClosing", stopLogAt);
 
 
