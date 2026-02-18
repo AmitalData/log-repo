@@ -18,7 +18,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
             commonDataContext = context;
         }
 
-
+        public HybridPartnersPermissionRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
 
         public HybridPartnersPermission GetSingleHybridPartnersPermission(string hybridPartnerId, string allowedByHybridPartnerId)
         {

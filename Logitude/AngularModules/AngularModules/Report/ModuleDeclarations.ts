@@ -98,7 +98,6 @@ import { VDKFilterComponent } from './Components/FilterReportComponent/VDKFilter
 import { UserDefinedReportFilterControl } from './Components/FilterReportComponent/UserDefinedReportFilterControl';
 import { LogitudeCRMReportFilterComponent } from './Components/FiltersComponent/CRM/LogitudeCRMReportFilterComponent';
 import { ExcelReportTemplateComponent } from './Components/ExcelReportTemplateComponent';
-import { NoStimulReportTemplateComponent } from './Components/NoStimulReportTemplateComponent';
 import { SpotRateQuoteReportFilterComponent } from './Components/FiltersComponent/Quote/SpotRate/SpotRateQuoteReportFilterComponent';
 import { ReportVariablesComponent } from './Components/ReportVariablesComponent';
 
@@ -108,7 +107,6 @@ import { CustomsCollateralFilterComponent } from './Components/FiltersComponent/
 import { CertificateOfOriginReportFilterComponent } from './Components/FiltersComponent/ExportCustoms/CertificateOfOriginReportFilterComponent';
 import { CertificateOfOriginCountReportFilterComponent } from './Components/FiltersComponent/ExportCustoms/CertificateOfOriginCountReportFilterComponent';
 import { NewAgingFilterComponent } from './Components/FiltersComponent/Accounting/NewAgingFilterComponent';
-import { NewLedgerTransactionsFilterControl } from './Components/FiltersComponent/Accounting/NewLedgerTransactionsFilterControl';
  
 
 export const Components =
@@ -192,7 +190,6 @@ export const Components =
         UserDefinedReportFilterControl,
          LogitudeCRMReportFilterComponent,
         ExcelReportTemplateComponent,
-        NoStimulReportTemplateComponent,
         PerVendorReportFilterComponent,
         ARinvoiceSequencesReportFilterComponent,
         SpotRateQuoteReportFilterComponent,
@@ -203,7 +200,6 @@ export const Components =
         CertificateOfOriginCountReportFilterComponent,
         MonthlyBalancesReportFilterComponent,
         CustomsCollateralFilterComponent,
-         NewLedgerTransactionsFilterControl
  
     ];
 
@@ -291,7 +287,6 @@ export class ModuleDeclarations {
             case "UserDefinedReportFilterControl": { myResult = UserDefinedReportFilterControl; break; }
             case "LogitudeCRMReportFilterComponent": { myResult = LogitudeCRMReportFilterComponent; break; }
             case "ExcelReportTemplateComponent": { myResult = ExcelReportTemplateComponent; break; }
-            case "NoStimulReportTemplateComponent": { myResult = NoStimulReportTemplateComponent; break; }
             case "PerVendorReportFilterComponent": { myResult = PerVendorReportFilterComponent; break; }
             case "ARinvoiceSequencesReportFilterComponent": { myResult = ARinvoiceSequencesReportFilterComponent; break; }
             case "SpotRateQuoteReportFilterComponent": { myResult = SpotRateQuoteReportFilterComponent; break; }
@@ -302,7 +297,6 @@ export class ModuleDeclarations {
             case "CertificateOfOriginReportFilterComponent": { myResult = CertificateOfOriginReportFilterComponent; break; }
             case "CertificateOfOriginCountReportFilterComponent": { myResult = CertificateOfOriginCountReportFilterComponent; break; }
             case "NewAgingFilterComponent": { myResult = NewAgingFilterComponent; break; }
-            case "NewLedgerTransactionsFilterControl": { myResult = NewLedgerTransactionsFilterControl; break; }
 
         }
 
