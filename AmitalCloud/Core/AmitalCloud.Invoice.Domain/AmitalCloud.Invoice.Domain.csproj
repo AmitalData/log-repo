@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AmitalCloud.Infrastructure.Data\AmitalCloud.Infrastructure.Data.csproj" />
+    <ProjectReference Include="..\AmitalCloud.Infrastructure.Domain\AmitalCloud.Infrastructure.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Logitude.Accounting.Data">
+      <HintPath>..\..\Library\Bin\Logitude.Accounting.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Logitude.Accounting.Def">
+      <HintPath>..\..\Library\Bin\Logitude.Accounting.Def.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ServiceModel.DomainServices.Server">
+      <HintPath>..\..\Library\Bin\System.ServiceModel.DomainServices.Server.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+</Project>
