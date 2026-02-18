@@ -47,7 +47,21 @@ namespace CommunicationWorkerRole.Services
     public class CustomerDebNotificationsTaskService
 	{
 
-      
+        int trackerCounter = 0;
+        string[,] trackerLogs = new string[,] //tracker(Step, DateTime)
+        {
+            {"Prepare report scheduler details", null},
+            {"Get report filters", null},
+            {"Build Report Data Provider and get stimul report", null},
+            {"Export pdf report", null},
+            {"Stored pdf report in Blob", null},
+            {"Send email to reciepents", null},
+            {"", null},
+            {"", null},
+            {"", null},
+
+        };
+
         TaskManagerBase currentTask;
 		ReportSchedulerTaskService reportSchedulerTaskService;
 
@@ -126,7 +140,8 @@ namespace CommunicationWorkerRole.Services
                     }
 				}
 				this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine($"Preparing report scheduler details for GLAccount: {glaccount.EnglishName} ({glaccount.DisplayNumber})"));
-				
+				this.trackerLogs[trackerCounter, 1] = DateTime.Now.ToString();
+				this.trackerCounter += 1;
 
 
 				schedulerDetails.ReportDetails.ReportFilterItems.ForEach(filterItem => {

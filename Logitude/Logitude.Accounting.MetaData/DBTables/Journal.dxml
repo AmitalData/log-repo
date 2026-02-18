@@ -197,13 +197,6 @@
     <Constraints
       Nullable="true" />
   </Column>
-  <Column
-    Name="InvoicesXml"
-    Type="nvarchar"
-    Size="-1">
-    <Constraints
-      Nullable="true" />
-  </Column>
   <Relation
     ForeignKeyColumn="TypeCode"
     ReferencedTable="JournalTypes"

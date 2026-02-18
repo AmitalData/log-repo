@@ -22,10 +22,10 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             currentContext = context;
         }
 
-        public GGGQC GetSingle(string QUEID, int? tenant)
+        public GGGQC GetSingle(string QUEID)
         {
             return (from a in context.GGGQCs
-                    where a.QUEID == QUEID && a.TENANT == tenant
+                    where a.QUEID == QUEID
                     select a).FirstOrDefault();
         }
 
@@ -78,7 +78,7 @@ namespace Unifreight.Data.AmitalModel.Repsitories
         public GGGQC GetSingle(EntityKeyFields entityKeys)
         {
             var keys = entityKeys as GGGQCKeys;
-            return this.GetSingle(keys.QUEID , keys.Tenant);
+            return this.GetSingle(keys.QUEID);
         }
     }
 }
