@@ -10,7 +10,6 @@ import {ARInvoicePMService} from '../../Services/StandardPMs/ARInvoicePMService'
 import {MessageWindow} from '../../../Controls/Windows/MessageWindow';
 import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
 import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
-import { ListComponentArgs } from 'Infrastructure/Args';
 
 @Component({
     
@@ -29,8 +28,6 @@ export class FieldTemplateComponent extends BaseComponent {
     public DisplaySATFields: boolean = false;
     public isRTL: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
-    private ListComponentArgs: ListComponentArgs;
-
     public NumberFieldRightPadding = "20px";
     constructor() {
         super();
@@ -38,8 +35,6 @@ export class FieldTemplateComponent extends BaseComponent {
         if (SessionLocator.SATInterfaceSettings.SATInterfaceCode != "NONE") {
             this.DisplaySATFields = true;
         }
-        this.ListComponentArgs = SessionLocator.SelectedSession?.CurrentListComponent._ListComponentArgs;
-
     }
 
     public IsUnpaidInvoice: boolean = false;
@@ -134,16 +129,12 @@ export class FieldTemplateComponent extends BaseComponent {
                 tableName = "ARPayment";
                 entityId = this.arPaymentId;
             }
-            else if(entityType == "GLAC") {
-                tableName = "GLAccount";
-                entityId = this.Entity.GLAccountId;
-                this.ListComponentArgs.SuppressOnRowSelectedField = true;
-            }
+
             SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run({ EntityId: entityId, ObjectTableName: tableName, });
-                        
+
                     let isEditComponentSaved = false;
                     cmpRef.instance.BackCompleted.subscribe(bk => {
                         if (isEditComponentSaved) {

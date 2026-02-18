@@ -43,7 +43,7 @@ export class SharedLogisticsDocumentPermissiosComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.IsCloud = ObjectsLocator.GlobalSetting?.WorkEnvironment == "cloud";
+        this.IsCloud = ObjectsLocator.GlobalSetting.WorkEnvironment == "cloud";
         this.OnCloseWindowEvent.subscribe(($event: any) => {
             this.SaveButtonClicked();
         });

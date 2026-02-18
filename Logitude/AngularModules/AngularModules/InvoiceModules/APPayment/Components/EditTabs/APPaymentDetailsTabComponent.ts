@@ -83,7 +83,6 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
      public GLAccountsFilterItems: ApiQueryFilters;
     isLoad:boolean = false;
     public OldRate: number = null;
-    public partnerTypeList ="AC,CS,AG,AL,CG,SG,SL,TR,VD,CO,WH"
      constructor(private entityArgs: EntityArgs, private _entityResourceService: EntityResourceService, private cd: ChangeDetectorRef) {
         super();
 
@@ -271,8 +270,6 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
     vendor: CardList;
     VendorChanged(vednor: CardList) {
         this.vendor = vednor;
-        this.FromDate = null;
-        this.ToDate = null;
 
     }
 
@@ -730,15 +727,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
         if (!AppTool.IsNullOrEmpty(this.searchText)) {
             searchValue = AppTool.IsNullOrEmpty(this.searchText.trim()) ? null : this.searchText;
         }
-        if(!AppTool.IsNullOrEmpty(this.DateFilterSelectedValue) && (!AppTool.IsNullOrEmpty(this.FromDate) || !AppTool.IsNullOrEmpty(this.ToDate))){
-            if(this.DateFilterSelectedValue ==="filter_Due"){
-                filters.addAdditionalFilter("DueDate", this.FromDate, this.ToDate, null, "Between", false, false, false, "DateTime"); 
-            }
-            else{
-                filters.SortBy =  "AccountingDate"
-                filters.addAdditionalFilter("AccountingDate", this.FromDate, this.ToDate, null, "Between", false, false, false, "DateTime");
-            }
-        }
+
         filters.addAdditionalFilter("APPaymentInvoicesSearch", searchValue, null, null, "Contains", true, false, false, "string");
         filters.addAdditionalFilter("APPaymentInvoicesConnected", this.EntityPM.Id, null, null, "Contains", true, false, false, "string");
 
@@ -774,15 +763,6 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
         filters.addAdditionalFilter("IsClosed", false, null, null, "Equals", false, false, false, "Boolean");
         if (this.FilterInvoiceByAPPayment)
             filters.addAdditionalFilter("InvoiceCurrencyId", this.EntityPM.PaymentCurrencyId, null, null, "Equals", false, false, false, "string");
-        if(!AppTool.IsNullOrEmpty(this.DateFilterSelectedValue) && (!AppTool.IsNullOrEmpty(this.FromDate) || !AppTool.IsNullOrEmpty(this.ToDate))){
-            if(this.DateFilterSelectedValue ==="filter_Due"){
-                filters.addAdditionalFilter("DueDate", this.FromDate, this.ToDate, null, "Between", false, false, false, "DateTime"); 
-            }
-            else{
-                filters.SortBy =  "AccountingDate"
-                filters.addAdditionalFilter("AccountingDate", this.FromDate, this.ToDate, null, "Between", false, false, false, "DateTime");
-            }
-        }
         var searchValue = null;
         if (!AppTool.IsNullOrEmpty(this.searchText)) {
             searchValue = AppTool.IsNullOrEmpty(this.searchText.trim()) ? null : this.searchText;
@@ -1561,7 +1541,13 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
                 this.UpdateCurrencyRates();
                 this.IsTaxUpdated = true;
                 this.LoadTaxPercentage();
-               
+                // if (value != null && DateTool.GetDateFromDate(value) > DateTool.GetDateFromDate(this.ValueDate) && this.PaymentMethodCode == "BT") {
+                //     var msg = TextCodeTranslator.Translate("APPayment.M.ValueDateBiggerOrEqualRegisterDate");
+                //     this.UIProperties.SetValidity("RegisterDate", this.ObjectTableName, false, msg);
+                // } else {
+                //     this.UIProperties.SetValidity("RegisterDate", this.ObjectTableName, true, '');
+                //     this.UIProperties.SetValidity("ValueDate", this.ObjectTableName, true, '');
+                // }
             }
         }
     }
@@ -1574,7 +1560,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
     }
     set AccountingPaymentMethodId(value: string) {
         if (this.EntityPM != null) {
-            if (this.EntityPM.AccountingPaymentMethodId != value) {                
+            if (this.EntityPM.AccountingPaymentMethodId != value) {
                 this.EntityPM.AccountingPaymentMethodId = value;
                 this.RefreshPaymentMethodFields();
             }
@@ -1656,18 +1642,10 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
             }
         }
 
-        if (this.PaymentMethodCode == "CA" || this.PaymentMethodCode == "FS" || this.PaymentMethodCode == "MS") {
+        if (this.PaymentMethodCode == "CA" || this.PaymentMethodCode == "FS") {
             this.ValueDate = DateTool.GetCurrentDateAsUtc();
         }
-        if(this.PaymentMethodCode === "MS"){
-            this.partnerTypeList = "VD,CS";
-            this.VendorId = null;
-            
-        }
-            
-        else{
-            this.partnerTypeList = "AC,CS,AG,AL,CG,SG,SL,TR,VD,CO,WH"
-        }
+
         this.SetUIProperties_Cheque();
         this.SetUIProperties_CreditCard();
 
@@ -1743,7 +1721,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
     }
     get VisibleIfCash() {
         var result = false;
-        if (AppTool.IsNullOrEmpty(this.PaymentMethodCode) || this.PaymentMethodCode == "CA" || this.PaymentMethodCode == "FS" || this.PaymentMethodCode == "MS") {
+        if (AppTool.IsNullOrEmpty(this.PaymentMethodCode) || this.PaymentMethodCode == "CA" || this.PaymentMethodCode == "FS") {
             result = true;
         }
         return result;
@@ -1751,7 +1729,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
     get CollapsedIfCash() {
         var result = false;
         if (!AppTool.IsNullOrEmpty(this.PaymentMethodCode)) {
-            if (this.PaymentMethodCode == "CA" || this.PaymentMethodCode == "FS" || this.PaymentMethodCode == "MS") {
+            if (this.PaymentMethodCode == "CA" || this.PaymentMethodCode == "FS") {
                 result = false;
             }
 
@@ -1820,7 +1798,14 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
                 else {
                     this.UIProperties.SetRequired("ValueDate", this.ObjectTableName, true);
                 }
-              
+                
+                // if (value != null && DateTool.GetDateFromDate(value) < DateTool.GetDateFromDate(this.RegisterDate) && this.PaymentMethodCode == "BT") {
+                //     var msg = TextCodeTranslator.Translate("APPayment.M.ValueDateBiggerOrEqualRegisterDate");
+                //     this.UIProperties.SetValidity("ValueDate", this.ObjectTableName, false, msg);
+                // } else {
+                //     this.UIProperties.SetValidity("ValueDate", this.ObjectTableName, true, '');
+                //     this.UIProperties.SetValidity("RegisterDate", this.ObjectTableName, true, '');
+                // }
             }
         }
     }
@@ -1962,25 +1947,6 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
             }
         }
     }
-    private toDate : Date = null;
-    get ToDate() { return this.toDate; }
-    set ToDate(value: Date) {
-        if (this.toDate != value) {
-            this.toDate = value;
-            if (!AppTool.IsNullOrEmpty(this.EntityPM.VendorId))
-                this.LoadData();
-        }
-    }
-    private fromDate : Date = null;
-    get FromDate() { return this.fromDate; }
-    set FromDate(value: Date) {
-        if (this.fromDate != value) {
-            this.fromDate = value;
-            if (!AppTool.IsNullOrEmpty(this.EntityPM.VendorId))
-                this.LoadData();
-        }
-    }
-    
     loadBankAccounts(filters: ApiQueryFilters) {
         var myService: BankAccountListService = new BankAccountListService();
         filters.addAdditionalFilter("Inactive", false, null, null, "Equals", false, false, false, "Boolean");
@@ -2096,7 +2062,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
             return; // 👈 ignore internal updates
         }
 
-        this.isRateManual = true; // ✝︝ user typed
+        this.isRateManual = true; // ✍️ user typed
 
         // Store the old exchange rate before updating
         const oldRate = this.OldRate;
@@ -2148,7 +2114,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
                         /*
                             The LogTextBox always emits ValueChanged:
 
-                                * when the user types ✝︝
+                                * when the user types ✍️
 
                                 * when your code assigns a value 🤖
 
@@ -2240,15 +2206,6 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
         }
 
         this.RequestedCommandCode = null;
-    }
-   
-    DateFilterSelectedValue: string = 'filter_Accounting';
-    DateFilterItemClicked(filter: string) {
-        if(this.DateFilterSelectedValue != filter){
-            this.DateFilterSelectedValue = filter;
-            if (!AppTool.IsNullOrEmpty(this.EntityPM.VendorId) && this.EntityPM.StatusCode != "VD")
-                this.LoadPaymentInvoices_IsMatched();
-        }
     }
 }
 export class APPaymentInvoiceArgs extends BaseComponent {
@@ -2912,5 +2869,4 @@ export class APPaymentInvoiceArgs extends BaseComponent {
             this.UpdatePayment();
         }
     }
-    
 }
