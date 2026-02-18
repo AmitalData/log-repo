@@ -13,7 +13,12 @@ namespace Simplog.Data.CommonDataModel.Repositories
     {
         ICommonDataContext commonDataContext;
 
-
+        public DocumentsFilingRepository()
+        {
+            commonDataContext = new CommonDataContext();
+            //(context as System.Data.Entity.Infrastructure.IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
+        
+        }
 
         public DocumentsFilingRepository(int tenant)
         {
@@ -58,23 +63,6 @@ namespace Simplog.Data.CommonDataModel.Repositories
                                  where a.Id == id && a.Tenant == tenant
                                  select a).FirstOrDefault();
             return d;
-        }
-        public IList<FilingDocumentInfoDto> GetSecurityIdsByFilingIds(IEnumerable<string> filingIds, int tenant)
-        {
-            if (filingIds == null || !filingIds.Any())
-                return new List<FilingDocumentInfoDto>();
-
-            return (from f in context.DocumentsFilings
-                    join d in context.Documents
-                         on f.DocumentId equals d.Id            
-                    where f.Tenant == tenant && filingIds.Contains(f.Id)
-                    select new FilingDocumentInfoDto
-                    {
-                        Id = f.Id,
-                        SecurityId = f.SecurityId,
-                        Extension = d.Extension                  
-                    })
-              .ToList();
         }
 
         public List<DocumentsFiling> GetDocumentsFilingsByEntityId1(string entityId, int tenant)
@@ -456,12 +444,6 @@ namespace Simplog.Data.CommonDataModel.Repositories
         public string Id { get; internal set; }
         public string DocumentTypeId { get; internal set; }
         public string DocumentId { get; internal set; }
-    }
-    public sealed class FilingDocumentInfoDto
-    {
-        public string Id { get; set; }
-        public string SecurityId { get; set; }
-        public string Extension { get; set; }
     }
 
 }

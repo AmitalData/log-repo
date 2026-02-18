@@ -39,11 +39,12 @@ export class ReportService {
         }),catchError(ServiceHelper.HandleServiceError));
     }
     
-    GetPrepareSendReport(type: string, fileName: string,  tenant: number, displayName: string) {
+    GetPrepareSendReport(type: string, fileName: string,  tenant: number) {
 
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken())
-        return this._http.get(this._apiUrl + "/GetPrepareSendReport" + '?type=' + type + '&fileName=' + fileName  +  '&tenant=' + tenant + '&displayName=' + (displayName || ""),ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        return this._http.get(this._apiUrl + "/GetPrepareSendReport" + '?type=' + type + '&fileName=' + fileName  +  '&tenant=' + tenant,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+
             var pmresponse: ServiceResponse;
             pmresponse = new ServiceResponse();
             pmresponse.Result = response;
@@ -136,43 +137,24 @@ export class ReportService {
         }
         );
     }
-    GetExcel(reportKey:string,  reportName:string): Promise<any> {
+    GetExcel(filter: ReportFliter): Promise<any> {
         const authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         authHeader.append('Content-Type', 'application/json');
-    
-         reportKey = encodeURIComponent(reportKey);
-         reportName = encodeURIComponent(reportName);
-        
-        return defer(() => {
-            return this._http
-                .get(this._apiUrl +
-                    '/GetExcel' +
-                    '?reportKey=' +
-                    reportKey +
-                    '&reportName=' +
-                    reportName, {
-                    headers: ServiceHelper.GetHttpHeaders().headers,
-                    responseType: 'blob',
-                })
-                .pipe(
-                    map((response) => {
-                        return response;
-                    }),
-                    catchError(ServiceHelper.HandleServiceError)
-                );
-        }).toPromise() as Promise<any>;
-    }
 
-    GetPowerBIReports() {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken())
-        return this._http.get(this._apiUrl + '/GetPowerBIReports',ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-            var pmresponse: ServiceResponse;
-            pmresponse = new ServiceResponse();
-            pmresponse.Result = response;
-            return pmresponse;
-        }),catchError(ServiceHelper.HandleServiceError));
+        const filterString = encodeURIComponent(JSON.stringify(filter));
+
+        return defer(() => {
+            return this._http.get(`${this._apiUrl}/GetExcel?filter=${filterString}`, {
+                headers: ServiceHelper.GetHttpHeaders().headers,
+                responseType: 'blob'
+            }).pipe(
+                map(response => {
+                    return response;
+                }),
+                catchError(ServiceHelper.HandleServiceError)
+            );
+        }).toPromise() as Promise<any>;
     }
 
 }

@@ -73,7 +73,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                 return;
             }
-            FeatureQuery featureQuery = new FeatureQuery(requestParams.Tenant);
+            FeatureQuery featureQuery = new FeatureQuery();
             bool bFromMehes = false;
             var features = featureQuery.GetAllowedFeaturesForLoggedUser(requestParams.LoggingUserId, requestParams.Tenant);
 
