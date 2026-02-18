@@ -252,8 +252,11 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                 throw new ApplicationException("Invoice Date is required");
             }
 
-
-            if (!(this.aPInvoicePM.AmountInInvoiceCurrency == null || this.aPInvoicePM.AmountInInvoiceCurrency == 0))
+            if (this.aPInvoicePM.AmountInInvoiceCurrency == null || this.aPInvoicePM.AmountInInvoiceCurrency == 0)
+            {
+                throw new ApplicationException("Invoice Amount is required");
+            }
+            else
             {
                 this.aPInvoicePM.InvoiceExpectedAmount = this.aPInvoicePM.AmountInInvoiceCurrency;
             }

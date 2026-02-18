@@ -16,7 +16,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         MetodoPagoRepository repository;
 
-
+        public MetodoPagoQuery()
+        {
+            repository = new MetodoPagoRepository();
+        }
 
         public MetodoPagoQuery(int tenant)
         {

@@ -132,12 +132,6 @@ namespace LogitudeBatchServicesManager
         {
             string path = System.AppDomain.CurrentDomain.BaseDirectory;
             string ConfigFilePath = path + "BatchManagerConfig.xml";
-
-            if (!File.Exists(ConfigFilePath))
-            {
-                throw new FileNotFoundException("Batch Manager Configuration file not found at path: " + ConfigFilePath);
-            }
-
             string xmlString = File.ReadAllText(ConfigFilePath);
             BatchManagerConfigurations batchManagerConfigurations = xmlString.ParseXML<BatchManagerConfigurations>(); 
             return batchManagerConfigurations;
