@@ -351,10 +351,9 @@ export class ReportsPreviewComponent implements AfterViewInit {
 
 
 
-    GenerateReport(filter: ReportFliter, isInteractive: boolean ,IsFromPagination = false) {
+    GenerateReport(filter: ReportFliter, isInteractive: boolean) {
 
         if (!this.ShowBusyIndicator) {
-            this.IsFromPagination = IsFromPagination;
             this.ShowBusyIndicator = true;
             this.ReportFliter = this.FillReportFilter(filter, isInteractive);
             if (this.IsUsedExportToExel || this.ReportFliter.ReportCode == "EXDE")
@@ -755,8 +754,6 @@ export class ReportsPreviewComponent implements AfterViewInit {
 
     ShowBusyIndicator: boolean = false;
     BusyIndicatorText: string = "";
-    IsFromPagination: boolean = false;
-
     WidthBusyIndicator: number;
     StartBusyIndicator(message: string = "Generating...", width: number = 200) {
 

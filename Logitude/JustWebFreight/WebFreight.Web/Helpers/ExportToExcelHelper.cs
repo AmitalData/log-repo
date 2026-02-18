@@ -317,7 +317,7 @@ namespace WebFreight.Web.Helpers
 						stop = true;
 					}
 				}
-                if (stop == false)
+				if (stop == false)
 				{
 					MethodsInfo = getMethodsInfo("WebFreight.Web.AccountingModel.DomainServices.TaxReportDomainService", query);
 					if (MethodsInfo != null)
@@ -328,18 +328,7 @@ namespace WebFreight.Web.Helpers
 						stop = true;
 					}
 				}
-                if (stop == false)
-                {
-                    MethodsInfo = getMethodsInfo("WebFreight.Web.AccountingModel.DomainServices.OpenFormatReportDomainService", query);
-                    if (MethodsInfo != null)
-                    {
-                        getListMethodInfo = MethodsInfo.ListMethodInfo;
-                        getCountMethodInfo = MethodsInfo.CountMethodInfo;
-                        context = MethodsInfo.context;
-                        stop = true;
-                    }
-                }
-                if (stop == false)
+				if (stop == false)
 				{
 					MethodsInfo = getMethodsInfo("WebFreight.Web.AccountingModel.DomainServices.ARPaymentChequeDomainService", query);
 					if (MethodsInfo != null)

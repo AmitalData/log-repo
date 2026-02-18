@@ -17,8 +17,6 @@ import { ReportsTemplatePMExtendedService } from '../../Common/Services/Extended
 import { MessageWindow } from '../../Controls/Windows/MessageWindow';
 declare var querySelection, StringToBase64, resultToUnitArray: any;
 import { AppTool } from '../../Infrastructure/Tools';
-import { CopyFromTenant0ExtendedListService } from 'Accounting/Services/ExtendedLists/CopyFromTenant0ExtendedListService';
-
 @Component({
 
     moduleId: './Report/Components/',
@@ -42,16 +40,11 @@ export class NewReportsTemplateComponent implements OnInit {
     IsFromScheduler: boolean = false;
     UseStimul: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
-    public _copyFromTenant0ExtendedListService: CopyFromTenant0ExtendedListService;
-    public FromTenantZero = "FromTenantZero";
-    private ReportTableName = "Report Templates";
-
     constructor() {
         this.reportsTemplatePMService = new ReportsTemplatePMService();
         this.NewReportTypeRadio += this.CurrentSession.GetNewId("RadioButton");
         this.reportsTemplatePMExtendedService = new ReportsTemplatePMExtendedService();
         this._documentTypeTemplatePMExtendedService = new DocumentTypeTemplatePMExtendedService();
-        this._copyFromTenant0ExtendedListService = new CopyFromTenant0ExtendedListService();
         this.validator = new ClassLevelValidator();
     }
     IsVisibile: boolean = false;
@@ -141,19 +134,6 @@ export class NewReportsTemplateComponent implements OnInit {
     }
 
     SaveButtonClicked() { 
-
-        if (this.NewReportTypeRadioChoice == this.FromTenantZero) {
-            this.CurrentSession.StartBusyIndicatorSaving();
-            this._copyFromTenant0ExtendedListService.copyTableFromTenant0(this.ReportTableName, this.DataViewModel.EntityPM.Code).subscribe((res: any) => {
-                var result: ServiceResponse = res;
-                if (!result.HasError) {
-                    this.CurrentSession.CloseCurrentWindowEmit("changed");
-                }
-                this.CurrentSession.StopBusyIndicator();
-            });
-            return;
-        }
-
         this.ValidationErrorsList = [];
         var errorsArray = this.validator.Validate("ReportsTemplate", this.ReportsTemplatePM);
         if (errorsArray.length > 0) {
@@ -215,8 +195,13 @@ export class NewReportsTemplateComponent implements OnInit {
             }
 
             else this.ComplateSave();
+
+
         }
+
+
     }
+
 
     ComplateSave() {
         if (SessionLocator.Tenant == 0) {

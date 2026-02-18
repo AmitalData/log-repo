@@ -174,12 +174,9 @@ export class StimulsoftViewerComponent implements OnInit {
                 this.ReportsTemplatesLists = templates.filter(t => t.TemplateType === "R");
             }
 
-            this.StimulsoftArgData.TemplateDescription = selected.Description;
-            console.log('matching template found for ProcessMenuTemplateId:', processMenuTemplateId);
             this.SelectedReportsTemplateList = selected ?? null;
         }
         else {
-            console.log('No matching template found for ProcessMenuTemplateId:');
             this.ReportsTemplatesLists = templates.filter(t => t.TemplateType === "R");
             this.SelectedReportsTemplateList = this.ReportsTemplatesLists.find(t => t.Id === this.StimulsoftArgData.DefaultTemplateId) ?? null;
         }
@@ -798,9 +795,7 @@ export class StimulsoftViewerComponent implements OnInit {
 
         //  var fileName: string = this.StimulsoftArgData.ReportKey + "@" + (this.StimulsoftArgData.ReportsPreviewComponent ? this.StimulsoftArgData.ReportsPreviewComponent.Report.Name:"");
         var fileName: string = this.StimulsoftArgData.ReportKey + "@" + this.StimulsoftArgData.TemplateDescription;
-        var displayName = this.StimulsoftArgData.ReportsPreviewComponent ? this.StimulsoftArgData.ReportsPreviewComponent.Title : "Report";
-
-        this.reportService.GetPrepareSendReport(type, fileName, SessionLocator.Tenant, displayName).subscribe((res: any) => {
+        this.reportService.GetPrepareSendReport(type, fileName, SessionLocator.Tenant).subscribe((res: any) => {
             this.CurrentSession.StopBusyIndicator();
 
             var pmResponse: ServiceResponse = res;
@@ -944,7 +939,7 @@ ResetEditableField(field: EditableFieldPosition){
         if (this.StimulsoftArgData.ReportsPreviewComponent) {
             this.StimulsoftArgData.ReportFliter.ProcessType = processName;
             this.StimulsoftArgData.ReportFliter.NumberOfPage = this.StimulsoftArgData.NumberOfPage;
-            this.StimulsoftArgData.ReportsPreviewComponent.GenerateReport(this.StimulsoftArgData.ReportFliter, true ,true);
+            this.StimulsoftArgData.ReportsPreviewComponent.GenerateReport(this.StimulsoftArgData.ReportFliter, true);
         }
         else {
             if (this.StimulsoftArgData.EditDocumentComponent) {
