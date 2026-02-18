@@ -328,38 +328,6 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated //AccountingPerio
             }
         }
 
-        public HttpResponseMessage PostJournalAsMichpal(JournalPM entityPM)
-        {
-              
-                try
-                {
-                    using (TransactionScope scope = TransactionFactory.GetTransaction())
-                    {
-                        string logKey = PerformanceLogger.LogCurrentTime();
-                        string token = HttpContext.Current.Request.Headers["Token"];
-                        AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                        SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                        SecurityUtility.CheckContactFeature("Journal", "NEW", authToken.Tenant);
-                        SecurityUtility.AuthenticationOnEntityTenant("Journal", entityPM.Tenant, authToken.Tenant);
-
-                        IAccountingContext MyContext = AccountingContext.GetContext(entityPM.Tenant);
-                        JournalUpdateService service = new JournalUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
-                        entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;                       
-                        service.JournalAsMichpal(entityPM);         
-                        service.Update(entityPM, true);
-                        scope.Complete();
-                        PerformanceLogger.AddServerExecutionTimeHeader(logKey);
-
-                        return Request.CreateResponse(HttpStatusCode.OK, entityPM);
-                    }
-                }
-
-                catch (Exception ex)
-                {
-                    return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-                }
-        }
-
         [HttpPut]
         public HttpResponseMessage PutCreateInterestTransactions(string date)
         {
