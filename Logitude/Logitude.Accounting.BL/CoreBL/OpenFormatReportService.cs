@@ -130,9 +130,9 @@ namespace Logitude.Accounting.BL.CoreBL
             List<CurrencyPM> currencies = currencyQuery.GetCurrenciesByTenantPM(tenant).ToList(); ;
 
             ARInvoiceQuery aRInvoiceQuery = new ARInvoiceQuery(tenant);
-            List<GLAccountCurrency> gLAccountCurrencies = new List<GLAccountCurrency>();
+            List<GLAccountCurrencyPM> gLAccountCurrencies = new List<GLAccountCurrencyPM>();
             GLAccountCurrencyQueryService gLAccountCurrencyQueryService = new GLAccountCurrencyQueryService(tenant);
-            gLAccountCurrencies = gLAccountCurrencyQueryService.GetCurrenciesAccountsByTenant(tenant);
+            gLAccountCurrencies = gLAccountCurrencyQueryService.GetTenantCurrenciesAccount(tenant);
 
             ComputingPartnerTranslationHelper computingPartnerTranslationHelper = new ComputingPartnerTranslationHelper(tenant);
             List<ComputingPartnerTranslationPM> computingPartnerTranslations = new List<ComputingPartnerTranslationPM>();
@@ -3301,9 +3301,13 @@ namespace Logitude.Accounting.BL.CoreBL
 
 
 
-            byte[] bytearray = Encoding.UTF8.GetBytes(file);       
+
+            byte[] bytearray = Encoding.GetEncoding("Windows-1255").GetBytes(file);
 
             document.FileData = bytearray;
+
+
+
             docService.Create(document, document.FileData, contact.Id);
 
 
@@ -3814,7 +3818,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 FileName = "INI",
             };
 
-            byte[] bytearray = Encoding.UTF8.GetBytes(file);
+            byte[] bytearray = Encoding.GetEncoding("Windows-1255").GetBytes(file);
             document.FileData = bytearray;
             docService.Create(document, document.FileData, contact.Id);
 

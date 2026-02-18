@@ -11,13 +11,15 @@ using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
+using Microsoft.IdentityModel.Tokens;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; 
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.InvoiceModel.Repositories;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.Repositories;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -157,10 +159,25 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                         this.billToAccountingCard = accountingSystemHelper.GetGenericCreditAccount(vendor.Id, aPInvoicePM.InvoiceCurrencyId, tenant, true);
                     }
 
-                    if (string.IsNullOrEmpty(this.aPInvoicePM.VATNumber))
+
+                    if (FeatureToggleHelper.HasFeatureToggle("VPI", tenant)) // Take VAT number from the invoice, not from the vendor  
                     {
-                        this.aPInvoicePM.VATNumber = vendor.VatNumber;
+                        // VAT number should be taken from the vendor only when it is not present on the invoice
+                        if (string.IsNullOrWhiteSpace(this.aPInvoicePM.VATNumber) && !string.IsNullOrEmpty(vendor.VatNumber))
+                            this.aPInvoicePM.VATNumber = vendor.VatNumber;
                     }
+
+                    else // Don't take VAT number from the invoice, take it from the vendor always
+                    {
+                        if (!string.IsNullOrEmpty(vendor.VatNumber))
+                        {
+                            this.aPInvoicePM.VATNumber = vendor.VatNumber;
+                        }                        
+                        
+
+
+                    }
+
 
                     if (string.IsNullOrEmpty(this.aPInvoicePM.InvoiceCurrencyId))
                     {
@@ -171,6 +188,10 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                     {
                         defaultPaymentTermId = vendor.PaymentTermId;
                     }
+                }
+                else if(!FeatureToggleHelper.HasFeatureToggle("VPI", tenant))// A vendor is needed to take VAT Number from
+                {
+                    throw new ApplicationException($"No Vendor Found with Id {this.aPInvoicePM.VendorId}");
                 }
             }
 
@@ -252,8 +273,11 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                 throw new ApplicationException("Invoice Date is required");
             }
 
-
-            if (!(this.aPInvoicePM.AmountInInvoiceCurrency == null || this.aPInvoicePM.AmountInInvoiceCurrency == 0))
+            if (this.aPInvoicePM.AmountInInvoiceCurrency == null || this.aPInvoicePM.AmountInInvoiceCurrency == 0)
+            {
+                throw new ApplicationException("Invoice Amount is required");
+            }
+            else
             {
                 this.aPInvoicePM.InvoiceExpectedAmount = this.aPInvoicePM.AmountInInvoiceCurrency;
             }

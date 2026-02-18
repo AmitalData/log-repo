@@ -102,7 +102,6 @@
     <Compile Include="RequestParams\CLAIM_2340_ClaimRequestRequestParams.Shared.cs" />
     <Compile Include="RequestParams\ContinuousRequestOnClaimFileRequestParams.Shared.cs" />
     <Compile Include="RequestParams\CourierBOLQueryRequestParams.Shared.cs" />
-    <Compile Include="RequestParams\GetAttachmentRequestParams.cs" />
     <Compile Include="RequestParams\CustomItemMekachRequestParams.Shared.cs" />
     <Compile Include="RequestParams\CustomItemRuleRequestParams.Shared.cs" />
     <Compile Include="RequestParams\GetClassifGuidanceDetailsRequestParams.Shared.cs" />
@@ -177,7 +176,6 @@
     <Compile Include="RequestParams\VE_MSG010_VendorInsertUpdateDeleteMessageRequestParams.Shared.cs" />
     <Compile Include="RequestParams\VE_MSG013_VendorAddCommunicationDeviceRequestParams.Shared.cs" />
     <Compile Include="RequestParams\VE_MSG051_VendorSearchByCustomsAgentRequestParams.Shared.cs" />
-    <Compile Include="ResponseData\GetAttachmentResponseData.Shared.cs" />
     <Compile Include="ResponseData\CustomItemMekachResponseData.Shared.cs" />
     <Compile Include="ResponseData\GetClassifGuidanceDetailsResponseData.Shared.cs" />
     <Compile Include="ResponseData\CustomItemRuleResponseData.Shared .cs" />

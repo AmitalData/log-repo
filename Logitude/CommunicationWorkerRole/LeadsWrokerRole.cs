@@ -364,13 +364,10 @@ namespace CommunicationWorkerRole
                         country = countryRepository.GetSingleCountryByCode("--", crmTenant);
 
                     }
-                    Dictionary<string, string> counterAdditionalParameters = new Dictionary<string, string>() { { "[B]", "" }, { "[BranchName]", "" } };
 
-                    counterAdditionalParameters["[B]"] = "CS";
-                    counterAdditionalParameters["[BranchName]"] = "CS";
                     CustomerPM customerPM = new CustomerPM()
                     {
-                        Code = TableCounter.DoesCounterDefinitionExist("CADC",crmTenant, "CS") ? TableCounter.GetNumber(crmTenant, "CADC", "CS", null, counterAdditionalParameters, true): CodeCounter.GetNumber("Customer", crmTenant).ToString(),
+                        Code = CodeCounter.GetNumber("Customer", crmTenant).ToString(),
                         PartnerTypeId = "PO",
                         Tenant = crmTenant,
                         EnglishName = TruncateLongString(lead.CompanyName, 70),
