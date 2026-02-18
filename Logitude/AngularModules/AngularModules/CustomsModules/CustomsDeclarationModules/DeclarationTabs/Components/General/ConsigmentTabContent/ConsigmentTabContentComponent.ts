@@ -29,6 +29,7 @@ import { MessageWindow } from '../../../../../../Controls/Windows/MessageWindow'
 import { LogitudeWindow } from '../../../../../../Controls/Windows/LogitudeWindow';
 import { WindowArgs } from '../../../../../../Infrastructure/DataContracts/WindowArgs';
 import { CustomsRequiredFieldExtendedListService } from '../../../../../../Customs/Services/ExtendedLists/CustomsRequiredFieldExtendedListService';
+import { Dictionary } from '../../../../../../Infrastructure/GenericTypes/Dictionary';
 import { DeclarationCourierStatusList } from '../../../../../../Customs/EntityLists/DeclarationCourierStatusList';
 import { DeclarationCourierStatusListService } from '../../../../../../Customs/Services/StandardLists/DeclarationCourierStatusListService';
 import { EntityResourceService } from '../../../../../../Infrastructure/Services/EntityResourceService';
