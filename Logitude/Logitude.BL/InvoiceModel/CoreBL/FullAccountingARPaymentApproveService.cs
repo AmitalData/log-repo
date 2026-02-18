@@ -1,49 +1,42 @@
-﻿using Logitude.Accounting.Data;
-using Logitude.Accounting.Data.EntityListQueryServices;
-using Logitude.Accounting.Data.EntityLists;
-using Logitude.Accounting.Data.EntityMapping;
-using Logitude.Accounting.Data.EntityPOCOs;
-using Logitude.Accounting.Data.Enums;
-using Logitude.Accounting.Data.Repositories;
-using Logitude.Accounting.Def.BLExt;
-using Logitude.Accounting.Def.EntityPMs;
-using Logitude.Accounting.Def.EntityQueryServicesExt;
-using Logitude.Accounting.Def.EntityUpdateServicesExt;
-using Logitude.BL.CommonDataModel.EntityPMs;
-using Logitude.BL.CommonDataModel.EntityQueries;
-using Logitude.BL.DataContracts;
-using Logitude.BL.Helpers;
-using Logitude.BL.InfrastructureModel;
-using Logitude.BL.InvoiceModel.CloseTables;
-using Logitude.BL.InvoiceModel.EntityOtherServices;
-using Logitude.BL.InvoiceModel.EntityPMs;
-using Logitude.BL.InvoiceModel.EntityQueries;
-using Logitude.BL.InvoiceModel.Tools.DataMapping;
-using Logitude.BL.InvoiceModel.Tools.TraceEvents;
-using Logitude.BL.InvoiceModel.Tools.Validating;
-using Logitude.BL.Resolvers;
-using Logitude.BL.Security;
-using Logitude.Server.Tools;
-using Logitude.Server.Tools.Counters;
-using Logitude.Server.Tools.Helpers;
-using Microsoft.Practices.Unity;
-using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; 
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.Helpers;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; 
 using Simplog.Data.InvoiceModel;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel.Repositories;
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Logitude.BL.DataContracts;
+using Logitude.BL.Helpers;
+using Logitude.BL.InfrastructureModel;
+using Logitude.BL.InvoiceModel.EntityPMs;
+using Logitude.BL.InvoiceModel.Tools.DataMapping;
+using Logitude.BL.InvoiceModel.Tools.TraceEvents;
+using Logitude.BL.InvoiceModel.Tools.Validating;
+using Logitude.Server.Tools.Counters;
 using Simplog.Server.Infrastructure;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.Metrics;
-using System.Linq;
-using AccountingEntityValues = Logitude.BL.InvoiceModel.CloseTables.AccountingEntityValues;
-
+using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.Security;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Logitude.Server.Tools.Helpers;
+using Logitude.Accounting.Data.Repositories;
+using Logitude.Accounting.Data;
+using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Accounting.Def.EntityUpdateServicesExt;
+using Logitude.Accounting.Def.EntityPMs;
+using Logitude.Server.Tools;
+using Logitude.Accounting.Def.EntityQueryServicesExt;
+using Microsoft.Practices.Unity;
+using Simplog.Data.Helpers;
+using Logitude.BL.InvoiceModel.EntityQueries;
+using Simplog.Data.CommonDataModel;
+using Logitude.BL.InvoiceModel.EntityOtherServices;
+using Logitude.Accounting.Data.EntityListQueryServices;
+using Logitude.Accounting.Data.EntityLists;
+using Logitude.Accounting.Def.BLExt;
+using Logitude.BL.Resolvers;
+using Logitude.BL.InvoiceModel.CloseTables;
 
 namespace Logitude.BL.InvoiceModel.CoreBL
 {
@@ -584,112 +577,14 @@ $"[InterestTransactionPM] MapInterestTransactionPMFromBankTransferARPaymentPM  A
             int counter = 0;
 
             CreateCreditLines(ref counter);
-            CreateDebitLines(ref counter);
+            CreateDebitLines(counter);
             CheckAbiltiyOfCreatingAutomaticReconcileForJournal();
-            if (FeatureToggleHelper.HasFeatureToggle("RFR", paymentPM.Tenant))
-                ProcessInvoiceDifference(ref counter);
 
             AutoExternalReconcileBankTransferPageLines();
 
             AddAccountingEntitieJournal(journal, AccountingEntityJournalActions.ARPaymentApprove);
             SubmitJournal();
             return journal;
-        }
-
-        private void ProcessInvoiceDifference(ref int counter)
-        {
-            if (paymentPM.PaymentInvoices.Any())
-            {
-                var invoicesLocal = Math.Round(paymentPM.PaymentInvoices.Sum(inv => inv.LocalAmount ?? 0), 2);
-                var invoicesForeign = Math.Round(paymentPM.PaymentInvoices.Sum(inv => inv.ForeignAmount ?? 0), 2);
-                if (paymentPM.AmountInPaymentCurrency == invoicesForeign)
-                {
-                    var localDiff = paymentPM.AmountInLocalCurrency - invoicesLocal;
-                    if (localDiff != 0) 
-                    {
-                        TenantQuery tenantQuery = new TenantQuery(paymentPM.Tenant);
-                        var tenantCurrencyId = tenantQuery.GetLocalCurrencyFromTenant(paymentPM.Tenant);
-                        if (paymentPM.PaymentCurrencyId != tenantCurrencyId && !string.IsNullOrEmpty(paymentPM.BillToId))
-                        {
-                            GLAccountPM account = GetGLAccount(paymentPM.BillToId, paymentPM.Tenant);
-
-                            if (account == null && account.ReconcileMethodCode == ReconcileMethodCodes.ForeignCurrency)
-                            {
-                                decimal diff = (decimal)localDiff;
-                                CreateDiffLines(-diff, account.Id, account.ControlAccountId, ref counter);
-                            }
-                            
-
-                        }
-                    }
-                }
-
-            }
-        }
-
-        private void CreateDiffLines(decimal diff, string paymentAccountId, string controlAccountId, ref int counter)
-        {
-            IFullAccountingSettingQueryServiceExt fullAccountingSettingQuery = ContainerAccessor.Container.Resolve(typeof(IFullAccountingSettingQueryServiceExt), "FullAccountingSettingQueryServiceExt", new ParameterOverride("", 1)) as IFullAccountingSettingQueryServiceExt;
-            var settings = fullAccountingSettingQuery.GetFullAccountingSettingByTenant(paymentPM.Tenant);
-            var diffAccountId = settings.ExchangeRateDiffGLAccountId;
-            if (String.IsNullOrEmpty(diffAccountId))
-            {
-                throw new ApplicationException("Exchange Rate Diff GLA. is not set");
-            }
-
-
-            JournalLinePM debitLine = new JournalLinePM
-            {
-                Tenant = paymentPM.Tenant,
-                ChangeSetOp = ChangeSetOperation.Insert,
-                Line = ++counter,
-                JournalId = journal.Id,
-                ActionCode = "2",//- Debit
-                ActionTypeCodeEnum = JournalActionTypeEnum.Debit,
-                ActionTypeCode = JournalActionTypes.Debit,
-                CreditAccountId = diffAccountId,
-                CreditControlAccountId = null,
-                DebitAccountId = paymentAccountId,
-                DebitControlAccountId = controlAccountId,
-                DocumentDate = paymentPM.RegisterDate.Value,
-                AccountingDate = paymentPM.RegisterDate.Value,
-                LocalAmount = diff,
-                CurrencyId = paymentPM.PaymentCurrencyId,
-                ForeignAmount = 0,
-                ExchangeRate = (decimal)paymentPM.PaymentCurrencyExchangeRate,
-                Reference1 = paymentPM.PaymentNo,
-                Notes = TranslateTextsClass.Translate("Revaluations.Q.Revaluation", 0, true),
-                DueDate = GetDueDate(),
-                
-            };
-            journal.JournalLines.Add(debitLine);
-
-
-            JournalLinePM creditLine = new JournalLinePM
-            {
-                Tenant = tenant,
-                ChangeSetOp = ChangeSetOperation.Insert,
-                Line = ++counter,
-                JournalId = journal.Id,
-                ActionCode = "1",//- Credit
-                ActionTypeCodeEnum = JournalActionTypeEnum.Credit,
-                ActionTypeCode = JournalActionTypes.Credit,
-                CreditAccountId = diffAccountId,
-                CreditControlAccountId = null,
-                DebitAccountId = paymentAccountId,
-                DebitControlAccountId = controlAccountId,
-                DocumentDate = paymentPM.RegisterDate.Value,
-                AccountingDate = paymentPM.RegisterDate.Value,
-                LocalAmount = diff,
-                CurrencyId = paymentPM.PaymentCurrencyId,
-                ForeignAmount = 0,
-                ExchangeRate = (decimal)paymentPM.PaymentCurrencyExchangeRate,
-                Reference1 = paymentPM.PaymentNo,
-                Notes = TranslateTextsClass.Translate("Revaluations.Q.Revaluation", 0, true),
-                DueDate = GetDueDate(),
-                
-            };
-            journal.JournalLines.Add(creditLine);
         }
 
         private void AddAccountingEntitieJournal(JournalPM entityPM, string action, string ChildEntityId = null)
@@ -828,7 +723,7 @@ $"[InterestTransactionPM] MapInterestTransactionPMFromBankTransferARPaymentPM  A
             return glaAccountId;
         }
 
-        private int CreateDebitLinesForEachCheque(JournalPM journal, ref int counter)
+        private int CreateDebitLinesForEachCheque(JournalPM journal, int counter)
         {
             if (paymentPM.ARPaymentChequeReplicas.Count > 0)
                 CreateJournalLineForEachReplica(ref counter, "2");
@@ -837,7 +732,7 @@ $"[InterestTransactionPM] MapInterestTransactionPMFromBankTransferARPaymentPM  A
             return counter;
         }
 
-        private int CreateDebitLinesForEachBankTransfer(JournalPM journal, ref int counter)
+        private int CreateDebitLinesForEachBankTransfer(JournalPM journal, int counter)
         {
             if (paymentPM.ARPaymentBankTranfers != null && paymentPM.ARPaymentBankTranfers.Count > 0)
                 CreateJournalLineForEachBankTransfer(ref counter, "2");
@@ -931,18 +826,18 @@ $"[InterestTransactionPM] MapInterestTransactionPMFromBankTransferARPaymentPM  A
             journal.JournalLines.Add(creditLine);
 
         }
-        private int CreateDebitLines(ref int counter)
+        private int CreateDebitLines(int counter)
         {
             if (paymentPM.AccountingPaymentMethodCode == "CH")
-                counter = CreateDebitLinesForEachCheque(journal, ref counter);
+                counter = CreateDebitLinesForEachCheque(journal, counter);
             else if (paymentPM.AccountingPaymentMethodCode == "BT" && paymentPM.ARPaymentBankTranfers != null)
-                counter = CreateDebitLinesForEachBankTransfer(journal, ref counter);
+                counter = CreateDebitLinesForEachBankTransfer(journal, counter);
             else
-                counter = CreateDebitLineForNonChequePayment(journal, ref counter);
+                counter = CreateDebitLineForNonChequePayment(journal, counter);
             return counter;
         }
 
-        private int CreateDebitLineForNonChequePayment(JournalPM journal, ref int counter)
+        private int CreateDebitLineForNonChequePayment(JournalPM journal, int counter)
         {
             var debitLine = new JournalLinePM
             {

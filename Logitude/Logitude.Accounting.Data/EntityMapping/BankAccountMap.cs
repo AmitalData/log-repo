@@ -89,8 +89,6 @@ namespace Logitude.Accounting.Data.EntityMapping
             this.Property(t => t.ChequeCounterSeriesID).HasColumnName("ChequeCounterSeriesID");
 
             this.Property(t => t.FactoringBank).HasColumnName("FactoringBank");
-
-            this.Property(t => t.MasavGLAcccountId).HasColumnName("MasavGLAcccountId").HasMaxLength(15).IsUnicode(false);
         }
     }
 }
