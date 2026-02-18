@@ -70,8 +70,8 @@ export class NewUserComponent extends BaseComponent implements OnInit {
 
         this.IsCurrentUserFreelancer = SessionLocator.LoggedUserPM.IsFreelancer;
 
-        //if (ObjectsLocator.GlobalSetting?.WorkEnvironment == "customs") {
-        if (ObjectsLocator != null && ObjectsLocator.GlobalSetting != null && ObjectsLocator.GlobalSetting?.WorkEnvironment == "customs") {
+        //if (ObjectsLocator.GlobalSetting.WorkEnvironment == "customs") {
+        if (ObjectsLocator != null && ObjectsLocator.GlobalSetting != null && ObjectsLocator.GlobalSetting.WorkEnvironment == "customs") {
             if (this.IsCurrentUserFreelancer) {
                 //this.NewUserPM.IsFreelancer = true;
                 //this.IsFreelancerVisible = false;

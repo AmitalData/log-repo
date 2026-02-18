@@ -23,7 +23,6 @@ import { MaintenanceComponent } from 'Infrastructure/Components/Maintenance/Main
 
 
 export class AmitalGatewayUtil {
-
     private static _Instance: AmitalGatewayUtil;
     public static get Instance(): AmitalGatewayUtil {
         this._Instance = this._Instance || new AmitalGatewayUtil();
@@ -106,7 +105,7 @@ export class AmitalGatewayUtil {
             "CFIHMAIN.LogitudeTask",
             "ShowDeclarationCertificatesByGroupsUnifreightCallBack",
             unifreightMessageM,
-            " םישורים נדרשים");
+            " אישורים נדרשים");
     }
 
     public ShowDocumentsSharing(
@@ -732,7 +731,7 @@ export class AmitalGatewayUtil {
                     
                     if (unifreightMessage.UnifreightEntity == "BFIFILE" /*|| myEditComponent.EntityPM?.Direction == "E"*/)
                     {
-                        BackButtonLabel = TextCodeTranslator.Translate("Customs.Declaration.O.exportFileHeader");
+                        BackButtonLabel = "תיק יצוא"
                     }
                     if(!AmitalGatewayUtil.Instance.AmitalBrowserInUse){
                         
@@ -1150,7 +1149,7 @@ export class AmitalGatewayUtil {
                 "CFIHMAIN.LogitudeTask",
                 AmitalGatewayUtil.Instance.DeclarationMessaging.RaiseInstructionReturnCanIContinueMessage,
                 unifreightMessageM,
-                "AMI-49615 - הפעלת Instructions מתוך הצהרת יבום");
+                "AMI-49615 - הפעלת Instructions מתוך הצהרת יבוא");
         }
 
         public static RaiseCheckInsuranseReturnIsNeededAmount(
@@ -1172,7 +1171,7 @@ export class AmitalGatewayUtil {
                 "CFIHMAIN.LogitudeTask",
                 "RaiseCheckInsuranseReturnIsNeededAmount",
                 unifreightMessageM,
-                "AMI-49619 - ביטוח שער עולמי - פיתוח ממשק לבדיקה הםם נדרש לתיק ביטוח");
+                "AMI-49619 - ביטוח שער עולמי - פיתוח ממשק לבדיקה האם נדרש לתיק ביטוח");
         }
 
         public static RaiseOpenNewBrowser(url: string) {
@@ -1307,7 +1306,7 @@ export class AmitalGatewayUtil {
                 "CFIHMAIN.LogitudeTask",
                 "ShowDeclarationCertificatesByGroupsUnifreightCallBack",
                 unifreightMessageM,
-                " םישורים נדרשים");
+                " אישורים נדרשים");
         }
 
         public ShowDocumentsSharingUnifreightCallBack(

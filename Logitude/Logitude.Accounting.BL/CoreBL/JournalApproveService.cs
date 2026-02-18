@@ -43,7 +43,6 @@ using System.Text;
 using System.Threading;
 using System.Transactions;
 using System.Web;
-using static Simplog.Server.Infrastructure.DbContextBase;
 using Logitude.Accounting.BL.CoreBL.Reports.Aging;
 using Simplog.Data.CommonDataModel.EntityPOCOs; 
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
@@ -1214,10 +1213,10 @@ namespace Logitude.Accounting.BL.CoreBL
                         }
                         catch (Exception eee2)
                         {
-							LogMessagingUtil.Instance.AppendLine($"ReturnToQueue journalId= {journalId.ToString()} | Exception: {eee2.Message}");
-                            NetCommonHelper.Logger.DevLog.Instance.WriteFatal(eee2, journalId.ToString());
-
-                            Logitude.SystemLogs.ExceptionHandler.HandleException(eee2, DateTime.Now, 0, "", "", "JournalApproveService.ReturnToQueue()" + eee2.Message, null);
+ 							LogMessagingUtil.Instance.AppendLine($"ReturnToQueue journalId= {journalId.ToString()} | Exception: {eee2.Message}");
+ 
+							NetCommonHelper.Logger.DevLog.Instance.WriteFatal(eee2,journalId.ToString());
+                             Logitude.SystemLogs.ExceptionHandler.HandleException(eee2, DateTime.Now, 0, "", "", "JournalApproveService.ReturnToQueue()" + eee2.Message, null);
 
                             Thread.Sleep(100);
 
@@ -1380,7 +1379,6 @@ namespace Logitude.Accounting.BL.CoreBL
 
                     myDbQueueService.Complete();
                     isSubmitApprove = true;
-                    MatchPaymentCommandTransactions(qpJournalId,tenant);
                 }
                 else
                 {
@@ -1805,18 +1803,6 @@ namespace Logitude.Accounting.BL.CoreBL
             return tGLAccountAgingDataType;
         }
 
-        private static void MatchPaymentCommandTransactions(string journalId, int tenant)
-        {
-
-            try
-            {
-                         
-            }
-            catch (Exception ex)
-            {
-                NetCommonHelper.Logger.DevLog.Instance.WriteError(ex.Message + " ,"+journalId);
-            }
-        }
         public class JournalApproveWorker
         {
             private static DateTime _NextDueDoneAt = DateTime.MinValue;
