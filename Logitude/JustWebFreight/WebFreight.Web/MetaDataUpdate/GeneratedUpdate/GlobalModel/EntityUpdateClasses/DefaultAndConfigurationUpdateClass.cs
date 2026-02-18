@@ -24,7 +24,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 {
    public class DefaultAndConfigurationUpdateClass
    {  		
-		public const string HashString = "d29a9bab8dbb7dd8619a143feac22e63";
+		public const string HashString = "53882c3332c87e139bd73d8da1add0ff";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -47,7 +47,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			      				    HasShortTitle =  false,
 			      				    HasFiltersMenu =  false,
 			      				    IsEditable =  false,
-			      				    IsNewWizard =  true,
+			      				    IsNewWizard =  false,
 			      				    KeyPropertyPath =  "Id",
 			      				    AutoCompleteSearchWindow =  true,
 			      				    IsClosed =  false,
@@ -68,7 +68,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
-			      				    NewWizardControlName =  "./InfrastructureModules/InfrastructureOthers/Components/DefaultAndConfiguration/DefaultAndConfigurationComponent",
 			      				    DefaultText =  "Default And Configuration",
 			      				    Code =  "52aa",
 			      				    Name =  " Query Group",

@@ -1,5 +1,5 @@
 ﻿using Logitude.BL.GlobalModel.EntityPMs;
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 
 namespace Logitude.BL.GlobalModel.Tools.DataMapping
 {

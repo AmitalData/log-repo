@@ -1,9 +1,13 @@
-﻿using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Simplog.Global.Data.GlobalModel.Repositories;
+﻿using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Caching;
+using System.Text;
+using System.Threading.Tasks;
+using Simplog.Global.Data.GlobalModel.Repositories;
 
 namespace Logitude.BL.Helpers
 {

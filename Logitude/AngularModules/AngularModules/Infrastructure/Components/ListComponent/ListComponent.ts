@@ -1245,7 +1245,7 @@ export class ListComponent implements OnInit, AfterViewInit {
             return false;
         if (FeatureLocator.IsFeatureGrantedByUniqeCode("General.Customization.DeploymentPackage"))
             return false;
-        if ((SessionLocator.LoggedUserPM.IsCustomerCare || SessionLocator.LoggedUserPM.IsDistributor || ObjectsLocator.GlobalSetting?.DeploymentStage == "Dev"))
+        if ((SessionLocator.LoggedUserPM.IsCustomerCare || SessionLocator.LoggedUserPM.IsDistributor || ObjectsLocator.GlobalSetting.DeploymentStage == "Dev"))
             return true;
         return false;
     }
@@ -1309,7 +1309,7 @@ export class ListComponent implements OnInit, AfterViewInit {
         }
 
         this.CheckIfQueriesConatinDefaultPerspectiveQuery();
-        let forceExistQuery = (ObjectsLocator.GlobalSetting?.WorkEnvironment == "customs");
+        let forceExistQuery = (ObjectsLocator.GlobalSetting.WorkEnvironment == "customs");
 
         if (/*forceExistQuery &&*/  this.SelectedQuery != null) {
             let existSelectedQuery: boolean = false;
@@ -1442,7 +1442,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     ClearMySearch: boolean = false;
     QueryValueChanged(Args) {
         this.AdvanceFilters = new ApiQueryFilters();
-        if (ObjectsLocator.GlobalSetting?.WorkEnvironment != "customs") {
+        if (ObjectsLocator.GlobalSetting.WorkEnvironment != "customs") {
             if (Args.IgnoreSearchFields != true) {
                 this.searchFields = "";
             }
@@ -3567,14 +3567,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                         logWindow.Height = 200;
                         break;
                     }
-                case "MasavInterface":
 
-                    {
-
-                        logWindow.Width = 400;
-                        logWindow.Height = 300;
-                        break;
-                    }
                 case "TaxDeductionReport":
 
                     {
@@ -3686,9 +3679,6 @@ export class ListComponent implements OnInit, AfterViewInit {
                     logWindow.Height = 300;
                 }
             }
-            else if (this.ObjectTableName == "AdditionalCurrencyRate") {
-                str = TextCodeTranslator.Translate("AdditionalCurrencyRate.O.NewAdditionalCurrencyRate");
-            }
             else if (this.ObjectTableName == "InterestReport") {
                 str = TextCodeTranslator.Translate('InterestReport.O.NewReport');
             }
@@ -3699,6 +3689,9 @@ export class ListComponent implements OnInit, AfterViewInit {
                 str = TextCodeTranslator.Translate('OpenFormatReport.O.NewReport');
             }
 
+            else if (this.ObjectTableName == "AdditionalCurrencyRate") {
+                str = TextCodeTranslator.Translate("AdditionalCurrencyRate.O.NewAdditionalCurrencyRate");
+            }
             if (!AppTool.IsNullOrEmpty(this.NewButtonLable)) {
                 str = this.NewButtonLable;
             }
@@ -4308,7 +4301,7 @@ export class ListComponent implements OnInit, AfterViewInit {
 
     IsUseCardSearchMechanism() {
         var result: boolean = false;
-        if (this.ObjectTableName == "Customer" && ObjectsLocator.GlobalSetting?.WorkEnvironment != "customs") {
+        if (this.ObjectTableName == "Customer" && ObjectsLocator.GlobalSetting.WorkEnvironment != "customs") {
             result = true;
         }
         return result;

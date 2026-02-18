@@ -4,6 +4,7 @@ using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using System.Collections.Generic;
 using System.Linq;
+using Logitude.BL.InfrastructureModel.EntityLists;
 
 namespace Logitude.BL.GlobalModel.EntityQueries
 {
@@ -30,17 +31,17 @@ namespace Logitude.BL.GlobalModel.EntityQueries
         {
             DefaultAndConfigurationKeyPM result =
             (from a in repository.context.DefaultAndConfigurationKeys
-             where a.SetKey == setkey && a.Tenant == tenant
-             select new DefaultAndConfigurationKeyPM()
-             {
-                 Tenant = a.Tenant,
-                 CreateDate = a.CreateDate,
-                 SetType1 = a.SetType1,
-                 SetKey = a.SetKey,
-                 ShortDescription = a.ShortDescription,
-                 FullDesctiption = a.FullDesctiption,
-                 SetType2 = a.SetType2,
-             }).FirstOrDefault();
+            where a.SetKey == setkey && a.Tenant == tenant
+            select new DefaultAndConfigurationKeyPM()
+            { 
+               Tenant = a.Tenant,
+               CreateDate = a.CreateDate,
+               SetType1 = a.SetType1,
+               SetKey = a.SetKey,
+               ShortDescription = a.ShortDescription,
+               FullDesctiption = a.FullDesctiption,
+               SetType2 = a.SetType2,
+            }).FirstOrDefault();
 
             return result;
         }

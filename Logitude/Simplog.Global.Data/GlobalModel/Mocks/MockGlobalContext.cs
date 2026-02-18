@@ -299,6 +299,13 @@ namespace WebFreight.Web.GlobalModelDB
                 throw new NotImplementedException();
             }
         }
+        public IDbSet<AuthenticationToken> AuthenticationTokens
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
 
         public IDbSet<DefaultAndConfiguration> DefaultAndConfigurations
         {
@@ -315,7 +322,5 @@ namespace WebFreight.Web.GlobalModelDB
                 throw new NotImplementedException();
             }
         }
-
-        public IDbSet<AuthenticationToken> AuthenticationTokens => throw new NotImplementedException();
     }
 }

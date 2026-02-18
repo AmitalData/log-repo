@@ -153,8 +153,8 @@ namespace Logitude.Global.OracleMigration.GlobalModel
         public IDbSet<WebhookKeys> WebhookKeys { get; set; }
         public IDbSet<BluesnapContractType> BluesnapContractTypes { get; set; }
         public IDbSet<BluesnapTransaction> BluesnapTransactions { get; set; }
-        public IDbSet<DefaultAndConfiguration> DefaultAndConfigurations { get; set; }
-        public IDbSet<DefaultAndConfigurationKey> DefaultAndConfigurationKeys { get; set; }
+        public IDbSet<WebhookKeys> DefaultAndConfiguration { get; set; }
+        public IDbSet<WebhookKeys> DefaultAndConfigurationKey { get; set; }
         public IDbSet<AuthenticationToken> AuthenticationTokens { get; set; }
     }
 }

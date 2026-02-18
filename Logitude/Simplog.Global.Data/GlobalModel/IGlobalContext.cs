@@ -1,5 +1,6 @@
 using System.Data.Entity;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using System.Data.Entity.Core.Objects;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 
 namespace Simplog.Global.Data.GlobalModel

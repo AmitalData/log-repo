@@ -3,6 +3,7 @@ using Logitude.BL.GlobalModel.Tools.DataMapping;
 using Simplog.Global.Data.GlobalModel;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
+using Simplog.Data.InfrastructureModel.Repositories;
 
 namespace Logitude.BL.GlobalModel.Tools.EntityService
 {
