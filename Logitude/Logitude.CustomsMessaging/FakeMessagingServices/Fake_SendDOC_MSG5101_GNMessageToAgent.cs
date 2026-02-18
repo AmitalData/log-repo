@@ -5,7 +5,6 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using UnifreightIIG.Common.MessageLib.Docs;
@@ -18,8 +17,6 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
         public int msgCode;
         public string entityIdKey1;
         public int entityType;
-        public string senderName;
-        public int? responseToMessage;
         internal DOC_NG_5101_GNMessageToAgent GetFakeCustomsResponse(GenericRequestParams requestParamsData)
         {
             dynamic data = JObject.Parse(requestParamsData.TestCase.Param1);
@@ -49,12 +46,7 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
             msg.RelatedEntity = GetRelatedEntity(dec);
             msg.msgCode = msgCode;
             msg.msgString = msgString;
-            msg.SenderName = senderName;
-            if(responseToMessage.HasValue)
-            {
-                msg.responseToMessageSpecified = true;
-                msg.responseToMessage = responseToMessage.Value;
-            }
+            msg.SenderName = "Tester";
             return msg;
         }
         private ConnectedEntity GetRelatedEntity(DeclarationPM dec)
@@ -84,17 +76,6 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
             if (data.msgString != null && data.msgString != "")
             {
                 msgString = data.msgString;
-            }
-            if (data.senderName != null && data.senderName.ToString() != "")
-            {
-                senderName = data.senderName;
-            }
-
-            if (data.responseToMessage != null && data.responseToMessage.ToString() != "")
-            {
-                int tmp;
-                if (int.TryParse(Convert.ToString(data.responseToMessage), out tmp))
-                    responseToMessage = tmp;
             }
         }
         private DeclarationPM GetDec(GenericRequestParams requestParamsData)
