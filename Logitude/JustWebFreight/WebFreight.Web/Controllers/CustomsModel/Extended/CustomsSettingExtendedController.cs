@@ -128,10 +128,6 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
                 DefaultValueQueryService defaultValueQueryService = new DefaultValueQueryService(tenant);
                 string insurancePercent = defaultValueQueryService.GetDefault("ISRAEL", "CIM_INSUR_PERC", "NON", customerCode, tenant);
-                if (insurancePercent == null)
-                {
-                     insurancePercent = defaultValueQueryService.GetDefault("ISRAEL", "CGG_INSUR_PERC", "NON", "NON", tenant);
-                }
                 //return insurancePercent;
                 var resMode = new { insurancePercent = insurancePercent };
 
