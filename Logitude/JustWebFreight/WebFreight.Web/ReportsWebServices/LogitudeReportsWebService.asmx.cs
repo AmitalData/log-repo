@@ -10051,20 +10051,6 @@ namespace WebFreight.Web.ReportsWebServices
             return transactionReportLoader.LoadFromXML(xmlFilters);
         }
 
-        public NewLedgerTransactionDataProvider GetNewLedgerTransactionsDataProvider(byte[] xmlFilters, int tenant)
-        {
-            NewLedgerTransactionReportLoader transactionReportLoader = new NewLedgerTransactionReportLoader(tenant);
-
-            return transactionReportLoader.LoadFromXML(xmlFilters);
-        }
-        public byte[] LoadNewLedgerTransactionDataProvider(byte[] xmlFilters, ReportFliter reportFliter, int tenant)
-        {
-            NewLedgerTransactionDataProvider dataprovider = GetNewLedgerTransactionsDataProvider(xmlFilters, tenant);
-            byte[] bytearray = new ReportMemoryStreamService().Convert(dataprovider, typeof(NewLedgerTransactionDataProvider), tenant);
-            ReportManipulationDataService reportManipulationDataService = new ReportManipulationDataService(dataprovider, reportFliter);
-            bytearray = reportManipulationDataService.IsDataProviderHaveListWithValues() ? bytearray : null;
-            return bytearray;
-        }
         T GetQueryFilterItemValue<T>(QueryFilterItem filterItem)
         {
             if (filterItem?.FieldValue != null)

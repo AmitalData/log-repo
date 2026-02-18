@@ -66,7 +66,7 @@ namespace Logitude.BL.InvoiceModel.EntityLists
         public string VendorBankAccountNumber { get; set; }
         public string VendorSwift { get; set; }
         public string VendorIBANNumber { get; set; }
-        public string VendorPartnerTypeId { get; set; }
+
         public string Field1 { get; set; }
         public string Field2 { get; set; }
         public string Field3 { get; set; }
@@ -82,9 +82,5 @@ namespace Logitude.BL.InvoiceModel.EntityLists
         public string ExternalPaymentNotes { get; set; }
         public string VendorCode { get; set; }
         public string ConnectedInvoicesNumbers { get; set; }
-        public string MasavInterfaceId { get; set; }
-        public string VendorBankBranch { get; set; }
-        public string VendorBankAccount { get; set; }
-        public string VendorBankCode { get; set; }
     }
 }
