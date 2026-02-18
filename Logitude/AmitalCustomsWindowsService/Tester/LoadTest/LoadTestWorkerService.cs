@@ -46,7 +46,7 @@ namespace AmitalCustomsWindowsService.Tester.LoadTest
 
         }
 
-        public async Task EnshureThreadWorkingAsync(bool forceStartAgain)
+        public void EnshureThreadWorking(bool forceStartAgain)
         {
 
             Program.ThreadStartStaticIsMustB4UsingTheDB();
@@ -71,7 +71,9 @@ namespace AmitalCustomsWindowsService.Tester.LoadTest
             {
                 q = q.Take(iTotalRetrieve + 1000);
             }
-            LoadTestWR.CommunicationLogList104921 = await q.ToListAsync();
+            var t = q.ToListAsync();
+            t.Wait();
+            LoadTestWR.CommunicationLogList104921 = t.Result;
 
             
             var sw = Stopwatch.StartNew();
@@ -155,7 +157,7 @@ namespace AmitalCustomsWindowsService.Tester.LoadTest
         {
             base.OnStop();
         }
-        public override async void WorkOnce()
+        public override void WorkOnce()
         {
             //throw new NotImplementedException();
            NetCommonHelper.Logger.DevLog.Instance.WriteDebug("LoadTestWR");
@@ -177,7 +179,9 @@ namespace AmitalCustomsWindowsService.Tester.LoadTest
                 var q = s.GetQMultiCommunicationLog(CommunicationLogId, 1);
                 if (Async)
                 {
-                    var CommunicationLog = await q.ToListAsync();
+                    var t = q.ToListAsync();
+                    t.Wait();
+                    var CommunicationLog = t.Result;
 
                 }
                 else

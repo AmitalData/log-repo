@@ -203,7 +203,7 @@ namespace Logitude.Customs.BL.Messaging.Customs
 
         private int GetTenantBy(string customsAgentId)
         {
-            var customsSettingQueryService = new CustomsSettingQueryService(SignQueue.CurrentTenant);
+            var customsSettingQueryService = new CustomsSettingQueryService(0);
             CustomsSettingPM customsSettingPM = customsSettingQueryService.GetSettingPMByCustomsAgentId(customsAgentId);
             return customsSettingPM?.Tenant ?? 0;
         }
@@ -387,7 +387,7 @@ namespace Logitude.Customs.BL.Messaging.Customs
                         }
                     }
 
-                    var customsSettingQueryService = new CustomsSettingQueryService(SignQueue.CurrentTenant);
+                    var customsSettingQueryService = new CustomsSettingQueryService(0);
                     var listSetting = customsSettingQueryService.GetAll()
                         .Where(rec => !string.IsNullOrWhiteSpace(rec.CustomsAgentId) && !string.IsNullOrWhiteSpace(rec.IIGServiceAddress))
                         .Where(rec => rec.Tenant > 0)
@@ -539,7 +539,7 @@ namespace Logitude.Customs.BL.Messaging.Customs
         {
             var mySignCertificateClass = SignCertificateClass.Get(CurrentSignCertificate);
 
-            var userRep = new Simplog.Data.CommonDataModel.Repositories.UserRepository(SignQueue.CurrentTenant);
+            var userRep = new Simplog.Data.CommonDataModel.Repositories.UserRepository(0);
             var intLIst = userRep.GetPersonTenantList(mySignCertificateClass.PersonId);
             var tenantCommaDelimitedList = "";
             if (intLIst.Count < 1) return tenantCommaDelimitedList;
@@ -548,14 +548,14 @@ namespace Logitude.Customs.BL.Messaging.Customs
         }
         public static string GetCustomsAgentIdFromTenant(int tenant)
         {
-            var customsSettingQueryService = new CustomsSettingQueryService(SignQueue.CurrentTenant);
-            var pm = customsSettingQueryService.GetSettingByTenantN(tenant, false);
+            var customsSettingQueryService = new CustomsSettingQueryService(0);
+            var pm = customsSettingQueryService.GetSettingByTenantN(tenant);
             return pm.CustomsAgentId;
         }
         public static string GetCompanyTenant(string CurrentSignCertificate)
         {
             var mySignCertificateClass = SignCertificateClass.Get(CurrentSignCertificate);
-            var customsSettingQueryService = new CustomsSettingQueryService(SignQueue.CurrentTenant);
+            var customsSettingQueryService = new CustomsSettingQueryService(0);
             var pm = customsSettingQueryService.GetSettingPMByCustomsAgentId(mySignCertificateClass.CustomsAgentId);
             if (pm == null || String.IsNullOrWhiteSpace(pm.CustomsAgentId))
             {
@@ -712,8 +712,6 @@ namespace Logitude.Customs.BL.Messaging.Customs
         public static string CustomRequestSign { get { return "CustomRequestSign"; } }
 
         public static string CustomRequestSignPersonal { get { return "CustomRequestSignPersonal"; } }
-        
-        public static int CurrentTenant = SettingUtil.GetCurrentTenant();
     }
 
 

@@ -230,14 +230,18 @@ export class InvoicesRoutingsFilterComponent extends BaseComponent  {
         }
     }
 
-    RunReport(isInteractive: boolean) {
+
+    RunReport(isloading: boolean) {
+        
+        
         if (this.ValidateSelectedFilters()) {
+            
             var reportFliter = new ReportFliter();
             reportFliter.NumberOfPage = 1;
             reportFliter.ProcessType = "GenerateReport";
             reportFliter.QueryFilterItemLists = this.GetQueryFilterItems();
-            reportFliter.IsInteractive = isInteractive;
             this.RunReportEvent.emit(reportFliter);
+
         }
     }
     

@@ -32,12 +32,11 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="DocumentId"
-    OldNames="CommunicationId"
+    Name="CommunicationId"
     Type="varchar"
     Size="15">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="Step"
@@ -60,20 +59,11 @@
     <Constraints
       Nullable="true" />
   </Column>
-  <Column
-    Name="ExternalID"
-    Type="nvarchar"
-    Size="100">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="ARInvoiceId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
+  <Relation
+    ForeignKeyColumn="CommunicationId"
+    ReferencedTable="CommunicationLogs"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
   <Relation
     ForeignKeyColumn="Step"
     ReferencedTable="InvoiceApiSteps"
@@ -83,10 +73,5 @@
     ForeignKeyColumn="StatusCode"
     ReferencedTable="InvoiceApiStatuses"
     ReferencedColumn="StatusCode"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="ARInvoiceId"
-    ReferencedTable="ARInvoices"
-    ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
 </Table>

@@ -145,7 +145,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         public static bool Isinteractive(int tenant, string RequestComminicationId)
         {
             SendRequestVIA? curSendRequestVIA = null;
-            var communicationLogStepQuery = new CommunicationLogStepQuery(tenant);
+            var communicationLogStepQuery = new CommunicationLogStepQuery();
             var requestParamXml = communicationLogStepQuery.GetStartRequestParams(tenant, RequestComminicationId);
             if (!string.IsNullOrWhiteSpace(requestParamXml))
             {
@@ -324,9 +324,9 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 {
                     throw new Exception("Unable to cancel request. Current customsDocumentPM==null ");
                 }
-                if (customsDocumentPM.DocumentStatusCode != "7" && !string.IsNullOrEmpty(customsDocumentPM.DocumentStatusCode))
+                if (customsDocumentPM.DocumentStatusCode != "7")
                 {
-                    throw new Exception("Unable to cancel request. Current customsDocumentPM.DocumentStatusCode!=7 && !=null");
+                    throw new Exception("Unable to cancel request. Current customsDocumentPM.DocumentStatusCode!=7 ");
                 }
                 var featureDocumentStatusCodeShouldNOTChange = ConfigurationManager.AppSettings["20180624.DocumentStatusCodeShouldNOTChange"] == "1";
 

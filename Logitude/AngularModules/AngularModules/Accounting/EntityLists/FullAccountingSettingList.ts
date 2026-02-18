@@ -66,9 +66,6 @@ export class FullAccountingSettingList {
 	TenantForConfirmationNumberApi: string;
 	InvoiceNotes: string;
 	InterestInvoiceNotes: string;
-	PrepaidExpensesGLAccountId: string;
-	MasavBankId: string;
-	MasavCode: string;
 	
 }
  

@@ -16,7 +16,11 @@ namespace Simplog.Data.CommonDataModel.Repositories
         {
             commonDataContext = context;
         }
+        public CardExternalAccountsByProductRepository()
+        {
+            commonDataContext = new CommonDataContext();
 
+        }
         public CardExternalAccountsByProductRepository(int tenant)
         {
             commonDataContext = CommonDataContext.GetContext(tenant);
