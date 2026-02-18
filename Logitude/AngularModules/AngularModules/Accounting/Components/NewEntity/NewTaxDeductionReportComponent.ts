@@ -9,7 +9,6 @@ import { Validator } from '../../../Infrastructure/Validators/Validator';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
 import { AppTool } from '../../../Infrastructure/Tools';
-import { MessageWindow } from 'Controls/Windows/MessageWindow';
 
 @Component({
     selector: 'NewTaxDeductionReportComponent',
@@ -34,11 +33,6 @@ export class NewTaxDeductionReportComponent extends BaseComponent {
             SessionLocator.LoggedUserPM.Email;
         this.BuildMonthList();
     }
-    public readonly TimePeriod = {
-        Year: "Year",
-        Periodic: "Periodic",
-        Month: "Month",
-    } as const;
 
     public MonthsList: CodeNameClass[];
     BuildMonthList() {
@@ -56,7 +50,6 @@ export class NewTaxDeductionReportComponent extends BaseComponent {
         this.MonthsList.push(new CodeNameClass('10', 'October'));
         this.MonthsList.push(new CodeNameClass('11', 'November'));
         this.MonthsList.push(new CodeNameClass('12', 'December'));
-        this.SelectedFromMonth = this.MonthsList[0];
         this.SelectedMonth = this.MonthsList[0];
     }
     private selectedMonth: CodeNameClass;
@@ -85,39 +78,33 @@ export class NewTaxDeductionReportComponent extends BaseComponent {
         }
     }
 
-    private selectedFromMonth: CodeNameClass;
-    get SelectedFromMonth() {
-        return this.selectedFromMonth;
-    }
-    set SelectedFromMonth(value: CodeNameClass) {
-        if (this.selectedFromMonth != value) {
-            this.selectedFromMonth = value;
-            if (value != null) {
-                this.entityPM.FromMonth = new Date();
-                this.entityPM.FromMonth.setDate(1);
-                this.entityPM.FromMonth.setMonth(+value.Code - 1);
-            }
-            this.UIProperties.SetRequired('FromMonth', this.ObjectTableName, AppTool.IsNullOrEmpty(value));
-        }
-    }
-
-    public FilterSelectedValue: string = this.TimePeriod.Year;
+    public FilterSelectedValue: string = 'Year';
     FilterItemClicked(itemValue: string) {
         if (this.FilterSelectedValue != itemValue) {
             this.FilterSelectedValue = itemValue;
-
-            this.ByMonth = itemValue == this.TimePeriod.Month || itemValue == this.TimePeriod.Periodic;
+            if (itemValue == 'Month') {
+                this.ByMonth = true;
+            } else {
+                this.ByMonth = false;
+            }
             this.SetEmailValue();
+            this.SetEmailUIProperties();
         }
     }
 
-
-    private SetEmailValue(): void {
-        if (!AppTool.IsNullOrEmpty(this.entityPM.Email)) {
+    private SetEmailValue() {
+        if (!AppTool.IsNullOrEmpty(this.entityPM.Email))
             this.enterdEmail = this.entityPM.Email;
-        }
         this.entityPM.Email =
-                this.FilterSelectedValue === this.TimePeriod.Month ? ' ' : this.enterdEmail;
+            this.FilterSelectedValue == 'Month' ? ' ' : this.enterdEmail;
+    }
+
+    SetEmailUIProperties() {
+        this.UIProperties.SetEnabled(
+            'Email',
+            this.ObjectTableName,
+            this.ByMonth ? false : true
+        );
     }
 
     get Email() {
@@ -201,21 +188,11 @@ export class NewTaxDeductionReportComponent extends BaseComponent {
 
             errors.push(s);
         }
-
-
-        if (this.FilterSelectedValue == this.TimePeriod.Periodic &&
-            this.entityPM.Month.getMonth() <= this.entityPM.FromMonth.getMonth()) {
-            errors.push(TextCodeTranslator.Translate('TaxDeductionReport.O.InvalidMonthPeriod'));
-        }
-        this.entityPM.FromMonth.setFullYear(this.entityPM.TaxYear);
+        
         this.entityPM.Month.setFullYear(this.entityPM.TaxYear);
         this.ValidationErrorsList = errors;
 
         if (this.ValidationErrorsList.length == 0) {
-            if (this.FilterSelectedValue !== this.TimePeriod.Periodic) {
-                this.entityPM.FromMonth = null;
-            }
-
             this.CurrentSession.StartBusyIndicator('');
             this.TaxDeductionReportPMService.insert(this.entityPM).subscribe(
                 (myResult: any) => {
@@ -224,14 +201,23 @@ export class NewTaxDeductionReportComponent extends BaseComponent {
                         var entity = mm.Result;
 
                         this.CurrentSession.CloseCurrentWindowEmit('ok');
+
+                        SessionLocator.DynamicLoader.Load(
+                            './Infrastructure/Components/EditComponent/EditComponent',
+                            this.CurrentSession.SessionLocation.viewContainerRef
+                        ).then((cmpRef) => {
+                            cmpRef.instance.ComponentRef = cmpRef;
+                            cmpRef.instance.Run({
+                                EntityId: entity.Id,
+                                ObjectTableName: this.ObjectTableName,
+                            });
+                            cmpRef.instance.BackCompleted.subscribe(
+                                ($event: any) => {
+                                    this.CancelButtonClicked();
+                                }
+                            );
+                        });
                         this.CurrentSession.StopBusyIndicator();
-                        var messageWindow= new MessageWindow()
-                        messageWindow.Show(TextCodeTranslator.Translate("TaxDeductionReport.O.ReportGenerationMessage"));
-
-                        setTimeout(() => {
-                          messageWindow.Close();  
-                        }, 2000);
-
                     } else {
                         this.ValidationErrorsList = mm.ErrorsArray;
                         this.CurrentSession.StopBusyIndicator();

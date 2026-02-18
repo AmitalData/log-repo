@@ -23,7 +23,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
             commonDataContext = CommonDataContext.GetContext(tenant);
         }
 
-
+        public HTSCodeRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
 
         public IQueryable<HTSCode> GetHTSCodes(int tenant)
         {
