@@ -130,6 +130,7 @@ namespace Logitude.Accounting.Data.Repositories
                                     select c.GLAccountId).ToList();
 
             relevantGLAccountIds.Add(glAccountId);
+
             bool hasInvalidRecords = context.InterestTransactions
                .Any(it => it.GLAccountId == glAccountId &&
                it.Tenant == tenant &&

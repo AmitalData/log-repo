@@ -19,8 +19,8 @@ using Logitude.BL.Security;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
-using Simplog.Data.CommonDataModel.EntityPOCOs; 
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.InvoiceModel;
@@ -226,10 +226,9 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                                     break;
                             }
                         }
+
                     }
                 }
-
-
 
                 if (entityPM.RevalOnForeignReco == true  && FeatureToggleHelper.HasFeatureToggle("RFR", entityPM.Tenant))
                 {
@@ -248,8 +247,6 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                         }
                     }
                 }
-
-
 
                 if (entityPM.Number == "get")
                 {

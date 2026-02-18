@@ -106,8 +106,6 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string ForbiddenSigns { get; set; }
         [Column("CB_LastUpdateDate")]
 	    public DateTime? CB_LastUpdateDate { get; set; }
-        [Column("CustomsBookToken")]
-	    public string CustomsBookToken { get; set; }
     }
 }
 	 
