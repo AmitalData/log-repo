@@ -33,7 +33,7 @@ namespace Unifreight.BL.EntityUpdateServices
         
         protected override Simplog.Server.Infrastructure.EntityKeyFields GetKeys(GGGQPM entityPM)
         {
-            return new GGGQKeys() { QUEID = entityPM.QUEID , Tenant = entityPM.Tenant };
+            return new GGGQKeys() { QUEID = entityPM.QUEID };
         }
 
         protected override void OnCreating(GGGQPM entityPM, EntityPM entityParentPM)
@@ -69,7 +69,7 @@ namespace Unifreight.BL.EntityUpdateServices
             (context as System.Data.Entity.Infrastructure.IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false;
 
             var myGGGQQueryService = new GGGQQueryService(context);
-            GGGQPM ExistGGGQPM = myGGGQQueryService.GetByPrimary(entityPM.PRIMARYNUM, entityPM.ENTNAME, entityPM.ORIGINQUE, entityPM.FORMID, entityPM.STATUS, entityPM.Tenant);
+            GGGQPM ExistGGGQPM = myGGGQQueryService.GetByPrimary(entityPM.PRIMARYNUM, entityPM.ENTNAME, entityPM.ORIGINQUE, entityPM.FORMID, entityPM.STATUS);
             if (ExistGGGQPM != null && !string.IsNullOrWhiteSpace(ExistGGGQPM.QUEID))
             {
                 logData = $"entityPM.PRIMARYNUM={entityPM.PRIMARYNUM}, ExistGGGQPM.QUEID={ExistGGGQPM.QUEID}, queue found ";
