@@ -21,7 +21,6 @@ using Logitude.Server.Tools.Utils;
 using System.Data.SqlClient;
 using System.Data;
 using System.Configuration;
-using Simplog.Data.Helpers;
 
 namespace Logitude.Accounting.Data.Repositories
 {
@@ -687,7 +686,7 @@ namespace Logitude.Accounting.Data.Repositories
 
         public void FixFailedReconcileJournals(int tenant)
         {
-            string sqlConnectionString = TenantServerConfigration.GetDbConnection(tenant);
+            string sqlConnectionString = ConfigurationManager.ConnectionStrings["LogitudeStr"].ConnectionString;
 
             using (SqlConnection sqlConnection = new SqlConnection(sqlConnectionString))
             {

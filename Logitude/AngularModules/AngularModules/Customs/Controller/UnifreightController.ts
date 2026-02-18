@@ -35,6 +35,9 @@ export class UnifreightController {
         var declarationId = this._DeclarationPM.Id;
         var declarationNumber = this._DeclarationPM.DeclarationNumber;
         var customFileNo = this._DeclarationPM.CustomFileNo;
+        if(this._DeclarationPM.Direction == "E"){
+            return;
+        }
         AmitalGatewayUtil.Instance.DeclarationMessaging.RaiseInstructionReturnCanIContinue
             (customFileNo, declarationId, this._ViewModelName, ViewPlace, this._DeclarationPM.Direction);
 
@@ -85,10 +88,6 @@ export class UnifreightInstructionController {
     constructor(private EntityPM: DeclarationPM, private ViewPlace: string) { }
 
     public ShowInstruction(OnResponceOKMethod: () => void, OnResponceFailedMethod: () => void) {
-        if (this.EntityPM.Direction === "E") {
-            OnResponceOKMethod();
-            return;
-        }
         if (AmitalGatewayUtil.Instance.IsDeclarationInUse(this.EntityPM.CustomFileNo, this.EntityPM.IsConvertedDeclaration, this.EntityPM.IsConnectedToUnifreight)) {
             SessionLocator.SelectedSession.StartBusyIndicator("Check Instruction...");
 
