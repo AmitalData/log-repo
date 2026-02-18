@@ -696,19 +696,16 @@
     cookie_name = "email_cookie" // added 
     expdays = 365
 
-    // An adaptation of Dorcht's cookie functions
+    // An adaptation of Dorcht's cookie functions 
 
     function set_cookie(name, value, expires, path, domain, secure) {
-         const isSecure = (window.location.protocol === "https:");
 
         if (!expires) { expires = new Date() }
         document.cookie = name + "=" + escape(value) +
         ((expires == null) ? "" : "; expires=" + expires.toGMTString()) +
         ((path == null) ? "" : "; path=" + path) +
         ((domain == null) ? "" : "; domain=" + domain) +
-        ((secure == null) ? "" : "; secure")+
-        (isSecure ? "; Secure" : "") +
-        "; SameSite=Lax";
+        ((secure == null) ? "" : "; secure");
     }
 
     function get_cookie(name) {
@@ -768,7 +765,7 @@
 
 
     // --> 
-    </script> 
+</script> 
      
 </body>
 </html>
