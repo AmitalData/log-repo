@@ -30,8 +30,6 @@ using System.Web.Caching;
 using System.Web;
 using System.Net.Mail;
 using System.Collections.Specialized;
-using System.Text;
-using System.Text.RegularExpressions;
 
 namespace CustomsBook
 {
@@ -93,8 +91,8 @@ namespace CustomsBook
                     //Delete temp tables
                     CustomsBookRepository.TruncateTables();
                     
-                   // Get rules from WS 8319
-                   GetRulesFromWS8319();
+                    // Get rules from WS 8319
+                    GetRulesFromWS8319();
                     
                     List<string> fileNames = FindFileNames();
                     
@@ -109,9 +107,8 @@ namespace CustomsBook
                     // Swap temp tables to main tables
                     foreach (string tempTable in tempTables)
                     {
-                      CustomsBookRepository.SwapTempToMainTable(tempTable);
+                        CustomsBookRepository.SwapTempToMainTable(tempTable);
                     }
-                    CustomsBookRepository.UpdateCB_LastUpdateDateForAllCustomsSettings();
 
 
                 }
@@ -138,6 +135,7 @@ namespace CustomsBook
                     Directory.GetFiles(folder).ToList().ForEach(File.Delete);
                 }
 
+                CustomsBookRepository.UpdateCB_LastUpdateDateForAllCustomsSettings();
             }
         }
         static List<string> FindFileNames()
@@ -204,7 +202,6 @@ namespace CustomsBook
         static void GetRulesFromWS8319()
         {
 
-            string exceptionMsgList = "";
             List<int> customsItemIds = CustomsBookRepository.GetCustomsItemIdWithRules();
             
             StartStatic();
@@ -219,26 +216,14 @@ namespace CustomsBook
                     customsItemId = id,
                     validToDate = DateTime.Now,
                 };
-                try
+                DCAInGet_CB_MSG_8319_CustomItemRuleMessagingService messagingService = new DCAInGet_CB_MSG_8319_CustomItemRuleMessagingService();
+                CustomItemRuleResponseData responseData = messagingService.Send(requestParamsData);
+                if (responseData != null && !responseData.Succeeded)
                 {
-                    DCAInGet_CB_MSG_8319_CustomItemRuleMessagingService messagingService = new DCAInGet_CB_MSG_8319_CustomItemRuleMessagingService();
-                    CustomItemRuleResponseData responseData = messagingService.Send(requestParamsData);
-                    if (responseData != null && !responseData.Succeeded)
-                    {
-                        throw new Exception(responseData.UserMessage);
-                    }
-                }
-                catch(Exception ex)
-                {
-                    logger.Debug("The DCAInGet_CB_MSG_8319_CustomItemRuleMessagingService for customsItemId- " + requestParamsData.customsItemId + " is not a valid.\nerror data:\n" + ex);
-                    exceptionMsgList += "\n Error on DCAInGet_CB_MSG_8319_CustomItemRuleMessagingService customsItemId- \n" + ex?.Message;
+                    throw new Exception(responseData.UserMessage);
                 }
             }
             tempTables.Add("TEMP_CB_RuleClassifications");
-            if(exceptionMsgList != "")
-            {
-                SendEmailAlert(null, exceptionMsgList);
-            }
         }
 
         static void MapXmlTempTable(string fileName)
@@ -253,15 +238,8 @@ namespace CustomsBook
                 try
                 {
                     // Load the XML document
-                    try
-                    {
-                        xmlDoc = XDocument.Load(xmlFilePath);
-                    }
-                    catch(Exception ex) 
-                    { 
-                        string cleanXml = CleanXmlForParsing(xmlFilePath);
-                        xmlDoc = XDocument.Parse(cleanXml);
-                    }
+                    xmlDoc = XDocument.Load(xmlFilePath);
+
                 }
                 catch (Exception ex)
                 {
@@ -391,50 +369,6 @@ namespace CustomsBook
             }
         }
 
-        static string CleanXmlForParsing(string xmlFilePath)
-        {
-            string xml = "";
-            using (var sr = new StreamReader(xmlFilePath, true))
-            {
-                xml = sr.ReadToEnd();
-        }
-            if (string.IsNullOrEmpty(xml))
-                return xml;
-
-            var sb = new StringBuilder(xml.Length);
-
-            for (int i = 0; i < xml.Length; i++)
-            {
-                char c = xml[i];
-
-                if (char.IsSurrogate(c))
-                {
-                    if (i + 1 < xml.Length && char.IsSurrogatePair(c, xml[i + 1]))
-                    {
-                        sb.Append(c);
-                        sb.Append(xml[i + 1]);
-                        i++;
-                    }
-                    continue;
-                }
-
-                if (c == 0x9 || c == 0xA || c == 0xD || c >= 0x20)
-                {
-                    sb.Append(c);
-                }
-            }
-
-            return Regex.Replace(
-                sb.ToString(),
-                @"&#x([0-1]?[0-9A-Fa-f]);",
-                m =>
-                {
-                    int val = Convert.ToInt32(m.Groups[1].Value, 16);
-                    return (val == 0x9 || val == 0xA || val == 0xD) ? m.Value : "";
-                });
-        }
-
-
         public static void EnsureHttpRuntime()
         {
            
@@ -553,7 +487,7 @@ namespace CustomsBook
         }
 
 
-        public static void SendEmailAlert(Exception ex, string exceptionMsgList = null)
+        public static void SendEmailAlert(Exception ex)
         {
             try
             {
@@ -585,14 +519,6 @@ namespace CustomsBook
 
                         message.Subject = subject;
                         message.Body = $"ConnectionString: {sqlConnectionString}\n\n An error occurred:\n\n{ex}";
-                        if (ex != null)
-                        {
-                            message.Body += ex;
-                        }
-                        else if (exceptionMsgList != null && exceptionMsgList != "")
-                        {
-                            message.Body += exceptionMsgList;
-                        }
 
                         client.Send(message);
                     }

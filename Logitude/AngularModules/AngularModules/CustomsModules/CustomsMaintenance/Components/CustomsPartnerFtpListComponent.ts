@@ -84,7 +84,6 @@ export class CustomsPartnerFtpListComponent extends BaseComponent implements OnI
 
 
                     let val = r.Value;
-
                     let myInterfaceDetails: InterfaceDetails = JSON.parse(val);
                     this._InterfaceNameItems.push(new KeyValuePair(myInterfaceDetails.Code,myInterfaceDetails.Name));
                     this._InterfaceDetailsItems.push(myInterfaceDetails);
@@ -143,6 +142,9 @@ export class CustomsPartnerFtpListComponent extends BaseComponent implements OnI
         }
         if (!AppTool.IsNullOrEmpty(this.Password)) {
             this.Password = this.Password.trim();
+        }
+        if(!AppTool.IsNullOrEmpty(this.CustomerUniqueCode)){
+            this.CustomerUniqueCode = this.CustomerUniqueCode.trim();
         }
         this.ValidateCustomsPartnerFtp();
         if (this.ValidationErrorsList != null && this.ValidationErrorsList.length > 0) {
@@ -355,7 +357,9 @@ export class CustomsPartnerFtpListComponent extends BaseComponent implements OnI
     public get Password() { return this._WebApiDefinition.Password; }
     public set Password(newValue: string) { if (this._WebApiDefinition.Password != newValue) { this._WebApiDefinition.Password = newValue; } }
 
-    
+    public get CustomerUniqueCode() { return this._WebApiDefinition.CustomerUniqueCode; }
+    public set CustomerUniqueCode(newValue: string) { if (this._WebApiDefinition.CustomerUniqueCode != newValue) { this._WebApiDefinition.CustomerUniqueCode = newValue; } }
+
     ClearScreen() {
         this.ValidationErrorsList = [];
         this._SettingsHost = null;
@@ -539,4 +543,5 @@ class WebApiDefinition {
     serviceURL: string
     User: string
     Password: string
+    CustomerUniqueCode :string 
 }

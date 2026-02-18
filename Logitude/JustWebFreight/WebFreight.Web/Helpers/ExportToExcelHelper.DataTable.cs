@@ -17,129 +17,120 @@ namespace WebFreight.Web.Helpers
     {
         public byte[] ExportDataTableToExcel(DataTable dataTable, int tenant, BITabularViewSettings bITabularViewSettings)
         {
-            if (dataTable == null || dataTable.Columns.Count == 0)
-                throw new InvalidOperationException("DataTable is empty.");
+            ///////////////////////////////////////////////////////////
+
+
+
 
             System.IO.MemoryStream memory = new System.IO.MemoryStream();
-            using (ExcelEngine excelEngine = new ExcelEngine())
+            ExcelEngine excelEngine = new ExcelEngine();
+            IApplication application = excelEngine.Excel;
+            Syncfusion.XlsIO.IWorkbook workbook = excelEngine.Excel.Workbooks.Create(1);
+            IWorksheet sheet = workbook.Worksheets[0];
+
+            int count = dataTable.Columns.Count;
+            List<DataColumn> deletedColumns = new List<DataColumn>();
+
+            var columnNames = bITabularViewSettings.Columns.OrderBy(a => a.Index).Select(d => d.Code).ToList();
+            int columnIndex = 0;
+            foreach (var columnName in columnNames)
             {
-                IApplication application = excelEngine.Excel;
-                Syncfusion.XlsIO.IWorkbook workbook = excelEngine.Excel.Workbooks.Create(1);
-                workbook.StandardFont = "Arial";
-                workbook.StandardFontSize = 10;
-                IWorksheet sheet = workbook.Worksheets[0];
+                dataTable.Columns[columnName].SetOrdinal(columnIndex);
+                columnIndex++;
+            }
 
-                int count = dataTable.Columns.Count;
-                List<DataColumn> deletedColumns = new List<DataColumn>();
-
-                var columnNames = bITabularViewSettings.Columns.OrderBy(a => a.Index).Select(d => d.Code).ToList();
-                int columnIndex = 0;
-                foreach (var columnName in columnNames)
+            if (deletedColumns.Count > 0)
+            {
+                foreach (var item in deletedColumns)
                 {
-                    dataTable.Columns[columnName].SetOrdinal(columnIndex);
-                    columnIndex++;
+                    dataTable.Columns.Remove(item);
                 }
+            }
+            RemoveEqualFromAllColumns(dataTable);//avoid exception "David" is not valid named range due value:"= david 33"
 
-                if (deletedColumns.Count > 0)
+            sheet.ImportDataTable(dataTable, true, 1, 1);
+
+            // sheet Format - Width 
+            for (var i = 0; i < dataTable.Columns.Count; i++)
+            {
+                var agColumn = bITabularViewSettings.Columns.Where(a => a.Name == dataTable.Columns[i].ColumnName).FirstOrDefault();
+                if (agColumn != null)
                 {
-                    foreach (var item in deletedColumns)
-                    {
-                        dataTable.Columns.Remove(item);
-                    }
+                    sheet.Columns[i].ColumnWidth = agColumn.Width / 7.5;
                 }
-                RemoveEqualFromAllColumns(dataTable);//avoid exception "David" is not valid named range due value:"= david 33"
+            }
 
-                sheet.ImportDataTable(dataTable, true, 1, 1);
-
-                // sheet Format - Width 
-                for (var i = 0; i < dataTable.Columns.Count; i++)
+            TenantRepository tenantRepoitory = new TenantRepository(tenant);
+            var CurTenant = tenantRepoitory.GetSingleByTenant(tenant);
+            var rows = dataTable.Rows.Count;
+            if (rows > 0 && sheet != null && dataTable != null && bITabularViewSettings?.Columns != null)
+            {
+                for (int j = 1; j <= dataTable.Columns.Count; j++)
                 {
-                    var agColumn = bITabularViewSettings.Columns.Where(a => a.Name == dataTable.Columns[i].ColumnName).FirstOrDefault();
+                    var agColumn = bITabularViewSettings.Columns.Where(a => a.Name == dataTable.Columns[j - 1].ColumnName).FirstOrDefault();
                     if (agColumn != null)
                     {
-                        sheet.Columns[i].ColumnWidth = agColumn.Width / 7.5;
-                    }
-                }
-
-                TenantRepository tenantRepoitory = new TenantRepository(tenant);
-                var CurTenant = tenantRepoitory.GetSingleByTenant(tenant);
-                var rows = dataTable.Rows.Count;
-                if (rows > 0 && sheet != null && dataTable != null && bITabularViewSettings?.Columns != null)
-                {
-                    for (int j = 1; j <= dataTable.Columns.Count; j++)
-                    {
-                        var agColumn = bITabularViewSettings.Columns.Where(a => a.Name == dataTable.Columns[j - 1].ColumnName).FirstOrDefault();
-                        if (agColumn != null)
+                        IRange writeRange = null;
+                        try
                         {
-                            IRange writeRange = null;
-                            try
-                            {
-                                writeRange = sheet.Range[2, j, rows + 1, j];
-                            }
-                            catch (Exception ex)
-                            {
-                                NetCommonHelper.Logger.DevLog.Instance.WriteError($"Failed to access range: {ex.Message} for column: {j}");
-                                continue;
-                            }
+                            writeRange = sheet.Range[2, j, rows+1, j];
+                        }
+                        catch (Exception ex)
+                        {
+                            NetCommonHelper.Logger.DevLog.Instance.WriteError($"Failed to access range: {ex.Message} for column: {j}");
+                            continue;
+                        }
 
-                            if (writeRange == null)
-                            {
-                                NetCommonHelper.Logger.DevLog.Instance.WriteWarning($"Accessed range is null");
-                                continue;
-                            }
+                        if (writeRange == null)
+                        {
+                            NetCommonHelper.Logger.DevLog.Instance.WriteWarning($"Accessed range is null");
+                            continue;
+                        }
 
-                            try
-                            {
-                                switch (agColumn.DataTypeCode)
+                        switch (agColumn.DataTypeCode)
+                        {
+                            case "Constant":
+                            case "Text":
+                                writeRange.HorizontalAlignment = ExcelHAlign.HAlignLeft;
+                                break;
+                            case "DateTime":
+                                string datetimeformat = @"dd\/MM\/yyyy";
+                                if (!string.IsNullOrEmpty(CurTenant.DateTimeFormat))
                                 {
-                                    case "Constant":
-                                    case "Text":
-                                        writeRange.HorizontalAlignment = ExcelHAlign.HAlignLeft;
-                                        break;
-                                    case "DateTime":
-                                        string datetimeformat = @"dd\/MM\/yyyy";
-                                        if (!string.IsNullOrEmpty(CurTenant.DateTimeFormat))
-                                        {
-                                            datetimeformat = CurTenant.DateTimeFormat;
-                                        }
-                                        writeRange.NumberFormat = datetimeformat;
-                                        break;
-                                    case "DateTime?":
-                                        string longdatetimeformat = @"dd\/MM\/yyyy HH:mm";
-                                        if (!string.IsNullOrEmpty(CurTenant.DateTimeFormat))
-                                        {
-                                            datetimeformat = CurTenant.DateTimeFormat;
-                                        }
-                                        writeRange.NumberFormat = longdatetimeformat;
-                                        break;
-                                    case "Decimal":
-                                    case "Double":
-                                        writeRange.HorizontalAlignment = ExcelHAlign.HAlignRight;
-                                        writeRange.NumberFormat = "###,##0.00";
-                                        break;
-                                    case "Integer":
-                                        writeRange.HorizontalAlignment = ExcelHAlign.HAlignRight;
-                                        writeRange.NumberFormat = "###,##";
-                                        break;
-
-                                    default:
-                                        writeRange.HorizontalAlignment = ExcelHAlign.HAlignLeft;
-                                        break;
+                                    datetimeformat = CurTenant.DateTimeFormat;
                                 }
-                            }
-                            catch (Exception ex)
-                            {
-                                NetCommonHelper.Logger.DevLog.Instance.WriteError($"Failed to format range / align horizontal: {ex.Message} for column: {j}, continue");
-                            }
+                                writeRange.NumberFormat = datetimeformat;
+                                break;
+                            case "DateTime?":
+                                string longdatetimeformat = @"dd\/MM\/yyyy HH:mm";
+                                if (!string.IsNullOrEmpty(CurTenant.DateTimeFormat))
+                                {
+                                    datetimeformat = CurTenant.DateTimeFormat;
+                                }
+                                writeRange.NumberFormat = longdatetimeformat;
+                                break;
+                            case "Decimal":
+                            case "Double":
+                                writeRange.HorizontalAlignment = ExcelHAlign.HAlignRight;
+                                writeRange.NumberFormat = "###,##0.00";
+                                break;
+                            case "Integer":
+                                writeRange.HorizontalAlignment = ExcelHAlign.HAlignRight;
+                                writeRange.NumberFormat = "###,##";
+                                break;
+
+                            default:
+                                writeRange.HorizontalAlignment = ExcelHAlign.HAlignLeft;
+                                break;
                         }
                     }
                 }
-                sheet.Range[1, 1, 1, dataTable.Columns.Count + 1].CellStyle.ColorIndex = ExcelKnownColors.Grey_25_percent;
-                sheet.Range[1, 1, 1, dataTable.Columns.Count + 1].CellStyle.Font.Bold = true;
-                ///workbook.Version = ExcelVersion.Excel2007;
-                workbook.SaveAs(memory, ExcelSaveType.SaveAsXLS);
-                return memory.ToArray();
             }
+            sheet.Range[1, 1, 1, dataTable.Columns.Count + 1].CellStyle.ColorIndex = ExcelKnownColors.Grey_25_percent;
+            sheet.Range[1, 1, 1, dataTable.Columns.Count + 1].CellStyle.Font.Bold = true;
+            ///workbook.Version = ExcelVersion.Excel2007;
+            workbook.SaveAs(memory, ExcelSaveType.SaveAsXLS);
+            return memory.ToArray();
         }
 
         public byte[] ExportDataTableToExcelForExportStorage(List<DataTable> dataTable, int tenant, List<BITabularViewSettings> bITabularViewSettings, int numSheet = 1)

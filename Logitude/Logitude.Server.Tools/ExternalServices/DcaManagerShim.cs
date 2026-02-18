@@ -339,7 +339,7 @@ namespace Logitude.Server.Tools.ExternalServices
                     if (status != "0") { error = true; log = message; return; }
 
                     var toName = string.IsNullOrEmpty(renameFilename) ? filename : renameFilename;
-                    var targetRelPath = CombinePath(targetDir, toName);
+                    var targetRelPath = CombinePath(targetDir, toName)
 
                     SafeRename(sftp, filename, targetRelPath, ref moreParams, out status, out message);
 
