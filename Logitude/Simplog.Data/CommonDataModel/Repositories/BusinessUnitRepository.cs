@@ -16,7 +16,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
             get { return Context; }
         }
 
-
+        public BusinessUnitRepository()
+        {
+            this.Context = new CommonDataContext();
+        }
 
         public BusinessUnitRepository(int tenant)
         {
@@ -48,18 +51,8 @@ namespace Simplog.Data.CommonDataModel.Repositories
         {
             return context.BusinessUnits.Where(d => d.Tenant == tenant && d.Name == "Organization").Any();
         }
-		public BusinessUnit GetBusinessUnitByName(string name, int tenant)
-		{
-			string nameNew = "";
-			nameNew = name;
 
-			var query = (from a in context.BusinessUnits
-						 where a.Tenant == tenant && a.Name.ToLower() == name.ToLower()
-						 select a).FirstOrDefault();
-
-			return query;
-		}
-		public void Add(BusinessUnit entity)
+        public void Add(BusinessUnit entity)
         {
             context.BusinessUnits.Add(entity);
         }

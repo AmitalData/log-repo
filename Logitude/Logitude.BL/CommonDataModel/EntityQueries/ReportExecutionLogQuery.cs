@@ -25,7 +25,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     public class ReportExecutionLogQuery
     {
         ReportExecutionLogRepository repository;
-
+        public ReportExecutionLogQuery()
+        {
+            repository = new ReportExecutionLogRepository();
+        }
         public ReportExecutionLogQuery(int tenant)
         {
             repository = new ReportExecutionLogRepository(tenant);
@@ -118,22 +121,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                             SearchFields = a.SearchFields,
                                                         };
             return result;
-        }
-
-        public void SendReportToBackground(string reportExecutionLogId, int tenant)
-        {
-            ReportExecutionLog reportExecutionLog = repository.GetReportExecutionLog(reportExecutionLogId, tenant);
-
-            if (reportExecutionLog != null)
-            {
-                reportExecutionLog.NotDisplayInMenu = false;
-                repository.Update(reportExecutionLog);
-                repository.SubmitChanges();
-            }
-            else
-            {
-                throw new Exception("ReportExecutionLog not found");
-            }
         }
 
         public void CancelStuckReports(int tenant ,string report=null)

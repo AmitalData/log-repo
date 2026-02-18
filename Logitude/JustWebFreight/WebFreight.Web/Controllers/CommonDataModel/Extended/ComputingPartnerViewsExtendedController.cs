@@ -119,18 +119,13 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                     {
                         prop = objectTablePM.CodeField;
                         propName = objectTablePM.NameField;
+                        // prop = "Code";
+                        //propName = "Name";
+
                     }
                     Type type = myTableDataList.First().GetType();
                     PropertyInfo property = type.GetProperty(prop);
                     PropertyInfo property2 = propName != null ? type.GetProperty(propName) : null;
-                    if (property2 == null)
-                    {
-                        property2 = type.GetProperty("LocalName");
-                        if (property2 == null)
-                        {
-                            property2 = type.GetProperty("EnglishName");
-                        }
-                    }
                     PropertyInfo Active = type.GetProperty("InActive");
 
                     if (property != null)

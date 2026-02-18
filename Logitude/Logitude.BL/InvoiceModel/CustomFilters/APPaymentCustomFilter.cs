@@ -56,12 +56,6 @@ namespace Logitude.BL.InvoiceModel.CustomFilters
                                  select r);
                         }
                     }
-                    else if (item.FieldName == "MasavInterface")
-                    {
-                        queryableData = queryableData.Where(d =>  d.MasavInterfaceId == null || (d.MasavInterfaceId == (string)item.FieldValue));
-
-                    }
-
                 }
             }
 
