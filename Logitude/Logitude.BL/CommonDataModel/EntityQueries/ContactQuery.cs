@@ -19,7 +19,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         ContactRepository repository;
 
-
+        public ContactQuery()
+        {
+            repository = new ContactRepository();
+        }
 
         public ContactQuery(int tenant)
         {
@@ -561,8 +564,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                      IndexColor = a.IndexColor,
                                      CompanyName = a.CompanyName,
                                      CreateDate = a.CreateDate,
-                                     DigitalPortalLanguage = a.DigitalPortalLanguage,
-                                     ContactForAccounting = a.ContactForAccounting
+                                     DigitalPortalLanguage = a.DigitalPortalLanguage
                                  }).FirstOrDefault();
 
             if (contact != null)
@@ -621,8 +623,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                      IndexColor = a.IndexColor,
                                      CompanyName = a.CompanyName,
                                      CreateDate = a.CreateDate,
-                                     DigitalPortalLanguage = a.DigitalPortalLanguage,
-                                     ContactForAccounting = a.ContactForAccounting
+                                     DigitalPortalLanguage = a.DigitalPortalLanguage
                                  }).FirstOrDefault();
 
             if (contact != null)
@@ -690,7 +691,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                              IndexColor = a.IndexColor,
                                              CompanyName = a.CompanyName,
                                              CreateDate = a.CreateDate,
-                                             ContactForAccounting = a.ContactForAccounting
                                          }).FirstOrDefault();
 
                     if (contact == null)
@@ -730,8 +730,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        IndexColor = a.IndexColor,
                                        CompanyName = a.CompanyName,
                                        CreateDate = a.CreateDate,
-                                       DigitalPortalLanguage = a.DigitalPortalLanguage,
-                                       ContactForAccounting = a.ContactForAccounting
+                                       DigitalPortalLanguage = a.DigitalPortalLanguage
                                    }).FirstOrDefault();
 
                         isTenant0User = true;
@@ -813,8 +812,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                          IndexColor = a.IndexColor,
                                          CompanyName = a.CompanyName,
                                          CreateDate = a.CreateDate,
-                                         DigitalPortalLanguage = a.DigitalPortalLanguage,
-                                         ContactForAccounting = a.ContactForAccounting
+                                         DigitalPortalLanguage = a.DigitalPortalLanguage
                                      }).FirstOrDefault();
 
                 if (contact == null)
@@ -854,8 +852,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                    IndexColor = a.IndexColor,
                                    CompanyName = a.CompanyName,
                                    CreateDate = a.CreateDate,
-                                   DigitalPortalLanguage = a.DigitalPortalLanguage,
-                                   ContactForAccounting = a.ContactForAccounting
+                                   DigitalPortalLanguage = a.DigitalPortalLanguage
                                }).FirstOrDefault();
                 }
                 if (contact != null)
@@ -931,8 +928,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                              IndexColor = a.IndexColor,
                                              CompanyName = a.CompanyName,
                                              CreateDate = a.CreateDate,
-                                             DigitalPortalLanguage = a.DigitalPortalLanguage,
-                                             ContactForAccounting = a.ContactForAccounting
+                                             DigitalPortalLanguage = a.DigitalPortalLanguage
                                          }).FirstOrDefault();
 
                     if (contact == null)
@@ -972,8 +968,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        IndexColor = a.IndexColor,
                                        CompanyName = a.CompanyName,
                                        CreateDate = a.CreateDate,
-                                       DigitalPortalLanguage = a.DigitalPortalLanguage,
-                                       ContactForAccounting = a.ContactForAccounting
+                                       DigitalPortalLanguage = a.DigitalPortalLanguage
                                    }).FirstOrDefault();
 
                         isTenant0User = true;
@@ -1062,8 +1057,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                          IndexColor = a.IndexColor,
                                          CompanyName = a.CompanyName,
                                          CreateDate = a.CreateDate,
-                                         DigitalPortalLanguage = a.DigitalPortalLanguage,
-                                         ContactForAccounting = a.ContactForAccounting
+                                         DigitalPortalLanguage = a.DigitalPortalLanguage
                                      }).FirstOrDefault();
 
                 if (contact == null)
@@ -1103,8 +1097,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                    IndexColor = a.IndexColor,
                                    CompanyName = a.CompanyName,
                                    CreateDate = a.CreateDate,
-                                   DigitalPortalLanguage = a.DigitalPortalLanguage,
-                                   ContactForAccounting = a.ContactForAccounting
+                                   DigitalPortalLanguage = a.DigitalPortalLanguage
                                }).FirstOrDefault();
 
                     isTenant0User = true;
@@ -1179,8 +1172,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       IndexColor = a.IndexColor,
                                       CompanyName = a.CompanyName,
                                       CreateDate = a.CreateDate,
-                                      DigitalPortalLanguage = a.DigitalPortalLanguage,
-                                      ContactForAccounting = a.ContactForAccounting
+                                      DigitalPortalLanguage = a.DigitalPortalLanguage
                                   }).FirstOrDefault();
 
                         if (entity != null)
@@ -1250,8 +1242,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                              IndexColor = a.IndexColor,
                                              CompanyName = a.CompanyName,
                                              CreateDate = a.CreateDate,
-                                             DigitalPortalLanguage = a.DigitalPortalLanguage,
-                                             ContactForAccounting = a.ContactForAccounting
+                                             DigitalPortalLanguage = a.DigitalPortalLanguage
                                          }).FirstOrDefault();
 
                     if (contact != null)
@@ -1309,8 +1300,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                          ExternalId = a.ExternalId,
                                          CompanyName = a.CompanyName,
                                          CreateDate = a.CreateDate,
-                                         DigitalPortalLanguage = a.DigitalPortalLanguage,
-                                         ContactForAccounting = a.ContactForAccounting
+                                         DigitalPortalLanguage = a.DigitalPortalLanguage
                                      }).FirstOrDefault();
 
                 if (contact != null)
@@ -1745,8 +1735,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                           CompanyName = a.CompanyName,
                                           CreateDate = a.CreateDate,
                                           IndexColor = a.IndexColor,
-                                          DigitalPortalLanguage = a.DigitalPortalLanguage,
-                                          ContactForAccounting = a.ContactForAccounting
+                                          DigitalPortalLanguage = a.DigitalPortalLanguage
                                       }).FirstOrDefault();
 
                 if (instance != null)
@@ -1843,8 +1832,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       CompanyName = a.CompanyName,
                                       CreateDate = a.CreateDate,
                                       IndexColor = a.IndexColor,
-                                      DigitalPortalLanguage = a.DigitalPortalLanguage,
-                                      ContactForAccounting = a.ContactForAccounting
+                                      DigitalPortalLanguage = a.DigitalPortalLanguage
                                   }).FirstOrDefault();
 
 
@@ -1977,8 +1965,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                      IndexColor = a.IndexColor,
                                      CompanyName = a.CompanyName,
                                      CreateDate = a.CreateDate,
-                                     DigitalPortalLanguage = a.DigitalPortalLanguage,
-                                     ContactForAccounting = a.ContactForAccounting
+                                     DigitalPortalLanguage = a.DigitalPortalLanguage
                                  }).FirstOrDefault();
 
             if (contact != null)

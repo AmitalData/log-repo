@@ -88,8 +88,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
              DateFormat,
 			 PaymentTerms,
              ContactId,
-            MarkDate,
-            ForeignCurrencyInterest
+            MarkDate
         }
 
 
@@ -255,8 +254,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             ContactId,
 	         ContactName,
             MarkDate,
-            CardCountryCode,
-            ForeignCurrencyInterest
+            CardCountryCode
         }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -601,10 +599,6 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             {
                 entityPOCO.MarkDate = entityPM.MarkDate;
             }
-            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ForeignCurrencyInterest))
-            {
-                entityPOCO.ForeignCurrencyInterest = entityPM.ForeignCurrencyInterest;
-            }
             BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
 		  }
 
@@ -941,10 +935,6 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             {
                 entityPM.MarkDate = entityPOCO.MarkDate;
             }
-            if (!CustomMappedPMProperties.Contains(PMPropertyNames.ForeignCurrencyInterest))
-            {
-                entityPM.ForeignCurrencyInterest = entityPOCO.ForeignCurrencyInterest;
-            }
 
         }
 
@@ -1278,10 +1268,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             {
                 oldEntityPM.MarkDate = entityPM.MarkDate;
             }
-            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ForeignCurrencyInterest))
-            {
-                oldEntityPM.ForeignCurrencyInterest = entityPM.ForeignCurrencyInterest;
-            }
+
         }
 
 	    public void EncodeBase64NVARCHARFields(GLAccountPM entityPM)

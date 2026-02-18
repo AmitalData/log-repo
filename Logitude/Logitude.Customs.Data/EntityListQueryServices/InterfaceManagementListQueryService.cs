@@ -86,8 +86,6 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                              SendTime = s.SendTime,
                                                              EntityLockId = a.EntityLockId,
                                                              EntityLockName = a.EntityLock != null ? a.EntityLock.Name : null,
-                                                             IsUnifreight = a.IsUnifreight,
-                                                             IsCustomsFile = a.IsCustomsFile,
 
                                                          });
             return query;
