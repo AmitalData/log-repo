@@ -72,13 +72,15 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                 {
                     _SearchByFilter = _Param.SearchFields;
                     var myGLAccountQueryService = new GLAccountQueryService(_AccountingContext);
+//                    var hashsetallIdAccounts = myGLAccountQueryService.GetAllIdAccountsCat(_Param.Tenant, _Param.GLAccountId, _Param.Category1Id, _Param.Category2Id,
+//                        _Param.Category3Id, _Param.Category4Id, _Param.Category5Id, _Param.IncludeChildAccounts);
                     var qAllIdAccounts = myGLAccountQueryService.GetAllIdAccountsTypeCat(_Param.Tenant, _Param.GLAccountId, _Param.Category1Id, _Param.Category2Id,
                         _Param.Category3Id, _Param.Category4Id, _Param.Category5Id, _Param.AccountTypeCode, _Param.ChartOfAccountsId, _Param.IncludeChildAccounts
-                        ,null
-                        ,null 
-                        ,true,false,null,null,null,null
+                        ,null/*_Param.ChartOfAccountsTypeCode*/
+                        ,null //SALESMAN 
+                        ,true,false,null
                         );
-                    _allIdAccounts = qAllIdAccounts;
+                    _allIdAccounts = qAllIdAccounts;// new List<string>(hashsetallIdAccounts);
                 }
 
 
