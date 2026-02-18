@@ -38,12 +38,7 @@ export class APInvoiceValidator {
                 this.Errors.push(this.message.replace("%FieldName", "Vat Number"));
             }
         }
-        if(this.EntityPM.IsPrepaidExpenses && !this.EntityPM.HasExpenseAllocationSetting && this.EntityPM.SetApproved){
-            this.Errors.push(TextCodeTranslator.Translate("APInvoice.O.ExpenseAllocationSettingIsRequiredForPrepaidExpenses"));
-        }
-        if(this.EntityPM.ExpenseAllocationStartDate != null && this.EntityPM.ExpenseAllocationStartDate < this.EntityPM.AccountingDate && this.EntityPM.IsPrepaidExpenses  && this.EntityPM.SetApproved){
-            this.Errors.push(TextCodeTranslator.Translate("APInvoice.O.ExpenseAllocationSettingStartDateError"));
-        }
+
         if (entityPM.IsMultipleEntities) {
 
         }
@@ -93,12 +88,6 @@ export class APInvoiceValidator {
 
                 if (this.EntityPM.AmountInInvoiceCurrency != this.EntityPM.AmountInInvoiceCurrency_Summary) {
                     this.Errors.push(TextCodeTranslator.Translate("APInvoice.M.InvoiceAmountNotMatched"));
-                }
-                if(this.EntityPM.IsPrepaidExpenses){
-                  
-                   if (!this.EntityPM.InvoiceLines.some(line => line.IsPrepaidExpenses)) {
-                      this.Errors.push(TextCodeTranslator.Translate("APInvoice.O.PrepaidExpensesLineRequired"));
-                   }
                 }
             }
         }

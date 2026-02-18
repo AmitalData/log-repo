@@ -132,8 +132,7 @@ namespace Logitude.CustomsMessaging.Helpers.ClosedTable
     {
         public bool IsCustomApprovalRequired { get; set; }
         public bool IsCriterionMandatory { get; set; }
-        public bool IsCustomsItemMandatory { get; set; }
-        public bool IsZipcodeMandatory { get; set; }
+
     }
     public class CertificateOfOriginMandatoryFields
     {

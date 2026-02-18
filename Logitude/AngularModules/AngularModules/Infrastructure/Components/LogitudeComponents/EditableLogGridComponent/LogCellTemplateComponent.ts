@@ -295,6 +295,7 @@ export class LogCellTemplateComponent implements OnDestroy {
         if ($event.keyCode == 121) {
             if ($event.altKey) {
                 var originalElement = document.getElementById(this.ColumnComponent.LogGridId + this.CurrentSession.SessionIndex + "_" + this.ColumnComponent.index + "_" + (this.TempRowIndex));
+                //var nextElement = document.getElementById(this.ColumnComponent.LogGridId + this.CurrentSession.SessionIndex + "_" + this.ColumnComponent.index + "_" + (this.TempRowIndex + 1));
                 var originalData = this.ColumnComponent.EditableLogGridComponent.ItemSource.Collection[this.RowIndex - 1][this.ColumnComponent.binding];
                 var nextData = this.ColumnComponent.EditableLogGridComponent.ItemSource.Collection[this.RowIndex][this.ColumnComponent.binding];
                 var elementinputs = originalElement.getElementsByTagName("input");
@@ -303,6 +304,7 @@ export class LogCellTemplateComponent implements OnDestroy {
 
                     this.CurrentSession.CopyCellIntoMemory.emit(elementinputs[0].id);
                 }
+                //this.ColumnComponent.EditableLogGridComponent.ItemSource.Collection[this.RowIndex][this.ColumnComponent.binding] = originalData;
 
                 if ((this.ColumnComponent.index + 1) == colCount) {
                     this.CurrentSession.CurrentLogGrid = this.ColumnComponent.LogGridId;
@@ -315,16 +317,27 @@ export class LogCellTemplateComponent implements OnDestroy {
                     }
                 }
                 else {
-                    setTimeout(() => {
-                        var columnIndex = this.ColumnComponent.index + 1;
+                    var columnIndex = this.ColumnComponent.index + 1;
                     var elementId = this.ColumnComponent.LogGridId + this.CurrentSession.SessionIndex + "_" + columnIndex + "_" + (this.TempRowIndex);
                     var nextElement = document.getElementById(elementId);
                     nextElement.focus();
-                    }, 200);
-                   
                 }
 
-              
+                //var elements = originalElement.getElementsByTagName("logtextbox");
+                //var elementinputs = originalElement.getElementsByTagName("input");
+                //if (elementinputs != null && elementinputs.length>0 && nextElement != null) {
+                //    this.CurrentSession.CopyCellIntoMemory.emit(elementinputs[0].id);
+
+                //    nextElement.focus();
+                //}
+                //var fieldName = elements[0].getAttributeNode("ng-reflect--object-field-name");
+                //var dataContext = elements[0].getAttributeNode("ng-reflect--data-context");
+
+                //var nextElements = nextElement.getElementsByTagName("logtextbox");
+                //var nFieldName = nextElements[0].getAttribute("ng-reflect--object-field-name");
+                //var nDataContext = nextElements[0].getAttribute("ng-reflect--data-context");
+
+               // nDataContext[nFieldName] = dataContext[fieldName];
 
             }
         }
