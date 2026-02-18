@@ -115,7 +115,7 @@ using WebFreight.Web.Helpers;
 
 
                 TotalInterest = d.CalculatedCreditInterestAmount + d.CalculatedExcepInterestAmount + d.CalculatedStandInterestAmount,
-                TotalLocalAmount = d.StandardInterestAmount + d.ExceptionalInterestAmount + d.CreditInterestAmount,
+                TotalLocalAmount = interestTransactionLists.Sum(s => s.LocalAmount),
 
                 InterestTransactionList = interestTransactionLists.Where(s => s.InterestValueDate.Date == d.FromDate.Date &&
                                                                               s.InterestEntityTypeCode != InterestEntityTypes.OpenBalance)
@@ -147,10 +147,7 @@ using WebFreight.Web.Helpers;
                    }).ToList(),
             }).ToHashSet();
 
-
-
-
-
+            
             return InterestReportPeriods.OrderBy(s => s.FromDate).ToList<InterestReportLinesByDateProvider>();
 
         }
@@ -173,9 +170,8 @@ using WebFreight.Web.Helpers;
                         line.LineNo = ++flatLineCounter;
                         line.LineType = InterestPeriodLineTypes.Transaction;
                         line.Date = transactionDP.InterestValueDate.Value.Date;
-                        totalLocalInPeriod += _InterestReportPM.IsForeignCurrency ? (transactionDP.ForeignAmount ?? 0m)  : (transactionDP.LocalAmount);
-                        line.LocalAmount = transactionDP.LocalAmount ; 
-                        line.ForeignAmount = transactionDP.ForeignAmount;
+                        totalLocalInPeriod += transactionDP.LocalAmount;
+                        line.LocalAmount = transactionDP.LocalAmount;
                         line.AmountInCurrencyReport = _InterestReportPM.IsForeignCurrency ? transactionDP.ForeignAmount : transactionDP.LocalAmount;
                         line.Reference1 = GetReference1(transactionDP);
                         line.Notes = GetNotes(transactionDP);
@@ -370,7 +366,7 @@ using WebFreight.Web.Helpers;
             IAccountingContext context = AccountingContext.GetContext(tenant);
             InterestTransactionListQueryService interestTransactionQueryService = new InterestTransactionListQueryService(context);
             DateTime reportMonthLastDay = DateTimeStaticExtention.GetLastDayOfMonth(_InterestReportPM.InterestCalculationDate.Date);
-            IQueryable<InterestTransactionList> futureQuery =
+            IQueryable<InterestTransactionList> futureQuery = 
                 interestTransactionQueryService.GetFutureInterestTransactionsByInterestReportMonth(reportMonthLastDay,
                 _InterestReportPM.GLAccountId, tenant);
             if (futureQuery != null)
@@ -416,6 +412,7 @@ using WebFreight.Web.Helpers;
             }
             return futureInterestTransactions;
         }
+
 
 
         /// Creates and returns the first flat line of the interest report.
@@ -470,13 +467,26 @@ using WebFreight.Web.Helpers;
             return rv;
         }
 
-
         private string GetReference1(InterestTransactionProvider interestTransactionDP)
         {
+            string rv = string.Empty;
 
-            return interestTransactionDP.EntityType == InterestEntityTypeCodes.Journal
-                                                        ? interestTransactionDP.Reference1
-                                                        : interestTransactionDP.EntityNumber;
+
+            switch (interestTransactionDP.EntityType)   // InterestEntityIconCode
+            {
+                case InterestEntityTypeCodes.ARInvoice:
+                case InterestEntityTypeCodes.ARPayment:
+                case InterestEntityTypeCodes.Adjustments:
+                case InterestEntityTypeCodes.InterestReport:
+                    rv = interestTransactionDP.EntityNumber;
+                    break;
+                case InterestEntityTypeCodes.Journal:
+                    rv = interestTransactionDP.Reference1;
+                    break;
+                default:
+                    break;
+            }
+            return rv;
 
         }
 
@@ -486,6 +496,7 @@ using WebFreight.Web.Helpers;
                                             ? interestTransactionList.Reference1
                                             : interestTransactionList.Source;
         }
+
 
         private string GetNotes(InterestTransactionProvider interestTransactionDP)
         {
@@ -510,16 +521,12 @@ using WebFreight.Web.Helpers;
 
         }
 
-        private static void GetGLAccountDisplayNumber(int tenant, InterestDataProvider interestReportDP, InterestReportPM InterestReportPM)
+        private static void GetGLAccountDisplayNumber(int tenant, InterestDataProvider InterestReportDP, InterestReportPM interestReportPM)
         {
             GLAccountQueryService glAccountQuery = new GLAccountQueryService(tenant);
-            GLAccountPM gLAccount = glAccountQuery.GetSinglePM(InterestReportPM.GLAccountId, tenant);
-            if (!string.IsNullOrWhiteSpace(InterestReportPM.GLAccountId))
-            {
-                interestReportDP.GLAccountDisplayNumber = gLAccount.DisplayNumber;
-            }
+            GLAccountPM gLAccount = glAccountQuery.GetSinglePM(interestReportPM.GLAccountId, tenant);
+            InterestReportDP.GLAccountDisplayNumber = gLAccount.DisplayNumber;
         }
-
 
         private static void GetCurrency(int tenant,string currencyId, InterestDataProvider InterestReportDP)
         {
@@ -533,12 +540,11 @@ using WebFreight.Web.Helpers;
         }
 
 
-
-        private static string SetAllotmentCalculationEquation(InterestDataProvider InterestReportDP, InterestReportPM InterestReportPM)
+        private static string SetAllotmentCalculationEquation(InterestDataProvider InterestReportDP, InterestReportPM interestReportPM)
         {
-            if (InterestReportPM.CreditAllotmentPercentage != null)
+            if (interestReportPM.CreditAllotmentPercentage != null)
             {
-                return string.Concat(InterestReportPM.GLAccountInterestCreditLimit, " * ", '(', InterestReportPM.CreditAllotmentPercentage, " / 100)");
+                return string.Concat(interestReportPM.GLAccountInterestCreditLimit, " * ", '(', interestReportPM.CreditAllotmentPercentage, " / 100)");
             }
             return null;
         }

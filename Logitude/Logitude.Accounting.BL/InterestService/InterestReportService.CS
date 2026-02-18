@@ -438,9 +438,7 @@ namespace Logitude.Accounting.BL.InterestService
                 InterestCalculationDate = interestReport.InterestCalculationDate,
                 SearchFields = interestReport.SearchFields,
                 InvoiceAmount = (decimal?)AmountInLocalCurrency,
-                IsForeignCurrency = interestReport.IsForeignCurrency,
-                ReportCurrencyId = interestReport.ReportCurrencyId
-
+                
             };
 
             return interestReportPM;

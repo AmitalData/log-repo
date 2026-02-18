@@ -2,7 +2,12 @@
     <div class="data-row">
         <LogLabel [ObjectFieldName]="'Ref'" [ObjectTableName]="ObjectTableName" [DataContext]="externalLinkPM">
         </LogLabel>
-        <LogTextBox class="data-value" [ObjectFieldName]="'Ref'" [DataContext]="externalLinkPM" [ForceDisabled]="!isTenant0"></LogTextBox>
+        <LogTextBox class="data-value" [ObjectFieldName]="'Ref'" [DataContext]="externalLinkPM"></LogTextBox>
+    </div>
+    <div class="data-row">
+        <LogLabel [ObjectFieldName]="'Link'" [ObjectTableName]="ObjectTableName" [DataContext]="externalLinkPM">
+        </LogLabel>
+        <LogTextBox class="data-value" [ObjectFieldName]="'Link'" [DataContext]="externalLinkPM"></LogTextBox>
     </div>
     <div class="data-row">
         <LogLabel [ObjectFieldName]="'ExpirationDate'" [ObjectTableName]="ObjectTableName"
@@ -13,12 +18,12 @@
     <div class="data-row">
         <LogLabel [ObjectFieldName]="'Params'" [ObjectTableName]="ObjectTableName" [DataContext]="externalLinkPM">
         </LogLabel>
-        <LogTextBox class="data-value" [ObjectFieldName]="'Params'" [DataContext]="externalLinkPM" [ForceDisabled]="!isTenant0"></LogTextBox>
+        <LogTextBox class="data-value" [ObjectFieldName]="'Params'" [DataContext]="externalLinkPM"></LogTextBox>
     </div>
     <div class="data-row">
         <LogLabel [ObjectFieldName]="'ActivityLog'" [ObjectTableName]="ObjectTableName" [DataContext]="externalLinkPM">
         </LogLabel>
-        <BooleanFilter [ngClass]="{'disable-button': !isTenant0}" [SelectedValue]="externalLinkPM.ActivityLog ? 'True' : 'False'"
+        <BooleanFilter [SelectedValue]="externalLinkPM.ActivityLog ? 'True' : 'False'"
             (SelectedTypeValueChanged)="externalLinkPM.ActivityLog = $event === 'True'">
         </BooleanFilter>
     </div>

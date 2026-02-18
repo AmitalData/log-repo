@@ -2948,22 +2948,6 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             return cardBillToIds;
         }
 
-        public bool CheckIfArInvoiceCanBeReconcilied(string aRInvoiceId, int tenant, ARInvoiceLineRepository aRInvoiceLineRepository = null)
-        {
-            var arInvoiceIsMultiCurrency = repository.GetARInvoiceById(tenant, aRInvoiceId).Select(a => a.IsMultiCurrency).FirstOrDefault();
-            if (arInvoiceIsMultiCurrency)
-            {
-                if (aRInvoiceLineRepository == null)
-                {
-                    aRInvoiceLineRepository = new ARInvoiceLineRepository(tenant);
-                }
-                var arinvoiceLines = aRInvoiceLineRepository.GetInvoiceLinesByInvoiceId(aRInvoiceId, tenant);
-                var arinvoiceLinesCurrencies = arinvoiceLines.Select(x => x.ForiegnCurrencyId).Distinct().ToList();
-                return arinvoiceLinesCurrencies.Count > 1 ? false : true;
-            }
-            return true;
-        }
-
         #endregion Digital Portal 
     }
 }

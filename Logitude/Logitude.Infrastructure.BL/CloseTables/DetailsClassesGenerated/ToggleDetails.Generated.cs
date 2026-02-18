@@ -940,16 +940,7 @@ namespace Logitude.Infrastructure.BL
                 Description = "Payment Status based on Reco", 
                 Name = " A/P Invoice Payment Status based on Reconciliation", 
 			});
-
-
-            all.Add(new ToggleDetails()
-            {
-                SearchFields = "RFR, Revaluation on Foreign Reco",
-                Code = "RFR",
-                Description = "Revaluation on Foreign Reco",
-                Name = "Revaluation Journal on Foreign Currency Reconciliation",
-            });
-
+			 
             all.Add(new ToggleDetails()
             {    
                 Code = "RE2", 
@@ -1109,13 +1100,6 @@ namespace Logitude.Infrastructure.BL
                 Name = "Original Name For Child Account",
                 SearchFields = "OCA,Original Name For Child Account",
                 Description = "Original Name For Child Account",
-            });
-            all.Add(new ToggleDetails()
-            {
-                Code = "SSH",
-                Name = "Skip Steps on Hasavot",
-                SearchFields = "SSH,Skip Steps on Hasavot",
-                Description = "לדלג על השלבים עבור הסבות",
             });
             return all;
        }
