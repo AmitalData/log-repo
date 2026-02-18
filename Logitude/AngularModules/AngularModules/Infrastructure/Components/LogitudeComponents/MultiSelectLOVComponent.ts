@@ -142,7 +142,6 @@ export class MultiSelectLOVComponent implements OnInit, AfterContentChecked {
         this._CD.detectChanges();
     }
     ngAfterContentChecked() {      
-
         this._CD.detectChanges();
     }
 
