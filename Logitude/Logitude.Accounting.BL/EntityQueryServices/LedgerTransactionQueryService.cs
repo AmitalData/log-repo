@@ -4,7 +4,6 @@ using Logitude.Accounting.BL.DataContract;
 using Logitude.Accounting.BL.DataContract;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.EntityKeys;
-using Logitude.Accounting.Data.EntityListQueryServices;
 using Logitude.Accounting.Data.EntityLists;
 using Logitude.Accounting.Data.EntityLists;
 using Logitude.Accounting.Data.EntityPOCOs;
@@ -521,9 +520,9 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return this.repository.GetLedgerTransactionSumFromTo(gLAccointId, fromDate, toDate, tenant, currencyId);
         }
 
-        public List<GLAccountTotalByMonth> CalcGLAccountTotalByMonthByDateType(string DateTypeCode, DateTime fromDate, DateTime accoutingDateUntillNotInclude, int tenant, IQueryable<string> listOfAccId = null, LedgerTransactionBalanceFilter _param =null)
+        public List<GLAccountTotalByMonth> CalcGLAccountTotalByMonthByDateType(string DateTypeCode, DateTime fromDate, DateTime accoutingDateUntillNotInclude, int tenant, IQueryable<string> listOfAccId = null)
         {
-            return this.repository.CalcGLAccountTotalByMonthByDateType(DateTypeCode,fromDate, accoutingDateUntillNotInclude, tenant, listOfAccId, _param);
+            return this.repository.CalcGLAccountTotalByMonthByDateType(DateTypeCode,fromDate, accoutingDateUntillNotInclude, tenant, listOfAccId);
         }
         
         public List<CurrencySumOpenAmount> CalcCurrencySumOpenAmountByMonthByDateType(string DateTypeCode,  DateTime accoutingDateUntillNotInclude, int tenant, IQueryable<string> listOfAccId = null)
@@ -539,15 +538,6 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         {
             return this.repository.GetLedgerTransactionTotalLocalAmountFromTo(gLAccointId, fromDate, toDate, tenant);
         }
-
-
-        public List<CurrencySum> GetLedgerTransactionTotalLocalAmountFromToV2(IEnumerable<string> accountIds, DateTime fromDate, DateTime toDate, int tenant)
-        {
-            return this.repository.GetLedgerTransactionTotalLocalAmountFromToV2(accountIds, fromDate, toDate, tenant);
-        }
-
-
-
         public List<LedgerTransactionPM> GetByJournalId(string journalId, int tenant)
         {
             List<LedgerTransaction> ledgerTransactionPOCOs = null;
@@ -1744,12 +1734,6 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         public bool ExistsLedgerTransactionByReferenceGLAccountId(string reference1, string gLAccountId, int tenant)
         {
             return repository.ExistsLedgerTransactionByReferenceGLAccountId(reference1, gLAccountId, tenant);
-        }
-
-
-        public LedgerTransactionList GetSingleAsLiteForReco(string transactionId)
-        {
-            return repository.GetSingleAsLiteForReco(transactionId);
         }
     }
     public class JournalLineLedgerDTO

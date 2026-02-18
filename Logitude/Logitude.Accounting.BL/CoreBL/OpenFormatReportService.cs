@@ -3301,9 +3301,13 @@ namespace Logitude.Accounting.BL.CoreBL
 
 
 
-            byte[] bytearray = Encoding.UTF8.GetBytes(file);       
+
+            byte[] bytearray = Encoding.GetEncoding("Windows-1255").GetBytes(file);
 
             document.FileData = bytearray;
+
+
+
             docService.Create(document, document.FileData, contact.Id);
 
 
@@ -3814,7 +3818,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 FileName = "INI",
             };
 
-            byte[] bytearray = Encoding.UTF8.GetBytes(file);
+            byte[] bytearray = Encoding.GetEncoding("Windows-1255").GetBytes(file);
             document.FileData = bytearray;
             docService.Create(document, document.FileData, contact.Id);
 

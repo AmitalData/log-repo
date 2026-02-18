@@ -12,6 +12,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
     {
         ICommonDataContext commonDataContext;
 
+        public FreelancerGroupTypeRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
 
         public FreelancerGroupTypeRepository(int tenant)
         {

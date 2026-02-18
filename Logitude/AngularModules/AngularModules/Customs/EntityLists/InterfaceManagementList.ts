@@ -40,7 +40,6 @@ export class InterfaceManagementList {
 	EntityLockName: string;
 	IsCustomsFile: boolean;
 	IsUnifreight: boolean;
-	QueueDefinitionGroup: string;
 	
 }
  

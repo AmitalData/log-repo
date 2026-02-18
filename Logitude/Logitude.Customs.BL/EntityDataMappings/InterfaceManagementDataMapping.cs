@@ -13,7 +13,6 @@ using Logitude.Customs.Data;
 using Simplog.Server.Infrastructure;
 using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.Data.Repsitories;
-using Simplog.Server.Infrastructure.Helpers;
 
 namespace Logitude.Customs.BL.EntityDataMappings
 {
@@ -50,13 +49,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
         public void CustomPOCOToPM(InterfaceManagementPM entityPM, InterfaceManagement entityPOCO)
         {
-            var tenant = entityPM.Tenant;
-            if (tenant == 0)
-            {
-               tenant = SettingUtil.GetCurrentTenant();
-            }
-            
-            InterfaceTenantDefinitionRepository definitionRep = new InterfaceTenantDefinitionRepository(tenant);
+            InterfaceTenantDefinitionRepository definitionRep = new InterfaceTenantDefinitionRepository(entityPM.Tenant);
             InterfaceTenantDefinition definition = definitionRep.GetSingleDefinitionByCode(entityPM.Code, entityPM.Tenant);
 
             if (definition != null)

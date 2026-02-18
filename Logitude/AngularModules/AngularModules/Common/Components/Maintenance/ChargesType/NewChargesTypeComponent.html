@@ -48,26 +48,11 @@
                             </td>
 
                             <td style="width:230px;">
-                                <LogTextBox [ObjectFieldName]="'Code'" [IsNewEntityCall]="true" [Text]="Code" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                <LogTextBox [ObjectFieldName]="'Code'" [IsNewEntityCall]="true" [Text]="Code" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideLastColumn]="true"></LogTextBox>
                             </td>
 
-                            <td style="width: 18px;">
+                            <td colspan="2">
                                 <div></div>
-                            </td>
-
-                            <td *ngIf="AccountingActivated" style="width: 170px;">
-                                <LogLabel [ObjectFieldName]="'PayableDebitAccount'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                            </td>
-
-                            <td *ngIf="AccountingActivated" style="width:230px;">
-                                <LogLov [ObjectFieldName]="'PayableDebitGLAcountId'"
-                                        [SelectedValue]="PayableDebitGLAcountId"
-                                        [ObjectTableName]="ObjectTableName"
-                                        [DataContext]="DataContext"
-                                        [LookUpTableName]="'GLAccount'"
-                                        [DependencyFilter1Value]="false"
-                                        [DependencyFilter2Value]="'1'"  [QueryFilterItems]="PayableDebitGLAcountFilterItems">
-                                </LogLov>
                             </td>
                         </tr>
 
@@ -77,26 +62,11 @@
                             </td>
 
                             <td>
-                                <LogTextBox [ObjectFieldName]="'EnglishName'" [Text]="EnglishName" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                <LogTextBox [ObjectFieldName]="'EnglishName'" [Text]="EnglishName" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideLastColumn]="true"></LogTextBox>
                             </td>
 
-                            <td style="width: 18px;">
+                            <td colspan="2">
                                 <div></div>
-                            </td>
-
-                            <td *ngIf="AccountingActivated" >
-                                <LogLabel [ObjectFieldName]="'ReceivableCreditAccount'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                            </td>
-
-                            <td *ngIf="AccountingActivated" >
-                                <LogLov [ObjectFieldName]="'ReceivableCreditGLAccountId'"
-                                        [SelectedValue]="ReceivableCreditGLAccountId"
-                                        [ObjectTableName]="ObjectTableName"
-                                        [DataContext]="DataContext"
-                                        [LookUpTableName]="'GLAccount'" 
-                                        [DependencyFilter1Value]="false"
-                                        [DependencyFilter2Value]="'1'"  [QueryFilterItems]="ReceivableCreditGLAccountFilterItems">
-                                </LogLov>
                             </td>
                         </tr>
 
@@ -105,44 +75,18 @@
                                 <LogLabel [ObjectFieldName]="'LocalName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                             </td>
 
-                            <td>
-                                <LogTextBox [ObjectFieldName]="'LocalName'" [Text]="LocalName" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                            </td>
-
-                            <td style="width: 18px;">
-                                <div></div>
-                            </td>
-
-                            <td *ngIf="AccountingActivated">
-                                <LogLabel [ObjectFieldName]="'ViewOrder'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                            </td>
-
-                            <td *ngIf="AccountingActivated">
-                                <LogTextBox [ObjectFieldName]="'ViewOrder'" [Text]="ViewOrder" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                            <td style="padding-right:18px;">
+                                <LogTextBox [ObjectFieldName]="'LocalName'" [Text]="LocalName" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
                             </td>
 
                             <td style="width:20px;">
                                 <div></div>
                             </td>
 
-                            <td *ngIf="!AccountingActivated" style="font-size:12px;">{{'ChargesType.M.LocalLanguageInvoice' | TextCodeTranslationPipe}}</td>
+                            <td style="font-size:12px;">{{'ChargesType.M.LocalLanguageInvoice' | TextCodeTranslationPipe}}</td>
                         </tr>
 
-                        <tr *ngIf="AccountingActivated" class="FormFieldRow">
-                            <td>
-                                <LogLabel [ObjectFieldName]="'VatTypeId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                            </td>
-
-                            <td>
-                                <LogLov [ObjectFieldName]="'VatTypeId'"
-                                        [ObjectTableName]="ObjectTableName"
-                                        [DataContext]="DataContext"
-                                        [LookUpTableName]="'VatType'" [DependencyFilter2Value]="false">
-                                </LogLov>
-                            </td>
-                        </tr>
-
-                        <tr *ngIf="!AccountingActivated" class="FormFieldRow">
+                        <tr class="FormFieldRow">
                             <td>
                                 <LogLabel [ObjectFieldName]="'ChargesGroupId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                             </td>
@@ -156,14 +100,14 @@
                                 </LogLov>
                             </td>
 
-                            <td colspan="2">
+                            <td>
                                 <div></div>
                             </td>
 
                             <td style="font-size:12px;">{{'ChargesType.M.ConcentratingIntoGroups' | TextCodeTranslationPipe}}</td>
                         </tr>
 
-                        <tr *ngIf="!AccountingActivated" class="FormFieldRow">
+                        <tr class="FormFieldRow">
                             <td>
                                 <LogLabel [ObjectFieldName]="'MeasurementId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                             </td>
@@ -174,18 +118,19 @@
                                         [DataContext]="DataContext"
                                         [LookUpTableName]="'Measurement'"
                                         [DependencyFilter2Value]="false"
+                                        [HideLastColumn]="true"
                                         [QueryFilterItems]="MeasurementsQueryFilters">
                                 </LogLov>
                             </td>
 
-                            <td colspan="2">
+                            <td>
                                 <div></div>
                             </td>
 
                             <td style="font-size:12px;">{{'ChargesType.M.ChargesCalculation' | TextCodeTranslationPipe}}</td>
                         </tr>
 
-                        <tr *ngIf="!AccountingActivated" class="FormFieldRow">
+                        <tr class="FormFieldRow">
                             <td>
                                 <LogLabel [ObjectFieldName]="'ContainerMeasurementId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                             </td>
@@ -195,18 +140,19 @@
                                         [ObjectTableName]="ObjectTableName"
                                         [DataContext]="DataContext"
                                         [LookUpTableName]="'Measurement'"
+                                        [HideLastColumn]="true"
                                         [QueryFilterItems]="MeasurementsQueryFilters">
                                 </LogLov>
                             </td>
 
-                            <td colspan="2">
+                            <td>
                                 <div></div>
                             </td>
 
                             <td style="font-size:12px;">{{'ChargesType.M.OoceanInlandShipments' | TextCodeTranslationPipe}}</td>
                         </tr>
 
-                        <tr *ngIf="!AccountingActivated && ChargesGroupCode  == 'FRT'">
+                        <tr *ngIf="ChargesGroupCode == 'FRT'">
                             <td colspan="4" style="margin-left:5px; margin-top:5px; font-size:13px; color:darkgoldenrod;">{{'ChargesType.M.BelongToFreight' | TextCodeTranslationPipe}}</td>
                         </tr>
 
@@ -771,7 +717,7 @@
                                                         </td>
                                                     </tr>
 
-                                                    <tr *ngIf="AccountingActivated" class="FormFieldRow">
+                                                    <tr class="FormFieldRow">
                                                         <td>
                                                             <LogLabel [ObjectFieldName]="'ViewOrder'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                         </td>
@@ -810,7 +756,7 @@
                         <div></div>
                     </td>
 
-                    <td *ngIf="!AccountingActivated" style="width: 60px;">
+                    <td style="width: 60px;">
                         <button class="Button" (click)="PreviousButtonClicked()" [disabled]="!IsPreviousEnabled">Previous</button>
                     </td>
 
@@ -818,7 +764,7 @@
                         <div></div>
                     </td>
 
-                    <td *ngIf="!AccountingActivated" style="width: 60px;">
+                    <td style="width: 60px;">
                         <button class="Button" (click)="NextButtonClicked()" [disabled]="!IsNextEnabled">Next</button>
                     </td>
 
@@ -827,7 +773,7 @@
                     </td>
 
                     <td style="width: 60px;">
-                        <button class="RedButton" (click)="FinishButtonClicked()" [disabled]="!IsFinishEnabled && !AccountingActivated">Finish</button>
+                        <button class="RedButton" (click)="FinishButtonClicked()" [disabled]="!IsFinishEnabled">Finish</button>
                     </td>
 
                     <td style="width: 3px;">

@@ -1,5 +1,4 @@
-import { Component, ViewChild, ViewContainerRef, ChangeDetectorRef } from '@angular/core';
-import {BehaviorSubject,Observable} from 'rxjs';
+import { Component, ViewChild, ViewContainerRef, EventEmitter, ChangeDetectorRef } from '@angular/core';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
@@ -18,7 +17,7 @@ import { DeclarationReferantDataPMService } from '../../Services/StandardPMs/Dec
 import { ExceptionReasonExtendedListService } from '../../Services/ExtendedLists/ExceptionReasonExtendedListService';
 import { ExceptionReasonListService } from '../../Services/StandardLists/ExceptionReasonListService';
 import { ExceptionReasonList } from '../../EntityLists/ExceptionReasonList';
-import {ReferantExceptionExtendedPMService} from  '../../Services/ExtendedPMs/ReferantExceptionExtendedPMService';
+
 import { EntityResourceService } from '../../../Infrastructure/Services/EntityResourceService';
 import { PhysicalChecksCloseSharedDataService } from '../../Services/DataChange/PhysicalChecksCloseSharedDataService';
 import { CourierMasterService } from 'Customs/Services/Others/CourierMasterService';
@@ -60,9 +59,6 @@ export class FieldTemplateComponent {
     _declarationReferantDataPMService: DeclarationReferantDataPMService = new DeclarationReferantDataPMService();
     _declarationReferantDataWebService: DeclarationReferantDataWebService = new DeclarationReferantDataWebService();
     private _ListComponentArgs: ListComponentArgs;
-    isShowExceptionList$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-    showExceptionList$: Observable<boolean> = this.isShowExceptionList$.asObservable();
-
     @ViewChild('SpotLight', { read: ViewContainerRef, static: false }) SpotLightViewContainerRef: ViewContainerRef;
     RowIndex: any;
     constructor(
@@ -71,10 +67,8 @@ export class FieldTemplateComponent {
         private _physicalChecksCloseSharedDataService: PhysicalChecksCloseSharedDataService,
         private _logisticActionRequestsCloseSharedDataService: LogisticActionRequestsCloseSharedDataService,
         private logtuideTableDataService: LogtuideTableDataService,
-        private pendingByKeywordWebService: PendingByKeywordWebService
+        private pendingByKeywordWebService: PendingByKeywordWebService,
     ) {
-        this.showExceptionList$ = this.isShowExceptionList$.asObservable();
-
         if (SessionLocator.SelectedSession.CurrentListComponent != null) {
             this._ListComponentArgs = SessionLocator.SelectedSession.CurrentListComponent._ListComponentArgs;
         } else {
@@ -199,13 +193,6 @@ export class FieldTemplateComponent {
         }
         if (this.Entity['IsClosedForFollowUp'] == "1") {
             this.closingOpening = TextCodeTranslator.Translate("Customs.DeclarationReferantData.O.OpenCustomFile")
-        }
-        if(this.Entity['ExceptionReasonsList']!=null){
-
-            var referantExceptionExtendedPMService = new ReferantExceptionExtendedPMService();
-            referantExceptionExtendedPMService.GetByDecId(this.Entity.DeclarationId).subscribe((response: ServiceResponse) => {
-                this.isShowExceptionList$.next(response.Result[0].Status === 'A' );
-            });
         }
     }
 

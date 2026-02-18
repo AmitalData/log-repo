@@ -29,11 +29,6 @@ export class API_MainService extends BaseService {
 		// this.ApiURL = this.BaseURL + 'api/ShipmentDomain';
 	}
 
-	GetCustomsBookLastUpdateDateByTenant(tenant: number) {
-		const url = `${this._apiUrl}CB_CustomsItemExtended/GetCustomsBookLastUpdateDateByTenant?tenant=${tenant}`;
-		return this.Get(url);
-	}
-	
 	AddNEWRemarksClassification(data) {
 		const url = `${this._apiUrl}CB_CustomsItemExtended/AddNEWRemarksClassification`;
 		// const url = `${this._apiUrl}RemarksClassifications/Post`;
@@ -49,7 +44,7 @@ export class API_MainService extends BaseService {
 		const url = `${this._apiUrl}CB_CustomsItemExtended/DeleteRemarksClassification`;
 		return this.Post(url, data);
 	}
-
+	
 	GetDefaultCB_CollapseSearchHierarchy(tenant: number) {
 		const url = `${this._apiUrl}CB_CustomsItemExtended/GetDefaultCB_CollapseSearchHierarchy?tenant=${tenant}`;
 		return this.Get(url);
@@ -74,14 +69,9 @@ export class API_MainService extends BaseService {
 		const url = `${this._apiUrl}CB_CustomsItemExtended/GetClassifGuidanceDetails?classificationGuidanceNumber=${classificationGuidanceNumber}&tenant=${tenant}`;
 		return this.Get(url);
 	}
-
+	
 	GetMekachDetails(customsItemId: number, tenant: number) {
 		const url = `${this._apiUrl}CB_CustomsItemExtended/GetMekachDetails?customsItemId=${customsItemId}&tenant=${tenant}`;
-		return this.Get(url);
-	}
-
-	GetMekachDocument(documentId: number, tenant: number) {
-		const url = `${this._apiUrl}CB_CustomsItemExtended/GetMekachDocument?documentId=${documentId}&tenant=${tenant}`;
 		return this.Get(url);
 	}
 

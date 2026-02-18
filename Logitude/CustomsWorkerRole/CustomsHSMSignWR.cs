@@ -97,13 +97,18 @@ where not exists(select *
 
 
                 this.myClass = this.GetType().Name;
-                int tenantConfig = SettingUtil.GetTenantDBFromConfig();
-                var customsEnvironmentSettingQueryService = new CustomsEnvironmentSettingQueryService(tenantConfig);
-                var customsEnvironmentSettingPM = customsEnvironmentSettingQueryService.GetEnvironmentSettingPM(tenantConfig) ?? new CustomsEnvironmentSettingPM();
 
+                var customsEnvironmentSettingQueryService = new CustomsEnvironmentSettingQueryService(1);
+                var customsEnvironmentSettingPM = customsEnvironmentSettingQueryService.GetEnvironmentSettingPM() ?? new CustomsEnvironmentSettingPM();
+
+                //if (CustomDbQueueService.SupportedRabbitMQList.Contains(SBQueueNames.SendWEBAPIMessage2MamanQ.ToString()) && CustomDbQueueService.IsFeatureOnRABBITMQ_Communication() && customsEnvironmentSettingPM.UseRabbitMQ)
+                //{
+                //    base.WorkerQueueType = WorkerQueueType.RabbitMQ;
+                //}
+                //else
                 {
                     base.WorkerQueueType = WorkerQueueType.DB;
-					_CustomDbQueueService = new CustomDbQueueService(myClass, tenantConfig, queueDefinitionCode: this.BatchServiceCode);
+					_CustomDbQueueService = new CustomDbQueueService(myClass, SettingUtil.GetTenantDBFromConfig());
                 }
 
 
@@ -287,7 +292,7 @@ where not exists(select *
                     .SignCustomsRequest(
                     _Tenant, customsRequestsSheetId,
                     requestParamsBase.SignByPersonalId, companypersonal,
-                    setting.CustomsAgentId,bytesToSign, requestParamsBase.HsmStationContext);
+                    setting.CustomsAgentId,bytesToSign);
 
                 MessagingServiceFactoryHelper.InitContainer();
                 var mySendSheetSignModel = new SendSheetSignModel();
