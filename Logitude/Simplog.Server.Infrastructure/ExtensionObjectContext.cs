@@ -1,7 +1,7 @@
 ﻿
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
+
 using System.Data.Entity.Core.Objects;
 using System.Linq;
 using System.Linq.Expressions;
@@ -65,35 +65,38 @@ using Simplog.Server.Infrastructure;
             return myOut;
         }
     }
-	public static List<T> GetListNOWAITWhere<T>(this System.Data.Entity.Core.Objects.ObjectContext db, Expression<Func<T, bool>> filter) where T : class
-	{
-		var newselectSql = string.Empty;
-		var queryFilter = db.CreateObjectSet<T>().Where(filter);
+    public static List<T> GetListNOWAITWhere<T>(this System.Data.Entity.Core.Objects.ObjectContext db, Expression<Func<T, bool>> filter) where T : class
+    {
 
 
-        if (!queryFilter.Take(1).Any()) 
-		{
-			return new List<T>(); 
-		}
-		var query = queryFilter as ObjectQuery;
+        var newselectSql = "";
+        //var query = db.Set<T>().Where(filter);
+        var query = db.CreateObjectSet<T>().Where(filter) as ObjectQuery;
 
-		string selectSql = query.ToTraceString();
+        string selectSql = query.ToTraceString();
 
-		if (LogitudeSettings.DatabaseManagementSystem == "oracle")
-		{
-			newselectSql = selectSql + " FOR UPDATE NOWAIT ";
-		}
-		else
-		{
-			var indexOfWhere = selectSql.LastIndexOf("WHERE ");
-			var sqlServer = " WITH(UPDLOCK, NOWAIT) ";
 
-			newselectSql = selectSql.Insert(indexOfWhere, sqlServer);
-		}
-		var parameters = query.Parameters.Select(p => GetDbParameter(p.Name, p.Value)).ToArray();
+        //newselectSql = "SELECT 1 MyCount  " + selectSql.Substring(indexOffROM) + " FOR UPDATE NOWAIT ";
 
-		return db.ExecuteStoreQuery<T>(newselectSql, parameters).ToList();
-	}
+        if (LogitudeSettings.DatabaseManagementSystem == "oracle")
+        {
+            newselectSql = selectSql + " FOR UPDATE NOWAIT ";
+            //newselectSql = selectSql + " FOR UPDATE WAIT 1 ";
+        }
+        else
+        {
+            var indexOfWhere = selectSql.LastIndexOf("WHERE ");
+            var sqlServer = " WITH(NOWAIT) ";
+            sqlServer = " WITH(UPDLOCK, NOWAIT) ";
+
+            newselectSql = selectSql.Insert(indexOfWhere, sqlServer);
+        }
+        var parameters = query.Parameters.Select(p => GetDbParameter(p.Name, p.Value)).ToArray();
+
+        //db.Database.ExecuteSqlCommand(deleteSql, parameters);
+        return db.ExecuteStoreQuery<T>(newselectSql, parameters).ToList();
+
+    }
 	public static List<T> GetListWhere<T>(this System.Data.Entity.DbContext dbContext, Expression<Func<T, bool>> filter) where T : class
 	{
 		using (var myIDbContextLogger = (dbContext as DbContextBase).CreateLogger())
@@ -156,9 +159,9 @@ using Simplog.Server.Infrastructure;
     {
         if (LogitudeSettings.DatabaseManagementSystem == "oracle")
         {
-            return new Devart.Data.Oracle.OracleParameter(Name, Value ?? DBNull.Value) as System.Data.Common.DbParameter;
+            return new Devart.Data.Oracle.OracleParameter(Name, Value) as System.Data.Common.DbParameter;
         }
-        return new System.Data.SqlClient.SqlParameter(Name, Value ?? DBNull.Value) as System.Data.Common.DbParameter;
+        return new System.Data.SqlClient.SqlParameter(Name, Value) as System.Data.Common.DbParameter;
 
     }
         public static IEnumerable<T> UpdateWhereNotFast<T>(this System.Data.Entity.DbSet<T> Input, Func<T, Boolean> Objects, Action<T> UpdateAction) 

@@ -14,7 +14,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
        DocumentTypeCategoryRepository repository;
 
-
+        public DocumentTypeCategoryQuery()
+        {
+            repository = new DocumentTypeCategoryRepository(); 
+        }
 
         public DocumentTypeCategoryQuery(int tenant)
         {

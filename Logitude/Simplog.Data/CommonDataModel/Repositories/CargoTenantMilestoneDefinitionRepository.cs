@@ -15,7 +15,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
             commonDataContext = context;
         }
 
-
+        public CargoTenantMilestoneDefinitionRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
 
         public CargoTenantMilestoneDefinitionRepository(int tenant)
         {

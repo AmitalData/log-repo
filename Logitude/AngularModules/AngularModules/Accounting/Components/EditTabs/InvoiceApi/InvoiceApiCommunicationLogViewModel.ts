@@ -1,5 +1,5 @@
-﻿import { InvoiceApiStatusList } from "Accounting/EntityLists/InvoiceApiStatusList";
-import { InvoiceApiStepList } from "Accounting/EntityLists/InvoiceApiStepList";
+﻿import { InvoiceApiStepList } from "Accounting/EntityLists/InvoiceApiStepList";
+import { set } from "cypress/types/lodash";
 
 export class InvoiceApiCommunicationLogViewModel {
     Step: string;
@@ -11,25 +11,25 @@ export class InvoiceApiCommunicationLogViewModel {
     AllowedViewXml: boolean;
     StepList: InvoiceApiStepList
 
-    public constructor(stepList:InvoiceApiStepList, entity: any,statusList: InvoiceApiStatusList[])  {
+    public constructor(stepList:InvoiceApiStepList, entity: any)  {
 
         this.StepList = stepList;
         this.Step = stepList.Code;
         this.Name = stepList.EnglishName;
         this.LocalName = stepList.LocalName;
-        if(stepList.Code < entity.Step){ 
-            this.Status = statusList?.find((s: any) => s.StatusCode === InvoiceApiStatusEnum.Done)?.StatusName;
+        if(stepList.Code < entity.StepNumber){ 
+            this.Status = "4";
         } 
         else{
             if(stepList.Code === entity.Step)
-                this.Status = statusList?.find((s: any) => s.StatusCode === entity.StatusCode)?.StatusName;
+                this.Status = entity.StatusCode;
             else
-                this.Status = statusList?.find((s: any) => s.StatusCode === InvoiceApiStatusEnum.Pending)?.StatusName;
+                this.Status = "2";
         }      
-        this.AllowedResend = stepList.IsAllowResend && stepList.Code === entity.Step && entity.StatusCode === InvoiceApiStatusEnum.Failed;
-        this.AllowedViewXml =  Number(entity.Step) >= Number(InvoiceApiStepEnum.GetInvoiceApiInvoicesList)  && Number(stepList.Code) >= Number(InvoiceApiStepEnum.GetInvoiceApiInvoicesList);
+        this.AllowedResend = stepList.IsAllowResend && stepList.Code === entity.Step && stepList.Code === "5";
+        this.AllowedViewXml =  stepList.Code === "4" &&  (entity.Step === "4" && entity.Status === "4"|| entity.Step > "4");
     }
-  
+
 
 
    
@@ -37,23 +37,4 @@ export class InvoiceApiCommunicationLogViewModel {
 
 
 
-}
-
-
-export enum InvoiceApiStatusEnum {
-    Created = "1",
-    Pending = "2",
-    InProgress = "3",
-    Done = "4",
-    Failed = "5"
-}
-export enum InvoiceApiStepEnum {
-    OpenInvoiceApiSession = "1",
-    CloseInvoiceApiSession = "2",
-    GetInvoiceApiInvoicesList = "3",
-    GetInvoiceApiInvoice = "4",
-    GenerateInvoice = "5",
-    GetConfirmationNumber = "6",
-    ApproveInvoice = "7",
-    PrintOrSendInvoice = "8"
 }
