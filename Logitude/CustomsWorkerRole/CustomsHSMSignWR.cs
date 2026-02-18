@@ -103,7 +103,7 @@ where not exists(select *
 
                 {
                     base.WorkerQueueType = WorkerQueueType.DB;
-					_CustomDbQueueService = new CustomDbQueueService(myClass, tenantConfig, queueDefinitionCode: this.BatchServiceCode);
+					_CustomDbQueueService = new CustomDbQueueService(myClass, tenantConfig);
                 }
 
 
@@ -287,7 +287,7 @@ where not exists(select *
                     .SignCustomsRequest(
                     _Tenant, customsRequestsSheetId,
                     requestParamsBase.SignByPersonalId, companypersonal,
-                    setting.CustomsAgentId,bytesToSign, requestParamsBase.HsmStationContext);
+                    setting.CustomsAgentId,bytesToSign);
 
                 MessagingServiceFactoryHelper.InitContainer();
                 var mySendSheetSignModel = new SendSheetSignModel();

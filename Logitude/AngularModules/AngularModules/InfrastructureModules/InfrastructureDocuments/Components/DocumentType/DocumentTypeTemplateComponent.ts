@@ -43,7 +43,7 @@ export class DocumentTypeTemplateComponent extends BaseComponent implements OnIn
     public documentTypePMService: DocumentTypePMService;
     @Output() ReloadTemplates: EventEmitter<any> = new EventEmitter();
 
-    constructor() {
+constructor() {
         super();
          
         this.documentTypePMService = new DocumentTypePMService();;
@@ -240,9 +240,7 @@ export class DocumentTypeTemplateComponent extends BaseComponent implements OnIn
 
             logWindow.WindowArgs = windowArgs;
             logWindow.Show("./InfrastructureModules/InfrastructureDocuments/Components/DocumentComponent/HtmlDocumentPreviewComponent");
-            logWindow.WindowClosed.subscribe((res: any) => {
-                this.ReloadTemplates.emit("reload");
-            })  
+
         }
 
         else {
@@ -279,10 +277,6 @@ export class DocumentTypeTemplateComponent extends BaseComponent implements OnIn
                         this.designerPopUpClosed();
                     }
                 }, 200);
-
-                logWindow.WindowClosed.subscribe((res: any) => {
-                this.ReloadTemplates.emit("reload");
-                })   
            
         }
 
