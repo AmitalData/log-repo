@@ -62,6 +62,11 @@ export class TrailBalanceFiltersComponent extends BaseComponent
     ChartOfAccountsSelectedValue:string
     ChartOfAccountsTypeSelectedValue: string;
 
+
+    private static readonly A_OPTION     = 'A_OPTION';
+    private static readonly B_OPTION     = 'B_OPTION';    
+    private static readonly C_OPTION     = 'C_OPTION';
+
     constructor()
     {
         super();
@@ -180,9 +185,17 @@ export class TrailBalanceFiltersComponent extends BaseComponent
                 case "DetailedForVendors":
                     this.DetailedForVendors = queryFilterItem.FieldValue;
                                                             break;
-                case "DontShowCardsWith0Balance":
-                    this.DontShowCardsWith0Balance = queryFilterItem.FieldValue;
-                                                                break;
+                //case "DontShowCardsWith0Balance":
+                //    this.DontShowCardsWith0Balance = queryFilterItem.FieldValue;
+                //                                                break;
+
+                 case "SelectedBalance":
+                 {  
+                    this.BuildFilterList();
+                    this.SelectedBalanceOptionFilter = queryFilterItem.FieldValue;
+                                                                 break;
+                 }
+
                 case "ChartOfAccountId":
                     this.ChartOfAccountId = queryFilterItem.FieldValue;
                                                                     break;
@@ -343,12 +356,33 @@ export class TrailBalanceFiltersComponent extends BaseComponent
     InitializeComponent(myReportsPreview: ReportsPreviewComponent)
     {
         this.ReportsPreview = myReportsPreview;
-
-
-
-
         //this.BuildFilterList();
     }
+
+    public BalanceOptionsFilterList: CodeNameClass[];
+    private BuildFilterList() {
+        this.BalanceOptionsFilterList = [];
+        this.BalanceOptionsFilterList.push(new CodeNameClass(TrailBalanceFiltersComponent.A_OPTION, "Without balance 0 cards that don't have any transactions",
+            TextCodeTranslator.Translate("Accounting.General.O.AllAccountsOption")));
+
+        this.BalanceOptionsFilterList.push(new CodeNameClass(TrailBalanceFiltersComponent.B_OPTION, "No balanced accounts in the period",
+            TextCodeTranslator.Translate("Accounting.General.O.WithTransactionsOption")));
+
+        this.BalanceOptionsFilterList.push(new CodeNameClass(TrailBalanceFiltersComponent.C_OPTION, "Show all accounts",
+            TextCodeTranslator.Translate("Accounting.General.O.WithTransactionsOption")));
+
+        this.SelectedBalanceOptionFilter = this.BalanceOptionsFilterList.filter(d => d.Code === TrailBalanceFiltersComponent.A_OPTION)[0];
+    }
+
+    private selectedBalanceOptionFilter: CodeNameClass;
+    get SelectedBalanceOptionFilter() { return this.selectedBalanceOptionFilter; }
+    set SelectedBalanceOptionFilter(value: CodeNameClass) {
+        if (this.selectedBalanceOptionFilter !== value) {
+            this.selectedBalanceOptionFilter = value;
+        }
+    }
+
+
     private fromDate: Date;
     public get FromDate() { return this.fromDate; }
     public set FromDate(value: Date)
@@ -441,14 +475,14 @@ export class TrailBalanceFiltersComponent extends BaseComponent
         }
     }
 
-    private dontShowCardsWith0Balance: boolean;
+    /*private dontShowCardsWith0Balance: boolean;
     get DontShowCardsWith0Balance() { return this.dontShowCardsWith0Balance; }
     set DontShowCardsWith0Balance(value: boolean)
     {
         if (this.dontShowCardsWith0Balance != value) {
             this.dontShowCardsWith0Balance = value;
         }
-    }
+    }*/
 
     private detailedForVendors: boolean;
     get DetailedForVendors() { return this.detailedForVendors; }
@@ -695,7 +729,8 @@ export class TrailBalanceFiltersComponent extends BaseComponent
         this.queryFilterItems.push(new QueryFilterItem("DetailedForJobs", this.DetailedForJobs, "boolean"));
         this.queryFilterItems.push(new QueryFilterItem("DetailedForVendors", this.DetailedForVendors, "boolean"));
 
-        this.queryFilterItems.push(new QueryFilterItem("DontShowCardsWith0Balance", this.DontShowCardsWith0Balance, "boolean"));
+        //this.queryFilterItems.push(new QueryFilterItem("DontShowCardsWith0Balance", this.DontShowCardsWith0Balance, "boolean"));
+        this.queryFilterItems.push(new QueryFilterItem("SelectedBalance", this.SelectedBalanceOptionFilter.Code));
         this.queryFilterItems.push(new QueryFilterItem("ChartOfAccountId", this.ChartOfAccountId, "String"));
 
         if(this.selectedChartOfAccountsTypes)

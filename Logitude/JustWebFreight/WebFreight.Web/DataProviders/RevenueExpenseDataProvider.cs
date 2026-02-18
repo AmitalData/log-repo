@@ -42,6 +42,7 @@ namespace WebFreight.Web.DataProviders
         public string ChartOfAccountsTypeEnglish { get; set; }
         public string ChartOfAccountsEnglish { get; set; }
         public string GLAccountEnglish { get; set; }
+        public string SelectedBalance { get; set; }
 
     }
 

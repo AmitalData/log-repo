@@ -1,98 +1,95 @@
-﻿using Logitude.Accounting.BL.CoreBL.Reports;
-using Logitude.Accounting.BL.EntityQueryServices;
-using Logitude.Accounting.Data;
-using Logitude.Accounting.Data.EntityListQueryServices;
-using Logitude.Accounting.Data.EntityLists;
-using Logitude.Accounting.Data.EntityPOCOs;
-using Logitude.Accounting.Data.Enums;
-using Logitude.Accounting.Data.Repositories;
-using Logitude.Accounting.Def.EntityPMs;
-using Logitude.BL.CommonDataModel.BusinessUnitFilters;
-using Logitude.BL.CommonDataModel.EntityLists;
-using Logitude.BL.CommonDataModel.EntityPMs;
-using Logitude.BL.CommonDataModel.EntityQueries;
-using Logitude.BL.CommonDataModel.Tools.EntityService;
-using Logitude.BL.DataContracts;
-using Logitude.BL.GlobalModel.EntityLists;
-using Logitude.BL.GlobalModel.EntityQueries;
-using Logitude.BL.Helpers;
-using Logitude.BL.InfrastructureModel.EntityPMs;
-using Logitude.BL.InfrastructureModel.EntityQueries;
-using Logitude.BL.InvoiceModel.CustomFilters;
-using Logitude.BL.InvoiceModel.EntityLists;
-using Logitude.BL.InvoiceModel.EntityQueries;
-using Logitude.BL.QuoteModel;
-using Logitude.BL.QuoteModel.EntityLists;
-using Logitude.BL.QuoteModel.EntityQueries;
-using Logitude.BL.Resolvers;
-using Logitude.BL.ShipmentsModel.CustomFilters;
-using Logitude.BL.ShipmentsModel.EntityLists;
-using Logitude.BL.ShipmentsModel.EntityPMs;
-using Logitude.BL.ShipmentsModel.EntityQueries;
-using Logitude.CRM.Data;
-using Logitude.CRM.Data.EntityListQueryServices;
-using Logitude.CRM.Data.EntityLists;
-using Logitude.CRM.Data.EntityPOCOs;
-using Logitude.CRM.Data.Repsitories;
-using Logitude.Server.Tools;
-using Logitude.Server.Tools.Helpers;
-using Logitude.TimeManagement.Data;
-using Logitude.TimeManagement.Data.EntityPOCOs;
-using Logitude.TimeManagement.Data.Repositories;
-using Logitude.WarehouseLib.BL.DataContracts;
-using Logitude.WarehouseLib.BL.EntityQueryServices;
-using Microsoft.Azure.Management.ResourceManager.Models;
-using Microsoft.Practices.ObjectBuilder2;
-using Newtonsoft.Json;
-using NLog;
-using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; 
-using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.Helpers;
-using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; 
-using Simplog.Data.InfrastructureModel.Repositories;
-using Simplog.Data.InvoiceModel;
-using Simplog.Data.InvoiceModel.EntityPOCOs;
-using Simplog.Data.InvoiceModel.Repositories;
-using Simplog.Data.QuoteModel.EntityPOCOs;
-using Simplog.Data.QuoteModel.Repositories;
-using Simplog.Data.ShipmentsModel;
-using Simplog.Data.ShipmentsModel.EntityPOCOs;
-using Simplog.Data.ShipmentsModel.Repositories;
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Simplog.Global.Data.GlobalModel.Repositories;
-using Simplog.Server.Infrastructure;
-using Simplog.Server.Infrastructure.DataContracts;
-using Simplog.Server.Infrastructure.Helpers;
-using System;
-using System.Collections;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Data;
 using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using System.Transactions;
-using System.Web;
 using System.Web.Services;
-using System.Windows.Media;
 using System.Xml.Serialization;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Simplog.Data.ShipmentsModel.Repositories;
+using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityQueries;
 using WebFreight.Web.DataContracts;
 using WebFreight.Web.DataProviders;
-using WebFreight.Web.Helpers;
-using WebFreight.Web.Helpers.DataProviderHelpers;
-using WebFreight.Web.Helpers.Reports;
+using Logitude.BL.ShipmentsModel.EntityLists;
+using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
+using Simplog.Data.InvoiceModel.Repositories;
+using Logitude.BL.InvoiceModel.EntityQueries;
+using Logitude.BL.InvoiceModel.EntityLists;
+using Simplog.Data.Helpers;
+using Simplog.Data.QuoteModel.Repositories;
+using Logitude.BL.QuoteModel.EntityQueries;
+using Simplog.Data.QuoteModel.EntityPOCOs;
+using Logitude.BL.QuoteModel.EntityLists;
+using Simplog.Server.Infrastructure.DataContracts;
+using Simplog.Server.Infrastructure.Helpers;
+using Logitude.BL.ShipmentsModel.EntityQueries;
+using Logitude.CRM.Data.EntityListQueryServices;
+using Logitude.CRM.Data;
+using Logitude.CRM.Data.EntityLists;
+using Logitude.BL.ShipmentsModel.EntityPMs;
+using Logitude.CRM.Data.Repsitories;
+using Logitude.CRM.Data.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.Repositories;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Server.Infrastructure;
+using System.Transactions;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.Repositories;
 using WebFreight.Web.InfrastructureModel.DomainServices;
-using WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting;
 using WebFreight.Web.Security;
-using WebFreight.Web.Services;
-using WebFreight.Web.WebServices;
+using Logitude.BL.CommonDataModel.BusinessUnitFilters;
+using System.ComponentModel.DataAnnotations;
+using Logitude.Server.Tools.Helpers;
+using Logitude.BL.QuoteModel;
+using Logitude.BL.InvoiceModel.CustomFilters;
+using Logitude.BL.ShipmentsModel.CustomFilters;
+using Logitude.BL.Helpers;
+using Simplog.Data.ShipmentsModel;
+using Simplog.Data.CommonDataModel;
+using Simplog.Data.InvoiceModel;
+using Logitude.WarehouseLib.BL.EntityQueryServices;
+using Logitude.WarehouseLib.BL.DataContracts;
+using Logitude.TimeManagement.Data.Repositories;
+using Logitude.TimeManagement.Data.EntityPOCOs;
+using Logitude.TimeManagement.Data;
+using Logitude.Accounting.BL.CoreBL.Reports;
+using Logitude.Accounting.Data.Repositories;
+using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.BL.GlobalModel.EntityQueries;
+using Logitude.BL.GlobalModel.EntityLists;
+using Logitude.BL.CommonDataModel.EntityLists;
 using static Logitude.Accounting.BL.CoreBL.Reports.RevenueExpenseReportParam;
+using Logitude.Accounting.BL.EntityQueryServices;
+using Logitude.Accounting.Def.EntityPMs;
+using Logitude.Server.Tools;
+using System.Data;
+using Newtonsoft.Json;
+using Logitude.Accounting.Data;
+using WebFreight.Web.Helpers.DataProviderHelpers;
+using System.Text;
+using System.Web;
+using Logitude.BL.DataContracts;
+using Simplog.Data.InfrastructureModel;
+using Logitude.BL.InfrastructureModel.EntityQueries;
+using Logitude.Accounting.Data.EntityListQueryServices;
+using Logitude.Accounting.Data.EntityLists;
+using Logitude.BL.InfrastructureModel.EntityPMs;
+using Logitude.BL.Resolvers;
+using WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting;
+using Logitude.BL.CommonDataModel.Tools.EntityService;
+using System.Reflection;
+using System.Collections;
+using WebFreight.Web.Helpers;
+using WebFreight.Web.Helpers.Reports;
+using WebFreight.Web.WebServices;
+using WebFreight.Web.Services;
+using System.Threading.Tasks;
+using NLog;
+using System.Windows.Media;
+using Microsoft.Azure.Management.ResourceManager.Models;
+using Microsoft.Practices.ObjectBuilder2;
 //using NPOI.SS.Formula.Functions;
 
 namespace WebFreight.Web.ReportsWebServices
@@ -10492,7 +10489,7 @@ namespace WebFreight.Web.ReportsWebServices
                 }
             }
 
-            //Level
+            //Card Balance
             string card = null;
             if (filterItem_card != null)
             {
@@ -10542,11 +10539,6 @@ namespace WebFreight.Web.ReportsWebServices
                 case "2":
                     {
                         revenueExpenseReportParam.MyCardFilter = CardFilterEnum.ShowAllCard;
-                        break;
-                    }
-                case "3":
-                    {
-                        revenueExpenseReportParam.MyCardFilter = CardFilterEnum.ShowCardsWithActivity_AndBalanceNotZero;
                         break;
                     }
 
@@ -10869,10 +10861,6 @@ namespace WebFreight.Web.ReportsWebServices
 
             }
 
-            if (level == GLAccount)
-            {
-                RemoveRevExpZeroBalanceCards(totalData);
-            }
             RecalculateParentTotals(totalData);
 
             totalData.ResultList.OrderBy(d => d.Name);
@@ -10892,10 +10880,6 @@ namespace WebFreight.Web.ReportsWebServices
 
 
             totalData.TotalRevenueExpense = (totalRevenues == null ? 0 : totalRevenues) + (totalExpenses == null ? 0 : totalExpenses);
-            foreach (var res in totalData.ResultList.Where(r => r.Balance == null))
-            {
-                res.Balance = 0;
-            }
 
 
             #endregion
@@ -10903,64 +10887,6 @@ namespace WebFreight.Web.ReportsWebServices
             return totalData;
         }
 
-
-        private void RemoveRevExpZeroBalanceCards(RevenueExpenseDataProvider totalData)
-        {
-            // ** Stage 1: Removal of Parents of the removed GLAccounts that have no children left
-            // Get the set of all remaining ParentIds in the list - these are parents that still have children after the GLAccount removal.
-            var remainingParentIds = totalData.ResultList.Select(item => item.ParentId).ToHashSet();
-
-            // Identify the parent Ids from the groupedList that no longer have any children in the list.
-            var chartIdsToRemove = totalData.ResultList
-                .Where(res => res.Type == ChartOfAccount && res.ParentId != null).Select(res => res.Id)
-                .Where(chartId => !remainingParentIds.Contains(chartId))
-                .ToHashSet();
-
-            List<string> typeIdList = ChartOfAccountsTypes.All.ToList();
-            if (!typeIdList.Any())
-            {
-                typeIdList = new List<string>() { "1", "2", "3", "4", "5", "6", "7" };
-            }
-
-
-            // Identify GrandParents of the removed charts to check if they have any children left after the removal of the charts.
-            var grandParentIdsToCheck = totalData.ResultList
-            .Where(res => chartIdsToRemove.Contains(res.Id) && res.ParentId != null
-                        && !typeIdList.Contains(res.ParentId))
-            .Select(item => item.ParentId).ToHashSet();
-
-            // Remove the parent items that have no children left.
-            totalData.ResultList.RemoveAll(item => chartIdsToRemove.Contains(item.Id));
-
-            // ** Stage 2: Check GrandParents of the removed Parents and remove them if they have no children left
-            const int maxIterations = 3; // Remaining levels to check
-            if (grandParentIdsToCheck.Any())
-            {
-
-                for (int i = 0; i < maxIterations; i++)
-                {
-                    remainingParentIds = totalData.ResultList.Select(item => item.ParentId).ToHashSet();
-                    var gpIdsToRemove = new HashSet<string>(
-                        grandParentIdsToCheck.Where(grandParentId =>
-                                        !remainingParentIds.Contains(grandParentId)));
-
-                    if (!gpIdsToRemove.Any())
-                    {
-                        break; // Exit loop if no items to remove
-                    }
-
-                    grandParentIdsToCheck = totalData.ResultList
-                        .Where(res => gpIdsToRemove.Contains(res.Id) && res.ParentId != null
-                            && !typeIdList.Contains(res.ParentId))
-                        .Select(item => item.ParentId).ToHashSet();
-
-
-                    totalData.ResultList.RemoveAll(item => gpIdsToRemove.Contains(item.Id));
-
-                }
-
-            }
-        }
 
         #endregion
 
@@ -10994,7 +10920,8 @@ namespace WebFreight.Web.ReportsWebServices
             QueryFilterItem filterItem_Category4 = queryOperations.QueryFilterItems.Where(d => d.FieldName == "Category4").FirstOrDefault();
 
             QueryFilterItem filterItem_ChartOfAccountId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ChartOfAccountId").FirstOrDefault();
-            QueryFilterItem filterItem_DontShowCardsWith0Balance = queryOperations.QueryFilterItems.Where(d => d.FieldName == "DontShowCardsWith0Balance").FirstOrDefault();
+            // QueryFilterItem filterItem_DontShowCardsWith0Balance = queryOperations.QueryFilterItems.Where(d => d.FieldName == "DontShowCardsWith0Balance").FirstOrDefault();
+            QueryFilterItem filterItem_SelectedBalance = queryOperations.QueryFilterItems.Where(d => d.FieldName == "SelectedBalance").FirstOrDefault();
             QueryFilterItem filterItem_Category5 = queryOperations.QueryFilterItems.Where(d => d.FieldName == "Category5").FirstOrDefault();
             QueryFilterItem filterItem_DetailedCustomer = queryOperations.QueryFilterItems.Where(d => d.FieldName == "DetailedForCustomers").FirstOrDefault();
             QueryFilterItem filterItem_DetailedVendor = queryOperations.QueryFilterItems.Where(d => d.FieldName == "DetailedForVendors").FirstOrDefault();
@@ -11013,14 +10940,26 @@ namespace WebFreight.Web.ReportsWebServices
                 }
             }
             //UseBalanceFilter
-            bool dontShowCardsWith0Balance = false;
+            /*bool dontShowCardsWith0Balance = false;
             if (filterItem_DontShowCardsWith0Balance != null)
             {
                 if (filterItem_DontShowCardsWith0Balance.FieldValue != null)
                 {
                     dontShowCardsWith0Balance = (bool)filterItem_DontShowCardsWith0Balance.FieldValue;
                 }
+            }*/
+
+            //Card Selected Balance
+            string selectedBalance = null;
+            if (filterItem_SelectedBalance != null)
+            {
+                if (filterItem_SelectedBalance.FieldValue != null)
+                {
+                    selectedBalance = (string)filterItem_SelectedBalance.FieldValue;
+                }
             }
+
+
             //category1
             string category1 = null;
             if (filterItem_Category1 != null)
@@ -11186,7 +11125,8 @@ namespace WebFreight.Web.ReportsWebServices
             totalData.DetailedCustomersAccounts = SetDetailedCustomersAccounts(customer);
             totalData.DetailedVendorsAccounts = SetDetailedVendorsAccounts(vendor);
             totalData.Category = category1Name != null ? category1Name : category5Name;
-            totalData.DontShowCardsWith0Balance = dontShowCardsWith0Balance;
+            //totalData.DontShowCardsWith0Balance = dontShowCardsWith0Balance;
+            totalData.SelectedBalance = selectedBalance;
             totalData.FromDate = fromDate;
             totalData.ToDate = toDate;
 
@@ -11205,7 +11145,8 @@ namespace WebFreight.Web.ReportsWebServices
                 Category3 = category3,
                 Category4 = category4,
                 Category5 = category5,
-                DoNotShowCardWithLocalCloseBalanceEqualZero = dontShowCardsWith0Balance,
+                //DoNotShowCardWithLocalCloseBalanceEqualZero = dontShowCardsWith0Balance,
+                SelectedBalance = selectedBalance,
                 IsRevenueExpenseReport = false,
                 //Suppress_ControlAccount = true,
                 //  Skip = true
@@ -11895,8 +11836,8 @@ namespace WebFreight.Web.ReportsWebServices
                 //trailReportParam.Suppress_ControlAccount = true;
                 trailReportParam.Suppress_DoNotShowCardWithoutActivity = false; // may it be 'true' sometimes? 
 
-                trailReportParam.DoNotShowCardWithLocalCloseBalanceEqualZero = dontShowCardsWith0Balance;
-
+                //trailReportParam.DoNotShowCardWithLocalCloseBalanceEqualZero = dontShowCardsWith0Balance;
+                trailReportParam.SelectedBalance = selectedBalance;
                 var servce = TrailReportFactory.CreateNew(trailReportParam);
 
                 List<TrailReportM> list;

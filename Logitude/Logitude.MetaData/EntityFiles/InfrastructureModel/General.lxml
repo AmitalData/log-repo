@@ -66,7 +66,7 @@
   IsLookUp="false"
   IsTabsHidden="false"
   SearchFields="&quot;General,Generals,,Id,&quot;">
-<Screen
+  <Screen
     Name="&quot;GeneralHeaderScreen&quot;"
     ObjectTableName="&quot;General&quot;"
     IsReadOnly="true"
@@ -2127,13 +2127,6 @@
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Accounting.General.B.RevaluationJournal&quot;"
-      DefaultText="&quot;Revaluation Journal&quot;"
-      LocalDefaultTextBack_up="&quot;פקודת שערוך&quot;"
-      LocalDefaultText="&quot;BS64:Itek16fXldeT16og16nXoteo15XXmiI=&quot;"
-      TextCodeTypeCode="&quot;O&quot;"
-      IsSpellChecked="false" />
-    <TextCode
       Code="&quot;Accounting.General.B.AutomaticReconcile&quot;"
       DefaultText="&quot;AutomaticReconcile&quot;"
       LocalDefaultTextBack_up="&quot;התאמה אוטומטית&quot;"
@@ -2222,20 +2215,6 @@
       DefaultText="&quot;Reconciliation No.&quot;"
       LocalDefaultTextBack_up="&quot;התאמה מס'&quot;"
       LocalDefaultText="&quot;BS64:IteU16rXkNee15Qg157XoSci&quot;"
-      TextCodeTypeCode="&quot;O&quot;"
-      IsSpellChecked="false" />
-    <TextCode
-      Code="&quot;Accounting.O.RFRDiff1&quot;"
-      DefaultText="&quot;There is a difference of: &quot;"
-      LocalDefaultTextBack_up="&quot; :קיים הפרש של  &quot;"
-      LocalDefaultText="&quot;BS64:IiA616fXmdeZ150g15TXpNeo16kg16nXnCAgIg==&quot;"
-      TextCodeTypeCode="&quot;O&quot;"
-      IsSpellChecked="false" />
-    <TextCode
-      Code="&quot;Accounting.O.RFRDiff2&quot;"
-      DefaultText="&quot;Create a revaluation journal?&quot;"
-      LocalDefaultTextBack_up="&quot;האם לבצע פקודת שיערוך?&quot;"
-      LocalDefaultText="&quot;BS64:IteU15DXnSDXnNeR16bXoiDXpNen15XXk9eqINep15nXoteo15XXmj8i&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
@@ -4159,24 +4138,24 @@
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Accounting.General.O.AlsoWithZeroBalance&quot;"
-      DefaultText="&quot;Also include accounts with 0 balance&quot;"
-      LocalDefaultTextBack_up="&quot;כלול גם כרטיסים עם יתרה 0&quot;"
-      LocalDefaultText="&quot;BS64:Iteb15zXldecINeS150g15vXqNeY15nXodeZ150g16LXnSDXmdeq16jXlCAwIg==&quot;"
+      Code="&quot;Accounting.General.O.NoBalance0AccWithoutTransOption&quot;"
+      DefaultText="&quot;Without balance 0 cards that don't have any transactions&quot;"
+      LocalDefaultTextBack_up="&quot;ללא כרטיסים ביתרה 0 ללא תנועות בטווח&quot;"
+      LocalDefaultText="&quot;BS64:Itec15zXkCDXm9eo15jXmdeh15nXnSDXkdeZ16rXqNeUIDAg15zXnNeQINeq16DXldei15XXqiDXkdeY15XXldeXIg==&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Accounting.General.O.AllAccountsOption&quot;"
-      DefaultText="&quot;All Accounts&quot;"
-      LocalDefaultTextBack_up="&quot;כל הכרטיסים&quot;"
-      LocalDefaultText="&quot;BS64:Iteb15wg15TXm9eo15jXmdeh15nXnSI=&quot;"
+      Code="&quot;Accounting.General.O.NoBalancedAccInPeriodOption&quot;"
+      DefaultText="&quot;No balanced accounts in the period&quot;"
+      LocalDefaultTextBack_up="&quot;ללא כרטיסים מאוזנים בטווח ביתרה 0&quot;"
+      LocalDefaultText="&quot;BS64:Itec15zXkCDXm9eo15jXmdeh15nXnSDXnteQ15XXlteg15nXnSDXkdeY15XXldeXINeR15nXqteo15QgMCI=&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Accounting.General.O.WithTransactionsOption&quot;"
-      DefaultText="&quot;Only accounts with transactions in the period&quot;"
-      LocalDefaultTextBack_up="&quot;רק כרטיסים עם תנועות בתקופה&quot;"
-      LocalDefaultText="&quot;BS64:Iteo16cg15vXqNeY15nXodeZ150g16LXnSDXqteg15XXoteV16og15HXqten15XXpNeUIg==&quot;"
+      Code="&quot;Accounting.General.O.ShowAllAccountsOption&quot;"
+      DefaultText="&quot;Show all accounts&quot;"
+      LocalDefaultTextBack_up="&quot;הצג את כל הכרטיסים&quot;"
+      LocalDefaultText="&quot;BS64:IteU16bXkiDXkNeqINeb15wg15TXm9eo15jXmdeh15nXnSI=&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
@@ -6826,33 +6805,6 @@
       LocalDefaultText="&quot;BS64:Itep15zXlyDXnNeo16fXoiI=&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
-
-    <TextCode
-      Code="&quot;Accounting.General.O.CreateANewTaxReport&quot;"
-      DefaultText="&quot;Tax Report&quot;"
-      LocalDefaultText="&quot;דוח מעמ&quot;"
-      TextCodeTypeCode="&quot;O&quot;"
-      IsSpellChecked="false" />
-    <TextCode
-      Code="&quot;Accounting.General.O.CancelTaxReport&quot;"
-      DefaultText="&quot;Cancel Tax Report&quot;"
-      LocalDefaultText="&quot;ביטול דוח מעמ&quot;"
-      TextCodeTypeCode="&quot;O&quot;"
-      IsSpellChecked="false" />
-    <TextCode
-      Code="&quot;Accounting.General.O.TransactionsBefore&quot;"
-      DefaultText="&quot;Transactions Before&quot;"
-      LocalDefaultTextBack_up="&quot; תנועות לפני&quot;"
-      LocalDefaultText="&quot;BS64:IiDXqteg15XXoteV16og15zXpNeg15ki&quot;"
-      TextCodeTypeCode="&quot;O&quot;"
-      IsSpellChecked="false" />
-    <TextCode
-      Code="&quot;Accounting.General.O.TransactionsAfter&quot;"
-      DefaultText="&quot;Transactions After&quot;"
-      LocalDefaultTextBack_up="&quot;תנועות אחרי&quot;"
-      LocalDefaultText="&quot;BS64:Iteq16DXldei15XXqiDXkNeX16jXmSI=&quot;"
-      TextCodeTypeCode="&quot;O&quot;"
-      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
@@ -9340,7 +9292,7 @@
       IsOld="false"
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
-    <Feature
+     <Feature
       Code="&quot;General.Features.CustomerDebtNotification&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
       FeatureTextCodeCode="&quot;General.Features.General.Features.CustomerDebtNotification&quot;"

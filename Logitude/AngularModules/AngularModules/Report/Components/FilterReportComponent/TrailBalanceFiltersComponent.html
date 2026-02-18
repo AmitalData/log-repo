@@ -294,12 +294,18 @@
 
                                         <tr style="height:20px">
                                             <td style="width:10px"></td>
-                                            <td style="width:20px">
+
+                                            <!--<td style="width:20px">
                                                 <CheckBox [IsChecked]="DontShowCardsWith0Balance" (Checked)="DontShowCardsWith0Balance = $event" [IsEnabled]="IsEditable">></CheckBox>
 
                                             </td>
 
-                                            <td style="width:130px">{{'Accounting.O.DontShowCardsWith0' | TextCodeTranslationPipe}}</td>
+                                            <td style="width:130px">{{'Accounting.O.DontShowCardsWith0' | TextCodeTranslationPipe}}</td>-->
+                                            <td style="width:210px; min-width: 210px;">
+                                               <ComboBox [ItemsSource]="BalanceOptionsFilterList" [Binding]="showLocal ? 'LocalName' : 'Name'" [SelectedItem]="SelectedBalanceOptionFilter" (SelectedItemChanged)="SelectedBalanceOptionFilter = $event"></ComboBox>
+                                            </td>
+
+
                                             <td style="width:42px"></td>
 
                                             <td style="width:20px">

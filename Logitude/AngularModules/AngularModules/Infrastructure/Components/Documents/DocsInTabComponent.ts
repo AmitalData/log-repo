@@ -307,7 +307,7 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
             this.IsApprovePendingDocumentsEnabled = false;
             return;
         }
-        if ((this.ObjectTableName == "Shipment" || ObjectsLocator.GlobalSetting?.WorkEnvironment == "Logitude") && SessionLocator.TenantPM.ApproveUploadedDocuments)
+        if ((this.ObjectTableName == "Shipment" || ObjectsLocator.GlobalSetting.WorkEnvironment == "Logitude") && SessionLocator.TenantPM.ApproveUploadedDocuments)
             this.IsApprovePendingDocumentsEnabled = true;
         if (this.IsApprovePendingDocumentsEnabled) {
             this.IsDocumentsNeedApprove = this.EntityPM.IsDocumentsNeedApprove;

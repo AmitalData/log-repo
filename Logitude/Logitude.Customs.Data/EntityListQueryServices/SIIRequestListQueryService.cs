@@ -21,7 +21,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
     {
 	    private IQueryable<SIIRequestList> GetIqueryableList(IQueryable<SIIRequest> iQueryable)
         {
-		IQueryable<SIIRequestList> query = (from a in iQueryable.Include("SIIRequestStatus")
+		IQueryable<SIIRequestList> query = (from a in iQueryable
                                             select new SIIRequestList()
 											{
                      
@@ -31,7 +31,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 					
 					                          SearchFields = a.SearchFields,
 					
-					                          Status = a.SIIRequestStatus.LocalName,
+					                          Status = a.Status,
 					
 					                          WareHouseAddress = a.WareHouseAddress,
 					
@@ -39,10 +39,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 					
 					                          IsClosed = a.IsClosed,
 											  Remarks = a.Remarks,
-											  DeclarationId = a.DeclarationId,
-                                                RequestNo = a.RequestNo,
-												RequestDate = a.RequestDate,
-                                            });
+											  DeclarationId = a.DeclarationId
+		                    	            });
             return query;
 		}
 

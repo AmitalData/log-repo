@@ -396,6 +396,11 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
         public bool DoNotShowCardWithLocalCloseBalanceEqualZero { get;  set; }
         #endregion
 
+        public string SelectedBalance { get; set; }
+
+        public const string A_OPTION = "A_OPTION";
+        public const string B_OPTION = "B_OPTION";
+        public const string C_OPTION = "C_OPTION";
     }
 
 

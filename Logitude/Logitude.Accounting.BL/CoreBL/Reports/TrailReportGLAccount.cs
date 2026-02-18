@@ -559,6 +559,14 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             {
                 _QBaseTrailReportFull = _QBaseTrailReportFull.Where(r => r.LocalCloseBalance.HasValue &&   r.LocalCloseBalance != 0);
             }
+
+
+            if (_TrailReportParam.SelectedBalance == TrailReportParam.A_OPTION)
+            {
+                _QBaseTrailReportFull = _QBaseTrailReportFull.Where(r => r.LocalOpenBalance.HasValue && r.LocalOpenBalance != 0); // HAVE TO ADD HERE: All accounts with transactions in the period 
+            }
+
+
             if (testNow)
             {
                 var tettt = _QBaseTrailReportFull.ToList();
