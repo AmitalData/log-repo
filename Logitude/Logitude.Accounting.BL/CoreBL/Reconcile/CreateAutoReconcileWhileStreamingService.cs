@@ -327,7 +327,6 @@ namespace Logitude.Accounting.BL.CoreBL
                 myReconciliationLinePM.Tenant = myReconciliationPM.Tenant;
                 myReconciliationLinePM.Line = lineCounter++;
                 myReconciliationLinePM.TransactionId = journalReconcile.LedgerTransactionId;
-                myReconciliationLinePM.CurrencyRate = oldLedger.ExchangeRate;
 
                 if (!String.IsNullOrEmpty(oldLedger.OpenAmountCurrencyId) && !String.IsNullOrEmpty(journalReconcile.CurrencyId)
                     && journalReconcile.CurrencyId != oldLedger.OpenAmountCurrencyId) // journalReconcile currency does not match the account's reco. method
@@ -422,7 +421,6 @@ namespace Logitude.Accounting.BL.CoreBL
             myReconciliationLinePM.TransactionId = newLTran.Id;
             myReconciliationLinePM.ReconciliationAmount = newLTranReconciliationAmount /*newLTran.OpenAmount*/;
             myReconciliationLinePM.GroupNumber = 1;
-            myReconciliationLinePM.CurrencyRate = newLTran.ExchangeRate;
             return myReconciliationLinePM;
         }
 
