@@ -194,8 +194,6 @@ namespace Logitude.CustomsMessaging.Dca
 
                 var files = new List<String>();
                 _SBInfoLog.AppendLine($"HowManyOtherWaitingMessages {response.Result.HowManyOtherWaitingMessages}  took:{sw.Elapsed}");
-                NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"HowManyOtherWaitingMessages={response.Result.HowManyOtherWaitingMessages} ");
-
                 _SBInfoLog.AppendLine($"RowNumbers {response.Result.RowNumbers}");
                 //var sbFilename = new StringBuilder();
                 sbFilenameQueue.Enqueue($"Start Tenant {_CustomsSettingPM.Tenant}");
