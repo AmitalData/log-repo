@@ -11,7 +11,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
     {
         ICommonDataContext commonDataContext;
 
-
+        public DocumentOutRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
 
         public DocumentOutRepository(ICommonDataContext context)
         {
@@ -63,28 +66,9 @@ namespace Simplog.Data.CommonDataModel.Repositories
         {
             if (string.IsNullOrEmpty(entityId) && string.IsNullOrEmpty(childEntityId))
                 return null;
-            IQueryable<DocumentOut> query = context.DocumentOuts.Where(a => a.Tenant == tenant);
-
-            if (entityId == null)
-            {
-                query = query.Where(a => a.DocumentsFiling.EntityId == null);
-            }
-            else
-            {
-                query = query.Where(a => a.DocumentsFiling.EntityId == entityId);
-            }
-
-            if (childEntityId == null)
-            {
-                query = query.Where(a => a.DocumentsFiling.ChildEntityId == null);
-            }
-            else
-            {
-                query = query.Where(a => a.DocumentsFiling.ChildEntityId == childEntityId);
-            }
-
-            DocumentOut documentOut = query.FirstOrDefault();
-
+            DocumentOut documentOut = (from a in context.DocumentOuts.Include("DocumentsFiling").Include("DocumentsFiling.DocumentType").Include("DocumentsFiling.CreatedByUser.Contact")
+                                       where a.DocumentsFiling.EntityId == entityId && a.DocumentsFiling.ChildEntityId == childEntityId && a.Tenant == tenant
+                                       select a).FirstOrDefault();
             return documentOut;
         }
 

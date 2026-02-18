@@ -20,7 +20,6 @@ import {CheckBox} from './All/CheckBox';
 import {RadioButton} from './All/RadioButton';
 import {BackButton} from './All/BackButton';
 import {BusyIndicator} from './All/BusyIndicator';
-import {RunReportToggleComponent} from './All/RunReportToggle';
 import {Hyperlink} from './All/Hyperlink';
 import {HyperlinkQuery} from './All/HyperlinkQuery';
 import {ScrollViewer} from './All/ScrollViewer';
@@ -105,7 +104,6 @@ export const Components =
         BackButton,
         MettingSummary,
         BusyIndicator,
-        RunReportToggleComponent,
         CellTooltip,
         Hyperlink,
         HyperlinkQuery,

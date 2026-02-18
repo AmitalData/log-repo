@@ -74,8 +74,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         IsCancelled,  
 	         Notes, 
 	         UpdatedByUserName,
-            AccountingDate
-        }
+	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
         List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
@@ -258,16 +257,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             {
 					entityPM.Notes = entityPOCO.Notes;
             }
-            if (!CustomMappedPMProperties.Contains(PMPropertyNames.JournalId))
-            {
-                entityPM.JournalId = entityPOCO.JournalId;
-            }
-            if (!CustomMappedPMProperties.Contains(PMPropertyNames.AccountingDate))
-            {
-                entityPM.AccountingDate = entityPOCO.AccountingDate;
-            }
 
-        }
+		}
 
 		public void PMToOldPM(InterestTransactionPM entityPM, InterestTransactionPM oldEntityPM)
         {
