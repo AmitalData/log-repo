@@ -25,8 +25,7 @@ namespace Logitude.BL.QuoteModel.Tools.Behaviours
 		private QuoteComputedField quoteComputedField;
 		private QuotePM quoteEntityPM;
 		private List<QuoteChargePM> quoteCharges;
-        private string accountingCurrencyId;
-
+		private string accountingCurrencyId;
 		public void Handle(IServiceInitializer initializer)
 		{
 			this.initializer = (QuoteServiceInitializer)initializer;
@@ -224,19 +223,12 @@ namespace Logitude.BL.QuoteModel.Tools.Behaviours
 
 		private void MapEstimatedPayablesInSalesCurrencyField()
 		{
-
-            if (quoteEntityPM.QuoteCharges != null && quoteEntityPM.ExchangeRate != null && quoteEntityPM.ExchangeRate != 0)
-            {
-
-				var totalLocal = quoteCharges.Sum(d => d.CostTotalAmountLocal ?? 0) ;
-				var costTotalAmountLocalrounded = Math.Round(totalLocal, 2, MidpointRounding.AwayFromZero);
-                var calculateEstimatedPayablesInSale = (costTotalAmountLocalrounded / quoteEntityPM.ExchangeRate) ?? 0;
-				quoteComputedField.EstimatedPayablesInSales = Math.Round(calculateEstimatedPayablesInSale, 2, MidpointRounding.AwayFromZero);
+			if (quoteEntityPM.QuoteCharges != null)
+			{
+				quoteComputedField.EstimatedPayablesInSales = quoteCharges.Sum(d => d.CostAmountInSaleCurrency);
 			}
+		}
 
- 		}	
-
-	
 		private void MapEstimatedReceivablesInLocalCurrencyField()
 		{
 			if (quoteEntityPM.QuoteCharges != null)

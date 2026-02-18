@@ -8,15 +8,16 @@ import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceRe
 import { SchedulerExtendedPMService } from '../../../Infrastructure/Services/ExtendedPMs/SchedulerExtendedPMService';
 import { AfterViewInit, Component } from '@angular/core';
 import { TaskReportSchedulerItemClass } from './TaskReportSchedulerComponent';
+import { QueryFilterItem } from '../Filters/QueryFilterItem';
 import {
     SchedulerDetails,
     ReportSchedulerDetails,
     ReportSchedulerRecepients,
 } from '../../../Infrastructure/DataContracts/SchedulerDetails';
+import { DateTimePipe } from '../../../Controls/Pipes/DateTimePipe';
 import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator';
 import { CodeNameClass } from '../../../Infrastructure/DataContracts/CodeNameClass';
 import { AddEditReportSchedulerComponent } from './AddEditReportSchedulerComponent';
-import { AccountingEventManager } from 'Accounting/Utilities/AccountingEventManager';
 
 @Component({
     templateUrl: './AddEditReportTaskSchedulerComponent.html',
@@ -32,7 +33,6 @@ export class AddEditReportTaskSchedulerComponent implements AfterViewInit{
     public SelectedFormatAdvanced: string;
     public IsBIReport: boolean;
     public IsQueryReport: boolean;
-    public IsCustomerDebNotification: boolean;
     public SchedulerReports: CodeNameClass[] = [];
     public SelectedReport: CodeNameClass;
     schedulerExtendedPMService: SchedulerExtendedPMService;
@@ -47,13 +47,12 @@ export class AddEditReportTaskSchedulerComponent implements AfterViewInit{
         this.EntityPM = DataContext['DataContext'].EntityPM;
         this.IsBIReport = this.DataContext.fatherComponent.IsBIReport;
         this.IsQueryReport = this.DataContext.fatherComponent.IsQueryReport;
-        this.IsCustomerDebNotification = this.DataContext.fatherComponent.IsCustomerDebNotification;
         this.EntityPM.EntityId = this.IsBIReport ? this.DataContext.fatherComponent.BIReportEntity['Id'] : this.DataContext.fatherComponent.ReportList.Id;
         this.FillSchedulerFormats();
         this.SetSchedulerFormat();
         this.FillSchedulerReports() 
         this.SetSchedulerResultType();
-        this.EntityPM.ProcedureCode = this.IsBIReport ? 'BIReportSchedulerTask' : this.IsQueryReport ? 'QueryReport' : this.IsCustomerDebNotification ? 'CustomerDebNotificationsTask':'ReportSchedulerTask';
+        this.EntityPM.ProcedureCode = this.IsBIReport ? 'BIReportSchedulerTask' : this.IsQueryReport ? 'QueryReport' : 'ReportSchedulerTask';
         this.parentComponent = DataContext['parentComponent'];
         this.BuildSchedulerDetailsData();
         this.Clone();
@@ -64,7 +63,7 @@ export class AddEditReportTaskSchedulerComponent implements AfterViewInit{
         this.SetSchedulerReport();
     }
     SendValidation() {
-        if ((SessionLocator.LoggedUserPM.IsCustomerCare || ObjectsLocator.GlobalSetting?.DeploymentStage == "Dev") && this.DataContext?.fatherComponent?.ReportList?.Code != "RSTA") {
+        if ((SessionLocator.LoggedUserPM.IsCustomerCare || ObjectsLocator.GlobalSetting.DeploymentStage == "Dev") && this.DataContext?.fatherComponent?.ReportList?.Code != "RSTA") {
             this.DisplayFTPOption = true;
         }
     }
@@ -381,7 +380,7 @@ export class AddEditReportTaskSchedulerComponent implements AfterViewInit{
         if (reportSchedulerDetails) {
             this.SetReportDetails(reportSchedulerDetails);
             this.EntityPM.DocumentTypeTemplateIds = reportSchedulerDetails.DocumentTypeTemplateIds;
-        }    
+        }
         if (this.DataContext.IsNew) {
             this.DataContext.SchedulerDetails.ReportDetails.CreatedByUserId =
                 SessionLocator.LoggedUserId;
@@ -392,11 +391,6 @@ export class AddEditReportTaskSchedulerComponent implements AfterViewInit{
                     if (!myResponse.HasError) {
                         this.EntityPM = myResponse.Result;
                         this.EntityPM.IsDirty = false;
-                        if(this.IsCustomerDebNotification){
-                            AccountingEventManager.TasksSchedulerId.emit(myResponse.Result.body.Id);
-                            this.CurrentSession.CloseCurrentWindowData(myResponse.Result.body.Id);
-
-                         }
                         if (this.DataContext.fatherComponent) {
                             this.DataContext.fatherComponent.RefreshButtonClicked();
                             this.DataContext.fatherComponent.RefreshButtonClicked();
@@ -419,11 +413,6 @@ export class AddEditReportTaskSchedulerComponent implements AfterViewInit{
                         if (!myResponse.HasError) {
                             this.EntityPM = myResponse.Result;
                             this.EntityPM.IsDirty = false;
-                            if(this.IsCustomerDebNotification){
-                                AccountingEventManager.TasksSchedulerId.emit(myResponse.Result.body.Id);
-                                this.CurrentSession.CloseCurrentWindowData(myResponse.Result.body.Id);
-
-                             }
                             if (this.DataContext.fatherComponent) {
                                 this.DataContext.fatherComponent.RefreshButtonClicked();
                             }
