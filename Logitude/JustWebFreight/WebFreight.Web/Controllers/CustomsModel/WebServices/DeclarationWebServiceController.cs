@@ -475,7 +475,6 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                     DF_NG_2757_MSG10004_ExportAmendmentDeclarationResponseService dF_NG_2757_MSG10004_ExportFixedDeclarationResponseService = new DF_NG_2757_MSG10004_ExportAmendmentDeclarationResponseService();
 
                     DeclarationPM declarationPM = dF_NG_2757_MSG10004_ExportFixedDeclarationResponseService.MapResponseToDeclaration(request.Declaration, requestParams.Tenant, true, requestParams.AppicationId, out error, user: requestParams.LoggingUserId, isCopy: Convert.ToBoolean(requestParams.LoggingEntityId2));
-                    requestParams.DeclarationDirection = declarationPM?.Direction;
 
 
                     if (declarationPM != null)
@@ -487,8 +486,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 {
 
                     DF_MSG10000_ImportDeclarationRequestService _dF_MSG10000_ImportDeclarationRequestService = new DF_MSG10000_ImportDeclarationRequestService();
-                    requestParams.DeclarationDirection = "I";
-                   _dF_MSG10000_ImportDeclarationRequestService.IsFromOpenNewAmendment = true;
+                    _dF_MSG10000_ImportDeclarationRequestService.IsFromOpenNewAmendment = true;
                     var request = _dF_MSG10000_ImportDeclarationRequestService.GetRequest(requestParams);
                     string error = "";
                     DF_NG_2754_MSG10004_ImportAmendmentDeclarationResponseService dF_NG_2754_MSG10004_ImportFixedDeclarationResponseService = new DF_NG_2754_MSG10004_ImportAmendmentDeclarationResponseService();
@@ -2740,117 +2738,6 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
             }
             return queryOperations;
         }
-
-        [HttpPost]
-        public HttpResponseMessage PostExportDeclarationsBatchActions([FromBody] SendExportDeclarationsBatchRequestParams request, [FromUri] ApiQueryFilters filters)
-        {
-            try
-            {
-                var token = HttpContext.Current.Request.Headers["Token"];
-                var authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                var tenant = authToken.Tenant;
-                var email = authToken.Email;
-
-                SecurityUtility.AuthenticationOnTenant(tenant);
-                var userRepository = new UserRepository(tenant);
-                var loggedUser = userRepository.GetSingleUserByCodeOrEmail(null, email, tenant, true);
-
-                var customContext = CustomContext.GetContext(authToken.Tenant);
-                var bl = new ExportDeclarationsBatchActionsService(customContext);
-
-                if (request.IsAllSelected && filters != null)
-                {
-                    filters.GetAll = true;
-                    request.QueryOperations = PrepareFilters(tenant, filters);
-                }
-
-                var result = new DataResult();
-                string reqList;
-
-                switch ((request.Action ?? string.Empty).Trim())
-                {
-                    case "CheckStatus":
-                        result.Message = bl.RunCheckStatus(tenant, request.SelectedIds, out reqList);
-                        result.RequestInProgressList = reqList;
-                        break;
-
-                    case "OperationalClose":
-                        result.Message = bl.RunOperationalClose(tenant, request.SelectedIds, out reqList);
-                        result.RequestInProgressList = reqList;
-                        break;
-                    case "DeclarationRestore":
-                        {
-                            string buildFailList;
-                            var restoreRequests = bl.BuildDeclarationRestoreRequests(
-                                tenant,
-                                request.SelectedIds,
-                                out buildFailList);
-
-                            int okSend = 0;
-                            int failSend = 0;
-
-                            foreach (var rp in restoreRequests)
-                            {
-                                try
-                                {
-                                    var messagingService = new DF_NG_9079_Web05_RetrieveExportOrTransshipmentDeclarationMessagingService();
-                                    var responseData = messagingService.Send(rp);
-
-                                    if (responseData != null && !responseData.HasException && responseData.Succeeded)
-                                        okSend++;
-                                    else
-                                        failSend++;
-                                }
-                                catch
-                                {
-                                    failSend++;
-                                }
-                            }
-
-                            result.Message = okSend.ToString();
-
-                            int buildFail = 0;
-                            int.TryParse(buildFailList, out buildFail);
-                            var totalFail = buildFail + failSend;
-                            result.RequestInProgressList = totalFail.ToString();
-                            break;
-                        }
-
-                    default:
-                        throw new Exception("Action not supported");
-                }
-
-                return Request.CreateResponse(HttpStatusCode.OK, result);
-            }
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
-
-        [HttpGet]
-        public HttpResponseMessage GetAmendmentMessage(string declarationId)
-        {
-            try
-            {
-                var token = HttpContext.Current.Request.Headers["Token"];
-                var authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                var tenant = authToken.Tenant;
-
-                SecurityUtility.AuthenticationOnTenant(tenant);
-
-                var declarationQuery = new DeclarationQueryService(tenant);
-                var res = declarationQuery.GetAmendmentMessageResponse(declarationId, tenant);
-
-                return Request.CreateResponse(HttpStatusCode.OK, res);
-            }
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
-
-
     }
 
     internal class CustomsPartnersItemCRList
@@ -2884,13 +2771,4 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
         public string RequestInProgressList { get; set; }
         public string Message { get; set; }
     }
-
-    public class SendExportDeclarationsBatchRequestParams
-    {
-        public string Action { get; set; }
-        public IEnumerable<string> SelectedIds { get; set; }
-        public bool IsAllSelected { get; set; }
-        public object QueryOperations { get; set; }
-    }
- 
 }

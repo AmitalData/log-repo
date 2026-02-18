@@ -549,7 +549,7 @@ namespace Logitude.Customs.BL.Messaging.Customs
         public static string GetCustomsAgentIdFromTenant(int tenant)
         {
             var customsSettingQueryService = new CustomsSettingQueryService(SignQueue.CurrentTenant);
-            var pm = customsSettingQueryService.GetSettingByTenantN(tenant, false);
+            var pm = customsSettingQueryService.GetSettingByTenantN(tenant);
             return pm.CustomsAgentId;
         }
         public static string GetCompanyTenant(string CurrentSignCertificate)

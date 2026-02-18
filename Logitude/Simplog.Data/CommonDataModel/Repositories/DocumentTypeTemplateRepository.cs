@@ -11,7 +11,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
     {
         ICommonDataContext commonDataContext;
 
-
+        public DocumentTypeTemplateRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
 
         public DocumentTypeTemplateRepository(ICommonDataContext context)
         {
