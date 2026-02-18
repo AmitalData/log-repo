@@ -257,7 +257,42 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private string remarks ;
+
+	   private List<SupplierInvoiceItemsReqListPM> supplierInvoiceItemsReqLists;
+	    
+       [Composition]
+ 
+		     
+	   [Include]
+	   [Association("CompositionSupplierInvoiceItemsReqList", "DeclarationId,CounterKey,LineNumber","DeclarationId,InvoiceCounterKey,InvoiceItemLineNumber")]
+	   [DataMember]
+	   public virtual List<SupplierInvoiceItemsReqListPM> SupplierInvoiceItemsReqLists  
+	   {
+	        get
+             {
+                 if (supplierInvoiceItemsReqLists == null)
+                 {
+                     supplierInvoiceItemsReqLists = new List<SupplierInvoiceItemsReqListPM>();
+                 }
+                 return supplierInvoiceItemsReqLists;
+              }
+             set { supplierInvoiceItemsReqLists = value; }
+	    }
+		   
+	   private List<SupplierInvoiceItemsReqListPM>  deletedSupplierInvoiceItemsReqLists;
+	   public virtual List<SupplierInvoiceItemsReqListPM> DeletedSupplierInvoiceItemsReqLists  
+	   {
+	        get
+             {
+                 if ( deletedSupplierInvoiceItemsReqLists == null)
+                 {
+                      deletedSupplierInvoiceItemsReqLists = new List<SupplierInvoiceItemsReqListPM>();
+                 }
+                 return  deletedSupplierInvoiceItemsReqLists;
+              }
+             set {  deletedSupplierInvoiceItemsReqLists = value; }
+	    }
+	  	  private string remarks ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
@@ -533,134 +568,7 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private string fromApplicationId ;
-	  	  
-       
-	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string FromApplicationId  
-	   {
-	    
-	     get
-		{
-		   return fromApplicationId;
-		 }
-		 set
-		 {
-		   if(fromApplicationId != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FromApplicationId",OldValue=fromApplicationId,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   fromApplicationId=value;
-		   }
-			
-		 }
-	   }
-	  private string originCountryCode ;
-	  	  
-       
-	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string OriginCountryCode  
-	   {
-	    
-	     get
-		{
-		   return originCountryCode;
-		 }
-		 set
-		 {
-		   if(originCountryCode != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="OriginCountryCode",OldValue=originCountryCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   originCountryCode=value;
-		   }
-			
-		 }
-	   }
-	  private string unloadPortCode ;
-	  	  
-       
-	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string UnloadPortCode  
-	   {
-	    
-	     get
-		{
-		   return unloadPortCode;
-		 }
-		 set
-		 {
-		   if(unloadPortCode != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="UnloadPortCode",OldValue=unloadPortCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   unloadPortCode=value;
-		   }
-			
-		 }
-	   }
-	  private DateTime requestDate ;
-	  	  
-       
-	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
-	   [DataMember]
-       public DateTime RequestDate  
-	   {
-	    
-	     get
-		{
-		   return requestDate;
-		 }
-		 set
-		 {
-		   if(requestDate != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="RequestDate",OldValue=requestDate,NewValue=value,PropertyType="DateTime"};
-		    NotifyPropertyChanged(values);
-		   requestDate=value;
-		   }
-			
-		 }
-	   }
-
-	   private List<SupplierInvoiceItemsReqListPM> supplierInvoiceItemsReqLists;
-	    
-       [Composition]
- 
-		     
-	   [Include]
-	   [Association("SIIRequestSupplierInvoiceItemsReqLists", "DeclarationId,Id","DeclarationId,SIIRequestID")]
-	   [DataMember]
-	   public virtual List<SupplierInvoiceItemsReqListPM> SupplierInvoiceItemsReqLists  
-	   {
-	        get
-             {
-                 if (supplierInvoiceItemsReqLists == null)
-                 {
-                     supplierInvoiceItemsReqLists = new List<SupplierInvoiceItemsReqListPM>();
-                 }
-                 return supplierInvoiceItemsReqLists;
-              }
-             set { supplierInvoiceItemsReqLists = value; }
 	    }
-		   
-	   private List<SupplierInvoiceItemsReqListPM>  deletedSupplierInvoiceItemsReqLists;
-	   public virtual List<SupplierInvoiceItemsReqListPM> DeletedSupplierInvoiceItemsReqLists  
-	   {
-	        get
-             {
-                 if ( deletedSupplierInvoiceItemsReqLists == null)
-                 {
-                      deletedSupplierInvoiceItemsReqLists = new List<SupplierInvoiceItemsReqListPM>();
-                 }
-                 return  deletedSupplierInvoiceItemsReqLists;
-              }
-             set {  deletedSupplierInvoiceItemsReqLists = value; }
-	    }
-	  	    }
    
 }
 	 

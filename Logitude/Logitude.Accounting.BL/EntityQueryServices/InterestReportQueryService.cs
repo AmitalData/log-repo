@@ -194,9 +194,6 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                         ARInvoiceNumber = a.ARInvoice == null ? null : a.ARInvoice.InvoiceNumber,
                         GLAccountLocalName = a.GLAccount == null ? null : a.GLAccount.LocalName,
                         ReportCurrencyCode = a.Currency != null ? a.Currency.Code : null,
-                        IsForeignCurrency = a.IsForeignCurrency,
-                        ReportCurrencyId = a.ReportCurrencyId
-
 
                     });
 
@@ -318,8 +315,6 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                        GLAccountMinimumInterest = a.GLAccount.MinimumInterestInvoiceBilling,
 
                         ReportCurrencyCode = a.Currency != null ? a.Currency.Code : null,
-                        IsForeignCurrency = a.IsForeignCurrency,
-                        ReportCurrencyId = a.ReportCurrencyId
 
 
                     }).ToList();

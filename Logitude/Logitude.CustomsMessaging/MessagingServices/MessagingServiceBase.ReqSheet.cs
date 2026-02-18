@@ -171,14 +171,16 @@ namespace Logitude.CustomsMessaging.MessagingServices
 				responseData = new TResponseData();
 				try
 				{
-                    if (!requestParams.SuppressSplitWR)
+
+					if (!requestParams.SuppressSplitWR)
 					{
-						SBQMessageService.CreateBasic<CustomsCommandEnum>(CustomsCommandEnum.CustomsCommandGetCustomRequestWR,
+						SBQMessageService.CreateBasic<CustomsCommandEnum>(
+							 CustomsCommandEnum.CustomsCommandGetCustomRequestWR,
 							_CustomsRequestsSheetService.MyCustomsRequestsSheetPM.Tenant,
 							_CustomsRequestsSheetService.MyCustomsRequestsSheetPM.InterfaceTypeCode,
 							_CustomsRequestsSheetService.MyCustomsRequestsSheetPM.Id,
-							this.RequestParams.FutureSendDateTime, _CustomsRequestsSheetService.InterfaceTenantDefinitionManagement.InterfaceManagement.QueueDefinitionGroup
-                            );
+							this.RequestParams.FutureSendDateTime
+							);
 
 						responseData.Succeeded = true;
 						responseData.ContinueProcessInBackground = true;
@@ -2096,7 +2098,7 @@ Exception:" + ee.Message
 						{
 							SBQMessageService.CreateBasic<CustomsCommandEnum>(
 								 CustomsCommandEnum.CustomsCommandAnalyzeResponseWR,
-								_CustomsRequestsSheetService.MyCustomsRequestsSheetPM.Id, queueSendModel, _CustomsRequestsSheetService.InterfaceTenantDefinitionManagement.InterfaceManagement.QueueDefinitionGroup);
+								_CustomsRequestsSheetService.MyCustomsRequestsSheetPM.Id, queueSendModel);
 						}
 						else
 						{
