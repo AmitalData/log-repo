@@ -869,7 +869,6 @@
 
         private string tRADE_AGREEMENTField;
 
-
         /// <remarks/>
         public string INVOICELINENO
         {
@@ -1118,8 +1117,6 @@
                 this.tRADE_AGREEMENTField = value;
             }
         }
-
-        
     }
 
     /// <remarks/>
@@ -1173,8 +1170,6 @@
         private POINTERS[] pOINTERSField;
 
         private CARS[] cARSField;
-        private string iTEM_WEIGHTField;
-
 
         /// <remarks/>
         public string ITEMLINENO
@@ -1448,17 +1443,6 @@
             set
             {
                 this.cARSField = value;
-            }
-        }
-        public string ITEM_WEIGHT
-        {
-            get
-            {
-                return this.iTEM_WEIGHTField;
-            }
-            set
-            {
-                this.iTEM_WEIGHTField = value;
             }
         }
     }
