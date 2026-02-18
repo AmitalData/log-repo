@@ -13,7 +13,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
     {
         ICommonDataContext commonDataContext;
 
-
+        public MetodoPagoRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
 
         public MetodoPagoRepository(int tenant)
         {
