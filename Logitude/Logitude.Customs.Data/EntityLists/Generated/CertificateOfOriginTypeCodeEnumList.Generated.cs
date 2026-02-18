@@ -35,10 +35,6 @@ namespace Logitude.Customs.Data.EntityLists
        public bool? IsCustomApprovalRequired  { get; set; }
        [DataMember]
        public bool? IsCriterionMandatory  { get; set; }
-       [DataMember]
-       public bool? IsCustomsItemMandatory  { get; set; }
-       [DataMember]
-       public bool? IsZipcodeMandatory  { get; set; }
    }
 
 }

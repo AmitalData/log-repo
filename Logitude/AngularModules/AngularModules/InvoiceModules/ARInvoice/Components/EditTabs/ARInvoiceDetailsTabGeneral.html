@@ -402,7 +402,6 @@
                                                 <td style="text-align: center;" [style.width.px]="VATColumnWidth" [style.min-width.px]="VATColumnWidth" [style.max-width.px]="VATColumnWidth">{{'ARInvoiceLine.CH.VatTypeIdListLable' | TextCodeTranslationPipe}}</td>
                                                 <td style="width: 100px; min-width: 100px; max-width: 100px; text-align: center;">{{LocalAmountHeader}}</td>
                                                 <td style="width: 100px; min-width: 100px; max-width: 100px; text-align: center;" *ngIf="IsInvoiceAmountHeaderVisible">{{InvoiceAmountHeader}}</td>
-                                                <td style="width: 100px; min-width: 100px; max-width: 100px; text-align: center;">{{'ARInvoiceLine.F.ReceivableCreditGLAccountId' | TextCodeTranslationPipe}}</td>
                                                 <td class="LastChild" style="width: 25px; min-width: 25px; max-width: 25px;">
                                                     <div></div>
                                                 </td>
@@ -510,11 +509,6 @@
                                                             <!-- InvoiceCurrencyAmount -->
                                                             <td [style.text-align]="isRTL ? 'left' : 'right'" class="GridViewCell" [ngStyle]="{background: item.CellBackground}" style="width: 100px; min-width: 100px; max-width: 100px;" *ngIf="IsInvoiceAmountHeaderVisible">
                                                                 {{item.InvoiceCurrencyAmount | NumbersPipe:'N2'}}
-                                                            </td>
-
-                                                            <!-- ReceivableCreditGLAccountName -->
-                                                            <td [style.text-align]="isRTL ? 'left' : 'right'" class="GridViewCell" [ngStyle]="{background: item.CellBackground}" style="width: 100px; min-width: 100px; max-width: 100px;">
-                                                                {{item.ReceivableCreditGLAccountName }}
                                                             </td>
 
                                                             <td class="LastChild" [ngStyle]="{background: item.CellBackground}" style="width: 25px; min-width: 25px; max-width: 25px;">

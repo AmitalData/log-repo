@@ -35,9 +35,9 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string DeclarationId { get; set; }
 	      
         public virtual SupplierInvoiceItem SupplierInvoiceItem { get; set; }
+     [Key]
         [Column("LineNumber" ,Order = 4)]
 	    public int LineNumber { get; set; }
-     [Key]
         [Column("SIIRequestID")]
 	    public string SIIRequestID { get; set; }
      [Key]
@@ -69,15 +69,6 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string ItemNo { get; set; }
         [Column("ItemName")]
 	    public string ItemName { get; set; }
-        [ForeignKey("SIIRequestLineStatus")]
-        [Column("StatusCode")]
-	    public string StatusCode { get; set; }
-	      
-        public virtual SIIRequestLineStatus SIIRequestLineStatus { get; set; }
-        [Column("StatusDate")]
-	    public DateTime? StatusDate { get; set; }
-        [Column("DistApprovalAttachmentPath")]
-	    public string DistApprovalAttachmentPath { get; set; }
     }
 }
 	 

@@ -222,12 +222,9 @@ namespace WebFreight.Web
                                 OceanInsightsRequestService service = new OceanInsightsRequestService(objectContext, tenant);
 
                                 if (TempReq != null)
-                                {   if(TempReq.System == SystemType.Export)
-                                    {
-                                        TempReq.IsClosed = TempReq.System == SystemType.Export && !string.IsNullOrEmpty(mpty_return_actual);
-                                         service.Update(TempReq);
-                                    }
-
+                                {
+                                    TempReq.IsClosed = TempReq.System == SystemType.Export && !string.IsNullOrEmpty(mpty_return_actual);
+                                    ///service.Create(TempReq);
                                     UpdateStatus(TempRec, data, (!string.IsNullOrEmpty(TempReq.ContainerNumber) ? TempReq.ContainerNumber : TempReq.BLNumber));
 								}
 								else
@@ -277,6 +274,7 @@ namespace WebFreight.Web
         
         private void UpdateStatus(OceanInsightsRequestPM TempRec, string data, string Reference)
         {
+			WriteOceanInsightsStatusLog(data, TempRec.OceanInsigntId, TempRec.Tenant);
 			using (TransactionScope scope = TransactionFactory.GetTransaction())
             {
                 IShipmentsContext objectContext = ShipmentsContext.GetContext(TempRec.Tenant);
@@ -389,6 +387,25 @@ namespace WebFreight.Web
                 scope.Complete();
             }
         }
+		private void WriteOceanInsightsStatusLog(dynamic data,string oceanInsightsRequestId, int tenant)
+		{
+			try
+			{
+				OceanInsightsStatusLogPM oceanInsightsStatusLog = new OceanInsightsStatusLogPM();
+				IShipmentsContext objectContext = ShipmentsContext.GetContext(tenant);
+				OceanInsightsStatusLogService service = new OceanInsightsStatusLogService(objectContext, tenant);
+				oceanInsightsStatusLog.Tenant = tenant;
+				oceanInsightsStatusLog.OceanInsigntRequestId = oceanInsightsRequestId;
+				oceanInsightsStatusLog.XML = data;
+
+				service.Create(oceanInsightsStatusLog);
+			}
+			catch(Exception ex)
+			{
+
+			}
+
+		}
 		private void WriteData(dynamic data)
 		{
 			try
