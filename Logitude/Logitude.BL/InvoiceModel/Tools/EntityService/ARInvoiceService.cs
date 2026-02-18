@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Mocks;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.InvoiceModel;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
@@ -64,7 +62,6 @@ using AccountingEntityValues = Logitude.BL.InvoiceModel.CloseTables.AccountingEn
 using Logitude.Server.Tools.QueueService;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InvoiceModel.Tools.Exceptions;
-
 
 
 
@@ -736,7 +733,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 invoiceRepository.Update(invoice);
                 invoiceRepository.SubmitChanges();
             }
-            if (entityPM.IsAutoCredit && entityPM.StatusCode != "DR" && entityPM.SetApproved)
+            if (entityPM.IsAutoCredit && entityPM.SetApprovedAutoCredit)
             {
                 entityPM.SetApproved = false;
                 entityPM.StatusCode = "AC";
@@ -751,8 +748,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             this.ValidateInvoiceConnected();
 
-             if (entityPM.SetApproved || entityPM.SetApprovedAutoCredit)
-             {
+            if (entityPM.SetApproved || entityPM.SetApprovedAutoCredit)
+            {
                 if (invoice.StatusCode == "LL")
                 {
                     throw new ApplicationException("this invoice is Draft cancelled");
@@ -852,8 +849,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                 // Full Accounting - Tax Fields Work 
                 this.CalculationOfTaxReportfields(entityPM, isApprovingInvoice);
-                 if (entityPM.SetApproved || entityPM.SetApprovedAutoCredit)
-                 {
+                if (entityPM.SetApproved || entityPM.SetApprovedAutoCredit)
+                {
                     if (entityPM.ConfirmationNumberStatus == null && !entityPM.IsExternalEntity)
                     {
                         SetConfirmationNumberStatus(entityPM);
@@ -1880,8 +1877,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.InitializeTransferFields();
             this.InitializeGLAccountFields();
 
-             if ((this.entityPM.SetApproved || entityPM.SetApprovedAutoCredit) && string.IsNullOrEmpty(entityPM.TransferError))
-             {
+            if ((this.entityPM.SetApproved || entityPM.SetApprovedAutoCredit) && string.IsNullOrEmpty(entityPM.TransferError))
+            {
                 if (this.isTransferToDropbox && this.TransferToDropboxActivated)
                 {
                     this.entityPM.TransferStatusCode = "TR";
@@ -1897,8 +1894,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 isInitializing = true;
             }
 
-             else if (entityPM.SetApproved || entityPM.SetApprovedAutoCredit)
-             {
+            else if (entityPM.SetApproved || entityPM.SetApprovedAutoCredit)
+            {
                 isInitializing = true;
             }
 
@@ -2182,8 +2179,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         Tenant tenantPOCO;
         private void InitializeGLAccountFields()
         {
-             if (entityPM.SetApproved || entityPM.SetApprovedAutoCredit)
-             {
+            if (entityPM.SetApproved || entityPM.SetApprovedAutoCredit)
+            {
                 TenantRepository tenantRepository = new TenantRepository(tenant);
                 tenantPOCO = tenantRepository.GetSingleTenant(tenant);
 
@@ -3475,8 +3472,7 @@ $"[InterestTransactionPM] CreateInterestTransactionLineForVatLine  ARInvoiceId (
                     CurrencyId = entityPM.InvoiceCurrencyId,
                     ChangeSetOp = ChangeSetOperation.Insert,
                     JournalId = entityPM.JournalId,
-                    AccountingDate = entityPM.InvoiceDate,
-                    Notes = entityPM.MainEntityReference,
+                    AccountingDate = entityPM.InvoiceDate
                 };
                 return InterestTransactionVatLine;
             }
@@ -3562,8 +3558,8 @@ $"[InterestTransactionPM] CreateInterestTransactionLineForInvoiceLine  ARInvoice
                     ChangeSetOp = ChangeSetOperation.Insert,
                     CurrencyId = invoiceLine.ForiegnCurrencyId,
                     JournalId = entityPM.JournalId,
-                    AccountingDate = entityPM.InvoiceDate,
-                    Notes = entityPM.MainEntityReference,
+                    AccountingDate = entityPM.InvoiceDate
+
                 };
                 return interestTransaction;
             }
@@ -4513,8 +4509,8 @@ $"[InterestTransactionPM] CreateInterestTransactionLineForInvoiceLine  ARInvoice
             int tenant = theEntityPm.Tenant;
             TenantRepository tenantRepository = new TenantRepository(tenant);
             Tenant tenantPOCO = tenantRepository.GetSingleTenant(tenant);
-             isApprovingInvoice = isApprovingInvoice || theEntityPm.SetApprovedAutoCredit;
-             if (tenantPOCO.AccountingActivated)
+            isApprovingInvoice = isApprovingInvoice || theEntityPm.SetApprovedAutoCredit;
+            if (tenantPOCO.AccountingActivated)
             {
                 if (theEntityPm.InvoiceLines != null && theEntityPm.InvoiceLines.Count() > 0)
                 {
@@ -4742,8 +4738,8 @@ $"[InterestTransactionPM] CreateInterestTransactionLineForInvoiceLine  ARInvoice
         }
         private void OnApprovingInvoice()
         {
-             if (this.isApprovingInvoice || this.entityPM.SetApprovedAutoCredit)
-             {
+            if (this.isApprovingInvoice || this.entityPM.SetApprovedAutoCredit)
+            {
                 if (String.IsNullOrEmpty(entityPM.ExternalAccountingEntityId) || String.IsNullOrEmpty(entityPM.JournalId))
                 {
                     // Journal Work
@@ -5234,24 +5230,8 @@ $"[InterestTransactionPM] CreateInterestTransactionLineForInvoiceLine  ARInvoice
                     ChildReference = reference,
                     
                 };
-
                 DocumentHelper documentHelper = new DocumentHelper();
-                 
-                var result = documentHelper.PutCreateDocumentOut(documentOutArgs, userId);
-                DocumentOutPM documentOutPM = result.document;
-                if (!result.isSign)
-                {
-                    DocumentTypePM documentTypePM = documentTypeQuery.GetSinglePM(documentTypeId, tenant);
-                    IExportDocumentHelper exportDocumentHelper = ContainerAccessor.Container.Resolve(typeof(IExportDocumentHelper), "ExportDocumentHelper", new ParameterOverride("", 1)) as IExportDocumentHelper;
-
-                    documentTypePM.DocumentTypeCopies.ForEach(doc =>
-                    {
-                        exportDocumentHelper.ExportDocument2Pdf(documentTypeId, id, objectTable?.Id, null, null, documentOutPM.Id, tenant, doc.Id, userId);
-                    });
-                }
-
-
-
+                DocumentOutPM documentOutPM = documentHelper.PutCreateDocumentOut(documentOutArgs, userId);
             }
             catch (Exception ex)
             {
