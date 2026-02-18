@@ -1,43 +1,43 @@
-﻿using Logitude.Accounting.BL.APIDataContract.ApiV1;
-using Logitude.Accounting.BL.CloseTables;
-using Logitude.Accounting.BL.EntityQueryServices;
-using Logitude.Accounting.Data;
-using Logitude.Accounting.Data.EntityListQueryServices;
-using Logitude.Accounting.Data.EntityLists;
-using Logitude.Accounting.Data.EntityPOCOs;
-using Logitude.Accounting.Data.Repositories;
-using Logitude.Accounting.Def.EntityPMs;
-using Logitude.BL.CommonDataModel.EntityPMs;
-using Logitude.BL.CommonDataModel.EntityQueries;
-using Logitude.BL.DataContracts;
-using Logitude.BL.Helpers;
-using Logitude.BL.InvoiceModel.EntityQueries;
-using Logitude.Server.Tools;
-using Logitude.Server.Tools.Helpers;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Web.Services;
+using System.Xml.Serialization;
+
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; 
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; 
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel.Repositories;
 using Simplog.Data.ShipmentsModel;
 using Simplog.Data.ShipmentsModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
-using System;
-using System.Collections.Generic;
+
+using WebFreight.Web.CommonDataModel;
+using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using WebFreight.Web.DataProviders;
+using WebFreight.Web.InfrastructureModel;
+using WebFreight.Web.InvoiceModel;
+using WebFreight.Web.ShipmentsModel;
+using WebFreight.Web.Helpers;
+using Logitude.BL.Helpers;
+using Logitude.BL.DataContracts;
+using Logitude.Server.Tools;
 using System.Drawing;
-using System.IO;
-using System.Linq;
+using System.Xml;
 using System.Text;
 using System.Web;
-using System.Web.Services;
-using System.Xml;
-using System.Xml.Serialization;
-using WebFreight.Web.DataProviders;
-using WebFreight.Web.Helpers;
-using JournalQueryService = Logitude.Accounting.BL.EntityQueryServices.JournalQueryService;
+using Logitude.Server.Tools.Helpers;
+using Logitude.Accounting.Data.Repositories;
+using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Accounting.BL.EntityQueryServices;
+using Logitude.Accounting.Def.EntityPMs;
+using Logitude.BL.InvoiceModel.EntityQueries;
 
 namespace WebFreight.Web.ReportsWebServices
 {
@@ -423,48 +423,7 @@ namespace WebFreight.Web.ReportsWebServices
                     List<ARInvoiceTotalVAT> ARInvoiceTotalVATs = new List<ARInvoiceTotalVAT>();
                     paymentDataProvider.PaidInvoicesList = new List<PaymentDataProvider.InvoicePayments>();
                     List<ARInvoicePayment> invoices = invoiceCotnext.ARInvoicePayments.Include("ARInvoice").Where(inv => inv.ARPaymentId == currentPayment.Id && inv.Tenant == currentPayment.Tenant).ToList();
-                 if(invoices == null || invoices.Count == 0)
-                 {
-                     JournalQueryService journalQueryService = new JournalQueryService(tenant);
-                     JournalPM journalPM = journalQueryService.GetByAccountingEntityIdAndAccountingEntityCode(currentPayment.Id, AccountingEntityValues.ARPayment, tenant); 
-                     if(journalPM != null)
-                     {
-                         invoices = new List<ARInvoicePayment>();
-                         ReconciliationListQueryService reconciliationListQueryService = new ReconciliationListQueryService(AccountingContext.GetContext(tenant));
-                         List<ReconciliationList> openReconciliation = reconciliationListQueryService.GetReconciliationsByJournalId(journalPM.Id, tenant);
-                         if( openReconciliation != null && openReconciliation.Count > 0)
-                         {
-                             ARInvoiceQuery arInvoiceQuery = new ARInvoiceQuery(tenant);
-                             foreach (var item in openReconciliation)
-                             {
-                                 ReconciliationLineQueryService recoLineQuery = new ReconciliationLineQueryService(tenant);
-                                 List<ReconciliationLine> recoLine = recoLineQuery.GetLinesByReconciliationIdAndTenant(item.Id,tenant);
-                                 var ledgerTransactionQueryService = new LedgerTransactionQueryService(AccountingContext.GetContext(tenant));
-                                 var ledgerTransactions= ledgerTransactionQueryService.GetLedgerTransactionPMsByIdList(recoLine.Select(a=>a.TransactionId).ToList(), tenant);
-                                    Dictionary<string, string> ltIds = ledgerTransactions
-                                        .ToDictionary(d => d.Id, d => d.JournalId);
-                                    foreach (var kvp in ltIds) 
-                                    {
-                                        string transactionId = kvp.Key;
-                                        string journalId = kvp.Value;
 
-                                        var journal =journalQueryService.GetSingle(journalId, false,false);
-                                      if (journal == null || journal.AccountingEntityCode != AccountingEntityValues.ARInvoice)
-                                      {
-                                          continue;
-                                      }
-                                        var rec = recoLine.Where(a => a.TransactionId == transactionId).FirstOrDefault();
-                                        var arinvoice = arInvoiceQuery.GetSingle(journal.AccountingEntityId, tenant);
-                                      ARInvoicePayment aRInvoicePayment = MapARInvoiceToARInvoicePayment(arinvoice, currentPayment,rec.ReconciliationAmount);
-                                      invoices.Add(aRInvoicePayment);
-                                   }
-                               
-                               }
-                           }
-                       }
-                   
-
-                   }
                     var payments = (from a in invoices
                                     group a by new
                                     {
@@ -926,22 +885,7 @@ namespace WebFreight.Web.ReportsWebServices
         {
             paymentDataProvider.ARPaymentCheques.Add(ChequeFromDataProvider);
         }
-          private  ARInvoicePayment MapARInvoiceToARInvoicePayment(ARInvoice invoice, ARPayment aRPayment, decimal paymentAmount)
-        {
 
-            ARInvoicePayment aRInvoicePayment = new ARInvoicePayment();
-            aRInvoicePayment.ARInvoiceId = invoice.Id;
-            aRInvoicePayment.ARPaymentId = aRPayment.Id;
-            aRInvoicePayment.LocalAmount = invoice.AmountInLocalCurrency;
-            aRInvoicePayment.ForeignAmount = invoice.AmountInInvoiceCurrency;
-            aRInvoicePayment.ExchangeRate = invoice.InvoiceCurrencyExchangeRate;
-            aRInvoicePayment.ForeignCurrencyId = invoice.InvoiceCurrencyId;
-            aRInvoicePayment.Tenant = invoice.Tenant;
-            aRInvoicePayment.ARInvoice = invoice;
-            aRInvoicePayment.PaymentAmount = (double)paymentAmount;
-
-            return aRInvoicePayment;
-        }
         private  PaymentDataProvider.ARPaymentCheque MapPaymentChequeFieldsByEntityPM(ARPaymentChequePM chequePM)
         {
             PaymentDataProvider.ARPaymentCheque cheque = new PaymentDataProvider.ARPaymentCheque();

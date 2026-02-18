@@ -31,8 +31,6 @@ import { SessionLocator } from 'Infrastructure/Utilities/SessionLocator';
 import * as xmlbuilder from 'xmlbuilder';
 import { ConfirmWindow } from 'Controls/Windows/ConfirmWindow';
 import { DeclarationPMService } from 'Customs/Services/StandardPMs/DeclarationPMService';
-import { CertificateOfOriginTypeCodeEnumPM } from 'Customs/EntityPMs/CertificateOfOriginTypeCodeEnumPM';
-import { CertificateOfOriginTypeCodeEnumListService } from 'Customs/Services/StandardLists/CertificateOfOriginTypeCodeEnumListService';
 
 
 class UpdateGeneralArgsParams {
@@ -99,7 +97,6 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
     }
 
     cargoDescription: string = "";
-    certificateOfOriginTypeCodeEnumListService: CertificateOfOriginTypeCodeEnumListService = new CertificateOfOriginTypeCodeEnumListService();
     supplierInvoiceExtendedPMService: SupplierInvoiceExtendedPMService = new SupplierInvoiceExtendedPMService();
     InitTab(EntityPM: CertificateOfOriginPM, currentDeclaration: DeclarationPM, IsNewOrEdit: StatusCertificateOfOrigin, IsDisplayOnly: boolean) {
         this.entityPM = EntityPM;
@@ -110,7 +107,6 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         this.CertificateOriginItemItems = new ObservableCollection([]);
         this.currentDeclaration = currentDeclaration;
         this.cargoDescription = this.currentDeclaration.Consignments[0]?.CargoDescription;
-        this.updatePortOfShipment();
 
         if (IsNewOrEdit === StatusCertificateOfOrigin.IsNew) {
 
@@ -163,14 +159,6 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
 
     }
 
-
-    updatePortOfShipment(): void {
-        this.entityPM.PortOfShipment = this.currentDeclaration.Consignments[0]?.ExportLoadingPortCode;
-        if (this.entityPM?.PortOfShipment === "ILAST")
-            this.entityPM.PortOfShipment = "ILASH";
-        else if (this.entityPM?.PortOfShipment === "ILHBT")
-            this.entityPM.PortOfShipment = "ILHFA";
-    }
 
     setDisplayMessage() {
         if (this.entityPM.UpdateDeclaration == "A") {
@@ -304,54 +292,35 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         const oldItems = this.entityPM.CertificateOriginItemItems.filter(a => !AppTool.IsNullOrEmpty(a.Id));
         this.entityPM.CertificateOriginItemItems = [];
         result?.certificateOfOriginItems?.forEach((unifreightItem) => {
-            if (!unifreightItem) return;
+            if(!unifreightItem) return;
             const mappedConsignments = new CertificateOfOriginItemPM(EntityPM);
             mappedConsignments.Tenant = EntityPM.Tenant;
 
             // Initialize from Unifreight data if available
             mappedConsignments.ItemSerial = unifreightItem.itemSerial || '';
             mappedConsignments.MarksAndNumbers = unifreightItem.marksAndNumbers || '';
-            mappedConsignments.ItemDescription = unifreightItem.description || '';
-            mappedConsignments.PackageQuantity = unifreightItem.PackageQuantity || '';
-            mappedConsignments.PackageType = unifreightItem.PackageType || '';
-            this.getPackageTypeNameFromCache(mappedConsignments);
             mappedConsignments.Weight = unifreightItem.weight || '';
             mappedConsignments.ContainerIsoCode = unifreightItem.isoContainerType || '';
+            mappedConsignments.ItemDescription = unifreightItem.description || '';
 
-            if (AppTool.IsNullOrEmpty(mappedConsignments.MarksAndNumbers)) mappedConsignments.MarksAndNumbers = mappedConsignments.ItemDescription;
-
-            const TransportModeOcean = 'O';
             // Find corresponding consignment item by serial or other identifier
             let consignment = this.currentDeclaration.Consignments.filter(c => c.SequenceNumeric == unifreightItem.itemSerial)[0];
-            if (this.currentDeclaration.TransportModeId === TransportModeOcean)
-                consignment = this.currentDeclaration.Consignments.filter(c => c.ManifestNumber == unifreightItem.manifestNumber)[0];
 
             if (consignment) {
                 const consignmentPackage = consignment.ConsignmentPackages[0];
                 // Update fields if not set by Unifreight data:
-                if (this.currentDeclaration.TransportModeId !== TransportModeOcean) {
-                    mappedConsignments.MarksAndNumbers = mappedConsignments.MarksAndNumbers || consignmentPackage?.MarksNumbers || '';
-                    mappedConsignments.ItemDescription = mappedConsignments.ItemDescription || consignment.CargoDescription || '';
-                    mappedConsignments.PackageQuantity = mappedConsignments.PackageQuantity || consignmentPackage?.PackageQuantity || 0;
-                    mappedConsignments.PackageType = mappedConsignments.PackageType || consignmentPackage?.PackageTypeCode || '';
-                    mappedConsignments.PackingTypeName = mappedConsignments.PackingTypeName || consignmentPackage?.PackageTypeName || '';
-                    mappedConsignments.Weight = mappedConsignments.Weight || consignmentPackage?.GrossMassMeasure || 0;
-                }
+                mappedConsignments.MarksAndNumbers = mappedConsignments.MarksAndNumbers || consignmentPackage?.MarksNumbers || '';
+                mappedConsignments.PackageQuantity = consignmentPackage?.PackageQuantity || 0;
+                mappedConsignments.Weight = mappedConsignments.Weight || consignmentPackage?.GrossMassMeasure || 0;
                 mappedConsignments.MeasureType = consignmentPackage?.GrossMassMeasureTypeCode || '';
+                mappedConsignments.PackageType = consignmentPackage?.PackageTypeCode || '';
+                mappedConsignments.PackingTypeName = consignmentPackage?.PackageTypeName || '';
                 mappedConsignments.MeasureTypeName = consignmentPackage?.GrossMassMeasureTypeName || '';
-
-
+                mappedConsignments.ItemDescription = mappedConsignments.ItemDescription || consignment.CargoDescription || '';
+                mappedConsignments.ItemId = this.currentDeclaration.SupplierInvoices[0]?.SupplierInvoiceItems[0]?.ClassificationCode.substring(0, 6) || '';
                 // Initialize ContainerTypeWCO field:
                 this.getContainerTypeWCOData(consignment, mappedConsignments, unifreightItem.manifestNumber);
             }
-            else {
-                const firstConsignmentPackage = this.currentDeclaration.Consignments?.[0]?.ConsignmentPackages?.[0] || null;
-                if (firstConsignmentPackage) {
-                    mappedConsignments.MeasureType = firstConsignmentPackage?.GrossMassMeasureTypeCode || '';
-                    mappedConsignments.MeasureTypeName = firstConsignmentPackage?.GrossMassMeasureTypeName || '';
-                }
-            }
-            mappedConsignments.ItemId = this.currentDeclaration.SupplierInvoices[0]?.SupplierInvoiceItems[0]?.ClassificationCode.substring(0, 6) || '';
 
             // Add to collections
             const certificateOfOriginItemLine = new CertificateOfOriginItemLine(mappedConsignments, this);
@@ -377,7 +346,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
                     mappedConsignments.MeasureTypeName = consignmentPackage.GrossMassMeasureTypeName;
                 }
                 mappedConsignments.ItemDescription = consignment.CargoDescription;
-                mappedConsignments.ItemId = this.currentDeclaration.SupplierInvoices[0]?.SupplierInvoiceItems[0]?.ClassificationCode?.substring(0, 6);
+                mappedConsignments.ItemId = this.currentDeclaration.SupplierInvoices[0]?.SupplierInvoiceItems[0]?.ClassificationCode.substring(0, 6);
 
                 // #101498 after this task is finish- add this field initilize - field ContainerTypeWCO
                 this.getContainerTypeWCOData(consignment, mappedConsignments);
@@ -423,8 +392,6 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
             const marksAndNumbers = item.getElementsByTagName('MarksAndNumbers')[0]?.textContent || '';
             const weight = item.getElementsByTagName('Weight')[0]?.textContent || '';
             const isoContainerType = item.getElementsByTagName('IsoContainerType')[0]?.textContent || '';
-            const PackageQuantity = item.getElementsByTagName('PackageQuantity')[0]?.textContent || '';
-            const PackageType = item.getElementsByTagName('PackageType')[0]?.textContent || '';
 
             certificateOfOriginItems.push({
                 itemSerial,
@@ -433,8 +400,6 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
                 marksAndNumbers,
                 weight,
                 isoContainerType,
-                PackageQuantity,
-                PackageType
             });
         }
 
@@ -459,18 +424,20 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
             ExporterAddress: EntityPM.ExporterAddress,
             ConsigneeName: EntityPM.ConsigneeName,
             ConsigneeAddress: EntityPM.ConsigneeAddress,
-            // Map CertificateOfOriginItems to Unifreight:
+            // MAP CertificateOfOriginItems to Unifreight BY THIS STRUCTURE:
             CertificateOfOriginItems: this.currentDeclaration.Consignments.map(consignment => ({
                 ItemSerial: consignment.ConsignmentNumber,
-                ManifestNumber: this.currentDeclaration.TransportModeId === 'O' ? "" : consignment.ManifestNumber,
+                ManifestNumber: consignment.ManifestNumber,
+                // this fields will return full from Unifreight:
                 Description: "",
                 MarksAndNumbers: "",
                 Weight: "",
-                IsoContainerType: "",
-                PackageQuantity: "",
-                PackageType: ""
+                IsoContainerType: ""
             }))
         };
+        // const xmlDataString = this.convertToXML(data);
+        // console.log(xmlDataString);
+
         return this.convertToXML(data);
     }
 
@@ -492,12 +459,11 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
             const itemElement = items.ele('CertificateOfOriginItem');
             itemElement.ele('ItemSerial', item.ItemSerial);
             itemElement.ele('ManifestNumber', item.ManifestNumber);
+            // Explicitly add empty fields
             itemElement.ele('Description', item.Description || '');
             itemElement.ele('MarksAndNumbers', item.MarksAndNumbers || '');
             itemElement.ele('Weight', item.Weight || '');
             itemElement.ele('IsoContainerType', item.IsoContainerType || '');
-            itemElement.ele('PackageQuantity', item.PackageQuantity || '');
-            itemElement.ele('PackageType', item.PackageType || '');
         });
 
         const xmlString = root.end({ pretty: true });
@@ -544,16 +510,9 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
 
     exportStorageWebService = new ExportStorageWebService();
     getContainerTypeWCOData(consignment: ConsignmentPM, mappedConsignments: CertificateOfOriginItemPM, ManifestNumberFromUnifreight = null) {
-        const TransportModeOcean = 'O';
-        if (this.currentDeclaration.TransportModeId !== TransportModeOcean && AppTool.IsNullOrEmpty(ManifestNumberFromUnifreight)) {
-            consignment.ManifestNumber = consignment.ManifestNumber ? consignment.ManifestNumber : '';
-        }
-        else if (AppTool.IsNullOrEmpty(ManifestNumberFromUnifreight)) {
-            mappedConsignments.ContainerIsoCode = "";
-            return;
-        }
-        else
-            consignment.ManifestNumber = ManifestNumberFromUnifreight;
+        // Validate consignment data:
+        if (!ManifestNumberFromUnifreight) consignment.ManifestNumber = consignment.ManifestNumber ? consignment.ManifestNumber : '';
+        else consignment.ManifestNumber = ManifestNumberFromUnifreight;
 
         consignment.SecondCargoID = consignment.SecondCargoID ? consignment.SecondCargoID : '';
         consignment.ThirdCargoID = consignment.ThirdCargoID ? consignment.ThirdCargoID : '';
@@ -590,12 +549,11 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
     InitializeCertificateOriginItemItems(certificateOriginItemItems: CertificateOfOriginItemPM[]) {
         this.CertificateOriginItemItems.Clear();
         this.originalItemSource.Clear();
-        this.SelectedRow = null;
-        certificateOriginItemItems = certificateOriginItemItems?.sort((a, b) => a.ItemSerial - b.ItemSerial);
+
         // update CertificateOriginItemItems list:
         certificateOriginItemItems.forEach((item) => {
             this.getMeasureNameFromCache(item.MeasureType, item);
-            this.getPackageTypeNameFromCache(item);
+            this.getPackageTypeNameFromCache(item.PackageType, item);
             this.getOriginCriterionCodeNameFromCache(item.OriginCriterionCode, true, item);
 
             const certificateOfOriginItemLine = new CertificateOfOriginItemLine(item, this);
@@ -605,6 +563,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
     }
 
     RefreshCertificateOriginItemItemsClicked() {
+
         var confirmMsg: string = TextCodeTranslator.Translate('Customs.CertificateOfOriginItem.O.RefreshConfirmationQuestion');
         var confirmWindow = new ConfirmWindow();
         confirmWindow.Title = TextCodeTranslator.Translate("General.O.Confirm");
@@ -616,6 +575,11 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
 
         confirmWindow.WindowClosed.subscribe((event: any) => {
             if (confirmWindow.Yes) {
+                // this._declarationPMService.get(this.currentDeclaration.Id).subscribe(myResult => {
+                //     var myResponse: ServiceResponse = myResult;
+                //     if (!myResponse.HasError && myResponse.Result) {
+                //         this.currentDeclaration = myResponse.Result;
+                //     }
                 this.supplierInvoiceExtendedPMService.GetSupplierInvoicesPMsForDeclaration(this.currentDeclaration.Id).subscribe((response: any) => {
                     if (!response.HasError && response.Result) {
                         this.currentDeclaration.SupplierInvoices = response.Result;
@@ -628,11 +592,13 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
                     });
                     this.entityPM.IsChange = true;
                 });
+                // });
             }
         });
     }
 
     RefreshCertificateOriginInvoiceItemsClicked() {
+
         var confirmMsg: string = TextCodeTranslator.Translate('Customs.CertificateOfOriginInvoice.O.RefreshConfirmationQuestion');
         var confirmWindow = new ConfirmWindow();
         confirmWindow.Title = TextCodeTranslator.Translate("General.O.Confirm");
@@ -641,15 +607,24 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         confirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
         confirmWindow.NoButtonText = TextCodeTranslator.Translate("General.B.Cancel");
         confirmWindow.Show(confirmMsg);
+
         confirmWindow.WindowClosed.subscribe((event: any) => {
             if (confirmWindow.Yes) {
+                // this._declarationPMService.get(this.currentDeclaration.Id).subscribe(myResult => {
+                //     var myResponse: ServiceResponse = myResult;
+                //     if (!myResponse.HasError && myResponse.Result) {
+                //         this.currentDeclaration = myResponse.Result;
+                // this.entityPM.CertificateOriginInvoiceItems.forEach(item => this.entityPM.DeletedCertificateOriginInvoiceItems.push(item));
                 const oldItems = this.entityPM.CertificateOriginInvoiceItems.filter(a => !AppTool.IsNullOrEmpty(a.Id));
+
                 this.InitilizeNewCertificateWithSupplierInvoices(this.entityPM);
                 oldItems.forEach(item => {
                     item.ChangeSetOp = "Delete";
                     this.entityPM.CertificateOriginInvoiceItems.push(item);
                 });
                 this.entityPM.IsChange = true;
+                //     }
+                // });
             }
         });
     }
@@ -682,8 +657,8 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
             }
         });
     }
-    getPackageTypeNameFromCache(item) {
-        this.packingTypeListService.getSingleFromCache(item.PackageType).subscribe((myResponse: ServiceResponse) => {
+    getPackageTypeNameFromCache(code, item) {
+        this.packingTypeListService.getSingleFromCache(code).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 var result: PackingTypeList = myResponse.Result;
                 if (result != null) {
@@ -706,6 +681,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
             this.CriterionTypesFilterItems = new ApiQueryFilters();
             this.CriterionTypesFilterItems.addAdditionalFilter("CertificateOfOriginTypeCodeID", this.entityPM.CooTypeCode, null, null, "Equals", false, false, false, "number");
             this.updateOptionsMap["OriginCriterionCode"].Arguments.QueryFilterItems = this.CriterionTypesFilterItems;
+            // this.UpdateOptionParams.OriginCriterionCode.QueryFilterItems = this.CriterionTypesFilterItems;
         });
     }
 
@@ -743,6 +719,10 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         this.UIProperties.SetEnabled("IsInvoicesForPrint", "Customs.CertificateOriginInvoice", enabled);
         this.UIProperties.SetEnabled("IsInvoiceConnected", "Customs.CertificateOriginInvoice", enabled);
         this.UIProperties.SetEnabled("Observations", this.ObjectTableName, enabled);
+
+        // this.disableElementById("selectedValueTradeAgreementBox", enabled);
+        // this.disableElementById("selectedValueOriginCountryBox", enabled);
+        // this.disableElementById("selectedValueDestinationCountryBox", enabled);
         this.disableClassOpacityDimBox(enabled);
     }
 
@@ -757,20 +737,13 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         this.UIProperties.SetWarning("RequestReasonCode", this.ObjectTableName, true);
     }
 
-    SetDisableByCooTypeCode(CooTypeCode: string, IsDisplayOnly: false) { // if CooTypeCode = 1 or 2
-        this.UIProperties.SetEnabled("TradeAgreementCountry1", this.ObjectTableName, IsDisplayOnly);
-        this.UIProperties.SetEnabled("TradeAgreementCountry2", this.ObjectTableName, IsDisplayOnly);
-        this.UIProperties.SetEnabled("TradeAgreementGroupOfCountries", this.ObjectTableName, IsDisplayOnly);
-        this.SetManufactureDataByCooTypeCode(CooTypeCode);
-    }
-    
-    SetManufactureDataByCooTypeCode(CooTypeCode: string) {
-        let enabled: boolean = false;
-        this.certificateOfOriginTypeCodeEnumListService.getSingle(CooTypeCode).subscribe((response: ServiceResponse) => {
-            if (!response.HasError) enabled = response.Result?.IsZipcodeMandatory;
-            this.UIProperties.SetEnabled("PlaceOfManufacture", this.ObjectTableName, enabled);
-            this.UIProperties.SetEnabled("ZipCodeOfManufacture", this.ObjectTableName, enabled);
-        });
+    SetDisableByCooTypeCodeEuro(enabled: boolean) { // if CooTypeCode = 1 or 2
+        this.UIProperties.SetEnabled("TradeAgreementCountry1", this.ObjectTableName, enabled);
+        this.UIProperties.SetEnabled("TradeAgreementCountry2", this.ObjectTableName, enabled);
+        this.UIProperties.SetEnabled("TradeAgreementGroupOfCountries", this.ObjectTableName, enabled);
+        this.UIProperties.SetEnabled("PlaceOfManufacture", this.ObjectTableName, enabled);
+        this.UIProperties.SetEnabled("ZipCodeOfManufacture", this.ObjectTableName, enabled);
+        // this.disableElementById("selectedValueTradeAgreementBox", enabled);
     }
 
     mandatoryFielsList = [];
@@ -778,6 +751,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
     tempCertificateOfOriginMandatoryFieldsList = [];
     certificateOfOriginWebService: CertificateOfOriginWebService = new CertificateOfOriginWebService();
     formSectionsCouples: FormSectionsCouples;
+    //certificateOfOriginMandatoryCouples = [];
     SetWarningByCooTypeCode(CooTypeCode) {
         if (!CooTypeCode) {
             this.tempCertificateOfOriginMandatoryFieldsList.forEach(i => {
@@ -796,7 +770,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
             this.SetPropertiesEnabledAllFields(!this.IsDisplayOnly);
 
             if (this.entityPM.CooTypeCode != "1" && this.entityPM.CooTypeCode != "2") {
-                this.SetDisableByCooTypeCode(CooTypeCode, this.IsDisplayOnly);
+                this.SetDisableByCooTypeCodeEuro(this.IsDisplayOnly);
             }
         }
 
@@ -1042,65 +1016,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         logcelltemplate.IsEditMode = true;
     }
 
-    deleteItemLine(item: CertificateOfOriginItemLine) {
-        // Delete from screen:
-        this.CertificateOriginItemItems.Remove(item);
-        const oldItems = this.entityPM.CertificateOriginItemItems.filter(a => !AppTool.IsNullOrEmpty(a.Id));
-        const index = this.entityPM.CertificateOriginItemItems.findIndex(i => i.ItemSerial === item.entityPM.ItemSerial);
-        if (index > -1) this.entityPM.CertificateOriginItemItems.splice(index, 1);
 
-        // Mark the item for delete in the DB in next save operation:
-        oldItems.forEach(i => {
-            if (i.ItemSerial === item.entityPM.ItemSerial) {
-                i.ChangeSetOp = "Delete";
-                this.entityPM.CertificateOriginItemItems.push(i);
-            }
-        });
-        this.reorderItemSerial();
-        this.entityPM.IsDirty = true;
-        this.entityPM.IsChange = true;
-    }
-
-    addItemLine() {
-        const certificateOfOriginItem = new CertificateOfOriginItemPM(this.entityPM);
-        certificateOfOriginItem.Tenant = this.entityPM.Tenant;
-        certificateOfOriginItem.ItemSerial = this.CertificateOriginItemItems.Collection.length + 1;
-        const certificateOfOriginItemLine = new CertificateOfOriginItemLine(certificateOfOriginItem, this);
-        this.CertificateOriginItemItems.Insert(certificateOfOriginItemLine);
-        this.entityPM.CertificateOriginItemItems.push(certificateOfOriginItem);
-        this.entityPM.AddCertificateOfOriginItem(certificateOfOriginItem);
-        this.entityPM.IsDirty = true;
-        this.reorderItemSerialBySelectedRow(this.SelectedRow, certificateOfOriginItemLine);
-    }
-
-    SelectedRow: CertificateOfOriginItemLine;
-    // reorder ItemSerial for the remaining items
-    reorderItemSerial() {
-        this.CertificateOriginItemItems.Collection.forEach((item, index) => {
-            item.entityPM.ItemSerial = index + 1;
-            item.entityPM.IsDirty = true;
-        });
-    }
-
-    reorderItemSerialBySelectedRow(selectedRow: CertificateOfOriginItemLine, addedItem: CertificateOfOriginItemLine) {
-        const collection = this.CertificateOriginItemItems.Collection;
-        const selectedIndex = collection.findIndex(item => item?.entityPM.ItemSerial === selectedRow?.entityPM.ItemSerial);
-        const addedItemIndex = collection.findIndex(item => item?.entityPM.ItemSerial === addedItem?.entityPM.ItemSerial);
-        if (selectedIndex === -1) return;
-        if (addedItemIndex !== -1) {
-            collection.splice(addedItemIndex, 1); // Remove the added item from its current position
-            const insertIndex = addedItemIndex < selectedIndex ? selectedIndex : selectedIndex + 1;
-            collection.splice(insertIndex, 0, addedItem); // Insert after the selected row
-        }
-        else collection.splice(selectedIndex + 1, 0, addedItem);
-        this.CertificateOriginItemItems.Clear();
-        this.CertificateOriginItemItems.InsertCollection(collection);
-        this.reorderItemSerial();
-    }
-
-    SelectedRowClick(selectedRow: CertificateOfOriginItemLine) {
-        this.SelectedRow = selectedRow?.entityPM?.Id === this.SelectedRow?.entityPM?.Id ? null : selectedRow;
-    }
 
     CheckMandatoryFields() {
         if (!this.entityPM.CooTypeCode && !this.entityPM.RequestReasonCode) {
@@ -2116,7 +2032,7 @@ export class CertificateOfOriginItemLine extends BaseComponent {
         return this.entityPM.PackageType;
     }
     public set PackageType(newValue: string) {
-        this.entityPM.PackageType = newValue === '' ? null : newValue;
+        this.entityPM.PackageType = newValue;
         this.updateIsDirty();
     }
 
