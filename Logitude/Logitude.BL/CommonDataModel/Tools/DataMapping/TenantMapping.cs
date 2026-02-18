@@ -154,7 +154,6 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             poco.ApproveUploadedDocuments = entityPM.ApproveUploadedDocuments;
             poco.InvoicePrintNotes = entityPM.InvoicePrintNotes;
             poco.InvoicePrintNotesLocal = entityPM.InvoicePrintNotesLocal;
-            poco.HebrewTenant = entityPM.HebrewTenant;
             // poco.StorageEncryptionKey = entityPM.StorageEncryptionKey;
             BuildSearchFields(entityPM, poco);
         }

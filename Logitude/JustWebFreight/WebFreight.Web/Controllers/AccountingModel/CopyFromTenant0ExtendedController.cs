@@ -68,7 +68,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
         }
         [HttpGet]
 
-        public HttpResponseMessage CopyTableFromTenant0(string tableName, string entityId = null)
+        public HttpResponseMessage CopyTableFromTenant0(string tableName)
         {
             try
             {
@@ -144,13 +144,13 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         case "DocumentTypesandTemplates":
                             {
                                 DocumentTypeTemplateQuery documentTypeTemplateQuery = new DocumentTypeTemplateQuery(authToken.Tenant);
-                                documentTypeTemplateQuery.CopyFromTenant0(0, authToken.Tenant, entityId);
+                                documentTypeTemplateQuery.CopyFromTenant0(0, authToken.Tenant);
                                 break;
                             }
                         case "ReportTemplates":
                             {
                                 ReportHelper reportHelper = new ReportHelper();
-                                reportHelper.CopyFromTenant0(0, authToken.Tenant, entityId);
+                                reportHelper.CopyFromTenant0(0, authToken.Tenant);
                                 break;
                             }
                         case "AccountingSettings":
