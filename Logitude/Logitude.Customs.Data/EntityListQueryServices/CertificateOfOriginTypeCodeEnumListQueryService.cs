@@ -38,12 +38,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 					                          IsCustomApprovalRequired = a.IsCustomApprovalRequired,
 					
 					                          IsCriterionMandatory = a.IsCriterionMandatory,
-
-											  IsCustomsItemMandatory = a.IsCustomsItemMandatory,
-
-                                              IsZipcodeMandatory = a.IsZipcodeMandatory,
-
-                                            });
+					
+		                    	            });
             return query;
 		}
 

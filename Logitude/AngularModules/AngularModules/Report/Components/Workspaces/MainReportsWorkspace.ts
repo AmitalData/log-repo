@@ -1,19 +1,8 @@
-import { Component, ViewChildren, QueryList, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { Component, ViewChildren, QueryList, OnInit } from '@angular/core';
 import { FeatureLocator } from '../../../Infrastructure/Utilities/FeatureLocator';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 import { LocationDirective } from '../../../Infrastructure/Utilities/LocationDirective';
 import { EntityResourceService } from '../../../Infrastructure/Services/EntityResourceService';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { ReportService } from 'Common/Services/ExtendedLists/ReportService';
-import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
-import * as pbi from 'powerbi-client';
-import { models } from 'powerbi-client';
-import { MessageWindow } from 'Controls/Windows/MessageWindow';
-import { ReportGroupList } from 'Report/EntityLists/ReportGroupList';
-import { LogitudeWindow } from 'Controls/Windows/LogitudeWindow';
-import { ReportList } from '../../EntityLists/ReportList';
-import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
-import { ReportListService } from 'Common/Services/StandardLists/ReportListService';
 
 @Component({
     
@@ -28,10 +17,8 @@ export class MainReportsWorkspace implements OnInit {
     public IsReportItemVisible: boolean = false;
     public IsResourcesReady: boolean = false;
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
-    private _reportListService: ReportListService;
+    constructor(private _entityResourceService: EntityResourceService) {
 
-    constructor(private _entityResourceService: EntityResourceService, private sanitizer: DomSanitizer) {
-        this._reportListService = new ReportListService();
     }
     ngOnInit() {
 
@@ -107,92 +94,6 @@ export class MainReportsWorkspace implements OnInit {
         }
     }
 
-    public PowerBiReports;
-    public PowerBiReportUrl = null;
-    public ActiveDirectoryTenantId;
-    public SelectedPowerBIReport = null;
-    private _reportService: ReportService = new ReportService();
-    @ViewChild('reportContainer', { static: false })
-    reportContainer!: ElementRef<HTMLDivElement>;
-
-    GetPowerBiReports() {
-
-        if (!this.PowerBiReports) {
-            this._reportService.GetPowerBIReports().subscribe((myResponse: ServiceResponse) => {
-                if (myResponse.HasError) {
-                    var messageWindow = new MessageWindow();
-                    messageWindow.Show(myResponse.ErrorsArray?.[0] || "An unexpected error occurred");
-                }
-                else {
-                    this.ActiveDirectoryTenantId = myResponse?.Result?.ActiveDirectoryTenantId;
-                    this.PowerBiReports = myResponse?.Result?.Reports || [];
-
-                    this.PowerBiReports.forEach(report => {                        
-                        var filters = new ApiQueryFilters;
-                        filters.GetAll = true;
-                        filters.SortBy = "CreateDate";
-                        filters.SortDirection = "Descending";
-                        filters.addAdditionalFilter("Name", report.Name, null, null, "Equals", false, false, false, "string");
-
-                        this._reportListService.getByFilters(filters).subscribe((myResult: ServiceResponse) => {
-                            var myResponse: ServiceResponse = myResult;
-                            if (!myResponse.HasError && myResponse.Result?.length > 0) {
-                                report.Report = myResponse.Result[0];
-                            }
-                        });
-                    });
-                }
-            });
-        }
-    }
-
-    SelectPowerBiReport(report) {
-        this.SelectedPowerBIReport = report;
-
-        setTimeout(() => this.EmbedReport());
-    }
-
-    EmbedReport() {
-        const embedConfig = {
-            type: 'report',
-            tokenType: models.TokenType.Embed,
-            accessToken: this.SelectedPowerBIReport.EmbedToken,
-            embedUrl: this.SelectedPowerBIReport.EmbedUrl,
-            id: this.SelectedPowerBIReport.Id,
-            settings: {
-                panes: {
-                    filters: { visible: false },
-                    pageNavigation: { visible: true }
-                }
-            } as any
-        };
-        
-        const powerbiService = new pbi.service.Service(
-            pbi.factories.hpmFactory,
-            pbi.factories.wpmpFactory,
-            pbi.factories.routerFactory
-        );
-
-        powerbiService.embed(this.reportContainer.nativeElement, embedConfig);
-    }
-
-    onReportSchedulerClick(groupList: ReportGroupList, reportList: ReportList) {
-        this._entityResourceService.getEntityResourceByTableName("TasksScheduler", 0).subscribe((response:any) => {
-
-            var windowArgs: any = {};
-            windowArgs.ReportGroupList = groupList;
-            windowArgs.ReportList = reportList;
-            windowArgs.IsPowerBIReport = true;
-
-            var logWindow = new LogitudeWindow();
-            logWindow.Width = 1200;
-            logWindow.Height = 1000;
-
-            logWindow.Title = reportList.Name + " Scheduler";
-            logWindow.WindowArgs = windowArgs;
-            logWindow.Show('./Report/Components/Scheduler/MainReportSchedulerComponent');
-        });
-    }
 
     private Page_BI: any = null;
     private Page_Report: any = null;
@@ -202,7 +103,7 @@ export class MainReportsWorkspace implements OnInit {
             if (this.SelectedItem != null) {
 
                 let myLocation: LocationDirective = this.AllLocations.toArray().filter(d => d.Code == this.SelectedItem)[0];
-                if (myLocation != null || this.SelectedItem == "PowerBI") {
+                if (myLocation != null) {
 
                     switch (this.SelectedItem) {
 
@@ -229,11 +130,6 @@ export class MainReportsWorkspace implements OnInit {
                             }
                             break;
                         }
-
-                        case "PowerBI":
-                            this.SelectedPowerBIReport = null;
-                            this.GetPowerBiReports();
-                            break;
                     }
                 }
             }
