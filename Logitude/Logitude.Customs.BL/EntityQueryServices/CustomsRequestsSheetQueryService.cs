@@ -209,7 +209,6 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "8323",//פרטי הנחיות סיווג
 "8319",//כללים - ספר סיווג
 "8318",// תדפיסי חקיקה (מקח''ים) - ספר סיווג
-"DOC8318",// תדפיסי חקיקה (מקח''ים) - ספר סיווג - attachment
 "UCB8373",
 
 
@@ -458,7 +457,6 @@ namespace Logitude.Customs.BL.EntityQueryServices
             "8323",//פרטי הנחיות סיווג
             "8319",//כללים - ספר סיווג
             "8318",// תדפיסי חקיקה (מקח''ים) - ספר סיווג
-            "DOC8318",// תדפיסי חקיקה (מקח''ים) - ספר סיווג - attachment
             "UCB8373",
             };
         }
@@ -622,8 +620,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "8323",//פרטי הנחיות סיווג
 "8319",//כללים - ספר סיווג
 "8318",// תדפיסי חקיקה (מקח''ים) - ספר סיווג
-"DOC8318",// תדפיסי חקיקה (מקח''ים) - ספר סיווג - attachment
-"UCB8373",
+"UCB8373"
 };
 
 
@@ -999,11 +996,6 @@ namespace Logitude.Customs.BL.EntityQueryServices
         {
             return repository.GetTenantPriorityByEntityIDAndTeant(EntityID, tenant);
         }
-        public bool HasBlockingRequests(string customFileNumber, int tenant, string interfaceTypeCode)
-        {
-            return repository.HasBlockingRequests(customFileNumber, tenant, interfaceTypeCode);
-        }
-
 
     }
 

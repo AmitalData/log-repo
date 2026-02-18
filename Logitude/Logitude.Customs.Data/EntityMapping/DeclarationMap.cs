@@ -17,19 +17,19 @@ using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using System.Data.Entity.ModelConfiguration;
 using POCO = Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data;
-
+ 
 namespace Logitude.Customs.Data.EntityMapping
 {
-
+ 
     public class DeclarationMap : EntityTypeConfiguration<POCO.Declaration>
     {
-        string dbms;
+	    string dbms;
         public DeclarationMap()
-        {
-            this.ToTable("Declarations", "Customs");
-
-            this.HasKey(t => new { t.Id });
-
+        { 
+			  this.ToTable("Declarations", "Customs");
+		
+		    this.HasKey(t => new { t.Id });
+	 
             this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.Tenant).HasColumnName("Tenant");
@@ -361,3 +361,4 @@ namespace Logitude.Customs.Data.EntityMapping
         }
     }
 }
+	 

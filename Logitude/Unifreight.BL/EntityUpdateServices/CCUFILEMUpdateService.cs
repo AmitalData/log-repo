@@ -38,7 +38,7 @@ namespace Unifreight.BL.EntityUpdateServices
 
         protected override Simplog.Server.Infrastructure.EntityKeyFields GetKeys(CCUFILEMPM entityPM)
         {
-            return new CCUFILEMKeys() { FILENO = entityPM.FILENO, TENANT = entityPM.Tenant };
+            return new CCUFILEMKeys() { FILENO = entityPM.FILENO };
         }
 
         protected override void OnCreating(CCUFILEMPM entityPM, EntityPM entityParentPM)

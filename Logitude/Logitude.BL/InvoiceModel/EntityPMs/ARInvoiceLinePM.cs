@@ -98,7 +98,8 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string GLAccountDisplayNumber { get; set; }
-        public string ReceivableCreditGLAccountId { get; set; }
-        public string ReceivableCreditGLAccountName { get; set; }
+
+
+
     }
 }
