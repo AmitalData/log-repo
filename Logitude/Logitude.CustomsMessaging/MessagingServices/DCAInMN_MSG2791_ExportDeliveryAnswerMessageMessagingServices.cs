@@ -8,7 +8,6 @@ using Logitude.CustomsMessaging.RequestServices;
 using Logitude.CustomsMessaging.ResponseServices;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure;
-using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,17 +35,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
         protected override GenericRequestParams CreateDefaultRequestParamsFromCustomsResponse(MN_MSG2791_ExportDeliveryAnswerMessage customsResponse)
         {
-            int contextTenant = 0;
-            if (RequestParams?.Tenant == null)
-            {
-                contextTenant = SettingUtil.GetCurrentTenant();
-            }
-            else
-            {
-                contextTenant = RequestParams.Tenant;
-            }
-
-            ExportStoragePM entity = new ExportStorageQueryService(CustomContext.GetContext(contextTenant)).GetByCargoKeys(
+            ExportStoragePM entity = new ExportStorageQueryService(CustomContext.GetContext(RequestParams.Tenant)).GetByCargoKeys(
                 customsResponse.CargoIdentifier.cargoIdentifierKey1,
                 customsResponse.CargoIdentifier.cargoIdentifierKey2,
                 customsResponse.CargoIdentifier.cargoIdentifierKey3,
@@ -55,9 +44,9 @@ namespace Logitude.CustomsMessaging.MessagingServices
             var myGenericRequestParams = new GenericRequestParams()
             {
                 LoggingObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration"),
-                LoggingEntityId = entity?.DeclarationId,
+                LoggingEntityId = entity.DeclarationId,
                 LoggingObjectTableId2 = ObjectTableRepository.GetObjectTableByName("Customs.ExportStorage"),
-                LoggingEntityId2 = entity?.Id,                
+                LoggingEntityId2 = entity.Id,                
             };
             
             return myGenericRequestParams;

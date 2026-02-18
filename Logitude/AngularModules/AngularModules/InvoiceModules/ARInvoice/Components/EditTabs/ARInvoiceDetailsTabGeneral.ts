@@ -216,7 +216,7 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     public myVatTypeListService: VatTypeListService;
     public myChargesTypeListService: ChargesTypeListService;
     private myCommonDomainService: CommonDomainService;
-    public myGLAccountPMService: GLAccountPMService;
+    private myGLAccountPMService: GLAccountPMService;
     InitializeServices() {
         this.myCardListService = new CardListService();
         this.myCurrencyListService = new CurrencyListService();
@@ -378,14 +378,6 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
 
             this.UIProperties.SetRequired("VatNumber", this.ObjectTableName, isFieldRequired);
         }
-        if(this.VatNumber === SessionLocator.AccountingSettingPM.VatNumber  && InvoiceTool.IsEditingARInvoiceEnabled(this.EntityPM)){
-            this.UIProperties.SetEnabled("ConfirmationNumber", this.ObjectTableName, true);
-
-        }
-        else{
-            this.UIProperties.SetEnabled("ConfirmationNumber", this.ObjectTableName, false);
-
-        }
     }
     SetUIProperties_ExchangeRate() {
         var isFieldtEnabled = false;
@@ -515,14 +507,7 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
                                     }
                                 });
                             }
-                            if(this.VatNumber === SessionLocator.AccountingSettingPM.VatNumber  && InvoiceTool.IsEditingARInvoiceEnabled(this.EntityPM)){
-                                this.UIProperties.SetEnabled("ConfirmationNumber", this.ObjectTableName, true);
 
-                            }
-                            if(this.VatNumber !== SessionLocator.AccountingSettingPM.VatNumber || !InvoiceTool.IsEditingARInvoiceEnabled(this.EntityPM)){
-                                this.UIProperties.SetEnabled("ConfirmationNumber", this.ObjectTableName, false);
-                                
-                            }
                             if (!AppTool.IsNullOrEmpty(this.cardList.InvoiceCurrencyId)) {
                                 this.InvoiceCurrencyId = this.cardList.InvoiceCurrencyId;
                             }
@@ -1043,7 +1028,6 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
                     myResult = lastRate.ValueDate;
                 }
             }
-            
         }
 
         return myResult;
@@ -1574,14 +1558,7 @@ export class ARInvoiceLineItem extends BaseComponent {
 
 
         this.SetUIProperties_Rate();
-        this.SetUIProperties_ReceivableCreditGLAccountId();
     }
-
-    SetUIProperties_ReceivableCreditGLAccountId() {
-        this.UIProperties.SetRequired("ReceivableCreditGLAccountId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.ReceivableCreditGLAccountId));
-        this.UIProperties.SetEnabled("ReceivableCreditGLAccountId", this.ObjectTableName, this.IsEditingEnabled && AppTool.IsNullOrEmpty(this.chargesTypeList?.ReceivableCreditGLAccountId));
-    }
-
     SetUIProperties_Rate() {
         var isFieldEnabled = false;
 
@@ -1689,14 +1666,9 @@ export class ARInvoiceLineItem extends BaseComponent {
             else {
                 var lastRate: LastRate = this.fatherComponent.LastRatesList.filter(d => d.ForeignCurrencyId == this.ForiegnCurrencyId)[0];
                 if (lastRate != null) {
-                    const exchangeRateId = !this.fatherComponent.glaccount?.IsMultiCurrency ? this.fatherComponent.glaccount?.ExchangeRateId  : this.fatherComponent.glaccount?.GLAccountCurrencies?.find(child => child.CurrencyId === this.ForiegnCurrencyId)?.ExchangeRateId ?? this.fatherComponent.glaccount?.ExchangeRateId;
-                    const customRate = exchangeRateId 
-                        ? lastRate.CurrencyRates.find(rate => rate.AdditionalCurrencyRateId === exchangeRateId)?.Rate 
-                        : null;
-                    myRate = customRate ?? lastRate.Rate;
+                    myRate = lastRate.Rate;
                     myRateDate = lastRate.ValueDate;
                 }
-               
             }
         }
 
@@ -1709,27 +1681,6 @@ export class ARInvoiceLineItem extends BaseComponent {
         if (this.EntityPM.ForiegnCurrencyCode != newValue) {
             this.EntityPM.ForiegnCurrencyCode = newValue;
 
-        }
-    }
-
-    get ReceivableCreditGLAccountId() { return this.EntityPM.ReceivableCreditGLAccountId; }
-    set ReceivableCreditGLAccountId(value: string) {
-        if (this.EntityPM.ReceivableCreditGLAccountId != value) {
-            this.EntityPM.ReceivableCreditGLAccountId = value;
-            if(!AppTool.IsNullOrEmpty(value) && AppTool.IsNullOrEmpty(this.chargesTypeList?.ReceivableCreditGLAccountId))    {}
-            this.fatherComponent.myGLAccountPMService.get(this.ReceivableCreditGLAccountId).subscribe((myResponse: ServiceResponse) => {
-                if (!myResponse.HasError) {
-                     this.ReceivableCreditGLAccountName = this.fatherComponent.isRTL ? myResponse?.Result?.LocalName : myResponse?.Result?.EnglishName;
-                 
-                }
-            });
-            this.SetUIProperties_ReceivableCreditGLAccountId();
-        }
-     }
-     get ReceivableCreditGLAccountName() { return this.EntityPM.ReceivableCreditGLAccountName }
-     set ReceivableCreditGLAccountName(value: string) {
-      if (this.EntityPM.ReceivableCreditGLAccountName != value) {
-            this.EntityPM.ReceivableCreditGLAccountName = value;
         }
     }
 
@@ -1785,9 +1736,9 @@ export class ARInvoiceLineItem extends BaseComponent {
                 this.LocalDescription = null;
                 this.VatTypeId = null;
                 this.LineActionCode = null;
-                this.chargesTypeList = null;
-                this.ReceivableCreditGLAccountId = null;
+
             }
+
             else {
                 this.fatherComponent.myChargesTypeListService.getSingleFromCache(newValue).subscribe((myResponse: ServiceResponse) => {
                     if (!myResponse.HasError) {
@@ -1797,15 +1748,6 @@ export class ARInvoiceLineItem extends BaseComponent {
                             this.LocalDescription = this.chargesTypeList.LocalName;
                             this.VatTypeId = this.chargesTypeList.VatTypeId;
                             this.LineActionCode = this.chargesTypeList.IsExpense ? '2' : '1';
-                            this.ReceivableCreditGLAccountId = this.chargesTypeList.ReceivableCreditGLAccountId;
-
-                            if (!AppTool.IsNullOrEmpty(this.chargesTypeList.ReceivableCreditGLAccountId)) {
-                                this.fatherComponent.myGLAccountPMService.get(this.chargesTypeList.ReceivableCreditGLAccountId).subscribe((myResponse: ServiceResponse) => {
-                                    if (!myResponse.HasError) {
-                                        this.ReceivableCreditGLAccountName = myResponse?.Result?.LocalName;
-                                    }
-                                });
-                            }
                         }
                     }
                 });

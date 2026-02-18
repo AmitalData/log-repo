@@ -55,7 +55,7 @@ namespace Simplog.Server.Infrastructure.Helpers
                 if (deploymentstage==null || deploymentstage.Length==0)
                     return false;
 
-                if (deploymentstage.Any(x =>  x != null && x.ToLower() == LogitudeSettings.DeploymentStage.ToLower()))
+                if (deploymentstage.Any(x => x.ToLower() == LogitudeSettings.DeploymentStage.ToLower()))
                 {
                     return true;
                 }
