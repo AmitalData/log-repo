@@ -24,7 +24,7 @@ namespace Logitude.BL.QuoteModel.Tools.Behaviours.QuoteBehaviours
 
         private void HandleBehaviour()
         {
-            if (initializer.IsNewEntity || entityPM.ConvertTransportMode)
+            if (initializer.IsNewEntity)
             {
                 GetProductCode();
             }

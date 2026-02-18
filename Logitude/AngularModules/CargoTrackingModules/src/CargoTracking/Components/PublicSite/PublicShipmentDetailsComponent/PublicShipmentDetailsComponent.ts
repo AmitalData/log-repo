@@ -376,7 +376,7 @@ export class PublicShipmentDetailsComponent implements OnInit
                     S.Notes = 'Booking Conf. Num: '+ S.Notes;
                 }
             });
-            this.hasMilestoneWithTenant = this.AllMilestoneFields.some(m => m.TenantId == this.Shipment.Tenant);  
+            this.hasMilestoneWithTenant = this.AllMilestoneFields.some(m => m.Tenant == this.Shipment.Tenant);  
         }
 
 
@@ -480,7 +480,7 @@ export class Milestone
     public IsEstimation: boolean;
     public IsCurrent: boolean;
     public InActive: boolean;
-    public TenantId: number;
+    public Tenant: number;
 }
 
 
