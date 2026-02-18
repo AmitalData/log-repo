@@ -821,7 +821,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             documentsFilingPM.ExternalEntityName = _DeclarationPM?.Direction=="E" ? "EFIFILEM": "CFIFILEM";
             documentsFilingPM.FileExtension = "PDF";
 
-            documentsFilingService.Create(documentsFilingPM, attachment.content, requestParams.LoggingUserId);
+            documentsFilingService.Create(documentsFilingPM, attachment.content, requestParams.LoggingUserId, true);
             LogMessagingUtil.Instance.AppendLine("File document " + documentsFilingPM.Code + logMessage);
             _ReturnMessage = string.Concat(_ReturnMessage, " ונוצר מסמך ", documentsFilingPM.Code);
         }
@@ -859,7 +859,19 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 myPaymentOrderLineUpdateService.Update(item, false);
             }
         }
-      
+
+        private void DeletedPaymentOrderConnectionTables(PaymentOrderConnectionTableUpdateService paymentOrderConnectionTableUpdateService, string connectedEntityCode)
+        {
+            foreach (var paymentItem in _PaymentOrderPM.PaymentOrderConnectionTables)
+            {
+                // Delete old connection if it from the same type 
+                if (paymentItem.ConnectedEntityCode == connectedEntityCode)
+                {
+                    paymentItem.ChangeSetOp = ChangeSetOperation.Delete;
+                    paymentOrderConnectionTableUpdateService.Update(paymentItem, false);
+                }
+            }
+        }
     }
 
     public class AnalyzePaymentDocumentManager

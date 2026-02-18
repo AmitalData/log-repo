@@ -138,7 +138,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                  
                 ReportsTemplateRepository reportsTemplateRepository = new ReportsTemplateRepository(tenant);
                 ReportsTemplatesVersionRepository reportsTemplatesVersionRepository = new ReportsTemplatesVersionRepository(tenant);
-                string reportTemplateId=  reportHelper.AddReportTemplate(reportsTemplatePM.ReportId, reportsTemplatePM.Description, reportsTemplatePM.CreatedByUserId, newDocument.Id, tenant, reportsTemplateRepository, reportsTemplatesVersionRepository, null, reportsTemplatePM.IsSystem, reportsTemplatePM.TemplateType, reportsTemplatePM.EntityId, reportsTemplatePM.ObjectTableId, reportsTemplatePM.Subject, useStimul : reportsTemplatePM.UseStimul);
+                string reportTemplateId=  reportHelper.AddReportTemplate(reportsTemplatePM.ReportId, reportsTemplatePM.Description, reportsTemplatePM.CreatedByUserId, newDocument.Id, tenant, reportsTemplateRepository, reportsTemplatesVersionRepository, null, reportsTemplatePM.IsSystem, reportsTemplatePM.TemplateType, reportsTemplatePM.EntityId, reportsTemplatePM.ObjectTableId, reportsTemplatePM.Subject);
 
                 reportsTemplateRepository.SubmitChanges();
                 reportsTemplatesVersionRepository.SubmitChanges();
