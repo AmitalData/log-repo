@@ -103,8 +103,6 @@ namespace Logitude.Accounting.Data.EntityLists
        public int? ChequeCounterSeriesID  { get; set; }
        [DataMember]
        public bool? FactoringBank  { get; set; }
-       [DataMember]
-       public string MasavGLAcccountId  { get; set; }
    }
 
 }

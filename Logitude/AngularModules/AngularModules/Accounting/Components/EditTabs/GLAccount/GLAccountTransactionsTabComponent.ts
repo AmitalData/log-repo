@@ -190,8 +190,8 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
             this.DateFilterWidth2 = this.isRTL ? 288 : 340;
         }
         else {
-            this.DateFilterWidth = 238;
-            this.DateFilterWidth2 = 288;
+            this.DateFilterWidth = 288;
+            this.DateFilterWidth2 = 340;
         }
 
     }
@@ -446,7 +446,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
     set NotIncludedInAnyTaxReport(value: boolean) {
         if (this.notIncludedInAnyTaxReport != value) {
             this.notIncludedInAnyTaxReport = value;
-            this.SelectedTaxReport = value ? null : this.TaxReportLists?.[0];
+            this.SelectedTaxReport = null;
 
         }
         this.RefreshButtonClicked();
@@ -536,16 +536,6 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
 
 
     public ExportToExcelClick() {
-
-        this.QueryColumns.forEach(col => {
-            if (col.ObjectFieldName === "LocalAmountCredit") {
-                col.ObjectFieldName = "CalculatedLocalAmount";
-            }
-            else if (col.ObjectFieldName === "ForeignAmountCredit") {
-                col.ObjectFieldName = "CalculatedForeignAmount";
-            }
-        });
-
         this.LogitudeGridExportToExcelComponent.ExportToExcelExcute("GLAccountLedgerTransaction", this.filterAgrs, this.QueryColumns, "SaveToMicrosoftExcel2007", true);
         
     }
@@ -636,14 +626,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
         filters.addAdditionalFilter("GLAccountId", this.EntityPM.Id, null, null, "Equals", false, false, false, "string");
         filters.addAdditionalFilter("IncludeRelatedCurrenciesAccount", this.splittedByCurrencyCheckBox == null ? false : this.splittedByCurrencyCheckBox, null, null, "Equals", false, false, false, "boolean");
         filters.addAdditionalFilter("IncludeChildAccounts", this.attachedGLAccountCheckBox == null ? false : this.attachedGLAccountCheckBox, null, null, "Equals", false, false, false, "boolean");
-        filters.addAdditionalFilter("UseTaxreportFilter", this.UseTaxreportFilter, null, null, "Equals", false, false, false, "boolean");
-        filters.addAdditionalFilter("NotIncludedInAnyTaxReport", this.notIncludedInAnyTaxReport == null ? false : this.notIncludedInAnyTaxReport, null, null, "Equals", false, false, false, "boolean");
 
-        if (this.SelectedTaxReport) {
-
-            filters.addAdditionalFilter("TaxReportId", this.SelectedTaxReport.Code, null, null, "Equals", true, false, false, "string");
-
-        }
         this.MenuHeaderchangeevent.emit({ Filters: filters, IgnoreFilter: false });
 
         this.ledgerTransactionListExtendedService.getBalanceByFilters(filters).subscribe((myResponse: ServiceResponse) => {
@@ -739,10 +722,6 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
     }
     GetOpenBalanceAmount() {
         var result = 0;
-        if(this.filterSelectedValue === 'filter_Tax'){
-            this.LTBSummery.StartBalanceLocal = 0;
-            return 0;
-        } 
         if (this.EntityPM && this.LTBSummery) {
             if (this.EntityPM.IsMultiCurrency) {
                 if (this.LTBSummery.StartBalanceLocal)
@@ -1351,25 +1330,25 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
                         HtmlListComponentName: 'GlAccountLedgerTransactionsListTemplate',
                         HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
                         IsCustomTemplate: true,
-                        DisplayFieldName: "LedgerTransaction.O.TotalLocalAmount",
+                        
                     },
                     CumulativeLocalAmount: {
                         HtmlListComponentName: 'GlAccountLedgerTransactionsListTemplate',
                         HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
                         IsCustomTemplate: true,
-                        PreventSort: true,                       
+                       
                     },
                     ForeignAmountCredit: {
                         HtmlListComponentName: 'GlAccountLedgerTransactionsListTemplate',
                         HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
                         IsCustomTemplate: true,
-                        DisplayFieldName: "LedgerTransaction.O.TotalForeignAmount",
+                        
                     },
                     CumulativeForeignAmount: {
                         HtmlListComponentName: 'GlAccountLedgerTransactionsListTemplate',
                         HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
                         IsCustomTemplate: true,
-                        PreventSort: true,                       
+                      
                     },
                     Reference1: {
                         IsCustomTemplate: true,
@@ -1439,7 +1418,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
                     if (fieldName === 'OppositeAccountLocalName') {
                         fieldName = this.CheckOppositeAccountIsActive();
                     }
-
+    
                     const displayName = TextCodeTranslator.Translate(field.ListTextCodeCode || field.FieldName);
                     const settings = customFieldSettings[field.FieldName];
     
@@ -1448,7 +1427,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
                         DataTypeCode: field.DataTypeCode,
                         Display: displayName,
                         Styles: { width: ((settings?.Width || queryCol.ColumnWidth || 100) + 'px') },
-                        ServerSideSortable: settings?.PreventSort? false: true,
+                        ServerSideSortable: true,
                         ColumnHeaderTemplateName: field.ColumnHeaderTemplateName,
                         ObjectField: field,
                         QueryCode: queryCode
@@ -1459,10 +1438,6 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
                         if (settings.HtmlListComponentUrl) column.HtmlListComponentUrl = settings.HtmlListComponentUrl;
                         if (settings.IsCustomTemplate) column.IsCustomTemplate = true;
                         if (settings.AdditionalDataCustom) column.AdditionalDataCustom = settings.AdditionalDataCustom;
-                        if (settings.DisplayFieldName) {
-                            column.Display = TextCodeTranslator.Translate(settings.DisplayFieldName);
-                            queryCol.ObjectFieldListLabelTextCodeCode = settings.DisplayFieldName;
-                        }
                     }
     
                     if (field.FieldName === 'ForeignAmountCredit' && this.EntityPM.CurrencyId === SessionLocator.TenantPM.CurrencyId) return;
@@ -1471,11 +1446,9 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
     
                     this.columns.push(column);
     
-                    if (this.QueryColumns.length === 0) {
-                        this.QueryColumns.push(
-                            this.LogitudeGridExportToExcelComponent.GetQueryColumn(field.FieldName, field.DataTypeCode, displayName)
-                        );
-                    }
+                    this.QueryColumns.push(
+                        this.LogitudeGridExportToExcelComponent.GetQueryColumn(field.FieldName, field.DataTypeCode, displayName)
+                    );
                 });
                 this.columnsReady = true;
                 this.CD.detectChanges();
