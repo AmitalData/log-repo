@@ -38,16 +38,17 @@ namespace CommunicationWorkerRole.Analyzers
             logitudeOceanInsightsRequestRepository = new LogitudeOceanInsightsRequestRepository(this.tenant);
         }
 
-        public async Task SendAsync()
+        public void Send()
         {
             ValidateRequest();
             SetRequestArguments();
-            var loginToExternalServiceResponse = await LoginToExternalService();
-            if (loginToExternalServiceResponse != null && loginToExternalServiceResponse.HasError)
+            var loginToExternalServiceTask = LoginToExternalService();
+            loginToExternalServiceTask.Wait();
+            if (loginToExternalServiceTask.Result != null && loginToExternalServiceTask.Result.HasError)
             {
-                throw new ApplicationException(loginToExternalServiceResponse.ErrorMessage);
+                throw new ApplicationException(loginToExternalServiceTask.Result.ErrorMessage);
             }
-            var token = loginToExternalServiceResponse.Result;
+            var token = loginToExternalServiceTask.Result.Result;
             SendContainerStatusRequestToOceanInsightSevice(token);
         }
 
