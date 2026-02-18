@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 namespace Logitude.Accounting.BL.DataContract
 {
-    public class TaxDeductionReportData: BaseDataProvider
+    public class TaxDeductionReportData
     {
         [Key]
         public string Id { get; set; }

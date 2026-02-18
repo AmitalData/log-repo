@@ -267,7 +267,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated //AccountingPerio
                 {
                     byte[] dosBytes = Convert.FromBase64String(fileUploadParamerter.Base64String);
 
-                    string winHebrewString = DecodeHebrewBytes(dosBytes);
+                    string winHebrewString = Encoding.GetEncoding("Windows-1255").GetString(dosBytes);
 
                     var myJournalsCSVFlatFileAnalyser_ISL = new JournalsCSVFlatFileAnalyser_ISL();
                     var journalPM =myJournalsCSVFlatFileAnalyser_ISL.Analyse(authToken.Tenant, winHebrewString);
@@ -303,7 +303,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated //AccountingPerio
                 if (fileUploadParamerter != null && !string.IsNullOrEmpty(fileUploadParamerter.Base64String))
                 {
                     byte[] dosBytes = Convert.FromBase64String(fileUploadParamerter.Base64String);
-                    string winHebrewString = DecodeHebrewBytes(dosBytes);
+                    string winHebrewString = Encoding.UTF8.GetString(dosBytes);
 
                     var myJournalsCSVFlatFileAnalyser_ISL = new JournalsCSVFlatFileAnalyser_ISL();
                     var journalAnalyseResult = myJournalsCSVFlatFileAnalyser_ISL.AnalyseWithSkip(authToken.Tenant, winHebrewString);
@@ -326,38 +326,6 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated //AccountingPerio
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
-        }
-
-        public HttpResponseMessage PostJournalAsMichpal(JournalPM entityPM)
-        {
-              
-                try
-                {
-                    using (TransactionScope scope = TransactionFactory.GetTransaction())
-                    {
-                        string logKey = PerformanceLogger.LogCurrentTime();
-                        string token = HttpContext.Current.Request.Headers["Token"];
-                        AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                        SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                        SecurityUtility.CheckContactFeature("Journal", "NEW", authToken.Tenant);
-                        SecurityUtility.AuthenticationOnEntityTenant("Journal", entityPM.Tenant, authToken.Tenant);
-
-                        IAccountingContext MyContext = AccountingContext.GetContext(entityPM.Tenant);
-                        JournalUpdateService service = new JournalUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
-                        entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;                       
-                        service.JournalAsMichpal(entityPM);         
-                        service.Update(entityPM, true);
-                        scope.Complete();
-                        PerformanceLogger.AddServerExecutionTimeHeader(logKey);
-
-                        return Request.CreateResponse(HttpStatusCode.OK, entityPM);
-                    }
-                }
-
-                catch (Exception ex)
-                {
-                    return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-                }
         }
 
         [HttpPut]
@@ -396,30 +364,6 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated //AccountingPerio
                 return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
             }
         }
-
-
-        public static string DecodeHebrewBytes(byte[] dosBytes)
-        {
-            try
-            {
-                // Try UTF-8 first
-                string decoded = Encoding.UTF8.GetString(dosBytes);
-
-                // If the text has replacement characters (�), it likely means wrong encoding
-                if (decoded.Contains("�"))
-                {
-                    decoded = Encoding.GetEncoding(1255).GetString(dosBytes); // Windows-1255
-                }
-
-                return decoded;
-            }
-            catch
-            {
-                // Fallback to Windows-1255 if UTF-8 throws
-                return Encoding.GetEncoding(1255).GetString(dosBytes);
-            }
-        }
-
 
         public HttpResponseMessage GetFailedJournalInReconcileProcess(string accountId)
         {
