@@ -13,7 +13,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
     {
         ICommonDataContext commonDataContext;
 
-
+        public ChargesTypeRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
 
         public ChargesTypeRepository(ICommonDataContext context)
         {
@@ -24,11 +27,8 @@ namespace Simplog.Data.CommonDataModel.Repositories
         {
             return (from record in context.ChargesTypes.Include("Measurement").Include("ContainerMeasurement").Include("ReceivableAccount").Include("PayableAccount").Include("PayablesDefaultCurrency").Include("ReceivablesDefaultCurrency") where record.Tenant == tenant select record);
         }
-		public IQueryable<string> GetChargesTypesOfVAL(int tenant)
-		{
-			return (from record in context.ChargesTypes where record.Tenant == tenant && record.ChargesGroupCode == "VAL" select record.Id);
-		}
-		public IQueryable<ChargesType> GetQuoteDefaultChargesTypes(int tenant)
+
+        public IQueryable<ChargesType> GetQuoteDefaultChargesTypes(int tenant)
         {
             return (from d in context.ChargesTypes.Include("Measurement").Include("ContainerMeasurement").Include("ReceivableAccount").Include("PayableAccount")
                     where d.Tenant == tenant && d.IsAutoDisplayInQuote

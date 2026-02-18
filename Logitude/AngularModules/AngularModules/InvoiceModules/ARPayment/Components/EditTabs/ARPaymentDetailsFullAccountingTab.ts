@@ -47,8 +47,6 @@ import { EntityListService } from 'Infrastructure/Services/EntityListService';
 import { BankAccountListService } from 'Accounting/Services/StandardLists/BankAccountListService';
 import { QueryColumnPM } from 'Infrastructure/EntityPMs/QueryColumnPM';
 import { ReconcileEventManager } from 'Accounting/Utilities/ReconcileEventManager';
-import { ARInvoiceExtendedService } from 'Invoice/Services/ExtendedPMs/ARInvoiceExtendedService';
-import { MessageWindow } from 'Controls/Windows/MessageWindow';
 declare var window: any;
 
 @Component({
@@ -1734,7 +1732,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
     {
         this.IsCashBookValid = false;
 
-        if (this.isFullAccounting && (this.AccountingPaymentMethodCode == "CA" || this.AccountingPaymentMethodCode == "CH") && this.BranchId) {
+        if (this.isFullAccounting && (this.AccountingPaymentMethodCode == "CA" || this.AccountingPaymentMethodCode == "CH")) {
             var service: InvoiceDomainService = new InvoiceDomainService();
 
             service.CheckARPaymentCashBook(this.AccountingPaymentMethodCode, this.PaymentCurrencyId, this.BranchId).subscribe((myResponse: ServiceResponse) =>
@@ -1758,12 +1756,11 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
                         }
                     }
                     else {
+                        var msg = "There is no cashbook that compatible to this ARPayment, create one please";
+                        this.UIProperties.SetValidity("BranchId", this.ObjectTableName, false, msg);
+
                         if (this.CheckDefaultBranchId) {
                             this.BranchId = null;
-                        }
-                        else {
-                            var msg = "There is no cashbook that compatible to this ARPayment, create one please";
-                            this.UIProperties.SetValidity("BranchId", this.ObjectTableName, false, msg);
                         }
                     }
                 }
@@ -2830,7 +2827,6 @@ export class TransactionLineModel extends BaseComponent
     isLineValid: boolean = true;
     public InvoiceCurrency: string;
     IsAccountingActivated: boolean = false;
-    _ARInvoiceExtendedService: ARInvoiceExtendedService;
     constructor(
         private ledgerTransaction: LedgerTransactionPM,
         private parent: ARPaymentDetailsFullAccountingTab
@@ -2845,7 +2841,6 @@ export class TransactionLineModel extends BaseComponent
         this.CalculateFields();
 
         this.UIProperties.SetEnabled("AmountToReconcile", "LedgerTransaction", this.Status != TextStore.Closed && !this.parent.IsGridReadOnly );
-        this._ARInvoiceExtendedService = new ARInvoiceExtendedService();
     }
 
     CalculateFields()
@@ -2908,9 +2903,6 @@ export class TransactionLineModel extends BaseComponent
             return this._isChecked;
         }
     }
-
-    private arInvoiceAvailable = new Map<string, boolean>();
-
     public set IsChecked(v: boolean)
     {
 
@@ -2918,14 +2910,10 @@ export class TransactionLineModel extends BaseComponent
 
         if (v) {
 
-            const arInvoiceId = this.ledgerTransaction.SourceId;
-            if (this.arInvoiceAvailable.has(arInvoiceId)) {
-                setTimeout(() => this.CheckCanBeReconciled(arInvoiceId, true));
-            }
-            else {
-                this.GetCanBeReconciled(arInvoiceId, true);
-            }
 
+            this.SetAmountToReconcile();
+
+            this.parent.PushTransaction(this.ledgerTransaction);
         } else {
             this.AmountToReconcile = 0;
 
@@ -2935,43 +2923,11 @@ export class TransactionLineModel extends BaseComponent
             }
 
         }
-    }
-    
-    UpdateArInvoiceAvailable()
-    {
-        const arInvoiceId = this.ledgerTransaction.SourceId;
-        if (!this.arInvoiceAvailable.has(arInvoiceId)) {
-            this.GetCanBeReconciled(arInvoiceId, false);
-        }
-    }
 
-    GetCanBeReconciled(arInvoiceId: string, setAmount: boolean)
-    {
-        this._ARInvoiceExtendedService.getCanBeReconciled(arInvoiceId).subscribe((result: boolean) =>
-        {
-            this.arInvoiceAvailable.set(arInvoiceId, result);
-            if (!result) {
-                this.UIProperties.SetEnabled("AmountToReconcile", "LedgerTransaction", false);
-            }
-            this.CheckCanBeReconciled(arInvoiceId, setAmount);
-        });
     }
 
 
-    CheckCanBeReconciled(arInvoiceId: string, setAmount = false)
-    {
-        if (this.arInvoiceAvailable.get(arInvoiceId) && setAmount) {
-            this.SetAmountToReconcile();
 
-            this.parent.PushTransaction(this.ledgerTransaction);
-        }
-        else if (!this.arInvoiceAvailable.get(arInvoiceId)) {
-            this.IsChecked = false;
-
-            var messageWindow: MessageWindow = new MessageWindow();
-            messageWindow.Show(TextCodeTranslator.Translate("ARPayment.O.CanNotReconcile"));
-        }
-    }
 
     private SetAmountToReconcile()
     {

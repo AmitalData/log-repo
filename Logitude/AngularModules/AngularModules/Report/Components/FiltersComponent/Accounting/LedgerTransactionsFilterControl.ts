@@ -1,6 +1,5 @@
 import { FeatureLocator } from './../../../../Infrastructure/Utilities/FeatureLocator';
-import { Component, OnInit, Output, EventEmitter, ChangeDetectorRef, Input } from '@angular/core';
-
+import { Component, OnInit, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
 import { AppTool } from '../../../../Infrastructure/Tools';
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -77,8 +76,6 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
     private chartOfAccountPMService: ChartOfAccountPMService = new ChartOfAccountPMService();
     private fullAccountingSetting: FullAccountingSettingList = new FullAccountingSettingList();
     private ChartOfAccountSecurityLevel: any;
-    @Input() IsDisableGlaccountId: boolean = false;
-
     constructor(private CD: ChangeDetectorRef) {
         super();
 
@@ -654,9 +651,6 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
                         this.selectedAmountOperatorLocalBalanceInDue = this.operatorsList.filter(x => x.Code == queryFilterItem.Operator)[0];
                     }
                     break;
-                case "IsDisableGlaccountId":
-                    this.IsDisableGlaccountId = queryFilterItem.FieldValue;
-                    break;
             }
         }
     }
@@ -729,17 +723,33 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
         }
     }
 
-    RunButtonClicked(isInteractive: boolean) {
+    RunButtonClicked() {
         this.SetUIProperties();
 
+        var errors: string[] = [];
+        var categoryValue = null;
+        var categoryIndex = null;
+
         if (this.ValidateSelectedFilters()) {
+
+
+            // // Selecting category
+            // if (this.SelectedCategory) {
+            //     categoryIndex = this.SelectedCategory.replace(' ', ''); // remove space from selected category
+
+            //     if (categoryIndex)
+            //         categoryValue = this.DataContext[categoryIndex]; // select the value from the context
+            // }
+            // myFilterItems.push(new QueryFilterItem("CategoryIndex", categoryIndex)); // 'Category1' , 'Category2' , ...
+            // myFilterItems.push(new QueryFilterItem("CategoryValue", categoryValue));
+
             var myReportFliter: ReportFliter = new ReportFliter();
             myReportFliter.NumberOfPage = 1;
             myReportFliter.ProcessType = "GenerateReport";
             myReportFliter.QueryFilterItemLists = this.GetQueryFilterItems();
-            myReportFliter.IsInteractive = isInteractive;
 
             this.RunReportEvent.emit(myReportFliter);
+
         }
     }
 

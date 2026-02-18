@@ -1,13 +1,16 @@
 
 import { Injectable } from '@angular/core';
+import { defer, of } from 'rxjs';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
+import { ClassLevelValidator } from '../../../Infrastructure/Validators/ClassLevelValidator';
+import { Guid } from '../../../Infrastructure/Utilities/Guid';
+import { InfraSettings } from '../../../Infrastructure/Utilities/InfraSettings';
 import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
-import { TaxDeductionReportPM} from '../../EntityPMs/TaxDeductionReportPM';
-import { TaxDeductionReportData } from '../../DataContracts/TaxDeductionReportData';
+import { TaxDeductionReportPM } from '../../EntityPMs/TaxDeductionReportPM';
+import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
 import { CustomFieldClass } from '../../../Infrastructure/DataContracts/CustomFieldClass'
-import { HttpClient } from '@angular/common/http';
+import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators'
-import { Observable } from 'rxjs/internal/Observable';
  
 
 @Injectable()
@@ -44,9 +47,9 @@ export class TaxDeductionReportExtendedPMService {
                 return serviceResponse;
             }),
             catchError(ServiceHelper.HandleServiceError));
+        
 
     }
-
 
 
     MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: TaxDeductionReportPM = null) {
@@ -85,54 +88,6 @@ export class TaxDeductionReportExtendedPMService {
         entityPM.IsDirty = false;
         return entityPM;
     }
-
-
-
-    GetTaxDeductionReportData(reportId: string): Observable<ServiceResponse> {
-        const url = `${this._apiUrl}/GetTaxDeductionReportData?reportId=${encodeURIComponent(reportId)}`;
-        return this.httpClient.get<any[]>(url, ServiceHelper.GetHttpHeaders()).pipe(
-        map(response => {
-            const returnedval = response as any;
-            console.log("Returned value:", returnedval);
-            let mappedList;
-            if (Array.isArray(response)) {
-                mappedList = response.map(json => this.MapJsonToEntityData(json));
-            } else {
-                mappedList = this.MapJsonToEntityData(response);
-            }
-            const serviceResponse = new ServiceResponse();
-            serviceResponse.Result = mappedList;
-            return serviceResponse;
-        }),
-        catchError(ServiceHelper.HandleServiceError)
-        );
-    }
-
-
-
-    MapJsonToEntityData(jsonData: any, mapParent: boolean = true, entityData: TaxDeductionReportData = new TaxDeductionReportData()): TaxDeductionReportData {
-        const customFields = Array.from({ length: 10 }, (_, i) => `Field${i + 1}`);
-
-
-        for (const property of Object.keys(jsonData)) {
-            if (property === "UIProperties" || property === "PropertyChanged") {
-                continue;
-            }
-
-            if (customFields.includes(property) && jsonData[property]) {
-                entityData[property] = new CustomFieldClass(
-                    jsonData[property].Value,
-                    jsonData[property].FieldName,
-                    jsonData[property].TableName
-                );
-            } else {
-                entityData[property] = jsonData[property];
-            }
-        }
-
-        return entityData;    
-    }
-
 
 
 }

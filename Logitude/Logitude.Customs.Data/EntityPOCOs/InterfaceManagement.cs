@@ -79,8 +79,6 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public bool? IsCustomsFile { get; set; }
         [Column("IsUnifreight")]
 	    public bool? IsUnifreight { get; set; }
-        [Column("QueueDefinitionGroup")]
-	    public string QueueDefinitionGroup { get; set; }
     }
 }
 	 

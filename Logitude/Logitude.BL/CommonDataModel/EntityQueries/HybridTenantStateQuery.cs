@@ -19,7 +19,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         HybridTenantStateRepository repository;
 
-
+        public HybridTenantStateQuery()
+        {
+            repository = new HybridTenantStateRepository();
+        }
 
         public HybridTenantStateQuery(int tenant)
         {
