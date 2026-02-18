@@ -1186,29 +1186,6 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
-	  private string invoicesXml ;
-	  	  
-       
-	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string InvoicesXml  
-	   {
-	    
-	     get
-		{
-		   return invoicesXml;
-		 }
-		 set
-		 {
-		   if(invoicesXml != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="InvoicesXml",OldValue=invoicesXml,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   invoicesXml=value;
-		   }
-			
-		 }
-	   }
 	    }
    
 }
