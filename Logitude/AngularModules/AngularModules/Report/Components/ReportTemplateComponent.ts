@@ -105,7 +105,7 @@ export class ReportTemplateComponent implements OnInit {
 
 
     private RegularReportTemplateEnabled() : boolean {
-        return SessionLocator.LoggedUserPM.IsCustomerCare || ObjectsLocator.GlobalSetting?.DeploymentStage == "Dev" ||
+        return SessionLocator.LoggedUserPM.IsCustomerCare || ObjectsLocator.GlobalSetting.DeploymentStage == "Dev" ||
          SessionLocator.LoggedUserPM.IsDistributor || FeatureLocator.HasFeaturePermession("ReportsTemplate", "REGULARREPORTTEMPLATE");
     }
 
