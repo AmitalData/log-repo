@@ -10,8 +10,6 @@ import { EntityListService } from "Infrastructure/Services/EntityListService";
 import { FeatureLocator } from "Infrastructure/Utilities/FeatureLocator";
 import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
 import { BehaviorSubject, Observable } from "rxjs";
-import { AppTool } from "Infrastructure/Tools";
-
 
 @Injectable()
 export class FastSearchService implements OnDestroy {
@@ -62,25 +60,24 @@ export class FastSearchService implements OnDestroy {
         this.$recentSearches.next([]);
     }
 
-    public async initFastSearch(objectTable: ObjectTablePM, objectTableName: string, menuTableQuerySection: string,ShowFastSearch:boolean = false, index :string = null): Promise<void> {
+    public async initFastSearch(objectTable: ObjectTablePM, objectTableName: string, menuTableQuerySection: string): Promise<void> {
         this.resetData();
 
         const havePermission = FeatureLocator.HasFeaturePermession("General", "FASTSEARCH") || isDevMode();
-        const enabled = objectTable.ShowFastSearch || ShowFastSearch;
+        const enabled = objectTable.ShowFastSearch;
         if (!havePermission || !enabled) return;
 
         this.menuTableQuerySection = menuTableQuerySection;
         this.objectTableName = objectTableName;
-        let indexName: string = !AppTool.IsNullOrEmpty(index)? index : objectTableName.replace('Customs.', '').toLowerCase();
+        let indexName: string = objectTableName.replace('Customs.', '').toLowerCase();
         if (!indexName.endsWith('s'))
             indexName += 's';
 
         this.indexName = indexName;
-             if (menuTableQuerySection == "Customs.Declaration")
-            indexName = 'declarations';
-        else if (menuTableQuerySection == "Customs.ExportDeclaration")
+        if (menuTableQuerySection == "Customs.ExportDeclaration")
             indexName = 'exportDeclarations';
-        
+        else return; // Disabled fase search for import declaration
+
         const settings: FastSearchSettings = await this.azureSearchWebService.getSettings(indexName);
         this.settings = settings;
         this.$fastSearchEnable.next(true);

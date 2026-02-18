@@ -1062,7 +1062,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                ApproveUploadedDocuments = a.ApproveUploadedDocuments,
                                                InvoicePrintNotes = a.InvoicePrintNotes,
                                                InvoicePrintNotesLocal = a.InvoicePrintNotesLocal,
-                                               HebrewTenant = a.HebrewTenant,
                                            }).FirstOrDefault();
 
                         using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -1242,7 +1241,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            ApproveUploadedDocuments = a.ApproveUploadedDocuments,
                                            InvoicePrintNotes = a.InvoicePrintNotes,
                                            InvoicePrintNotesLocal = a.InvoicePrintNotesLocal,
-                                           HebrewTenant = a.HebrewTenant,
                                        }).FirstOrDefault();
 
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -1409,7 +1407,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        ApproveUploadedDocuments = a.ApproveUploadedDocuments,
                                        InvoicePrintNotes = a.InvoicePrintNotes,
                                        InvoicePrintNotesLocal = a.InvoicePrintNotesLocal,
-                                       HebrewTenant = a.HebrewTenant,
                                    }).FirstOrDefault();
                 if (tenant != null)
                 {
@@ -1595,7 +1592,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     ApproveUploadedDocuments = myPOCO.ApproveUploadedDocuments,
                     InvoicePrintNotes = myPOCO.InvoicePrintNotes,
                     InvoicePrintNotesLocal = myPOCO.InvoicePrintNotesLocal,
-                    HebrewTenant = myPOCO.HebrewTenant,
                 };
 
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
