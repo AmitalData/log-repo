@@ -687,7 +687,7 @@ namespace WebFreight.Web.WcfApi
                             XmlDocument doc = new XmlDocument();
                             MemoryStream ms = new MemoryStream(filedata);
                             doc.Load(ms);
-                            
+                            //result = doc.InnerXml;
 
                             List<QueueTask> taskslist = LogitudeXmlSerializer.DeserializeObject<List<QueueTask>>(doc.InnerXml);
                             envelope.CommunicationLogId = communicationLogId;

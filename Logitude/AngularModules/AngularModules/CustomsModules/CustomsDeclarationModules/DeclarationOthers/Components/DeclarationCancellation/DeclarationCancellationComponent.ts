@@ -1,9 +1,9 @@
-import { Component, ChangeDetectorRef, OnInit, OnDestroy } from '@angular/core';
+import { Component, ChangeDetectorRef, OnInit } from '@angular/core';
 import { BaseComponent } from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { SessionLocator } from '../../../../../Infrastructure/Utilities/SessionLocator';
 import { EntityResourceService } from '../../../../../Infrastructure/Services/EntityResourceService';
 import { DeclarationPM } from '../../../../../Customs/EntityPMs/DeclarationPM';
-import { CustomSendOptionsArgs, HsmStationContext, RequestParamsBase, SendRequestVIA, TestCase } from '../../../../../Customs/DataContract/RequestParams/RequestParamsBase';
+import { CustomSendOptionsArgs, RequestParamsBase, SendRequestVIA, TestCase } from '../../../../../Customs/DataContract/RequestParams/RequestParamsBase';
 import { DeclarationPMService } from '../../../../../Customs/Services/StandardPMs/DeclarationPMService';
 import { AppTool, DateTool } from '../../../../../Infrastructure/Tools';
 import { TextCodeTranslator } from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
@@ -24,7 +24,7 @@ declare var window: any;
     providers: [DeclarationPMService, DeclarationWebService]
 })
 
-export class DeclarationCancellationComponent extends BaseComponent implements OnInit ,OnDestroy{
+export class DeclarationCancellationComponent extends BaseComponent implements OnInit {
     public ObjectTableName: string = "Customs.Declaration";
     public DataContext: DeclarationCancellationComponent = this;
     private CurrentSession = SessionLocator.SelectedSession;
@@ -155,16 +155,7 @@ export class DeclarationCancellationComponent extends BaseComponent implements O
         currRequestParams.RequestName = "Declaration Cancellation Request";
         currRequestParams.ResponseName = "Declaration Cancellation Response";
         currRequestParams.RequestVIA = this.RequestVIA;
-        
-        if (this.EntityPM?.IsCourierDeclaration === true ) {
-            currRequestParams.HsmStationContext = HsmStationContext.Courier;
-        }
-        else if (this.EntityPM?.Direction === "E") {
-            currRequestParams.HsmStationContext = HsmStationContext.Export;
-        }
-        else {
-            currRequestParams.HsmStationContext = HsmStationContext.Import;
-        }
+
 
 
         this._DeclarationWebService.GetIsDeclarationCancellationAttachmentNumberIsMoreThenAllow(this.EntityPM.Id).subscribe((response: ServiceResponse) => {
@@ -326,7 +317,6 @@ export class DeclarationCancellationComponent extends BaseComponent implements O
     }
     SkipCtor: boolean = false;
     ViewDocumentsComponent() {
-        this.EntityPM.FromCancelDeclaration = true;
         var windowArgs: any = {};
         windowArgs.EntityPM = this.EntityPM;
         //windowArgs.ObjectTableName = "Customs.DeclarationCancellation";
@@ -372,11 +362,7 @@ export class DeclarationCancellationComponent extends BaseComponent implements O
     //}
 
     ngOnInit() {
-        this.EntityPM.FromCancelDeclaration = true;
-    }
 
-    ngOnDestroy() {
-        this.EntityPM.FromCancelDeclaration = false;
     }
 
 
