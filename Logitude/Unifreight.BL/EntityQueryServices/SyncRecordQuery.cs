@@ -53,7 +53,7 @@ namespace Unifreight.BL.EntityQueryServices
             return tenant;
         }
 
-        public List<EntityRecord> GetUnsyncRecordsAndMarkAsInProcess(int tenant, string item, long? customsFileNo, bool allTask)
+        public List<EntityRecord> GetUnsyncRecordsAndMarkAsInProcess(int tenant, string item, int? customsFileNo, bool allTask)
         {
             ConcurrentBag<SyncRecord> notExistsRecord = new ConcurrentBag<SyncRecord>();
 

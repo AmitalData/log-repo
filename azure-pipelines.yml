@@ -118,13 +118,9 @@ stages:
 
     - script: |
         echo "Running PR Agent action step"
-        API_URL="https://dev.azure.com/amitaldata/amital/_apis/git/pullrequests/${SYSTEM_PULLREQUEST_PULLREQUESTID}?api-version=7.1-preview.1"
-        AUTH_HEADER="Authorization: Bearer $(azure_devops_pat)"
-        echo "$API_URL"
-        REPO_NAME=$(basename "$SYSTEM_PULLREQUEST_SOURCEREPOSITORYURI")    
-        echo "$REPONAME"
+
         # Construct PR_URL
-        PR_URL="${SYSTEM_COLLECTIONURI}${SYSTEM_TEAMPROJECT}/_git/$REPO_NAME/pullrequest/${SYSTEM_PULLREQUEST_PULLREQUESTID}"
+        PR_URL="${SYSTEM_COLLECTIONURI}${SYSTEM_TEAMPROJECT}/_git/${BUILD_REPOSITORY_NAME}/pullrequest/${SYSTEM_PULLREQUEST_PULLREQUESTID}"
         #PR_URL="https://amitaldata.visualstudio.com/Amital/_git/log-repo/pullrequest/5152"
         #PR_URL="https://amitaldata.visualstudio.com/Amital/_git/log-repo/pullrequest/5156"
         #PR_URL="https://amitaldata.visualstudio.com/Amital/_git/log-repo/pullrequest/5122"
