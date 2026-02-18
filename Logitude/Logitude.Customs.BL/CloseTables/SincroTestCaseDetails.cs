@@ -41,7 +41,6 @@ namespace Logitude.Customs.BL.CloseTables
                     Code = "2754Payment",
                     Name = "  הגשת תשלום",
                     Entity="DeclarationPayment",
-                    Param1= @"{ ""PaymentOrderNumber"":""4589""}",
                     AvoidSign= true
 
                 },
@@ -268,8 +267,7 @@ MainInterfaceCode ="5002"
                     Name = "הודעה לסוכן",
                     IsDCA = true,
                     Entity="Declaration",
-                    Param1= @"{""entityType"" :"""" ,  ""entityIdKey1"" :"""" , ""msgCode"" :"""" , ""msgString"" :"""",""senderName"": """",""responseToMessage"" : """"
-}",
+                    Param1= @"{""entityType"" :"""" ,  ""entityIdKey1"" :"""" , ""msgCode"" :"""" , ""msgString"" :""""}",
                     Param2= @"{}",
                     MainInterfaceCode="5101O_I",
 

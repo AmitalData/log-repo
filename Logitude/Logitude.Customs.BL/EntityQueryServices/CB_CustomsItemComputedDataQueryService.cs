@@ -36,11 +36,6 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return this.repository.GetCustomsBookMainView(customsBookType, tenant, isDiscountCodes);
         }
 
-        public List<CustomsItemValidationResult> GetCustomsBookMainViewByList(string customsItems, string customsBookType = "1", bool isDiscountCodes = false)
-        {
-            return this.repository.GetCustomsBookMainViewByList(customsItems, customsBookType, isDiscountCodes);
-        }
-
     }
    
 }
