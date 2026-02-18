@@ -20,7 +20,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         
            TenantLoginPolicyRepository repository;
 
-
+        public TenantLoginPolicyQuery()
+        {
+            repository = new TenantLoginPolicyRepository();
+        }
 
         public TenantLoginPolicyQuery(int tenant)
         {

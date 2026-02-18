@@ -16,7 +16,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         FormCustomFieldRepository repository;
 
-
+        public FormCustomFieldQuery()
+        {
+            repository = new FormCustomFieldRepository(); 
+        }
 
         public FormCustomFieldQuery(int tenant)
         {

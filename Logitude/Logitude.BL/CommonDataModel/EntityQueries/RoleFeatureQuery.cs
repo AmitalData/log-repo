@@ -20,7 +20,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         RoleFeatureRepository repository;
 
-
+        public RoleFeatureQuery()
+        {
+            repository = new RoleFeatureRepository(); 
+        }
 
         public RoleFeatureQuery(int tenant)
         {

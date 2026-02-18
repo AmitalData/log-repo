@@ -101,11 +101,9 @@ namespace Logitude.Accounting.BL.DataContract
             }
             else
             {
-                startDate = taxDeductionReport.ByMonth && taxDeductionReport.FromMonth.HasValue ? new DateTime((int)taxDeductionReport.TaxYear, (int)taxDeductionReport.FromMonth.Value.Month, 1, 0, 0, 0) :
-                    taxDeductionReport.ByMonth ? new DateTime((int)taxDeductionReport.TaxYear, (int)taxDeductionReport.Month.Value.Month, 1, 0, 0, 0) :
-                        new DateTime((int)taxDeductionReport.TaxYear, 1, 1, 0, 0, 0);
-
+                startDate = taxDeductionReport.ByMonth ? new DateTime((int)taxDeductionReport.TaxYear, (int)taxDeductionReport.Month.Value.Month, 1, 0, 0, 0) : new DateTime((int)taxDeductionReport.TaxYear, 1, 1, 0, 0, 0);
                 endDate = taxDeductionReport.ByMonth ? new DateTime((int)taxDeductionReport.TaxYear, (int)taxDeductionReport.Month.Value.Month, DateTime.DaysInMonth((int)taxDeductionReport.TaxYear, taxDeductionReport.Month.Value.Month), 23, 59, 59) : new DateTime((int)taxDeductionReport.TaxYear, 12, 31, 23, 59, 59);
+
             }
         }
         TaxDeductionReportData taxDeductionReportData;
@@ -463,10 +461,10 @@ namespace Logitude.Accounting.BL.DataContract
 
 
         }
-        public List<GLAccountList> GetGLAccountsByIds(List<string> accountIds, bool dontExcludeFromdeductionReport = false)
+        public List<GLAccountList> GetGLAccountsByIds(List<string> accountIds)
         {
             return (from a in accountingContext.GLAccounts
-                    where a.Tenant == Tenant && (a.ExcludeFromDeductionReport == false || dontExcludeFromdeductionReport)
+                    where a.Tenant == Tenant && a.ExcludeFromDeductionReport ==false
                     && accountIds.Contains(a.Id)
                     select new GLAccountList()
                     {
@@ -775,11 +773,6 @@ namespace Logitude.Accounting.BL.DataContract
                     {
                         childGLAccount = gLAccount;
                         gLAccount = gLAccounts.Where(d => d.Id == mainGLAccountId).FirstOrDefault();
-
-                        if (gLAccount == null)
-                        {
-                            gLAccount = GetOneGLAccountByIds(mainGLAccountId);
-                        }
                     }
                     if (taxDeductionPerVendorReportParameters == null) ValidateGLAccountVendors(selectedVendors, gLAccount);
                     groupedbyVendor = SetGLAccountFields(gLAccount, groupedbyVendor, childGLAccount);
@@ -824,12 +817,6 @@ namespace Logitude.Accounting.BL.DataContract
                 .ToList();
 
             return byVendors;
-        }
-
-        private GLAccountList GetOneGLAccountByIds(string id)
-        {
-            List<string> gLAccountIds = new List<string>() { id };
-            return GetGLAccountsByIds(gLAccountIds, true).FirstOrDefault();
         }
 
         private ByVendorList CombineByVendorItems(IEnumerable<ByVendorList> gr)
@@ -913,29 +900,25 @@ namespace Logitude.Accounting.BL.DataContract
 
         private void SetErrorMessage(ByVendorList groupedbyVendor, List<CardList> selectedVendors, string cardsCodes)
         {
-            if (taxDeductionReport != null) {
-                if (groupedbyVendor.VATNumber == null)
+            if (groupedbyVendor.VATNumber == null)
+            {
+                var vendorsWithoutVatNumberCache = selectedVendors.Where(d => d.VatNumber == null
+                                                            && !VendorsWithoutVatNumberCache.Contains(d.Code)).ToList();
+                if (vendorsWithoutVatNumberCache.Any())
                 {
-                    var vendorsWithoutVatNumberCache = selectedVendors.Where(d => d.VatNumber == null
-                                                                && !VendorsWithoutVatNumberCache.Contains(d.Code)).ToList();
-                    if (vendorsWithoutVatNumberCache.Any())
-                    {
-                        taxDeductionReport.ErrorMessage = (taxDeductionReport.ErrorMessage ?? "") + Environment.NewLine + (vendorsWithoutVatNumberCache.Count > 1
-                            ? " Vendor GLAccount " + groupedbyVendor.DisplayNumber + " is connected to more than one Operational Vendor Card and none of them contain a VAT number" + cardsCodes
-                            : TextCodesTranslator.TranslateText("TaxDeductionReport.O.CardWithoutVatNumber", Tenant) + ", " + TextCodesTranslator.TranslateText("Card.F.Code", Tenant) + ":" + vendorsWithoutVatNumberCache[0].Code);
-                        VendorsWithoutVatNumberCache.UnionWith(vendorsWithoutVatNumberCache.Select(d => d.Code).Distinct());
+                    taxDeductionReport.ErrorMessage = (taxDeductionReport.ErrorMessage ?? "") + Environment.NewLine + (vendorsWithoutVatNumberCache.Count > 1
+                        ? " Vendor GLAccount " + groupedbyVendor.DisplayNumber + " is connected to more than one Operational Vendor Card and none of them contain a VAT number" + cardsCodes
+                        : TextCodesTranslator.TranslateText("TaxDeductionReport.O.CardWithoutVatNumber", Tenant) + ", " + TextCodesTranslator.TranslateText("Card.F.Code", Tenant) + ":" + vendorsWithoutVatNumberCache[0].Code);
+                    VendorsWithoutVatNumberCache.UnionWith(vendorsWithoutVatNumberCache.Select(d => d.Code).Distinct());
 
-                    }
-                }
-                if (groupedbyVendor.VendorAddress == null && groupedbyVendor.VendorCity == null)
-                {
-                    taxDeductionReport.ErrorMessage = (taxDeductionReport.ErrorMessage ?? "") + Environment.NewLine + (selectedVendors.Count > 1
-                        ? " Vendor GLAccount " + groupedbyVendor.DisplayNumber + " is connected to more than one Operational Vendor Card and none of them contain an address" + cardsCodes
-                        : TextCodesTranslator.TranslateText("TaxDeductionReport.O.CardWithoutAddress", Tenant) + ", " + TextCodesTranslator.TranslateText("Card.F.Code", Tenant) + ":" + selectedVendors[0].Code);
                 }
             }
-
-         
+            if (groupedbyVendor.VendorAddress == null && groupedbyVendor.VendorCity == null)
+            {
+                taxDeductionReport.ErrorMessage = (taxDeductionReport.ErrorMessage ?? "") + Environment.NewLine + (selectedVendors.Count > 1 
+                    ? " Vendor GLAccount " + groupedbyVendor.DisplayNumber + " is connected to more than one Operational Vendor Card and none of them contain an address" + cardsCodes 
+                    : TextCodesTranslator.TranslateText("TaxDeductionReport.O.CardWithoutAddress", Tenant) + ", " + TextCodesTranslator.TranslateText("Card.F.Code", Tenant) + ":" + selectedVendors[0].Code);
+            }
         }
 
         private void DeleteVendorFromTaxDeductionReportLines(string vendorId)
@@ -1028,7 +1011,6 @@ namespace Logitude.Accounting.BL.DataContract
             groupedbyVendor.AssessingOfficerCode = gLAccount.AssessingOfficeCode;
             groupedbyVendor.AssessingOfficerName = gLAccount.AssessingOfficeName;
             groupedbyVendor.DeductionFileTypeCode = gLAccount.DeductionFileTypeCode;
-            groupedbyVendor.DeductionFileTypeName = gLAccount.DeductionFileTypeName;
             groupedbyVendor.DeductionFileNumber = gLAccount.DeductionFileNumber;
             groupedbyVendor.DeductionType = gLAccount.DeductionTypeId;
             groupedbyVendor.EnglishName = childGLAccount != null ? childGLAccount.EnglishName : gLAccount.EnglishName;
@@ -1079,15 +1061,19 @@ namespace Logitude.Accounting.BL.DataContract
         private List<ByMonthList> FillGroupedByMonthList(List<TaxDeductionReportLine> deductionLines, TaxDeductionReportData taxDeduction)
         {
             List<ByMonthList> groupedByMonthLines = new List<ByMonthList>();
-
-            int start = taxDeductionReport.ByMonth && taxDeductionReport.FromMonth.HasValue ? taxDeductionReport.FromMonth.Value.Month: taxDeductionReport.ByMonth ? taxDeductionReport.Month.Value.Month : 1;
-            int end = taxDeductionReport.ByMonth ? taxDeductionReport.Month.Value.Month : 12;
-
-            for (int month = start; month <= end; month++)
+            if (taxDeductionReport.ByMonth)
             {
-                groupedByMonthLines = FillGroupByMonthData(month, groupedByMonthLines);
+                groupedByMonthLines= FillGroupByMonthData(taxDeductionReport.Month.Value.Month, groupedByMonthLines);
             }
+            else
+            {
+                for (int i = 1; i < 13; i++)
+                {
+                    var month = i;
+                    groupedByMonthLines= FillGroupByMonthData(month, groupedByMonthLines);
 
+                }
+            }
             return groupedByMonthLines;
         }
         private List<ByMonthList> FillGroupByMonthData(int month, List<ByMonthList> groupedByMonthLines) // 80

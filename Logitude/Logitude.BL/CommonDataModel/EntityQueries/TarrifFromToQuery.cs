@@ -16,6 +16,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         TarrifFromToRepository repository;
 
+        public TarrifFromToQuery()
+        {
+            repository = new TarrifFromToRepository(); 
+        }
 
         public TarrifFromToQuery(int tenant)
         {
