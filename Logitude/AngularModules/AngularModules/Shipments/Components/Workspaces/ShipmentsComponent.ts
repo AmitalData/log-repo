@@ -30,8 +30,8 @@ export class ShipmentsComponent {
     constructor() {
         this.myShipmentDomainService = new ShipmentDomainService();
         if (ObjectsLocator.GlobalSetting) {
-            if (ObjectsLocator.GlobalSetting?.DeploymentStage) {
-                if (ObjectsLocator.GlobalSetting?.DeploymentStage.toLowerCase() == "amitalstorage") {
+            if (ObjectsLocator.GlobalSetting.DeploymentStage) {
+                if (ObjectsLocator.GlobalSetting.DeploymentStage.toLowerCase() == "amitalstorage") {
                     this.IsCloudDeployment = true;
                 }
             }

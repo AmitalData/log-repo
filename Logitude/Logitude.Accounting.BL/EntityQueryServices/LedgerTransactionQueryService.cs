@@ -1,31 +1,28 @@
 ﻿using Logitude.Accounting.BL.CloseTables;
-using Logitude.Accounting.BL.CloseTables;
-using Logitude.Accounting.BL.DataContract;
 using Logitude.Accounting.BL.DataContract;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.EntityKeys;
-using Logitude.Accounting.Data.EntityListQueryServices;
-using Logitude.Accounting.Data.EntityLists;
 using Logitude.Accounting.Data.EntityLists;
 using Logitude.Accounting.Data.EntityPOCOs;
-using Logitude.Accounting.Data.Enums;
 using Logitude.Accounting.Data.Repositories;
+using Logitude.Accounting.Data.Enums;
 using Logitude.Accounting.Def.EntityPMs;
-using Logitude.BL.InvoiceModel.EntityQueries;
 using Logitude.Server.Tools;
-using Microsoft.Practices.ObjectBuilder2;
-using Simplog.Data.InvoiceModel.EntityPOCOs;
-using Simplog.Data.InvoiceModel.Repositories;
  using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Data.Entity;
 using System.Data.Entity.Core.Objects;
 using System.Linq;
  using System.Text;
 using System.Threading.Tasks;
-using Logitude.Server.Tools.Helpers;
-
+using Logitude.Accounting.BL.DataContract;
+using Logitude.Accounting.BL.CloseTables;
+using System.Data.Entity;
+using Logitude.Accounting.Data.EntityLists;
+using Logitude.BL.InvoiceModel.EntityQueries;
+using Simplog.Data.InvoiceModel.Repositories;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
+using Microsoft.Practices.ObjectBuilder2;
  
 namespace Logitude.Accounting.BL.EntityQueryServices
 {
@@ -521,9 +518,9 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return this.repository.GetLedgerTransactionSumFromTo(gLAccointId, fromDate, toDate, tenant, currencyId);
         }
 
-        public List<GLAccountTotalByMonth> CalcGLAccountTotalByMonthByDateType(string DateTypeCode, DateTime fromDate, DateTime accoutingDateUntillNotInclude, int tenant, IQueryable<string> listOfAccId = null, LedgerTransactionBalanceFilter _param =null)
+        public List<GLAccountTotalByMonth> CalcGLAccountTotalByMonthByDateType(string DateTypeCode, DateTime fromDate, DateTime accoutingDateUntillNotInclude, int tenant, IQueryable<string> listOfAccId = null)
         {
-            return this.repository.CalcGLAccountTotalByMonthByDateType(DateTypeCode,fromDate, accoutingDateUntillNotInclude, tenant, listOfAccId, _param);
+            return this.repository.CalcGLAccountTotalByMonthByDateType(DateTypeCode,fromDate, accoutingDateUntillNotInclude, tenant, listOfAccId);
         }
         
         public List<CurrencySumOpenAmount> CalcCurrencySumOpenAmountByMonthByDateType(string DateTypeCode,  DateTime accoutingDateUntillNotInclude, int tenant, IQueryable<string> listOfAccId = null)
@@ -739,32 +736,15 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             List<B100Data> transactions = null;
             var firstDayOfFromDate = new DateTime(fromDate.Year, 1, 1);
             IQueryable<B100Data> transactionsQuery;
-            if (FeatureToggleHelper.HasFeatureToggle("BMO", tenant))
+            if (firstDayOfFromDate == fromDate.Date)
             {
-                if (firstDayOfFromDate == fromDate.Date)
-                {
-                    transactions = GetTransactionsQueryWithValidateFirsDateOpt1(firstDayOfFromDate, fromDate, toDate, tenant);
-                }
-                else
-                {
-                    transactionsQuery = GettransactionsQuery(fromDate, toDate, tenant);
-                    transactions = transactionsQuery.ToList();
-                }
+                transactionsQuery = GettransactionsQueryWithValidateFirsDate(firstDayOfFromDate, fromDate, toDate, tenant);
             }
             else
             {
-
-
-                if (firstDayOfFromDate == fromDate.Date)
-                {
-                    transactionsQuery = GettransactionsQueryWithValidateFirsDate(firstDayOfFromDate, fromDate, toDate, tenant);
-                }
-                else
-                {
-                    transactionsQuery = GettransactionsQuery(fromDate, toDate, tenant);
-                }
-                transactions = transactionsQuery.ToList();
+                transactionsQuery = GettransactionsQuery(fromDate, toDate, tenant);
             }
+            transactions = transactionsQuery.ToList();
             
             return transactions;
         }
@@ -864,27 +844,26 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
         private IQueryable<B100Data> GettransactionsQueryWithValidateFirsDate(DateTime firstDayOfFromDate, DateTime fromDate, DateTime toDate, int tenant)
         {
-            DateTime secondDayOfFromDate = firstDayOfFromDate.AddDays(1);
-            var query =
+            var preQuery = 
                 (from lt in context.LedgerTransactions
-                 join g in context.GLAccounts on lt.AccountId equals g.Id
-                 join j in context.Journals on lt.JournalId equals j.Id
-                 join cancelledj in context.Journals on j.OriginalJournalId equals cancelledj.Id into cancelledjJoin
-                 from cancelledj in cancelledjJoin.DefaultIfEmpty() // Left outer join
-                 join f in context.FullAccountingSettings on lt.Tenant equals f.Tenant
-                 where ((lt.AccountingDate >= fromDate && lt.AccountingDate <= toDate))
-                     && lt.Tenant == tenant
-                     && (lt.AccountingDate < firstDayOfFromDate || lt.AccountingDate >= secondDayOfFromDate
-                     || (lt.AccountingDate >= firstDayOfFromDate && lt.AccountingDate < secondDayOfFromDate
-                             && !(j.AccountingEntityCode == Logitude.Accounting.Data.Enums.AccountingEntityValues.YearTransfer & (g.ChartOfAccountsTypeCode == "1" || g.ChartOfAccountsTypeCode == "2" || g.Id == f.RevenueExpenseGLAccountId))))
+                    join g in context.GLAccounts on lt.AccountId equals g.Id
+                    join j in context.Journals on lt.JournalId equals j.Id
+                    join cancelledj in context.Journals on j.OriginalJournalId equals cancelledj.Id into cancelledjJoin
+                    from cancelledj in cancelledjJoin.DefaultIfEmpty() // Left outer join
+                    join f in context.FullAccountingSettings on lt.Tenant equals f.Tenant
+                    where ((lt.AccountingDate >= fromDate && lt.AccountingDate <= toDate))
+                        && lt.Tenant == tenant
+                        && (DbFunctions.TruncateTime(lt.AccountingDate) != firstDayOfFromDate || (DbFunctions.TruncateTime(lt.AccountingDate) == firstDayOfFromDate 
+                                && !(j.AccountingEntityCode == Logitude.Accounting.Data.Enums.AccountingEntityValues.YearTransfer & (g.ChartOfAccountsTypeCode == "1" || g.ChartOfAccountsTypeCode == "2" || g.Id == f.RevenueExpenseGLAccountId))))
 
-                 select new
-                 {
-                     LedgerTransaction = lt,
-                     Journal = j,
-                     CancelledJournal = cancelledj,
-                     GLAccount = g
-                 }) .ToList() // materialize into memory - EF bug workaround (placing ResolveReferenceType in the LINQ-to-Entities query causes an exception)
+                    select new
+                    {
+                        LedgerTransaction = lt,
+                        Journal = j,
+                        CancelledJournal = cancelledj,
+                        GLAccount = g
+                    })
+                    .ToList() // materialize into memory - EF bug workaround (placing ResolveReferenceType in the LINQ-to-Entities query causes an exception)
                     .Select(x => new B100Data
                     {
                         AccountingDate = x.LedgerTransaction.AccountingDate,
@@ -902,7 +881,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                         GLAccountDisplayNumber = x.GLAccount.DisplayNumber,
                         LocalAmountCredit = x.LedgerTransaction.LocalAmountCredit,
                         LocalAmountDebit = x.LedgerTransaction.LocalAmountDebit,
-                        CreateDate = x.LedgerTransaction.CreateDate ?? DateTime.MinValue,
+                        CreateDate =  x.LedgerTransaction.CreateDate ?? DateTime.MinValue,
                         CurrencyId = x.LedgerTransaction.CurrencyId,
                         CreatedByUser = x.Journal.CreatedByUserId,
                         JournalLineNumber = x.LedgerTransaction.JournalLineNumber,
@@ -912,143 +891,9 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                         LedgerTransactionId = x.LedgerTransaction.Id,
                         OppositGLAccount = x.LedgerTransaction.OppositeAccount != null ? x.LedgerTransaction.OppositeAccount.DisplayNumber : null,
                     });
-            var result = query.AsQueryable();
+            var result = preQuery.AsQueryable();
             return result;
         }
-
-
-        private List<B100Data> GetTransactionsQueryWithValidateFirsDateOpt1(DateTime firstDayOfFromDate, DateTime fromDate, DateTime toDate, int tenant)
-        {
-            DateTime secondDayOfFromDate = firstDayOfFromDate.AddDays(1);
-
-            // Branch 1: Dates BEFORE FirstDayOfFromDate
-            var query1 =
-                from lt in context.LedgerTransactions
-                join g in context.GLAccounts on lt.AccountId equals g.Id
-                join j in context.Journals on lt.JournalId equals j.Id
-                join cancelledj in context.Journals on j.OriginalJournalId equals cancelledj.Id into cancelledjJoin
-                from cancelledj in cancelledjJoin.DefaultIfEmpty() // Left outer join
-                join f in context.FullAccountingSettings on lt.Tenant equals f.Tenant
-                where lt.Tenant == tenant
-                      && lt.AccountingDate >= fromDate
-                      && lt.AccountingDate <= toDate
-                      && lt.AccountingDate < firstDayOfFromDate
-                select new
-                {
-                    LedgerTransaction = lt,
-                    Journal = j,
-                    CancelledJournal = cancelledj,
-                    GLAccount = g
-                };
-
-
-            // Branch 2: Dates ON or AFTER SecondDayOfFromDate
-            var query2 =
-                from lt in context.LedgerTransactions
-                join g in context.GLAccounts on lt.AccountId equals g.Id
-                join j in context.Journals on lt.JournalId equals j.Id
-                join cancelledj in context.Journals on j.OriginalJournalId equals cancelledj.Id into cancelledjJoin
-                from cancelledj in cancelledjJoin.DefaultIfEmpty() // Left outer join
-                join f in context.FullAccountingSettings on lt.Tenant equals f.Tenant
-                where lt.Tenant == tenant
-                      && lt.AccountingDate >= fromDate
-                      && lt.AccountingDate <= toDate
-                      && lt.AccountingDate >= secondDayOfFromDate
-                select new
-                {
-                    LedgerTransaction = lt,
-                    Journal = j,
-                    CancelledJournal = cancelledj,
-                    GLAccount = g
-                };
-
-
-
-
-            // Branch 3: Dates BETWEEN FirstDay and SecondDay AND NOT the exclusion rule (Year Transfer of Revenue & Expenses)
-            var query3 =
-                from lt in context.LedgerTransactions
-                join g in context.GLAccounts on lt.AccountId equals g.Id
-                join j in context.Journals on lt.JournalId equals j.Id
-                join cancelledj in context.Journals on j.OriginalJournalId equals cancelledj.Id into cancelledjJoin
-                from cancelledj in cancelledjJoin.DefaultIfEmpty()
-                join f in context.FullAccountingSettings on lt.Tenant equals f.Tenant
-                where lt.Tenant == tenant
-                      && lt.AccountingDate >= firstDayOfFromDate
-                      && lt.AccountingDate < secondDayOfFromDate
-                      && !(j.AccountingEntityCode == Logitude.Accounting.Data.Enums.AccountingEntityValues.YearTransfer
-                           && (g.ChartOfAccountsTypeCode == "1"
-                               || g.ChartOfAccountsTypeCode == "2"
-                               || g.Id == f.RevenueExpenseGLAccountId))
-                select new
-                {
-                    LedgerTransaction = lt,
-                    Journal = j,
-                    CancelledJournal = cancelledj,
-                    GLAccount = g
-                };
-
-
-            // Combine the branches
-            var combinedQuery = query1.Concat(query2).Concat(query3);
-
-            // Final Projection to B100Data (without ResolveReferenceType)
-            var result = combinedQuery
-                .Select(x => new B100Data
-                {
-                    AccountingDate = x.LedgerTransaction.AccountingDate,
-                    DocumentDate = x.LedgerTransaction.DocumentDate,
-                    AccountingEntityCode = x.Journal.AccountingEntityCode,
-                    AccountingEntityReference = x.Journal.AccountingEntityReference,
-                    ForeignAmountCredit = x.LedgerTransaction.ForeignAmountCredit,
-                    ForeignAmountDebit = x.LedgerTransaction.ForeignAmountDebit,
-                    GLAccountDisplayNumber = x.GLAccount.DisplayNumber,
-                    LocalAmountCredit = x.LedgerTransaction.LocalAmountCredit,
-                    LocalAmountDebit = x.LedgerTransaction.LocalAmountDebit,
-                    CreateDate = x.LedgerTransaction.CreateDate ?? DateTime.MinValue,
-                    CurrencyId = x.LedgerTransaction.CurrencyId,
-                    CreatedByUser = x.Journal.CreatedByUserId,
-                    JournalLineNumber = x.LedgerTransaction.JournalLineNumber,
-                    JournalNumber = x.Journal.JournalNumber,
-                    Notes = x.LedgerTransaction.Notes,
-                    Reference2 = x.LedgerTransaction.Reference2,
-                    LedgerTransactionId = x.LedgerTransaction.Id,
-                    OppositGLAccount = x.LedgerTransaction.OppositeAccount != null
-                        ? x.LedgerTransaction.OppositeAccount.DisplayNumber
-                        : null,
-
-                    // Temporary – resolved later
-                    AccountingEntityReferenceType = null,
-
-                    // You still need these for ResolveReferenceType
-                    _LedgerTransaction = x.LedgerTransaction,
-                    _Journal = x.Journal,
-                    _CancelledJournal = x.CancelledJournal
-                })
-                .AsNoTracking()
-                .ToList();
-
-            //Apply ResolveReferenceType AFTER materializing
-            foreach (var b in result)
-            {
-                b.AccountingEntityReferenceType =
-                    ResolveReferenceType(
-                        b._LedgerTransaction,
-                        b._CancelledJournal ?? b._Journal,
-                        tenant,
-                        OpenFormatDocumentTypes.Fallback
-                    );
-
-                // Optional cleanup to reduce memory
-                b._LedgerTransaction = null;
-                b._Journal = null;
-                b._CancelledJournal = null;
-            }
-
-            return result;
-        }
-
-
 
         public List<LedgerTransactionPM> GetTransactionBySourceEntity(string entityId,string sourceTypeCode, int tenant)
         {

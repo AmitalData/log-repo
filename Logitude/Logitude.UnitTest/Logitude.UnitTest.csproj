@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="..\packages\EntityFramework.6.5.1\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.props')" />
   <Import Project="..\packages\NUnit.4.1.0\build\NUnit.props" Condition="Exists('..\packages\NUnit.4.1.0\build\NUnit.props')" />
@@ -31,8 +31,6 @@
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
     <TargetFrameworkProfile />
-    <!-- Explicitly mark as test project so VSTest runs under dotnet test -->
-    <IsTestProject>true</IsTestProject>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -135,7 +133,6 @@
       <HintPath>..\packages\NUnit.4.1.0\lib\net462\nunit.framework.legacy.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Web" />
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
     </Reference>
@@ -197,12 +194,9 @@
     <Compile Include="Accounting\UniTests\InterestReport\InterestReportCalculationsUnitTest.cs" />
     <Compile Include="Accounting\UniTests\JournalDataMappingUnitTest.cs" />
     <Compile Include="Accounting\UniTests\JournalStornoReconcileServiceUnitTest.cs" />
-    <!-- Temporarily excluded due to compilation errors - will be fixed separately -->
-    <!-- <Compile Include="Accounting\UniTests\JournalStornoServiceUnitTest.cs" /> -->
+    <Compile Include="Accounting\UniTests\JournalStornoServiceUnitTest.cs" />
     <Compile Include="Accounting\UniTests\JournalUpdateOnCreatingLineUnderTest.cs" />
-    <!-- Temporarily excluded due to compilation error (CodeCounterWrapperGetNumber) - will be fixed separately -->
-    <!-- <Compile Include="Accounting\UniTests\JournalUpdateOnCreatingUnitTest.cs" /> -->
-    <Compile Include="Accounting\UniTests\JournalUpdateOnCreatingUnitTest_MSTest.cs" />
+    <Compile Include="Accounting\UniTests\JournalUpdateOnCreatingUnitTest.cs" />
     <Compile Include="Accounting\UniTests\JournalUpdateOnUpdatingUnderTest.CheckVoid.cs" />
     <Compile Include="Accounting\UniTests\JournalUpdateOnUpdatingUnderTest.cs" />
     <Compile Include="Accounting\UniTests\JournalValidatorUnitTest.Reco.cs" />
@@ -215,24 +209,20 @@
     <Compile Include="Accounting\UniTests\CashBookOnUpdatingServiceUnitTest.cs" />
     <Compile Include="Accounting\UniTests\BankAccountTests\BankAccountOnCreatingServiceUnitTest.cs" />
     <Compile Include="Accounting\UniTests\BankAccountTests\BankAccountOnUpdatingServiceUnitTest.cs" />
-    <!-- Temporarily excluded due to compilation errors - will be fixed separately -->
-    <!-- <Compile Include="Accounting\UniTests\BankAccountTests\BankAccountValidateUpdateServiceUnitTest.cs" /> -->
+    <Compile Include="Accounting\UniTests\BankAccountTests\BankAccountValidateUpdateServiceUnitTest.cs" />
     <Compile Include="Accounting\UniTests\Report\LedgerTransactionBalanceServiceUnderTest.DateTypeCode.cs" />
     <Compile Include="Accounting\UniTests\Reconciliation\CreateAutoReconcileWhileStreamingServiceUnitTest.cs" />
     <Compile Include="Accounting\UniTests\YearTransferUnitTest.cs" />
-    <!-- Exclude missing ItzikTest files to allow build; restore sources later -->
-    <!-- <Compile Include="ItzikTest\TransactionUnitTest.cs" /> -->
-    <!-- <Compile Include="ItzikTest\LinqUnitTest.cs" /> -->
+    <Compile Include="ItzikTest\TransactionUnitTest.cs" />
+    <Compile Include="ItzikTest\LinqUnitTest.cs" />
     <Compile Include="SimplogDataFakeFactory.cs" />
     <Compile Include="TestBase.cs" />
     <Compile Include="TestingTestingUnitTest.cs" />
-    <!-- Temporarily excluded due to compilation error (Assert.AreEqual type inference) - will be fixed separately -->
-    <!-- <Compile Include="Accounting\UniTests\AccountingSettingResolverUnitTest.cs" /> -->
+    <Compile Include="Accounting\UniTests\AccountingSettingResolverUnitTest.cs" />
     <Compile Include="Accounting\UniTests\ChartOfAccountFlatUnitTest.cs" />
-    <!-- <Compile Include="Accounting\UniTests\FakeItTest\UnitTest1.cs" /> -->
+    <Compile Include="Accounting\UniTests\FakeItTest\UnitTest1.cs" />
     <Compile Include="Accounting\UniTests\GLAccountUpdateServiceUnitTest.cs" />
-    <!-- Temporarily excluded due to compilation errors (NetCommonHelper) - will be fixed separately -->
-    <!-- <Compile Include="Accounting\UniTests\JournalLineCreditMappingUnitTest.cs" /> -->
+    <Compile Include="Accounting\UniTests\JournalLineCreditMappingUnitTest.cs" />
     <Compile Include="Accounting\UniTests\JournalLineRepositoryUnitTest.cs" />
     <Compile Include="Accounting\UniTests\JournalRepositoryUnitTest.cs" />
     <Compile Include="Accounting\UniTests\JournalValidatorUnitTest.1.cs" />
@@ -244,31 +234,11 @@
     <Compile Include="Accounting\UniTests\JournalValidatorUnitTest.7.cs" />
     <Compile Include="Accounting\UniTests\JournalValidatorUnitTest.cs" />
     <Compile Include="Accounting\UniTests\JournalLineDebitMappingUnitTest.cs" />
-    <Compile Include="Accounting\UniTests\JournalLineDebitMappingUnitTest_MSTest.cs" />
-    <Compile Include="Accounting\UniTests\JournalDataMappingUnitTest_MSTest.cs" />
-    <Compile Include="Accounting\UniTests\JournalLineCreditMappingUnitTest_MSTest.cs" />
-    <Compile Include="Accounting\UniTests\ChartOfAccountFlatUnitTest_MSTest.cs" />
-    <Compile Include="Accounting\UniTests\JournalRepositoryUnitTest_MSTest.cs" />
-    <Compile Include="Accounting\UniTests\JournalLineRepositoryUnitTest_MSTest.cs" />
-    <Compile Include="Accounting\UniTests\YearTransferUnitTest_MSTest.cs" />
-    <Compile Include="Accounting\UniTests\CashBookOnCreatingServiceUnitTest_MSTest.cs" />
-    <Compile Include="Accounting\UniTests\CashBookOnUpdatingServiceUnitTest_MSTest.cs" />
-    <Compile Include="Accounting\UniTests\JournalStornoReconcileServiceUnitTest_MSTest.cs" />
-    <Compile Include="Accounting\UniTests\GLAccountUpdateServiceUnitTest_MSTest.cs" />
-    <Compile Include="Accounting\UniTests\BankAccountTests\BankAccountOnCreatingServiceUnitTest_MSTest.cs" />
-    <Compile Include="Accounting\UniTests\BankAccountTests\BankAccountOnUpdatingServiceUnitTest_MSTest.cs" />
-    <Compile Include="Accounting\UniTests\BankAccountTests\BankAccountCustomDataMappingUnitTest_MSTest.cs" />
-    <Compile Include="Accounting\UniTests\BankAccountTests\BankAccountTraceEventServiceUnitTest_MSTest.cs" />
-    <Compile Include="Accounting\UniTests\BankDeposit\BankDepositOnCreatingServiceUnitTest_MSTest.cs" />
-    <Compile Include="Accounting\UniTests\PaymentChequeTests\PaymentChequeDataMappingUnitTest_MSTest.cs" />
-    <Compile Include="Accounting\UniTests\PaymentChequeTests\PaymentChequeOnCreatingServiceUnitTest_MSTest.cs" />
-    <Compile Include="Accounting\UniTests\PaymentChequeTests\PaymentChequeOnUpdatingServiceUnitTest_MSTest.cs" />
-    <!-- <Compile Include="UnitTest1.cs" /> -->
+    <Compile Include="UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\AccountingSettingResolverUtil.cs" />
     <Compile Include="Utils\AssertHelper.cs" />
     <Compile Include="Utils\CacheUtil.cs" />
-    <Compile Include="Utils\EnvFakes.cs" />
     <Compile Include="Utils\FakeFactory.cs" />
     <Compile Include="Utils\LogitudeServerToolsFactory.cs" />
     <Compile Include="Utils\TestsUtil.cs" />
@@ -277,10 +247,6 @@
     <ProjectReference Include="..\Logitude.Accounting.BL\Logitude.Accounting.BL.csproj">
       <Project>{00e5d96d-dd45-47e8-aaa3-fdbfd8add61a}</Project>
       <Name>Logitude.Accounting.BL</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Logitude.Test.Infrastructure\Logitude.Test.Infrastructure.csproj">
-      <Project>{04E15311-C97C-40ED-B40D-0C617103C026}</Project>
-      <Name>Logitude.Test.Infrastructure</Name>
     </ProjectReference>
     <ProjectReference Include="..\Logitude.Accounting.Data\Logitude.Accounting.Data.csproj">
       <Project>{a3799525-14a2-42fc-a2de-69ed3fd1c5d1}</Project>
@@ -336,12 +302,6 @@
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
-  <!-- Exclude unstable tests for this environment -->
-  <ItemGroup>
-    <Compile Remove="Accounting\UniTests\ExternalReconcile\*.cs" />
-    <Compile Remove="Accounting\UniTests\Reconciliation\*.cs" />
-    <Compile Remove="Accounting\UniTests\InterestReport\*.cs" />
-  </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>
@@ -365,7 +325,7 @@
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see [http://go.microsoft.com/fwlink/?LinkID=322105](http://go.microsoft.com/fwlink/?LinkID=322105). The missing file is {0}.</ErrorText>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
     <Error Condition="!Exists('..\packages\Microsoft.Testing.Platform.1.2.1\build\netstandard2.0\Microsoft.Testing.Platform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Testing.Platform.1.2.1\build\netstandard2.0\Microsoft.Testing.Platform.props'))" />
@@ -381,4 +341,11 @@
   <Import Project="..\packages\Microsoft.Testing.Platform.MSBuild.1.2.1\build\netstandard2.0\Microsoft.Testing.Platform.MSBuild.targets" Condition="Exists('..\packages\Microsoft.Testing.Platform.MSBuild.1.2.1\build\netstandard2.0\Microsoft.Testing.Platform.MSBuild.targets')" />
   <Import Project="..\packages\MSTest.TestAdapter.3.4.3\build\net462\MSTest.TestAdapter.targets" Condition="Exists('..\packages\MSTest.TestAdapter.3.4.3\build\net462\MSTest.TestAdapter.targets')" />
   <Import Project="..\packages\EntityFramework.6.5.1\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
 </Project>
