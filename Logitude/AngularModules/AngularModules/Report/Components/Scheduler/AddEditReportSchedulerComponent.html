@@ -79,7 +79,7 @@
                     </td>
                     <td style="width: 5px;"><div></div></td>
                     <td style="width: 57px;">
-                        <button [disabled]="DisableNextButton()" style="cursor:pointer" class="Button" (click)="NextButtonClicked()">{{'General.B.Next' | TextCodeTranslationPipe}}</button>
+                        <button [disabled]="SelectedTabLocation == 2 || (DataContext.IsFTP && SelectedTabLocation == 1)" style="cursor:pointer" class="Button" (click)="NextButtonClicked()">{{'General.B.Next' | TextCodeTranslationPipe}}</button>
                     </td>
                     <td style="width: 5px;"><div></div></td>
                     <td style="width: 57px;">
@@ -87,7 +87,7 @@
                     </td>
                     <td style="width: 5px;"><div></div></td>
                     <td style="width: 57px;">
-                        <button style="cursor:pointer" class="Button" (click)="CloseButtonClicked()">Cancel</button>
+                        <button style="cursor:pointer" class="Button" (click)="CloseButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
                     </td>
                 </tr>
             </table>

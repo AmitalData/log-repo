@@ -15,7 +15,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
 
         PaymentGatewayPartnerRepository repository;
-
+        public PaymentGatewayPartnerQuery()
+        {
+            repository = new PaymentGatewayPartnerRepository();
+        }
 
         public PaymentGatewayPartnerQuery(int tenant)
         {

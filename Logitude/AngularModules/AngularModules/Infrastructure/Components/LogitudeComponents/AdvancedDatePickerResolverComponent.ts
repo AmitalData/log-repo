@@ -4,14 +4,14 @@ export class AdvancedDatePickerResolverComponent {
 
     public SetValidityBetweenTwoDateOptions(firstOption: any, secondOption: any) {
         if (firstOption != null && secondOption != null) {
-            var firstDateValue = this.ResolveDateValue(firstOption, true);
-            var secondDateValue = this.ResolveDateValue(secondOption, false);
-            if (firstDateValue === null || secondDateValue === null || firstDateValue > secondDateValue) return false;
+            var firstDateValue = this.ResolveDateValue(firstOption);
+            var secondDateValue = this.ResolveDateValue(secondOption);
+            if (firstDateValue > secondDateValue) return false;
             else return true;
         }
         return false;
     }
-    public ResolveDateValue(dateOption: any, fromDate: boolean) {
+    public ResolveDateValue(dateOption: any) {
         var date = new Date(); 
         var dateValue = new Date();
         var quarterNumber = this.GetQuarterNumber(date);
@@ -60,56 +60,9 @@ export class AdvancedDatePickerResolverComponent {
                     dateValue = new Date(date.getFullYear(), 0, 0);
                     break;
                 default:
-                    try {
-                        if (typeof dateOption === "string" && dateOption?.startsWith("PER_")) {
-                            const parts = dateOption.split("_");
-                            const value = parseInt(parts[1], 10);
-                            const unit = parts[2].toLowerCase(); // days / months / years
-                            const sign = fromDate ? -1 : 1;
-
-                            if (value === 0) {
-                                console.error("missing day/month/year number");
-                                return null;
-                            }
-
-                            return this.SetOffsetDate(dateValue, sign * value, unit);
-                        }
-                        else if (typeof dateOption === "string" && dateOption.indexOf("_") > -1) {
-                            const parts = dateOption.split("_");
-                            const dateValue = this.ResolveDateValue(parts[0], null);
-                            const offset = (parts[1]?.toLowerCase() == "minus"? -1: 1) * parseInt(parts[2], 10);
-                            const unit = parts[3];
-                            return this.SetOffsetDate(dateValue, offset, unit);
-                        }
-                        else {
-                            dateValue = new Date(dateOption);
-                        }
-                    } catch(error) {
-                        console.error("Unexpected error", error);
-                        return null;
-                    }
+                    dateValue = new Date(dateOption);
                     break;
             }
-        }
-        return dateValue;
-    }
-
-    SetOffsetDate(dateValue, offset, unit) {
-        switch (unit.toLowerCase()) {
-            case "days":
-                dateValue.setDate(dateValue.getDate() + offset);
-                break;
-            case "weeks":
-                dateValue.setDate(dateValue.getDate() + offset * 7);
-                break;
-            case "months":
-                dateValue.setMonth(dateValue.getMonth() + offset);
-                break;
-            case "years":
-                dateValue.setFullYear(dateValue.getFullYear() + offset);
-                break;
-            default:
-                throw new Error("Unsupported period unit: " + unit);
         }
         return dateValue;
     }

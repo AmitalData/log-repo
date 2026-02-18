@@ -47,7 +47,6 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
             AdditionalInformation[2].Content = new AdditionalDocumentTypeTextType() { Value = "1" };
             response.Response.AdditionalInformation = AdditionalInformation;
 
-            
 
             //amendment
             response.Response.Amendment = new ResponseAmendment[1]; // reason to change?
