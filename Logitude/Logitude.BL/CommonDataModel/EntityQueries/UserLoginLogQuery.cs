@@ -16,7 +16,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         UserLoginLogRepository repository;
 
-
+        public UserLoginLogQuery()
+        {
+            repository = new UserLoginLogRepository(); 
+        }
 
         public UserLoginLogQuery(int tenant)
         {
