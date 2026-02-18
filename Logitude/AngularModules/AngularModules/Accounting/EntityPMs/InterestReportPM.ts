@@ -281,11 +281,6 @@ export class InterestReportPM {
     public set ReportCurrencyCode(newValue: string) { if (this.reportCurrencyCode != newValue) { this.reportCurrencyCode = newValue; this.MarkAsDirty("ReportCurrencyCode"); } }
        
 	 
-    private vatNumber: string;
-    public get VatNumber() { return this.vatNumber; }
-    public set VatNumber(newValue: string) { if (this.vatNumber != newValue) { this.vatNumber = newValue; this.MarkAsDirty("VatNumber"); } }
-       
-	 
 
     public OldEntityPM: InterestReportPM;
 		
