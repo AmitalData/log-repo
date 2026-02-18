@@ -88,7 +88,7 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSImport
                         throw new BusinessErrorException("_DirtyDeclarationPaymentPM.DeclarationId could not convert to long ");
                     }
                     var myCCUFILEMRepository = new CCUFILEMRepository(dec.Tenant);
-                    var ccufilem = myCCUFILEMRepository.GetFILENOByCUSTOMFILENO(lCUSTOMFILENO,dec.Tenant);
+                    var ccufilem = myCCUFILEMRepository.GetFILENOByCUSTOMFILENO(lCUSTOMFILENO);
                     var myCCUQUELOCKRepository = new CCUQUELOCKRepository(dec.Tenant);
                     try
                     {
