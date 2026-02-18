@@ -53,10 +53,6 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.IsCustomApprovalRequired).HasColumnName("IsCustomApprovalRequired");
 
             this.Property(t => t.IsCriterionMandatory).HasColumnName("IsCriterionMandatory");
-
-            this.Property(t => t.IsCustomsItemMandatory).HasColumnName("IsCustomsItemMandatory");
-
-            this.Property(t => t.IsZipcodeMandatory).HasColumnName("IsZipcodeMandatory");
         }
     }
 }

@@ -353,9 +353,6 @@ namespace Logitude.Accounting.Data.EntityLists
        public string ContactPhone  { get; set; }
         [DataMember]
         public DateTime? MarkDate { get; set; }
-
-        [DataMember]
-        public bool ForeignCurrencyInterest { get; set; }
     }
 
 }

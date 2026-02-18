@@ -104,13 +104,7 @@ namespace Logitude.Server.Tools.Utils
                        tenant.ToString();
             return key;
         }
-		public string GetKeySFTP(string analyzeQueueId, int tenant)
-		{
-			string key = "SFTP:analyzeQueueId:" + analyzeQueueId + ",t:" +
-					   tenant.ToString();
-			return key;
-		}
-		public string GetKey4InProggressCustomsRequestsSheet(string CustomsRequestsSheetId)
+        public string GetKey4InProggressCustomsRequestsSheet(string CustomsRequestsSheetId)
         {
             string key = "InProggressCustomsRequestsSheet:" + CustomsRequestsSheetId;
             return key;
@@ -137,9 +131,7 @@ namespace Logitude.Server.Tools.Utils
             {
                 if (multiProcess)
                 {
-					NetCommonHelper.Logger.DevLog.Instance.WriteError("multiProcess lockit" + key.ToString());
-
-					var multiProcessLockTableUtil = new MultiProcessLockTableUtil();
+                    var multiProcessLockTableUtil = new MultiProcessLockTableUtil();
                     return multiProcessLockTableUtil.LockItAndGetReleaseToken(tenant, key, requestLog);
                 }
                 return ProcessLockTableUtil.Instance.LockItAndGetReleaseToken(key, requestLog);
