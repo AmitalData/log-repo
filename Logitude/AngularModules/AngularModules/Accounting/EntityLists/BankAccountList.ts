@@ -49,7 +49,6 @@ export class BankAccountList {
 	TotalOpenPagesLines: string;
 	ChequeCounterSeriesID: number;
 	FactoringBank: boolean;
-	MasavGLAcccountId: string;
 	
 }
  

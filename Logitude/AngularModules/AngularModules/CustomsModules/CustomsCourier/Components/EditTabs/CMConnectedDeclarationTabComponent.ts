@@ -1,27 +1,27 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import {Component, EventEmitter, Output} from '@angular/core';
 import { AppTool, DateTool } from '../../../../Infrastructure/Tools';
-import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
-import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
-import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
-import { CourierMasterPM } from '../../../../Customs/EntityPMs/CourierMasterPM';
+import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
+import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
+import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
+import {CourierMasterPM} from '../../../../Customs/EntityPMs/CourierMasterPM';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
-import { ObservableCollection } from '../../../../Infrastructure/Utilities/ObservableCollection';
-import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
+import {ObservableCollection} from '../../../../Infrastructure/Utilities/ObservableCollection';
+import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
 import { CourierMasterValidator } from '../../../../Customs/Validators/CourierMasterValidator';
 import { CustomsRequestsSheetPM } from '../../../../Customs/EntityPMs/CustomsRequestsSheetPM';
 import { CourierMasterService } from 'Customs/Services/Others/CourierMasterService';
 import { CustomMessageProgressComponent } from 'CustomsModules/CustomsControls/Components/CustomMessageProgressComponent';
 
 @Component({
-
+    
     templateUrl: './CMConnectedDeclarationTabComponent.html',
     providers: [CourierMasterService]
 })
 
 
 export class CMConnectedDeclarationTabComponent extends BaseComponent {
-    public SelectedRow2: any;
+  public SelectedRow2: any;
 
     ObjectTableName: string = "Customs.CourierMaster";
     DataContext: any = this;
@@ -33,7 +33,6 @@ export class CMConnectedDeclarationTabComponent extends BaseComponent {
     notConnectedListIds: ObservableCollection;
 
     public CurrentEditComponentId: string;
-    private _isBusy: boolean = false;
 
     private _ConnectedSearch: string;
     private _NotConnectedSearch: string;
@@ -102,7 +101,7 @@ export class CMConnectedDeclarationTabComponent extends BaseComponent {
         if (SessionLocator.SelectedSession.CurrentEditComponent != null) {
             this.CurrentEditComponentId = SessionLocator.SelectedSession.CurrentEditComponent.ComponentId;
             SessionLocator.SelectedSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
-
+                
                 if (isSaveSuccess) {
                     this.EntityPM = SessionLocator.SelectedSession.CurrentEditComponent.EntityPM;
                     this.CourierMasterService.isNotDirty = true;
@@ -110,21 +109,22 @@ export class CMConnectedDeclarationTabComponent extends BaseComponent {
                         //  this.CourierMasterService.connectedSelectAll = true;
                         this.CourierMasterService.disconnectedSelectAll = false;
                     }
-
+                    
                     else if (this.CourierMasterService.connectedSelectAll) {
                         this.CourierMasterService.disconnectedSelectAll = false;
                         //     this.CourierMasterService.connectedSelectAll = false;
                     }
                     this.CourierMasterService.connectedSelectAll = true;
-
+                    
                     this.LoadConnectedDeclarationGrid();
                     this.LoadNotConnectedDeclarationGrid();
                 }
             });
+            
             SessionLocator.SelectedSession.CurrentEditComponent.SaveStart.subscribe((entityPM: any) => {
                 this.sendConnectDeclaration();
             });
-
+            
             SessionLocator.SelectedSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                 if (isLoadSuccess) {
                     this.EntityPM = SessionLocator.SelectedSession.CurrentEditComponent.EntityPM;
@@ -143,42 +143,36 @@ export class CMConnectedDeclarationTabComponent extends BaseComponent {
         }
     }
 
-    private sendConnectDeclaration() {
+    private async sendConnectDeclaration() {
         if (
-            this.CourierMasterService.connectedSelectAll
-            && !this.CourierMasterService.disconnectedSelectAll
-            && this.entityPM.ConnectedDeclarations?.split(',')?.length < 100
-            && this.entityPM.NotConnectedDeclarations?.split(',')?.length < 100
-        )
+                this.CourierMasterService.connectedSelectAll
+                && !this.CourierMasterService.disconnectedSelectAll
+                && this.entityPM.ConnectedDeclarations?.split(',')?.length < 100 
+                && this.entityPM.NotConnectedDeclarations?.split(',')?.length < 100
+            )
             return;
-
-        if (!this._isBusy) {
-            SessionLocator.SelectedSession.StartBusyIndicator('פותח מסר קישור הצהרות')
-            this._isBusy = true;
-            this.CourierMasterService.sendConnectDeclaration(this.entityPM.Id, this.entityPM.Tenant, this.entityPM.HAWB, this.CourierMasterService.connectedSelectAll, this.CourierMasterService.disconnectedSelectAll, this.CourierMasterService.connectedItems.Collection, this.CourierMasterService.disconnectedItems.Collection)
-                .then(() => {
-                    CustomMessageProgressComponent.ShowCustomMessageProgressComponent('הצהרות מקושרות', 'עדכון כל ההצהרות נשלח בתהליך ברקע', () => { })
-                })
-                .catch(() => {
-                    CustomMessageProgressComponent.ShowCustomMessageProgressComponent('הצהרות מקושרות', 'עדכון כל ההצהרות נכשל', () => { })
-                }).finally(() => {
-                    SessionLocator.SelectedSession.StopBusyIndicator();
-                    this._isBusy = false;
-                });
-        }
-
+            
+        SessionLocator.SelectedSession.StartBusyIndicator('פותח מסר קישור הצהרות')
+        await this.CourierMasterService.sendConnectDeclaration(this.entityPM.Id, this.entityPM.Tenant, this.entityPM.HAWB, this.CourierMasterService.connectedSelectAll, this.CourierMasterService.disconnectedSelectAll, this.CourierMasterService.connectedItems.Collection, this.CourierMasterService.disconnectedItems.Collection)
+            .then(() => { 
+                CustomMessageProgressComponent.ShowCustomMessageProgressComponent('הצהרות מקושרות', 'עדכון כל ההצהרות נשלח בתהליך ברקע', () => { })
+                SessionLocator.SelectedSession.StopBusyIndicator();
+            })
+            .catch(() => {
+                CustomMessageProgressComponent.ShowCustomMessageProgressComponent('הצהרות מקושרות', 'עדכון כל ההצהרות נכשל', () => { })
+                SessionLocator.SelectedSession.StopBusyIndicator();
+            });
     }
-
 
     OnAllConnectedChecked(isFirst: boolean) {
         this.CourierMasterService.connectedSelectAll = true;
         this.CourierMasterService.connectedItems.Clear();
         this.entityPM.NotConnectedDeclarations = "";
         this.CourierMasterService.isNotDirty = !!isFirst;
-
+        
         this.LoadConnectedItems();
     }
-
+    
     OnAllConnectedUnchecked() {
         this.CourierMasterService.connectedSelectAll = false;
         this.CourierMasterService.connectedItems.Clear();
@@ -192,11 +186,11 @@ export class CMConnectedDeclarationTabComponent extends BaseComponent {
         this.CourierMasterService.disconnectedSelectAll = true;
         this.CourierMasterService.disconnectedItems.Clear();
         this.entityPM.ConnectedDeclarations = "ALL";
-
+        
         this.LoadNotConnectedDeclarationGrid();
         this.CourierMasterService.isNotDirty = false;
     }
-
+    
     OnAllDiconnectedUnchecked() {
         this.CourierMasterService.disconnectedSelectAll = false;
         this.CourierMasterService.disconnectedItems.Clear();
@@ -327,28 +321,28 @@ export class CMConnectedDeclarationTabComponent extends BaseComponent {
             Styles: { width: '200px' },
             IsCustomTemplate: true
         });
-
+       
     }
     test: any;
 
-    DataSource = {
+     DataSource = {
 
         pageSize: 10,
         rowCount: null,
-
+       
         sortingDir: "Ascending",
         getRows: (skip: number, take: number, sortingCol: string, sortingDir: string, getCount: boolean, searchFields?: string, filters: ApiQueryFilters = null) => {
 
             var tempo = this.getRows(skip, take, sortingCol, sortingDir, getCount, searchFields, filters);
-            return tempo;
+             return tempo;
         },
 
     };
     filterAgrs: ApiQueryFilters;
 
     LoadConnectedItems() {
-        this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
-
+       this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
+       
     }
 
     DataSource1 = {
