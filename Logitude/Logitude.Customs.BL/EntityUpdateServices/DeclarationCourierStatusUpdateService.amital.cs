@@ -150,6 +150,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         {
             if (dirtyDeclarationPM.Direction != "E")
             {
+                var isConnectedToUniFreight = CustomsSettingQueryService.GetSettingByTenant(dirtyDeclarationPM.Tenant).IsConnectedToUniFreight;
 
 
                 var sw = Stopwatch.StartNew();
@@ -168,7 +169,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     myCCUQUELOCKUpdateService.DontAddTransaction = true;
 
 
-                    CCUQUELOCKPM myCCUQUELOCK = myCCUQUELOCKQueryService.GetSingle("CFIFILEM", dirtyDeclarationPM.CustomFileNo,dirtyDeclarationPM.Tenant, false);
+                    CCUQUELOCKPM myCCUQUELOCK = myCCUQUELOCKQueryService.GetSingle("CFIFILEM", dirtyDeclarationPM.CustomFileNo, false);
                     if (myCCUQUELOCK == null)
                     {
                         var myCCUQUELOCKPM = new CCUQUELOCKPM()
@@ -177,9 +178,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                             ENTNAME = "CFIFILEM",
                             FILENO = dirtyDeclarationPM.CustomFileNo,
                         };
-                        
-                        myCCUQUELOCKPM.Tenant = EntityPM.Tenant;
-                        
+                        if (!isConnectedToUniFreight)
+                        {
+                            myCCUQUELOCKPM.Tenant = EntityPM.Tenant;
+                        }
                         myCCUQUELOCKUpdateService.Update(myCCUQUELOCKPM, true);
                     }
 
@@ -235,8 +237,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         USRCODE = unifreightUser,
                         ARCHIVE = "F",
                     };
-                    myYCULTASKPM.Tenant = dirtyDeclarationPM.Tenant;
-                    
+                    if (!isConnectedToUniFreight)
+                    {
+                        myYCULTASKPM.Tenant = dirtyDeclarationPM.Tenant;
+                    }
                     var myYCULTASKUpdateService = new Unifreight.BL.EntityUpdateServices.YCULTASKUpdateService(_AmitalContext);
                     myYCULTASKUpdateService.DontAddTransaction = true;
                     myYCULTASKUpdateService.Update(myYCULTASKPM, true);
@@ -256,9 +260,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                          DEBUG = "F",
                          DONEOPERATION = "D",
                     };
-                    
-                    myGGGQPM.Tenant = dirtyDeclarationPM.Tenant;
-                    
+                    if (!isConnectedToUniFreight)
+                    {
+                        myGGGQPM.Tenant = dirtyDeclarationPM.Tenant;
+                    }
                     var myGGGQUpdateService = new Unifreight.BL.EntityUpdateServices.GGGQUpdateService(_AmitalContext);
                     myGGGQUpdateService.DontAddTransaction = true;
                     myGGGQUpdateService.Update(myGGGQPM, true);

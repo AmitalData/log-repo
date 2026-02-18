@@ -20,7 +20,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         PortRepository repository;
 
-
+        public PortQuery()
+        {
+            repository = new PortRepository();
+        }
 
         public PortQuery(int tenant)
         {

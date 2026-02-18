@@ -90,7 +90,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             this.MyRequestSheetParam.RequestDescription = "מסר מניפסט";
 
             stopwatch = Stopwatch.StartNew();
-            FeatureQuery featureQuery = new FeatureQuery(_DeclarationPM.Tenant);
+            FeatureQuery featureQuery = new FeatureQuery();
             var features = featureQuery.GetAllowedFeaturesForLoggedUser(AuthenticationUtil.ResolveUserId(_DeclarationPM.Tenant), _DeclarationPM.Tenant);
             var feature = features.Features.FirstOrDefault(x => x.Code == "SendManifestEvent");
             LogMessagingUtil.Instance.AppendLine("GetAllowedFeaturesForLoggedUser:Elapsed:" + stopwatch.ElapsedMilliseconds);
@@ -264,7 +264,7 @@ namespace Logitude.CustomsMessaging.RequestServices
                 throw new BusinessErrorException("_DirtyDeclarationPaymentPM.DeclarationId could not convert to long ");
             }
             var myCCUFILEMRepository = new CCUFILEMRepository(declarationPM.Tenant);
-            var ccufilem = myCCUFILEMRepository.GetFILENOByCUSTOMFILENO(lCUSTOMFILENO, declarationPM.Tenant);
+            var ccufilem = myCCUFILEMRepository.GetFILENOByCUSTOMFILENO(lCUSTOMFILENO);
 
 
             var myCCUQUELOCKRepository = new CCUQUELOCKRepository(requestParams.Tenant);

@@ -98,14 +98,10 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.MaxSISendInteractive).HasColumnName("MaxSISendInteractive");
 
-            this.Property(t => t.CourierDocToken).HasColumnName("CourierDocToken").HasMaxLength(1024).IsUnicode(false);
-
+ 
             this.Property(t => t.ForbiddenSigns).HasColumnName("ForbiddenSigns").HasMaxLength(128).IsUnicode(true);
-
-            this.Property(t => t.CB_LastUpdateDate).HasColumnName("CB_LastUpdateDate");
-
-            this.Property(t => t.CustomsBookToken).HasColumnName("CustomsBookToken").HasMaxLength(1024).IsUnicode(false);
-        }
+             this.Property(t => t.CourierDocToken).HasColumnName("CourierDocToken").HasMaxLength(1024).IsUnicode(false);
+         }
     }
 }
 	 

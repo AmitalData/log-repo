@@ -1497,7 +1497,7 @@
     IsDeleted="false"
     ObjectTableName="&quot;Customs.DeclarationReferantData&quot;"
     FieldsDataType="&quot;LookUp&quot;"
-    LookUpTableName="&quot;TransportMode&quot;"
+    LookUpTableName="&quot;Customs.CustomsTransportMode&quot;"
     MinLength="0"
     MaxLength="17"
     IsRequired="false"
@@ -3076,7 +3076,7 @@
     CopyToDW="false"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
-    CanFilter="true"
+    CanFilter="false"
     DisplayOnly="false"
     SystemRequired="false"
     ObjectFieldNotRequired="false"
@@ -3084,7 +3084,6 @@
     DisplayInList="true"
     IsCustomFilter="false"
     IsListFilter="false"
-    Operator="&quot;Equals&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -5478,8 +5477,7 @@
     FullLocalDefaultText="&quot;FCL/LCL&quot;"
     ListFieldLable="&quot;FclLclListLable&quot;"
     ListLableDefaultText="&quot;FCL/LCL&quot;"
-    ListLocalDefaultTextBack_up="&quot;FCL/LCLקוד &quot;"
-    ListLocalDefaultText="&quot;BS64:IkZDTC9MQ0zXp9eV15MgIg==&quot;"
+    ListLocalDefaultText="&quot;FCL/LCL&quot;"
     IsNullable="false"
     IsForeignKey="true"
     ForeignEntity="&quot;FclLclCode&quot;"
@@ -7719,7 +7717,7 @@
     SystemRequired="false"
     ObjectFieldNotRequired="false"
     SystemMaxLength="2"
-    DisplayInList="false"
+    DisplayInList="true"
     IsCustomFilter="false"
     IsListFilter="false"
     MultiLine="false"
@@ -7735,7 +7733,7 @@
     DependencyFilter1IsList="false"
     DependencyFilter2IsList="false"
     DependencyFilter3IsList="false"
-    ValidForQuerySection1="&quot;&quot;"
+    ValidForQuerySection1="&quot;Customs.DeclarationReferantData&quot;"
     IsRestrictable="false"
     DisplayInEntityVariables="false"
     AllowedInCustomerFieldsSettings="false"
@@ -7748,6 +7746,10 @@
     DefaultText="&quot;Origin Country&quot;"
     FullLocalDefaultTextBack_up="&quot;ארץ מוצא&quot;"
     FullLocalDefaultText="&quot;BS64:IteQ16jXpSDXnteV16bXkCI=&quot;"
+    ListFieldLable="&quot;OriginCountryCodeListLable&quot;"
+    ListLableDefaultText="&quot;OriginCountryCode&quot;"
+    ListLocalDefaultTextBack_up="&quot;ארץ מוצא&quot;"
+    ListLocalDefaultText="&quot;BS64:IteQ16jXpSDXnteV16bXkCI=&quot;"
     IsNullable="true"
     IsForeignKey="false"
     ForeignEntity="&quot;CustomsCountry&quot;"
@@ -10135,48 +10137,6 @@
       DefaultText="&quot;Confirm Open File&quot;"
       LocalDefaultTextBack_up="&quot;אשר פתיחת תיק&quot;"
       LocalDefaultText="&quot;BS64:IteQ16nXqCDXpNeq15nXl9eqINeq15nXpyI=&quot;"
-      TextCodeTypeCode="&quot;O&quot;"
-      IsSpellChecked="false" />
-    <TextCode
-      Code="&quot;Customs.StatusRemarks.SivugTitle&quot;"
-      DefaultText="&quot;Status remarks - Classifier&quot;"
-      LocalDefaultTextBack_up="&quot;הערות סטטוס - מסווג&quot;"
-      LocalDefaultText="&quot;BS64:IteU16LXqNeV16og16HXmNeY15XXoSAtINee16HXldeV15Ii&quot;"
-      TextCodeTypeCode="&quot;O&quot;"
-      IsSpellChecked="false" />
-    <TextCode
-      Code="&quot;Customs.StatusRemarks.MevakerTitle&quot;"
-      DefaultText="&quot;Status remarks - Inspector&quot;"
-      LocalDefaultTextBack_up="&quot;הערות סטטוס - מבקר&quot;"
-      LocalDefaultText="&quot;BS64:IteU16LXqNeV16og16HXmNeY15XXoSAtINee15HXp9eoIg==&quot;"
-      TextCodeTypeCode="&quot;O&quot;"
-      IsSpellChecked="false" />
-    <TextCode
-      Code="&quot;Customs.Remarks.MevakerShortTitle&quot;"
-      DefaultText="&quot;Inspector remarks&quot;"
-      LocalDefaultTextBack_up="&quot;הערות מבקר&quot;"
-      LocalDefaultText="&quot;BS64:IteU16LXqNeV16og157Xkden16gi&quot;"
-      TextCodeTypeCode="&quot;O&quot;"
-      IsSpellChecked="false" />
-    <TextCode
-      Code="&quot;Customs.Remarks.SivugShortTitle&quot;"
-      DefaultText="&quot;Classifier remarks&quot;"
-      LocalDefaultTextBack_up="&quot;הערות מסווג&quot;"
-      LocalDefaultText="&quot;BS64:IteU16LXqNeV16og157XodeV15XXkiI=&quot;"
-      TextCodeTypeCode="&quot;O&quot;"
-      IsSpellChecked="false" />
-    <TextCode
-      Code="&quot;Customs.Errors.SivugRemarksLoad&quot;"
-      DefaultText="&quot;Error loading classifier remarks&quot;"
-      LocalDefaultTextBack_up="&quot;שגיאה בקריאת הערות מסווג&quot;"
-      LocalDefaultText="&quot;BS64:Itep15LXmdeQ15Qg15HXp9eo15nXkNeqINeU16LXqNeV16og157XodeV15XXkiI=&quot;"
-      TextCodeTypeCode="&quot;O&quot;"
-      IsSpellChecked="false" />
-    <TextCode
-      Code="&quot;Customs.Errors.MevakerRemarksLoad&quot;"
-      DefaultText="&quot;Error loading inspector remarks&quot;"
-      LocalDefaultTextBack_up="&quot;שגיאה בקריאת הערות מבקר&quot;"
-      LocalDefaultText="&quot;BS64:Itep15LXmdeQ15Qg15HXp9eo15nXkNeqINeU16LXqNeV16og157Xkden16gi&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>

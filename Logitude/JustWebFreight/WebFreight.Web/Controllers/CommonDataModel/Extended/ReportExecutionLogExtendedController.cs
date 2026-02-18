@@ -77,26 +77,5 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
             }
 
         }
-
-        public HttpResponseMessage PostSendToBackground(string reportId)
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                var tenant = authToken.Tenant;
-                SecurityUtility.AuthenticationOnTenant(tenant);
-
-                SecurityUtility.CheckContactFeature("ReportExecutionLog", "READ", tenant);
-                ReportExecutionLogQuery reportExecutionLogQuery = new ReportExecutionLogQuery(authToken.Tenant);
-                reportExecutionLogQuery.SendReportToBackground(reportId, authToken.Tenant);
-
-                return Request.CreateResponse(HttpStatusCode.OK, "OK");
-            }
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
     }
 }
