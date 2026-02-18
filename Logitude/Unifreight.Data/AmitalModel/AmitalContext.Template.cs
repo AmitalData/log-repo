@@ -236,7 +236,7 @@ namespace Unifreight.Data.AmitalModel
             #region CCUACCSUP
 
             modelBuilder.Entity<CCUACCSUP>()
-                .HasKey(p => new { p.TENANT, p.FILENO, p.LINENO })
+                .HasKey(p => new { p.FILENO, p.LINENO })
                 .ToTable("CCUACCSUP", "AMITESTM");
             // Properties:
             modelBuilder.Entity<CCUACCSUP>()
@@ -4795,10 +4795,10 @@ namespace Unifreight.Data.AmitalModel
                     .HasColumnName(@"LINE_COUNTER")
                     .HasColumnType("int");
             modelBuilder.Entity<CFIMSVLINE>()
-                .Property(p => p.PROTESTREMARK)
-                .HasColumnName(@"PROTEST_REMARK")
-                .HasMaxLength(255)
-                .HasColumnType("varchar2");
+.Property(p => p.PROTESTREMARK)
+.HasColumnName(@"PROTEST_REMARK")
+.HasMaxLength(255)
+.HasColumnType("varchar2");
             modelBuilder.Entity<CFIMSVLINE>()
             .Property(p => p.MAKATREMARK)
             .HasColumnName(@"MAKAT_REMARK")
@@ -4809,17 +4809,6 @@ namespace Unifreight.Data.AmitalModel
         .HasColumnName(@"PRAT_MEHES2")
         .HasMaxLength(11)
         .HasColumnType("varchar2");
-            modelBuilder.Entity<CFIMSVLINE>()
-    .Property(p => p.WEIGHT)
-        .HasColumnName(@"WEIGHT")
-        .HasColumnType("decimal")
-        .HasPrecision(14, 4);
-
-            modelBuilder.Entity<CFIMSVLINE>()
-                .Property(p => p.WEIGHT_UNIT)
-                    .HasColumnName(@"WEIGHT_UNIT")
-                    .HasMaxLength(32)
-                    .HasColumnType("varchar2");
 
             #endregion
 
@@ -11239,7 +11228,7 @@ namespace Unifreight.Data.AmitalModel
             #region GGGQ
 
             modelBuilder.Entity<GGGQ>()
-                .HasKey(p => new { p.TENANT, p.QUEID })
+                .HasKey(p => new { p.QUEID })
                 .ToTable("GGGQ", "AMITESTM");
             // Properties:
             modelBuilder.Entity<GGGQ>()
@@ -11410,7 +11399,7 @@ namespace Unifreight.Data.AmitalModel
             #region GGGQC
 
             modelBuilder.Entity<GGGQC>()
-                .HasKey(p => new { p.TENANT, p.QUEID, p.FIELDID })
+                .HasKey(p => new { p.QUEID, p.FIELDID })
                 .ToTable("GGGQC", "AMITESTM");
             // Properties:
             modelBuilder.Entity<GGGQC>()
@@ -11437,7 +11426,7 @@ namespace Unifreight.Data.AmitalModel
             #region CCUMSHGR
 
             modelBuilder.Entity<CCUMSHGR>()
-                .HasKey(p => new { p.TENANT, p.FILENO, p.LINENO })
+                .HasKey(p => new { p.FILENO, p.LINENO })
                 .ToTable("CCUMSHGR", "AMITESTM");
             // Properties:
             modelBuilder.Entity<CCUMSHGR>()
@@ -11524,12 +11513,12 @@ namespace Unifreight.Data.AmitalModel
                 .Property(p => p.DESCOFGOODS2)
                     .HasColumnName(@"DESC_OF_GOODS2")
                     .HasMaxLength(30)
-                    .HasColumnType("nvarchar");
+                    .HasColumnType("varchar");
             modelBuilder.Entity<CCUMSHGR>()
                 .Property(p => p.DESCOFGOODS3)
                     .HasColumnName(@"DESC_OF_GOODS3")
                     .HasMaxLength(30)
-                    .HasColumnType("nvarchar");
+                    .HasColumnType("varchar");
             modelBuilder.Entity<CCUMSHGR>()
                 .Property(p => p.CARRIERID)
                     .HasColumnName(@"CARRIER_ID")
@@ -11624,7 +11613,7 @@ namespace Unifreight.Data.AmitalModel
             #region CCUPAYHAND
 
             modelBuilder.Entity<CCUPAYHAND>()
-                .HasKey(p => new { p.TENANT, p.FILENO })
+                .HasKey(p => p.FILENO)
                 .ToTable("CCUPAYHAND", "AMITESTM");
             // Properties:
             modelBuilder.Entity<CCUPAYHAND>()
@@ -11701,12 +11690,12 @@ namespace Unifreight.Data.AmitalModel
                 .Property(p => p.IMPORTERNAME)
                     .HasColumnName(@"IMPORTER_NAME")
                     .HasMaxLength(55)
-                    .HasColumnType("nvarchar");
+                    .HasColumnType("varchar");
             modelBuilder.Entity<CCUPAYHAND>()
                 .Property(p => p.TRANSIMPORTERNAME)
                     .HasColumnName(@"TRANS_IMPORTER_NAME")
                     .HasMaxLength(55)
-                    .HasColumnType("nvarchar");
+                    .HasColumnType("varchar");
             modelBuilder.Entity<CCUPAYHAND>()
                 .Property(p => p.BONDEDNAME)
                     .HasColumnName(@"BONDED_NAME")
@@ -11727,7 +11716,7 @@ namespace Unifreight.Data.AmitalModel
             #region CCUSUPITEM
 
             modelBuilder.Entity<CCUSUPITEM>()
-                .HasKey(p => new { p.TENANT, p.FILENO, p.ACCLINENO, p.LINENO })
+                .HasKey(p => new { p.FILENO, p.ACCLINENO, p.LINENO })
                 .ToTable("CCUSUPITEMS", "AMITESTM");
             // Properties:
             modelBuilder.Entity<CCUSUPITEM>()
@@ -11968,7 +11957,7 @@ namespace Unifreight.Data.AmitalModel
             #region CCUCRREQ
 
             modelBuilder.Entity<CCUCRREQ>()
-                .HasKey(p => new { p.TENANT, p.ACCLINENO, p.ENTNAME, p.FILENO, p.ITEMLINE, p.LINENO })
+                .HasKey(p => new { p.ACCLINENO, p.ENTNAME, p.FILENO, p.ITEMLINE, p.LINENO })
                 .ToTable("CCUCRREQ", "AMITESTM");
             // Properties:
             modelBuilder.Entity<CCUCRREQ>()
@@ -12078,7 +12067,7 @@ namespace Unifreight.Data.AmitalModel
              #region CCUCUSTITEM
 
             modelBuilder.Entity<CCUCUSTITEM>()
-                .HasKey(p => new { p.TENANT, p.FILENO, p.LINENO })
+                .HasKey(p => new { p.FILENO, p.LINENO })
                 .ToTable("CCUCUSTITEMS", "AMITESTM");
             // Properties:
             modelBuilder.Entity<CCUCUSTITEM>()
@@ -12346,7 +12335,7 @@ namespace Unifreight.Data.AmitalModel
             #region CCUPAYLINEF
 
             modelBuilder.Entity<CCUPAYLINEF>()
-                .HasKey(p => new { p.TENANT, p.FILENO, p.LINENO })
+                .HasKey(p => new { p.FILENO, p.LINENO })
                 .ToTable("CCUPAYLINEF", "AMITESTM");
             // Properties:
             modelBuilder.Entity<CCUPAYLINEF>()
@@ -12430,7 +12419,7 @@ namespace Unifreight.Data.AmitalModel
             #region CCUTAX
 
             modelBuilder.Entity<CCUTAX>()
-                .HasKey(p => new { p.TENANT, p.FILENO, p.LINENO })
+                .HasKey(p => new { p.FILENO, p.LINENO })
                 .ToTable("CCUTAX", "AMITESTM");
             // Properties:
             modelBuilder.Entity<CCUTAX>()
@@ -12515,7 +12504,7 @@ namespace Unifreight.Data.AmitalModel
             #region CCUFILEM
 
             modelBuilder.Entity<CCUFILEM>()
-                .HasKey(p => new { p.TENANT, p.FILENO })
+                .HasKey(p => p.FILENO)
                 .ToTable("CCUFILEM", "AMITESTM");
             // Properties:
             modelBuilder.Entity<CCUFILEM>()
@@ -12915,7 +12904,7 @@ namespace Unifreight.Data.AmitalModel
             #region CCUTRANSPVAL
 
             modelBuilder.Entity<CCUTRANSPVAL>()
-                .HasKey(p => new { p.TENANT, p.FILENO, p.LINENO })
+                .HasKey(p => new { p.FILENO, p.LINENO })
                 .ToTable("CCUTRANSPVAL", "AMITESTM");
             // Properties:
             modelBuilder.Entity<CCUTRANSPVAL>()
@@ -12954,7 +12943,7 @@ namespace Unifreight.Data.AmitalModel
             #region CCUMESSAGE
 
             modelBuilder.Entity<CCUMESSAGE>()
-                .HasKey(p => new { p.TENANT, p.FILENO, p.LINENO })
+                .HasKey(p => new { p.FILENO, p.LINENO })
                 .ToTable("CCUMESSAGE", "AMITESTM");
             // Properties:
             modelBuilder.Entity<CCUMESSAGE>()
@@ -13027,7 +13016,7 @@ namespace Unifreight.Data.AmitalModel
             #region CCUCARL
 
             modelBuilder.Entity<CCUCARL>()
-                .HasKey(p => new { p.TENANT, p.COUNTER, p.FILENO, p.LINENO })
+                .HasKey(p => new { p.COUNTER, p.FILENO, p.LINENO })
                 .ToTable("CCUCARL", "AMITESTM");
             // Properties:
             modelBuilder.Entity<CCUCARL>()
@@ -13127,7 +13116,7 @@ namespace Unifreight.Data.AmitalModel
              #region CCUTSRUFOT
 
             modelBuilder.Entity<CCUTSRUFOT>()
-                .HasKey(p => new { p.TENANT, p.FILENO, p.LINENO })
+                .HasKey(p => new { p.FILENO, p.LINENO })
                 .ToTable("CCUTSRUFOT", "AMITESTM");
             // Properties:
             modelBuilder.Entity<CCUTSRUFOT>()
@@ -13162,7 +13151,7 @@ namespace Unifreight.Data.AmitalModel
             #region CCUCAR
 
             modelBuilder.Entity<CCUCAR>()
-                .HasKey(p => new { p.TENANT, p.FILENO, p.LINENO })
+                .HasKey(p => new { p.FILENO, p.LINENO })
                 .ToTable("CCUCAR", "AMITESTM");
             // Properties:
             modelBuilder.Entity<CCUCAR>()
@@ -13203,7 +13192,7 @@ namespace Unifreight.Data.AmitalModel
             #region CCUCARSC
 
             modelBuilder.Entity<CCUCARSC>()
-                .HasKey(p => new { p.TENANT, p.COUNTER, p.FILENO, p.LINENO })
+                .HasKey(p => new { p.COUNTER, p.FILENO, p.LINENO })
                 .ToTable("CCUCARSC", "AMITESTM");
             // Properties:
             modelBuilder.Entity<CCUCARSC>()
@@ -13274,7 +13263,7 @@ namespace Unifreight.Data.AmitalModel
             #region CCUSIGNUM
 
             modelBuilder.Entity<CCUSIGNUM>()
-                .HasKey(p => new { p.TENANT, p.FILENO, p.LINENOMSHGR, p.LINENOSIGN })
+                .HasKey(p => new { p.FILENO, p.LINENOMSHGR, p.LINENOSIGN })
                 .ToTable("CCUSIGNUM", "AMITESTM");
             // Properties:
             modelBuilder.Entity<CCUSIGNUM>()
@@ -13307,7 +13296,7 @@ namespace Unifreight.Data.AmitalModel
             #region CCUSUPITEMSI
 
             modelBuilder.Entity<CCUSUPITEMSI>()
-                .HasKey(p => new { p.TENANT, p.ACCLINENO, p.FILENO, p.LINEID, p.LINENO, p.SICOUNTER })
+                .HasKey(p => new { p.ACCLINENO, p.FILENO, p.LINEID, p.LINENO, p.SICOUNTER })
                 .ToTable("CCUSUPITEMSI", "AMITESTM");
             // Properties:
             modelBuilder.Entity<CCUSUPITEMSI>()
@@ -13350,7 +13339,7 @@ namespace Unifreight.Data.AmitalModel
             #region YCULTASK
 
             modelBuilder.Entity<YCULTASK>()
-                .HasKey(p => new { p.TENANT, p.TASKID })
+                .HasKey(p => new { p.TASKID })
                 .ToTable("YCULTASK", "AMITESTM");
             // Properties:
             modelBuilder.Entity<YCULTASK>()

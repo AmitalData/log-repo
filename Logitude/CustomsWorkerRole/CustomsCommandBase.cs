@@ -101,9 +101,8 @@ namespace CustomsWorkerRole
                 myClass = _QueueNameOverride;
             }
             className = myClass;
-            int tenantConfig = SettingUtil.GetTenantDBFromConfig();
-            var customsEnvironmentSettingQueryService = new CustomsEnvironmentSettingQueryService(tenantConfig);
-            var customsEnvironmentSettingPM = customsEnvironmentSettingQueryService.GetEnvironmentSettingPM(tenantConfig) ?? new CustomsEnvironmentSettingPM();
+            var customsEnvironmentSettingQueryService = new CustomsEnvironmentSettingQueryService(1);
+            var customsEnvironmentSettingPM = customsEnvironmentSettingQueryService.GetEnvironmentSettingPM() ?? new CustomsEnvironmentSettingPM();
             if (customsEnvironmentSettingPM.UseRabbitMQ)
             {
                 base.WorkerQueueType = WorkerQueueType.RabbitMQ;
@@ -139,8 +138,8 @@ namespace CustomsWorkerRole
                 //RoleEnvironment.Changing += RoleEnvironmentChanging;
             }
             else
-            {   
-				_CustomDbQueueService = new CustomDbQueueService(myClass, SettingUtil.GetTenantDBFromConfig(),queueDefinitionCode: this.BatchServiceCode);
+            {
+				_CustomDbQueueService = new CustomDbQueueService(myClass, SettingUtil.GetTenantDBFromConfig());
                 
             }
 

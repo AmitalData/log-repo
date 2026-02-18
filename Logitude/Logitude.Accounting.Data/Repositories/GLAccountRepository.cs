@@ -1,20 +1,23 @@
  
-using Logitude.Accounting.Data.DataContract;
-using Logitude.Accounting.Data.EntityKeys;
-using Logitude.Accounting.Data.EntityPOCOs;
-using Logitude.Server.Tools;
-using System.Data.Entity.Infrastructure;
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Simplog.Data.InvoiceModel.EntityPOCOs;
-using System.Runtime.Remoting.Contexts;
-using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
-using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
-using System.Diagnostics;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Accounting.Data.EntityKeys;
+using Simplog.Server.Infrastructure;
+using System.Diagnostics;
+using Simplog.Data.CommonDataModel;
+using Logitude.Server.Tools;
+using Logitude.Accounting.Data.DataContract;
+using System.Data.Entity.Infrastructure;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
+using System.Runtime.Remoting.Contexts;
+using System.Data.Entity;
 
 namespace Logitude.Accounting.Data.Repositories
 {
@@ -304,12 +307,12 @@ namespace Logitude.Accounting.Data.Repositories
 
         public IQueryable<string> GetQAccIdByAcountIdTypeCategories(int tenant, string AccountId,
              string Category1, string Category2, string Category3, string Category4, string Category5, string gLAccountType, string chartOfAccountsId,
-             string ChartOfAccountsTypeCode, string salesmanId, bool includeControlAccount, string collectorId, int? securityLevel, List<string> listGLAccounts,string fromGLAccountDisplayNumber, string toGLAccountDisplayNumber)
+             string ChartOfAccountsTypeCode, string salesmanId, bool includeControlAccount, string collectorId, int? securityLevel)
         {
             return
             this
                 .GetByAcountIdTypeCategories(tenant, AccountId, gLAccountType, chartOfAccountsId,
-            Category1, Category2, Category3, Category4, Category5, ChartOfAccountsTypeCode, salesmanId, includeControlAccount, securityLevel, collectorId, listGLAccounts, fromGLAccountDisplayNumber, toGLAccountDisplayNumber)
+            Category1, Category2, Category3, Category4, Category5, ChartOfAccountsTypeCode, salesmanId, includeControlAccount, securityLevel, collectorId)
             .Select(a => a.Id);
 
         }
@@ -434,53 +437,21 @@ namespace Logitude.Accounting.Data.Repositories
 
         public IQueryable<GLAccount> GetByAcountIdTypeCategories(int tenant, string AccountId, string gLAccountType, string chartOfAccountsId,
             string Category1, string Category2, string Category3, string Category4, string Category5,
-            string ChartOfAccountsTypeCode, string salesmanId, bool includeControlAccount, int? securityLevel,string collectorId,List<string> listGLAccounts,string fromGLAccountDisplayNumber, string toGLAccountDisplayNumber)
+            string ChartOfAccountsTypeCode, string salesmanId, bool includeControlAccount, int? securityLevel,string collectorId)
         {
             IQueryable<GLAccount> q;
-            HashSet<string> idSet = new HashSet<string>();
-
-            q = (from a in context.GLAccounts
-                 where a.Tenant == tenant
-                 select a);
-
             if (!string.IsNullOrWhiteSpace(AccountId))
-            {
-                idSet.Add(AccountId);
-            }
-            if (listGLAccounts != null && listGLAccounts.Count > 0)
-            {
-                foreach (var id in listGLAccounts)
-                {
-                    idSet.Add(id);
-                }
-            }
-
-            if (idSet.Count > 0)
             {
                 q = (from a in context.GLAccounts
                      where a.Tenant == tenant
-                     where idSet.Contains(a.Id)
+                     where a.Id == AccountId
                      select a);
             }
-            if (!string.IsNullOrWhiteSpace(toGLAccountDisplayNumber) && !string.IsNullOrWhiteSpace(fromGLAccountDisplayNumber))
+            else
             {
-                if (int.TryParse(fromGLAccountDisplayNumber, out int fromNum) && int.TryParse(toGLAccountDisplayNumber, out int toNum))
-                {
-                    q = q.AsEnumerable()
-                             .Where(g =>
-                             {
-                               
-                                 var numericPart = g.DisplayNumber?
-                                     .Split(new[] { '\\', '/' })[0];
-                                 if (int.TryParse(numericPart, out int num))
-                                 {
-                                     return num >= fromNum && num <= toNum;
-                                 }
-                                 return false;
-                             })
-                             .OrderBy(r => r.DisplayNumber)
-                             .AsQueryable();
-                }
+                q = (from a in context.GLAccounts
+                     where a.Tenant == tenant
+                     select a);
             }
             if (!includeControlAccount)
             {
@@ -516,10 +487,8 @@ namespace Logitude.Accounting.Data.Repositories
             }
             if (!string.IsNullOrWhiteSpace(ChartOfAccountsTypeCode))
             {
-                var codes = ChartOfAccountsTypeCode.Split(',').ToList();
-                q = q.Where(r => codes.Contains(r.ChartOfAccountsTypeCode));
-            }           
-
+                q = q.Where(r => r.ChartOfAccountsTypeCode == ChartOfAccountsTypeCode);
+            }
             if (!string.IsNullOrWhiteSpace(collectorId))
             {
                 q = q.Where(r => r.CollectorId == collectorId);
@@ -840,7 +809,7 @@ namespace Logitude.Accounting.Data.Repositories
 
         public List<GLAccount> GetByRevaluationEnabled_OtherParams(bool? revaluationEnabled, string chartOfAccountsTypeCode, string chartOfAccountsId, string accountTypeCode, string gLAccountId, string accountingCurrencyId, int tenant)
         {
-            if (revaluationEnabled == true && String.IsNullOrEmpty(chartOfAccountsId))
+            if (revaluationEnabled.HasValue && revaluationEnabled.Value)
             {
                 List<GLAccount> rv1;
                 IQueryable<GLAccount> rec1 =
@@ -870,7 +839,6 @@ namespace Logitude.Accounting.Data.Repositories
                                     && (record.Id == gLAccountId || String.IsNullOrEmpty(gLAccountId)
                                     && (record.CurrencyId != accountingCurrencyId || (record.IsMultiCurrency.HasValue && record.IsMultiCurrency.Value) || String.IsNullOrEmpty(accountingCurrencyId))
                                     && (!record.IsControlAccount.HasValue || record.IsControlAccount == false)
-                                    && (revaluationEnabled != true || record.RevaluationEnabled == true) 
                )
                  select record;
                 if (rec2 != null)
@@ -1353,19 +1321,6 @@ namespace Logitude.Accounting.Data.Repositories
             }
         }
 
-        public decimal GetTotalOpenChequesInLocalCurById(String glaccountId, int tenant)
-        {                           
-           var now = DateTime.UtcNow;
-           
-           return context.AllARPaymentChequesViews
-               .Where(a => a.AccountId == glaccountId
-                        && a.Tenant == tenant
-                        && a.Notes != "החזרת שיק ללקוח"
-                        && a.ValueDate <= now)
-               .Sum(a => (decimal?)a.LocalAmountCredit) ?? 0m;        
-            
-        }
-
         public List<GLAccount> GetByDisplayNumberEnding(String displayNumberEnding, int tenant)
         {
             if (String.IsNullOrEmpty(displayNumberEnding))
@@ -1712,21 +1667,9 @@ namespace Logitude.Accounting.Data.Repositories
 
             return accounts;
         }
-
-		public List<GLAccount> GetGLAccountByTenantAndCustomerDebtNotification(int tenant)
-		{
-			List<GLAccount> accounts = ((from account in context.GLAccounts
-										 join notification in context.CustomerDebtNotifications 
-                                         on new { account.Tenant, Id = account.Id} equals new { notification.Tenant, Id = notification.AccountId } into moreDataJoin
-										 from joinedNotification in moreDataJoin.DefaultIfEmpty()
-										 where account.Tenant == tenant && account.Inactive == false  && account.AccountTypeCode == "2" && joinedNotification == null
-										 select account).ToList());
-
-			return accounts;
-		}
     }
 
-		public class GLAccountAndMoreDTO//: GLAccount
+    public class GLAccountAndMoreDTO//: GLAccount
     {
         
         public string Id { get; set; }

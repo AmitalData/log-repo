@@ -23,7 +23,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         CustomsShipperRepository repository;
 
-
+        public CustomsShipperQuery()
+        {
+            repository = new CustomsShipperRepository();
+        }
 
         public CustomsShipperQuery(int tenant)
         {
