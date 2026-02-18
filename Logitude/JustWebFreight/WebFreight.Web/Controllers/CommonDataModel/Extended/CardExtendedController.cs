@@ -103,14 +103,9 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
             {
                 gLAccountCardsDataPM = GetGLAccountCardsDataForSingleCurrencyGLAccount();
             }
-            if (gLAccountCardsDataPM == null)
-            {
-                gLAccountCardsDataPM = GetSingleGLAccountCardsData(glaccount.CardsDataId);
-
-            }
+          
             if (gLAccountCardsDataPM != null)
             {
-                
                 ApplyChangesOnGLAccounts();
                 UpdateGLAccountCardsData(gLAccountCardsDataPM);
               
