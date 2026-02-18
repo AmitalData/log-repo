@@ -27,7 +27,7 @@
   </Column>
   <Column
     Name="EnglishName"
-    Type="varchar"
+    Type="nvarchar"
     Size="40">
     <Constraints
       Nullable="false" />

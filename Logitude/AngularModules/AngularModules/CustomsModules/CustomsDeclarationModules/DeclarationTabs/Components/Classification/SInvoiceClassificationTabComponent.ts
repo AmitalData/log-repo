@@ -178,10 +178,7 @@ export class SInvoiceClassificationTabComponent extends BaseComponent implements
             var displayOnlyCheckResult: DisplayOnlyCheckResult = response.Result;
             this.IsDisplayOnly = displayOnlyCheckResult.IsDisplayOnly;
             if (this.IsDisplayOnly) {
-                const prefix = (TextCodeTranslator.Translate("Customs.Declaration.O.DisplayOnly") || "").trim();
-                const msg = (displayOnlyCheckResult.DisplayOnlyMessage || "").trim();
-
-                this.DisplayOnlyMessage = msg.startsWith(prefix) ? msg : (prefix + msg);
+                this.DisplayOnlyMessage = TextCodeTranslator.Translate("Customs.Declaration.O.DisplayOnly") + displayOnlyCheckResult.DisplayOnlyMessage;
             }
            
             

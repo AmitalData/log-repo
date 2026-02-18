@@ -64,8 +64,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         MaxSISendInteractive, 
 	         CourierDocToken, 
 	         ForbiddenSigns, 
-	         CB_LastUpdateDate, 
-	         CustomsBookToken,
+	         CB_LastUpdateDate,
 	      }
 
 
@@ -111,8 +110,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         MaxSISendInteractive, 
 	         CourierDocToken, 
 	         ForbiddenSigns, 
-	         CB_LastUpdateDate, 
-	         CustomsBookToken,
+	         CB_LastUpdateDate,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -299,11 +297,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CB_LastUpdateDate))
             {
 				entityPOCO.CB_LastUpdateDate = entityPM.CB_LastUpdateDate;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomsBookToken))
-            {
-				entityPOCO.CustomsBookToken = entityPM.CustomsBookToken;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -497,11 +490,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.CB_LastUpdateDate = entityPOCO.CB_LastUpdateDate;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CustomsBookToken))
-            {
-					entityPM.CustomsBookToken = entityPOCO.CustomsBookToken;
-            }
-
 		}
 
 		public void PMToOldPM(CustomsSettingPM entityPM, CustomsSettingPM oldEntityPM)
@@ -686,11 +674,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CB_LastUpdateDate))
             {
                 oldEntityPM.CB_LastUpdateDate = entityPM.CB_LastUpdateDate;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomsBookToken))
-            {
-                oldEntityPM.CustomsBookToken = entityPM.CustomsBookToken;
             }
 			
 		}

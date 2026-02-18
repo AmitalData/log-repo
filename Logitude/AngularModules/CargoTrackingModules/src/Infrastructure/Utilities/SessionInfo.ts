@@ -30,6 +30,10 @@ export class SessionInfo{
     public static LoggedUserPM: any;
     public static LoggedContact: any;
     
+    private static isAdmin: string;
+    public static get IsAdmin(): string { return this.isAdmin; }
+    public static set IsAdmin(newValue: string) { this.isAdmin = newValue; }
+
     private static displayCookies: boolean;
     public static get DisplayCookies(): boolean { return this.displayCookies; }
     public static set DisplayCookies(newValue: boolean) { this.displayCookies = newValue; }
