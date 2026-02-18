@@ -5517,7 +5517,7 @@
     DisplayInList="true"
     IsCustomFilter="false"
     IsListFilter="false"
-    Operator="&quot;StartsWith&quot;"
+    Operator="&quot;Equals&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
