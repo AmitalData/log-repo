@@ -21,7 +21,6 @@ using System.Diagnostics;
 using CommunicationWorkerRole;
 using System.IO;
 using Logitude.CustomsMessaging.Dca;
-using System.Reflection;
 
 namespace AmitalCustomsWindowsService
 {
@@ -186,7 +185,6 @@ namespace AmitalCustomsWindowsService
             return _Workers[iWorker].MyType + ":" + iWorker.ToString();
         }
 
-        
         private void LoadWorkerFromDB()
         {
             if (!_AllWorkerLoaded)
@@ -194,8 +192,8 @@ namespace AmitalCustomsWindowsService
                 _Workers = new List<IWorkerBaseWorkOnce>();
                 _Threads = new List<Thread>(_Workers.Count);
                 List<BatchServicesDefinitionPM> BatchServicesDefinitions = GetBatchServicesDefinitions();
-             
                 LoadWorkerFromDB(BatchServicesDefinitions);
+
 
                 for (int iWorker = 0; iWorker < _Workers.Count; iWorker++)
                 {
@@ -248,12 +246,9 @@ namespace AmitalCustomsWindowsService
             listOfWorkerEntryPoint.Add(new CustomsHSMSignWR());
             listOfWorkerEntryPoint.Add(new ReportExecutionLogWR());
             listOfWorkerEntryPoint.Add(new SyncRecordsCCUTableWR());
-			listOfWorkerEntryPoint.Add(new DocumentAzureQueueWR());
-			listOfWorkerEntryPoint.Add(new DocumentSFTPAnalyzeWR());
-            listOfWorkerEntryPoint.Add(new SiiStatusAzureQueueWR());
+			listOfWorkerEntryPoint.Add(new DocumentAzureQueueWR());      
 
-
-            bool testCustomsSchedularWR = false;
+			bool testCustomsSchedularWR = false;
             if (testCustomsSchedularWR)
             {
                 listOfWorkerEntryPoint = new List<Logitude.Server.Tools.WorkerEntryPoint>();
@@ -299,7 +294,6 @@ namespace AmitalCustomsWindowsService
                     }
                 }
             }
-        
             ////FROM CONFIG !!! 
             SingletonFTPCommunicationLogQueue(listOfWorkerEntryPoint);
         }

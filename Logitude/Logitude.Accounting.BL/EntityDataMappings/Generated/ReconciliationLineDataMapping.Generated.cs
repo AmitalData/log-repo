@@ -78,8 +78,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         TransactionAmount, 
 	         ExcelTransactionAmount, 
 	         RefDate, 
-             CurrencyRate,
-        }
+	         CurrencyRate,
+	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
         List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
@@ -196,6 +196,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ReconciledWithTransactionId))
             {
 					entityPM.ReconciledWithTransactionId = entityPOCO.ReconciledWithTransactionId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CurrencyRate))
+            {
+					entityPM.CurrencyRate = entityPOCO.CurrencyRate;
             }
 
 		}

@@ -323,7 +323,7 @@ namespace Logitude.Accounting.Data
 				
 			modelBuilder.Entity<CashBook>().Property(x => x.TotalAmount).HasPrecision(16, 2);
 				
-			modelBuilder.Entity<CustomerDebtNotification>().Property(x => x.DebtLevelAmount).HasPrecision(10, 3);
+			modelBuilder.Entity<CustomerDebtNotification>().Property(x => x.DebtLevelAmount).HasPrecision(6, 3);
 				
 			modelBuilder.Entity<ExternalPageAdditionalData>().Property(x => x.LastPageCloseBalance).HasPrecision(16, 2);
 				

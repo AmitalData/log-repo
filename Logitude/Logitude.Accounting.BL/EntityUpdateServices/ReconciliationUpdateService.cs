@@ -19,8 +19,7 @@ using Logitude.BL.Security;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
-using Simplog.Data.CommonDataModel.EntityPOCOs; 
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.InvoiceModel;
@@ -30,11 +29,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.ServiceModel.DomainServices.Server;
-using GLAccountQueryService = Logitude.Accounting.BL.EntityQueryServices.GLAccountQueryService;
-using JournalQueryService = Logitude.Accounting.BL.EntityQueryServices.JournalQueryService;
-using LedgerTransaction = Logitude.Accounting.Data.EntityPOCOs.LedgerTransaction;
-using Logitude.Accounting.Data.EntityListQueryServices;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 {
@@ -226,8 +220,10 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                                     break;
                             }
                         }
+
                     }
                 }
+
 
 
 
@@ -248,8 +244,6 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                         }
                     }
                 }
-
-
 
                 if (entityPM.Number == "get")
                 {
@@ -486,8 +480,9 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             string createdByUserId = entityPM.CreatedByUserId;
 
             var gLAccountRecocileDataQueryService = new GLAccountRecocileDataQueryService(this.MainContext as IAccountingContext);
+            var pm = gLAccountRecocileDataQueryService.GetSingle(accountId, false, false);
             ChangeSetOperation changeSetOperation = ChangeSetOperation.Insert;
-            if (gLAccountRecocileDataQueryService.Exists(accountId, tenant))
+            if (pm != null)
             {
                 changeSetOperation = ChangeSetOperation.Update;
             }
@@ -549,9 +544,9 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     {
                         if (entityPM.ReconciliationLines.Count == 0)
                         {
-                            var reconciliationLineQueryService = new ReconciliationLineQueryService(this.MainContext as IAccountingContext);
-                            var linePMs = reconciliationLineQueryService.GetLinePMsByReconciliationIdAndTenant(entityPM.Id, entityPM.Tenant);
-                            entityPM.ReconciliationLines.AddRange(linePMs);
+                            var reconciliationQueryService = new ReconciliationQueryService(this.MainContext as IAccountingContext);
+                            var pm = reconciliationQueryService.GetSingle(entityPM.Id, true, false);
+                            entityPM.ReconciliationLines.AddRange(pm.ReconciliationLines);
                         }
                     }
                     UpdateLedgerTransaction(entityPM);
@@ -703,7 +698,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             ledgerTransactionUpdateService._CancelledAction = this._CancelledAction;
             ledgerTransactionUpdateService.UpdateMulti(LedgerTransactionPMsUpdated, new List<LedgerTransactionPM>(), entityPM, false);
 
-            if (this._CancelledAction || !updateGLAccountAgingDataUsingWR)
+            bool getNewContextWhileStreamingLedger = true;
+            if (getNewContextWhileStreamingLedger && (this._CancelledAction || !updateGLAccountAgingDataUsingWR))
             {
                 UpdateGLaccountAgingData(entityPM);
             }
