@@ -109,8 +109,8 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
         {
             try
             {
-                var customsEnvironmentSettingQueryService = new CustomsEnvironmentSettingQueryService(tenant);
-                var customsEnvironmentSettingPM = customsEnvironmentSettingQueryService.GetEnvironmentSettingPM(tenant) ?? new CustomsEnvironmentSettingPM();
+                var customsEnvironmentSettingQueryService = new CustomsEnvironmentSettingQueryService(1);
+                var customsEnvironmentSettingPM = customsEnvironmentSettingQueryService.GetEnvironmentSettingPM() ?? new CustomsEnvironmentSettingPM();
                 bool UseRabbitMQ = customsEnvironmentSettingPM.UseRabbitMQ;
 
                 CustomDbQueueService.SendCommunicationLogMessageToQueue(
@@ -272,8 +272,8 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
             bool useQueueMessage = false;
             if (useQueueMessage)
             {
-                var customsEnvironmentSettingQueryService = new CustomsEnvironmentSettingQueryService(tenant);
-                var customsEnvironmentSettingPM = customsEnvironmentSettingQueryService.GetEnvironmentSettingPM(tenant) ?? new CustomsEnvironmentSettingPM();
+                var customsEnvironmentSettingQueryService = new CustomsEnvironmentSettingQueryService(1);
+                var customsEnvironmentSettingPM = customsEnvironmentSettingQueryService.GetEnvironmentSettingPM() ?? new CustomsEnvironmentSettingPM();
                 bool UseRabbitMQ = customsEnvironmentSettingPM.UseRabbitMQ;//currInterfaceTenantDefinition.UseRabbitMQ;
 
                 CustomDbQueueService.SendCommunicationLogMessageToQueue(commLog.QueueName, commLog.Id, tenant, UseRabbitMQ);

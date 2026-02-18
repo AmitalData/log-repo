@@ -1,13 +1,36 @@
 /// <reference types="cypress" />
 
+
+
 export class LoginComp {
-    
-    static login() {
-        cy.visit(Cypress.env("URL"))
-        cy.get('#Email').clear().type(Cypress.env("Email"), { delay: 50 })
-        cy.get('#Email').invoke('val').should('eq', Cypress.env("Email"))
-        cy.get('#Password').clear().type(Cypress.env("Password"))
-        cy.get('#cmdLogin').click()
-        cy.url().should('not.include', '/login')
-    }
 }
+
+
+  it('Login Successfully', () => {
+
+
+ //cy.visit('http://localhost:4200/')
+ 
+  //cy.visit('https://test.logitudeworld.com/test')
+  cy.visit(Cypress.env("URL"))
+
+  cy.get('#Email').type(Cypress.env("Email"), { delay: 50 }).should('have.value', 'protractor2@test.com')
+
+  cy.get('#Password').type(Cypress.env("Password"))
+  cy.get('#cmdLogin').click()
+
+
+
+ cy.server();
+   //cy.route('test/api/ObjectTableLastUpdate/GetLastTableUpdateDate/?tenant=1102').as('LoadDataCompleted');
+   cy.route('**/ObjectTableLastUpdate/**').as('LoadDataCompleted');
+
+ cy.wait('@LoadDataCompleted');
+
+
+
+
+})
+
+
+

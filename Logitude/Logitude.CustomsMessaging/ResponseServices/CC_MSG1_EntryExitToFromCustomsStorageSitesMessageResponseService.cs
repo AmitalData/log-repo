@@ -56,7 +56,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 var thirdCargoID = customResponse.ReportingDetails.cargoIdentifier.cargoIdentifierKey3;
 
                 var declarationQueryService = new DeclarationQueryService(myDbContext);
-                var declaration = declarationQueryService.GetDeclarationByConsignment(requestParams.Tenant, cargoTypeCode.ToString(), manifestNumber, secondCargoID, thirdCargoID);
+                var declaration = declarationQueryService.GetDeclarationByConsignment(cargoTypeCode.ToString(), manifestNumber, secondCargoID, thirdCargoID);
                 if (declaration != null && declaration.Id != null)
                 {
                     this.MyResponseData.UserMessage = " התקבל מסר יציאה ממסוף " + declaration.CustomFileNo;
@@ -137,7 +137,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             try
             {
 
-                UserRepository userRepository = new UserRepository(Tanent);
+                UserRepository userRepository = new UserRepository();
                 var user = userRepository.GetSingleUserByCode("MEHES", Tanent, true);
                 string loggingUserId="";
                 if (user != null)

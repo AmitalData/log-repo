@@ -118,8 +118,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 			var invoicesLines = arInvoiceRepository.GetControlForInvoiceLinesDataView(tenant);
 			invoicesLines = this.ApplyCustomFilters(reportQueryOperations, invoicesLines, tenant);
 			invoiceLines = (from a in invoicesLines
-                            orderby a.InvoiceDate
-                            select new InvoiceLine()
+							select new InvoiceLine()
 							{
 								InvoiceDate = a.InvoiceDate,
 								InvoiceNumber = a.InvoiceNumber,

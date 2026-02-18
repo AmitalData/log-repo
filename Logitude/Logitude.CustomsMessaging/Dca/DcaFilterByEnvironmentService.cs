@@ -92,14 +92,13 @@ namespace Logitude.CustomsMessaging.Dca
                     break;
                 case DcaFilterByEnvironment.Export:
                     sbLocal.Append(";FilterBy:Contains(_EX_)");
-                    string[] message2Take = { "_EX_", "2791" };
-                    outgoingMessage = outgoingMessage.Where(r => message2Take.Any(b => r.Filename.Contains(b)) || PrefixExportEnvironment.Any(prefix => r.Filename.ToUpper().Contains(prefix.ToUpper()))).ToList();
+                    outgoingMessage = outgoingMessage.Where(r => r.Filename.Contains("_EX_") || PrefixExportEnvironment.Any(prefix => r.Filename.ToUpper().Contains(prefix.ToUpper()))).ToList();
 
                     break;
                 case DcaFilterByEnvironment.Import:
                     sbLocal.Append(";FilterBy:!!NOT!!!Contains(_EX_)");
-                    string[] blockedParts = { "_EX_", "2281", "2791" };
-                    outgoingMessage = outgoingMessage.Where(r => !blockedParts.Any(b => r.Filename.Contains(b))).ToList();
+                    outgoingMessage = outgoingMessage.Where(r => !r.Filename.Contains("_EX_") && !r.Filename.Contains("2281")).ToList();
+
                     break;
                 default:
                     break;

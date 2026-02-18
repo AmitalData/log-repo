@@ -19,7 +19,11 @@ namespace Simplog.Data.CommonDataModel.Repositories
             commonDataContext = context;
         }
 
+        public CardExternalCodeByCurrencyRepository()
+        {
+            commonDataContext = new CommonDataContext();
 
+        }
 
         public CardExternalCodeByCurrencyRepository(int tenant)
         {

@@ -6,7 +6,7 @@
   Module="Shipment">
   <SqlScript><![CDATA[
 
-CREATE OR ALTER PROCEDURE [dbo].[usp_ComputeShipmentStatus]
+Create PROCEDURE [dbo].[usp_ComputeShipmentStatus]
 (
 	@ShipmentId varchar(15)
 )
@@ -36,9 +36,9 @@ select
 @MasterDataId = Shipments.MasterShipmentDataId,
 @ShipmentLevelCode= Shipments.ShipmentLevelCode,
 @CustomFileId = Shipments.CustomFileId,
-@ComputedStatusDate = CASE WHEN (MasterShipmentDataId IS NOT NULL) THEN CASE WHEN (ShipmentMasterDataEntityStatus.StatusWeight >= dbo.EntityStatus.StatusWeight) THEN dbo.ShipmentMasterDatas.StatusDate ELSE dbo.Shipments.StatusDate END ELSE dbo.Shipments.StatusDate END , 
+@ComputedStatusDate = CASE WHEN (MasterShipmentDataId IS NOT NULL) THEN CASE WHEN (ShipmentMasterDataEntityStatus.StatusWeight > dbo.EntityStatus.StatusWeight) THEN dbo.ShipmentMasterDatas.StatusDate ELSE dbo.Shipments.StatusDate END ELSE dbo.Shipments.StatusDate END , 
 @ShipmentDeclarationNumber =CustomsDeclarationNumber,
-@ComputedStatusId = CASE WHEN (MasterShipmentDataId IS NOT NULL) THEN CASE WHEN (ShipmentMasterDataEntityStatus.StatusWeight >= dbo.EntityStatus.StatusWeight) THEN ShipmentMasterDataEntityStatus.Id ELSE dbo.EntityStatus.Id END ELSE dbo.EntityStatus.Id END
+@ComputedStatusId = CASE WHEN (MasterShipmentDataId IS NOT NULL) THEN CASE WHEN (ShipmentMasterDataEntityStatus.StatusWeight > dbo.EntityStatus.StatusWeight) THEN ShipmentMasterDataEntityStatus.Id ELSE dbo.EntityStatus.Id END ELSE dbo.EntityStatus.Id END
 from Shipments
 LEFT OUTER JOIN   dbo.ShipmentMasterDatas ON dbo.ShipmentMasterDatas.Id = Shipments.MasterShipmentDataId 
 LEFT OUTER JOIN dbo.EntityStatus AS ShipmentMasterDataEntityStatus ON dbo.ShipmentMasterDatas.StatusId = ShipmentMasterDataEntityStatus.Id 
