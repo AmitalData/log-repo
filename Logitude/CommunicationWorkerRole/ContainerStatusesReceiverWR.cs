@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace CommunicationWorkerRole
 {
@@ -21,7 +20,7 @@ namespace CommunicationWorkerRole
                     try
                     {
                         ContainerStatusesReceiver containerStatusesReceiver = new ContainerStatusesReceiver();
-                        ProcessContainerStatusesAsync(containerStatusesReceiver).GetAwaiter().GetResult();
+                        containerStatusesReceiver.Run();
                         LogDoneItemInMemory();
                     }
                     catch (Exception e)
@@ -35,11 +34,6 @@ namespace CommunicationWorkerRole
                     Thread.Sleep(60000);
                 }
             }
-        }
-
-        private async Task ProcessContainerStatusesAsync(ContainerStatusesReceiver receiver)
-        {
-            await receiver.RunAsync();
         }
 
         public override bool OnStart()
