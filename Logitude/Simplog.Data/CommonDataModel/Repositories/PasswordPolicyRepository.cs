@@ -10,7 +10,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
     {
         ICommonDataContext commonDataContext;
 
-
+        public PasswordPolicyRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
 
         public PasswordPolicyRepository(ICommonDataContext context)
         {

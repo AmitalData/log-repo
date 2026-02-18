@@ -25,55 +25,55 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                 repository = new ARInvoicesSignedStatusRepository(tenant);
             }
 
-            public ARInvoicesSignedStatusQuery(ARInvoicesSignedStatusRepository arInvoicesSignedStatusRepository)
+            public ARInvoicesSignedStatusQuery(ARInvoicesSignedStatusRepository arInvoiceStatusRepository)
             {
-                repository = arInvoicesSignedStatusRepository;
+                repository = arInvoiceStatusRepository;
             }
 
-            public IQueryable<ARInvoicesSignedStatusPM> GetInvoicesSignedStatusPMs()
+            public IQueryable<ARInvoiceStatusPM> GetInvoiceStatusePMs()
             {
-                return from a in repository.context.ARInvoicesSignedStatuses
-                       select new ARInvoicesSignedStatusPM()
+                return from a in repository.context.ARInvoiceStatuses
+                       select new ARInvoiceStatusPM()
                        {
                            Code = a.Code,
-                           EnglishName = a.EnglishName,
+                           Name = a.Name,
                            SearchFields = a.SearchFields,
                        };
             }
 
-            public ARInvoicesSignedStatusPM GetSingleInvoicesSignedStatusPM(string code)
+            public ARInvoiceStatusPM GetSingleInvoiceStatusPM(string code)
             {
-                return (from a in repository.context.ARInvoicesSignedStatuses
+                return (from a in repository.context.ARInvoiceStatuses
                         where a.Code == code
-                        select new ARInvoicesSignedStatusPM()
+                        select new ARInvoiceStatusPM()
                         {
                             Code = a.Code,
-                            EnglishName = a.EnglishName,
+                            Name = a.Name,
                             SearchFields = a.SearchFields,
                         }).FirstOrDefault();
             }
 
 
-            public ARInvoicesSignedStatusPM GetSinglePM(string code, int tenant)
+            public ARInvoiceStatusPM GetSinglePM(string code, int tenant)
             {
-                return (from a in repository.context.ARInvoicesSignedStatuses
+                return (from a in repository.context.ARInvoiceStatuses
                         where a.Code == code
-                        select new ARInvoicesSignedStatusPM()
+                        select new ARInvoiceStatusPM()
                         {
                             Code = a.Code,
-                            EnglishName = a.EnglishName,
+                            Name = a.Name,
                             SearchFields = a.SearchFields,
                         }).FirstOrDefault();
             }
 
-            public ARInvoicesSignedStatusPM GetSinglePM(string code)
+            public ARInvoiceStatusPM GetSinglePM(string code)
             {
-                return (from a in repository.context.ARInvoicesSignedStatuses
+                return (from a in repository.context.ARInvoiceStatuses
                         where a.Code == code
-                        select new ARInvoicesSignedStatusPM()
+                        select new ARInvoiceStatusPM()
                         {
                             Code = a.Code,
-                            EnglishName = a.EnglishName,
+                            Name = a.Name,
                             SearchFields = a.SearchFields,
                         }).FirstOrDefault();
             }

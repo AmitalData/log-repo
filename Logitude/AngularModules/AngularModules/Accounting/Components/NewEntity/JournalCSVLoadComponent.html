@@ -21,7 +21,7 @@
 
     <!-- Request -->
     <div class="class-request-content" *ngIf="!HasError">
-        <table style="width: 350px;height: 120px;padding-top: 10px;">
+        <table style="width: 350px;height: 270px;padding-top: 10px;">
 
 
             <!-- Request Fields -->
@@ -38,9 +38,6 @@
                 <td style="width:60px;text-align:left">
                     <button [disabled]="!UploadButtonIsEnabled" style="width:55px;" class="Button" (click)="OpenUpLoadFile()">Upload</button>
                     <input accept=".csv,.CSV" [attr.id]="UploadFileId" type="file" [(ngModel)]="FileData" (change)="UploadFile($event)" style="display:none;width:65px" class="upload" />
-                </td>
-                <td *ngIf="JournalExampleUrl" style="padding-right: 5px;">
-                    <a [attr.href]="JournalExampleUrl" target="_blank">Download an empty example</a>
                 </td>
                 <td style="width:150px; background-color:white">
                     <div *ngIf="IsShowProgressBar" style="height:20px;border:1px solid gray;border-radius:3px">
@@ -85,7 +82,7 @@
 
 
 
-    <div *ngIf="_NewJournalPM" style="overflow:auto; height:50px;">
+    <div *ngIf="_NewJournalPM" style="overflow:auto; height:300px;">
         <table>
             <tr class="MyTR">
                 <td>
@@ -94,29 +91,11 @@
             </tr>
             <tr>
                 <td>
-                    <a *ngIf="NewJournalNumber"
+                    <a *ngIf="_NewJournalPM"
                        href="javascript:;" (click)="OpenJournal()">
-                        New Journal created: {{ NewJournalNumber }}
+                        Adjust Journal have created :{{ _NewJournalPM['JournalNumber'] }}
                     </a>
                 </td>
-            </tr>
-            <tr>
-                <td><div></div></td>
-            </tr>
-        </table>
-
-    </div>
-
-
-    <div *ngIf="_DuplicateLinesSkippedNumber > 0" style="overflow:auto; height:50px;">
-        <table>
-            <tr class="MyTR">
-                <td>
-                    <span>{{GetDuplicateLinesSkippedMessage()}}</span>
-                </td>
-            </tr>
-            <tr>
-                <td><div></div></td>
             </tr>
             <tr>
                 <td><div></div></td>

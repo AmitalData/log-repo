@@ -8,9 +8,16 @@ using Simplog.Data.ShipmentsModel.Repositories;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
+using System.Runtime.Serialization;
+using System.ServiceModel;
 using System.ServiceModel.Activation;
+using System.Text;
 using System.Transactions;
+using System.Xml;
 using Unifreight.ContainerTasks;
 using WebFreight.Web.Security;
 
@@ -20,16 +27,18 @@ namespace WebFreight.Web.WcfApi
     // NOTE: In order to launch WCF Test Client for testing this service, please select OceanInsightsWcfService.svc or OceanInsightsWcfService.svc.cs at the Solution Explorer and start debugging.
     //  ss
     [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
-    public class OceanInsightsTestWcfService : IOceanInsightsV2WcfService
+    public class OceanInsightsTestWcfService : IOceanInsightsWcfService
     {
-        public Response Insert(int Tenant, string ScacCode, string ReferenceNo, string Type, string System = null)
+        public Response Insert(int Tenant, string ScacCode, string ReferenceNo, string Type)
         {
+            //ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
             Response response = new Response();
             try
             {
                 SecurityUtility.AuthenticationOnTenant(Tenant);
                 string OIToken = LogitudeSettings.OceanInsightsToken;
+                //SecurityUtility.CheckContactFeature("Shipment", "UPDATE", entityPM.Tenant);//UPDATE//READ
                 using (TransactionScope scope = TransactionFactory.GetTransaction())
                 {
 
@@ -42,23 +51,28 @@ namespace WebFreight.Web.WcfApi
                         response.ErrorMessage = "ScacCode must have value";
                         return response;
                     }
-                
+                    //if (string.IsNullOrEmpty(ReferenceNo))
+                    //{
+                    //    response.HasError = true;
+                    //    response.ErrorMessage = "ReferenceNo # must have value";
+                    //    return response;
+                    //}
                     if (response.HasError)
                     {
                         return response;
                     }
                     OceanInsightsRequestQuery query = new OceanInsightsRequestQuery(Tenant);
-                    OceanInsightsRequestPM OceanInsightsRequestPm;
+                    OceanInsightsRequestPM OceanInsightsRequestPm;// = new OceanInsightsRequestPM();
                     if (Type == "c_id")
                     {
-                        OceanInsightsRequestPm = query.GetSinglePMByOceanInsightsByScacCodeContainerNoTenant(ScacCode, ReferenceNo, Tenant, System);
+                        OceanInsightsRequestPm = query.GetSinglePMByOceanInsightsByScacCodeContainerNoTenant(ScacCode, ReferenceNo, Tenant);
                     }
                     else
                     {
-                        OceanInsightsRequestPm = query.GetSinglePMByOceanInsightsByCareierScacBLNoTenant(ScacCode, ReferenceNo, Tenant , System);
+                        OceanInsightsRequestPm = query.GetSinglePMByOceanInsightsByCareierScacBLNoTenant(ScacCode, ReferenceNo, Tenant);
                         if (OceanInsightsRequestPm == null)
                         {
-                            OceanInsightsRequestPm = query.GetSinglePMByOceanInsightsByScacCodeContainerNoTenant(ScacCode, ReferenceNo, Tenant, System);
+                            OceanInsightsRequestPm = query.GetSinglePMByOceanInsightsByScacCodeContainerNoTenant(ScacCode, ReferenceNo, Tenant);
                         }
                     }
 
@@ -67,7 +81,7 @@ namespace WebFreight.Web.WcfApi
                     string Result = "";
                     string Status;
                     string Errors;
-                    object Temp = null;
+                    object Temp = null;//STARTMONITOR
                     if (OceanInsightsRequestPm == null)
                     {
                         OceanInsightsRequestPm = new OceanInsightsRequestPM();
@@ -86,9 +100,8 @@ namespace WebFreight.Web.WcfApi
                         OceanInsightsRequestPm.Tenant = Tenant;
                         OceanInsightsRequestPm.OceanInsigntId = Id;
                         OceanInsightsRequestPm.Type = Type;
-						OceanInsightsRequestPm.Type = System;
 
-						service.Create(OceanInsightsRequestPm);
+                        service.Create(OceanInsightsRequestPm);
 
                     }
                     response.Result = OceanInsightsRequestPm.OceanInsigntId;

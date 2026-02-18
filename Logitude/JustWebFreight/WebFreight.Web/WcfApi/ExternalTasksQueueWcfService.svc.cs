@@ -320,16 +320,10 @@ namespace WebFreight.Web.WcfApi
             try
             {
                 bool from_global = false;
-                bool convert_bool = false;
                 if (queryParams.ContainsKey("from_global"))
                 {
                     bool.TryParse(queryParams["from_global"], out from_global);
                     queryParams.Remove("from_global");
-                }
-                if (queryParams.ContainsKey("convert_bool"))
-                {
-                    bool.TryParse(queryParams["convert_bool"], out convert_bool);
-                    queryParams.Remove("convert_bool");
                 }
 
                 using (TransactionScope scope = TransactionFactory.GetTransaction())
@@ -357,7 +351,7 @@ namespace WebFreight.Web.WcfApi
                 logi_list = CFILOGIAPITask.GetLogiOcc();
                 if (queryId == "EXTERNAL_LOGIAPI")
                 {
-                    //sql_logi = JsonConvert.DeserializeObject<CFILOGIAPI>(queryParams["CFILOGIAPI"]);
+                    sql_logi = JsonConvert.DeserializeObject<CFILOGIAPI>(queryParams["CFILOGIAPI"]);
                 }
                 else
                 {
@@ -400,7 +394,6 @@ namespace WebFreight.Web.WcfApi
                 {
                     sqlQuery = sqlQuery.Replace("@CLOSE_TABLE", queryParams["CLOSE_TABLE"]);
                 }
-
                 using (SqlConnection connection = new SqlConnection())
                 {
                     if (from_global)
@@ -426,25 +419,6 @@ namespace WebFreight.Web.WcfApi
                     connection.Open();
                     using (var cmd = new SqlCommand(sqlQuery, connection))
                     {
-
-                        if (!string.IsNullOrEmpty(sql_logi.HAS_IN_OPER))
-                        {
-                            //sqlQuery = sqlQuery.Replace(sql_logi.HAS_IN_OPER, queryParams[sql_logi.HAS_IN_OPER.Substring(1)]);
-                            string in_list = queryParams[sql_logi.HAS_IN_OPER.Substring(1)].Replace("'","");
-                            var ids =  in_list.Split(',').ToList();
-
-                            // create DataTable for parameter
-                            var dt = new DataTable();
-                            dt.Columns.Add(sql_logi.HAS_IN_OPER.Substring(1), typeof(string));
-                            foreach (var id in ids) dt.Rows.Add(id);
-
-                            var p = cmd.Parameters.AddWithValue(sql_logi.HAS_IN_OPER.Substring(1), dt);
-                            p.SqlDbType = SqlDbType.Structured;
-                            p.TypeName = "dbo.StringList"; // match the type in SQL
-                            queryParams.Remove(sql_logi.HAS_IN_OPER.Substring(1));
-                            table_types(connection);
-                        }
-
                         foreach (var field in queryParams)
                         {
 
@@ -487,25 +461,7 @@ namespace WebFreight.Web.WcfApi
 
                                         for (int pos = 0; reader.FieldCount > pos; pos++)
                                         {
-                                            if (convert_bool)
-                                            {
-                                                object val = reader.IsDBNull(pos) ? null : reader.GetValue(pos);
-
-                                                // Convert BIT/boolean to "1"/"0"
-                                                if (val is bool b)
-                                                {
-                                                    one_line.Add(b ? "1" : "0");
-                                                }
-                                                else
-                                                {
-                                                    // Keep everything else as string (null -> empty)
-                                                    one_line.Add(val?.ToString() ?? string.Empty);
-                                                }
-                                            }
-                                            else
-                                            {
-                                                one_line.Add(reader[pos].ToString());
-                                            }
+                                            one_line.Add(reader[pos].ToString());
                                         }
                                         all_lines.Add(one_line);
                                     }
@@ -538,18 +494,6 @@ namespace WebFreight.Web.WcfApi
                 return (response);
             }
 
-        }
-        public bool table_types(SqlConnection connection)
-        {
-            string sqlQuery= @"IF NOT EXISTS (SELECT 1 FROM sys.table_types 
-                WHERE name='StringList' AND SCHEMA_NAME(schema_id)='dbo')
-                CREATE TYPE dbo.StringList AS TABLE (value nvarchar(400) NOT NULL);";
-            using (var cmd = new SqlCommand(sqlQuery, connection))
-            {
-                cmd.ExecuteNonQuery();
-            }
-
-            return (true);
         }
         public string BuildConnectionString(ConnectionStringArguments connectionStringArguments)
         {
@@ -687,7 +631,7 @@ namespace WebFreight.Web.WcfApi
                             XmlDocument doc = new XmlDocument();
                             MemoryStream ms = new MemoryStream(filedata);
                             doc.Load(ms);
-                            
+                            //result = doc.InnerXml;
 
                             List<QueueTask> taskslist = LogitudeXmlSerializer.DeserializeObject<List<QueueTask>>(doc.InnerXml);
                             envelope.CommunicationLogId = communicationLogId;

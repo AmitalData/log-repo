@@ -65,7 +65,6 @@ namespace WebFreight.Web.InvoiceModel.DomainServices
         private APInvoiceTypeQuery apInvoiceTypeQuery;
         private APPaymentStatusQuery apPaymentStatusQuery;
         private ARInvoiceStatusQuery arInvoiceStatusQuery;
-        private ARInvoicesSignedStatusQuery aRInvoicesSignedStatusQuery;
         private ARInvoiceTotalVATQuery arInvoiceTotalVatQuery;
         private ARInvoiceTypeQuery arInvoiceTypeQuery;
         private AccountingPaymentMethodQuery paymentMethodQuery;

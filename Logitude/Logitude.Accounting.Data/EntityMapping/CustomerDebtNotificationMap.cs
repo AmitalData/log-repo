@@ -40,7 +40,7 @@ namespace Logitude.Accounting.Data.EntityMapping
 
             this.Property(t => t.DebtLevel).HasColumnName("DebtLevel").HasMaxLength(4).IsUnicode(true);
 
-            this.Property(t => t.DebtLevelAmount).HasColumnName("DebtLevelAmount").HasPrecision(10, 3);
+            this.Property(t => t.DebtLevelAmount).HasColumnName("DebtLevelAmount").HasPrecision(6, 3);
 
             this.Property(t => t.TasksSchedulerId).HasColumnName("TasksSchedulerId").HasMaxLength(15).IsUnicode(false);
 
