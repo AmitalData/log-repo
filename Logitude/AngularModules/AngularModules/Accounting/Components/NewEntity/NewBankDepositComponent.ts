@@ -48,7 +48,6 @@ export class NewBankDepositComponent extends BaseComponent implements OnInit {
         this.EntityPM.DepositDate = new Date();
         this.EntityPM.DepositNumber = 0;
         this.SetUIProperties();
-        this.GetClosedMonth();
     }
 
     SetUIProperties() {

@@ -1,17 +1,9 @@
-﻿using Logitude.Accounting.Data.EntityPOCOs;
-using Logitude.Accounting.Data.Repositories;
-using Logitude.Accounting.Def.EntityPMs;
-using Logitude.Accounting.Def.EntityQueryServicesExt;
+﻿using Logitude.Accounting.Def.EntityPMs;
 using Logitude.Accounting.Def.EntityUpdateServicesExt;
-using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.DataContracts;
-using Logitude.BL.InvoiceModel.EntityPMs;
-using Logitude.BL.InvoiceModel.EntityQueries;
-using Logitude.BL.InvoiceModel.Tools;
-using Logitude.BL.InvoiceModel.Tools.EntityService;
 using Logitude.BL.Resolvers;
 using Logitude.BL.Security;
 using Logitude.Server.Tools;
@@ -23,14 +15,12 @@ using Logitude.SystemLogs;
 using Microsoft.Practices.Unity;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
-using Simplog.Data.CommonDataModel.Mapping;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.InvoiceModel;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
-using Simplog.Data.InvoiceModel.Enums;
 using Simplog.Data.InvoiceModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
@@ -44,17 +34,26 @@ using System.Data.Common;
 using System.Data.Entity.Core.Objects;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Net.Configuration;
 using System.Text;
 using System.Transactions;
 using System.Web;
 using WebFreight.Web;
-using WebFreight.Web;
-using Contact = Simplog.Data.CommonDataModel.EntityPOCOs.Contact;
-using Customer = Simplog.Data.CommonDataModel.EntityPOCOs.Customer;
-using DocumentsFiling = Simplog.Data.CommonDataModel.EntityPOCOs.DocumentsFiling;
-using DocumentType = Simplog.Data.CommonDataModel.EntityPOCOs.DocumentType;
 using User = Simplog.Data.CommonDataModel.EntityPOCOs.User;
+using WebFreight.Web;
+using Logitude.BL.InvoiceModel.Tools;
+using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Accounting.Data.Repositories;
+using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
+using DocumentsFiling = Simplog.Data.CommonDataModel.EntityPOCOs.DocumentsFiling;
+using Customer = Simplog.Data.CommonDataModel.EntityPOCOs.Customer;
+using DocumentType = Simplog.Data.CommonDataModel.EntityPOCOs.DocumentType;
+using Contact = Simplog.Data.CommonDataModel.EntityPOCOs.Contact;
+using Logitude.Accounting.Def.EntityQueryServicesExt;
+using Simplog.Data.InvoiceModel.Enums;
+using System.Net.Configuration;
+using Logitude.BL.InvoiceModel.EntityPMs;
+using Logitude.BL.InvoiceModel.Tools.EntityService;
+using Logitude.BL.InvoiceModel.EntityQueries;
 
 namespace Logitude.BL.Helpers
 {
@@ -96,7 +95,7 @@ namespace Logitude.BL.Helpers
 
                 if (string.IsNullOrEmpty(userId))
                 {
-                    string loggedUserEmail = AuthenticationUtil.ResolveUserIdentityName(tenant);
+                    string loggedUserEmail = AuthenticationUtil.GetAuthenticatedUser();
                     UserRepository userRepository = new UserRepository(tenant);
                     User loggedUser = userRepository.GetSingleUserByCodeOrEmail(null, loggedUserEmail, tenant, true);
 
@@ -203,9 +202,8 @@ namespace Logitude.BL.Helpers
 
         }
 
-        public (DocumentOutPM document, bool isSign) PutCreateDocumentOut(CreateDocumentOutArgs createDocumentOutArgs, string userId = null)
+        public DocumentOutPM PutCreateDocumentOut(CreateDocumentOutArgs createDocumentOutArgs, string userId = null)
         {
-            bool isSign = false;
             DocumentOutQuery documentOutQuery = new DocumentOutQuery(createDocumentOutArgs.Tenant);
             DocumentOutPM documentOutPM = documentOutQuery.GetDocumentOutByDocumentTypeEntityAndChild(createDocumentOutArgs.EntityId, createDocumentOutArgs.ChildEntityId, createDocumentOutArgs.DocumentTypeId, createDocumentOutArgs.Tenant);
             if (documentOutPM == null)
@@ -219,12 +217,12 @@ namespace Logitude.BL.Helpers
                     IFullAccountingSettingQueryServiceExt query = ContainerAccessor.Container.Resolve(typeof(IFullAccountingSettingQueryServiceExt), "FullAccountingSettingQueryServiceExt", new ParameterOverride("", 1)) as IFullAccountingSettingQueryServiceExt;
                     FullAccountingSettingPM accountingSettings = query.GetFullAccountingSettingByTenant(createDocumentOutArgs.Tenant);
                     if (accountingSettings.AccountingActivated && !string.IsNullOrEmpty(accountingSettings.HSM) && !string.IsNullOrEmpty(accountingSettings.HSMaddress) && !string.IsNullOrEmpty(accountingSettings.HSMtoken))
-                        isSign = Sign(documentOutPM.Id, createDocumentOutArgs.Tenant, accountingSettings);
+                        Sign(documentOutPM.Id, createDocumentOutArgs.Tenant, accountingSettings);
 
                 }
 
             }
-            return (documentOutPM, isSign);
+            return documentOutPM;
         }
 
         private DocumentOut CreateDocumentOutInstance(string userId, string documentTemplateId, string emailTemplateId)
@@ -998,7 +996,7 @@ namespace Logitude.BL.Helpers
 
 
         }
-        public bool Sign(string documentOutId, int tenant, FullAccountingSettingPM accountingSettings)
+        public void Sign(string documentOutId, int tenant, FullAccountingSettingPM accountingSettings)
         {
 
             ICommonDataContext objectContext = CommonDataContext.GetContext(tenant);
@@ -1019,12 +1017,9 @@ namespace Logitude.BL.Helpers
                         this.CreateDocumentInterestReport(invoice.Tenant, invoice.Id ,null);
                     }
                     this.StartSignPDFInvoice(invoice, invoice.Tenant, repository, contactEmail, accountingSettings);
-                    return true;
                 }
-                return false;
 
             }
-            return false;
 
         }
 
