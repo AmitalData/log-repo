@@ -61,24 +61,14 @@ export class CargoTrackingMilestonePM {
     public set ExportWeight(newValue: number) { if (this.exportWeight != newValue) { this.exportWeight = newValue; this.MarkAsDirty("ExportWeight"); } }
        
 	 
+    private tenant: number;
+    public get Tenant() { return this.tenant; }
+    public set Tenant(newValue: number) { if (this.tenant != newValue) { this.tenant = newValue; this.MarkAsDirty("Tenant"); } }
+       
+	 
     private eventTypeId: string;
     public get EventTypeId() { return this.eventTypeId; }
     public set EventTypeId(newValue: string) { if (this.eventTypeId != newValue) { this.eventTypeId = newValue; this.MarkAsDirty("EventTypeId"); } }
-       
-	 
-    private notes: string;
-    public get Notes() { return this.notes; }
-    public set Notes(newValue: string) { if (this.notes != newValue) { this.notes = newValue; this.MarkAsDirty("Notes"); } }
-       
-	 
-    private tenantId: number;
-    public get TenantId() { return this.tenantId; }
-    public set TenantId(newValue: number) { if (this.tenantId != newValue) { this.tenantId = newValue; this.MarkAsDirty("TenantId"); } }
-       
-	 
-    private externalCode: string;
-    public get ExternalCode() { return this.externalCode; }
-    public set ExternalCode(newValue: string) { if (this.externalCode != newValue) { this.externalCode = newValue; this.MarkAsDirty("ExternalCode"); } }
        
 	 
 

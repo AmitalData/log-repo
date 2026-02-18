@@ -23,7 +23,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class ReportsTemplateUpdateClass
    {  		
-		public const string HashString = "598cba550e7cfe37abb6a7d6e8b541d8";
+		public const string HashString = "598cba460e7cfe37abb6a7d6e8b379d8";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -1692,75 +1692,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
-              
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
-				{
-					FieldName = "UseStimul",
-					ObjectTableName = "ReportsTemplate",
-					FieldsDataType = "Boolean",
-					MinLength = 0,
-					MaxLength = 0,
-					IsRequired = false,
-					CopyToDW = false,
-					DisplayOnLookUp = false,
-					DisplayOnLookUpLocal = false,
-					CanFilter = false,
-					DisplayOnly = false,
-					SystemRequired = false,
-					SystemMaxLength = 0,
-					DisplayInList = true,
-					IsCustomFilter = false,
-					IsListFilter = false,
-					Operator = "Equals",
-					MultiLine = false,
-					IsTimeFrameFilter = false,
-					DisplayInSearchWindowList = false,
-					PMPropertyPath = "UseStimul",
-					ListPropertyPath = "UseStimul",
-					DisplayInLookUpIndex = 0,
-					AutomaticField = false,
-					UniqueField = false,
-					DisplayInSearchWindowListIndex = 0,
-					IsMulti = false,
-					DependencyFilter1IsList = false,
-					DependencyFilter2IsList = false,
-					DependencyFilter3IsList = false,
-					ValidForQuerySection1 = "ReportsTemplate",
-					IsRestrictable = false,
-					DisplayInEntityVariables = false,
-					Code = "UseStimul",
-					AllowedInCustomerFieldsSettings = false,
-					DisplayInSearchWindowFilters = false,
-					DisplayInSearchWindowFiltersIndex = 0,
-					DisplayInDocumentReferences = false,
-					NumberOfDigits = 0,
-					DigitsAfterPoint = 0,
-					InActive = false,
-					DisplayLongName = false,
-					FullFieldLable = "UseStimul",
-					DefaultText = "Use Stimul",
-					ListFieldLable = "UseStimulListLable",
-					ListLableDefaultText = "Use Stimul",
-					IsForeignKey = false,
-					IsMaxLength = false,
-					NoMetaDataField = false,
-					IsFixedLength = false,
-					EnableAutoFill = false,
-					IncludeInSearchField = false,
-					AllowedinAutomationConditions = false,
-					AutomationEmailRecipient = false,
-					CanAutomateSetValue = false,
-					DisplayInAutomationAsEnitity = false,
-					HasTemplate = false,
-					IsCustom = false,
-					HelpTextCode = "UseStimul",
-					EnableFullscreenTextBox = false,
+ 
+	    }
 
-				}, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes, objectTables, addedFields, addedTextCodes, contextTenant);
-
-        }
-
-        public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups ,int contextTenant)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups ,int contextTenant)
 	    {    
 	    }
 
