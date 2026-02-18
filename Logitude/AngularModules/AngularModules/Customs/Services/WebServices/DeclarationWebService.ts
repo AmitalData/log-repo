@@ -2195,49 +2195,6 @@ export class DeclarationWebService {
          return this.logtuideTableDataService.sendAjaxAndGetDataStandart(ajax);
         
     }
-    
-    public PostExportDeclarationsBatchActions(
-        requestParams: SendExportDeclarationsBatchRequestParams,
-        filters: ApiQueryFilters
-    ) {
-        return defer(() => {
-
-            var authHeader = new Headers();
-            authHeader.append('Token', SessionInfo.Token);
-            authHeader.append('Content-Type', 'application/json');
-
-            const url =
-                this._apiUrl +
-                '/PostExportDeclarationsBatchActions?' +
-                this.logtuideTableDataService.apiQueryFilterToQueryString(filters);
-
-            return this._http.post(
-                url,
-                JSON.stringify(requestParams),
-                ServiceHelper.GetHttpHeaders()
-            )
-                .pipe(
-                    map((response: any) => {
-                        var serviceResponse: DataResult = new DataResult();
-                        serviceResponse.Message = response?.Message;
-                        serviceResponse.RequestInProgressList = response?.RequestInProgressList;
-                        return serviceResponse;
-                    }),
-                    catchError(ServiceHelper.HandleServiceError)
-                );
-        });
-    }
-
-    public FetchAmendmentMessage(declarationId: string): Promise<AmendmentMessageResponse> {
-        if (!declarationId) {
-            return Promise.resolve(new AmendmentMessageResponse());
-        }
-        const ajax: Observable<any> = this._http.get(this._apiUrl + "/GetAmendmentMessage/?declarationId=" + encodeURIComponent(declarationId),
-            { headers: ServiceHelper.GetHttpHeaders().headers }
-        );
-        return this.logtuideTableDataService.sendAjaxAndGetDataStandart(ajax);
-    }
-
 }
 
 
@@ -2265,14 +2222,4 @@ export interface GoldPaymentDefaults {
     CustomerDefaultGoldPay_CIM_GOLD_PAY: string
     CompanyDefaultMaxPayMASAV_CGG_MAX_AGT_PAY: string
     CompanyDefaultaboveamountagentCash_CGG_ABOVE_AGT_C: string//סכום שמעל יבוצע תשלום בקופה סוכן"
-}
-export interface SendExportDeclarationsBatchRequestParams { 
-    Action: string; 
-    SelectedIds: string[];
-    IsAllSelected: boolean;
-    QueryOperations?: any; 
-}
-export class AmendmentMessageResponse {
-    public AmendmentMessage: string;
-    public IsAmendmentDisplayOnly: boolean;
 }
