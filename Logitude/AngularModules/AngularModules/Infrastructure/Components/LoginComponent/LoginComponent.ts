@@ -1,6 +1,5 @@
 declare var window: any;
 import { Component, OnInit, Output, EventEmitter, isDevMode, AfterViewInit } from '@angular/core';
-import { APP_VERSION } from '../../../src/version';
 
 import { ServiceHelper } from '../../Utilities/ServiceHelper';
 import { SessionInfo } from '../../Utilities/SessionInfo';
@@ -82,7 +81,6 @@ export class LoginComponent implements OnInit ,AfterViewInit {
     public InvalidVerificationCode: boolean = false;
     private generalTableResourcesIsLoaded: boolean = false;
     public DefultText: string;
-    public AppVersion: string = '';
     //public LogoURL: string = "./Images/ApplicationLogo/UnifreightLogo.jpg";
     //public SampleLogoURL: string = "./Images/ApplicationLogo/UnifreightLogo.jpg";
     private _objectTableRulePMService: ObjectTableRulePMService =
@@ -112,7 +110,6 @@ export class LoginComponent implements OnInit ,AfterViewInit {
         this.LoginFailed = false;
         this.LoginParams = new LoginParameters();
         this.HidePendingLoading = true;
-        
         var temp = window.sessionStorage.getItem('LogoURL');
         var LogoCode = window.sessionStorage.getItem('LogoCode');
         if (temp) {
@@ -163,9 +160,6 @@ export class LoginComponent implements OnInit ,AfterViewInit {
     idxdb: IDBOpenDBRequest;
     public authHeader;
     ngOnInit() {
-        // Load version from version.ts
-        this.AppVersion = APP_VERSION;
-        
         let AmitalSSOAngular = this.getParameterByName(
             'AmitalSSOAngular',
             window.location.href
@@ -206,68 +200,6 @@ export class LoginComponent implements OnInit ,AfterViewInit {
      }
      ngAfterViewInit() {
         this.clearSessionCache();
-        this.addVersionTag();
-    }
-    
-    addVersionTag() {
-        if (!this.AppVersion) {
-            console.log('AppVersion not set:', this.AppVersion);
-            return;
-        }
-        
-        const tryAddVersion = (attempt: number = 0) => {
-            if (attempt > 15) {
-                console.log('Failed to find versionContainer after 15 attempts');
-                return; // Stop after 15 attempts
-            }
-            
-            // Try by ID first
-            let container = document.getElementById('versionContainer');
-            
-            // Fallback: try to find by background image
-            if (!container) {
-                const allTds = document.querySelectorAll('td');
-                for (let i = 0; i < allTds.length; i++) {
-                    const td = allTds[i] as HTMLElement;
-                    const style = window.getComputedStyle(td);
-                    if (style.backgroundImage && style.backgroundImage.includes('Layer.png')) {
-                        container = td;
-                        break;
-                    }
-                }
-            }
-            
-            if (container && this.AppVersion) {
-                // Remove existing version tag if any
-                const existing = container.querySelector('.app-version-tag');
-                if (existing) {
-                    existing.remove();
-                }
-                
-                // Ensure container has position relative
-                const containerStyle = window.getComputedStyle(container);
-                if (containerStyle.position === 'static') {
-                    (container as HTMLElement).style.position = 'relative';
-                }
-                
-                // Create and add version tag
-                const versionDiv = document.createElement('div');
-                versionDiv.className = 'app-version-tag';
-                versionDiv.style.cssText = 'position: absolute !important; bottom: 10px !important; right: 10px !important; font-size: 11px !important; color: rgba(150, 150, 150, 0.8) !important; font-family: tahoma, arial, sans-serif !important; z-index: 9999 !important; background-color: transparent !important; padding: 2px 4px !important; border-radius: 3px !important; pointer-events: none !important; font-weight: 400 !important;';
-                versionDiv.textContent = `v${this.AppVersion}`;
-                container.appendChild(versionDiv);
-                console.log('Version tag added:', `v${this.AppVersion}`, 'to element:', container);
-            } else {
-                // Retry if element not found or version not set
-                setTimeout(() => tryAddVersion(attempt + 1), 200);
-            }
-        };
-        
-        // Start trying immediately and also after delays
-        tryAddVersion();
-        setTimeout(() => tryAddVersion(), 500);
-        setTimeout(() => tryAddVersion(), 1000);
-        setTimeout(() => tryAddVersion(), 2000);
     }
    
     clearSessionCache(){
@@ -311,8 +243,6 @@ export class LoginComponent implements OnInit ,AfterViewInit {
                   this.Email = "angular@fnarsoft.com";
                 this.Password = "1";
                  this.IsShowLoginForm = true;
-                 // Try to add version tag after form becomes visible
-                 setTimeout(() => this.addVersionTag(), 300);
             }
 
          
@@ -697,7 +627,7 @@ export class LoginComponent implements OnInit ,AfterViewInit {
                 GetToken: true,
                 IsAngularLogin: true,
                 ClientType: 'Web',
-                IgnoreMFA: false
+                IgnoreMFA: false,
             };
 
             this.loginService.CurrentTenant = this.Tenant;
@@ -948,7 +878,7 @@ export class LoginComponent implements OnInit ,AfterViewInit {
                                     'READ'
                                 ) &&
                                 ObjectsLocator.GlobalSetting &&
-                                ObjectsLocator.GlobalSetting?.WorkEnvironment !=
+                                ObjectsLocator.GlobalSetting.WorkEnvironment !=
                                     'customs'
                             ) {
                                 var myCreditLimitSettingPMService =

@@ -998,11 +998,6 @@
       SearchFields="&quot;VPI, Get Tax Report VAT from A/P Invoice&quot;"
       Description="&quot;Get Tax Report VAT from A/P Invoice&quot;" />
     <Record
-      Code="&quot;IRN&quot;"
-      Name="&quot;Interest Report Notes New Logic&quot;"
-      SearchFields="&quot;IRN, Interest Report Notes New Logic&quot;"
-      Description="&quot;Interest Report Notes: Entity of ARInvoice, Cheques of ARPayment&quot;" />
-    <Record
       Code="&quot;JAM&quot;"
       Name="&quot;Journal Approval MultiThreading&quot;"
       SearchFields="&quot;JAM, Journal Approval MultiThreading&quot;"

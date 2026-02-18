@@ -38,5 +38,4 @@ export class ARInvoiceSelectors {
     public static readonly APInvoiceBranch = '#APInvoice_BranchId';
     public static readonly LogLovARInvoicePartnerId = "#LogLov_ARInvoice_PartnerId"
     public static readonly IsConsolidationChecked = "checkbox[id^='IsConsolidationChecked']"
-    public static readonly ARInvoiceHeaderStatusName = "[id^='ARInvoiceHeaderStatusName']:last"
 }

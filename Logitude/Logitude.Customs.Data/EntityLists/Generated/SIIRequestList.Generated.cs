@@ -65,8 +65,6 @@ namespace Logitude.Customs.Data.EntityLists
        public string ContactFax  { get; set; }
        [DataMember]
        public string ContactId  { get; set; }
-       [DataMember]
-       public DateTime RequestDate  { get; set; }
    }
 
 }
