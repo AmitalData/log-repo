@@ -99,13 +99,6 @@
     <Constraints
       Nullable="true" />
   </Column>
-  <Column
-    Name="CostChargeGroupVal"
-    Type="nvarchar"
-    Size="30">
-    <Constraints
-      Nullable="true" />
-  </Column>
   <Relation
     ForeignKeyColumn="Id"
     ReferencedTable="Quotes"

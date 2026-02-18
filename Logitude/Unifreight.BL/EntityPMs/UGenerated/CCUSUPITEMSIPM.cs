@@ -27,4 +27,3 @@ namespace Unifreight.BL.EntityPMs.UGenerated
         public DateTime? LAST_UPDATE_DT { get; set; }
     }
 }
-
