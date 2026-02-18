@@ -212,7 +212,7 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entity.ConcurrencyGUID = entityPM.NewConcurrencyGUID;
             entityPM.ConcurrencyGUID = entity.ConcurrencyGUID;
             entity.ConfirmationNumber = entityPM.ConfirmationNumber;
-            entity.IsPrepaidExpenses = entityPM.IsPrepaidExpenses;
+           
 
         }
 
@@ -249,8 +249,6 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entity.ContainerTypeId = entityPM.ContainerTypeId;
             entity.Quantity = entityPM.Quantity;
             entity.ExcludeFromTaxReport = entityPM.ExcludeFromTaxReport;
-            entity.IsPrepaidExpenses = entityPM.IsPrepaidExpenses;
-
             MapJournalAmount(entityPM);
 
         }

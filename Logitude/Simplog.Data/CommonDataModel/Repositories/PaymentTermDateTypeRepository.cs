@@ -11,7 +11,11 @@ namespace Simplog.Data.CommonDataModel.Repositories
     public class PaymentTermDateTypeRepository : IRepository<PaymentTermDateType>
     {
         ICommonDataContext Context;
- 
+        public PaymentTermDateTypeRepository()
+        {
+            Context = new CommonDataContext();
+
+        }
         public PaymentTermDateTypeRepository(ICommonDataContext context)
         {
             Context = context;

@@ -16,7 +16,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         VatTypePercentageRepository repository;
 
-
+        public VatTypePercentageQuery()
+        {
+            repository = new VatTypePercentageRepository(); 
+        }
 
         public VatTypePercentageQuery(int tenant)
         {

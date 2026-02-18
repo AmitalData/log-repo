@@ -12,7 +12,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
     {
         ICommonDataContext commonDataContext;
 
-
+        public HybridTenantStateRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
 
         public HybridTenantStateRepository(ICommonDataContext context)
         {

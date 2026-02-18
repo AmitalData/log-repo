@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { defer } from 'rxjs';
 import { RootContext } from 'src/CargoTracking/Utilities/RootContext';
@@ -9,7 +9,6 @@ import { ServiceHelper } from '../../Utilities/ServiceHelper';
 import { HomeComponent } from 'src/CargoTracking/Components/PublicSite/HomeComponent/HomeComponent';
 import { Router } from '@angular/router';
 import { CargoTrackingBrandingData } from 'src/CargoTracking/DataContracts/CargoTrackingBrandingData';
-import { saveAs } from 'file-saver';
 declare var window: any;
 
 
@@ -22,57 +21,30 @@ export class DocumentDownloadService {
     public authHeaders = ServiceHelper.GetHeadersWithToken();
 
     constructor(@Inject('BASE_URL') private baseUrl: string, private  _http: HttpClient, private router: Router) {
+
     }
 
     async ExternalDownloadAllDocuments(securityId: string, forwardingShipmentId: string, tenant: number) {
-    console.log('ExternalDownloadAllDocuments called', { securityId, forwardingShipmentId, tenant });
-    const token = SessionInfo?.Token;
-    const securityKey =
-        `${securityId}::CS:${tenant}:${forwardingShipmentId ? forwardingShipmentId : ""}:cargo`;
-
-    const url = ServiceHelper.GetAppURL(this.baseUrl) +
-        `api/CorrespondenceDownload/ValidateAndDownloadDocument?DA=1&securitykey=${encodeURIComponent(securityKey)}`;
-
-    if (!token) {
-        const link = ServiceHelper.GetAppURL(this.baseUrl) +
-        `WebPages/CorrespondenceDownloadpage.aspx?DA=1&securitykey=${encodeURIComponent(securityKey)}`;
-        const win = window.open(link, '_blank'); if (win) { win.focus(); }
-        return;
-    }
-
-    this._http.get(url, {
-        responseType: 'blob',
-        observe: 'response',
-        withCredentials: true,
-        headers: new HttpHeaders({ Token: token })
-    }).subscribe(async res => {
-        const ct = (res.headers.get('Content-Type') || '').toLowerCase();
-        if (!ct.includes('application/zip')) {
-        const msg = await (res.body as Blob).text().catch(()=>'');
-        this.showError?.(msg || 'Download failed (server did not return a ZIP).');
-        return;
+        if(SessionInfo.Token != null)
+        {
+           var mylink = ServiceHelper.GetAppURL(this.baseUrl)
+               + `api/CorrespondenceDownload/ValidateAndDownloadDocument?DA=1&securitykey=${securityId}::CS:${tenant}:${forwardingShipmentId ? forwardingShipmentId : ""}:cargo`;
+           await this.downloadFile(mylink)
+        
         }
-        const cd = res.headers.get('Content-Disposition') || '';
-        const m = /filename\*?=(?:UTF-8'')?([^;]+)|filename="?([^"]+)"?/i.exec(cd);
-        const filename = decodeURIComponent((m?.[1] || m?.[2] || 'Documents.zip').trim());
-        const blob = new Blob([res.body!], { type: 'application/zip' });
-        try { saveAs(blob, filename); }
-        catch {
-        const a = document.createElement('a');
-        const urlObj = URL.createObjectURL(blob);
-        a.href = urlObj; a.download = filename; a.click();
-        URL.revokeObjectURL(urlObj);
-        }
-    }, async err => {
-        const msg = err?.error instanceof Blob ? await err.error.text() : ('' + (err?.error || ''));
-        this.showError?.(msg || 'Download failed.');
-        console.error('Download all failed', err);
-    });
-    }
-    showError(arg0: string) {
-        throw new Error('Method not implemented.');
-    }
+        else 
+        {
+            var link = ServiceHelper.GetAppURL(this.baseUrl)
+            + `WebPages/CorrespondenceDownloadpage.aspx?DA=1&securitykey=${securityId}::CS:${tenant}:${forwardingShipmentId ? forwardingShipmentId : ""}:cargo`;
+            var win = window.open(link, '_blank');
     
+            if (win) {
+                win.focus();
+            }
+        }
+    }
+
+
 
 
     private async buildHeaders(){
@@ -128,12 +100,11 @@ export class DocumentDownloadService {
             const downloadURL = window.URL.createObjectURL(blob);
             const link = document.createElement('a');
             link.href = downloadURL;
-            const filename2 = contentDisposition ? this.decodeBase64(contentDisposition) : 'downloaded-file';
+            const filename2 = this.decodeBase64(contentDisposition);
             link.download = filename2;
             link.click();
             link.remove();
         } catch (error) {
-            console.error('downloadFile error:', error);
             RootContext.StopBusyIndicator();
             this.OnSignoutClicked();
         }
@@ -218,7 +189,6 @@ export class DocumentDownloadService {
         });
 
     }
-
 
     private  GetCurrenctUserValidity() {
         this._apiUrl = ServiceHelper.GetAppURL(this.baseUrl) + 'api/LogitudeApplication';
