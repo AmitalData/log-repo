@@ -1,5 +1,5 @@
 declare var window: any;
-import {Component, AfterViewInit, ViewChild, ViewContainerRef, ComponentRef, ChangeDetectorRef, EventEmitter, Output}  from '@angular/core';
+import {Component, AfterViewInit, ViewChild, ViewContainerRef, ComponentRef, ChangeDetectorRef, Output, EventEmitter}  from '@angular/core';
 import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
 import {ReportFliter} from '../Components/Filters/ReportFliter';
 import {ReportService} from '../../Common/Services/ExtendedLists/ReportService';
@@ -19,7 +19,6 @@ import { interval } from 'rxjs';
 import { timeInterval } from 'rxjs/operators';
 import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 import { MenuTypes } from './ProcessMenuComponent';
-import { ReportExecutionLogPMService } from 'Common/Services/StandardPMs/ReportExecutionLogPMService';
 
 @Component({
     selector: 'ReportsPreviewComponent',
@@ -44,7 +43,6 @@ export class ReportsPreviewComponent implements AfterViewInit {
     public IsMenuReport: boolean = false;
 
     DefaultReportTemplateId: string;
-    ProcessMenuTemplateId: string;
     reportsTemplateListExtendedService: ReportsTemplateListExtendedService;
     StimulsoftArg: StimulsoftArg;
     ReportFliter: ReportFliter;
@@ -96,6 +94,7 @@ export class ReportsPreviewComponent implements AfterViewInit {
         this.RunComponent();
     }
 
+
     ngAfterViewInit() {
         if (!this.IsSchedulerReport) {
             this.BuildStimulsoft();
@@ -140,12 +139,10 @@ export class ReportsPreviewComponent implements AfterViewInit {
         return templateType;
     }
 
-    SetReportTemplate(reportTemplateId: string, fromProcessMenu = false) {
-        if(fromProcessMenu) {
-            this.ProcessMenuTemplateId = reportTemplateId;
-        }
-        else
+    SetReportTemplate(reportTemplateId: string) {
+        if (reportTemplateId) {
             this.DefaultReportTemplateId = reportTemplateId;
+        }
     }
 
     SetReportTemplateType(templateType: string) {
@@ -244,7 +241,7 @@ export class ReportsPreviewComponent implements AfterViewInit {
                                 //this.CurrentSession.ResizeCurrentWindow(1050);
                             }
 
-                            this.GenerateReport(s, s?.IsInteractive || false);
+                            this.GenerateReport(s, false);
                         }
                     });
                 }
@@ -253,7 +250,6 @@ export class ReportsPreviewComponent implements AfterViewInit {
                 this.BuildStimulsoft();
             });
     }
-    
 
     private BuildStimulsoft() {
         if (this.isLoaderReady) {
@@ -281,9 +277,6 @@ export class ReportsPreviewComponent implements AfterViewInit {
                 if (this.DefaultReportTemplateId) {
                     this.Report.DefaultTemplateId = this.DefaultReportTemplateId;
                 }
-                if (this.ProcessMenuTemplateId) {
-                    this.StimulsoftArg.ProcessMenuTemplateId = this.ProcessMenuTemplateId;
-                }
                 this.StimulsoftArg.DefaultTemplateId = this.Report.DefaultTemplateId;
                 this.StimulsoftArg.ReportsTemplateLists = this.ReportsTemplateLists;
                 this.StimulsoftArg.ShowReportsTemlatesLists = true;
@@ -297,8 +290,6 @@ export class ReportsPreviewComponent implements AfterViewInit {
                 this.StimulsoftArg.MessageTemplateLists = this.MessageTemplateLists;
 
                 this.StimulsoftArg.DefaultMessageTemplateId =  this.DefaultMessageTemplateId ? this.DefaultMessageTemplateId : this.Report.DefaultMessageTemplateId;
-                this.StimulsoftArg.DefaultExcelTemplateId = this.Report?.DefaultExcelTemplateId;
-                this.StimulsoftArg.DefaultExcelNoStimId = this.Report?.DefaultExcelNoStimId;
                 this.StimulsoftArg.ResultType = this.ResultType;
                 this.StimulsoftArg.EntityId = this.ReportEntityId;
                 this.StimulsoftArg.ObjectTableId = this.ObjectTableId;
@@ -351,18 +342,15 @@ export class ReportsPreviewComponent implements AfterViewInit {
 
 
 
-    GenerateReport(filter: ReportFliter, isInteractive: boolean ,IsFromPagination = false) {
+    GenerateReport(filter: ReportFliter, isloading: boolean) {
 
         if (!this.ShowBusyIndicator) {
-            this.IsFromPagination = IsFromPagination;
             this.ShowBusyIndicator = true;
-            this.ReportFliter = this.FillReportFilter(filter, isInteractive);
+            this.ReportFliter = this.FillReportFilter(filter);
             if (this.IsUsedExportToExel || this.ReportFliter.ReportCode == "EXDE")
             {
-               this.ReportFliter.ProcessType = "ExportToExcel";
-               this.ReportFliter.DefaultExcelNoStimId = this.StimulsoftArg.DefaultExcelNoStimId;
-               this.StartBuildStimulReportViaWorkerRole(this.ReportFliter, true); 
-               this.IsUsedExportToExel = false;
+               this.StartBusyIndicator("Exporting to Excel...");
+               this.ExportToExcel(this.ReportFliter);
                return
             }
             if (!this.IsHaveRunReportViewWorkerRoleToggleFeature || (this.IsHaveRunReportViewWorkerRoleToggleFeature && this.ReportFliter.ProcessType != "GenerateReport")) {
@@ -406,17 +394,27 @@ export class ReportsPreviewComponent implements AfterViewInit {
                     this.StopBusyIndicator();
                     return;
                 }
-                this.StartBuildStimulReportViaWorkerRole(this.ReportFliter, isInteractive);
+                this.StartBuildStimulReportViaWorkerRole(this.ReportFliter, true);
             }
         }
     }
-   
+    async ExportToExcel(reportFliter: ReportFliter) {
+        const res: Blob = await this._reportService.GetExcel(reportFliter);
+        const blobUrl: string = window.URL.createObjectURL(res);
+        const link = document.createElement('a');
+        link.href = blobUrl;
+        link.download = reportFliter.ReportName + ".xlsx";
+        link.click();
+        link.remove();
+        this.IsUsedExportToExel = false;
+        this.ShowBusyIndicator = false;
+    }
     GenerateReportViewWorkerRole(filter: ReportFliter) {
         this.IsRunReportSucceeded = false;
         this.IsRunReportFailed = false;
 
         if (!this.Report.DisablePreview) {
-            this.ReportFliter = this.FillReportFilter(filter, false);
+            this.ReportFliter = this.FillReportFilter(filter);
             this.ValiditySelectedTemplate();
             this.NumberOfRequests += 1;
             this._reportService.GenerateReportMethod(this.ReportFliter).subscribe((myResponse: ServiceResponse) => {
@@ -481,11 +479,10 @@ export class ReportsPreviewComponent implements AfterViewInit {
 
     }
 
-    FillReportFilter(filter: ReportFliter, isInteractive: boolean) {
+    FillReportFilter(filter: ReportFliter) {
         if (AppTool.IsNullOrEmpty(filter.DefaultTemplateId)) {
             if (this.StimulsoftArg) {
-                filter.DefaultTemplateId = this.StimulsoftArg.StimulsoftViewerComponent.TemplateType !=="E" ? 
-                    this.StimulsoftArg.DefaultTemplateId : this.StimulsoftArg.DefaultExcelTemplateId;
+                filter.DefaultTemplateId = this.StimulsoftArg.DefaultTemplateId;
             } else {
                 filter.DefaultTemplateId = this.Report.DefaultTemplateId;
             }
@@ -500,7 +497,7 @@ export class ReportsPreviewComponent implements AfterViewInit {
         filter.UserId = SessionLocator.LoggedUserId;
         filter.ReportId = this.Report.Id;
         filter.DisablePreview = this.Report.DisablePreview;
-        filter.NotDisplayInMenu = this.IsSchedulerReport || isInteractive || this.IsUsedExportToExel;
+        filter.NotDisplayInMenu = this.IsSchedulerReport;
         if (this.ReportsTemplateLists && !this.IsUsedExportToExel) {
             var reportTemplate: any = this.ReportsTemplateLists.filter(d => d.Id == filter.DefaultTemplateId)[0];
             if (reportTemplate) {
@@ -552,32 +549,32 @@ export class ReportsPreviewComponent implements AfterViewInit {
     }
 
 
-    StartBuildStimulReportViaWorkerRole(filter: ReportFliter, isInteractive?: boolean) {
-        
+    StartBuildStimulReportViaWorkerRole(filter: ReportFliter, isUsedWorkerRoleAlalways = false) {
         filter.ReportsRunUsingWR = this.IsUsedReportsRunUsingWR = true;
 
-        if(this.ReportFliter.ProcessType === "ExportToExcel")
-            this.StartBusyIndicator(TextCodeTranslator.Translate("General.B.ExportingDataToExcel"));
-        else{
-            this.StartBusyIndicator(TextCodeTranslator.Translate("General.O.Generating"));
-        }
+        this.StartBusyIndicator("Generating...");
 
 
         this._reportService.GenerateReportMethod(filter).subscribe((myResponse: ServiceResponse) => {
 
             if (!myResponse.HasError) {
-
                 this.ReportFliter = myResponse.Result;
 
-                if (isInteractive) {
-                    this.StartCheckStimulSoftSoftReportBliudViaWorkerRoleTimer();
-                }
-                else {
+               if(!this.IsSchedulerReport){
                     var messageWindow = new MessageWindow();
                     messageWindow.ShowSuccessIcon = true;
+      
                     messageWindow.Show(TextCodeTranslator.Translate("General.O.ReportInProcess"));
-
-                    this.SendToBackground();
+                SessionLocator.HomeComponent.IsProcessMenuVisible = true;
+                SessionLocator.HomeComponent.CurrentProcessId  = myResponse.Result.ReportKey;
+                SessionLocator.HomeComponent.SelectedTab = MenuTypes.ReportExecutionLog.toString();
+                    SessionLocator.HomeComponent.isPinned = true;
+      
+                    this.BackButtonClicked()
+                    this.StopBusyIndicator();
+                }
+                else{
+                    this.StartCheckStimulSoftSoftReportBliudViaWorkerRoleTimer();
                 }
                 
             } else {
@@ -637,23 +634,15 @@ export class ReportsPreviewComponent implements AfterViewInit {
                                 if (result.HasError) {
                                     this.StopBusyIndicator();
                                     var messageWindow = new MessageWindow();
-
-                                    if (result.ExceptionMessage.indexOf("Stopped manually by") == -1) {
-                                        messageWindow.Show(result.ExceptionMessage);
-                                    }
+                                    messageWindow.Show(result.ExceptionMessage);
                                 }
-                                
+
                                 else if (result.StatusCode == "P") {
-                                    this.StartBusyIndicator(TextCodeTranslator.Translate("General.O.ReportInProgress"));
+                                    this.StartBusyIndicator("Report is in progress");
                                 }
                                 else if (result.StatusCode == "D") {
-                                    if(this.ReportFliter.ProcessType === "ExportToExcel") {
-                                         this.DownloadExcelReport();
-                                    }
-                                    else{
-                                         this.ReportFliter.ProcessType = "ReportsRunUsingWR";
-                                         this.GenerateReportViewWorkerRole(this.ReportFliter);
-                                    }
+                                    this.ReportFliter.ProcessType = "ReportsRunUsingWR";
+                                    this.GenerateReportViewWorkerRole(this.ReportFliter);
                                 }
 
                             }
@@ -677,16 +666,7 @@ export class ReportsPreviewComponent implements AfterViewInit {
     }
 
 
-    async DownloadExcelReport() {
-        const res: Blob = await this._reportService.GetExcel(this.ReportFliter.ReportKey, this.ReportFliter.ReportName);
-        this.StopBusyIndicator();
-        const blobUrl: string = window.URL.createObjectURL(res);
-        const link = document.createElement('a');
-        link.href = blobUrl;
-        link.download = this.ReportFliter.ReportName + '.xlsx';
-        link.click();
-        link.remove();
-    }
+
     //Wait Result Stimul Timer
     IsStartTimerWaitingFirstStimulReportBuildRunning: boolean = false;
     initializeStartTimerWaitingFirstStimulReportBuild() {
@@ -755,8 +735,6 @@ export class ReportsPreviewComponent implements AfterViewInit {
 
     ShowBusyIndicator: boolean = false;
     BusyIndicatorText: string = "";
-    IsFromPagination: boolean = false;
-
     WidthBusyIndicator: number;
     StartBusyIndicator(message: string = "Generating...", width: number = 200) {
 
@@ -766,28 +744,6 @@ export class ReportsPreviewComponent implements AfterViewInit {
 
     }
 
-    ReportExecutionLogPMService: ReportExecutionLogPMService = new ReportExecutionLogPMService();
-    CancelReport() {
-        if (this.ReportFliter.ReportKey)
-        {
-            this.ReportExecutionLogPMService.Cancel(this.ReportFliter.ReportKey).subscribe((res: any) => {
-                this.CurrentSession.StopBusyIndicator();
-            });
-        }
-    }
-
-    SendToBackground () {
-        if (this.ReportFliter.ReportKey)
-        {
-            this.ReportExecutionLogPMService.SendToBackground(this.ReportFliter.ReportKey).subscribe((res: any) => {
-                SessionLocator.HomeComponent.IsProcessMenuVisible = false;
-                SessionLocator.HomeComponent.CurrentProcessId  = this.ReportFliter.ReportKey;
-                SessionLocator.HomeComponent.SelectedTab = MenuTypes.ReportExecutionLog.toString();
-                SessionLocator.HomeComponent.isPinned = false;
-                this.StopBusyIndicator();
-            });
-        }
-    }
 
     StopBusyIndicator() {
 

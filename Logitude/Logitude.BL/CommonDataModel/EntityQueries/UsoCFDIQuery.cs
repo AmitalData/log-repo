@@ -16,7 +16,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         UsoCFDIRepository repository;
 
-
+        public UsoCFDIQuery()
+        {
+            repository = new UsoCFDIRepository();
+        }
 
         public UsoCFDIQuery(int tenant)
         {

@@ -19,7 +19,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
             commonDataContext = context;
         }
 
-
+        public TenantAdditionalDataRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
 
         public TenantAdditionalDataRepository(int tenant)
         {
