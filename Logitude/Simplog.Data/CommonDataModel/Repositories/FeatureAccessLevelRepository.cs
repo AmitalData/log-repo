@@ -16,7 +16,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
             get { return Context; }
         }
 
-
+        public FeatureAccessLevelRepository()
+        {
+            this.Context = new CommonDataContext();
+        }
 
         public FeatureAccessLevelRepository(int tenant)
         {

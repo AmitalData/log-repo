@@ -13,7 +13,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
     {
         ICommonDataContext commonDataContext;
 
-
+        public HorseRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
 
         public HorseRepository(ICommonDataContext context)
         {

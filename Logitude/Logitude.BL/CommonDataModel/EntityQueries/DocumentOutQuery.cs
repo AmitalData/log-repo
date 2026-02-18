@@ -20,7 +20,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         DocumentOutRepository repository;
 
-
+        public DocumentOutQuery()
+        {
+            repository = new DocumentOutRepository();
+        }
 
         public DocumentOutQuery(int tenant)
         {

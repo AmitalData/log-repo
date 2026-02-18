@@ -82,14 +82,15 @@ namespace Simplog.Server.Infrastructure.Helpers
             }
         }
 
-		private Expression<Func<T, N>> GetSortExpression<T, N>(string sortByFieldName)
-		{
-			var param = Expression.Parameter(typeof(T), "item");
-			var sortExpression = Expression.Lambda<Func<T, N>>
-			   (Expression.Convert(Expression.Property(param, sortByFieldName), typeof(N)), param);
-			return sortExpression;
-		}
-		private string GetObjectTableKeyName(QueryOperations queryOperations , int tenant = -100)
+        private Expression<Func<T,N>> GetSortExpression<T,N>(string sortByFieldName)
+        {
+            var param = Expression.Parameter(typeof(T), "item");
+            var sortExpression = Expression.Lambda<Func<T, N>>
+               (Expression.Convert(Expression.Property(param, sortByFieldName), typeof(N)), param);
+            return sortExpression;
+        }
+
+        private string GetObjectTableKeyName(QueryOperations queryOperations , int tenant = -100)
         {
 
             if (tenant == -100)

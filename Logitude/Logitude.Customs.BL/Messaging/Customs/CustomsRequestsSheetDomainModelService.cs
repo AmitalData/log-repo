@@ -42,7 +42,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Transactions;
 using Unifreight.BL.EntityQueryServices;
-using Logitude.Customs.Data.Repsitories;
 
 
 
@@ -139,8 +138,7 @@ namespace Logitude.Customs.BL.Messaging.Customs
                 SuppressSendIIGMessages(requestParams);
 
                 CheckMessageInContainer(requestParams.InterfaceTypeCode, requestParams.MainInterfaceCode);
-                
-                if (!requestParams.ignoreConcurrentKiller) ConcurrentKiller(requestParams, reqSheetDetails);//Leave the campground cleaner than the way you found it.” found it.
+                ConcurrentKiller(requestParams, reqSheetDetails);//Leave the campground cleaner than the way you found it.” found it.
 
                 this.RequestParams = requestParams;            
                 InitMessageDefinition();
@@ -229,6 +227,9 @@ namespace Logitude.Customs.BL.Messaging.Customs
             }
             catch (CourierForceSignException e)
             {
+			
+				LogitudeSettings.HandleLogMe("line 230 CourierForceSignException" + e.Message.ToString(), false, "sendClosing", stopLogAt);
+
 				NoteClientNoRequestSheet4U(requestParams, e.Message);
                 throw new
                     CustomsRequestsSheetDomainModelServiceException(
@@ -237,6 +238,7 @@ namespace Logitude.Customs.BL.Messaging.Customs
             }
             catch (Exception e)
             {
+				LogitudeSettings.HandleLogMe("line 251 Exception: " + e.ToString(), false, "sendClosing", stopLogAt);
 
 				NoteClientNoRequestSheet4U(requestParams, e.ToString());
                 throw new
@@ -406,7 +408,7 @@ namespace Logitude.Customs.BL.Messaging.Customs
                 //{
                 //    return false;
                 //}
-                FeatureQuery featureQuery = new FeatureQuery(requestParams.Tenant);
+                FeatureQuery featureQuery = new FeatureQuery();
 
 
                 //SHOULD BE - 
@@ -492,7 +494,7 @@ namespace Logitude.Customs.BL.Messaging.Customs
         }
       
         public string GetAvailableSignServer(out string personId, out SignQueueByType SignatureBy, out string noAvailableSignServerErrorText,
-            string OverrideSignStepName = null, string hsmStationContext = null)
+            string OverrideSignStepName = null)
         {
             string availableSignServer = null;
             noAvailableSignServerErrorText = personId = "";
@@ -505,17 +507,16 @@ namespace Logitude.Customs.BL.Messaging.Customs
             string customsAgentId = SignQueue.GetCustomsAgentIdFromTenant(_RequestParams.Tenant);
             var dbSignQueueService = new SignQueueHybridDbService();
 
-            var isExport = SignQueueHybridDbService.IsCloudExport(_RequestParams.Tenant, _RequestParams.DeclarationDirection);
-            var IsCloud = SignQueueHybridDbService.IsCloud(_RequestParams.Tenant);
+            var isExport = SignQueueHybridDbService.IsCloudExport(_RequestParams.Tenant);
             var signQueueHSMService = new SignQueueHSMService();
             
             if (string.IsNullOrWhiteSpace(availableSignServer) &&
                  (isExport ||
-                signQueueHSMService.IsHSMSign_IsOn(_RequestParams.Tenant, hsmStationContext)|| IsCloud) )
+                signQueueHSMService.IsHSMSign_IsOn(_RequestParams.Tenant)) )
  
             {
                 (availableSignServer, signMethodByQueueEnum) = dbSignQueueService
-                    .GetAvailableSignServer(_RequestParams.Tenant, SignatureBy, personId, IsCloud, hsmStationContext:hsmStationContext);
+                    .GetAvailableSignServer(_RequestParams.Tenant, SignatureBy, personId, isExport);
                 if (availableSignServer != null)
                 {
                     if (signMethodByQueueEnum == SignMethodByQueueEnum.HybridDbSignQueue)
@@ -597,7 +598,7 @@ namespace Logitude.Customs.BL.Messaging.Customs
 
 
             var availableSignServer = GetAvailableSignServer(out personId, out signatureBy, out noAvailableSignServerErrorText,
-                MessageController.SignStepName, _RequestParams.HsmStationContext);
+                MessageController.SignStepName);
 
             switch (signatureBy)
             {
@@ -1904,16 +1905,13 @@ After that Remove file  from DCA  .. ");
                 }
                 if (createSBQMessage)
                 {
-                    InterfaceManagementRepository interfaceManagementRepository = new InterfaceManagementRepository(MyCustomsRequestsSheetPM.Tenant);
-                    string queueDefinitionGroup = interfaceManagementRepository.GetSingleFromCache(MyCustomsRequestsSheetPM?.InterfaceTypeCode)?.QueueDefinitionGroup;
-
                     LogMessagingUtil.Instance.AppendLine("if (createSBQMessage)");
 
                     SBQMessageService.CreateBasic<CustomsCommandEnum>(
                             nxtCustomsCommandEnum,
                             this.MyCustomsRequestsSheetPM.Tenant,
                             this.MyCustomsRequestsSheetPM.InterfaceTypeCode,
-                            this.MyCustomsRequestsSheetPM.Id, null, queueDefinitionGroup);
+                            this.MyCustomsRequestsSheetPM.Id);
                 }
 
 
@@ -2878,30 +2876,25 @@ After that Remove file  from DCA  .. ");
             _CustomsRequestsSheetUpdateService.Update(MyCustomsRequestsSheetPM, true);
             _CommonContext.SaveChanges();
 
-            InterfaceManagementRepository interfaceManagementRepository = new InterfaceManagementRepository(MyCustomsRequestsSheetPM.Tenant);
-            string queueDefinitionGroup = interfaceManagementRepository.GetSingleFromCache(MyCustomsRequestsSheetPM?.InterfaceTypeCode)?.QueueDefinitionGroup;
-
             CustomsCommandEnum nxtCustomsCommandEnum = CustomsCommandEnum.CustomsCommandAnalyzeResponseWR;
             SBQMessageService.CreateBasic<CustomsCommandEnum>(
                             nxtCustomsCommandEnum,
                             this.MyCustomsRequestsSheetPM.Tenant,
                             this.MyCustomsRequestsSheetPM.InterfaceTypeCode,
-                            this.MyCustomsRequestsSheetPM.Id, futureSendDateTime, queueDefinitionGroup);
+                            this.MyCustomsRequestsSheetPM.Id, futureSendDateTime);
         }
 
 
         public void ReCreateNow()
         {
 
-            InterfaceManagementRepository interfaceManagementRepository = new InterfaceManagementRepository(MyCustomsRequestsSheetPM.Tenant);
-            string queueDefinitionGroup = interfaceManagementRepository.GetSingleFromCache(MyCustomsRequestsSheetPM?.InterfaceTypeCode)?.QueueDefinitionGroup;
-
+            
             CustomsCommandEnum nxtCustomsCommandEnum = CustomsCommandEnum.CustomsCommandGetCustomRequestWR;
             SBQMessageService.CreateBasic<CustomsCommandEnum>(
                             nxtCustomsCommandEnum,
                             this.MyCustomsRequestsSheetPM.Tenant,
                             this.MyCustomsRequestsSheetPM.InterfaceTypeCode,
-                            this.MyCustomsRequestsSheetPM.Id, null, queueDefinitionGroup);
+                            this.MyCustomsRequestsSheetPM.Id);
         }
     }
 
