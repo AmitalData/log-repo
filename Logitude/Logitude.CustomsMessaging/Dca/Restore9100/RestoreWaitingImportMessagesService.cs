@@ -135,7 +135,7 @@ namespace Logitude.CustomsMessaging.Dca.Restore9100
 
 
                 var outgoingMessage9100ResponseAnalyze = new OutgoingMessage9100ResponseAnalyze(_CustomsSettingPM, _InterfaceListDCA);
-                outgoingMessage9100ResponseAnalyze.SaveInDB(dOnlyNewImportMessagges, true);
+                outgoingMessage9100ResponseAnalyze.SaveInDB(dOnlyNewImportMessagges);
 
 
                 outgoingMessage9100ResponseAnalyze.

@@ -4,8 +4,7 @@ using Logitude.Infrastructure.BL.EntityPMs;
 using Logitude.Infrastructure.BL.ExtendedServices;
 using Logitude.Server.Tools.Counters;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; 
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
@@ -24,10 +23,8 @@ using Logitude.Infrastructure.BL.EntityQueryServices;
 using Logitude.Infrastructure.Data;
 using Logitude.Infrastructure.Data.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; 
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.Helpers;
-using Logitude.Server.Tools.Helpers;
 
 namespace WebFreight.Web.Helpers.APIHelpers
 {
@@ -788,11 +785,6 @@ namespace WebFreight.Web.Helpers.APIHelpers
 
         private string CreateVendorPartner(PartnerExcel item)
         {
-            var counterAdditionalParameters = new Dictionary<string, string>
-            {
-                ["[B]"] = "VD",
-                ["[BranchName]"] = "VD"
-            };
             VendorPM vendor = new VendorPM()
             {
                 Id = IdCounter.GetNumber("Card", tenant).ToString(),
@@ -800,7 +792,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
                 VatNumber = item.VatNO,
                 Tenant = tenant,
                 IsHybrid = true,
-                Code = TableCounter.DoesCounterDefinitionExist("CADC", tenant, "VD") ?TableCounter.GetNumber(tenant, "CADC", "VD", null, counterAdditionalParameters, true) : CodeCounter.GetNumber("Vendor", tenant).ToString(),
+                Code = CodeCounter.GetNumber("Vendor", tenant).ToString(),
                 PartnerTypeId = item.Type,
                 UploadingUniqueKey = item.UniqueCode,
                 ReceivablesAccountingCard = item.ReceivablesExternalID,
@@ -821,11 +813,6 @@ namespace WebFreight.Web.Helpers.APIHelpers
 
         private string CreateAccountingPartnerPartner(PartnerExcel item)
         {
-            var counterAdditionalParameters = new Dictionary<string, string>
-            {
-                ["[B]"] = "AC",
-                ["[BranchName]"] = "AC"
-            };
             AccountingPartnerPM accountingPartner = new AccountingPartnerPM()
             {
                 Id = IdCounter.GetNumber("Card", tenant).ToString(),
@@ -833,7 +820,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
                 VatNumber = item.VatNO,
                 Tenant = tenant,
                 IsHybrid = true,
-                Code = TableCounter.DoesCounterDefinitionExist("CADC", tenant, "AC") ?TableCounter.GetNumber(tenant, "CADC", "AC", null, counterAdditionalParameters, true) : CodeCounter.GetNumber("AccountingPartner", tenant).ToString(),
+                Code = CodeCounter.GetNumber("AccountingPartner", tenant).ToString(),
                 PartnerTypeId = item.Type,
                 UploadingUniqueKey = item.UniqueCode,
                 ReceivablesAccountingCard = item.ReceivablesExternalID,
@@ -884,18 +871,13 @@ namespace WebFreight.Web.Helpers.APIHelpers
 
         private string CreateShippingLinePartner(PartnerExcel item)
         {
-            var counterAdditionalParameters = new Dictionary<string, string>
-            {
-                ["[B]"] = "SL",
-                ["[BranchName]"] = "SL"
-            };
             ShippingLinePM shippingLine = new ShippingLinePM()
             {
                 EnglishName = item.Name,
                 VatNumber = item.VatNO,
                 Tenant = tenant,
                 IsHybrid = true,
-                Code = TableCounter.DoesCounterDefinitionExist("CADC", tenant, "SL") ?TableCounter.GetNumber(tenant, "CADC", "SL", null, counterAdditionalParameters, true) : CodeCounter.GetNumber("ShippingLine", tenant).ToString(),
+                Code = CodeCounter.GetNumber("ShippingLine", tenant).ToString(),
                 CarrierTypeId = item.Type,
                 UploadingUniqueKey = item.UniqueCode,
                 ReceivablesAccountingCard = item.ReceivablesExternalID,
@@ -909,18 +891,13 @@ namespace WebFreight.Web.Helpers.APIHelpers
 
         private string CreateAirlinePartner(PartnerExcel item)
         {
-            var counterAdditionalParameters = new Dictionary<string, string>
-            {
-                ["[B]"] = "AL",
-                ["[BranchName]"] = "AL"
-            };
             AirlinePM airline = new AirlinePM()
             {
                 EnglishName = item.Name,
                 VatNumber = item.VatNO,
                 Tenant = tenant,
                 IsHybrid = true,
-                Code = TableCounter.DoesCounterDefinitionExist("CADC", tenant, "AL") ?TableCounter.GetNumber(tenant, "CADC", "AL", null, counterAdditionalParameters, true) : CodeCounter.GetNumber("Airline", tenant).ToString(),
+                Code = CodeCounter.GetNumber("Airline", tenant).ToString(),
                 CarrierTypeId = item.Type,
                 UploadingUniqueKey = item.UniqueCode,
                 ReceivablesAccountingCard = item.ReceivablesExternalID,
@@ -963,11 +940,6 @@ namespace WebFreight.Web.Helpers.APIHelpers
 
         private string CreateShippingAgentPartner(PartnerExcel item)
         {
-            var counterAdditionalParameters = new Dictionary<string, string>
-            {
-                ["[B]"] = "SG",
-                ["[BranchName]"] = "SG"
-            };
             ShippingAgentPM shippingAgent = new ShippingAgentPM()
             {
                 Id = IdCounter.GetNumber("Card", tenant).ToString(),
@@ -975,7 +947,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
                 VatNumber = item.VatNO,
                 Tenant = tenant,
                 IsHybrid = true,
-                Code = TableCounter.DoesCounterDefinitionExist("CADC", tenant, "SG") ?TableCounter.GetNumber(tenant, "CADC", "SG", null, counterAdditionalParameters, true) :  CodeCounter.GetNumber("ShippingAgent", tenant).ToString(),
+                Code = CodeCounter.GetNumber("ShippingAgent", tenant).ToString(),
                 PartnerTypeId = item.Type,
                 UploadingUniqueKey = item.UniqueCode,
                 ReceivablesAccountingCard = item.ReceivablesExternalID,
@@ -996,11 +968,6 @@ namespace WebFreight.Web.Helpers.APIHelpers
 
         private string CreateCustomAgentPartner(PartnerExcel item)
         {
-            var counterAdditionalParameters = new Dictionary<string, string>
-            {
-                ["[B]"] = "CG",
-                ["[BranchName]"] = "CG"
-            };
             CustomAgentPM customAgent = new CustomAgentPM()
             {
                 Id = IdCounter.GetNumber("Card", tenant).ToString(),
@@ -1008,7 +975,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
                 VatNumber = item.VatNO,
                 Tenant = tenant,
                 IsHybrid = true,
-                Code = TableCounter.DoesCounterDefinitionExist("CADC", tenant, "CG") ? TableCounter.GetNumber(tenant, "CADC", "CG", null, counterAdditionalParameters, true) : CodeCounter.GetNumber("CustomAgent", tenant).ToString(),
+                Code = CodeCounter.GetNumber("CustomAgent", tenant).ToString(),
                 PartnerTypeId = item.Type,
                 UploadingUniqueKey = item.UniqueCode,
                 ReceivablesAccountingCard = item.ReceivablesExternalID,
@@ -1030,11 +997,6 @@ namespace WebFreight.Web.Helpers.APIHelpers
 
         private string CreateCustomerPartner(PartnerExcel item)
         {
-            var counterAdditionalParameters = new Dictionary<string, string>
-            {
-                ["[B]"] = "CS",
-                ["[BranchName]"] = "CS"
-            };
             CustomerPM customer = new CustomerPM()
             {
                 Id = IdCounter.GetNumber("Card", tenant).ToString(),
@@ -1042,7 +1004,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
                 VatNumber = item.VatNO,
                 Tenant = tenant,
                 IsHybrid = true,
-                Code = TableCounter.DoesCounterDefinitionExist("CADC", tenant, "CS") ? TableCounter.GetNumber(tenant, "CADC", "CS", null, counterAdditionalParameters, true) : CodeCounter.GetNumber("Customer", tenant).ToString(),
+                Code = CodeCounter.GetNumber("Customer", tenant).ToString(),
                 PartnerTypeId = item.Type,
                 CustomerStatusCode = item.Type == "PO" ? "POT" : "ACT",
                 IsCustomer = true,
@@ -1065,11 +1027,6 @@ namespace WebFreight.Web.Helpers.APIHelpers
 
         private string CreateShipperConsigneePartner(PartnerExcel item)
         {
-            var counterAdditionalParameters = new Dictionary<string, string>
-            {
-                ["[B]"] = "CS",
-                ["[BranchName]"] = "CS"
-            };
             CustomerPM customer = new CustomerPM()
             {
                 Id = IdCounter.GetNumber("Card", tenant).ToString(),
@@ -1077,7 +1034,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
                 VatNumber = item.VatNO,
                 Tenant = tenant,
                 IsHybrid = true,
-                Code = TableCounter.DoesCounterDefinitionExist("CADC", tenant, "CS") ? TableCounter.GetNumber(tenant, "CADC", "CS", null, counterAdditionalParameters, true) :  CodeCounter.GetNumber("Customer", tenant).ToString(),
+                Code = CodeCounter.GetNumber("Customer", tenant).ToString(),
                 PartnerTypeId = "CS",
                 CustomerStatusCode = "ACT",
                 IsCustomer = false,
@@ -1100,11 +1057,6 @@ namespace WebFreight.Web.Helpers.APIHelpers
        
         private string CreateAgentPartner(PartnerExcel item)
         {
-            var counterAdditionalParameters = new Dictionary<string, string>
-            {
-                ["[B]"] = "AG",
-                ["[BranchName]"] = "AG"
-            };
             AgentPM agent = new AgentPM()
             {
                 Id = IdCounter.GetNumber("Card", tenant).ToString(),
@@ -1112,7 +1064,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
                 VatNumber = item.VatNO,
                 Tenant = tenant,
                 IsHybrid = true,
-                Code = TableCounter.DoesCounterDefinitionExist("CADC", tenant, "AG") ? TableCounter.GetNumber(tenant, "CADC", "AG", null, counterAdditionalParameters, true) : CodeCounter.GetNumber("Agent", tenant).ToString(),
+                Code = CodeCounter.GetNumber("Agent", tenant).ToString(),
                 PartnerTypeId = item.Type,
                 UploadingUniqueKey = item.UniqueCode,
                 ReceivablesAccountingCard = item.ReceivablesExternalID,

@@ -28,6 +28,7 @@
     border: 2px solid #cecece;
     cursor: pointer;
     margin-bottom: 25px;
+
 }
 
 .CertTicket:active:not(.Selected) {
@@ -35,6 +36,7 @@
     -moz-box-shadow: inset 0px 0px 11px 0px rgba(50, 50, 50, 0.10);
     box-shadow: inset 0px 0px 11px 0px rgba(50, 50, 50, 0.10);
     border: 2px solid #cecece;
+
 }
 
 .SearchIcon {
@@ -89,6 +91,17 @@
 .hidden {
     opacity: 0;
     visibility: collapse;
+}
+
+.DisbleBox {
+    display: inline-block;
+    border: 1px solid #ffd800;
+    border-radius: 5px;
+    background: #faf5c0;
+    padding: 2px 10px;
+    margin: 5px;
+    color: gray;
+    font-family: sans-serif;
 }
 
 .LogitudeCheckBox input {
