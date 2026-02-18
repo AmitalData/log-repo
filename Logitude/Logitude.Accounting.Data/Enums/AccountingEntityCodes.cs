@@ -20,6 +20,5 @@ namespace Logitude.Accounting.Data.Enums
         public const string Adjustment = "10";
         public const string YearTransfer = "11";
         public const string BankAdjustment = "12";
-        public const string TaxReport = "13";
     }
 }
