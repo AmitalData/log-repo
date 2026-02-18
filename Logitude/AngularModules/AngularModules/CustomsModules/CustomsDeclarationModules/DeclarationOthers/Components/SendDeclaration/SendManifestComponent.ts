@@ -19,7 +19,7 @@ import {CustomsExchangeRatePM} from '../../../../../Customs/EntityPMs/CustomsExc
 import {DeclarationValidator} from '../../../../../Customs/Validators/DeclarationValidator';
 import {DeclarationPMService} from '../../../../../Customs/Services/StandardPMs/DeclarationPMService';
 import {GenericRequestParams} from '../../../../../Customs/DataContract/RequestParams/GenericRequestParams';
-import {HsmStationContext, SendRequestVIA, TestCase} from '../../../../../Customs/DataContract/RequestParams/RequestParamsBase';
+import {SendRequestVIA, TestCase} from '../../../../../Customs/DataContract/RequestParams/RequestParamsBase';
 import {CustomMessageProgressComponent, ShowProgressBarParams} from '../../../../CustomsControls/Components/CustomMessageProgressComponent';
 import { ClientSearchResponseData } from '../../../../../Customs/DataContract/ResponseData/ClientSearchResponseData';
 import {SupplierInvoicePMService} from  '../../../../../Customs/Services/StandardPMs/SupplierInvoicePMService';
@@ -296,16 +296,6 @@ export class SendManifestService {
         sendParams.RequestVIA = this.RequestVIA;
         sendParams.ForcePersonalSign = this.ForcePersonalSign;
         sendParams.TestCase = this._TestCase;
-
-        if (this.EntityPM?.IsCourierDeclaration === true ) {
-            sendParams.HsmStationContext = HsmStationContext.Courier;
-        }
-        else if (this.EntityPM?.Direction === "E") {
-            sendParams.HsmStationContext = HsmStationContext.Export;
-        }
-        else {
-            sendParams.HsmStationContext = HsmStationContext.Import;
-        }
         //let myShowProgressBarParams = new ShowProgressBarParams();
         //myShowProgressBarParams.OnCloseCustomMessageProgressComponentMethod =
         //    (response: any) => {

@@ -18,7 +18,7 @@ export function NavigatesExportWizerd() {
 export function FillSearchField(addExportAttachmentDetails: AddExportAttachmentDetails) {
     cy.FillLogTextBox(AddExportAttachmentSelectors.SearchField, addExportAttachmentDetails.File, true);
     cy.get(AddExportAttachmentSelectors.SearchField).focus();
-    cy.wait(2000);
+    cy.wait(5000);
     cy.get(AddExportAttachmentSelectors.FirstDeclaration).click();
     cy.get(BaseExportSelectors.CustomDocuments).click();
     
@@ -26,12 +26,12 @@ export function FillSearchField(addExportAttachmentDetails: AddExportAttachmentD
 
 export function AddFSIE(addExportAttachmentDetails: AddExportAttachmentDetails) {
     cy.contains('button', 'שאילתא למסמכים').click();
-    cy.wait(500);
+    cy.wait(1000);
     cy.get(AddExportAttachmentSelectors.RedX).click()
     cy.FillLogTextBox(AddExportAttachmentSelectors.CustomsDocId, addExportAttachmentDetails.CustomsDocId, true);
-    cy.wait(1500);
+    cy.wait(3000);
     cy.Click(AddExportAttachmentSelectors.row0,null);
-    cy.wait(1500);
+    cy.wait(3000);
     cy.Click(AddExportAttachmentSelectors.Approve, null);
     
 }

@@ -132,30 +132,17 @@
 
 
                         <tr>
-                           
+                            <!-- AgingForDate -->
+                            <td style="width: 160px; padding-right: 5px;" class="Label">
+                                <LogLabel [ObjectTableName]="'GLAccount'" [TextCode]="'Accounting.General.O.Date'"
+                                    [ObjectFieldName]="'AgingForDate'" [DataContext]="DataContext"></LogLabel>
 
-                            <td style="width: 190px;" class="Label" *ngIf="!IsSalesmanRestricted">                                
-                               
-                                <LogLabel [ObjectTableName]="'GLAccount'" [TextCode]="'GLAccounts.O.ReportType'"
-                                    [ObjectFieldName]="'NumberOfMonths'" [DataContext]="DataContext"></LogLabel>
                             </td>
-
-                            <td style="width: 155px;">
-                                <ul class="FiltersMenu" [class.aboodRTLFilterMenu]="isRTL" float-start>
-                                    <li float-start id="filter_day"
-                                        (click)="FilterByMonthOrDayClicked('filter_day')" style="height: 22px;width: 68.5px"
-                                        [class.SelectedFilter]="monthOrDayFilterSelected === 'filter_day'">
-                                        {{'GLAccounts.O.Daily' | TextCodeTranslationPipe}}
-                                    </li>
-                                    <li float-start id="filter_month"
-                                        (click)="FilterByMonthOrDayClicked('filter_month')" style="height: 22px;width: 68.5px"
-                                        [class.SelectedFilter]="monthOrDayFilterSelected === 'filter_month'">
-                                        {{'GLAccounts.O.Monthly' | TextCodeTranslationPipe}}
-
-                                    </li>
-                                </ul>
+                            <td style="width: 135px;">
+                                <LogDatePicker [ObjectTableName]="'GLAccount'" [ObjectFieldName]="'AgingForDate'"
+                                    [SelectedDateValue]="AgingForDate" [DataContext]="DataContext" [HideColumns]="true"
+                                    (OnBlurEvent)="ValidateDate()"></LogDatePicker>
                             </td>
-        
                             <td style="width: 135px;"></td>
                             <td style="width: 35px;"></td>
 
@@ -260,31 +247,20 @@
                         </tr>
 
                         <tr>
-                            <td style="width: 190px; padding: 0 10px;" class="Label" *ngIf="!IsSalesmanRestricted">
-
-
-                                <ul class="FiltersMenu" [class.aboodRTLFilterMenu]="isRTL" float-start>
-                                    <li float-start id="filter_accounting"
-                                        (click)="FilterDateClicked('filter_accounting')" style="height: 22px;width: 85px;"
-                                        [class.SelectedFilter]="filterDateSelectedValue === 'filter_accounting'">
-                                        {{'GLAccounts.O.filter_accounting' | TextCodeTranslationPipe}}
-                                    </li>
-                                    <li float-start id="filter_due"
-                                        (click)="FilterDateClicked('filter_due')" style="height: 22px;width: 85px;"
-                                        [class.SelectedFilter]="filterDateSelectedValue === 'filter_due'">
-                                        {{'GLAccounts.O.filter_due' | TextCodeTranslationPipe}}
-                                    </li>
-                                </ul>
-
+                            <!-- SalesmanUserId -->
+                            <td style="padding-right: 5px;" class="Label">
+                                <LogLabel [ObjectFieldName]="'SalesmanUserId'" [ObjectTableName]="'GLAccount'"
+                                    [Text]="'Accounting.General.O.Salesman'| TextCodeTranslationPipe"
+                                    [DataContext]="DataContext"></LogLabel>
                             </td>
-                            <td style="width: 155px;">
-                                <AdvancedDatePicker *ngIf="monthOrDayFilterSelected === 'filter_day'" style="display: block;width: 155px;" float-start
-                                    [ObjectFieldName]="'AgingForDate'" [ObjectTableName]="'GLAccount'" [NoObjectField]="false"
-                                    [DataContext]="DataContext" [InputType]="'date'" [TimeMode]="'12'"
-                                    [SelectedDateValue]="AgingForDate" [ShowToolTip]="true"></AdvancedDatePicker> 
-                                <monthpicker *ngIf="monthOrDayFilterSelected === 'filter_month'" [SelectedDate]="AgingForDate" [PickerType]="'Month'" (OnChange)="AgingForDateChanged($event)"></monthpicker>
+                            <td style="">
+                                <!--[ObjectFieldName]="'SalesmanUserId'"-->
+                                <LogLov [ShowInActive]="true" [ObjectFieldName]="'Salesman'" [ObjectTableName]="'GLAccount'"
+                                    [DataContext]="DataContext" [LookUpTableName]="'User'" [SelectedValue]="Salesman"
+                                    [QueryFilterItems]="SalesmanFilterItems" [HideColumns]="true">
+                                </LogLov>
                             </td>
-                            <td></td>
+                            <td style=""></td>
                             <td></td>
 
 
@@ -394,63 +370,11 @@
                             </td>
                             <td style="width: 35px;"></td>
 
-                            <td  style="float: right; margin-right: 90px">
-                                <app-run-report-toggle [isRTL]="isRTL" [IsSchedulerReport]="IsSchedulerReport" (runReport)="RunButtonClicked($event)"></app-run-report-toggle>
-                            </td>
-                        </tr>
-
-
-                        <tr>
-                            <!-- SalesmanUserId -->
-                            <td style="padding-right: 5px;" class="Label">
-                                <LogLabel [ObjectFieldName]="'SalesmanUserId'" [ObjectTableName]="'GLAccount'"
-                                    [Text]="'Accounting.General.O.Salesman'| TextCodeTranslationPipe"
-                                    [DataContext]="DataContext"></LogLabel>
-                            </td>
-                            <td style="">
-                                <!--[ObjectFieldName]="'SalesmanUserId'"-->
-                                <LogLov [ShowInActive]="true" [ObjectFieldName]="'Salesman'" [ObjectTableName]="'GLAccount'"
-                                    [DataContext]="DataContext" [LookUpTableName]="'User'" [SelectedValue]="Salesman"
-                                    [QueryFilterItems]="SalesmanFilterItems" [HideColumns]="true">
-                                </LogLov>
-                            </td>
-                            <td></td>
-                            <td></td>
-                            <!-- 4 -->
-                            <td style="">
-                                <LogLabel [ObjectTableName]="'GLAccount'" [TextCode]="'GLAccount.O.SortBy'"
-                                    [ObjectFieldName]="'Balance'" [NoObjectField]="true" [DataContext]="DataContext">
-                                </LogLabel>
-                            </td>
-
-                            <!-- 5 -->
-                            <td style="">
-                                <ComboBox [ItemsSource]="SortTypes" (SelectedItemChanged)="SortTypeChanged($event)"
-                                    [SelectedItem]="SelectedSortTypeItem" style="display: block;width: 120px;"
-                                    [Binding]="showLocal ? 'LocalName' : 'EnglishName'"></ComboBox>
-                            </td>
-
-                            <!-- 6 -->
-                            <td style="">
-                                <div style="display: inline-block;padding: 0px 7px;">
-                                    <RadioButton float-start [Name]="'Ascending'"
-                                        [IsChecked]="SelectedSortDirectionCode == 'Ascending'"
-                                        (Checked)="SelectedSortDirectionCode = 'Ascending'" [Text]="'Ascending'">
-                                    </RadioButton>
-                                </div>
-                                <div style="display: inline-block;padding: 0px 7px;">
-                                    <RadioButton float-start [Name]="'Descending'"
-                                        [IsChecked]="SelectedSortDirectionCode == 'Descending'"
-                                        (Checked)="SelectedSortDirectionCode = 'Descending'" [Text]="'Descending'">
-                                    </RadioButton>
-                                </div>
-
-                            </td>
-
-
 
 
                         </tr>
+
+
                         <tr>
                             <!-- Category -->
                             <td style="padding-right: 5px;" class="Label">
@@ -512,16 +436,60 @@
 
 
                             </td>
-                            <td></td>                           
+                            <td></td>
+                            <!-- 4 -->
+                            <td style="">
+                                <LogLabel [ObjectTableName]="'GLAccount'" [TextCode]="'GLAccount.O.SortBy'"
+                                    [ObjectFieldName]="'Balance'" [NoObjectField]="true" [DataContext]="DataContext">
+                                </LogLabel>
+                            </td>
 
-                         
+                            <!-- 5 -->
+                            <td style="">
+                                <ComboBox [ItemsSource]="SortTypes" (SelectedItemChanged)="SortTypeChanged($event)"
+                                    [SelectedItem]="SelectedSortTypeItem" style="display: block;width: 120px;"
+                                    [Binding]="showLocal ? 'LocalName' : 'EnglishName'"></ComboBox>
+                            </td>
+
+                            <!-- 6 -->
+                            <td style="">
+                                <div style="display: inline-block;padding: 0px 7px;">
+                                    <RadioButton float-start [Name]="'Ascending'"
+                                        [IsChecked]="SelectedSortDirectionCode == 'Ascending'"
+                                        (Checked)="SelectedSortDirectionCode = 'Ascending'" [Text]="'Ascending'">
+                                    </RadioButton>
+                                </div>
+                                <div style="display: inline-block;padding: 0px 7px;">
+                                    <RadioButton float-start [Name]="'Descending'"
+                                        [IsChecked]="SelectedSortDirectionCode == 'Descending'"
+                                        (Checked)="SelectedSortDirectionCode = 'Descending'" [Text]="'Descending'">
+                                    </RadioButton>
+                                </div>
+
+                            </td>
+
+
+                            <td style="width: 100px;"></td>
+                            <td style="width: 35px;"></td>
+
+
+                            <td  style="padding-right: 100px;">
+                                <div style="width: 90px;">
+                                    <button class="GreenButton" (click)="RunButtonClicked()">
+                                        {{RunReportTitle}}
+                                    </button>
+                                </div>
+                            </td>
+
 
 
                         </tr>
                         <tr style="height: 15px;">
                             
                         </tr>
-                       
+                        <tr style="height: 15px;">
+                            <td></td>
+                        </tr>
 
                     </table>
                     <div *ngIf="!isReady" style="padding-top: 20px;padding-left: 20px;">
