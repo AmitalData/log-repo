@@ -14,7 +14,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         CarrierServiceLineRepository repository;
 
-
+        public CarrierServiceLineQuery()
+        {
+            repository = new CarrierServiceLineRepository();
+        }
 
         public CarrierServiceLineQuery(int tenant)
         {

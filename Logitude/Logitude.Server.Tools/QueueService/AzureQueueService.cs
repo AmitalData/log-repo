@@ -18,7 +18,7 @@ namespace Logitude.Server.Tools.QueueService
         private string QueueCode { get; set; }
         private QueueClient QueueClient { get; set; }
         private BrokeredMessage CurrentMessage { get; set; }
-        public void InitializeQueue(string queueCode, int tenant, string queueDefinitionGroup = null)
+        public void InitializeQueue(string queueCode, int tenant)
         {
             this.Tenant = tenant;
             this.QueueCode = queueCode;

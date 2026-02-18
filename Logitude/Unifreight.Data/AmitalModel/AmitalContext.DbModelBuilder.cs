@@ -38,15 +38,11 @@ namespace Unifreight.Data.AmitalModel
         public static AmitalContext Create(int tenantSeed, DbConnection connection)
         {
             string ConnSchemaUserId="";
-            var injector = LogitudeSettings.GetLogitudeCustomsSettingsMInject;
-            var settings = injector != null ? injector(tenantSeed) : null;
-            var dbConnectionInfo = settings == null || settings.IsConnectedToUniFreight ? connection.ConnectionString : settings.UnfConnectionString;
-            if (settings != null && settings.IsConnectedToUniFreight)
+            if (LogitudeSettings.GetLogitudeCustomsSettingsMInject(tenantSeed).IsConnectedToUniFreight)
             {
-                
-                ConnSchemaUserId =
+                 ConnSchemaUserId =
             _ModelName.GetOrAdd(
-                Tuple.Create(tenantSeed, dbConnectionInfo),
+                Tuple.Create(tenantSeed, connection.ConnectionString),
                 t =>
                 {
                     string ConnSchemaUserId1 = DbContextBaseUtil.GetSchemaAMITAL_DB(tenantSeed);
@@ -59,7 +55,7 @@ namespace Unifreight.Data.AmitalModel
                      ConnSchemaUserId = "dbo";
             }
             var compiledModel = _ModelCache.GetOrAdd(
-                Tuple.Create(tenantSeed, dbConnectionInfo),
+                Tuple.Create(tenantSeed, connection.ConnectionString),
                 t =>
                 {
                     DbModelBuilder modelBuilder  =null;

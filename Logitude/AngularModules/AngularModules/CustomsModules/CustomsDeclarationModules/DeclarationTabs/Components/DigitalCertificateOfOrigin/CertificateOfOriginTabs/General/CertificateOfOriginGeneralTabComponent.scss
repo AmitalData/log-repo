@@ -11,23 +11,35 @@
     opacity: 0.6;
 }
 
+// :host ::ng-deep .InputDiv {
+
+//     max-height: 50px !important;
+//     height: 50px !important;
+// }
 $border-color: #AAAAAA;
+/* Updated border color */
 $border-width: 1px;
 $border-radius: 5px;
+/* Increased border-radius for more rounded corners */
 $spacing: 0px;
+/* Space between boxes */
 
 .boxBorderRightTop {
     border-top: $border-width solid $border-color;
     border-right: $border-width solid $border-color;
     border-radius: 0 $border-radius 0 0;
+    /* Only top right corner rounded */
     margin-right: $spacing;
+    /* Add spacing on the right */
     padding-right: 5px;
+    /* Add padding to the right */
 }
 
 .boxBorderRightBottom {
     border-bottom: $border-width solid $border-color;
     border-right: $border-width solid $border-color;
     border-radius: 0 0 $border-radius 0;
+    /* Only bottom right corner rounded */
     margin-right: $spacing;
     margin-bottom: 5px;
     padding-right: 5px;
@@ -37,9 +49,11 @@ $spacing: 0px;
     border-top: $border-width solid $border-color;
     border-left: $border-width solid $border-color;
     border-radius: $border-radius 0 0 0;
+    /* Only top left corner rounded */
     margin-left: $spacing;
     margin-top: $spacing;
     padding-left: 5px;
+    /* Add padding to the left */
     height: 100%;
 }
 
@@ -47,9 +61,11 @@ $spacing: 0px;
     border-bottom: $border-width solid $border-color;
     border-left: $border-width solid $border-color;
     border-radius: 0 0 0 $border-radius;
+    /* Only bottom left corner rounded */
     margin-left: $spacing;
     margin-bottom: 10px;
     padding-left: 5px;
+    /* Add padding to the left */
     height: 100%;
 }
 
@@ -78,6 +94,7 @@ $spacing: 0px;
     border: 1px solid #ffd800;
     border-radius: 5px;
     background: #faf5c0;
+    /*fbebbc*/
     padding: 4px 10px;
     color: gray;
     font-family: sans-serif;
@@ -142,50 +159,4 @@ $spacing: 0px;
 .LogLovInputDiv:hover:not(:disabled),
 .LogLovInputDiv:focus:not(:disabled) {
     border: 1px solid #3BB3E2;
-}
-
-.actionLineContainer {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-}
-
-.deleteButtonWrapper {
-    width: 22px;
-    height: 20px;
-    float: right;
-    padding-top: 2px;
-    display: block;
-}
-
-.width180 {
-    width: 180px;
-}
-
-.width130 {
-    width: 130px;
-}
-
-.width30 {
-    width: 30px;
-}
-
-.textRight {
-    text-align: right;
-}
-
-.paddingRight5 {
-    padding-right: 5px;
-}
-
-.floatRight {
-    float: right;
-}
-
-.width890 {
-    width: 890px;
-}
-
-.width165 {
-    width: 165px;
 }

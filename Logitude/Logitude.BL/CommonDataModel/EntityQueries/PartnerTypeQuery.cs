@@ -16,7 +16,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         PartnerTypeRepository repository;
 
-
+        public PartnerTypeQuery()
+        {
+            repository = new PartnerTypeRepository(); 
+        }
 
         public PartnerTypeQuery(int tenant)
         {

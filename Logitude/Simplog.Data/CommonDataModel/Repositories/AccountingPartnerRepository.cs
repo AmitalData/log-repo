@@ -17,6 +17,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
             commonDataContext = context;
         }
 
+        public AccountingPartnerRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
 
         public AccountingPartnerRepository(int tenant)
         {

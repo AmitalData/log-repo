@@ -53,10 +53,8 @@ export class ReportTemplateComponent implements OnInit {
 
     MessageReportsTemplatePMLists: ReportsTemplatePM[] = [];
     CurrentMessageReportsTemplatePM: ReportsTemplatePM;
-    CurrentNoStimExcelReportsTemplate: ReportsTemplatePM;
 
     ExcellReportsTemplatePMLists: ReportsTemplatePM[] = [];
-    NoStimExcellReportsTemplateLists: ReportsTemplatePM[] = [];
     CurrentExcelReportsTemplatePM: ReportsTemplatePM;
 
 
@@ -105,7 +103,7 @@ export class ReportTemplateComponent implements OnInit {
 
 
     private RegularReportTemplateEnabled() : boolean {
-        return SessionLocator.LoggedUserPM.IsCustomerCare || ObjectsLocator.GlobalSetting?.DeploymentStage == "Dev" ||
+        return SessionLocator.LoggedUserPM.IsCustomerCare || ObjectsLocator.GlobalSetting.DeploymentStage == "Dev" ||
          SessionLocator.LoggedUserPM.IsDistributor || FeatureLocator.HasFeaturePermession("ReportsTemplate", "REGULARREPORTTEMPLATE");
     }
 
@@ -121,7 +119,6 @@ export class ReportTemplateComponent implements OnInit {
         this.ReportsTemplatePMLists = [];
         this.MessageReportsTemplatePMLists = [];
         this.ExcellReportsTemplatePMLists = [];
-        this.NoStimExcellReportsTemplateLists = [];
         this.CurrentSession.StartBusyIndicatorLoading();
         this.reportsTemplatePMExtendedService.GetReportsTemplatePMsByReportId(this.EntityPM.Id).subscribe((res: any) => {
             var pmResponse: ServiceResponse = res;
@@ -144,7 +141,6 @@ export class ReportTemplateComponent implements OnInit {
         this.SetTemplateAsDefault(this.ReportsTemplatePMLists, this.EntityPM.DefaultTemplateId);
         this.SetTemplateAsDefault(this.MessageReportsTemplatePMLists, this.EntityPM.DefaultMessageTemplateId);
         this.SetTemplateAsDefault(this.ExcellReportsTemplatePMLists, this.EntityPM.DefaultExcelTemplateId);
-        this.SetTemplateAsDefault(this.NoStimExcellReportsTemplateLists, this.EntityPM.DefaultExcelNoStimId);
     }
 
     AddReportsTemplateToList(reportsTemplate: any) {
@@ -155,12 +151,8 @@ export class ReportTemplateComponent implements OnInit {
         if (reportsTemplate.TemplateType == "M" && AppTool.IsNullOrEmpty(reportsTemplate.EntityId)) {
             this.MessageReportsTemplatePMLists.push(reportsTemplate);
             return;
-        } if (reportsTemplate.TemplateType == "E" && reportsTemplate.UseStimul) {
+        } if (reportsTemplate.TemplateType == "E") {
             this.ExcellReportsTemplatePMLists.push(reportsTemplate);
-            return;
-        }
-        if (reportsTemplate.TemplateType == "E" && !reportsTemplate.UseStimul) {
-            this.NoStimExcellReportsTemplateLists.push(reportsTemplate);
             return;
         }
     }
@@ -198,16 +190,6 @@ export class ReportTemplateComponent implements OnInit {
 
         if (item.InActive) item.InActive = false;
         else item.InActive = true;
-
-
-        this.UpdateReportsTemplatePM(item);
-
-    }
-
-    CheckUseStimulclick(item: ReportsTemplatePM) {
-
-        if (item.UseStimul) item.UseStimul = false;
-        else item.UseStimul = true;
 
 
         this.UpdateReportsTemplatePM(item);
@@ -330,13 +312,7 @@ export class ReportTemplateComponent implements OnInit {
         logWindow.Title = "Edit Excel Template";
 
         logWindow.WindowArgs = windowArgs;
-        if (!item.UseStimul){
-            logWindow.Show("./Report/Components/NoStimulReportTemplateComponent"); 
-            logWindow.Title = "Edit Excel Templates (Native)";
-
-        }
-        else
-            logWindow.Show("./Report/Components/ExcelReportTemplateComponent");
+        logWindow.Show("./Report/Components/ExcelReportTemplateComponent");
 
     }
 
@@ -367,14 +343,13 @@ export class ReportTemplateComponent implements OnInit {
         });
     }
 
-    SetAsDefaultButtonClicked(type: string, useStimul: boolean = true) {
+    SetAsDefaultButtonClicked(type: string) {
 
-        var currentTemplate: ReportsTemplatePM = type == "R" ? this.CurrentReportsTemplatePM : type == "M" ? 
-            this.CurrentMessageReportsTemplatePM : useStimul ? this.CurrentExcelReportsTemplatePM : this.CurrentNoStimExcelReportsTemplate;
+        var currentTemplate: ReportsTemplatePM = type == "R" ? this.CurrentReportsTemplatePM : type == "M" ? this.CurrentMessageReportsTemplatePM : this.CurrentExcelReportsTemplatePM;
 
         if (currentTemplate) {
             if (!currentTemplate.InActive) {
-                var tempate: ReportsTemplatePM = this.GetDefaultTemplate(type, useStimul);
+                var tempate: ReportsTemplatePM = this.GetDefaultTemplate(type);
                 if (tempate) {
                     tempate.IsDefault = false;
                 }
@@ -382,8 +357,7 @@ export class ReportTemplateComponent implements OnInit {
                 currentTemplate.IsDefault = true;
                 if (type == "R") this.EntityPM.DefaultTemplateId = currentTemplate.Id;
                 else if (type == "M") this.EntityPM.DefaultMessageTemplateId = currentTemplate.Id;
-                else if (type == "E" && useStimul) this.EntityPM.DefaultExcelTemplateId = currentTemplate.Id;
-                else if (type == "E" && !useStimul) this.EntityPM.DefaultExcelNoStimId = currentTemplate.Id;
+                else if (type == "E") this.EntityPM.DefaultExcelTemplateId = currentTemplate.Id;
             }
             else this.ShowMessage("Please note that you can't set an inactive template as default");
 
@@ -391,7 +365,7 @@ export class ReportTemplateComponent implements OnInit {
 
     }
 
-    GetDefaultTemplate(type: string, useStimul: boolean = true): ReportsTemplatePM {
+    GetDefaultTemplate(type: string): ReportsTemplatePM {
         if (type == "R") {
             return this.ReportsTemplatePMLists.filter(d => d.Id == this.EntityPM.DefaultTemplateId)[0];
         }
@@ -400,32 +374,30 @@ export class ReportTemplateComponent implements OnInit {
             return this.MessageReportsTemplatePMLists.filter(d => d.Id == this.EntityPM.DefaultMessageTemplateId)[0];
         }
 
-        if (type == "E" && useStimul) {
+        if (type == "E") {
             return this.ExcellReportsTemplatePMLists.filter(d => d.Id == this.EntityPM.DefaultExcelTemplateId)[0];
-        }
-        if (type == "E" && !useStimul) {
-            return this.NoStimExcellReportsTemplateLists.filter(d => d.Id == this.EntityPM.DefaultExcelNoStimId)[0];
         }
     }
 
 
-    AddReportTemplateButtonClicked(type: string, useStimul: boolean = true) {
+    AddReportTemplateButtonClicked(type: string) {
+
+
         var windowArgs: any = {};
         windowArgs.DataViewModel = this;
         windowArgs.TemplateType = type;
-        windowArgs.UseStimul = useStimul;
         var logWindow = new LogitudeWindow();
         logWindow.Width = 700;
-        logWindow.Height = 600;
+        logWindow.Height = 500;
         logWindow.Title = type == "R" ? "New Report Template" : type == "M" ? "New Message Template" : "New Excel Report Template";
         logWindow.WindowArgs = windowArgs;
+
         logWindow.Show("./Report/Components/NewReportsTemplateComponent");
         logWindow.WindowClosed.subscribe(($event: any) => {
             if ($event) {
-                this.IsChange = true;
-                this.Refresh();
             }
         });
+
     }
 
 
@@ -443,11 +415,8 @@ export class ReportTemplateComponent implements OnInit {
                         }
                         this.ReportsTemplatePMLists.push(result);
                         this.CurrentReportsTemplatePM = result;
-                    } else if (item.TemplateType == "E" && item.UseStimul) {
+                    } else if (item.TemplateType == "E") {
                         this.AddTemplateToExcelList(result);
-                    }
-                    else if (item.TemplateType == "E" && !item.UseStimul) {
-                        this.AddTemplateToNoStimExcelList(result);
                     }
 
                 }
@@ -464,17 +433,6 @@ export class ReportTemplateComponent implements OnInit {
         this.CurrentExcelReportsTemplatePM = reportsTemplate;
         if (this.ExcellReportsTemplatePMLists.length == 1) {
             this.SetAsDefaultButtonClicked(reportsTemplate.TemplateType);
-        }
-    }
-
-    AddTemplateToNoStimExcelList(reportsTemplate: ReportsTemplatePM) {
-        if (!this.NoStimExcellReportsTemplateLists) {
-            this.NoStimExcellReportsTemplateLists = [];
-        }
-        this.NoStimExcellReportsTemplateLists.push(reportsTemplate);
-        this.CurrentNoStimExcelReportsTemplate = reportsTemplate;
-        if (this.NoStimExcellReportsTemplateLists.length == 1) {
-            this.SetAsDefaultButtonClicked(reportsTemplate.TemplateType, false);
         }
     }
 
