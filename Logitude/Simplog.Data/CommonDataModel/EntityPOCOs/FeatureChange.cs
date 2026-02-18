@@ -19,6 +19,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string UserId { get; set; }
         public string RoleId { get; set; }
         public string PackageCode { get; set; }
+        public string Notes { get; set; }
         public string SearchFields { get; set; }
 
         [ForeignKey("UserId")]

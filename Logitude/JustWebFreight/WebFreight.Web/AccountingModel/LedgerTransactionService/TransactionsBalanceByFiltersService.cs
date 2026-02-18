@@ -37,11 +37,6 @@ namespace WebFreight.Web.AccountingModel.LedgerTransactionService
 
                 var includeRelatedCurrenciesAccount = filters_list.Where(d => d.FieldName == "IncludeRelatedCurrenciesAccount").FirstOrDefault().FieldValue;
                 var includeChildAccounts = filters_list.Where(d => d.FieldName == "IncludeChildAccounts").FirstOrDefault().FieldValue;
-                var useTaxreportFilter = filters_list.Where(d => d.FieldName == "UseTaxreportFilter").FirstOrDefault().FieldValue;
-                var taxReportId = filters_list.Where(d => d.FieldName == "TaxReportId").FirstOrDefault()?.FieldValue;
-                var notIncludedInAnyTaxReport = filters_list.Where(d => d.FieldName == "NotIncludedInAnyTaxReport").FirstOrDefault()?.FieldValue;
-
-
                 string _dateTypeCode = filters_list.Where(d => d.FieldName == "DateTypeCode").FirstOrDefault()?.FieldValue.ToString();
                 
                 SetSecondeDateFilter(LTBFilter, filters_list);
@@ -70,12 +65,6 @@ namespace WebFreight.Web.AccountingModel.LedgerTransactionService
                 LTBFilter.IncludeRelatedCurrenciesAccount = Convert.ToBoolean(includeRelatedCurrenciesAccount);
                 LTBFilter.IncludeChildAccounts = Convert.ToBoolean(includeChildAccounts);
                 LTBFilter.DateTypeCode = _dateTypeCode;
-                LTBFilter.UseTaxreportFilter = Convert.ToBoolean(useTaxreportFilter);
-                LTBFilter.TaxreportId = taxReportId?.ToString();
-                LTBFilter.NotIncludedInAnyTaxReport = Convert.ToBoolean(notIncludedInAnyTaxReport);
-
-
-
             }
             var accountingContext = AccountingContext.GetContext(LTBFilter.Tenant);
             var ledgerTransactionBalanceService = new LedgerTransactionBalanceService(accountingContext, LTBFilter);
