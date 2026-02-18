@@ -859,7 +859,19 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 myPaymentOrderLineUpdateService.Update(item, false);
             }
         }
-      
+
+        private void DeletedPaymentOrderConnectionTables(PaymentOrderConnectionTableUpdateService paymentOrderConnectionTableUpdateService, string connectedEntityCode)
+        {
+            foreach (var paymentItem in _PaymentOrderPM.PaymentOrderConnectionTables)
+            {
+                // Delete old connection if it from the same type 
+                if (paymentItem.ConnectedEntityCode == connectedEntityCode)
+                {
+                    paymentItem.ChangeSetOp = ChangeSetOperation.Delete;
+                    paymentOrderConnectionTableUpdateService.Update(paymentItem, false);
+                }
+            }
+        }
     }
 
     public class AnalyzePaymentDocumentManager

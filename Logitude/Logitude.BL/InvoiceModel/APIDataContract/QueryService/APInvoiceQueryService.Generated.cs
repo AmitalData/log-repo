@@ -203,8 +203,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
 				   temp.EntityReference = MyEntityPM.MainEntityReference;
                    temp.ConfirmationNumber = MyEntityPM.ConfirmationNumber;
 				   temp.VendorGLAccount = MyEntityPM.VendorGLAccountId;
-				   temp.IsPrepaidExpenses = MyEntityPM.IsPrepaidExpenses;
-                if (MyEntityPM.TotalVATs?.Any() == true)
+				if(MyEntityPM.TotalVATs?.Any() == true)
 				{
 					 APInvoiceTotalVATQueryService APInvoiceTotalVATService10 = new APInvoiceTotalVATQueryService(Tenant);
 					 temp.TotalVATs = APInvoiceTotalVATService10.APInvoiceTotalVATDataMapping(MyEntityPM.TotalVATs,Tenant,ComputingPartnerName);
@@ -668,10 +667,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
 
 						temp.ExternalAccountingEntityId = MyEntity.ExternalAccountingEntityId;
 
-					     temp.IsPrepaidExpenses = MyEntity.IsPrepaidExpenses;
-
-
-                }  
+					}  
 
 					
 					if(string.IsNullOrEmpty(temp.Id))
