@@ -70,17 +70,9 @@ export class HomeComponent implements OnDestroy{
     isProcessMenuVisible: boolean = false;
     currentProcessId : string = "";
     public isPinned: boolean = false;
-    countCompletedProcesses : number = null;
+    countCompletedProcesses : number = 0;
     selectedTab: string = '0';
 
-    private justOpened = false;
-    @ViewChild('processMenu') processMenuRef!: ElementRef;
-    @HostListener('document:click', ['$event'])
-    onClickOutside(event: MouseEvent) {
-        if (!this.justOpened && this.processMenuRef && !this.processMenuRef.nativeElement.contains(event.target)) {
-            this.CloseMenu();
-        }
-    }
 
     constructor(private processMenuService: ProcessMenuService) {
         this.Tenant = SessionLocator.Tenant;
@@ -163,8 +155,8 @@ export class HomeComponent implements OnDestroy{
         this.LayoutDirection = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
 
         if (ObjectsLocator.GlobalSetting) {
-          // if (ObjectsLocator.GlobalSetting?.WorkEnvironment == "customs") {
-            if (ObjectsLocator.GlobalSetting?.WorkEnvironment == "customs" || !ObjectsLocator.LoggedUserPM.DontShowLocal) {
+          // if (ObjectsLocator.GlobalSetting.WorkEnvironment == "customs") {
+            if (ObjectsLocator.GlobalSetting.WorkEnvironment == "customs" || !ObjectsLocator.LoggedUserPM.DontShowLocal) {
                 this.SystemFontFamily = 'Arial'; //'OpenSans-Regular';
                 isNewSignupTenant = false;
             }
@@ -181,36 +173,13 @@ export class HomeComponent implements OnDestroy{
     InitializeChargifyComponents() {
         this.IsChargifyAccount = SessionLocator.TenantManagementJS.PaymentChannelCode == "CY";
     }
-
-    private previousStatuses = new Map<string, string>();
-    public NotViewedItems = new Set<string>();
-    public setCountBlink = false;
-
     InitializeProcess(){
         this.processMenuService.LoadMenuItems();
         this.processMenuService.processCount$.subscribe(count => {
-            if (this.countCompletedProcesses != null && count > this.countCompletedProcesses ) {
-                this.setCountBlink = true;
-            }
             this.countCompletedProcesses  = count;
-        });
-
-        this.processMenuService.relatedProcessSubject.subscribe(items => {
-            items.forEach(item => {
-                // if the report was in Progress/Waiting and now it is in Done, set it as not viewed
-                const prevStatus = this.previousStatuses.get(item.Id);
-                if ((prevStatus === "W" || prevStatus === "P") && item.StatusCode === "D") {
-                    this.NotViewedItems.add(item.Id);
-                }
-                this.previousStatuses.set(item.Id, item.StatusCode);
-            });
-        });
+          });
+      
     }
-
-    ViewedItem(id) {
-        this.NotViewedItems.delete(id);
-    }
-
     USDLastUpdate=null;
     GetCurrencyRateLastUpdate(){
         var myService: RatesTableExtendedService = new RatesTableExtendedService();
@@ -330,7 +299,7 @@ export class HomeComponent implements OnDestroy{
             this.IsDataBackupVisible = true;
         }
 
-        if (SessionLocator.LoggedUserPM.IsCustomerCare || ObjectsLocator.GlobalSetting?.DeploymentStage == "Dev") {
+        if (SessionLocator.LoggedUserPM.IsCustomerCare || ObjectsLocator.GlobalSetting.DeploymentStage == "Dev") {
             this.IsFillLocalStorageVisible = true;
         }
 
@@ -348,7 +317,7 @@ export class HomeComponent implements OnDestroy{
             this.IfBlueSnapContracts = true;
         }
 
-        if (SessionLocator.LoggedUserPM.IsCustomerCare || ObjectsLocator.GlobalSetting?.DeploymentStage === "Dev" ) {
+        if (SessionLocator.LoggedUserPM.IsCustomerCare || ObjectsLocator.GlobalSetting.DeploymentStage === "Dev" ) {
             this.IsSetWorkerRoleNameVisible = true;
         }
 
@@ -843,15 +812,12 @@ export class HomeComponent implements OnDestroy{
     get IsProcessMenuVisible() { return this.isProcessMenuVisible; }
     set IsProcessMenuVisible(newValue: boolean) {
        
-        this.setCountBlink = false;
+       
         this.isProcessMenuVisible = newValue;
         
         if(!newValue){
             this.isPinned = false;
-        }
-        else {
-            this.justOpened = true;
-            setTimeout(() => this.justOpened = false);
+
         }
     }
     get CurrentProcessId () { return this.currentProcessId ; }
@@ -874,7 +840,6 @@ export class HomeComponent implements OnDestroy{
     IsProcessMenuVisibleChanged() {
         this.IsProcessMenuVisible =!this.isProcessMenuVisible;
         this.CurrentProcessId = "";
-        this.setCountBlink = false;
     }
     TogglePinMenu(event: any) {
        
@@ -2214,8 +2179,7 @@ export class HomeComponent implements OnDestroy{
         d.setTime(d.getTime() + expireDays * 24 * 60 * 60 * 1000);
         let expires: string = `expires=${d.toUTCString()}`;
         let cpath: string = path ? `; path=${path}` : '';
-        const isSecure = (window.location.protocol === "https:");
-        document.cookie = `${name}=${value}; ${expires}${cpath}${isSecure ? "; Secure" : ""}; SameSite=Lax`;
+        document.cookie = `${name}=${value}; ${expires}${cpath}`;
     }
 
     ViewReleaseNotes() {

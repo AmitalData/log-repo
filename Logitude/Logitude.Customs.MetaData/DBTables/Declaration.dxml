@@ -455,7 +455,6 @@
   </Column>
   <Column
     Name="MainImporterEntitlemntTypeCode"
-    ShortName="MainImporterEntiTypeCode"
     Type="varchar"
     Size="3">
     <Constraints
@@ -890,7 +889,6 @@
   </Column>
   <Column
     Name="CancelRequestReasonExplanation"
-    ShortName="CancelRequestReasonExpl"
     Type="nvarchar"
     Size="512">
     <Constraints
@@ -1054,7 +1052,6 @@
   </Column>
   <Column
     Name="ExportCloseAmendRequestNumber"
-    ShortName="ExportCloseAmendReqNum"
     OldNames="ExportCloseAmendmentRequestNumber"
     Type="varchar"
     Size="9">
@@ -1063,7 +1060,6 @@
   </Column>
   <Column
     Name="ExportCloseAmendmentStatus"
-    ShortName="ExportCloseAmenStatus"
     Type="varchar"
     Size="2">
     <Constraints
@@ -1124,12 +1120,6 @@
     Name="ShipmentId"
     Type="varchar"
     Size="15">
-    <Constraints
-      Nullable="true" />  
-  </Column>
-  <Column
-    Name="RowVer"
-    Type="timestamp">
     <Constraints
       Nullable="true" />
   </Column>
@@ -1252,8 +1242,7 @@
     ForeignKeyColumn="MainImporterEntitlemntTypeCode"
     ReferencedTable="EntitlementTypes"
     ReferencedColumn="Code"
-    ReferencedTableSchema="Customs"
-    Ignore="true" />
+    ReferencedTableSchema="Customs" />
   <Relation
     ForeignKeyColumn="StorageStatusCode"
     ReferencedTable="StorageStatuses"
@@ -1363,13 +1352,17 @@
     ForeignKeyColumn="ExportCloseAmendmentStatus"
     ReferencedTable="AmendmentRequestStatuses"
     ReferencedColumn="Code"
-    ReferencedTableSchema="Customs"
-    Ignore="true" />
+    ReferencedTableSchema="Customs" />
   <Relation
     ForeignKeyColumn="SystemConnection"
     ReferencedTable="NUniclouds"
     ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="ShipmentId"
+    ReferencedTable="Shipments"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
   <Index
     Columns="AmendmentOriginalDeclartation" />
   <Index

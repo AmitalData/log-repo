@@ -30,9 +30,7 @@ namespace CommunicationWorkerRole.Tasks
         public string MessageId { get; set; }
         string TaskId;
         string TaskHistoryId;
-        protected  int Tenant;
-        public bool IsStartedFromUI = false;
-
+        protected int Tenant;
         TaskSchedulerHistoryPM TaskSchedulerHistory;
         ConcurrentQueueService<LogQueueMessage> queueService = new ConcurrentQueueService<LogQueueMessage>("LogMessagesQueue");
          public TaskManagerBase(string Id, int tenant)
@@ -89,8 +87,7 @@ namespace CommunicationWorkerRole.Tasks
                     Task.LastRunEndTimeUTC = LastExecutionHistory.EndDateTimeUTC;
                     Task.LastRunResult = LastExecutionHistory.LogType;
                     SchedulerHelper SchedulerHelper = new SchedulerHelper();
-                    if(!IsStartedFromUI)
-                         SchedulerHelper.AddSchedulerQueue(Task);
+                    SchedulerHelper.AddSchedulerQueue(Task);
                   
 					scope.Complete();
                 }

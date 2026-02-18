@@ -31,7 +31,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         public override void Update(DCAInUCB8250WithResponseContentHeader customResponse, GenericRequestParams requestParams)
         {
-            FeatureQuery featureQuery = new FeatureQuery(requestParams.Tenant);
+            FeatureQuery featureQuery = new FeatureQuery();
 
             var features = featureQuery.GetAllowedFeaturesForLoggedUser(requestParams.LoggingUserId, requestParams.Tenant);
 

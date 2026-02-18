@@ -170,9 +170,9 @@ namespace Logitude.BL.CommonDataModel.BusinessUnitFilters
 
         public IQueryable<CardList> RunFilter(IQueryable<CardList> iQueryableData)
         {
-            var iQueryableData_NotCustomers = iQueryableData.Where(d => (d.PartnerTypeId != "CS" && d.PartnerTypeId != "PO" )|| ( d.PartnerTypeId =="CS" && !d.IsCustomer));
+            var iQueryableData_NotCustomers = iQueryableData.Where(d => d.PartnerTypeId != "CS" && d.PartnerTypeId != "PO");
 
-            iQueryableData = iQueryableData.Where(d => (d.PartnerTypeId == "CS" && d.IsCustomer )|| d.PartnerTypeId == "PO");
+            iQueryableData = iQueryableData.Where(d => d.PartnerTypeId == "CS" || d.PartnerTypeId == "PO");
 
             if (iQueryableData.Count() > 0)
             {
@@ -393,7 +393,7 @@ namespace Logitude.BL.CommonDataModel.BusinessUnitFilters
         {
             List<RoleFeature> myFeatureRoles = new List<RoleFeature>();
 
-            if (loggedUserEmail != "support@amital.co.il")
+            if (loggedUserEmail != "admin@fnarsoft.com")
             {
                 ObjectTableRepository objectTabelRepository = new ObjectTableRepository(myCurrentTenant);
                 ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("Customer", 0, true);
