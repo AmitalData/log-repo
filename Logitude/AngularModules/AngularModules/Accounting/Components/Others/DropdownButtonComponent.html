@@ -7,7 +7,6 @@
         <button [disabled]="IsDisabled"
                 class="Button"
                 [attr.id]="_DropdownButtonComponentId"
-                [attr.data-cy]="dataCy || 'dropdown-button'"
                 style="min-width: 75px;width: fit-content;"
                 (click)="dropdowndisplayToggle()">
             <span>{{Dropdownbutton_Text}} </span>&#9660;
@@ -15,7 +14,6 @@
 
         <!--background-color : aquamarine;-->
         <div [attr.id]="_DropdownButtonComponentMenuId"
-             [attr.data-cy]="dataCy ? dataCy + '-menu' : 'dropdown-button-menu'"
              [ngStyle]="{'display': _DropdownDisplay  }"
              style="position: fixed;z-index: 1;border: .5px solid  #45494A;border-radius: 3px;background-color: #F2F2F2;text-shadow: 1px 1px white">
 

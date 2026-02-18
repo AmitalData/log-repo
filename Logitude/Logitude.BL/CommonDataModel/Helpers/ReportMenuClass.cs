@@ -29,7 +29,6 @@ namespace Logitude.BL.CommonDataModel.Helpers
        
         ReportExecutionLog = 0,
         BatchTaskExecution = 1,
-        ExcelExport = 2
     }
     
 }

@@ -17,7 +17,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
             commonDataContext = context;
         }
 
-
+        public WarehouseWeightRoundingRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
 
         public WarehouseWeightRoundingRepository(int tenant)
         {

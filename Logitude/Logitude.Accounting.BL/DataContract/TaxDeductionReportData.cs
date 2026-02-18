@@ -4,9 +4,10 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 namespace Logitude.Accounting.BL.DataContract
 {
-    public class TaxDeductionReportData: BaseDataProvider
+    public class TaxDeductionReportData
     {
         [Key]
         public string Id { get; set; }
@@ -74,8 +75,7 @@ namespace Logitude.Accounting.BL.DataContract
         public int Month { get; set; }
         public string DeductionFileNumber { get; set; }
         public string DeductionFileTypeCode { get; set; }
-        public string DeductionFileTypeName { get; set; }
-         public string VATNumber { get; set; }
+        public string VATNumber { get; set; }
         public string DisplayNumber { get; set; }
         public string GLAccountLocalName { get; set; }
         public string VendorAddress { get; set; }
@@ -95,7 +95,6 @@ namespace Logitude.Accounting.BL.DataContract
         public string VendorLocalName { get; set; }
         public decimal? TotalAmount { get;  set; }
         public string CardAddress1 { get;  set; }
-        
     }
     
 

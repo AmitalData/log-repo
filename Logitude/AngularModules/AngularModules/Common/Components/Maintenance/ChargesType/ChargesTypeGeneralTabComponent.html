@@ -77,12 +77,13 @@
                                                 <td>
                                                     <LogLabel [ObjectFieldName]="'MeasurementId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                 </td>
-                                                <td>
+                                                <td style="padding-right:18px;">
                                                     <LogLov [ObjectFieldName]="'MeasurementId'"
                                                             [ObjectTableName]="ObjectTableName"
                                                             [DataContext]="DataContext"
                                                             [LookUpTableName]="'Measurement'"
                                                             [DependencyFilter2Value]="false"
+                                                            [HideLastColumn]="true"
                                                             [QueryFilterItems]="MeasurementsQueryFilters">
                                                     </LogLov>
                                                 </td>
