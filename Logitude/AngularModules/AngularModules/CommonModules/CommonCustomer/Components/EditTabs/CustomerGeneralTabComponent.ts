@@ -1216,7 +1216,7 @@ export class CustomerGeneralTabComponent extends BaseComponent   {
 
     CheckAmitalCloudEnviroment() {
         var amitalEnvironment = "amitalstorage"
-        if (ObjectsLocator.GlobalSetting?.DeploymentStage == amitalEnvironment) {
+        if (ObjectsLocator.GlobalSetting.DeploymentStage == amitalEnvironment) {
             this.IsAmitalCloudEnvironment = true;
         }
     }
