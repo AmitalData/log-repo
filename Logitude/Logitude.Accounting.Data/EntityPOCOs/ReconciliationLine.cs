@@ -58,8 +58,6 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public string SearchFields { get; set; }
         [Column("ReconciledWithTransactionId")]
 	    public string ReconciledWithTransactionId { get; set; }
-        [Column("CurrencyRate")]
-	    public decimal? CurrencyRate { get; set; }
     }
 }
 	 

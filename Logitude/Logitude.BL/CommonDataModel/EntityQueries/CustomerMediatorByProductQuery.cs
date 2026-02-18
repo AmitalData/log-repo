@@ -16,7 +16,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         CustomerMediatorByProductRepository repository;
 
-
+        public CustomerMediatorByProductQuery()
+        {
+            repository = new CustomerMediatorByProductRepository(); 
+            
+        }
 
         public CustomerMediatorByProductQuery(int tenant)
         {

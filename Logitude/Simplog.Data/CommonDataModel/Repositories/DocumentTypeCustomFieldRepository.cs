@@ -15,7 +15,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
             commonDataContext = context;
         }
 
-
+        public DocumentTypeCustomFieldRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
 
         public DocumentTypeCustomFieldRepository(int tenant)
         {

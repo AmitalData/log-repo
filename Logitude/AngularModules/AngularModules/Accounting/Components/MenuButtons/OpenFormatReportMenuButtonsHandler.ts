@@ -13,12 +13,8 @@ import { DocumentTypePMExtendedService } from '../../../Common/Services/Extended
 import { DocumentsFilingExtendedPMService } from '../../../Common/Services/ExtendedPMs/DocumentsFilingExtendedPMService';
 import { ServiceLocator } from '../../../Infrastructure/Locators/ServiceLocator';
 import { GeneralPrintHelper } from '../../../Infrastructure/Helpers/GeneralPrintHelper';
-import { switchMap } from 'rxjs/operators';
-import { interval } from 'rxjs';
-import { OpenFormatReportPMService } from 'Accounting/Services/StandardPMs/OpenFormatReportPMService';
 
-
-export class OpenFormatReportMenuButtonsHandler{
+export class OpenFormatReportMenuButtonsHandler {
     public EntityPM: OpenFormatReportPM;
     public entityArgs: EntityArgs
     public TenantPM: TenantPM;
@@ -31,17 +27,12 @@ export class OpenFormatReportMenuButtonsHandler{
     INIDocumentType: any;
     DocumentsFilingExtendedPMService: DocumentsFilingExtendedPMService = new DocumentsFilingExtendedPMService();
     private CurrentSession = SessionLocator.SelectedSession;
-    processStatus = '2';
-    watchInterval = 10000; 
-    openFormatReportPMService: OpenFormatReportPMService = new OpenFormatReportPMService();
 
     public SetEntityPM(entityArgs: EntityArgs) {
         this.TenantPM = SessionLocator.TenantPM;
         this.entityArgs = entityArgs;
         this.EntityPM = entityArgs.EntityPM;
-        this.startWatching()
-       
-       }
+    }
 
     public CheckButtonState(menuButtons: MenuButtonPM[]) {
         if (this.EntityPM != null) {
@@ -178,6 +169,7 @@ export class OpenFormatReportMenuButtonsHandler{
                     var mm: ServiceResponse = myResult;
                     if (!mm.HasError) {
                         this.INIDocFilingPM = mm.Result;
+                        this.GetDocumentType("INI");
                         var securityIds = this.BMKDocFilingPM.SecurityId + "," + this.INIDocFilingPM.SecurityId;
                         if (this.try) {
                             DownloadManager.DownloadPage(null, securityIds);
@@ -210,35 +202,13 @@ export class OpenFormatReportMenuButtonsHandler{
         });
 
     }
-  
-    
-    watcher: any;
-    startWatching() {
-        if (this.EntityPM.StatusTypeCode === this.processStatus) {
-            
-            this.watcher = interval(this.watchInterval) 
-            .pipe(
-              switchMap(() => this.openFormatReportPMService.get(this.EntityPM.Id)
-            )
-            )
-            .subscribe({
-              next: res => {
-                if (!res?.HasError) {
-                  if (res.Result.StatusTypeCode !== this.processStatus || !this.CurrentSession.CurrentEditComponent) {
-                    this.watcher?.unsubscribe();
-                    this.EntityPM = res.Result;
-                    this.CurrentSession.CurrentEditComponent?.ReloadEntityPM();
-                  }
-                }
-              },
-              error: err => {
-                console.error('Error checking report status', err);
-              },
-            });
-        }
-        this.CurrentSession.CurrentEditComponent.BackCompleted.subscribe(($event: any)=>{
-            this.watcher?.unsubscribe();
-        })        
-      }
+
+    private StartBusyIndicator(message: string) {
+        this.CurrentSession.StartBusyIndicator(message);
+    }
+
+    private StopBusyIndicator() {
+        this.CurrentSession.StopBusyIndicator();
+    }
 }
 

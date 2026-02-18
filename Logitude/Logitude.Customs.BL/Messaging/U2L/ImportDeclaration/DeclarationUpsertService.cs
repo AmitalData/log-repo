@@ -47,12 +47,9 @@ using Logitude.Customs.Data.EntityMapping;
  
 namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 {
-    internal static class UnfMarkers
-    {
-        public const string NotFound = "UNF_NOT_FOUND";
-    }
+
     //Logitude.Customs.BL.Messaging.U2L.ImportDeclaration.DeclarationUpsertService 
-    public class DeclarationUpsertService : UnifreightGenericService
+	public class DeclarationUpsertService : UnifreightGenericService
 	{
 		private LOGICUSTFILE _LOGICUSTFILE;
 		public LogitudeCustomsFile _AmitalCustomsFile;
@@ -329,9 +326,9 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 					this._MyDeclarationPM.TaxationDateTime = DateTime.Now;
 					this._MyDeclarationPM.ExternalDeclarationNumber = (_AmitalCustomsFile.CustomFileNo + DateTime.Today.Year.ToString());
 					this._MyDeclarationPM.SystemConnection = _AmitalCustomsFile.SystemConnection;
-                    this._MyDeclarationPM.ShipmentId = _AmitalCustomsFile.ShipmentId;
-                    this._MyDeclarationPM.Consignments[0].ChangeSetOp = ChangeSetOperation.Insert;
-                    if (!string.IsNullOrWhiteSpace(_AmitalCustomsFile.CargoTypeCode))
+					this._MyDeclarationPM.ShipmentId = _AmitalCustomsFile.ShipmentId;
+					this._MyDeclarationPM.Consignments[0].ChangeSetOp = ChangeSetOperation.Insert;
+					if (!string.IsNullOrWhiteSpace(_AmitalCustomsFile.CargoTypeCode))
 					{
 						this._MyDeclarationPM.Consignments[0].CargoTypeCode = _AmitalCustomsFile.CargoTypeCode;
 					}
@@ -339,10 +336,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 					{
 						if (_AmitalCustomsFile.TransportModeId == "A")
 						{
-							initManifestNoByNewImportDeclarationWithDefualt();
-
-
-                            if (_AmitalCustomsFile.DeclarationOfficeCode == "49")
+							if (_AmitalCustomsFile.DeclarationOfficeCode == "49")
 							{
 								this._MyDeclarationPM.Consignments[0].CargoTypeCode = "7";
 							}
@@ -678,7 +672,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                     }
 					this._MyDeclarationPM.Consignments[0].StorageSiteCode = warehouseId;
 
-                    if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.UnloadportId) && string.IsNullOrEmpty(_MyDeclarationPM.Consignments[0].UnloadPortCode))
+                    if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.UnloadportId) && string.IsNullOrEmpty(_MyDeclarationPM.Consignments[0].UnloadPortCode) && _AmitalCustomsFile.SystemConnection == "N")
                     {
                         _MyDeclarationPM.Consignments[0].UnloadPortCode = TranslateUnloadPort(_AmitalCustomsFile.UnloadportId);
                     }
@@ -1050,14 +1044,8 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 					myDeclarationUpdateService.LastMileServiceType = _AmitalCustomsFile.LastMileServiceType;
 					myDeclarationUpdateService.MAWB = _AmitalCustomsFile.MAWB;
 					myDeclarationUpdateService.Update(_MyDeclarationPM, true);
-
-                    var sharedLog = LogMessagingUtil.Instance.ToString();
-                    if (!string.IsNullOrEmpty(sharedLog) && sharedLog.Contains(UnfMarkers.NotFound))
-                    {
-                        MyGenericResponseObj.ExtStatus = UnfMarkers.NotFound;       
-                    }
-                }
-                catch (DbEntityValidationException ex)
+				}
+				catch (DbEntityValidationException ex)
 				{
 					var FormatedException = ExceptionFormatUtil.GetFormated(ex);
 					AppendLogLine("ProccessRequest():Exception " + FormatedException.ToString() + Environment.NewLine + "---------------------------------------------");
@@ -1086,25 +1074,9 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 				MyCommunicationsParams.LoggingEntityId = MyGenericResponseObj.ApplicationId;
 
 				scope.Complete();
-				
+
 			}
 		}
-
-        private void initManifestNoByNewImportDeclarationWithDefualt()
-		{
-            string isAirImportNewDeclarationDeufult = GetAmitalDefault("ISRAEL", "CGG_AIR_CURYEAR", "NON", _AmitalCustomsFile.CustomerId, ResolvedTenant());
-            if (isAirImportNewDeclarationDeufult == "Y" && this._MyDeclarationPM.Direction == "I" && _AmitalCustomsFile.TransportModeId == "A")
-            {
-                if (this._MyDeclarationPM?.Consignments != null)
-                {
-                    foreach (var consignment in this._MyDeclarationPM.Consignments)
-                    {
-                        consignment.ManifestNumber = DateTime.Now.Year.ToString();
-                    }
-                }
-
-            }
-        }
 
         private void CalcGrossMassMeasure()
         {
@@ -1153,8 +1125,9 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 		}		
 		private void SendClosing()
 		{
-			try {
-                if (FieldError.Length == 0)
+			try { 
+
+			    if (FieldError.Length == 0)
 			    {
 			    	AppendLogLine("FieldError.Length == 0");
 			    
@@ -1186,7 +1159,6 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 			catch (Exception ex)
 			{
 				AppendLogLine("Exception SendClosing" + ex.ToString());
-				throw ex;
 			}
 		}
 		private void FillExportDeclarationClosingDataFromUNF()
@@ -1359,15 +1331,14 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 
 		private static void RaiseEvent(DeclarationPM dirtyDeclarationPM, string loggingUserId, string status_id,string FieldError)
 		{
-            bool isExport = dirtyDeclarationPM.Direction == "E";
-            //primary_number = $"{dirtyDeclarationPM.CustomFileNo},{dirtyDeclarationPM.TransportModeId == "A" ? "EFIFILEM" : "MFIFILEM" }",
-            string primary_number = $"{dirtyDeclarationPM.CustomFileNo},EFIFILEM";
+			//primary_number = $"{dirtyDeclarationPM.CustomFileNo},{dirtyDeclarationPM.TransportModeId == "A" ? "EFIFILEM" : "MFIFILEM" }",
+			string primary_number = $"{dirtyDeclarationPM.CustomFileNo},EFIFILEM";
 			if (dirtyDeclarationPM.TransportModeId != "A")
 			{
 				primary_number = $"{dirtyDeclarationPM.CustomFileNo},MFIFILEM";
 			}
 
-            var myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
+			var myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
 			{
 				Tenant = dirtyDeclarationPM.Tenant,
 				objectTableName = "Customs.Declaration",
@@ -1380,7 +1351,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 				CommunicationSubject = "FU Status " + status_id + " from logitude",
 				MyFUStatus = new AmitalEventTracerModel.FUStatus()
 				{
-					entname = isExport  ? "BFIFILE" : "CFIFILEM",
+					entname = dirtyDeclarationPM.Direction == "E" ? "BFIFILE" : "CFIFILEM",
 					primary_number = primary_number,
 					status = "new",
 					xml_status = "new",
@@ -1390,7 +1361,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 				}
 			};
 
-			AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel, suppress_RAISE_EVENT: true, isExport: isExport);
+			AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel, suppress_RAISE_EVENT: true);
 
 
 		}
@@ -2006,6 +1977,20 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 				this._DeclarationReferantDataPM.PackageQuantity = packageQuantity;
 			}
 
+            if (!string.IsNullOrWhiteSpace(_AmitalCustomsFile.Vessel))
+            {
+                VesselRepository vesselRepository = new VesselRepository(ResolvedTenant());
+                Vessel vessel = vesselRepository.GetSingleVesselByCode(_AmitalCustomsFile.Vessel, ResolvedTenant());
+                if (vessel != null)
+                {
+                    this._DeclarationReferantDataPM.Vessel = vessel.Id;
+                }
+                else
+                {
+                    NetCommonHelper.Logger.DevLog.Instance.WriteWarning($"Not found vessel for code: {_AmitalCustomsFile.Vessel}");
+                }
+            }
+
             this._DeclarationReferantDataPM.Commodity = _AmitalCustomsFile.Commodity;
 			this._DeclarationReferantDataPM.Hawb = _AmitalCustomsFile.ReferentHAWB;
 			this._DeclarationReferantDataPM.Mawb = _AmitalCustomsFile.ReferentMAWB;
@@ -2067,8 +2052,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 				else
 				{
 					NetCommonHelper.Logger.DevLog.Instance.WriteWarning($"Not found vessel for code: {vesselId}");
-                    AppendLogLine($"Not found vessel for code: {vesselId}");
-                }
+				}
 			}
 			return null;
 		}

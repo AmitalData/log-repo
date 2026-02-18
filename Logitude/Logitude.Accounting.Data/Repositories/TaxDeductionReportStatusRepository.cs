@@ -21,15 +21,7 @@ namespace Logitude.Accounting.Data.Repositories
 			throw new NotImplementedException();
         }
 
-        public string GetSingleEnglishNameByCode(string code)
-        {
-            if (string.IsNullOrEmpty(code))
-                return "";
-
-            return (from d in context.TaxDeductionReportStatuses where d.Code == code select d.EnglishName).FirstOrDefault();
-        }
-
-    }
+   }
 
 }
    
