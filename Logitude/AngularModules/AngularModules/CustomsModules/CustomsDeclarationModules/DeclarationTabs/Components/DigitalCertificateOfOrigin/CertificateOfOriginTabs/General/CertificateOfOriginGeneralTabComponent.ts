@@ -340,7 +340,6 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
                 mappedConsignments.MeasureType = consignmentPackage?.GrossMassMeasureTypeCode || '';
                 mappedConsignments.MeasureTypeName = consignmentPackage?.GrossMassMeasureTypeName || '';
 
-
                 // Initialize ContainerTypeWCO field:
                 this.getContainerTypeWCOData(consignment, mappedConsignments, unifreightItem.manifestNumber);
             }

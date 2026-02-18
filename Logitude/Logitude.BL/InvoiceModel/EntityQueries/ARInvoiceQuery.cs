@@ -5,7 +5,6 @@ using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InvoiceModel.CustomFilters;
 using Logitude.BL.InvoiceModel.EntityLists;
 using Logitude.BL.InvoiceModel.EntityPMs;
-using Logitude.Server.Tools;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs; 
@@ -26,7 +25,6 @@ using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.IdentityModel.Metadata;
 using System.Linq;
 
 namespace Logitude.BL.InvoiceModel.EntityQueries
@@ -94,12 +92,11 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                     Id = a.Id,
                     InvoiceNumber = a.InvoiceNumber,
                     Tenant = a.Tenant,
-                    MainEntityReference = a.MainEntityReference
                 }).FirstOrDefault();
             if (entityPM != null)
             {
                 entityPM = SetJournalFields(entityPM);
-                entityPM = SetLineFields(entityPM);
+
             }
 
             return entityPM;
@@ -117,14 +114,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
 
             return entityPM;
         }
-        private ARInvoicePM SetLineFields(ARInvoicePM entityPM)
-        {
-            var invoiceLineRepository = new ARInvoiceLineRepository(repository.context);
-            var arInvoiceLineQuery = new ARInvoiceLineQuery(invoiceLineRepository);
-            entityPM.InvoiceLines = arInvoiceLineQuery.GetInvoiceLinePMsByInvoiceId(entityPM.Id, entityPM.Tenant);
 
-            return entityPM;
-        }
 
         public ARInvoice GetSingleARInvoice(string id, int tenant)
         {
@@ -2946,22 +2936,6 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             CardRepository cardRepository = new CardRepository(tenant);
             var cardBillToIds = cardRepository.GetBillToCardById(cardId, tenant);
             return cardBillToIds;
-        }
-
-        public bool CheckIfArInvoiceCanBeReconcilied(string aRInvoiceId, int tenant, ARInvoiceLineRepository aRInvoiceLineRepository = null)
-        {
-            var arInvoiceIsMultiCurrency = repository.GetARInvoiceById(tenant, aRInvoiceId).Select(a => a.IsMultiCurrency).FirstOrDefault();
-            if (arInvoiceIsMultiCurrency)
-            {
-                if (aRInvoiceLineRepository == null)
-                {
-                    aRInvoiceLineRepository = new ARInvoiceLineRepository(tenant);
-                }
-                var arinvoiceLines = aRInvoiceLineRepository.GetInvoiceLinesByInvoiceId(aRInvoiceId, tenant);
-                var arinvoiceLinesCurrencies = arinvoiceLines.Select(x => x.ForiegnCurrencyId).Distinct().ToList();
-                return arinvoiceLinesCurrencies.Count > 1 ? false : true;
-            }
-            return true;
         }
 
         #endregion Digital Portal 
