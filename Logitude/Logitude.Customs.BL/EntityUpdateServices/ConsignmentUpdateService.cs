@@ -36,6 +36,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         {
             entityPM.DeclarationId = entityParentPM.Id;
 
+            //if (entityPM.ConsignmentNumber == null)
+            //{
+            //    entityPM.ConsignmentNumber = CodeCounter.GetNumber("Customs.Consignment", entityPM.Tenant);
+            //}
             if (!this.maxCounter.HasValue)
             {
                 ICustomContext _Context = MainContext as CustomContext;
@@ -52,8 +56,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         protected override void OnUpdating(ConsignmentPM entityPM, Consignment entityPOCO)
         {
 
-            if (EntityParentPM?.Direction == "I")
-            {
+            if (EntityParentPM?.Direction == "I") { 
 
                 entityPM.ManifestNumber = entityPM.ManifestNumber?.Trim();
                 entityPM.SecondCargoID = entityPM.SecondCargoID?.Trim();
@@ -86,7 +89,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 LogitudeSettings.HandleLogMe("Origin Country || Cargo Description deleted " + logData, false, "DeletedData", stopLogAt);
             }
 
-            UpdatePendingByKeyWords(entityPM, entityPOCO: entityPOCO);
+            UpdatePendingByKeyWords(entityPM);
             //BUG String Empty 175687
             entityPM.CargoTypeCode = !string.IsNullOrEmpty(entityPM.CargoTypeCode) ? entityPM.CargoTypeCode : null;
             entityPM.ManifestNumber = !string.IsNullOrEmpty(entityPM.ManifestNumber) ? entityPM.ManifestNumber : null;
@@ -97,85 +100,87 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         }
 
 
-        public void UpdatePendingByKeyWords(ConsignmentPM entityPM, Boolean IsAfterDeclarationCourierStatusInsert = false, Consignment entityPOCO = null)
+        public void UpdatePendingByKeyWords(ConsignmentPM entityPM, Boolean IsAfterDeclarationCourierStatusInsert = false)
         {
             LogMessagingUtil.Instance.AppendLine("UpdatePendingByKeyWords");
             try
             {
-                if (!String.IsNullOrWhiteSpace(entityPM.CargoDescription))
+            if (!String.IsNullOrWhiteSpace(entityPM.CargoDescription))
+            {
+                ConsignmentPM dbOccConsignmentPM = GetDBEntity(entityPM);
+                if (IsAfterDeclarationCourierStatusInsert) dbOccConsignmentPM.CargoDescription = null;
+                if (entityPM.CargoDescription != dbOccConsignmentPM.CargoDescription)
                 {
-                    string dbCargoDescription = entityPOCO != null
-                            ? entityPOCO.CargoDescription
-                            : GetDBEntity(entityPM)?.CargoDescription;
-                    if (IsAfterDeclarationCourierStatusInsert) dbCargoDescription = null;
-                    if (entityPM.CargoDescription != dbCargoDescription)
+                    List<string> pendingReasonCodeList = new List<string>();
+                    ICustomContext context = MainContext as CustomContext;
+                    DeclarationCourierStatusQueryService myDeclarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
+                    DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(MainContext, new Dictionary<string, IContext>(), entityPM.Tenant);
+                    DeclarationCourierStatusPM declarationCourierStatusPM = myDeclarationCourierStatusQueryService.GetSingle(entityPM.DeclarationId, true, false);
+                    if (declarationCourierStatusPM != null)
                     {
-                        List<string> pendingReasonCodeList = new List<string>();
-                        ICustomContext context = MainContext as CustomContext;
-                        DeclarationCourierStatusQueryService myDeclarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
-                        DeclarationCourierStatusPM declarationCourierStatusPM = myDeclarationCourierStatusQueryService.GetSingle(entityPM.DeclarationId, true, false);
-                        if (declarationCourierStatusPM != null)
+                        var pendingByKeywordQueryService = new PendingByKeywordQueryService(entityPM.Tenant);
+                        var courierReasonCodeList = pendingByKeywordQueryService.GetCourierPendingReasonCodeBykeyWords(
+                            entityPM.CargoDescription,
+                             "1"  /*תאור טובין*/,
+                            entityPM.Tenant);
+                        foreach (var courierReasonCode in courierReasonCodeList)
                         {
-                            var pendingByKeywordQueryService = new PendingByKeywordQueryService(entityPM.Tenant);
-                            var courierReasonCodeList = pendingByKeywordQueryService.GetCourierPendingReasonCodeBykeyWords(
-                                entityPM.CargoDescription,
-                                 "1"  /*תאור טובין*/,
-                                entityPM.Tenant);
                             CourierPendingReasonRepository courierPendingReasonRepositoryRepository = new CourierPendingReasonRepository(entityPM.Tenant);
-                            foreach (var courierReasonCode in courierReasonCodeList)
+                            Boolean isActive = courierPendingReasonRepositoryRepository.IsActive(courierReasonCode, entityPM.Tenant);
+
+                            if (!isActive) continue;
+
+                            if (!String.IsNullOrWhiteSpace(courierReasonCode) && !pendingReasonCodeList.Contains(courierReasonCode))
                             {
-                                Boolean isActive = courierPendingReasonRepositoryRepository.IsActive(courierReasonCode, entityPM.Tenant);
-                                if (!isActive) continue;
-                                if (!String.IsNullOrWhiteSpace(courierReasonCode) && !pendingReasonCodeList.Contains(courierReasonCode))
+                                pendingReasonCodeList.Add(courierReasonCode);
+                                DeclarationPendingPM declarationPendingPM = new DeclarationPendingPM();
+                                declarationPendingPM = declarationCourierStatusPM.DeclarationPendings.Where(r => r.DeclarationID == entityPM.DeclarationId && r.CourierPendingReasonCode == courierReasonCode).FirstOrDefault();
+                                if (declarationPendingPM != null)
                                 {
-                                    pendingReasonCodeList.Add(courierReasonCode);
-                                    DeclarationPendingPM declarationPendingPM = new DeclarationPendingPM();
-                                    declarationPendingPM = declarationCourierStatusPM.DeclarationPendings.Where(r => r.DeclarationID == entityPM.DeclarationId && r.CourierPendingReasonCode == courierReasonCode).FirstOrDefault();
-                                    if (declarationPendingPM != null)
+                                    if (declarationPendingPM.Status != "A")
                                     {
-                                        if (declarationPendingPM.Status != "A")
-                                        {
-                                            declarationPendingPM.ChangeSetOp = ChangeSetOperation.Update;
-                                            declarationPendingPM.Status = "A";
-                                            if (declarationCourierStatusPM.ChangeSetOp != ChangeSetOperation.Update) declarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
-                                        }
-                                    }
-                                    else
-                                    {
-                                        declarationPendingPM = new DeclarationPendingPM();
-                                        declarationPendingPM.ChangeSetOp = ChangeSetOperation.Insert;
+                                        declarationPendingPM.ChangeSetOp = ChangeSetOperation.Update;
                                         declarationPendingPM.Status = "A";
-                                        declarationPendingPM.DeclarationID = entityPM.DeclarationId;
-                                        declarationPendingPM.Tenant = entityPM.Tenant;
-                                        declarationPendingPM.CourierPendingReasonCode = courierReasonCode;
-                                        declarationCourierStatusPM.DeclarationPendings.Add(declarationPendingPM);
                                         if (declarationCourierStatusPM.ChangeSetOp != ChangeSetOperation.Update) declarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
                                     }
                                 }
+                                else
+                                {
+                                    declarationPendingPM = new DeclarationPendingPM();
+                                    declarationPendingPM.ChangeSetOp = ChangeSetOperation.Insert;
+                                    declarationPendingPM.Status = "A";
+                                    declarationPendingPM.DeclarationID = entityPM.DeclarationId;
+                                    declarationPendingPM.Tenant = entityPM.Tenant;
+                                    declarationPendingPM.CourierPendingReasonCode = courierReasonCode;
+                                    declarationCourierStatusPM.DeclarationPendings.Add(declarationPendingPM);
+                                    if (declarationCourierStatusPM.ChangeSetOp != ChangeSetOperation.Update) declarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                                }
                             }
-                            if (declarationCourierStatusPM != null && declarationCourierStatusPM.ChangeSetOp == ChangeSetOperation.Update)
-                            {
-                                DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(MainContext, new Dictionary<string, IContext>(), entityPM.Tenant);
-                                declarationCourierStatusUpdateService.Update(declarationCourierStatusPM, true);
-                            }
+                        }
+                        if (declarationCourierStatusPM != null && declarationCourierStatusPM.ChangeSetOp == ChangeSetOperation.Update)
+                        {
+                            declarationCourierStatusUpdateService.Update(declarationCourierStatusPM, true);
                         }
                     }
                 }
+            }
 
             }
-            catch (Exception ex)
+            catch (Exception ex )
             {
-                LogMessagingUtil.Instance.AppendLine("UpdatePendingByKeyWords:" + ex.Message);
-                throw;
+                LogMessagingUtil.Instance.AppendLine("UpdatePendingByKeyWords:" +ex.Message);
+
+
+                throw ex;
             }
         }
 
 
-        private Consignment GetDBEntity(ConsignmentPM entityPM)
+        private ConsignmentPM GetDBEntity(ConsignmentPM entityPM)
         {
             var consignmentQueryService = new ConsignmentQueryService(entityPM.Tenant);
-            var myDBEntity = consignmentQueryService.GetSinglePoco(entityPM.DeclarationId, entityPM.ConsignmentNumber, true, false);
-            return myDBEntity;
+            var myDBEntity = consignmentQueryService.GetSingle(entityPM.DeclarationId, entityPM.ConsignmentNumber, true, false);
+            return myDBEntity ?? new ConsignmentPM();
         }
 
         private void LogHowClearUnloadPort(ConsignmentPM entityPM, Consignment entityPOCO)
@@ -302,7 +307,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 declarations = string.Join("','", declarationIds);
                 declarations = "'" + declarations + "'";
             }
-            if (!string.IsNullOrEmpty(unloadPortCode)) unloadPortCode = "'" + unloadPortCode + "'";
+            if(!string.IsNullOrEmpty(unloadPortCode)) unloadPortCode = "'" + unloadPortCode + "'";
             int i = 0;
             if (!string.IsNullOrEmpty(declarations) && declarations.Split(',').Count() > 990)
             {
@@ -371,22 +376,22 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         oracleCommand.ExecuteNonQuery();
                         con.Close();
                     }
-
+                    
                 }
             }
             else
             {
                 using (SqlConnection cn = new SqlConnection(strConnString))
                 {
-
+                    
                     if (Server.Tools.Helpers.FeatureToggleHelper.HasFeatureToggle("SQL_P", tenant))
                     {
                         string cmd = "Update customs.Consignments set UnloadPortCode =:pu ";
                         cmd = cmd + " where UnloadPortCode is null and declarationid IN (";
-
+                        
                         SqlCommand sqlCommand = new SqlCommand(cmd, cn);
                         sqlCommand.Parameters.Add(new SqlParameter("pu", unloadPortCode));
-
+                        
                         string formattedParams = whereIn.Replace(" ", string.Empty); // Or a custom format
                         string[] splitParams = formattedParams.Split(',');
 

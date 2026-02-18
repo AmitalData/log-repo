@@ -1,4 +1,5 @@
 using System.Data.Entity;
+using System.Data.Entity.Core.Objects;
 using System.Linq;
 using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
@@ -97,6 +98,8 @@ namespace Simplog.Data.InfrastructureModel
         IDbSet<APILogs> APILogs { get; }
         IDbSet<APILogsData> APILogsData { get; }
         IDbSet<QueueMessageMoreDetails> QueueMessageMoreDetails { get; }
+        IDbSet<DefaultAndConfiguration> DefaultAndConfigurations { get; }
+        IDbSet<DefaultAndConfigurationKey> DefaultAndConfigurationKey { get; }
         IDbSet<TasksScheduler> TasksSchedulers { get; }
         IDbSet<TaskSchedulerHistory> TaskSchedulerHistories { get; }
         IDbSet<DWObjectTable> DWObjectTables { get; }

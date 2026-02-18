@@ -16,7 +16,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         IncotermRepository repository;
 
- 
+        public IncotermQuery()
+        {
+            repository = new IncotermRepository();
+        }
 
         public IncotermQuery(int tenant)
         {

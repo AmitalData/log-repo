@@ -78,14 +78,10 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public string OcrToken  { get; set; }
        [DataMember]
+        public string ForbiddenSigns  { get; set; }
+        [DataMember]
        public string CourierDocToken  { get; set; }
-       [DataMember]
-       public string ForbiddenSigns  { get; set; }
-       [DataMember]
-       public DateTime? CB_LastUpdateDate  { get; set; }
-       [DataMember]
-       public string CustomsBookToken  { get; set; }
-   }
+    }
 
 }
 	 

@@ -52,16 +52,4 @@
     <Constraints
       Nullable="true" />
   </Column>
-  <Column
-    Name="IsCustomsItemMandatory"
-    Type="bit">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="IsZipcodeMandatory"
-    Type="bit">
-    <Constraints
-      Nullable="true" />
-  </Column>
 </Table>

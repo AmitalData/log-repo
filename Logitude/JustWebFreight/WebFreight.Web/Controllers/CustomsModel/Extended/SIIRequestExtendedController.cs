@@ -1,9 +1,14 @@
 ﻿
 using Logitude.Customs.BL.EntityQueryServices;
+using Logitude.Customs.BL.EntityUpdateServices;
 using Logitude.Customs.Data;
+using Logitude.Customs.Data.EntityLists;
 using Logitude.Customs.Def.EntityPMs;
 using Logitude.Server.Tools.Helpers;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Server.Infrastructure.Helpers;
+using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Net;
@@ -12,10 +17,13 @@ using System.Web;
 using System.Web.Http;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.Security;
+using System.Transactions;
+using Logitude.Customs.BL.AzureSearch;
 using System.Threading.Tasks;
+using Logitude.CustomsMessaging.MessagingServices;
+using Logitude.CustomsMessaging.Common.ResponseData;
+using Logitude.CustomsMessaging.Common.RequestParams;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Logitude.Customs.BL.BL.SIIRequest;
-using Logitude.Customs.Data.EntityKeys.Extended;
 
 namespace WebFreight.Web.Controllers.CustomsModel.Extended
 {
@@ -56,7 +64,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             }
         }
 
-        public HttpResponseMessage GetSupplierInvoiceItemsForSIIRequest(string declarationId,string siiRequestId)
+        public HttpResponseMessage GetSupplierInvoiceItemsForSIIRequest(string declarationId)
         {
             try
             {
@@ -69,7 +77,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 var ctx = CustomContext.GetContext(auth.Tenant);
                 var svc = new SIIRequestQueryService(ctx);
                 svc.InitializeSettings();
-                var list = svc.GetSupplierInvoiceItems(declarationId, siiRequestId,auth.Tenant);
+                var list = svc.GetSupplierInvoiceItems(declarationId, auth.Tenant);
 
                 PerformanceLogger.AddServerExecutionTimeHeader(logKey);
                 return Request.CreateResponse(HttpStatusCode.OK, list);
@@ -82,87 +90,5 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             }
 
         }
-
-        public async Task<HttpResponseMessage> PostSendSIIRequest(string siiRequestId,string declarationId, int tenant, [FromBody] SiiSendRequestBodyDto body)
-        {
-            try
-            {
-
-                string token = HttpContext.Current.Request.Headers["Token"];
-                var auth = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                var sender = new SIIRequestApiSender(auth.Tenant);
-
-                var (apiResp, dto) = await sender.SendAsync(siiRequestId, declarationId, body);
-
-                if (apiResp == null)
-                    throw new InvalidOperationException(
-                        $"Did not receive a response from SII for request '{siiRequestId}'.");
-                bool isFinal = new SIIRequestApiResponseSaver(auth.Tenant)
-                           .Save(apiResp, siiRequestId, dto);
-                if (apiResp?.Success == true && apiResp.Result?.ResponseCode == 0)
-                {
-                    return Request.CreateResponse(HttpStatusCode.OK, apiResp.Result);
-                }
-
-                var errorPayload = new
-                {
-                    ResponseCode = apiResp?.ErrorCode ?? -1,
-                    ValidationMessages = apiResp?.ErrorMessage ?? "Unknown error"
-                };
-
-                return Request.CreateResponse(HttpStatusCode.BadRequest, new
-                {
-                    Error = true,
-                    Details = errorPayload,
-                    IsFinal = isFinal
-                });
-            }
-            catch (Exception ex)
-            {
-                var errorPayload = new
-                {
-                    Error = true,
-                    Details = new
-                    {
-                        ResponseCode = -1,
-                        ValidationMessages = ex.Message
-                    }
-                };
-                return Request.CreateResponse(HttpStatusCode.BadRequest, errorPayload);   // 400
-            }
-        }
-
-        [HttpGet]
-        [Route("api/SIIRequestExtended/GetApprovalReport")]
-        public async Task<HttpResponseMessage> GetApprovalReport([FromUri] string url)
-        {
-            var uri = new Uri(url);
-            if (!uri.Host.Equals("m2c.sii.org.il", StringComparison.OrdinalIgnoreCase))
-                return Request.CreateResponse(HttpStatusCode.BadRequest, "Invalid host");
-
-            using (var http = new HttpClient())
-            using (var resp = await http.GetAsync(uri))
-            {
-                if (!resp.IsSuccessStatusCode)
-                    return Request.CreateResponse(resp.StatusCode, "Failed to fetch report");
-
-                var bytes = await resp.Content.ReadAsByteArrayAsync();
-
-                var result = new HttpResponseMessage(HttpStatusCode.OK);
-                result.Content = new ByteArrayContent(bytes);
-                result.Content.Headers.ContentType =
-                    resp.Content.Headers.ContentType ??
-                    new System.Net.Http.Headers.MediaTypeHeaderValue("application/pdf");
-
-                result.Content.Headers.ContentDisposition =
-                    new System.Net.Http.Headers.ContentDispositionHeaderValue("inline")
-                    { FileName = "DeclarationApprovalReport.pdf" };
-
-                return result;
-            }
-        }
-
-
-
     }
 }

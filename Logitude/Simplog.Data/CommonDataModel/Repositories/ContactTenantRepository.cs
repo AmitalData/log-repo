@@ -10,7 +10,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
     {
 
         ICommonDataContext commonDataContext;
-
+        public ContactTenantRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
 
         public ContactTenantRepository(ICommonDataContext context)
         {

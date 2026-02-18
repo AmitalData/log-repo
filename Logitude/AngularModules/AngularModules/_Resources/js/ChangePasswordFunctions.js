@@ -376,7 +376,7 @@ code review : by mohammad+ ihab
 
 if (window.location.href.includes("AmitalSSOAngular") && undefined ==
     window.AngularRecivedRequestFromUnifaceMethod) {
-    
+    console.error("sarya >>localhost!!!");
     window.AngularRecivedRequestFromUnifaceMethod = function (SenderID, ReceiverID, MessageID, CompressItBase64, MessageJSON, MoreParams) {
         //alert('**************Recived event from Uniface !!!**********');
         //alert(SenderID);
