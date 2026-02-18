@@ -20,6 +20,13 @@
       Nullable="false" />
   </Column>
   <Column
+    Name="Link"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
     Name="ExpirationDate"
     Type="int">
     <Constraints

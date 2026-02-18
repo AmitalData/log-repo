@@ -152,22 +152,6 @@
                                     [ObjectTableName]="ObjectTableNameSiiRequest" [Text]="ContactCellPhone"
                                     [HideColumns]="true"></LogTextBox>
                             </td>
-                            <td style="width:90px">
-                            <td style="width:88px">
-                                <LogLabel [TextCode]="'Customs.SIIRequest.O.ProcessType'" [DataContext]="DataContext">
-                                </LogLabel>
-                            </td>
-
-                            <td style="width:200px">
-                                <ComboBox style="width:180px;" [ItemsSource]="ProcessTypeOptions" [Binding]="'Name'"
-                                    [SelectedItem]="SelectedProcessType"
-                                    (SelectedItemChanged)="OnProcessTypeChanged($event)">
-                                </ComboBox>
-                            </td>
-                            <td style="width:90px">
-                            </td>
-                            <td style="width:90px">
-                            </td>
                         </tr>
                         <tr class="FieldRow"> </tr>
                     </table>

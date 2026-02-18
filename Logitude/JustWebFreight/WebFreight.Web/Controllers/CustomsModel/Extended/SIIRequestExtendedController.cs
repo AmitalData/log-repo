@@ -83,7 +83,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
         }
 
-        public async Task<HttpResponseMessage> PostSendSIIRequest(string siiRequestId,string declarationId, int tenant, [FromBody] SiiSendRequestBodyDto body)
+        public async Task<HttpResponseMessage> PostSendSIIRequest(string siiRequestId,string declarationId, int tenant, [FromBody] List<SiiSelectedRowDto> selectedRows)
         {
             try
             {
@@ -92,7 +92,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 var auth = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 var sender = new SIIRequestApiSender(auth.Tenant);
 
-                var (apiResp, dto) = await sender.SendAsync(siiRequestId, declarationId, body);
+                var (apiResp, dto) = await sender.SendAsync(siiRequestId, declarationId, selectedRows);
 
                 if (apiResp == null)
                     throw new InvalidOperationException(

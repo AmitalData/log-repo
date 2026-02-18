@@ -12,7 +12,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     public class CustomerGroupQuery
     {
         CustomerGroupRepository repository;
-
+        public CustomerGroupQuery()
+        {
+            repository = new CustomerGroupRepository();
+        }
         public CustomerGroupQuery(int tenant)
         {
             repository = new CustomerGroupRepository(tenant);

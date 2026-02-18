@@ -15,7 +15,6 @@ import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
 import { LogitudeWindow } from '../../../../../Controls/Windows/LogitudeWindow';
 import { TextCodeTranslator } from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { SIIRequestListService } from 'Customs/Services/StandardLists/SIIRequestListService';
-import { DeclarationDisplayOnlyChecks, DisplayOnlyCheckResult } from 'Customs/Utilities/DeclarationDisplayOnlyChecks';
 
 @Component({
   selector: 'SIIRequestTabComponent',
@@ -186,7 +185,7 @@ export class SIIRequestTabComponent extends BaseComponent implements OnInit {
             this.supplierInvoiceItemsForSIIRequest = myResponse.Result;
             args.supplierInvoiceItemsForSIIRequest = myResponse.Result;
             args.errorMassage = [];
-            this.openLogWindow(siiRequestMode, args);
+            this.openLogWindow(siiRequestMode, args);1
           }
           else {
             this.supplierInvoiceItemsForSIIRequest = [];
@@ -247,57 +246,21 @@ export class SIIRequestTabComponent extends BaseComponent implements OnInit {
     this.CurrentSession?.CurrentEditComponent?.ReloadEntityPM();
   }
 
-    DisplayOnlyCheck() {
-
-        this.IsDisplayOnly = !!this.CurrentSession?.CurrentEditComponent?.EditComponentController?.InDisplayMode;
-
-        if (this.EntityPM?.AmendmentMessage) {
-            this.DisplayOnlyMessage = this.EntityPM.AmendmentMessage;
-
-            if (this.EntityPM.IsAmendmentDisplayOnly) {
-                this.IsDisplayOnly = true;
-            }
-        }
-        else if (this.IsDisplayOnly) {
-            this.DisplayOnlyMessage = TextCodeTranslator.Translate("Customs.CertificateOfOrigin.O.DisplayOnly");
-        }
-
-        if (this.EntityPM.HatraDate || this.EntityPM.PaymentDate) {
-            this.IsDisplayOnly = true;
-        }
-
-        const declarationDisplayOnlyChecks: DeclarationDisplayOnlyChecks = new DeclarationDisplayOnlyChecks();
-        declarationDisplayOnlyChecks.DeclarationViewDisplayOnlyChecks(this.EntityPM).subscribe((response: any) => {
-
-            const displayOnlyCheckResult: DisplayOnlyCheckResult = response.Result;
-
-            this.IsDisplayOnly = !!displayOnlyCheckResult.IsDisplayOnly;
-
-            if (this.EntityPM.HatraDate || this.EntityPM.PaymentDate) {
-                this.IsDisplayOnly = true;
-            }
-
-            if (this.EntityPM?.AmendmentMessage) {
-                this.DisplayOnlyMessage = this.EntityPM.AmendmentMessage;
-
-                if (this.EntityPM.IsAmendmentDisplayOnly) {
-                    this.IsDisplayOnly = true;
-                }
-            }
-            else if (this.IsDisplayOnly) {
-                const prefix = (TextCodeTranslator.Translate("Customs.CertificateOfOrigin.O.DisplayOnly") || "").trim();
-                const msg = (displayOnlyCheckResult.DisplayOnlyMessage || "").trim();
-
-                this.DisplayOnlyMessage = msg
-                    ? (msg.startsWith(prefix) ? msg : (prefix + msg))
-                    : prefix;
-            }
-            else {
-                this.DisplayOnlyMessage = null;
-            }
-        });
+  DisplayOnlyCheck() {
+    this.IsDisplayOnly = this.CurrentSession?.CurrentEditComponent?.EditComponentController?.InDisplayMode;
+    if (this.EntityPM?.AmendmentMessage) {
+      this.DisplayOnlyMessage = this.EntityPM.AmendmentMessage;
+      if (this.EntityPM.IsAmendmentDisplayOnly) {
+        this.IsDisplayOnly = true;
+      }
+    } else if (this.IsDisplayOnly) {
+      this.DisplayOnlyMessage = TextCodeTranslator.Translate("Customs.CertificateOfOrigin.O.DisplayOnly");
+      ;
     }
-
+    if (this.EntityPM.HatraDate || this.EntityPM.PaymentDate) {
+      this.IsDisplayOnly = true;
+    }
+  }
 
   get IsAllowChange(): boolean {
     return !this.IsDisplayOnly;

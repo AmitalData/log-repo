@@ -10,7 +10,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
     {
         ICommonDataContext commonDataContext;
 
-
+        public EntityChangeRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
 
         public EntityChangeRepository(ICommonDataContext context)
         {

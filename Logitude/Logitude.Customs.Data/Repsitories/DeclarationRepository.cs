@@ -1,28 +1,26 @@
 ﻿
-using Logitude.Customs.Data.DataContracts;
-using Logitude.Customs.Data.EntityKeys;
-using Logitude.Customs.Data.EntityLists;
-using Logitude.Customs.Data.EntityPOCOs;
-using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; 
-using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.Helpers;
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Simplog.Server.Infrastructure;
-using Simplog.Server.Infrastructure.DataContracts;
-using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Data;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
-using System.Data.SqlClient;
-using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Data.EntityKeys;
+using Simplog.Server.Infrastructure;
+using Logitude.Customs.Data.EntityLists;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.Repositories;
+using System.Data.Entity.Infrastructure;
+using System.Data.Entity;
+using Simplog.Data.CommonDataModel;
+using System.Data.SqlClient;
+using System.Data;
+using Simplog.Data.Helpers;
+using Simplog.Server.Infrastructure.Helpers;
+using Simplog.Server.Infrastructure.DataContracts;
+using Logitude.Customs.Data.DataContracts;
 
 namespace Logitude.Customs.Data.Repsitories
 {
@@ -52,14 +50,14 @@ namespace Logitude.Customs.Data.Repsitories
                     select a).FirstOrDefault();
         }
 
-        public Declaration GetDeclarationByConsignment(int tenant, string cargoTypeCode, string manifestNumber, string secondCargoID, string thirdCargoID)
+        public Declaration GetDeclarationByConsignment(string cargoTypeCode, string manifestNumber, string secondCargoID, string thirdCargoID)
         {
             var query = (
                    from d in context.Declarations
                    join a in context.Consignments
                     on d.Id equals a.DeclarationId
-                   where a.Tenant == tenant && a.CargoTypeCode.ToLower() == cargoTypeCode.ToLower() && a.ManifestNumber.ToLower() == manifestNumber.ToLower()
-                && a.SecondCargoID.ToLower() == secondCargoID.ToLower() && a.ThirdCargoID.ToLower() == thirdCargoID.ToLower()
+                   where a.CargoTypeCode.ToLower() == cargoTypeCode.ToLower() & a.ManifestNumber.ToLower() == manifestNumber.ToLower()
+                & a.SecondCargoID.ToLower() == secondCargoID.ToLower() & a.ThirdCargoID.ToLower() == thirdCargoID.ToLower()
                    select d
                        ).ToList().FirstOrDefault();
             return query;
@@ -230,7 +228,7 @@ namespace Logitude.Customs.Data.Repsitories
                     allDecSameFile = qAllCustomFileNo.ToList();
                 }
                 var qGetAcceptDeclarationAmendment = (from a in allDecSameFile
-                                                      where ((a.Id == id && a.AmendmentDontDisplayInList == false) ||
+                                                      where ((a.Id == id && a.AmendmentDontDisplayInList == false && a.DeclarationNumber != null) ||
                             (a.AmendmentOriginalDeclartation == id && a.DeclarationNumber != null && a.AmendmentDontDisplayInList == false))
                             && a.Tenant == tenant
                                                       select a.Id
@@ -827,18 +825,6 @@ namespace Logitude.Customs.Data.Repsitories
                   )
                   .FirstOrDefault();
         }
-        public (string CustomFileNo, string DeclarationNumber) GetCustomFileNoAndDecNoByDeclarationId(string declarationId, int tenant)
-        {
-            if (string.IsNullOrWhiteSpace(declarationId))
-                return ("", "");
-
-            return context.Declarations
-                .Where(x => x.Id == declarationId && x.Tenant == tenant)
-                .AsEnumerable() 
-                .Select(x => (x.CustomFileNo, x.DeclarationNumber))
-                .FirstOrDefault();
-        }
-
 
         public List<string> GetCustomsFileNumbersByDeclaraionIds(List<string> declarationIds, int tenant)
         {
@@ -1095,7 +1081,7 @@ namespace Logitude.Customs.Data.Repsitories
             }
         }
 
-        public List<DeclarationPendingBulkFeed> GetforPendingBulkFeed(string courierMasterId, string goodsDescription, string weightFrom, string weightTo, string incotermCode, string SearchFilter, string totalInvoice, string fastIndividualProcess, decimal minValPay, int? skip = null, int? take = null, string sortingCol = null, string sortingDir = null)
+        public List<DeclarationPendingBulkFeed> GetforPendingBulkFeed(string courierMasterId, string goodsDescription, string weightFrom, string weightTo, string incotermCode, string SearchFilter, string totalInvoice, string fastIndividualProcess, int? skip = null, int? take = null, string sortingCol = null, string sortingDir = null)
         {
             int weightFromInt = 0;
             int weightToInt = 0;
@@ -1158,15 +1144,15 @@ namespace Logitude.Customs.Data.Repsitories
 
             switch (totalInvoice)
             {
-                case "minValPay":
+                case "75":
                     {
-                        q1 = q1.Where(r => r.TotalInvoiceAmountInUSD <= minValPay);
+                        q1 = q1.Where(r => r.TotalInvoiceAmountInUSD <= 75);
 
                         break;
                     }
                 case "500":
                     {
-                        q1 = q1.Where(r => r.TotalInvoiceAmountInUSD > minValPay && r.TotalInvoiceAmountInUSD <= 500);
+                        q1 = q1.Where(r => r.TotalInvoiceAmountInUSD > 75 && r.TotalInvoiceAmountInUSD <= 500);
                         break;
                     }
                 case "1000":
@@ -1249,20 +1235,12 @@ namespace Logitude.Customs.Data.Repsitories
             return res2;
         }
 
-        public DateTime? GetHatraDateForDecId(string decId, int tenant)
+        public string GetHatraDateForDecId(string decId, int tenant)
         {
-            return context.Declarations
-                  .Where(d => d.Id == decId && d.Tenant == tenant)
-                  .Select(d => d.HatraDate)
-                  .FirstOrDefault();
-        }
-
-        public bool HasHataraByCustomFile(string customFileNo, int tenant)
-        {
-            return context.Declarations
-                    .Any(a => a.CustomFileNo == customFileNo
-                       && a.Tenant == tenant
-                       && a.HatraDate != null);
+            var HatraDateQuery = (from a in context.Declarations
+                                  where a.Id == decId && a.Tenant == tenant
+                                  select a.HatraDate);
+            return HatraDateQuery.FirstOrDefault().ToString();
         }
 
         public List<string> GetDeclarationsByCourierHAWBsExpectDecWithHatraDate(List<string> courierHAWBs, int tenant)

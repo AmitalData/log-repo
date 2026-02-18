@@ -44,7 +44,7 @@
   LocalDefaultTextBack_up="&quot;בקשות למכון תקנים&quot;"
   LocalDefaultText="&quot;BS64:IteR16fXqdeV16og15zXnteb15XXnyDXqten16DXmdedIg==&quot;"
   DefaultText="&quot;SIIRequest&quot;"
-  Code="&quot;d59a&quot;"
+  Code="&quot;d3dd&quot;"
   Name="&quot; Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
@@ -2739,27 +2739,6 @@
       DefaultText="&quot;Missing Computing Partner translation for field {0} (value: {1})&quot;"
       LocalDefaultTextBack_up="&quot;חסר תרגום Computing Partner עבור השדה {0} (ערך: {1})&quot;"
       LocalDefaultText="&quot;BS64:IteX16HXqCDXqteo15LXldedIENvbXB1dGluZyBQYXJ0bmVyINei15HXldeoINeU16nXk9eUIHswfSAo16LXqNeaOiB7MX0pIg==&quot;"
-      TextCodeTypeCode="&quot;O&quot;"
-      IsSpellChecked="false" />
-    <TextCode
-      Code="&quot;Customs.SIIRequest.O.ProcessType&quot;"
-      DefaultText="&quot;ProcessType&quot;"
-      LocalDefaultTextBack_up="&quot;סוג תהליך&quot;"
-      LocalDefaultText="&quot;BS64:Iteh15XXkiDXqteU15zXmdeaIg==&quot;"
-      TextCodeTypeCode="&quot;O&quot;"
-      IsSpellChecked="false" />
-    <TextCode
-      Code="&quot;Customs.SIIRequest.O.AmitalProcessType&quot;"
-      DefaultText="&quot;AmitalProcessType&quot;"
-      LocalDefaultTextBack_up="&quot;תהליך עמיטל&quot;"
-      LocalDefaultText="&quot;BS64:Iteq15TXnNeZ15og16LXnteZ15jXnCI=&quot;"
-      TextCodeTypeCode="&quot;O&quot;"
-      IsSpellChecked="false" />
-    <TextCode
-      Code="&quot;Customs.SIIRequest.O.NotAmitalProcessType&quot;"
-      DefaultText="&quot;NotAmitalProcessType&quot;"
-      LocalDefaultTextBack_up="&quot;תהליך לא עמיטל&quot;"
-      LocalDefaultText="&quot;BS64:Iteq15TXnNeZ15og15zXkCDXotee15nXmNecIg==&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>

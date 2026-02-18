@@ -66,7 +66,7 @@ export class CreateTenantPackageSelectionComponent extends BaseComponent impleme
     }
 
 
-    private packageCode: string = (ObjectsLocator.GlobalSetting?.DeploymentStage == "logboxwe1" || ObjectsLocator.GlobalSetting?.DeploymentStage == "Test2") ? "IMPO" : "BUSN";
+    private packageCode: string = (ObjectsLocator.GlobalSetting.DeploymentStage == "logboxwe1" || ObjectsLocator.GlobalSetting.DeploymentStage == "Test2") ? "IMPO" : "BUSN";
     get PackageCode() { return this.packageCode; }
     set PackageCode(newValue: string) {
         if (this.packageCode != newValue) {

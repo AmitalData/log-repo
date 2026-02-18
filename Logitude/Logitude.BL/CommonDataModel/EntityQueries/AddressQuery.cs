@@ -18,7 +18,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         AddressRepository repository;
 
-
+        public AddressQuery()
+        {
+            repository = new AddressRepository();
+        }
 
         public AddressQuery(int tenant)
         {

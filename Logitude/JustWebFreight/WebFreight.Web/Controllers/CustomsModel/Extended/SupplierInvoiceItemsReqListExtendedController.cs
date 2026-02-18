@@ -64,10 +64,9 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             string declarationId)
         {
             try
-            {               
+            {
                 string token = HttpContext.Current?.Request?.Headers["Token"];
                 if (string.IsNullOrEmpty(token))
-
                     return Request.CreateResponse(HttpStatusCode.Unauthorized, new { error = "Missing authentication token." });
 
                 var authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
@@ -93,7 +92,6 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
                 var apiRequest = factory.Create(interfaceName, partnerCode, dto, commRequest, commResponse);
                 var executor = new RestRequestExecutor();
-
 
                 var apiResp = await executor
                     .ExecuteAsync<ProductFileRequestDto, ProductFileCheckResponseDto>(apiRequest)

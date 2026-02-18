@@ -48,6 +48,7 @@ namespace AmitalCustomsWindowsService
             var err = e.ExceptionObject.ToString();
             NetCommonHelper.Logger.DevLog.Instance.WriteFatal(new Exception("CurrentDomain_UnhandledException!!!"),JsonConvert.SerializeObject(e));
             //System.Diagnostics.Debugger.Launch();
+           
         }
 
         protected override void OnStart(string[] args)
@@ -154,7 +155,6 @@ namespace AmitalCustomsWindowsService
                 AddWorkerFromAppSetting<CustomsHSMSignWR>();
                 AddWorkerFromAppSetting<ReportExecutionLogWR>();
 				AddWorkerFromAppSetting<DocumentAzureQueueWR>();
-				AddWorkerFromAppSetting<DocumentSFTPAnalyzeWR>();
                 AddWorkerFromAppSetting<SiiStatusAzureQueueWR>(); 
 
 				bool courierFeaturePackageExist = true;

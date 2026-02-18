@@ -43,7 +43,7 @@
   ObjectTableTypeCode="&quot;BR&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Pointer Level&quot;"
-  Code="&quot;89da&quot;"
+  Code="&quot;0b6c&quot;"
   Name="&quot;Customs.PointerLevel Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;EnglishName&quot;"

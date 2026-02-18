@@ -101,21 +101,7 @@ void SavePocoOutput(string outputFileName)
   }
 #>
 
-<#+
-private bool ShouldSkipPoco(dynamic field)
-{
-    try {
-        if (field.ObjectFieldDBOnly.GetType() == typeof(string) && field.ObjectFieldDBOnly == "true")
-            return true;
-    } catch {}
-    // (optional backward-compat if you also used SkipPoco before)
-    try {
-        if (field.SkipPoco.GetType() == typeof(string) && field.SkipPoco == "true")
-            return true;
-    } catch {}
-    return false;
-}
-#>
+
 <#+
  private void WritePOCOMethod(dynamic entity)
 {
@@ -155,7 +141,6 @@ private bool ShouldSkipPoco(dynamic field)
     }
 	foreach (var field in entity["field"])
 {
-    if (ShouldSkipPoco(field)) continue;
     if (field.NameSpace != null && !(field.NameSpace is AmazedSaint.Elastic.Lib.ElasticObject))
     {
         string rawNamespace = field.NameSpace.ToString().Trim('"');
