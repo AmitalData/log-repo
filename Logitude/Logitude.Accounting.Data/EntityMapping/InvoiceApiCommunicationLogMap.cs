@@ -38,17 +38,13 @@ namespace Logitude.Accounting.Data.EntityMapping
 
             this.Property(t => t.SearchFields).HasColumnName("SearchFields").IsMaxLength().IsUnicode(true);
 
-            this.Property(t => t.DocumentId).HasColumnName("DocumentId").HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.CommunicationId).HasColumnName("CommunicationId").IsRequired().HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.Step).HasColumnName("Step").IsRequired().HasMaxLength(3).IsUnicode(false);
 
             this.Property(t => t.StatusCode).HasColumnName("StatusCode").IsRequired().HasMaxLength(3).IsUnicode(false);
 
             this.Property(t => t.Exception).HasColumnName("Exception").HasMaxLength(1000).IsUnicode(true);
-
-            this.Property(t => t.ExternalID).HasColumnName("ExternalID").HasMaxLength(100).IsUnicode(true);
-
-            this.Property(t => t.ARInvoiceId).HasColumnName("ARInvoiceId").HasMaxLength(15).IsUnicode(false);
         }
     }
 }

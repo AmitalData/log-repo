@@ -13,6 +13,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         CardContactAdditionalServiceRepository repository;
 
+        public CardContactAdditionalServiceQuery()
+        {
+            repository = new CardContactAdditionalServiceRepository();
+        }
 
         public CardContactAdditionalServiceQuery(int tenant)
         {

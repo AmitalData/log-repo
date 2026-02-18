@@ -14,7 +14,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         CustomerTenantAccessCardsBatchRepository repository;
 
-
+        public CustomerTenantAccessCardsBatchQuery()
+        {
+            this.repository = new CustomerTenantAccessCardsBatchRepository();
+        }
 
         public CustomerTenantAccessCardsBatchQuery(int tenant)
         {
