@@ -487,7 +487,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
 				throw new BusinessErrorException("_DirtyDeclarationPaymentPM.DeclarationId could not convert to long ");
 			}
 			var myCCUFILEMRepository = new CCUFILEMRepository(declarationPM.Tenant);
-			var ccufilem = myCCUFILEMRepository.GetFILENOByCUSTOMFILENO(lCUSTOMFILENO, declarationPM.Tenant);
+			var ccufilem = myCCUFILEMRepository.GetFILENOByCUSTOMFILENO(lCUSTOMFILENO);
 
 
 			var myCCUQUELOCKRepository = new CCUQUELOCKRepository(declarationPM.Tenant);
@@ -904,13 +904,13 @@ namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
 					var myCCUFILEMUpdateService = new CCUFILEMUpdateService(_AmitalContext);
 					myCCUFILEMUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
 
-					int? FILENO = myCCUFILEMQueryService.GetFILENOByCUSTOMFILENO(lCUSTOMFILENO,_MyDeclarationPM.Tenant);
+					int? FILENO = myCCUFILEMQueryService.GetFILENOByCUSTOMFILENO(lCUSTOMFILENO);
 					if (FILENO.HasValue)
 					{
 						int? FILENO1 = myCCUFILEMQueryService.GetFILENOByCUSTOMFILENO_forUpdateNOWAIT(lCUSTOMFILENO, this._MyDeclarationPM.Tenant);
 
 						//do not need the composite due we delete all down entities !!!_CCUFILEMPM = myCCUFILEMQueryService.GetSingle(FILENO.Value, true, false);
-						_CCUFILEMPM = myCCUFILEMQueryService.GetSingle(FILENO.Value, _MyDeclarationPM.Tenant, false, false);
+						_CCUFILEMPM = myCCUFILEMQueryService.GetSingle(FILENO.Value, false, false);
 						_CCUFILEMPM.ChangeSetOp = ChangeSetOperation.Update;
 						_CCUFILEMPM.MEHESDRAFTSTATUS = null;
 						using (var logger = (_AmitalContext as DbContextBase).CreateLogger())
