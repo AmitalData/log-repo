@@ -249,7 +249,7 @@ namespace Logitude.CustomsMessaging.RequestServices
 
             if (_DeclarationPM.IsCourierDeclaration)
             {
-                FeatureQuery featureQuery = new FeatureQuery(requestParams.Tenant);
+                FeatureQuery featureQuery = new FeatureQuery();
                 var features = featureQuery.GetAllowedFeaturesForLoggedUser(requestParams.LoggingUserId, requestParams.Tenant);
                 var feature = features.Features.FirstOrDefault(x => x.Code == "SendL2UFromSendDeclaration");
                 if (feature != null)
@@ -280,6 +280,7 @@ namespace Logitude.CustomsMessaging.RequestServices
                 return;
             var sw = Stopwatch.StartNew();
             TransactionScope scope = null;
+            bool isConnectedToUnifreight = mySetting.IsConnectedToUniFreight;
 
             if (!DbContextBaseUtil.UnifreightDataIncludedInMain_FeatureOn)
             {
@@ -300,7 +301,7 @@ namespace Logitude.CustomsMessaging.RequestServices
                 var myCCUQUELOCKQueryService = new Unifreight.BL.EntityQueryServices.CCUQUELOCKQueryService(_AmitalContext);
                 var myCCUQUELOCKUpdateService = new Unifreight.BL.EntityUpdateServices.CCUQUELOCKUpdateService(_AmitalContext);
                 myCCUQUELOCKUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
-                CCUQUELOCKPM myCCUQUELOCK = myCCUQUELOCKQueryService.GetSingle("CFIFILEM", dirtyDeclarationPM.CustomFileNo, dirtyDeclarationPM.Tenant, false);
+                CCUQUELOCKPM myCCUQUELOCK = myCCUQUELOCKQueryService.GetSingle("CFIFILEM", dirtyDeclarationPM.CustomFileNo, false);
                 if (myCCUQUELOCK == null)
                 {
                     var myCCUQUELOCKPM = new CCUQUELOCKPM()
@@ -331,9 +332,10 @@ namespace Logitude.CustomsMessaging.RequestServices
                     DEBUG = "F",
                     DONEOPERATION = "D"
                 };
-                
-                myGGGQPM.Tenant = dirtyDeclarationPM.Tenant;
-                
+                if (!isConnectedToUnifreight)
+                {
+                    myGGGQPM.Tenant = dirtyDeclarationPM.Tenant;
+                }
                 myGGGQUpdateService.Update(myGGGQPM, true);
 
 
@@ -394,9 +396,10 @@ namespace Logitude.CustomsMessaging.RequestServices
                     USRCODE = unifreightUser,
                     ARCHIVE = "F"
                 };
-                
-                myYCULTASKPM.Tenant = dirtyDeclarationPM.Tenant;
-                
+                if (!isConnectedToUnifreight)
+                {
+                    myYCULTASKPM.Tenant = dirtyDeclarationPM.Tenant;
+                }
                 var myYCULTASKUpdateService = new Unifreight.BL.EntityUpdateServices.YCULTASKUpdateService(_AmitalContext);
                 myYCULTASKUpdateService.DontAddTransaction = true;
                 myYCULTASKUpdateService.Update(myYCULTASKPM, true);
@@ -506,7 +509,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             var req = new DF_MSG10000_ImportDeclaration();
             CreateDeclarationPM(requestParams);
 
-            FeatureQuery featureQuery = new FeatureQuery(requestParams.Tenant);
+            FeatureQuery featureQuery = new FeatureQuery();
             var features = featureQuery.GetAllowedFeaturesForLoggedUser(requestParams.LoggingUserId, requestParams.Tenant);
             var feature = features.Features.FirstOrDefault(x => x.Code == "ISEXCLUDEMANIFEST");
             if (feature != null)
@@ -558,7 +561,7 @@ namespace Logitude.CustomsMessaging.RequestServices
                 throw new BusinessErrorException("_DirtyDeclarationPaymentPM.DeclarationId could not convert to long ");
             }
             var myCCUFILEMRepository = new CCUFILEMRepository(declarationPM.Tenant);
-            var ccufilem = myCCUFILEMRepository.GetFILENOByCUSTOMFILENO(lCUSTOMFILENO,declarationPM.Tenant);
+            var ccufilem = myCCUFILEMRepository.GetFILENOByCUSTOMFILENO(lCUSTOMFILENO);
 
 
             var myCCUQUELOCKRepository = new CCUQUELOCKRepository(requestParams.Tenant);
@@ -1977,8 +1980,8 @@ namespace Logitude.CustomsMessaging.RequestServices
                 {
                     supplierInvoiceItemPM.TaxExemptCode = supplierInvoiceItemPM.TaxExemptCode.Insert(10, "/");
                 }
-                supplierInvoiceItemPM.TaxExemptCode = supplierInvoiceItemPM.TaxExemptCode.Replace("//", "/");
                 DMExtensions.TaxExemptCode = new DeclarationGoodsShipmentGovernmentAgencyGoodsItemDMExtensionsTaxExemptCode() { Value = supplierInvoiceItemPM.TaxExemptCode };
+                //SetCodeTypeValue<DeclarationGoodsShipmentGovernmentAgencyGoodsItemDMExtensionsTaxExemptCode>(String.IsNullOrWhiteSpace(supplierInvoiceItemPM.TaxExemptCode) ? "1" : supplierInvoiceItemPM.TaxExemptCode)
             }
             if (supplierInvoiceItemPM.OptionalTamaPercentage.HasValue)
             {

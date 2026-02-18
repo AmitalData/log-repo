@@ -36,12 +36,12 @@
                 <table style="width:870px">
                     <!-- First Row -->
                     <tr class="FieldRow FirstRowBox">
-                        <td class="width130" class="bold-label">
+                        <td style="width:130px;" class="bold-label">
                             <LogLabel [ObjectFieldName]="'CooTypeCode'" [ObjectTableName]="ObjectTableName"
                                 [DataContext]="DataContext"></LogLabel>
                         </td>
 
-                        <td class="width180">
+                        <td style="width:180px">
                             <table>
                                 <tr>
 
@@ -66,7 +66,7 @@
                             <LogLabel [ObjectFieldName]="'RequestReasonCode'" [ObjectTableName]="ObjectTableName"
                                 [DataContext]="DataContext"></LogLabel>
                         </td>
-                        <td class="width180">
+                        <td style="width:180px">
                             <table>
                                 <tr>
                                     <td style="width: 22px;">
@@ -85,20 +85,24 @@
                             </table>
 
                         </td>
-                        <td class="width30"></td>
-                        <td class="width130">
+                        <td style="width: 30px;"></td>
+                        <td style="width:130px">
+                            <!-- <LogLabel [ObjectFieldName]="'DateOfDeclaration'" [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"></LogLabel> -->
                         </td>
-                        <td class="width180">
+                        <td style="width:180px">
+                            <!-- <LogDatePicker [ObjectFieldName]="'DateOfDeclaration'" [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker> -->
                         </td>
                     </tr>
 
                     <!-- Second Row -->
                     <tr class="FieldRow" [ngClass]="{ 'opacityDimBox': disableOpacityBox }">
-                        <td class="width130">
+                        <td style="width:130px">
                             <LogLabel [ObjectFieldName]="'TradeAgreementCountry1'" [ObjectTableName]="ObjectTableName"
                                 [DataContext]="DataContext"></LogLabel>
                         </td>
-                        <td class="width180">
+                        <td style="width:180px">
                             <table>
                                 <tr>
                                     <td style="width: 22px;">
@@ -138,7 +142,7 @@
                                 </select>
                             </div>
                         </td>
-                        <td class="width180">
+                        <td style="width:180px">
                             <table>
                                 <tr>
                                     <td style="width: 22px;">
@@ -169,12 +173,12 @@
                             
                             <div style="height: 5px;"></div>
                         </td>
-                        <td class="width30"></td>
-                        <td class="width130">
+                        <td style="width: 30px;"></td>
+                        <td style="width:130px;">
                             <LogLabel [ObjectFieldName]="'ExporterName'" [ObjectTableName]="ObjectTableName"
                                 [DataContext]="DataContext"></LogLabel>
                         </td>
-                        <td class="width180" class="nameBox">
+                        <td style="width:180px" class="nameBox">
                             <table>
                                 <tr>
                                     <td style="width: 22px;">
@@ -215,7 +219,7 @@
                                 </select>
                             </div>
                         </td>
-                        <td class="width180">
+                        <td style="width:180px">
                             <table>
                                 <tr>
                                     <td style="width: 22px;">
@@ -268,7 +272,7 @@
                                 </select>
                             </div>
                         </td>
-                        <td class="width180">
+                        <td style="width:180px">
                             <table>
                                 <tr>
                                     
@@ -301,12 +305,12 @@
                             
                             <div style="height: 5px;"></div>
                         </td>
-                        <td class="width30"></td>
-                        <td class="width130" rowspan="1">
+                        <td style="width: 30px;"></td>
+                        <td style="width:130px;" rowspan="1">
                             <LogLabel [ObjectFieldName]="'ExporterAddress'" [ObjectTableName]="ObjectTableName"
                                 [DataContext]="DataContext"></LogLabel>
                         </td>
-                        <td class="width180" rowspan="1" class="LogTextBoxMultiLine">
+                        <td style="width:180px;" rowspan="1" class="LogTextBoxMultiLine">
                             <table>
                                 <tr>
                                     <td style="width:22px;">
@@ -328,11 +332,11 @@
 
                     <!-- Forth Row -->
                     <tr class="FieldRow"  [ngClass]="{ 'opacityDimBox': disableOpacityBox }">
-                        <td class="width130">
+                        <td style="width:130px">
                             <LogLabel [ObjectFieldName]="'PlaceOfManufacture'" [ObjectTableName]="ObjectTableName"
                                 [DataContext]="DataContext"></LogLabel>
                         </td>
-                        <td class="width180">
+                        <td style="width:180px">
                             <table>
                                 <tr>
                                     <td style="width: 22px;">
@@ -350,11 +354,11 @@
                             </table>
 
                         </td>
-                        <td class="width130">
+                        <td style="width:130px">
                             <LogLabel [ObjectFieldName]="'ZipCodeOfManufacture'" [ObjectTableName]="ObjectTableName"
                                 [DataContext]="DataContext"></LogLabel>
                         </td>
-                        <td class="width180">
+                        <td style="width:180px">
                             <table>
                                 <tr>
                                     <td style="width:22px;">
@@ -371,13 +375,13 @@
                             </table>
 
                         </td>
-                        <td class="width30"></td>
+                        <td style="width: 30px;"></td>
 
-                        <td class="width130">
+                        <td style="width:130px">
                             <LogLabel [ObjectFieldName]="'ExporterCountry'" [ObjectTableName]="ObjectTableName"
                                 [DataContext]="DataContext"></LogLabel>
                         </td>
-                        <td class="width180">
+                        <td style="width:180px">
                             <table>
                                 <tr>
                                     <td style="width: 22px;">
@@ -398,11 +402,11 @@
 
                     <!-- Fifth Row -->
                     <tr class="FieldRow" [ngClass]="{ 'opacityDimBox': disableOpacityBox }">
-                        <td class="width130">
+                        <td style="width:130px">
                             <LogLabel [ObjectFieldName]="'Observations'" [ObjectTableName]="ObjectTableName"
                                 [DataContext]="DataContext"></LogLabel>
                         </td>
-                        <td class="width180" rowspan="1" class="LogTextBoxMultiLine">
+                        <td style="width:180px;" rowspan="1" class="LogTextBoxMultiLine">
                             <table>
                                 <tr>
                                     <td style="width: 22px;">
@@ -420,11 +424,11 @@
                             </table>
 
                         </td>
-                        <td class="width130">
+                        <td style="width:130px">
                             <LogLabel [ObjectFieldName]="'DateOfDeclaration'" [ObjectTableName]="ObjectTableName"
                                 [DataContext]="DataContext"></LogLabel>
                         </td>
-                        <td class="width180">
+                        <td style="width:180px">
                             <table>
                                 <tr>
                                     <td style="width: 22px;">
@@ -440,12 +444,12 @@
                             
                         </td>
 
-                        <td class="width30"></td>
-                        <td class="width130">
+                        <td style="width: 30px;"></td>
+                        <td style="width:130px">
                             <LogLabel [ObjectFieldName]="'ConsigneeName'" [ObjectTableName]="ObjectTableName"
                                 [DataContext]="DataContext"></LogLabel>
                         </td>
-                        <td class="width180" class="nameBox">
+                        <td style="width:180px" class="nameBox">
                             <table>
                                 <tr>    
                                     <td style="width: 22px;">
@@ -465,7 +469,7 @@
 
                     <!-- Six Row -->
                     <tr class="FieldRow"  [ngClass]="{ 'opacityDimBox': disableOpacityBox }">
-                        <td class="TabTitleRow" class="width130">
+                        <td class="TabTitleRow" style="width:130px;">
                             <table>
                                 <tr>
                                     <td style="width:22px">
@@ -484,7 +488,7 @@
                             <!-- PART 2- headline -->
                            
                         </td>
-                        <td class="width180"></td>
+                        <td style="width:180px"></td>
                         <td></td>
                         <!-- PART 2- -->
                         <td>
@@ -501,8 +505,8 @@
                                                     
                             </div>
                         </td>
-                        <td class="width30"></td>
-                        <td class="width130">
+                        <td style="width: 30px;"></td>
+                        <td style="width:130px">
                             <div>
                                 <div>
                                     <LogLabel [ObjectFieldName]="'ConsigneeAddress'" [ObjectTableName]="ObjectTableName"
@@ -511,7 +515,7 @@
                                 <div style="height: 5px;"></div>
                             </div>
                         </td>
-                        <td class="width180" rowspan="1" class="LogTextBoxMultiLine">
+                        <td style="width:180px;" rowspan="1" class="LogTextBoxMultiLine">
                             <table>
                                 <tr>
                                     <td style="width: 22px;">
@@ -547,7 +551,7 @@
                                                 <ng-template let-item>
                                                     <log-cell-template [IgnoreMods]="true" [IsEnabled]="!IsDisplayOnly"
                                                         #logcelltemplate>
-                                                        <div class="textRight">
+                                                        <div style="text-align:right">
                                                             <span>{{item.InvoicesIdUry}}</span>
                                                         </div>
 
@@ -563,7 +567,7 @@
                                                     <log-cell-template #logcelltemplate
                                                         (CellClicked)="onCellSelected($event,logcelltemplate,item)"
                                                         [RIndex]="item.InvoicesIdUry" [IsEnabled]="!IsDisplayOnly">
-                                                        <div class="TextTrimming" class="textRight"
+                                                        <div class="TextTrimming" style="text-align:right"
                                                             *ngIf="logcelltemplate.IsDisplayMode">
                                                             <span>{{item.InvoiceNumber}}</span>
                                                         </div>
@@ -585,7 +589,7 @@
                                                 <ng-template let-item>
                                                     <log-cell-template [IgnoreMods]="true" [IsEnabled]="!IsDisplayOnly"
                                                         #logcelltemplate>
-                                                        <div class="textRight">
+                                                        <div style="text-align:right">
                                                             <span>{{item.InvoiceDate | DateTimeToDatePipe}}</span>
                                                         </div>
 
@@ -595,26 +599,54 @@
 
                                             <log-column
                                                 [header]="'Customs.CertificateOfOrigin.O.InvoiceSum' | TextCodeTranslationPipe"
-                                                [binding]="'InvoiceSum'" [width]="'251'" [Alignment]="'right'">
+                                                [binding]="'InvoiceSum'" [width]="'260'" [Alignment]="'right'">
+                                                <!-- [binding]="'InvoiceSum'" [width]="'120'" [Alignment]="'right'"> -->
                                                 <ng-template let-item>
                                                     <log-cell-template [IgnoreMods]="true" [IsEnabled]="!IsDisplayOnly"
                                                         #logcelltemplate>
-                                                        <div class="textRight">
-                                                            <span class="paddingRight5">{{item.InvoiceSum |
+                                                        <div style="text-align:right">
+                                                            <span style="padding-right:5px">{{item.InvoiceSum |
                                                                 NumbersPipe:'n2'}}</span>
-                                                            <span class="floatRight">{{item.CurrencyTypeCode}}</span>
+                                                            <span style="float: right;">{{item.CurrencyTypeCode}}</span>
                                                         </div>
 
                                                     </log-cell-template>
                                                 </ng-template>
                                             </log-column>
+                                            <!-- remove from ui -->
+                                            <!-- <log-column
+                                    [header]="'Customs.CertificateOfOrigin.O.ItemDescription' | TextCodeTranslationPipe"
+                                    [binding]="'DescriptionOfInvoice'" [width]="'175'" [Alignment]="'right'"
+                                    [Editable]="true">
+                                    <ng-template let-item>
+                                        <log-cell-template #logcelltemplate
+                                            (CellClicked)="onCellSelected($event,logcelltemplate,item)"
+                                            [RIndex]="item.InvoicesIdUry" [IsEnabled]="!IsDisplayOnly">
+                                            <div class="TextTrimming" style="text-align:right" *ngIf="IsDisplayOnly">
+                                                <span>{{item.DescriptionOfInvoice}}</span>
+                                            </div>
+                                            <div style="width: 164.5px;" class="DescriptionBox" *ngIf="!IsDisplayOnly">
+                                                <LogTextBox #DescriptionOfInvoiceTextBox
+                                                    [ObjectFieldName]="'DescriptionOfInvoice'" [DataContext]="item"
+                                                    [FocusOnMe]="true" [InputType]="'nText'" [IsAccumulative]="true"
+                                                    [Text]="item.DescriptionOfInvoice"
+                                                    [ObjectTableName]="'Customs.CertificateOriginInvoice'"
+                                                    [HideColumns]="true" [IsMultiline]="true" [EnableKeyDown]="true"
+                                                    [Direction]="'LTR'">
+                                                </LogTextBox>
+                                            </div>
+                                        </log-cell-template>
+
+                                    </ng-template>
+                                </log-column> -->
+
                                             <log-column
                                                 [header]="'Customs.CertificateOfOrigin.O.IsInvoicesForPrint' | TextCodeTranslationPipe"
                                                 [binding]="'IsInvoicesForPrint'" [width]="'40'" [Alignment]="'right'">
                                                 <ng-template let-item>
                                                     <log-cell-template [IgnoreMods]="true" [IsEnabled]="!IsDisplayOnly"
                                                         #logcelltemplate>
-                                                        <div class="textRight">
+                                                        <div style="text-align:right">
                                                             <LogCheckBox [ObjectFieldName]="'IsInvoicesForPrint'"
                                                                 [Checked]="item.IsInvoicesForPrint"
                                                                 [ObjectTableName]="'Customs.CertificateOriginInvoice'"
@@ -632,7 +664,7 @@
                                                 <ng-template let-item>
                                                     <log-cell-template [IgnoreMods]="true" [IsEnabled]="!IsDisplayOnly"
                                                         #logcelltemplate>
-                                                        <div class="textRight">
+                                                        <div style="text-align:right">
                                                             <LogCheckBox [ObjectFieldName]="'IsInvoiceConnected'"
                                                                 [Checked]="item.IsInvoiceConnected"
                                                                 [ObjectTableName]="'Customs.CertificateOriginInvoice'"
@@ -682,14 +714,14 @@
                 </table>
 
                 <!-- Part 3: -->
-                <table class="width890" [ngClass]="{ 'opacityDimBox': disableOpacityBox }">
+                <table style="width:870px" [ngClass]="{ 'opacityDimBox': disableOpacityBox }">
                     <tr>
                         <td class="TabTitleRow" style="float: right;width: 22px;">
                             <HelpIcon *ngIf="myDictionary['CertificateOriginItemItems']!=null" [HideHeader]="true"
                                     [Text]="" [BackgroundImage]="myDictionary['CertificateOriginItemItems']"></HelpIcon>
                             
                         </td>
-                        <td class="TabTitleRow" class="floatRight">
+                        <td class="TabTitleRow" style="float: right;">
                             {{'Customs.Declaration.O.ConsignmentPackages' | TextCodeTranslationPipe}}
                             <IconButton [Name]="'Refresh'" (click)="RefreshCertificateOriginItemItemsClicked()"
                                 style="margin-left: 5px;"></IconButton>
@@ -706,32 +738,27 @@
                                     <button *ngFor="let option of UpdateOptionParams | keyvalue"
                                         [id]="'Update' + option.key" (click)="UpdateClicked(option.key)"
                                         [disabled]="!IsActionButtonsEnabled"
-                                        class="textRight">{{('Customs.Declaration.O.Update' |
+                                        style="text-align:right">{{('Customs.Declaration.O.Update' |
                                         TextCodeTranslationPipe) + " " + (('Customs.CertificateOfOrigin.O.' +
                                         option.key) | TextCodeTranslationPipe) }}</button>
                                 </div>
                             </div>
                         </td>
 
-                        <td *ngIf="currentDeclaration.Direction === 'E'"
-                            class="width165">
-                            <div class="actionLineContainer">
-                                <SearchTextBox *ngIf="currentDeclaration.TransportModeId === 'O'"
-                                    [PlaceHolder]="'Customs.CertificateOfOriginItem.O.SearchItems' | TextCodeTranslationPipe"
-                                    [ObjectTableName]="'Customs.CertificateOfOriginItem'"
-                                    (SearchTextChangeEvent)="Search($event)"></SearchTextBox>
-                                <div style="height: 20px;padding-bottom: 0px;top:2px; left:5px;width:30px">
-                                    <IconButton [IsEnabled]="!IsDisplayOnly" [Name]="'Add'" [IsSmall]="true" (click)="addItemLine()" style="top:18px; "></IconButton>
-                                </div>
-                            </div>
+                        <td *ngIf="currentDeclaration.Direction == 'E' && currentDeclaration.TransportModeId == 'O'"
+                            style="width:130px">
+                            <SearchTextBox
+                                [PlaceHolder]="'Customs.CertificateOfOriginItem.O.SearchItems' | TextCodeTranslationPipe"
+                                [ObjectTableName]="'Customs.CertificateOfOriginItem'"
+                                (SearchTextChangeEvent)="Search($event)"></SearchTextBox>
                         </td>
                     </tr>
                     <tr style="height:5px"></tr>
 
-                    <tr class="FieldRow" style="height : 135px">
+                    <tr class="FieldRow" style="height : 120px">
                         <td colspan="6">
                             <div class="GeneratedGridContainer" style="height : 100%;">
-                                <logitude-edit-grid GridWidth="100%" GridHeight="100%" (SelectedItemChanged)="SelectedRowClick($event)" [SelectedRow]="SelectedRow"
+                                <logitude-edit-grid GridWidth="100%" GridHeight="100%"
                                     [ItemSource]="CertificateOriginItemItems">
                                     <log-column
                                         [header]="'Customs.CertificateOfOrigin.O.number' | TextCodeTranslationPipe"
@@ -739,7 +766,7 @@
                                         <ng-template let-item>
                                             <log-cell-template [IgnoreMods]="true" [IsEnabled]="!IsDisplayOnly"
                                                 #logcelltemplate>
-                                                <div class="textRight">
+                                                <div style="text-align:right">
                                                     <span>{{item.ItemSerial}}</span>
                                                 </div>
 
@@ -754,7 +781,12 @@
                                             <log-cell-template #logcelltemplate
                                                 (CellClicked)="onCellSelected($event,logcelltemplate,item)"
                                                 [RIndex]="item.ItemSerial" [IsEnabled]="!IsDisplayOnly">
-                                                <div class="TextTrimming" class="textRight"
+                                                <!-- <div class="TextTrimming" style="text-align:right"
+                                                *ngIf="logcelltemplate.IsDisplayMode">
+                                                <span>{{item.MarksAndNumbers}}</span>
+                                            </div>
+                                            <div *ngIf="logcelltemplate.IsEditMode"> -->
+                                                <div class="TextTrimming" style="text-align:right"
                                                     *ngIf="IsDisplayOnly">
                                                     <span>{{item.MarksAndNumbers}}</span>
                                                 </div>
@@ -774,13 +806,18 @@
 
                                     <log-column
                                         [header]="'Customs.CertificateOfOrigin.O.ItemDescription' | TextCodeTranslationPipe"
-                                        [binding]="'ItemDescription'" [width]="'115'" [Alignment]="'right'"
+                                        [binding]="'ItemDescription'" [width]="'125'" [Alignment]="'right'"
                                         [Editable]="true">
                                         <ng-template let-item>
                                             <log-cell-template #logcelltemplate
                                                 (CellClicked)="onCellSelected($event,logcelltemplate,item)"
                                                 [RIndex]="item.ItemSerial" [IsEnabled]="!IsDisplayOnly">
-                                                <div class="TextTrimming" class="textRight"
+                                                <!-- <div class="TextTrimming" style="text-align:right"
+                                                *ngIf="logcelltemplate.IsDisplayMode">
+                                                <span>{{item.ItemDescription}}</span>
+                                            </div>
+                                            <div class="Tbl1Col1 DescriptionBox" *ngIf="logcelltemplate.IsEditMode"> -->
+                                                <div class="TextTrimming" style="text-align:right"
                                                     *ngIf="IsDisplayOnly">
                                                     <span>{{item.ItemDescription}}</span>
                                                 </div>
@@ -807,7 +844,7 @@
                                             <log-cell-template #logcelltemplate
                                                 (CellClicked)="onCellSelected($event,logcelltemplate,item)"
                                                 [RIndex]="item.ItemSerial" [IsEnabled]="!IsDisplayOnly">
-                                                <div class="TextTrimming" class="textRight"
+                                                <div class="TextTrimming" style="text-align:right"
                                                     *ngIf="logcelltemplate.IsDisplayMode">
                                                     <span>{{item.PackageQuantity}}</span>
                                                 </div>
@@ -832,7 +869,7 @@
                                             <log-cell-template #logcelltemplate
                                                 (CellClicked)="onCellSelected($event,logcelltemplate,item)"
                                                 [RIndex]="item.ItemSerial" [IsEnabled]="!IsDisplayOnly">
-                                                <div class="TextTrimming" class="textRight"
+                                                <div class="TextTrimming" style="text-align:right"
                                                     *ngIf="logcelltemplate.IsDisplayMode">
                                                     <span>{{item.PackingTypeName}}</span>
                                                 </div>
@@ -856,7 +893,7 @@
                                             <log-cell-template #logcelltemplate
                                                 (CellClicked)="onCellSelected($event,logcelltemplate,item)"
                                                 [RIndex]="item.ItemSerial" [IsEnabled]="!IsDisplayOnly">
-                                                <div class="TextTrimming" class="textRight"
+                                                <div class="TextTrimming" style="text-align:right"
                                                     *ngIf="logcelltemplate.IsDisplayMode">
                                                     <span>{{item.Weight}}</span>
                                                 </div>
@@ -879,7 +916,7 @@
                                             <log-cell-template #logcelltemplate
                                                 (CellClicked)="onCellSelected($event,logcelltemplate,item)"
                                                 [RIndex]="item.ItemSerial" [IsEnabled]="!IsDisplayOnly">
-                                                <div class="TextTrimming" class="textRight"
+                                                <div class="TextTrimming" style="text-align:right"
                                                     *ngIf="logcelltemplate.IsDisplayMode">
                                                     <span>{{item.MeasureTypeName}}</span>
                                                 </div>
@@ -898,13 +935,13 @@
 
                                     <log-column
                                         [header]="'Customs.CertificateOfOrigin.O.ContainerIsoCode' | TextCodeTranslationPipe"
-                                        [binding]="'ContainerIsoCode'" [width]="'78'" [Alignment]="'right'"
+                                        [binding]="'ContainerIsoCode'" [width]="'80'" [Alignment]="'right'"
                                         [Editable]="true">
                                         <ng-template let-item>
                                             <log-cell-template #logcelltemplate
                                                 (CellClicked)="onCellSelected($event,logcelltemplate,item)"
                                                 [RIndex]="item.ItemSerial" [IsEnabled]="!IsDisplayOnly">
-                                                <div class="TextTrimming" class="textRight"
+                                                <div class="TextTrimming" style="text-align:right"
                                                     *ngIf="logcelltemplate.IsDisplayMode">
                                                     <span>{{item.ContainerIsoCode}}</span>
                                                 </div>
@@ -923,12 +960,12 @@
 
                                     <log-column
                                         [header]="'Customs.CertificateOfOrigin.O.ItemId' | TextCodeTranslationPipe"
-                                        [binding]="'ItemId'" [width]="'72'" [Alignment]="'right'" [Editable]="true">
+                                        [binding]="'ItemId'" [width]="'80'" [Alignment]="'right'" [Editable]="true">
                                         <ng-template let-item>
                                             <log-cell-template #logcelltemplate
                                                 (CellClicked)="onCellSelected($event,logcelltemplate,item)"
                                                 [RIndex]="item.ItemSerial" [IsEnabled]="!IsDisplayOnly">
-                                                <div class="TextTrimming" class="textRight"
+                                                <div class="TextTrimming" style="text-align:right"
                                                     *ngIf="logcelltemplate.IsDisplayMode">
                                                     <span>{{item.ItemId}}</span>
                                                 </div>
@@ -946,12 +983,12 @@
 
                                     <log-column
                                         [header]="'Customs.CertificateOfOrigin.O.OriginCriterionCode' | TextCodeTranslationPipe"
-                                        [binding]="'OriginCriterionCode'" [width]="'60'" [Alignment]="'right'">
+                                        [binding]="'OriginCriterionCode'" [width]="'70'" [Alignment]="'right'">
                                         <ng-template let-item>
                                             <log-cell-template #logcelltemplate
                                                 (CellClicked)="onCellSelected($event,logcelltemplate,item)"
                                                 [RIndex]="item.ItemSerial" [IsEnabled]="!IsDisplayOnly">
-                                                <div class="TextTrimming" class="textRight"
+                                                <div class="TextTrimming" style="text-align:right"
                                                     *ngIf="logcelltemplate.IsDisplayMode">
                                                     <span>{{item.OriginCriterionCodeName}}</span>
                                                 </div>
@@ -989,17 +1026,6 @@
                                                         </IconButton>
                                                     </div>
                                                 </div>
-                                            </log-cell-template>
-                                        </ng-template>
-                                    </log-column>
-                                    <log-column [width]="'30'" [Editable]="true" [Alignment]="'right'" [visibility]="'visibile'" [header]="">
-                                        <ng-template let-item>
-                                            <log-cell-template [IgnoreMods]="true" [IsEnabled]="!IsDisplayOnly" #logcelltemplate>
-                                                <div class="deleteButtonWrapper">
-                                                    <IconButton [Name]="'Delete'" [IsSmall]="true"
-                                                        (click)="deleteItemLine(item)"
-                                                        [IsEnabled]="!IsDisplayOnly && !item.COONumber"></IconButton>
-                                                </div>              
                                             </log-cell-template>
                                         </ng-template>
                                     </log-column>
