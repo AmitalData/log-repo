@@ -844,10 +844,6 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             List<GLAccount> pocos = this.repository.GetByDisplayNumber(displayNumber, tenant);
             return pocos.Select(rec => this.GetEntityPM(rec)).ToList();
         }
-        public decimal GetTotalOpenChequesInLocalCurById(string Id, int tenant)
-        {
-            return this.repository.GetTotalOpenChequesInLocalCurById(Id, tenant);
-        }
         public List<GLAccountPM> GetByDisplayNumberEnding(string displayNumberEnding, int tenant)
         {
             List<GLAccount> pocos = this.repository.GetByDisplayNumberEnding(displayNumberEnding, tenant);
