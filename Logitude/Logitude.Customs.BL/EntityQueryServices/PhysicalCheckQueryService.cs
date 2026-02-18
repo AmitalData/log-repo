@@ -7,12 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.Entity;
-using Simplog.Data.CommonDataModel.EntityPOCOs; 
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.Customs.BL.EntityDataMappings;
-using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
-using Logitude.BL.CommonDataModel.EntityQueries;
-using Logitude.BL.CommonDataModel.EntityPMs;
 
 namespace Logitude.Customs.BL.EntityQueryServices
 {
@@ -102,16 +98,17 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
         //Yuval Chalup 17.11.2014 TASK-9089 --->
 
-        public (CardPM, string) GetCustomerNameByDeclartionNo(string declartionNumber, int tenant)
+        public Card GetCustomerNameByDeclartionNo(string declartionNumber, int tenant)
         {
-          CardPM card = new CardPM();
+            Card card = new Card();
             var declaration = context.Declarations.FirstOrDefault(x => x.Tenant == tenant && x.DeclarationNumber == declartionNumber);
             if (declaration != null)
             {
-                CardQuery cardQueryService = new CardQuery(tenant);
-                card = cardQueryService.GetSinglePM(declaration.CustomerId,tenant,false);
+                card = context.Cards.FirstOrDefault(x => x.Tenant== tenant && x.Id == declaration.CustomerId);
+                if (card != null)
+                    return card;
             }
-            return (card, declaration?.CustomFileNo);
+            return card;
         }
         public string GetCheckTypByCode(string code)
         {

@@ -203,14 +203,6 @@ namespace Logitude.Customs.BL.BL
 
                 myDeclarationCourierStatusPM.DocumentStatusCode = "M";
             }
-            else 
-            {
-                NetCommonHelper.Logger.DevLog.Instance.WriteDebug(
-                    string.Format("No error, no missing, -> set V, dec id :{0}",
-                        myDeclarationCourierStatusPM.DeclarationId));
-                myDeclarationCourierStatusPM.DocumentStatusCode = "V";
-            }
-           
 
         }
         public void CalcMissingDocumentStatusCode(DeclarationCourierStatusPM myDeclarationCourierStatusPM)
