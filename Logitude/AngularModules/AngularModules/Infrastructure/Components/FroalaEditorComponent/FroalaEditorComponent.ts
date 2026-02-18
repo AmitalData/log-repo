@@ -86,7 +86,7 @@ export class FroalaEditorComponent implements OnInit, AfterViewInit {
             RegisterCustomFroalaEditorButtom(this);
 
 
-            var froalakey: string = ObjectsLocator.GlobalSetting != null && ObjectsLocator.GlobalSetting?.WorkEnvironment == "cloud" ? "8A-9pwkamE5f1kG4ok==" : "ubd1wxffppaxjuE-11A2C-9rs==";
+            var froalakey: string = ObjectsLocator.GlobalSetting != null && ObjectsLocator.GlobalSetting.WorkEnvironment == "cloud" ? "8A-9pwkamE5f1kG4ok==" : "ubd1wxffppaxjuE-11A2C-9rs==";
 
 
             if (HtmlID.data('froala.editor')) HtmlID.froalaEditor('destroy');

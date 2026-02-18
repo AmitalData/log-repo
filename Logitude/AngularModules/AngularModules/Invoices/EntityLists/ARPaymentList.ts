@@ -105,8 +105,6 @@ export class ARPaymentList {
 	Field10: string;
 	PartnerId: string;
 	BillToCode: string;
-	GLAccountId : string;
-	GLAccountDisplayNumber : string;
 	
 }
  

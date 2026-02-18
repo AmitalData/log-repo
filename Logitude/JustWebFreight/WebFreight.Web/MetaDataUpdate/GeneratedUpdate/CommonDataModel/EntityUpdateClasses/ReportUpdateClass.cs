@@ -23,7 +23,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class ReportUpdateClass
    {  		
-		public const string HashString = "31f1431caa8f1c1a65c20e02deb37515";
+		public const string HashString = "31f1431caa8f1c1a65c20e02deb37532";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -1223,74 +1223,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
-            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
-            {
+ 
 
-                FieldName = "DefaultExcelNoStimId",
-                ObjectTableName = "Report",
-                FieldsDataType = "Text",
-                MinLength = 0,
-                MaxLength = 15,
-                IsRequired = false,
-                CopyToDW = false,
-                DisplayOnLookUp = false,
-                DisplayOnLookUpLocal = false,
-                CanFilter = false,
-                DisplayOnly = false,
-                SystemRequired = false,
-                SystemMaxLength = 15,
-                DisplayInList = true,
-                IsCustomFilter = false,
-                IsListFilter = false,
-                MultiLine = false,
-                IsTimeFrameFilter = false,
-                DisplayInSearchWindowList = false,
-                PMPropertyPath = "DefaultExcelNoStimId",
-                ListPropertyPath = "DefaultExcelNoStimId",
-                DisplayInLookUpIndex = 0,
-                AutomaticField = false,
-                UniqueField = false,
-                DisplayInSearchWindowListIndex = 0,
-                IsMulti = false,
-                DependencyFilter1IsList = false,
-                DependencyFilter2IsList = false,
-                DependencyFilter3IsList = false,
-                ValidForQuerySection1 = "Report",
-                IsRestrictable = false,
-                DisplayInEntityVariables = false,
-                AllowedInCustomerFieldsSettings = false,
-                DisplayInSearchWindowFilters = false,
-                DisplayInSearchWindowFiltersIndex = 0,
-                DisplayInDocumentReferences = false,
-                InActive = false,
-                DisplayLongName = false,
-                FullFieldLable = "DefaultExcelNoStimId",
-                DefaultText = "DefaultExcelNoStimId",
-                FullLocalDefaultText = "DefaultExcelNoStimId",
-                ListFieldLable = "DefaultExcelNoStimIdListLable",
-                ListLableDefaultText = "DefaultExcelNoStimId",
-                ListLocalDefaultText = "DefaultExcelNoStimId",
-                IsForeignKey = true,
-                ForeignEntity = "ReportsTemplate",
-                NavigationPropertyName = "TemplateDefExcelNoStim",
-                IsMaxLength = false,
-                NoMetaDataField = true,
-                IsFixedLength = false,
-                EnableAutoFill = false,
-                IncludeInSearchField = false,
-                AllowedinAutomationConditions = false,
-                AutomationEmailRecipient = false,
-                CanAutomateSetValue = false,
-                DisplayInAutomationAsEnitity = false,
-                DisplayInRequiredFields = false,
-                HasTemplate = false,
-                IsCustom = false,
-                EnableFullscreenTextBox = false,
-
-            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes, objectTables, addedFields, addedTextCodes, contextTenant);
-
-
-            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "LocalName",

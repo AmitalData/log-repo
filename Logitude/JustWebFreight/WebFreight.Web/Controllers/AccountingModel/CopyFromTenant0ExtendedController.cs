@@ -153,12 +153,6 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                                 reportHelper.CopyFromTenant0(0, authToken.Tenant, entityId);
                                 break;
                             }
-                        case "AccountingSettings":
-                            {
-                                AccountingSettingQuery accountingSettingQuery = new AccountingSettingQuery(authToken.Tenant);
-                                accountingSettingQuery.CopyFromTenant0(0, authToken.Tenant);
-                                break;
-                            }
 
 
                         default:
