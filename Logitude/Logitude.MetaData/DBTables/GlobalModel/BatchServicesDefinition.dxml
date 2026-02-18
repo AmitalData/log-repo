@@ -7,7 +7,7 @@
   <Column
     Name="Code"
     Type="varchar"
-    Size="100">
+    Size="50">
     <Constraints
       PrimaryKey="true"
       Nullable="false" />
@@ -45,12 +45,5 @@
     Type="bit">
     <Constraints
       Nullable="false" />
-  </Column>
-  <Column
-    Name="QueueBase"
-    Type="varchar"
-    Size="100">
-    <Constraints
-      Nullable="true" />
   </Column>
 </Table>
