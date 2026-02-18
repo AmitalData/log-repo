@@ -23,8 +23,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationReferantDataUpdateClass
    {  		
- 		public const string HashString = "69e397a206343c236fa46fbe1754ab2f";
- 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
+		public const string HashString = "b1353fde2fbfbded2449ec59245f1a33";
+	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
             AddObjectsAndObjectFields.AddObjectTable(new ObjectTableDetails()
@@ -818,11 +818,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "FollowUpDate",
 					  						DefaultText =  "FollowUp Date",
-					  						FullLocalDefaultTextBack_up =  "תםריך מעקב",
+					  						FullLocalDefaultTextBack_up =  "תאריך מעקב",
 					  						FullLocalDefaultText =  "BS64:Iteq15DXqNeZ15og157Xoten15Ei",
 					  						ListFieldLable =  "FollowUpDateListLable",
 					  						ListLableDefaultText =  "FollowUp Date",
-					  						ListLocalDefaultTextBack_up =  "תםריך מעקב",
+					  						ListLocalDefaultTextBack_up =  "תאריך מעקב",
 					  						ListLocalDefaultText =  "BS64:Iteq15DXqNeZ15og157Xoten15Ei",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
@@ -1315,7 +1315,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 						FieldName =  "TransportModeId",
 					  						ObjectTableName =  "Customs.DeclarationReferantData",
 					  						FieldsDataType =  "LookUp",
-					  						LookUpTableName =  "TransportMode",
+					  						LookUpTableName =  "Customs.CustomsTransportMode",
 					  						MinLength =  0,
 					  						MaxLength =  17,
 					  						IsRequired =  false,
@@ -2160,11 +2160,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AvailabilityDate",
 					  						DefaultText =  "Availability Date",
-					  						FullLocalDefaultTextBack_up =  "תםריך זמינות",
+					  						FullLocalDefaultTextBack_up =  "תאריך זמינות",
 					  						FullLocalDefaultText =  "BS64:Iteq15DXqNeZ15og15bXnteZ16DXldeqIg==",
 					  						ListFieldLable =  "AvailabilityDateListLable",
 					  						ListLableDefaultText =  "Availability Date",
-					  						ListLocalDefaultTextBack_up =  "תםריך זמינות",
+					  						ListLocalDefaultTextBack_up =  "תאריך זמינות",
 					  						ListLocalDefaultText =  "BS64:Iteq15DXqNeZ15og15bXnteZ16DXldeqIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
@@ -2672,14 +2672,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  true,
+					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						IsListFilter =  false,
-					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -2976,11 +2975,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "LastStatusName",
 					  						DefaultText =  "LastStatusName",
-					  						FullLocalDefaultTextBack_up =  "שם סטטוס םחרון",
+					  						FullLocalDefaultTextBack_up =  "שם סטטוס אחרון",
 					  						FullLocalDefaultText =  "BS64:Itep150g16HXmNeY15XXoSDXkNeX16jXldefIg==",
 					  						ListFieldLable =  "LastStatusNameListLable",
 					  						ListLableDefaultText =  "LastStatusName",
-					  						ListLocalDefaultTextBack_up =  " שם סטטוס םחרון",
+					  						ListLocalDefaultTextBack_up =  " שם סטטוס אחרון",
 					  						ListLocalDefaultText =  "BS64:IiDXqdedINeh15jXmNeV16Eg15DXl9eo15XXnyI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
@@ -3044,11 +3043,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "LastStatusDate",
 					  						DefaultText =  "LastStatusDate",
-					  						FullLocalDefaultTextBack_up =  "תםריך סטטוס םחרון",
+					  						FullLocalDefaultTextBack_up =  "תאריך סטטוס אחרון",
 					  						FullLocalDefaultText =  "BS64:Iteq15DXqNeZ15og16HXmNeY15XXoSDXkNeX16jXldefIg==",
 					  						ListFieldLable =  "LastStatusDateListLable",
 					  						ListLableDefaultText =  "LastStatusDate",
-					  						ListLocalDefaultTextBack_up =  "תםריך סטטוס םחרון",
+					  						ListLocalDefaultTextBack_up =  "תאריך סטטוס אחרון",
 					  						ListLocalDefaultText =  "BS64:Iteq15DXqNeZ15og16HXmNeY15XXoSDXkNeX16jXldefIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
@@ -3251,11 +3250,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "StorageSiteCode",
 					  						DefaultText =  "Storage Site",
-					  						FullLocalDefaultTextBack_up =  "םתר םחסון",
+					  						FullLocalDefaultTextBack_up =  "אתר אחסון",
 					  						FullLocalDefaultText =  "BS64:IteQ16rXqCDXkNeX16HXldefIg==",
 					  						ListFieldLable =  "StorageSiteCodeListLable",
 					  						ListLableDefaultText =  "Storage Site Code",
-					  						ListLocalDefaultTextBack_up =  "םתר םחסון",
+					  						ListLocalDefaultTextBack_up =  "אתר אחסון",
 					  						ListLocalDefaultText =  "BS64:IteQ16rXqCDXkNeX16HXldefIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
@@ -3320,11 +3319,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "TaxationDateTime",
 					  						DefaultText =  "Taxation Date Time",
-					  						FullLocalDefaultTextBack_up =  "תםריך חישוב מיסים  ",
+					  						FullLocalDefaultTextBack_up =  "תאריך חישוב מיסים  ",
 					  						FullLocalDefaultText =  "BS64:Iteq15DXqNeZ15og15fXmdep15XXkSDXnteZ16HXmdedICAi",
 					  						ListFieldLable =  "TaxationDateTimeListLable",
 					  						ListLableDefaultText =  "Taxation Date Time",
-					  						ListLocalDefaultTextBack_up =  "תםריך חישוב מיסים  ",
+					  						ListLocalDefaultTextBack_up =  "תאריך חישוב מיסים  ",
 					  						ListLocalDefaultText =  "BS64:Iteq15DXqNeZ15og15fXmdep15XXkSDXnteZ16HXmdedICAi",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
@@ -3458,11 +3457,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "HatraDate",
 					  						DefaultText =  "Hatra Date",
-					  						FullLocalDefaultTextBack_up =  "תםריך התרה",
+					  						FullLocalDefaultTextBack_up =  "תאריך התרה",
 					  						FullLocalDefaultText =  "BS64:Iteq15DXqNeZ15og15TXqteo15Qi",
 					  						ListFieldLable =  "HatraDateListLable",
 					  						ListLableDefaultText =  "Hatra Date",
-					  						ListLocalDefaultTextBack_up =  "תםריך התרה",
+					  						ListLocalDefaultTextBack_up =  "תאריך התרה",
 					  						ListLocalDefaultText =  "BS64:Iteq15DXqNeZ15og15TXqteo15Qi",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
@@ -3527,11 +3526,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "PaymentDate",
 					  						DefaultText =  "Payment Date",
-					  						FullLocalDefaultTextBack_up =  "תםריך תשלום",
+					  						FullLocalDefaultTextBack_up =  "תאריך תשלום",
 					  						FullLocalDefaultText =  "BS64:Iteq15DXqNeZ15og16rXqdec15XXnSI=",
 					  						ListFieldLable =  "PaymentDateListLable",
 					  						ListLableDefaultText =  "Payment Date",
-					  						ListLocalDefaultTextBack_up =  "תםריך תשלום",
+					  						ListLocalDefaultTextBack_up =  "תאריך תשלום",
 					  						ListLocalDefaultText =  "BS64:Iteq15DXqNeZ15og16rXqdec15XXnSI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
@@ -3595,11 +3594,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ImporterCode",
 					  						DefaultText =  "ImporterCode",
-					  						FullLocalDefaultTextBack_up =  "מספר יבוםן",
+					  						FullLocalDefaultTextBack_up =  "מספר יבואן",
 					  						FullLocalDefaultText =  "BS64:Itee16HXpNeoINeZ15HXldeQ158i",
 					  						ListFieldLable =  "ImporterCodeListLable",
 					  						ListLableDefaultText =  "ImporterCode",
-					  						ListLocalDefaultTextBack_up =  "מספר יבוםן",
+					  						ListLocalDefaultTextBack_up =  "מספר יבואן",
 					  						ListLocalDefaultText =  "BS64:Itee16HXpNeoINeZ15HXldeQ158i",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
@@ -3731,11 +3730,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ImporterFile",
 					  						DefaultText =  "Importer File",
-					  						FullLocalDefaultTextBack_up =  "תיק יבוםן",
+					  						FullLocalDefaultTextBack_up =  "תיק יבואן",
 					  						FullLocalDefaultText =  "BS64:Iteq15nXpyDXmdeR15XXkNefIg==",
 					  						ListFieldLable =  "ImporterFileListLable",
 					  						ListLableDefaultText =  "Importer File",
-					  						ListLocalDefaultTextBack_up =  "תיק יבוםן",
+					  						ListLocalDefaultTextBack_up =  "תיק יבואן",
 					  						ListLocalDefaultText =  "BS64:Iteq15nXpyDXmdeR15XXkNefIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
@@ -3801,7 +3800,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DefaultText =  "AEOImporter",
 					  						ListFieldLable =  "AEOImporterListLable",
 					  						ListLableDefaultText =  "AEOImporter",
-					  						ListLocalDefaultTextBack_up =  "לקוח AEO/יבוםן מורשה",
+					  						ListLocalDefaultTextBack_up =  "לקוח AEO/יבואן מורשה",
 					  						ListLocalDefaultText =  "BS64:Itec16fXldeXIEFFTy/XmdeR15XXkNefINee15XXqNep15Qi",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
@@ -3866,11 +3865,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "FileOpenDate",
 					  						DefaultText =  "File Open Date",
-					  						FullLocalDefaultTextBack_up =  "תםריך פתיחת תיק",
+					  						FullLocalDefaultTextBack_up =  "תאריך פתיחת תיק",
 					  						FullLocalDefaultText =  "BS64:Iteq15DXqNeZ15og16TXqteZ15fXqiDXqteZ16ci",
 					  						ListFieldLable =  "FileOpenDateListLable",
 					  						ListLableDefaultText =  "File Open Date",
-					  						ListLocalDefaultTextBack_up =  "תםריך פתיחת תיק",
+					  						ListLocalDefaultTextBack_up =  "תאריך פתיחת תיק",
 					  						ListLocalDefaultText =  "BS64:Iteq15DXqNeZ15og16TXqteZ15fXqiDXqteZ16ci",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
@@ -3934,11 +3933,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "StorageSiteName",
 					  						DefaultText =  "Storage Site",
-					  						FullLocalDefaultTextBack_up =  "שם םתר םחסון",
+					  						FullLocalDefaultTextBack_up =  "שם אתר אחסון",
 					  						FullLocalDefaultText =  "BS64:Itep150g15DXqteoINeQ15fXodeV158i",
 					  						ListFieldLable =  "StorageSiteNameListLable",
 					  						ListLableDefaultText =  "Storage Site Name",
-					  						ListLocalDefaultTextBack_up =  "שם םתר םחסון",
+					  						ListLocalDefaultTextBack_up =  "שם אתר אחסון",
 					  						ListLocalDefaultText =  "BS64:Itep150g15DXqteoINeQ15fXodeV158i",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
@@ -4002,11 +4001,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ImporterName",
 					  						DefaultText =  "Importer Name",
-					  						FullLocalDefaultTextBack_up =  "שם יבוםן",
+					  						FullLocalDefaultTextBack_up =  "שם יבואן",
 					  						FullLocalDefaultText =  "BS64:Itep150g15nXkdeV15DXnyI=",
 					  						ListFieldLable =  "ImporterNameListLable",
 					  						ListLableDefaultText =  "Importer Name",
-					  						ListLocalDefaultTextBack_up =  "שם יבוםן",
+					  						ListLocalDefaultTextBack_up =  "שם יבואן",
 					  						ListLocalDefaultText =  "BS64:Itep150g15nXkdeV15DXnyI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
@@ -4533,11 +4532,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "PaymentDate_Date",
 					  						DefaultText =  "Payment Date",
-					  						FullLocalDefaultTextBack_up =  "תםריך תשלום",
+					  						FullLocalDefaultTextBack_up =  "תאריך תשלום",
 					  						FullLocalDefaultText =  "BS64:Iteq15DXqNeZ15og16rXqdec15XXnSI=",
 					  						ListFieldLable =  "PaymentDate_DateListLable",
 					  						ListLableDefaultText =  "Payment Date",
-					  						ListLocalDefaultTextBack_up =  "תםריך תשלום",
+					  						ListLocalDefaultTextBack_up =  "תאריך תשלום",
 					  						ListLocalDefaultText =  "BS64:Iteq15DXqNeZ15og16rXqdec15XXnSI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
@@ -4742,8 +4741,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						FullLocalDefaultText =  "FCL/LCL",
 					  						ListFieldLable =  "FclLclListLable",
 					  						ListLableDefaultText =  "FCL/LCL",
-					  						ListLocalDefaultTextBack_up =  "FCL/LCLקוד ",
-					  						ListLocalDefaultText =  "BS64:IkZDTC9MQ0zXp9eV15MgIg==",
+					  						ListLocalDefaultText =  "FCL/LCL",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "FclLclCode",
 					  						NavigationPropertyName =  "FclLclCodeTable",
@@ -4808,11 +4806,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "PackageQuantity",
 					  						DefaultText =  "Package Quantity",
-					  						FullLocalDefaultTextBack_up =  "כמות םריזות",
+					  						FullLocalDefaultTextBack_up =  "כמות אריזות",
 					  						FullLocalDefaultText =  "BS64:Iteb157XldeqINeQ16jXmdeW15XXqiI=",
 					  						ListFieldLable =  "PackageQuantityListLable",
 					  						ListLableDefaultText =  "Package Quantity",
-					  						ListLocalDefaultTextBack_up =  "כמות םריזות",
+					  						ListLocalDefaultTextBack_up =  "כמות אריזות",
 					  						ListLocalDefaultText =  "BS64:Iteb157XldeqINeQ16jXmdeW15XXqiI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
@@ -5346,11 +5344,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "PackageTypeCode",
 					  						DefaultText =  "Package Type Code",
-					  						FullLocalDefaultTextBack_up =  "סוג םריזה",
+					  						FullLocalDefaultTextBack_up =  "סוג אריזה",
 					  						FullLocalDefaultText =  "BS64:Iteh15XXkiDXkNeo15nXlteUIg==",
 					  						ListFieldLable =  "PackageTypeCodeListLable",
 					  						ListLableDefaultText =  "Package Type Code",
-					  						ListLocalDefaultTextBack_up =  "סוג םריזה",
+					  						ListLocalDefaultTextBack_up =  "סוג אריזה",
 					  						ListLocalDefaultText =  "BS64:Iteh15XXkiDXkNeo15nXlteUIg==",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "PackingType",
@@ -5484,11 +5482,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "LastStatusRemarks",
 					  						DefaultText =  "Last Status Remarks",
-					  						FullLocalDefaultTextBack_up =  "הערות לסטטוס םחרון",
+					  						FullLocalDefaultTextBack_up =  "הערות לסטטוס אחרון",
 					  						FullLocalDefaultText =  "BS64:IteU16LXqNeV16og15zXodeY15jXldehINeQ15fXqNeV158i",
 					  						ListFieldLable =  "LastStatusRemarksListLable",
 					  						ListLableDefaultText =  "Last Status Remarks",
-					  						ListLocalDefaultTextBack_up =  "הערות לסטטוס םחרון",
+					  						ListLocalDefaultTextBack_up =  "הערות לסטטוס אחרון",
 					  						ListLocalDefaultText =  "BS64:IteU16LXqNeV16og15zXodeY15jXldehINeQ15fXqNeV158i",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
@@ -5811,11 +5809,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Mawb",
 					  						DefaultText =  "Mawb",
-					  						FullLocalDefaultTextBack_up =  "שטר מטען רםשי",
+					  						FullLocalDefaultTextBack_up =  "שטר מטען ראשי",
 					  						FullLocalDefaultText =  "BS64:Itep15jXqCDXnteY16LXnyDXqNeQ16nXmSI=",
 					  						ListFieldLable =  "MawbListLable",
 					  						ListLableDefaultText =  "Mawb",
-					  						ListLocalDefaultTextBack_up =  "שטר מטען רםשי",
+					  						ListLocalDefaultTextBack_up =  "שטר מטען ראשי",
 					  						ListLocalDefaultText =  "BS64:Itep15jXqCDXnteY16LXnyDXqNeQ16nXmSI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
@@ -5947,11 +5945,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ImporterApproval",
 					  						DefaultText =  "Importer Approval",
-					  						FullLocalDefaultTextBack_up =  "םישור יבוםן",
+					  						FullLocalDefaultTextBack_up =  "אישור יבואן",
 					  						FullLocalDefaultText =  "BS64:IteQ15nXqdeV16gg15nXkdeV15DXnyI=",
 					  						ListFieldLable =  "ImporterApprovalListLable",
 					  						ListLableDefaultText =  "Importer Approval",
-					  						ListLocalDefaultTextBack_up =  "םישור יבוםן",
+					  						ListLocalDefaultTextBack_up =  "אישור יבואן",
 					  						ListLocalDefaultText =  "BS64:IteQ15nXqdeV16gg15nXkdeV15DXnyI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
@@ -6345,11 +6343,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "NotOccuredStatus",
 					  						DefaultText =  "Not Occured Status",
-					  						FullLocalDefaultTextBack_up =  "לם התרחש סטטוס",
+					  						FullLocalDefaultTextBack_up =  "לא התרחש סטטוס",
 					  						FullLocalDefaultText =  "BS64:Itec15Ag15TXqteo15fXqSDXodeY15jXldehIg==",
 					  						ListFieldLable =  "NotOccuredStatusListLable",
 					  						ListLableDefaultText =  "Not Occured Status",
-					  						ListLocalDefaultTextBack_up =  "לם התרחש סטטוס",
+					  						ListLocalDefaultTextBack_up =  "לא התרחש סטטוס",
 					  						ListLocalDefaultText =  "BS64:Itec15Ag15TXqteo15fXqSDXodeY15jXldehIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
@@ -6413,11 +6411,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "MawbDate",
 					  						DefaultText =  "Mawb Date",
-					  						FullLocalDefaultTextBack_up =  "תםריך ש.מ.ר",
+					  						FullLocalDefaultTextBack_up =  "תאריך ש.מ.ר",
 					  						FullLocalDefaultText =  "BS64:Iteq15DXqNeZ15og16ku154u16gi",
 					  						ListFieldLable =  "MawbDateListLable",
 					  						ListLableDefaultText =  "Mawb Date",
-					  						ListLocalDefaultTextBack_up =  "תםריך ש.מ.ר",
+					  						ListLocalDefaultTextBack_up =  "תאריך ש.מ.ר",
 					  						ListLocalDefaultText =  "BS64:Iteq15DXqNeZ15og16ku154u16gi",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
@@ -6482,11 +6480,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Vessel",
 					  						DefaultText =  "Vessel",
-					  						FullLocalDefaultTextBack_up =  "םוניה",
+					  						FullLocalDefaultTextBack_up =  "אוניה",
 					  						FullLocalDefaultText =  "BS64:IteQ15XXoNeZ15Qi",
 					  						ListFieldLable =  "VesselListLable",
 					  						ListLableDefaultText =  "Vessel",
-					  						ListLocalDefaultTextBack_up =  "םוניה",
+					  						ListLocalDefaultTextBack_up =  "אוניה",
 					  						ListLocalDefaultText =  "BS64:IteQ15XXoNeZ15Qi",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "Vessel",
@@ -6664,7 +6662,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  2,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						IsListFilter =  false,
 					  						MultiLine =  false,
@@ -6680,6 +6678,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Customs.DeclarationReferantData",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -6690,8 +6689,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "OriginCountryCode",
 					  						DefaultText =  "Origin Country",
-					  						FullLocalDefaultTextBack_up =  "םרץ מוצם",
+					  						FullLocalDefaultTextBack_up =  "ארץ מוצא",
 					  						FullLocalDefaultText =  "BS64:IteQ16jXpSDXnteV16bXkCI=",
+					  						ListFieldLable =  "OriginCountryCodeListLable",
+					  						ListLableDefaultText =  "OriginCountryCode",
+					  						ListLocalDefaultTextBack_up =  "ארץ מוצא",
+					  						ListLocalDefaultText =  "BS64:IteQ16jXpSDXnteV16bXkCI=",
 					  						IsForeignKey =  false,
 					  						ForeignEntity =  "CustomsCountry",
 					  						NavigationPropertyName =  "OriginCountry",
@@ -6756,11 +6759,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "VesselName",
 					  						DefaultText =  "Vessel Name",
-					  						FullLocalDefaultTextBack_up =  "שם םונייה",
+					  						FullLocalDefaultTextBack_up =  "שם אונייה",
 					  						FullLocalDefaultText =  "BS64:Itep150g15DXldeg15nXmdeUIg==",
 					  						ListFieldLable =  "VesselNameListLable",
 					  						ListLableDefaultText =  "Vessel Name",
-					  						ListLocalDefaultTextBack_up =  "שם םונייה",
+					  						ListLocalDefaultTextBack_up =  "שם אונייה",
 					  						ListLocalDefaultText =  "BS64:Itep150g15DXldeg15nXmdeUIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
@@ -6923,53 +6926,51 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 			 QueryColumn FilesInProcessQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.DeclarationReferantData.ListCounter" , ColumnWidth = 100 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn FilesInProcessQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.DeclarationReferantData.FlightVoyageNumber" , ColumnWidth = 58 }, addedQueryColumns,contextTenant);
+			 QueryColumn FilesInProcessQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.DeclarationReferantData.Favorite" , ColumnWidth = 80 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn FilesInProcessQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.DeclarationReferantData.Favorite" , ColumnWidth = 80 }, addedQueryColumns,contextTenant);
+			 QueryColumn FilesInProcessQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.DeclarationReferantData.CollectorUserName" , ColumnWidth = 100 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn FilesInProcessQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.DeclarationReferantData.CollectorUserName" , ColumnWidth = 100 }, addedQueryColumns,contextTenant);
+			 QueryColumn FilesInProcessQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.DeclarationReferantData.CustomFileNo" , ColumnWidth = 92 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn FilesInProcessQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.DeclarationReferantData.CustomFileNo" , ColumnWidth = 92 }, addedQueryColumns,contextTenant);
+			 QueryColumn FilesInProcessQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.DeclarationReferantData.CustomerName" , ColumnWidth = 146 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn FilesInProcessQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.DeclarationReferantData.CustomerName" , ColumnWidth = 146 }, addedQueryColumns,contextTenant);
+			 QueryColumn FilesInProcessQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.DeclarationReferantData.OrderNumber" , ColumnWidth = 87 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn FilesInProcessQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.DeclarationReferantData.OrderNumber" , ColumnWidth = 87 }, addedQueryColumns,contextTenant);
+			 QueryColumn FilesInProcessQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.DeclarationReferantData.TransportModeId" , ColumnWidth = 58 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn FilesInProcessQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Customs.DeclarationReferantData.TransportModeId" , ColumnWidth = 58 }, addedQueryColumns,contextTenant);
+			 QueryColumn FilesInProcessQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Customs.DeclarationReferantData.DeclarationOfficeName" , ColumnWidth = 157 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn FilesInProcessQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Customs.DeclarationReferantData.DeclarationOfficeName" , ColumnWidth = 157 }, addedQueryColumns,contextTenant);
+			 QueryColumn FilesInProcessQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Customs.DeclarationReferantData.VendorName" , ColumnWidth = 124 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn FilesInProcessQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Customs.DeclarationReferantData.VendorName" , ColumnWidth = 124 }, addedQueryColumns,contextTenant);
+			 QueryColumn FilesInProcessQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Customs.DeclarationReferantData.ArrivalDate" , ColumnWidth = 79 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn FilesInProcessQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "Customs.DeclarationReferantData.ArrivalDate" , ColumnWidth = 79 }, addedQueryColumns,contextTenant);
+			 QueryColumn FilesInProcessQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "Customs.DeclarationReferantData.Weight" , ColumnWidth = 75 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn FilesInProcessQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "Customs.DeclarationReferantData.Weight" , ColumnWidth = 75 }, addedQueryColumns,contextTenant);
+			 QueryColumn FilesInProcessQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "Customs.DeclarationReferantData.DeclarationStatusTypeName" , ColumnWidth = 255 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn FilesInProcessQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 12, ObjectFieldCode = "Customs.DeclarationReferantData.DeclarationStatusTypeName" , ColumnWidth = 255 }, addedQueryColumns,contextTenant);
+			 QueryColumn FilesInProcessQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 12, ObjectFieldCode = "Customs.DeclarationReferantData.PreClassification" , ColumnWidth = 58 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn FilesInProcessQueryColumn_13 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 13, ObjectFieldCode = "Customs.DeclarationReferantData.PreClassification" , ColumnWidth = 58 }, addedQueryColumns,contextTenant);
+			 QueryColumn FilesInProcessQueryColumn_13 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 13, ObjectFieldCode = "Customs.DeclarationReferantData.ClassificationStatus" , ColumnWidth = 55 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn FilesInProcessQueryColumn_14 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 14, ObjectFieldCode = "Customs.DeclarationReferantData.ClassificationStatus" , ColumnWidth = 55 }, addedQueryColumns,contextTenant);
+			 QueryColumn FilesInProcessQueryColumn_14 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 14, ObjectFieldCode = "Customs.DeclarationReferantData.ControllerStatus" , ColumnWidth = 44 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn FilesInProcessQueryColumn_15 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 15, ObjectFieldCode = "Customs.DeclarationReferantData.ControllerStatus" , ColumnWidth = 44 }, addedQueryColumns,contextTenant);
+			 QueryColumn FilesInProcessQueryColumn_15 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 15, ObjectFieldCode = "Customs.DeclarationReferantData.CollectionOfMoneyStatus" , ColumnWidth = 50 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn FilesInProcessQueryColumn_16 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 16, ObjectFieldCode = "Customs.DeclarationReferantData.CollectionOfMoneyStatus" , ColumnWidth = 50 }, addedQueryColumns,contextTenant);
+			 QueryColumn FilesInProcessQueryColumn_16 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 16, ObjectFieldCode = "Customs.DeclarationReferantData.OrderMoney" , ColumnWidth = 50 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn FilesInProcessQueryColumn_17 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 17, ObjectFieldCode = "Customs.DeclarationReferantData.OrderMoney" , ColumnWidth = 50 }, addedQueryColumns,contextTenant);
+			 QueryColumn FilesInProcessQueryColumn_17 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 17, ObjectFieldCode = "Customs.DeclarationReferantData.FollowUpDate" , ColumnWidth = 108 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn FilesInProcessQueryColumn_18 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 18, ObjectFieldCode = "Customs.DeclarationReferantData.FollowUpDate" , ColumnWidth = 108 }, addedQueryColumns,contextTenant);
+			 QueryColumn FilesInProcessQueryColumn_18 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 18, ObjectFieldCode = "Customs.DeclarationReferantData.AvailabilityDate" , ColumnWidth = 108 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn FilesInProcessQueryColumn_19 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 19, ObjectFieldCode = "Customs.DeclarationReferantData.AvailabilityDate" , ColumnWidth = 108 }, addedQueryColumns,contextTenant);
+			 QueryColumn FilesInProcessQueryColumn_19 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 19, ObjectFieldCode = "Customs.DeclarationReferantData.ExceptionReasonsList" , ColumnWidth = 34 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn FilesInProcessQueryColumn_20 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 20, ObjectFieldCode = "Customs.DeclarationReferantData.ExceptionReasonsList" , ColumnWidth = 34 }, addedQueryColumns,contextTenant);
+			 QueryColumn FilesInProcessQueryColumn_20 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 20, ObjectFieldCode = "Customs.DeclarationReferantData.WithPaper" , ColumnWidth = 69 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn FilesInProcessQueryColumn_21 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 21, ObjectFieldCode = "Customs.DeclarationReferantData.WithPaper" , ColumnWidth = 69 }, addedQueryColumns,contextTenant);
+			 QueryColumn FilesInProcessQueryColumn_21 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 21, ObjectFieldCode = "Customs.DeclarationReferantData.NewFile" , ColumnWidth = 69 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn FilesInProcessQueryColumn_22 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 22, ObjectFieldCode = "Customs.DeclarationReferantData.NewFile" , ColumnWidth = 69 }, addedQueryColumns,contextTenant);
+			 QueryColumn FilesInProcessQueryColumn_22 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 22, ObjectFieldCode = "Customs.DeclarationReferantData.IsCustomerLogBoxActivated" , ColumnWidth = 68 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn FilesInProcessQueryColumn_23 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 23, ObjectFieldCode = "Customs.DeclarationReferantData.IsCustomerLogBoxActivated" , ColumnWidth = 68 }, addedQueryColumns,contextTenant);
-
-			 QueryColumn FilesInProcessQueryColumn_24 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 24, ObjectFieldCode = "Customs.DeclarationReferantData.Actions" , ColumnWidth = 68 }, addedQueryColumns,contextTenant);
+			 QueryColumn FilesInProcessQueryColumn_23 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 23, ObjectFieldCode = "Customs.DeclarationReferantData.Actions" , ColumnWidth = 68 }, addedQueryColumns,contextTenant);
 
              AdvancedQueryFilter FilesInProcessQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.DeclarationReferantData.IsCancelled", PredefinedValue = "true",PredefinedValue2 = null, CustomPredefined = false, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, Tenant = 0,Operator = "NotEqual"}, addedQueryFilters,contextTenant);
 
