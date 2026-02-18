@@ -71,7 +71,6 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             poco.ForwarderDocumentId = entityPM.ForwarderDocumentId;
 
             poco.LastVersion = entityPM.LastVersion;
-            poco.FileDataMD5Hash = entityPM.FileDataMD5Hash;
 
             if (!entityPM.IsHybrid)
             {
@@ -142,7 +141,6 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
 
             poco.SecurityId = entityPM.SecurityId;
             poco.LastVersion = entityPM.LastVersion;
-            poco.FileDataMD5Hash = entityPM.FileDataMD5Hash;
             poco.OrigionalDocumentId = entityPM.OrigionalDocumentId;
             poco.IsSharedIn = entityPM.IsSharedIn;
             poco.IsSharedOut = entityPM.IsSharedOut;

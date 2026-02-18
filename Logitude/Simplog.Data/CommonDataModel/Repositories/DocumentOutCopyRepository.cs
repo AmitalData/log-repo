@@ -12,7 +12,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
     {
         ICommonDataContext commonDataContext;
 
-
+        public DocumentOutCopyRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
 
         public DocumentOutCopyRepository(int tenant)
         {

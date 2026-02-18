@@ -9,7 +9,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
     {
         ICommonDataContext commonDataContext;
 
-
+        public TarrifHeaderRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
 
         public TarrifHeaderRepository(ICommonDataContext context)
         {

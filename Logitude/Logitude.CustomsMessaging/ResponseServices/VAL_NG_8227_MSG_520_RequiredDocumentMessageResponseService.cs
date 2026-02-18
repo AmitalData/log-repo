@@ -117,7 +117,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         }
                         if (myDeclarationPM == null || string.IsNullOrWhiteSpace(myDeclarationPM.Id))
                         {
-                            Handle8227DeclarationNotFound(customResponse, requestParams, dbContext, firstRelatedEntity.entityIdKey1);
                             this.MyResponseData.HasException = true;
                             this.MyResponseData.UserMessage = "Can't find declaration: \nDeclaration: " + firstRelatedEntity.entityIdKey1;
                             LogMessagingUtil.Instance.AppendLine("RequiredDocumentMessage: \nDeclaration: " + firstRelatedEntity.entityIdKey1 + " is missing");
@@ -167,7 +166,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         var myDeclaration = myConsignmentQueryService.GetDeclarationIdByConsignmentCargoId(firstRelatedEntity.entityIdKey1, firstRelatedEntity.entityIdKey2, firstRelatedEntity.entityIdKey3, requestParams.Tenant);
                         if (string.IsNullOrWhiteSpace(myDeclaration))
                         {
-                            Handle8227DeclarationNotFound(customResponse, requestParams, dbContext, firstRelatedEntity.entityIdKey1);
                             this.MyResponseData.HasException = true;
                             this.MyResponseData.UserMessage = "Can't find declaration: \nDeclaration: " + firstRelatedEntity.entityIdKey1;
                             LogMessagingUtil.Instance.AppendLine("RequiredDocumentMessage: \nDeclaration: " + firstRelatedEntity.entityIdKey1 + " is missing");
@@ -276,10 +274,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         else
 
                         {
-                            var typeIdStr = customResponse.RequiredDocumentDetails.typeID.ToString();
-                            var documentTypeName = GetDocumentTypeName(typeIdStr, requestParams.Tenant);
-                            var documentTypeInfo = string.Concat(typeIdStr, " - ", documentTypeName);
-                            myInsertEventContextTagModel.EventRemarks = "Document Request By Customs" + DeclarationConvertionText + " DocumentCode: " + documentTypeInfo;
+                            myInsertEventContextTagModel.EventRemarks = "Document Request By Customs" + DeclarationConvertionText;
 
                         }
 
@@ -504,89 +499,5 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel, suppress_RAISE_EVENT: true, iscustomUser: true, isExport: true);
         }
-        private void Handle8227DeclarationNotFound(
-    VAL_NG_8227_MSG_520_RequiredDocumentMessage customResponse,
-    RequiredDocumentRequestParams requestParams,
-    ICustomContext dbContext,
-    string declarationNumber)
-        {
-            try
-            {
-                if (string.IsNullOrWhiteSpace(declarationNumber))
-                {
-                    LogMessagingUtil.Instance.AppendLine("Handle8227DeclarationNotFound: firstRelatedEntity.entityIdKey1");
-                    return;
-                }
-
-                var msgType = customResponse?.RequiredDocumentDetails?.requiredDocumentMessageType;
-
-                string notificationDefinitionCode;
-                string assigneType;
-                string descPrefix;
-
-                if (msgType == 1)
-                {
-                    notificationDefinitionCode = "8227N";
-                    assigneType = "A"; 
-                    descPrefix = "מספר הצהרה " + declarationNumber + " - מסמך נדרש ע\"י המכס";
-                }
-                else if (msgType == 2)
-                {
-                    notificationDefinitionCode = "8227D";
-                    assigneType = "I";
-                    descPrefix = "מספר הצהרה " + declarationNumber + " - בוטלה דרישת מסמך";
-                }
-                else
-                {
-                    LogMessagingUtil.Instance.AppendLine("Handle8227DeclarationNotFound: Undeveloped requiredDocumentMessageType=" + msgType);
-                    return;
-                }
-
-                string desc = descPrefix;
-
-                var documentTypeCode = customResponse?.RequiredDocumentDetails?.typeID.ToString();
-                if (!string.IsNullOrWhiteSpace(documentTypeCode))
-                {
-                    var documentTypeName = GetDocumentTypeName(documentTypeCode, requestParams.Tenant);
-                    if (!string.IsNullOrWhiteSpace(documentTypeName))
-                    {
-                        desc += "\nסוג מסמך-" + documentTypeName;
-                    }
-                }
-
-                var customsDocId = customResponse?.RequiredDocumentDetails?.documentID.ToString();
-                if (!string.IsNullOrWhiteSpace(customsDocId))
-                {
-                    desc += "\nסימוכין מכס-" + customsDocId;
-                }
-
-                var remarks = customResponse?.RequiredDocumentDetails?.remarks;
-                if (!string.IsNullOrWhiteSpace(remarks))
-                {
-                    desc += "\nהערות מכס-" + remarks;
-                }
-
-                NotificationBase.CreateNotification(
-                    dbContext: dbContext,
-                    tenant: requestParams.Tenant,
-                    objectTableName: "Customs.Declaration",
-                    notificationDefinitionCode: notificationDefinitionCode,
-                    description: desc,
-                    assigneToNotificationTypeCode: assigneType,
-                    reference1Number: declarationNumber,       
-                    entityId: null,                          
-                    createdByRequestId: requestParams.CustomsRequestsSheetId,
-                    reference2Number: customsDocId             
-                );
-
-                LogMessagingUtil.Instance.AppendLine(
-                    $"Handle8227DeclarationNotFound: Notification created. Code={notificationDefinitionCode}, Ref={declarationNumber}, Doc={customsDocId}");
-            }
-            catch (Exception ex)
-            {
-                LogMessagingUtil.Instance.AppendLine("Handle8227DeclarationNotFound failed: " + ex);
-            }
-        }
-
     }
 }

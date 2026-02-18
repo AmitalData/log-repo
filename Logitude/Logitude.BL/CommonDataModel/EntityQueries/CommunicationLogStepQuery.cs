@@ -25,7 +25,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         CommunicationLogStepRepository repository;
 
-
+        public CommunicationLogStepQuery()
+        {
+            repository = new CommunicationLogStepRepository(); 
+        }
 
         public CommunicationLogStepQuery(int tenant)
         {

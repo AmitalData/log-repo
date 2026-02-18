@@ -1,6 +1,5 @@
 declare var window: any;
 import { Component, OnInit, Output, EventEmitter, isDevMode, AfterViewInit } from '@angular/core';
-import { APP_VERSION } from '../../../src/version';
 
 import { ServiceHelper } from '../../Utilities/ServiceHelper';
 import { SessionInfo } from '../../Utilities/SessionInfo';
@@ -34,14 +33,11 @@ import { SATInterfaceSettingPMService } from '../../../Invoice/Services/Standard
 import { DateTool } from '../../Tools';
 import { Guid } from '../../Utilities/Guid';
 import { AmitalGatewayUtil } from '../../Utilities/AmitalGatewayUtil';
-declare var changeFavicon: any;
-declare var changeTitle: any;
 import { RulesValidator } from '../../Validators/RulesValidator';
 import { Environment } from '../../Locators/Environment';
 import { ObjectsLocator } from '../../Locators/ObjectsLocator';
 import { ServiceLocator } from '../../Locators/ServiceLocator';
 import { ObjectsUpdater } from '../../Locators/ObjectsUpdater';
-//import { DWObjectFieldExtendedPMService } from '../../../../Infrastructure/Services/ExtendedPMs/DWObjectFieldExtendedPMService';
 import { UserExtendedPMService } from '../../../Common/Services/ExtendedPMs/UserExtendedPMService';
 import { GeneralDomainService } from '../../../Infrastructure/Services/GeneralDomainService';
 import { v4 as uuidv4 } from 'uuid';
@@ -82,7 +78,6 @@ export class LoginComponent implements OnInit ,AfterViewInit {
     public InvalidVerificationCode: boolean = false;
     private generalTableResourcesIsLoaded: boolean = false;
     public DefultText: string;
-    public AppVersion: string = '';
     //public LogoURL: string = "./Images/ApplicationLogo/UnifreightLogo.jpg";
     //public SampleLogoURL: string = "./Images/ApplicationLogo/UnifreightLogo.jpg";
     private _objectTableRulePMService: ObjectTableRulePMService =
@@ -95,6 +90,7 @@ export class LoginComponent implements OnInit ,AfterViewInit {
     private UserExtendedPMService: UserExtendedPMService;
     private generalDomainService: GeneralDomainService;
     private isLocalPrivateLable: boolean = false;
+
     constructor(
         private logitudeApplicationService: LogitudeApplicationService,
         private loginService: LoginService,
@@ -112,7 +108,6 @@ export class LoginComponent implements OnInit ,AfterViewInit {
         this.LoginFailed = false;
         this.LoginParams = new LoginParameters();
         this.HidePendingLoading = true;
-        
         var temp = window.sessionStorage.getItem('LogoURL');
         var LogoCode = window.sessionStorage.getItem('LogoCode');
         if (temp) {
@@ -158,13 +153,12 @@ export class LoginComponent implements OnInit ,AfterViewInit {
         //FileLoader.LoadFroalaResources();
         sessionStorage.setItem('SessionId', uuidv4());
 
+
     }
 
     idxdb: IDBOpenDBRequest;
     public authHeader;
     ngOnInit() {
-        // Load version from version.ts
-        this.AppVersion = APP_VERSION;
         
         let AmitalSSOAngular = this.getParameterByName(
             'AmitalSSOAngular',
@@ -205,78 +199,10 @@ export class LoginComponent implements OnInit ,AfterViewInit {
         //     this.developerLogin();       
      }
      ngAfterViewInit() {
-        this.clearSessionCache();
-        this.addVersionTag();
-    }
-    
-    addVersionTag() {
-        if (!this.AppVersion) {
-            console.log('AppVersion not set:', this.AppVersion);
-            return;
-        }
-        
-        const tryAddVersion = (attempt: number = 0) => {
-            if (attempt > 15) {
-                console.log('Failed to find versionContainer after 15 attempts');
-                return; // Stop after 15 attempts
-            }
-            
-            // Try by ID first
-            let container = document.getElementById('versionContainer');
-            
-            // Fallback: try to find by background image
-            if (!container) {
-                const allTds = document.querySelectorAll('td');
-                for (let i = 0; i < allTds.length; i++) {
-                    const td = allTds[i] as HTMLElement;
-                    const style = window.getComputedStyle(td);
-                    if (style.backgroundImage && style.backgroundImage.includes('Layer.png')) {
-                        container = td;
-                        break;
-                    }
-                }
-            }
-            
-            if (container && this.AppVersion) {
-                // Remove existing version tag if any
-                const existing = container.querySelector('.app-version-tag');
-                if (existing) {
-                    existing.remove();
-                }
-                
-                // Ensure container has position relative
-                const containerStyle = window.getComputedStyle(container);
-                if (containerStyle.position === 'static') {
-                    (container as HTMLElement).style.position = 'relative';
-                }
-                
-                // Create and add version tag
-                const versionDiv = document.createElement('div');
-                versionDiv.className = 'app-version-tag';
-                versionDiv.style.cssText = 'position: absolute !important; bottom: 10px !important; right: 10px !important; font-size: 11px !important; color: rgba(150, 150, 150, 0.8) !important; font-family: tahoma, arial, sans-serif !important; z-index: 9999 !important; background-color: transparent !important; padding: 2px 4px !important; border-radius: 3px !important; pointer-events: none !important; font-weight: 400 !important;';
-                versionDiv.textContent = `v${this.AppVersion}`;
-                container.appendChild(versionDiv);
-                console.log('Version tag added:', `v${this.AppVersion}`, 'to element:', container);
-            } else {
-                // Retry if element not found or version not set
-                setTimeout(() => tryAddVersion(attempt + 1), 200);
-            }
-        };
-        
-        // Start trying immediately and also after delays
-        tryAddVersion();
-        setTimeout(() => tryAddVersion(), 500);
-        setTimeout(() => tryAddVersion(), 1000);
-        setTimeout(() => tryAddVersion(), 2000);
-    }
-   
-    clearSessionCache(){
-        const computerId: string = SessionLocator.GetComputerIdFromStorage();
       localStorage.clear();
-        if (!AppTool.IsNullOrEmpty(computerId)) 
-            SessionLocator.StoreLogedComputerId(computerId);
+      sessionStorage.clear();
     }
-   
+
     async developerLogin() {
         this.Email = ''
         this.Password = '';
@@ -285,7 +211,7 @@ export class LoginComponent implements OnInit ,AfterViewInit {
        while(!this.TenantList?.length)
           await new Promise<void>(resolve => setTimeout(() => resolve(), 100))
 
-        this.SelectedCompany = this.TenantList.find(d => d.Tenant == 1);
+        this.SelectedCompany = this.TenantList.find(d => d.Tenant == 0);
 
         this.ContinueClicked()
     }   
@@ -311,8 +237,6 @@ export class LoginComponent implements OnInit ,AfterViewInit {
                   this.Email = "angular@fnarsoft.com";
                 this.Password = "1";
                  this.IsShowLoginForm = true;
-                 // Try to add version tag after form becomes visible
-                 setTimeout(() => this.addVersionTag(), 300);
             }
 
          
@@ -329,13 +253,6 @@ export class LoginComponent implements OnInit ,AfterViewInit {
             if (SessionLocator.ExternalParams) {
                 if (SessionLocator.ExternalParams.Menu) {
                     var menuName = SessionLocator.ExternalParams.Menu.toLocaleLowerCase();
-                    const token: string = new URLSearchParams(window.location.search).get('Token');
-                    
-                    if (menuName === 'redi' && token) {
-                        const origin: string = window.location.origin.replace('localhost:4200', 'localhost:9996');
-                        location.href = origin + '/api/ExternalLink/GetForward?Token=' + token;
-                        return;
-                    }
                     
                     if (
                         menuName == 'logbox' ||
@@ -613,7 +530,7 @@ export class LoginComponent implements OnInit ,AfterViewInit {
                 GetToken: true,
                 IsAngularLogin: true,
                 ClientType: 'Web',
-                IgnoreMFA: false
+                IgnoreMFA: false,
             };
 
             this.HidePendingLoading = false;
@@ -697,7 +614,6 @@ export class LoginComponent implements OnInit ,AfterViewInit {
                 GetToken: true,
                 IsAngularLogin: true,
                 ClientType: 'Web',
-                IgnoreMFA: false
             };
 
             this.loginService.CurrentTenant = this.Tenant;
@@ -948,7 +864,7 @@ export class LoginComponent implements OnInit ,AfterViewInit {
                                     'READ'
                                 ) &&
                                 ObjectsLocator.GlobalSetting &&
-                                ObjectsLocator.GlobalSetting?.WorkEnvironment !=
+                                ObjectsLocator.GlobalSetting.WorkEnvironment !=
                                     'customs'
                             ) {
                                 var myCreditLimitSettingPMService =
@@ -1502,4 +1418,5 @@ export class LoginComponent implements OnInit ,AfterViewInit {
             );
         }
     }
+  
 }
