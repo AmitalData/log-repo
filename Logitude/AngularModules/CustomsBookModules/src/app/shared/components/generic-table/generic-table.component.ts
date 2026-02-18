@@ -23,6 +23,19 @@ export class GenericTableComponent {
     this.buttonClicked.emit({ event, row, key });
   }
 
+  openBase64File(base64String: string, fileType: string): void {
+    if (!base64String) return;
+    const byteCharacters = atob(base64String);
+    const byteNumbers = new Array(byteCharacters.length);
+    for (let i = 0; i < byteCharacters.length; i++) {
+      byteNumbers[i] = byteCharacters.charCodeAt(i);
+    }
+    const byteArray = new Uint8Array(byteNumbers);
+    const fileBlob = new Blob([byteArray], { type: fileType });
+    const fileURL = URL.createObjectURL(fileBlob); // Open the file in a new tab:
+    window.open(fileURL, '_blank');
+  }
+
   shouldDisplayLink(condition: Condition | undefined, rowData: string): boolean {
     if (!condition || !condition.key || !condition.value) 
       return true;
