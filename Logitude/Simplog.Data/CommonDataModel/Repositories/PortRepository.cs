@@ -13,7 +13,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
     {
         ICommonDataContext commonDataContext;
 
-
+        public PortRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
 
         public PortRepository(int tenant)
         {

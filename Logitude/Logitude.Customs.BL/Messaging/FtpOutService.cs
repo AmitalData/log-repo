@@ -85,8 +85,8 @@ namespace Logitude.Customs.BL.Messaging
             var settingsData = Logitude.Server.Tools.Utils.ProxyUtil.JsonConvertSerialize(settings);
 
             CommunicationLog commLog = CreateCommunicationLog(tenant, ftpOutParams, loggedContactId, xmlSubject, target, objectTableId, commonContext, settingsData);
-            var customsEnvironmentSettingQueryService = new CustomsEnvironmentSettingQueryService(tenant);
-            var customsEnvironmentSettingPM = customsEnvironmentSettingQueryService.GetEnvironmentSettingPM(tenant) ?? new CustomsEnvironmentSettingPM();
+            var customsEnvironmentSettingQueryService = new CustomsEnvironmentSettingQueryService(1);
+            var customsEnvironmentSettingPM = customsEnvironmentSettingQueryService.GetEnvironmentSettingPM() ?? new CustomsEnvironmentSettingPM();
             bool UseRabbitMQ = customsEnvironmentSettingPM.UseRabbitMQ;//currInterfaceTenantDefinition.UseRabbitMQ;
 
             CustomDbQueueService.SendCommunicationLogMessageToQueue(commLog.QueueName, commLog.Id, tenant, UseRabbitMQ);

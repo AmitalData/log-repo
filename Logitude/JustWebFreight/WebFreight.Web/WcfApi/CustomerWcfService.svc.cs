@@ -533,10 +533,6 @@ namespace WebFreight.Web.WcfApi
                             entityPM.CustomerMediatorByProducts.Add(madiator);
 
                         }
-                        if (String.IsNullOrEmpty(entityPM.ContactForAccounting))
-                        {
-                            entityPM.ContactForAccounting = CustomerService.DONT_CARE;
-                        }
 
                         service.SetChangeSet(new List<CustomerSalesNotePM>(), new List<CustomerProductPM>(), new List<CustomerCompetitorPM>(), new List<CustomerAdditionalServicePM>(), entityPM.CustomerSalesmanByProducts, entityPM.CustomerAccountManagerByProducts, entityPM.CustomerCustomsAgentByProducts, entityPM.CustomerForwarderByProducts, entityPM.CustomerMediatorByProducts, entityPM.CardExternalCodeByCurrencies, entityPM.CustomerProductItems);
                         service.Update();

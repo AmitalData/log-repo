@@ -15,7 +15,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     public class PackageTypeQuery
     {
         PackageTypeRepository repository;
-
+        public PackageTypeQuery()
+        {
+            repository = new PackageTypeRepository(); 
+        }
         public PackageTypeQuery(int tenant)
         {
             repository = new PackageTypeRepository(tenant);

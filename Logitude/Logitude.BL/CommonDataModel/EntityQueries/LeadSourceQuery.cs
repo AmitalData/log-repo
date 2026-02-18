@@ -15,7 +15,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     public class LeadSourceQuery
     {
         LeadSourceRepository repository;
-
+        public LeadSourceQuery()
+        {
+               repository = new LeadSourceRepository(); 
+        }
 
         public LeadSourceQuery(int tenant)
         {
