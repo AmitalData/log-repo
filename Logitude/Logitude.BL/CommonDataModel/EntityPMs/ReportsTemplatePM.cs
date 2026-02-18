@@ -34,7 +34,5 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public string EntityId { get; set; }
         public bool IsCopiedAtSignup { get; set; }
         public string OriginalTemplateId { get; set; }
-        public bool UseStimul { get; set; }
-
     }
 }
