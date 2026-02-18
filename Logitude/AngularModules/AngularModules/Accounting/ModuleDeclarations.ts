@@ -105,7 +105,6 @@ import {PaymentChequeGeneralTabComponent} from './Components/EditTabs/PaymentChe
 import {CancelChequeComponent} from './Components/Others/CancelChequeComponent';
 import {DropdownButtonComponent} from './Components/Others/DropdownButtonComponent';
 import {JournalReconcileComponent} from './Components/Others/JournalReconcileComponent';
-import {JournalRevaluationComponent} from './Components/Others/JournalRevaluationComponent';
 import {ExternalReconcileComponent} from './Components/Others/ExternalReconcileComponent';
 import {AddEditTaxWithholdingLineComponent} from './Components/EditTabs/GLAccount/AddEditTaxWithholdingLineComponent';
 import {TaxReportDetailsTabComponent} from './Components/EditTabs/TaxReport/TaxReportDetailsTabComponent';
@@ -171,7 +170,6 @@ import { GlAccountInterestTransactionsListTemplate } from './Components/ListTemp
 import { NewNLogComponent } from './Components/Maintenance/NewNLogComponent';
 import { InvoiceApiCommunicationLogDetailsTabComponent } from './Components/EditTabs/InvoiceApi/InvoiceApiCommunicationLogDetailsTabComponent';
 import { CustomerDebtNotificationComponent } from './Components/Maintenance/CustomerDebtNotificationComponent';
-import { JournalMichpalLoadComponent } from './Components/NewEntity/JournalMichpalLoadComponent';
 
 
 
@@ -208,7 +206,6 @@ export const Components =
         LoadRecoExPageComponent,
         NewUserDefinedReportComponent,
         JournalCSVLoadComponent,
-        JournalMichpalLoadComponent,
         TaxReportUploadLinesComponent,
 
         //Maintenance
@@ -307,7 +304,6 @@ export const Components =
         CancelChequeComponent,
         DropdownButtonComponent,
         JournalReconcileComponent,
-        JournalRevaluationComponent,
         ExternalReconcileComponent,
         AddEditTaxWithholdingLineComponent,
         AddEditCalculatedChartsOfAccountComponent,
@@ -391,7 +387,6 @@ export class ModuleDeclarations {
             case "NewOpenFormatReportComponent": { myResult = NewOpenFormatReportComponent; break; }
             case "LoadRecoExPageComponent": { myResult = LoadRecoExPageComponent; break; }
             case "JournalCSVLoadComponent": { myResult = JournalCSVLoadComponent; break; }
-            case "JournalMichpalLoadComponent": { myResult = JournalMichpalLoadComponent; break; }
             case "NewInterestReportComponent": { myResult = NewInterestReportComponent; break; }
             case "NewUserDefinedReportComponent": { myResult = NewUserDefinedReportComponent; break; }
 
@@ -513,7 +508,6 @@ export class ModuleDeclarations {
             case "CancelChequeComponent": { myResult = CancelChequeComponent; break; }
             case "DropdownButtonComponent": { myResult = DropdownButtonComponent; break; }
             case "JournalReconcileComponent": { myResult = JournalReconcileComponent; break; }
-            case "JournalRevaluationComponent": { myResult = JournalRevaluationComponent; break; }
             case "ExternalReconcileComponent": { myResult = ExternalReconcileComponent; break; }
             case "AddEditTaxWithholdingLineComponent": { myResult = AddEditTaxWithholdingLineComponent; break; }
             case "AccountingFlatFileDownloadComponent": { myResult = AccountingFlatFileDownloadComponent; break; }
