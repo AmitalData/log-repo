@@ -1,15 +1,6 @@
-﻿using System;
-using System.Web;
-using System.Linq;
-using System.Collections.Generic;
-using Simplog.Data.Helpers;
-using Logitude.Server.Tools.Helpers;
+﻿using Logitude.Server.Tools.Helpers;
 using Simplog.Server.Infrastructure;
-using Logitude.Server.Tools.Counters;
 using Simplog.Server.Infrastructure.Helpers;
-using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Simplog.Data.InfrastructureModel.Repositories;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.Tools.DataMapping;
 using Logitude.BL.InfrastructureModel.Tools.Validating;
@@ -206,14 +197,6 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             entityRepository.SubmitChanges();
         }
 
-		public void Delete(int tenant,string taskSchedularId)
-		{
-			this.Poco = entityRepository.GetSingleTasksScheduler(taskSchedularId, tenant);
-            if (Poco == null) return;
-			entityRepository.Remove(Poco);
-			entityRepository.SubmitChanges();
-		}
-
         public void RunTaskNow(string taskSchedulerId, int tenant, DateTime FromDate, DateTime ToDate)
         {
             var poco = entityRepository.GetSingleTasksScheduler(taskSchedulerId, tenant);
@@ -223,7 +206,6 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
                 poco.SchedulerDetailsXML = LogitudeXmlSerializer.SerializeObjectToElementString(details);
                 entityRepository.Update(poco);
                 entityRepository.SubmitChanges();
-	
             }
 
             IQueueService queueservice = new DbQueueService();
@@ -240,7 +222,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
         }
 
     }
-	}
+}
 [System.Runtime.Serialization.DataContract]
 public class SchedulerDateRange
 {
