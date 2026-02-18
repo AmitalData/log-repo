@@ -32,12 +32,10 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         Tenant, 
 	         CreateDate, 
 	         SearchFields, 
-	         DocumentId, 
+	         CommunicationId, 
 	         Step, 
 	         StatusCode, 
-	         Exception, 
-	         ExternalID, 
-	         ARInvoiceId,
+	         Exception,
 	      }
 
 
@@ -48,16 +46,10 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         Tenant, 
 	         CreateDate, 
 	         SearchFields, 
-	         DocumentId, 
+	         CommunicationId, 
 	         Step, 
 	         StatusCode, 
-	         Exception, 
-	         StatusName, 
-	         StepName, 
-	         ExternalID, 
-	         ARInvoiceId, 
-	         InvoiceNumber, 
-	         ExternalInvoiceNumber,
+	         Exception,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -81,9 +73,9 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 				entityPOCO.SearchFields = entityPM.SearchFields;
 			}
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DocumentId))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CommunicationId))
             {
-				entityPOCO.DocumentId = entityPM.DocumentId;
+				entityPOCO.CommunicationId = entityPM.CommunicationId;
 			}
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Step))
@@ -99,16 +91,6 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Exception))
             {
 				entityPOCO.Exception = entityPM.Exception;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExternalID))
-            {
-				entityPOCO.ExternalID = entityPM.ExternalID;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ARInvoiceId))
-            {
-				entityPOCO.ARInvoiceId = entityPM.ARInvoiceId;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -137,9 +119,9 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.SearchFields = entityPOCO.SearchFields;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DocumentId))
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CommunicationId))
             {
-					entityPM.DocumentId = entityPOCO.DocumentId;
+					entityPM.CommunicationId = entityPOCO.CommunicationId;
             }
 
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Step))
@@ -155,16 +137,6 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Exception))
             {
 					entityPM.Exception = entityPOCO.Exception;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ExternalID))
-            {
-					entityPM.ExternalID = entityPOCO.ExternalID;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ARInvoiceId))
-            {
-					entityPM.ARInvoiceId = entityPOCO.ARInvoiceId;
             }
 
 		}
@@ -188,9 +160,9 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 oldEntityPM.SearchFields = entityPM.SearchFields;
             }
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DocumentId))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CommunicationId))
             {
-                oldEntityPM.DocumentId = entityPM.DocumentId;
+                oldEntityPM.CommunicationId = entityPM.CommunicationId;
             }
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Step))
@@ -206,16 +178,6 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Exception))
             {
                 oldEntityPM.Exception = entityPM.Exception;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExternalID))
-            {
-                oldEntityPM.ExternalID = entityPM.ExternalID;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ARInvoiceId))
-            {
-                oldEntityPM.ARInvoiceId = entityPM.ARInvoiceId;
             }
 			
 		}
@@ -234,10 +196,6 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             if (!String.IsNullOrWhiteSpace(entityPM.Exception)) //T4 find type == nText 
             {
                 entityPM.Exception = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.Exception));
-            }
-            if (!String.IsNullOrWhiteSpace(entityPM.ExternalID)) //T4 find type == nText 
-            {
-                entityPM.ExternalID = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.ExternalID));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}
