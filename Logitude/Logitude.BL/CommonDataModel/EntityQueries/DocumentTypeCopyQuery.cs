@@ -16,7 +16,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         DocumentTypeCopyRepository repository;
 
-
+        public DocumentTypeCopyQuery()
+        {
+            repository = new DocumentTypeCopyRepository(); 
+        }
 
         public DocumentTypeCopyQuery(int tenant)
         {

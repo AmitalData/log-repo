@@ -118,7 +118,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
                     Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance
     .AppendLine("if (SignQueue.Instance.IsPasiveSignMode() && !IsIneractiveHSM())");
-                    availableSignServer = _CustomsRequestsSheetService.GetAvailableSignServer(out personId, out SignatureBy, out noAvailableSignServerErrorText, requestParams?.HsmStationContext);
+                    availableSignServer = _CustomsRequestsSheetService.GetAvailableSignServer(out personId, out SignatureBy, out noAvailableSignServerErrorText);
 
                     if (!string.IsNullOrWhiteSpace(availableSignServer))
                     {
@@ -261,10 +261,10 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
         private bool IsInteractiveHSM()
         {
-            //if (this.MyOverrideControllerModel?.IsCustomsMessagingSheetWR == true)
-            //{
-            //    return true;
-            //}
+            if (this.MyOverrideControllerModel?.IsCustomsMessagingSheetWR == true)
+            {
+                return true;
+            }
             if (RequestParams.SignMethodByQueue != SignMethodByQueueEnum.HSMSignQueue.ToString())
             {
                 return false;

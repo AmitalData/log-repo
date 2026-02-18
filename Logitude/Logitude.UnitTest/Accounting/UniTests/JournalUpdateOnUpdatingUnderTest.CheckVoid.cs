@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace Logitude.UnitTest.Accounting.UniTests
 {
-    // Uses TestClass on main partial; keep this partial attribute-less to avoid duplicates.
+    [TestClass]
     public partial class JournalUpdateOnUpdatingUnderTest
     {
         [TestMethod]

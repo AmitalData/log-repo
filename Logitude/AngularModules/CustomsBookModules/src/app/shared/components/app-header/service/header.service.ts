@@ -8,7 +8,6 @@ export class HeaderService {
 	public searchState: string = 'יבוא';
 	public searchState$: BehaviorSubject<string> = new BehaviorSubject<string>(this.searchState);
 	public IsDiscountCodes: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-	public lastUpdateTaskScheduled: BehaviorSubject<Date> = new BehaviorSubject<Date>(null);
 
 	constructor() {
 		this.setSearchState();
@@ -31,10 +30,6 @@ export class HeaderService {
 
 	setIsDiscountCodes(value: boolean) {
 		this.IsDiscountCodes.next(value);
-	}
-
-	setLastUpdateTaskScheduled(date: Date) {
-		this.lastUpdateTaskScheduled.next(date);
 	}
 }
 

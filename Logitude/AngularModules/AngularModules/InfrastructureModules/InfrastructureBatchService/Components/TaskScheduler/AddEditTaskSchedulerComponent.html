@@ -358,53 +358,6 @@
                                                                         </div>
                                                                     </td>
                                                                 </tr>
-                                                                <tr style="height:1px;">
-                                                                    <td>
-                                                                        <table>
-                                                                            <tr>
-                                                                                <td style="width:10px"></td>
-                                                                               
-                                                                                
-                                                                                    <td style="width:80px"  *ngIf ="ShowRunTaskNowButton">
-                                                                                        <button [disabled]="DataContext.IsNew" class="Button" (click)="RunNowButtonClicked()">Run Task Now</button>
-    
-                                                                                    </td>                                                                                
-
-                                                                                <td *ngIf="ShowDateFields" style="width:320px;">
-                                                                                    <table>
-                                                                                        <tr>
-                                                                                            <td style="width: 5px;">
-                                                                                                <div></div>
-                                                                                            </td>
-                                                                                            <td  style="width:30px;">
-                                                                                                <LogLabel [Text]="'From'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                                                            </td>
-                                                                                            <td  style="width:90px">
-                                                                                                <LogDatePicker  [SelectedDateValue]="RunNowFromDate" (ValueChanged) ="DatePickerFromValueChange($event)" [ObjectTableName]="ObjectTableName" [ObjectFieldName]="'RunNowFromDate'" [DataContext]="DataContext" [NoObjectField]="true" [HideColumns]="true"></LogDatePicker>
-
-                                                                                            </td>
-
-                                                                                           
-                                                                                            <td  style="width:30px;">
-                                                                                                <LogLabel [Text]="'To'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                                                            </td>
-                                                                                            <td  style="width:90px">
-                                                                                                <LogDatePicker  [SelectedDateValue]="RunNowToDate" (ValueChanged) ="DatePickerToValueChange($event)" [ObjectTableName]="ObjectTableName" [ObjectFieldName]="'RunNowToDate'" [DataContext]="DataContext" [NoObjectField]="true" [HideColumns]="true"></LogDatePicker>
-                                                                                            </td>
-                                                                                        </tr>
-                                                                                    </table>
-                                                                                </td>
-                                                                                <td style="width:80px">
-                                                                                </td>
-                                                                                <td></td>
-                                                                            </tr>
-                                                                        </table>
-                                                                    </td>
-
-
-
-                                                                </tr>
-                                                                <tr style="height:10px"><td></td></tr>
 
                                                             </table>
                                                         </td>

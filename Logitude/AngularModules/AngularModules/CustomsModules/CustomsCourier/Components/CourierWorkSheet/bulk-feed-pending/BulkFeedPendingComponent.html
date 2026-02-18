@@ -46,7 +46,7 @@
                 <tr>
                     <td>
                         <div class="ActionButton" style="width: 35px;height:23px; ">
-                            <CheckBox [IsChecked]="_CourierWorksheetSharedDataService.connectedSelectAll" (Checked)="$event ? OnAllBtnClickedNot() : OnNoneBtnClickedNot()"></CheckBox>
+                            <CheckBox style="pointer-events:none;" [IsChecked]="_CourierWorksheetSharedDataService.connectedSelectAll" ></CheckBox>
 
                         </div>
                     </td>
@@ -79,61 +79,61 @@
 
 
     <LogLabel class="label-good-description"
-              [Text]="'Customs.ReleaseGoods.O.GoodsDescription' | TextCodeTranslationPipe" [NoObjectField]="true"
-              [DataContext]="DataContext"></LogLabel>
+        [Text]="'Customs.ReleaseGoods.O.GoodsDescription' | TextCodeTranslationPipe" [NoObjectField]="true"
+        [DataContext]="DataContext"></LogLabel>
 
     <LogTextBox class="input-good-description" [HideColumns]="true" [HideLastColumn]="true" [IsFreeText]="true"
-                [ObjectFieldName]="'GoodsDescription'" [IsMultiline]="true" [DataContext]="DataContext" [InputType]="'nText'">
+        [ObjectFieldName]="'GoodsDescription'" [IsMultiline]="true" [DataContext]="DataContext" [InputType]="'nText'">
     </LogTextBox>
     <LogLabel class="label-casual-supplier-name"
-              [Text]="'Customs.ReleaseGoods.O.CasualSupplierName' | TextCodeTranslationPipe" [NoObjectField]="true"
-              [DataContext]="DataContext"></LogLabel>
+        [Text]="'Customs.ReleaseGoods.O.CasualSupplierName' | TextCodeTranslationPipe" [NoObjectField]="true"
+        [DataContext]="DataContext"></LogLabel>
 
     <LogTextBox class="input-good-description" [HideColumns]="true" [HideLastColumn]="true" [IsFreeText]="true"
-                [ObjectFieldName]="'CasualSupplierName'" [IsMultiline]="true" [DataContext]="DataContext" [InputType]="'nText'">
+        [ObjectFieldName]="'CasualSupplierName'" [IsMultiline]="true" [DataContext]="DataContext" [InputType]="'nText'">
     </LogTextBox>
 
     <LogLabel class="label-weight" [Text]="'Customs.MasterBOLQuery.O.TotalWeight' | TextCodeTranslationPipe"
-              [NoObjectField]="true" [DataContext]="DataContext"></LogLabel>
+        [NoObjectField]="true" [DataContext]="DataContext"></LogLabel>
 
 
     <LogTextBoxV2 class="input-from" [HideColumns]="true" [HideLastColumn]="true" [IsFreeText]="true"
-                  [ObjectFieldName]="'WeightFrom'" [DataContext]="DataContext" [InputType]="'decimal'" [DigitsAfterPoint]='2'
-                  [Placeholder]="'Customs.General.O.From' | TextCodeTranslationPipe">
+        [ObjectFieldName]="'WeightFrom'" [DataContext]="DataContext" [InputType]="'decimal'" [DigitsAfterPoint]='2'
+        [Placeholder]="'Customs.General.O.From' | TextCodeTranslationPipe">
     </LogTextBoxV2>
 
 
     <LogTextBoxV2 class="input-to" [ngStyle]='' [HideColumns]="true" [HideLastColumn]="true" [IsFreeText]="true"
-                  [Placeholder]="'Customs.General.O.To' | TextCodeTranslationPipe" [ObjectFieldName]="'WeightTo'"
-                  [DataContext]="DataContext" [InputType]="'decimal'" [DigitsAfterPoint]='2'>
+        [Placeholder]="'Customs.General.O.To' | TextCodeTranslationPipe" [ObjectFieldName]="'WeightTo'"
+        [DataContext]="DataContext" [InputType]="'decimal'" [DigitsAfterPoint]='2'>
     </LogTextBoxV2>
 
     <LogLabel class="label-incoterm" [Text]="'Customs.General.O.TermsOfSale' | TextCodeTranslationPipe"
-              [NoObjectField]="true" [DataContext]="DataContext"></LogLabel>
+        [NoObjectField]="true" [DataContext]="DataContext"></LogLabel>
 
     <div class='incoterm-code-wrapper'>
         <LogLov [ObjectFieldName]="'IncotermCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
-                [LookUpTableName]="'Customs.TermsOfSaleType'" [HideColumns]="true" [SelectedValue]="IncotermCode">
+            [LookUpTableName]="'Customs.TermsOfSaleType'" [HideColumns]="true" [SelectedValue]="IncotermCode">
         </LogLov>
     </div>
 
     <MultiSelectLOV [DataContext]="DataContext"
-                    style="width: 250px; margin-right: 10px; vertical-align: middle; height: 32px;" [PlaceHolder]="'PENDING'"
-                    [LayoutDirection]="'rtl'" [LOVListComponentPropName]="'LOVListPendings'"
-                    (ChosenListItemsChanged)="SelectedValueChangedEmitUser()" [ChosenListHeader]="'PENDING שנבחרו'"
-                    [ButtonAddLabel]="'בחר'">
+        style="width: 250px; margin-right: 10px; vertical-align: middle; height: 32px;" [PlaceHolder]="'PENDING'"
+        [LayoutDirection]="'rtl'" [LOVListComponentPropName]="'LOVListPendings'"
+        (ChosenListItemsChanged)="SelectedValueChangedEmitUser()" [ChosenListHeader]="'PENDING שנבחרו'"
+        [ButtonAddLabel]="'בחר'">
         <span class="class-MultiSelectLOV-content">
             <LogLov [ObjectFieldName]="'CourierPendingReasonList'" [ObjectTableName]="ObjectTableName"
-                    [DataContext]="DataContext" [HideColumns]="true" [QueryFilterItems]="PendingFilterItems"
-                    [LookUpTableName]="'Customs.CourierPendingReason'" [DisplayMemberPath]="'LocalName'">
+                [DataContext]="DataContext" [HideColumns]="true" [QueryFilterItems]="PendingFilterItems"
+                [LookUpTableName]="'Customs.CourierPendingReason'" [DisplayMemberPath]="'LocalName'">
             </LogLov>
         </span>
         <!--[QueryFilterItems]="LoadingContactFilterItems"-->
     </MultiSelectLOV>
     <LogLabel [ObjectFieldName]="'CustomerName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-
+        
     <LogTextBox class="input-customer-name" [ObjectFieldName]="'CustomerName'" [InputType]="'nText'" [IsFreeText]="true" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
-                [HideColumns]="true"></LogTextBox>
+                                            [HideColumns]="true"></LogTextBox>
 
     <button class="Button" style="height:22px" (click)="search()">
         {{'Customs.General.O.Search' | TextCodeTranslationPipe}}
@@ -182,7 +182,7 @@
                     <tr class="FormFieldRow" style="height:22px">
                         <td style="width: 240px">
                             <LogLabel [ObjectFieldName]="'CourierBOL'" [DataContext]="DataContext"
-                                      [TextCode]="'Customs.CourierMaster.O.CourierBOL'">
+                                [TextCode]="'Customs.CourierMaster.O.CourierBOL'">
                             </LogLabel>
                         </td>
                     </tr>
@@ -197,9 +197,9 @@
                                     [class.SelectedFilter]="_SelectedTotalInvoiceValue === '500'">
                                     {{'500'}}
                                 </li>
-                                <li (click)="SelectedTotalInvoiceValue('minValPay')" style="width:55px;"
-                                    [class.SelectedFilter]="_SelectedTotalInvoiceValue === 'minValPay'">
-                                    {{ MinValPayDisplay }}
+                                <li (click)="SelectedTotalInvoiceValue('75')" style="width:55px;"
+                                    [class.SelectedFilter]="_SelectedTotalInvoiceValue === '75'">
+                                    {{'75'}}
                                 </li>
                                 <li (click)="SelectedTotalInvoiceValue('A')" style="width:55px;"
                                     [class.SelectedFilter]="_SelectedTotalInvoiceValue === 'A'">
@@ -216,7 +216,7 @@
                     <tr class="FormFieldRow" style="height:22px">
                         <td style="width: 240px">
                             <LogLabel [ObjectFieldName]="'Status'" [DataContext]="DataContext"
-                                      [TextCode]="'Customs.DeclarationCourierStatus.F.FastIndividualProcessCode'">
+                                [TextCode]="'Customs.DeclarationCourierStatus.F.FastIndividualProcessCode'">
                             </LogLabel>
                         </td>
                     </tr>
@@ -330,13 +330,13 @@
     </courier-filter-button>
 
     <SearchTextBox [ObjectTableName]="'Customs.CourierMaster'" (SearchTextChangeEvent)="onSearchTextChangeEvent($event)"
-                   [SearchText]="SearchFilter" [PlaceHolder]="'תיק/הצהרה/ש.מ.ב/לקוח'">
+        [SearchText]="SearchFilter" [PlaceHolder]="'תיק/הצהרה/ש.מ.ב/לקוח'">
     </SearchTextBox>
 
     <div style="width: 30px; margin-right: 10px; cursor: pointer;">
         <!--<IconButton [Name]="'Refresh'" (click)="RefreshButtonClicked()"></IconButton>-->
         <img (click)="RefreshButtonClicked()" title="Refresh" class="DocumentsButton"
-             src="./Images/Buttons/BlueRefresh.png" alt="RefreshButtonClicked" />
+            src="./Images/Buttons/BlueRefresh.png" alt="RefreshButtonClicked" />
     </div>
 
 

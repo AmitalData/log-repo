@@ -1,4 +1,4 @@
-@smoke @release @all @stable 
+@release @all @stable 
 Feature: AR Invoice Auto Credit
     The user creates AR Invoice, Approves it, auto credits and approves it.
 
