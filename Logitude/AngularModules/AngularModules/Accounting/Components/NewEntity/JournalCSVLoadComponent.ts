@@ -1,4 +1,4 @@
-import { Component, ChangeDetectorRef, OnInit } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { BaseComponent } from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
@@ -18,7 +18,6 @@ import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator'
 import { Guid } from '../../../Infrastructure/Utilities/Guid';
 import { ImageParameter } from '../../../Infrastructure/DataContracts/ImageParameter';
 import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
-import { DefaultAndConfigurationExtendedService } from 'Infrastructure/Services/ExtendedPMs/DefaultAndConfigurationExtendedService';
 declare var attachmentUploader, ResultAsArray: any;
 
 
@@ -29,7 +28,7 @@ declare var attachmentUploader, ResultAsArray: any;
     templateUrl: './JournalCSVLoadComponent.html',
 })
 
-export class JournalCSVLoadComponent extends BaseComponent implements OnInit {
+export class JournalCSVLoadComponent extends BaseComponent {
     public JournalPM: JournalPM;
     public BankAccountPM: BankAccountPM;
     public PrevBankPagePM: JournalPM;
@@ -52,7 +51,6 @@ export class JournalCSVLoadComponent extends BaseComponent implements OnInit {
     _JournalPMService: JournalPMService = new JournalPMService();
 
     _JournalExtendedPMService: JournalExtendedPMService = new JournalExtendedPMService();
-    _DefaultAndConfigurationExtendedService: DefaultAndConfigurationExtendedService = new DefaultAndConfigurationExtendedService();
     _CurrencyPMService: CurrencyPMService = new CurrencyPMService();
     currencyListService: CurrencyListService = new CurrencyListService();
 
@@ -79,7 +77,6 @@ export class JournalCSVLoadComponent extends BaseComponent implements OnInit {
     _LabelLog: string;
     public _NewJournalPM: JournalPM;
     public _DuplicateLinesSkippedNumber: number = 0;
-    public JournalExampleUrl: string;
 
     constructor(private CD: ChangeDetectorRef, public entityListService: EntityListService) {
         super();
@@ -87,17 +84,7 @@ export class JournalCSVLoadComponent extends BaseComponent implements OnInit {
 
         this.PageLinesList = new ObservableCollection([]);
 
-    }
 
-    ngOnInit(): void {
-        this._DefaultAndConfigurationExtendedService.GetBySetKey("JournalCsvExampleUrl").subscribe((myResponse:any) => {
-            if (!myResponse.HasError) {
-                const myResult = myResponse.Result;
-                if (myResult.length > 0) {
-                    this.JournalExampleUrl = myResult[0].Value1;
-                }
-            }
-        });
     }
 
     SetWindowArgs(args) {

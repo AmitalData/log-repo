@@ -18,8 +18,8 @@
         public const string SCRIPTS = "-scripts";
         public const string EXCLUDEINDEX = "-excludeindex";
         public const string INCLUDECONSTRAINTDROP = "-includeconstraintdrop";
+
         public const string INCLUDEINDEXDROP = "-includeindexdrop";
-        public const string DONTRUNONLINE = "-dontrunonline";
 
     }
 }

@@ -37,11 +37,9 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
 					                          Weight = a.Weight,
 											  ExportWeight = a.ExportWeight,
 
-											  TenantId = a.TenantId,
+											  Tenant = a.Tenant,
 
-											  EventTypeId = a.EventTypeId,
-
-											  Notes= a.Notes,
+											  EventTypeId = a.EventTypeId
 					
 		                    	            });
             return query;

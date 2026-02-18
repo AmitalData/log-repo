@@ -587,18 +587,12 @@ export class CourierWorksheetNGListTemplate {
     SendPay(event) {
         this.ButtonClick(event);
 
-        CacheCourierPendingReasonService.Instance.GetCache();
-
-        if (this._CourierWorksheet != null
-            && (
-                this._CourierWorksheet.CourierPendingReasonErrorPlace == "1"
-                || CacheCourierPendingReasonService.Instance.HasPaymentHold(this._CourierWorksheet.CourierPendingReasonList)
-            )
-        /*=="בתשלום"*/) {
-
+        if (this._CourierWorksheet.CourierPendingReasonErrorPlace == "1" /*=="בתשלום"*/) {
             var myMessageWindow = new MessageWindow
-            myMessageWindow.Show(/*"לם ניתן לבצע הגשת תשלום כםשר יש השהייה מסוג עצירת תשלום. "*/
-                TextCodeTranslator.Translate("Customs.CourierMaster.M.PaymentPendingHold"));
+            myMessageWindow.Show(
+                //"לם ניתן לבצע הגשת תשלום כםשר יש השהייה מסוג עצירת תשלום. "
+                TextCodeTranslator.Translate("Customs.CourierMaster.M.PaymentPendingHold")
+            );
             return;
         }
 
@@ -734,10 +728,10 @@ export class CourierWorksheetNGListTemplate {
                         this.CD.detectChanges();
                         project.next(1);
                     }
-
+                    
                 },
-                () => { project.next(0); },
-                () => { }
+                () => { project.next(0);},
+                () => {  }
 
             );
 
