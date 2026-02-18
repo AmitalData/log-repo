@@ -56,10 +56,8 @@ namespace WebFreight.Web.Security
 
                 string encryptedTicket = FormsAuthentication.Encrypt(ticket);
                 HttpCookie authCookie = new HttpCookie(FormsAuthentication.FormsCookieName, encryptedTicket);
-				authCookie.HttpOnly = true;
-				authCookie.Secure = true;
-				authCookie.SameSite = SameSiteMode.Lax;
-				HttpContextBase httpContext = (HttpContextBase)ServiceContext.GetService(typeof(HttpContextBase));
+
+                HttpContextBase httpContext = (HttpContextBase)ServiceContext.GetService(typeof(HttpContextBase));
                 httpContext.Response.Cookies.Add(authCookie);
             }
 

@@ -95,12 +95,6 @@ namespace Logitude.Customs.BL.EntityQueryServices
             }
             return ConsignmentPMs;
         }
-        public Consignment GetSinglePoco(string declarationid, int? consignmentnumber, bool getComposition, bool getFromCache)
-        {
-            EntityKeys = new ConsignmentKeys() { DeclarationId = declarationid, ConsignmentNumber = consignmentnumber };
-
-            return repository.GetSingle(EntityKeys);
-        }
 
 
     }

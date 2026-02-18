@@ -350,7 +350,7 @@
                                 </div>
 
                                 <!-- OpenAmount -->
-                               <div *ngIf="FieldName == 'OpenAmount'">
+                                <div *ngIf="FieldName == 'OpenAmount'">
                                     <table>
                                         <tr>
                                             <td style="width: 1px;">
@@ -382,11 +382,6 @@
                                 <div *ngIf="FieldName == 'JournalNumber' && IsHeaderScreenTemplate">
                                     <div>
                                         <a href="#" (click)="OpenJournal(Entity.JournalId)">{{Entity.JournalNumber}}</a>
-                                    </div>
-                                </div>
-                                <div *ngIf="FieldName == 'GLAccountDisplayNumber'">
-                                    <div>
-                                        <a href="#" (click)="ViewEntityClicked('GLAC')">{{Entity.GLAccountDisplayNumber}}</a>
                                     </div>
                                 </div>
                                 <div class="TextTrimming" *ngIf="FieldName == 'TransferError'" style="font-size:11px;color:#E53030;">{{FieldValue}}</div>

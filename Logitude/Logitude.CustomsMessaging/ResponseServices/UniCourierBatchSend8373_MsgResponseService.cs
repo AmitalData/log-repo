@@ -150,8 +150,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 LoggingEnabled = true,
                 LoggingEntityReference = "I",
                 IsAngularClient = true,
-                ParentId = requestParams.CustomsRequestsSheetId,
-			};
+            };
             if (isEffectiveFlight)
             {
                 requestParams8373.TenantPriority = 98;
