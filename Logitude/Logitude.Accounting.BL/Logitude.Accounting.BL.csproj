@@ -116,18 +116,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Library\Bin\Logitude.SystemLogs.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.IdentityModel.Abstractions, Version=6.35.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.IdentityModel.Abstractions.6.35.0\lib\net472\Microsoft.IdentityModel.Abstractions.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.IdentityModel.JsonWebTokens, Version=6.35.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.IdentityModel.JsonWebTokens.6.35.0\lib\net472\Microsoft.IdentityModel.JsonWebTokens.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.IdentityModel.Logging, Version=6.35.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.IdentityModel.Logging.6.35.0\lib\net472\Microsoft.IdentityModel.Logging.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.IdentityModel.Tokens, Version=6.35.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.IdentityModel.Tokens.6.35.0\lib\net472\Microsoft.IdentityModel.Tokens.dll</HintPath>
-    </Reference>
     <Reference Include="Simplog.Data, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Library\Bin\Simplog.Data.dll</HintPath>
@@ -154,6 +142,18 @@
     </Reference>
     <Reference Include="NetCommonHelper, Version=1.0.0.7, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\NetCommonHelper.1.0.9\lib\net472\NetCommonHelper.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.Abstractions, Version=7.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.Abstractions.7.6.0\lib\net472\Microsoft.IdentityModel.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.JsonWebTokens, Version=7.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.JsonWebTokens.7.6.0\lib\net472\Microsoft.IdentityModel.JsonWebTokens.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.Logging, Version=7.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.Logging.7.6.0\lib\net472\Microsoft.IdentityModel.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.Tokens, Version=7.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.Tokens.7.6.0\lib\net472\Microsoft.IdentityModel.Tokens.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Practices.Unity, Version=2.1.505.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.1.0.0\lib\Net40\Microsoft.Practices.Unity.dll</HintPath>
@@ -214,10 +214,10 @@
     </Reference>
     <Reference Include="System.Drawing" />
     <Reference Include="System.IdentityModel" />
-    <Reference Include="System.EnterpriseServices" />
-    <Reference Include="System.IdentityModel.Tokens.Jwt, Version=6.35.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.IdentityModel.Tokens.Jwt.6.35.0\lib\net472\System.IdentityModel.Tokens.Jwt.dll</HintPath>
+    <Reference Include="System.IdentityModel.Tokens.Jwt, Version=7.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IdentityModel.Tokens.Jwt.7.6.0\lib\net472\System.IdentityModel.Tokens.Jwt.dll</HintPath>
     </Reference>
+    <Reference Include="System.EnterpriseServices" />
     <Reference Include="System.IO.Compression" />
     <Reference Include="System.IO.FileSystem.AccessControl, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.IO.FileSystem.AccessControl.5.0.0\lib\net461\System.IO.FileSystem.AccessControl.dll</HintPath>
@@ -407,7 +407,6 @@
     <Compile Include="CloseTables\EnumGenerated\VatReportStatusStruct.Generated.cs" />
     <Compile Include="CloseTables\InvoiceApiStatusEnum.cs" />
     <Compile Include="CloseTables\InvoiceApiStepEnum.cs" />
-    <Compile Include="CloseTables\CustomerDebtNotificationEnum.cs" />
     <Compile Include="CloseTables\GLAccountTotalDateTypeEnum.cs" />
     <Compile Include="CoreBL\AccountBalanceByDateCodeService.cs" />
     <Compile Include="CoreBL\AccountBalanceService.cs" />
@@ -599,7 +598,6 @@
     <Compile Include="CoreBL\YearTransferService.cs" />
     <Compile Include="DataContract\ARinvoiceSequencesReportParameters.cs" />
     <Compile Include="DataContract\ARPaymentChequeFutureData.cs" />
-    <Compile Include="DataContract\BaseDataProvider.cs" />
     <Compile Include="DataContract\CashbookChequesCounter.cs" />
     <Compile Include="DataContract\InterestReportCustomerPM.cs" />
     <Compile Include="DataContract\InterestTransactionUniqueConstraintFields.cs" />
@@ -843,7 +841,6 @@
     <Compile Include="EntityQueryServiceExt\GLAccountWithholdingTaxQueryServiceExt.cs" />
     <Compile Include="EntityQueryServiceExt\JournalQueryServiceExt.cs" />
     <Compile Include="EntityQueryServiceExt\PaymentChequeQueryServiceExt.cs" />
-    <Compile Include="EntityQueryServices\GLAccountRecocileDataQueryService.cs" />
     <Compile Include="EntityQueryServices\InvoiceApiCommunicationLogQueryService.cs" />
     <Compile Include="EntityQueryServices\AccountingIntegrityCheckQueryService.cs" />
     <Compile Include="EntityQueryServices\AccountingCompanyTypeQueryService.cs" />
@@ -862,7 +859,6 @@
     <Compile Include="EntityQueryServices\Category4QueryService.cs" />
     <Compile Include="EntityQueryServices\Category5QueryService.cs" />
     <Compile Include="EntityQueryServices\ChartOfAccountsTypeQueryService.cs" />
-    <Compile Include="EntityQueryServices\CustomerDebtNotificationQueryService.cs" />
     <Compile Include="EntityQueryServices\ExternalReconciliationLineQueryService.cs" />
     <Compile Include="EntityQueryServices\Generated\AccountingCompanyTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\AccountingEntityJournalQueryService.Generated.cs" />
@@ -1122,7 +1118,6 @@
     <Compile Include="Utils\APInvoiceStatusUpdateBatch.cs" />
     <Compile Include="Utils\BanksCCExternalRecoBatch.cs" />
     <Compile Include="Utils\CardGLAccountConnectBatch.cs" />
-    <Compile Include="Utils\ExpenseAllocationBatch.cs" />
     <Compile Include="Utils\IntegrityCheckBatch.cs" />
     <Compile Include="Utils\InvoiceApiQueryBatch.cs" />
     <Compile Include="Utils\ReconcileInProgressCleanupBatch.cs" />

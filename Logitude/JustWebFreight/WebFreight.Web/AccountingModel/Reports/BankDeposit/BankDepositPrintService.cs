@@ -25,7 +25,6 @@ namespace WebFreight.Web.AccountingModel.Reports.BankDeposit
 {
     class BankDepositPrintService
     {
-        private readonly int ChequePairValidationDays = 183;
         public BankDepositPM bankDepositPM;
         public void BuildBankDepositReport(string entityId, int tenant, string documentOutId)
         {
@@ -113,34 +112,20 @@ namespace WebFreight.Web.AccountingModel.Reports.BankDeposit
 
 
                 // map lines
-                List<BankDepositLine> lines = bankDepositPM.BankDepositLines
-                       .Select(d => new
-                       {
-                           Line = d,
-                           TimeGroupKey = (int)(d.DueDate.Ticks / TimeSpan.FromDays(this.ChequePairValidationDays).Ticks)
-                       })
-                       .GroupBy(x => new
-                       {
-                           x.Line.Bank,
-                           x.Line.Branch,
-                           x.Line.AccountNumber,
-                           x.Line.ChequeNumber,
-                           x.TimeGroupKey
-                       })
-                      .Select(group => new BankDepositLine
-                      {
-                          Bank = group.Key.Bank,
-                          Branch = group.Key.Branch,
-                          AccountNumber = group.Key.AccountNumber,
-                          ChequeNumber = group.Key.ChequeNumber,
-                          DueDate = group.First().Line.DueDate,
-                          Currency = group.First().Line.Currency,
-                          Line = group.First().Line.Line,
-                          ARPaymentNumber = group.First().Line.ARPaymentNumber,
-                          LocalAmount = group.Sum(x => x.Line.LocalAmount),
-                          ForiegnAmount = group.Sum(x => x.Line.ForeignAmount)
-                    
-                      }).ToList();
+                List<BankDepositLine> lines = bankDepositPM.BankDepositLines.Select(d => new BankDepositLine()
+                {
+                    Line = d.Line,
+                    ChequeNumber = d.ChequeNumber,
+                    ForiegnAmount = d.ForeignAmount,
+                    LocalAmount = d.LocalAmount,
+                    DueDate = d.DueDate,
+                    Currency = d.Currency,
+                    AccountNumber = d.AccountNumber,
+                    Bank = d.Bank,
+                    Branch = d.Branch,
+                    ARPaymentNumber = d.ARPaymentNumber,
+
+                }).ToList();
 
                 bankDepositDP.BankDepositLines = lines;
 

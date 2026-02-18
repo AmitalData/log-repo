@@ -40,88 +40,92 @@ namespace WebFreight.Web.WcfApi
             {
                 SecurityUtility.AuthenticationOnTenant(entityPM.Tenant);
                 SecurityUtility.CheckContactFeature("Contact", "UPDATE", entityPM.Tenant);//UPDATE//READ
-                ClassLevelValidator validationClass = new ClassLevelValidator("Contact", entityPM.Tenant) { IsHybrid = true };
-                if (!validationClass.IsValid(entityPM, entityPM, null))
+                using (TransactionScope scope = TransactionFactory.GetTransaction())
                 {
-                    response.HasError = true;
-                    response.ErrorMessage = validationClass.GetErrorMessage(entityPM, null);
-                    return response;
-                }
 
-                ICommonDataContext objectContext = CommonDataContext.GetContext(entityPM.Tenant);
-                ContactRepository ContactRepository = new ContactRepository(objectContext);
-                CardRepository cardRepository = new CardRepository(objectContext);
-                GlobalContactRepository globalContactsRepository = new GlobalContactRepository();
-                ContactService service = new ContactService(objectContext, entityPM.Tenant);
-
-                entityPM.IsHybrid = true;
-                entityPM.DontShowLocal = true;
-                if (string.IsNullOrEmpty(entityPM.ExternalId))
-                {
-                    response.HasError = true;
-                    response.ErrorMessage = "ExternalId field is required";
-                    return response;
-                }
-                if (entityPM.Tenant != 0)
-                {
-                    Contact contact = ContactRepository.GetSingleContactByEmailSpecificTenant(entityPM.Email, 0);
-                    GlobalContact globalContact = globalContactsRepository.GetGlobalContactByEmailAndTenant(entityPM.Email, 0);
-                    if (contact != null)
+                    ClassLevelValidator validationClass = new ClassLevelValidator("Contact", entityPM.Tenant) { IsHybrid = true };
+                    if (!validationClass.IsValid(entityPM, entityPM, null))
                     {
-                        if (!contact.InActive)
+                        response.HasError = true;
+                        response.ErrorMessage = validationClass.GetErrorMessage(entityPM, null);
+                        return response;
+                    }
+
+                    ICommonDataContext objectContext = CommonDataContext.GetContext(entityPM.Tenant);
+                    ContactRepository ContactRepository = new ContactRepository(objectContext);
+                    CardRepository cardRepository = new CardRepository(objectContext);
+                    GlobalContactRepository globalContactsRepository=new GlobalContactRepository();
+                    ContactService service = new ContactService(objectContext, entityPM.Tenant);
+
+                    entityPM.IsHybrid = true;
+                    entityPM.DontShowLocal = true;
+                    if (string.IsNullOrEmpty(entityPM.ExternalId))
+                    {
+                        response.HasError = true;
+                        response.ErrorMessage = "ExternalId field is required";
+                        return response;
+                    }
+                    if (entityPM.Tenant != 0)
+                    {
+                        Contact contact = ContactRepository.GetSingleContactByEmailSpecificTenant(entityPM.Email, 0);
+                        GlobalContact globalContact = globalContactsRepository.GetGlobalContactByEmailAndTenant(entityPM.Email, 0);
+                         if (contact != null)
+                        {
+                            if (!contact.InActive)
+                            {
+                                response.HasError = true;
+                                response.ErrorMessage = "Email field exist in the database Contact in tenant 0.";
+                                return response;
+                            }
+                        }
+                        if (globalContact != null)
+                        {
+                            if (!globalContact.InActive)
+                            {
+                                response.HasError = true;
+                                response.ErrorMessage = "Email field exist in the database GlobalContact in tenant 0.";
+                                return response;
+                            }
+                        }
+                    }
+                    if (entityPM.CardId != null)
+                    {
+                        Card card = cardRepository.GetSingleCardByCode(entityPM.CardId, entityPM.Tenant, false);
+                        if (card != null)
+                        {
+                            entityPM.CardId = card.Id;
+                        }
+                        else
                         {
                             response.HasError = true;
-                            response.ErrorMessage = "Email field exist in the database Contact in tenant 0.";
+                            response.ErrorMessage = "CardId field doesn't exist in the database,Upsert this entity before using it.";
                             return response;
                         }
                     }
-                    if (globalContact != null)
+
+
+                    Contact entity = ContactRepository.GetSingleContactByExternalId(entityPM.ExternalId, entityPM.Tenant);
+
+                    if (entity == null && !string.IsNullOrEmpty(entityPM.Email))
                     {
-                        if (!globalContact.InActive)
-                        {
-                            response.HasError = true;
-                            response.ErrorMessage = "Email field exist in the database GlobalContact in tenant 0.";
-                            return response;
-                        }
+                        entity = ContactRepository.GetSingleContactByEmail(entityPM.Email, entityPM.Tenant);
                     }
-                }
-                if (entityPM.CardId != null)
-                {
-                    Card card = cardRepository.GetSingleCardByCode(entityPM.CardId, entityPM.Tenant, false);
-                    if (card != null)
+
+                    if (entity == null)
                     {
-                        entityPM.CardId = card.Id;
+                        service.Create(entityPM);
                     }
                     else
                     {
-                        response.HasError = true;
-                        response.ErrorMessage = "CardId field doesn't exist in the database,Upsert this entity before using it.";
-                        return response;
+                        entityPM.Id = entity.Id;
+                        service.Update(entityPM);
+
                     }
+
+                    response.Result = entityPM.Id;
+                    scope.Complete();
+                    return response;
                 }
-
-
-                Contact entity = ContactRepository.GetSingleContactByExternalId(entityPM.ExternalId, entityPM.Tenant);
-
-                if (entity == null && !string.IsNullOrEmpty(entityPM.Email))
-                {
-                    entity = ContactRepository.GetSingleContactByEmail(entityPM.Email, entityPM.Tenant);
-                }
-
-                if (entity == null)
-                {
-                    service.Create(entityPM);
-                }
-                else
-                {
-                    entityPM.Id = entity.Id;
-                    service.Update(entityPM);
-
-                }
-
-                response.Result = entityPM.Id;
-                return response;
-
             }
             catch (System.Data.Entity.Validation.DbEntityValidationException e)
             {
