@@ -940,16 +940,7 @@ namespace Logitude.Infrastructure.BL
                 Description = "Payment Status based on Reco", 
                 Name = " A/P Invoice Payment Status based on Reconciliation", 
 			});
-
-
-            all.Add(new ToggleDetails()
-            {
-                SearchFields = "RFR, Revaluation on Foreign Reco",
-                Code = "RFR",
-                Description = "Revaluation on Foreign Reco",
-                Name = "Revaluation Journal on Foreign Currency Reconciliation",
-            });
-
+			 
             all.Add(new ToggleDetails()
             {    
                 Code = "RE2", 
@@ -964,14 +955,6 @@ namespace Logitude.Infrastructure.BL
                 Name = "Get Tax Report VAT from A/P Invoice",
                 SearchFields = "VPI, Get Tax Report VAT from A/P Invoice",
                 Description = "Get Tax Report VAT from A/P Invoice",
-            });
-
-            all.Add(new ToggleDetails()
-            {
-                Code = "IRN",
-                Name = "Interest Report Notes New Logic",
-                SearchFields = "IRN, Interest Report Notes New Logic",
-                Description = "Interest Report Notes: Entity of ARInvoice, Cheques of ARPayment",
             });
 
             all.Add(new ToggleDetails()

@@ -26,9 +26,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class GLAccountUpdateClass
    {  		
-
-
-		public const string HashString = "27a6920f9c5b9c1a9962d002d46c78d0";
+		public const string HashString = "65b494d7c91181b3e7558ab9e79f8eac";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -12925,8 +12923,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
-
- 
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups ,int contextTenant)
@@ -15220,10 +15216,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode GLAccountTextCode_GLAccountsOMissingFieldInAccount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.MissingFieldInAccount", DefaultText = "Missing {field} in vendor account: {account} ",LocalDefaultText = @"BS64:Itec15Ag16DXntem15Age2ZpZWxkfSDXkdeb16jXmNeZ16Eg16HXpNenOiB7YWNjb3VudH0i", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
-
-
-
-
  		   TextCode GLAccountTextCode_AgingReportORunReportImmediately = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AgingReport.O.RunReportImmediately", DefaultText = "Run Immediately",LocalDefaultText = @"BS64:IteU16jXpSDXnteZ15nXk9eZ16oi", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
  		   TextCode GLAccountTextCode_GLTransactionReportOGLAccountList = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLTransactionReport.O.GLAccountList", DefaultText = "GLAccount List",LocalDefaultText = @"BS64:Iteo16nXmdee16og15vXqNeY15nXodeZ150i", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
@@ -15236,9 +15228,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode GLAccountTextCode_GLTransactionReportOGLAccountsRange = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLTransactionReport.O.GLAccountsRange", DefaultText = "GLAccount range by Display Number",LocalDefaultText = @"BS64:IteY15XXldeXINeb16jXmNeZ16HXmdedIg==", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
-
-
-
  		   TextCode GLAccountTextCode_GLAccountsOErrForeignInterestMultiCurrency = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.ErrForeignInterestMultiCurrency", DefaultText = "Interest in foreign currency cannot be set for a multi-currency",LocalDefaultText = @"BS64:Itec15Ag16DXmdeq158g15zXlNeS15PXmdeoINeo15nXkdeZ16og15HXnteYIteWINec15vXqNeY15nXoSDXqNeRINee15jXkdei15ki", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
  		   TextCode GLAccountTextCode_GLAccountsOErrMultiCurrencyDueToInterest = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.ErrMultiCurrencyDueToInterest", DefaultText = "Cannot change the card to multi-currency – it is set with interest in foreign currency",LocalDefaultText = @"BS64:Itec15Ag16DXmdeq158g15zXqdeg15XXqiDXkNeqINeU15LXk9eo16og15TXm9eo15jXmdehINec16jXkS3XnteY15HXoteZIOKAkyDXlNeb16jXmNeZ16Eg157XldeS15PXqCDXnNeo15nXkdeZ16og15HXnteYIteWIg==", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
@@ -15248,8 +15237,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode GLAccountTextCode_GLAccountsODaily = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.Daily", DefaultText = "Daily",LocalDefaultText = @"BS64:IteZ15XXnteZIg==", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
  		   TextCode GLAccountTextCode_GLAccountsOMonthly = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.Monthly", DefaultText = "Monthly",LocalDefaultText = @"BS64:IteX15XXk9ep15ki", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
- 		   TextCode GLAccountTextCode_GLAccountsOAccountingDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.AccountingDate", DefaultText = "Accounting",LocalDefaultText = @"BS64:IteX16nXkdeV16DXkNeZIg==", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
-
 
    
 	    
