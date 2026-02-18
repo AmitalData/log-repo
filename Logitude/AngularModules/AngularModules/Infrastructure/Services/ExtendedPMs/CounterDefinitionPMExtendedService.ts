@@ -27,19 +27,7 @@ export class CounterDefinitionPMExtendedService {
                     catchError(ServiceHelper.HandleServiceError));
         });
     }
-    GetCounterDefinitionsByCounterName(counterName: string) {
-        return defer(() => {
-            return this.httpClient.get(this.apiUrl + '/GetCounterDefinitionsByCounterName?' + 'counterName=' + counterName, ServiceHelper.GetHttpHeaders())
-                .pipe(
-                    map((response: HttpResponse<any>) => {
-                        let serviceResponse: ServiceResponse = new ServiceResponse();
-                        serviceResponse.Result = response;
-
-                        return serviceResponse;
-                    }),
-                    catchError(ServiceHelper.HandleServiceError));
-        });
-    }
+   
    
 
     public clone(jsonPM: any) {
