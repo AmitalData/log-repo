@@ -120,7 +120,7 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             return groupRecord;
         }
 
-        public int GetFileNo(int tenant, long customsFileNo) =>
+        public int GetFileNo(int tenant, int customsFileNo) =>
             context.CCUFILEMs.Where(file => file.TENANT == tenant && file.CUSTOMFILENO == customsFileNo)
                 .Select(file => file.FILENO)
                 .FirstOrDefault();

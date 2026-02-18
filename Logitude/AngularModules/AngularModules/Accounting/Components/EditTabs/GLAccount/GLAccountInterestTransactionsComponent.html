@@ -1,11 +1,3 @@
-<style type="text/css">
-    .disabled{
-        pointer-events: none;
-        opacity: 0.7;
-        cursor: default;
-    }
-</style>
-
 <!-- Header -->
 <table style="height: 130px;">
 
@@ -37,7 +29,7 @@
                         <div></div>
                     </td>
 
-                    <td style="width: 90px;" [class.disabled]="SelectedReport">
+                    <td style="width: 90px;">
                         <LogDatePicker [ObjectFieldName]="'FromDate'" [ObjectTableName]="ObjectTableName" [NoObjectField]="true" [ForceSubscribe]="true" [DataContext]="DataContext" [HideColumns]="true" [SelectedDateValue]="FromDate">
                         </LogDatePicker>
                     </td>
@@ -50,7 +42,7 @@
                         {{ 'Accounting.General.O.To' | TextCodeTranslationPipe }}
                     </td>
 
-                    <td style="width: 90px;" [class.disabled]="SelectedReport">
+                    <td style="width: 90px;">
                         <LogDatePicker [ObjectFieldName]="'ToDate'" [ObjectTableName]="ObjectTableName" [NoObjectField]="true" [ForceSubscribe]="true" [DataContext]="DataContext" [HideColumns]="true" [SelectedDateValue]="ToDate">
                         </LogDatePicker>
                     </td>
@@ -69,6 +61,9 @@
                     <td>
                         <div style="width: 110px; display: inline-block;" float-start>
                             <ComboBox [ItemsSource]="InterestReports" [Binding]="'ReportNumber'" [SelectedItem]="SelectedInterestReport" (SelectedItemChanged)="SelectedInterestReport = $event"></ComboBox>
+                        </div>
+                        <div style="display: inline-block; padding: 0 10px;" *ngIf="SelectedInterestReport" float-start>
+                            <IconButton [Name]="'delete'" (click)="SelectedInterestReport = null"></IconButton>
                         </div>
                     </td>
 

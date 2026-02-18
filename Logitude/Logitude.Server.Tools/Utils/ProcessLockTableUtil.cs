@@ -104,13 +104,7 @@ namespace Logitude.Server.Tools.Utils
                        tenant.ToString();
             return key;
         }
-		public string GetKeySFTP(string analyzeQueueId, int tenant)
-		{
-			string key = "SFTP:analyzeQueueId:" + analyzeQueueId + ",t:" +
-					   tenant.ToString();
-			return key;
-		}
-		public string GetKey4InProggressCustomsRequestsSheet(string CustomsRequestsSheetId)
+        public string GetKey4InProggressCustomsRequestsSheet(string CustomsRequestsSheetId)
         {
             string key = "InProggressCustomsRequestsSheet:" + CustomsRequestsSheetId;
             return key;

@@ -41,8 +41,6 @@
   HasDynamicHeader="false"
   ObjectTableTypeCode="&quot;BR&quot;"
   MaxNumberOfCustomFields="10"
-  LocalDefaultTextBack_up="&quot;חשבונית לקוח&quot;"
-  LocalDefaultText="&quot;BS64:IteX16nXkdeV16DXmdeqINec16fXldeXIg==&quot;"
   DefaultText="&quot;A/R Invoice&quot;"
   Code="&quot;INVC&quot;"
   Name="&quot;Invoices&quot;"
@@ -18455,7 +18453,8 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
-    <field Id="&quot;d915fe83-f3fe-48e0-85f2-5d584d8bcecc&quot;"
+  <field
+    Id="&quot;d915fe83-f3fe-48e0-85f2-5d584d8bcecc&quot;"
     FieldName="&quot;BillToDisplayNumber&quot;"
     OldNames="BillToDisplayNumber"
     IsNew="true"
@@ -18533,7 +18532,8 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
-    <field Id="&quot;570fbf01-a1fe-4b3b-9fd0-37aae5bc0d46&quot;"
+  <field
+    Id="&quot;570fbf01-a1fe-4b3b-9fd0-37aae5bc0d46&quot;"
     FieldName="&quot;SequenceStatus&quot;"
     OldNames="SequenceStatus"
     IsNew="true"
@@ -18925,7 +18925,6 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
-
   <field
     Id="&quot;9a64bdba-851b-4eb6-ad79-9f2f94c981c7&quot;"
     FieldName="&quot;ApprovalInProgress&quot;"
@@ -18955,8 +18954,6 @@
     PMPropertyPath="&quot;ApprovalInProgress&quot;"
     ListPropertyPath="&quot;ApprovalInProgress&quot;"
     DisplayInLookUpIndex="0"
-
-
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -18973,7 +18970,6 @@
     DisplayInDocumentReferences="false"
     InActive="false"
     DisplayLongName="false"
-
     FullFieldLable="&quot;ApprovalInProgress&quot;"
     DefaultText="&quot;ApprovalInProgress&quot;"
     ListFieldLable="&quot;ApprovalInProgressListLable&quot;"
@@ -19080,7 +19076,7 @@
     EnableFullscreenTextBox="false" />
   <Query
     Code="&quot;Draft General Invoices&quot;"
-     TextCode="&quot;Draft Invoices&quot;"
+    TextCode="&quot;Draft Invoices&quot;"
     LocalTextCodeBack_up="&quot;חשבוניות בסטטוס טיוטה&quot;"
     LocalTextCode="&quot;BS64:IteX16nXkdeV16DXmdeV16og15HXodeY15jXldehINeY15nXldeY15Qi&quot;"
     QueryGroupCode="&quot;INVC&quot;"
@@ -19438,9 +19434,10 @@
   </Query>
   <Query
     Code="&quot;All General Invoices&quot;"
+    TextCode="&quot;All Invoices&quot;"
     LocalTextCodeBack_up="&quot;חשבוניות כלליות&quot;"
     LocalTextCode="&quot;BS64:IteX16nXkdeV16DXmdeV16og15vXnNec15nXldeqIg==&quot;"
-     QueryGroupCode="&quot;INVC&quot;"
+    QueryGroupCode="&quot;INVC&quot;"
     IndexOrder="3"
     ObjectTableName="&quot;ARInvoice&quot;"
     QuerySection="&quot;ARInvoice&quot;"

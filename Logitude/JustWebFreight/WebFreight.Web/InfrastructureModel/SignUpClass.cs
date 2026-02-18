@@ -1752,7 +1752,7 @@ namespace WebFreight.Web.InfrastructureModel
             user.Email = user.Email.ToLower();
             Contact newContact = new Contact();
             MapUserToContact(user, newContact);
-            Contact adminContact = contactsRepository.GetSingleContactByEmail("support@amital.co.il", 0);
+            Contact adminContact = contactsRepository.GetSingleContactByEmail("admin@fnarsoft.com", 0);
             if (adminContact != null)
             {
                 newContact.Signature = adminContact.Signature;
@@ -1834,19 +1834,36 @@ namespace WebFreight.Web.InfrastructureModel
                         globalContext.ContactPasswords.Add(contactPassword);
                     }
 
+
+
                     GlobalContactRepository globalContactRep = new GlobalContactRepository(globalContext);
-                    bool globalContactExists = (from a in globalContactRep.GetGlobalContactByTenant(0)
+
+                    bool globalContactExists = (from a in globalContactRep.GetGlobalContactByTenant(newContact.Tenant)
                                                 where a.Email == newContact.Email
                                                 select a).Any();
 
+                    //bool globalContactIdExists = (from a in globalContactRep.GetGlobalContactByTenant(newContact.Tenant)
+                    //                            where a.Id==newContact.Id
+                    //                            select a).Any();
+                    //while (globalContactIdExists)
+                    //{
+                    //    newContact.Id = IdCounter.GetNumber("Contact", newContact.Tenant);
+                    //    globalContactIdExists = (from a in globalContactRep.GetGlobalContactByTenant(newContact.Tenant)
+                    //                             where a.Id == newContact.Id
+                    //                             select a).Any();
+                    //}
+
                     if (!globalContactExists)
                     {
-                        GlobalContact gcontact = new GlobalContact() { Email = newContact.Email, Id = newContact.Id, GlobalTenantId = 0, IsUser = true, };
+
+                        GlobalContact gcontact = new GlobalContact() { Email = newContact.Email, Id = newContact.Id, GlobalTenantId = newContact.Tenant, IsUser = true, };
 
                         globalContactRep.Add(gcontact);
                         globalContactRep.SubmitChanges();
                         scope.Complete();
                     }
+                    //throw new Exception("hahahahahaha");
+
                 }
                 contactTenantsRepository.Add(newContactTenant);
             }
