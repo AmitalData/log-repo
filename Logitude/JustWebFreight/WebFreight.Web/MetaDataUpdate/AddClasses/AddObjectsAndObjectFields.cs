@@ -1002,7 +1002,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
             ObjectTable table = tenantZeroObjectTables.ContainsKey(objectTableName) ? tenantZeroObjectTables[objectTableName] : null;
             if (table == null)
             {
-                table = objecttablesRepository.GetObjectTableByName(objectTableName, 0, true,contextTenant);
+                table = objecttablesRepository.GetObjectTableByName(objectTableName, 0, true);
             }
 
             return table;
@@ -1016,20 +1016,20 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
 
             if (!String.IsNullOrEmpty(objectFieldDetails.ObjectTableName) && String.IsNullOrEmpty(objectFieldDetails.ObjectTableId))
             {
-                ObjectTable table = objecttablesRepository.GetObjectTableByName(objectFieldDetails.ObjectTableName, 0, true,contextTenant);
+                ObjectTable table = objecttablesRepository.GetObjectTableByName(objectFieldDetails.ObjectTableName, 0, true);
                 objectFieldDetails.ObjectTableId = table.Id;
 
             }
             if (!String.IsNullOrEmpty(objectFieldDetails.LookUpTableName) && String.IsNullOrEmpty(objectFieldDetails.LookUpTableId))
             {
-                ObjectTable table = objecttablesRepository.GetObjectTableByName(objectFieldDetails.LookUpTableName, 0, true, contextTenant);
+                ObjectTable table = objecttablesRepository.GetObjectTableByName(objectFieldDetails.LookUpTableName, 0, true);
                 objectFieldDetails.LookUpTableId = table.Id;
 
             }
 
             if (!String.IsNullOrEmpty(objectFieldDetails.MultiTableName) && String.IsNullOrEmpty(objectFieldDetails.MultiTableId))
             {
-                ObjectTable table = objecttablesRepository.GetObjectTableByName(objectFieldDetails.MultiTableName, 0, true, contextTenant);
+                ObjectTable table = objecttablesRepository.GetObjectTableByName(objectFieldDetails.MultiTableName, 0, true);
                 if (table != null)
                 {
                     objectFieldDetails.MultiTableId = table.Id;

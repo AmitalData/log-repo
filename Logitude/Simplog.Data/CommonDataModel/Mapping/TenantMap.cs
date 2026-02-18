@@ -10,7 +10,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
         {
             this.HasKey(t => t.Id);
             this.Property(t => t.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
-            this.Property(t => t.Company).IsRequired().HasMaxLength(100).IsUnicode(true);
+            this.Property(t => t.Company).IsRequired().HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.CurrencyId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.Email).HasMaxLength(50).IsUnicode(false);
             this.Property(t => t.Website).HasMaxLength(100).IsUnicode(false);

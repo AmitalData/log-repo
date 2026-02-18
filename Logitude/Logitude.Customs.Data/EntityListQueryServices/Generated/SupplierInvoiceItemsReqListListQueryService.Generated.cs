@@ -143,10 +143,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
              return GetList(new QueryOperations() { QueryFilterItems=new List<QueryFilterItem>(),PageIndex = 0,GetAll = true},tenant);
          }
 
-        public SupplierInvoiceItemsReqListList GetSingle(string declarationid, string siirequestid, int invoicecounterkey, int invoiceitemlinenumber)
+        public SupplierInvoiceItemsReqListList GetSingle(string declarationid, int linenumber, int invoicecounterkey, int invoiceitemlinenumber)
         {
             IQueryable<POCO.SupplierInvoiceItemsReqList> SupplierInvoiceItemsReqListQuery = (from a in context.SupplierInvoiceItemsReqLists
-                                                       where a.DeclarationId == declarationid && a.SIIRequestID == siirequestid && a.InvoiceCounterKey == invoicecounterkey && a.InvoiceItemLineNumber == invoiceitemlinenumber
+                                                       where a.DeclarationId == declarationid && a.LineNumber == linenumber && a.InvoiceCounterKey == invoicecounterkey && a.InvoiceItemLineNumber == invoiceitemlinenumber
                                                        select a);
 
              
