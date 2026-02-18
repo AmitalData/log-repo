@@ -21,12 +21,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
     {
 	    private IQueryable<InvoiceApiCommunicationLogList> GetIqueryableList(IQueryable<InvoiceApiCommunicationLog> iQueryable)
         {
-            HashSet<string> invoiceStatusCodes = new HashSet<string>();
-            invoiceStatusCodes.Add("DR");
-            invoiceStatusCodes.Add("LL");
-            invoiceStatusCodes.Add("PR");
-
-            IQueryable<InvoiceApiCommunicationLogList> query = (from a in iQueryable
+		IQueryable<InvoiceApiCommunicationLogList> query = (from a in iQueryable
                                             select new InvoiceApiCommunicationLogList()
 											{
                      
@@ -38,23 +33,15 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 					
 					                          SearchFields = a.SearchFields,
 					
-					                          DocumentId = a.DocumentId,
+					                          CommunicationId = a.CommunicationId,
 					
 					                          Step = a.Step,
 					
 					                          StatusCode = a.StatusCode,
 					
 					                          Exception = a.Exception,
-
-                                              StatusName = a.InvoiceApiStatus != null ? a.InvoiceApiStatus.StatusName : null,
-
-                                              StepName = a.InvoiceApiStep != null ? a.InvoiceApiStep.EnglishName?? a.InvoiceApiStep.LocalName : null ,
-											  ExternalID = a.ExternalID,
-											  ARInvoiceId = a.ARInvoiceId,
-											  InvoiceNumber = a.ARInvoice != null ?( invoiceStatusCodes.Contains(a.ARInvoice.StatusCode) ? a.ARInvoice.DraftNumber : a.ARInvoice.InvoiceNumber) : null,
-											  ExternalInvoiceNumber =a.ARInvoice != null ? a.ARInvoice.DraftNumber : null
-
-                                            });
+					
+		                    	            });
             return query;
 		}
 
@@ -67,7 +54,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 			return iQueryable;
 		}
 		
-	}
+			}
 
 
 }

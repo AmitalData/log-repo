@@ -10,7 +10,7 @@ namespace Logitude.Customs.Def.EntityQueryServicesExt
 {
 	public interface ICustomsAutoDecClosing
 	{
-		void Send8235(DeclarationPM decPm,string LoggingUserId = "", bool isAutoSendByErrorDiamondDec = false);
+		void Send8235(DeclarationPM decPm,string LoggingUserId = "");
 	}
 	public interface ICustomCreateTicket
 	{

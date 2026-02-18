@@ -38,7 +38,7 @@ namespace Unifreight.BL.EntityUpdateServices
 
         protected override Simplog.Server.Infrastructure.EntityKeyFields GetKeys(CCUFILEMPM entityPM)
         {
-            return new CCUFILEMKeys() { FILENO = entityPM.FILENO, TENANT = entityPM.Tenant };
+            return new CCUFILEMKeys() { FILENO = entityPM.FILENO };
         }
 
         protected override void OnCreating(CCUFILEMPM entityPM, EntityPM entityParentPM)
@@ -70,12 +70,9 @@ namespace Unifreight.BL.EntityUpdateServices
 
         private int GetCounter(string dirtyDeclarationPMId, int tenant)
         {
-            int i = Convert.ToInt32(
-                           dirtyDeclarationPMId.Contains('-')
-                               ? "1" + dirtyDeclarationPMId.Split('-')[1]
-                               : dirtyDeclarationPMId.Replace(tenant + "-", "1"));
+            int i = Convert.ToInt32(dirtyDeclarationPMId.Replace("-", ""));
             i = 50000000 + i;
-            int fileNoLen = 15;
+            int fileNoLen = 15;// Convert.ToInt32(GetFileNoLen_Cache(tenant));
             if (i.ToString().Length > fileNoLen)
             {
                 return i - 110_009_120;

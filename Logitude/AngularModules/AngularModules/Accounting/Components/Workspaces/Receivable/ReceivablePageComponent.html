@@ -141,12 +141,14 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <!--<button class="Button" style="width:45px;" (click)="NewGeneralARInvoice()">New</button>-->
                                                 <div>
                                         
                                                 <table>
+                                                   
                                                     <tr>
                                                         <td style="width:190px;">
-                                                            <p class="QueryLink" (click)="ViewInvoiceQuery('ARInvoice:All Invoices')">{{'ARInvoice.Q.AllInvoices' | TextCodeTranslationPipe}}</p>
+                                                            <p class="QueryLink" (click)="ViewInvoiceQuery('ARInvoice:All General Invoices')">{{'ARInvoice.Q.AllGeneralInvoices' | TextCodeTranslationPipe}}</p>
                                                         </td>
                                                     </tr>
                                                     <tr>
@@ -154,6 +156,7 @@
                                                             <p class="QueryLink" (click)="ViewInvoiceSequence()">{{'ARInvoice.O.InvoiceSequence' | TextCodeTranslationPipe}}</p>
                                                         </td>
                                                     </tr>
+
                                                 </table>
 
                                                 </div>
@@ -178,7 +181,11 @@
                                                                           <p class="QueryLink" (click)="ViewInvoiceQuery('ARPayment:Draft Payments')"> {{'Accounting.General.O.DraftPayments' | TextCodeTranslationPipe}} ({{ARPaymentsDraftsCount}})</p>
                                                                         </td>
                                                                     </tr>-->
-                                                                   
+                                                                    <tr>
+                                                                        <td style="width:190px;">
+                                                                            <p class="QueryLink" (click)="ViewInvoiceQuery('ARPayment:Open Payments')"> {{'Accounting.General.O.OpenPayments' | TextCodeTranslationPipe}} </p>
+                                                                        </td>
+                                                                    </tr>
                                                                     <tr>
                                                                         <td style="width:190px;">
                                                                           <p class="QueryLink" (click)="ViewInvoiceQuery('ARPayment:All Payments')"> {{'Accounting.General.O.AllPayments' | TextCodeTranslationPipe}}</p>

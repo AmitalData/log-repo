@@ -15,7 +15,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
     {
         ICommonDataContext commonDataContext;
 
-
+        public UserLastSettingsRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
 
         public UserLastSettingsRepository(ICommonDataContext context)
         {
