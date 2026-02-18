@@ -1,0 +1,100 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="DefaultAndConfigurations"
+  Schema="dbo"
+  DBType="Main"
+  Module="Infrastructure">
+  <Column
+    Name="Id"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="CreateDate"
+    Type="datetime">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="SearchFields"
+    Type="nvarchar"
+    Size="-1">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Is_Active"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="StoreInCache"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="SetKey"
+    Type="nvarchar"
+    Size="-1">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="SetValueType1"
+    Type="nvarchar"
+    Size="128">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Value1"
+    Type="nvarchar"
+    Size="-1">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="SetValueType2"
+    Type="nvarchar"
+    Size="128">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Value2"
+    Type="nvarchar"
+    Size="-1">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="AllowInheritance"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="AdditionalKey"
+    Type="nvarchar"
+    Size="-1">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="SortOrder"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+</Table>

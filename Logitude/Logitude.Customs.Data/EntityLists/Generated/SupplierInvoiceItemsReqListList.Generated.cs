@@ -27,6 +27,8 @@ namespace Logitude.Customs.Data.EntityLists
        [Key]
        [DataMember]
        public string DeclarationId  { get; set; }
+
+       [Key]
        [DataMember]
        public int LineNumber  { get; set; }
 
@@ -61,8 +63,6 @@ namespace Logitude.Customs.Data.EntityLists
        public decimal? StatisticQuantity  { get; set; }
        [DataMember]
        public string StatisticQuantityType  { get; set; }
-       [DataMember]
-       public string StatusCode  { get; set; }
    }
 
 }
