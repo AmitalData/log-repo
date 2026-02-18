@@ -32,7 +32,6 @@ import { GLaccountFollowUpDataExtendedPMService } from 'Accounting/Services/Exte
 import { GLAccountCardsDataPMService } from '../../../Services/StandardPMs/GLAccountCardsDataPMService';
 import { GLAccountExtendedPMService } from '../../../Services/ExtendedPMs/GLAccountExtendedPMService';
 import { PaymentTermPMService } from 'Common/Services/StandardPMs/PaymentTermPMService';
-import { AmitalGatewayUtil, UnifreightMessageM } from '../../../../Infrastructure/Utilities/AmitalGatewayUtil';
 declare var makeAmBarChart;
 @Component({
 
@@ -57,7 +56,6 @@ export class GLAccountOverviewComponent extends BaseComponent {
     public CreditLimitAmount: number = 0;
     public InsuredCreditLimit: number = 0;
     public gLAccountFollowUpDataPM: GLAccountFollowUpDataPM;
-    public TotalOpenChequesInLocalCur = 0;
 
     //Services
     _GLAccountExtendedPMService: GLAccountExtendedPMService = new GLAccountExtendedPMService();
@@ -95,11 +93,6 @@ export class GLAccountOverviewComponent extends BaseComponent {
 
         this.chartId = "CustomerOverview_" + this.CurrentSession.GetChartId();
         this.Listen();
-    }
-
-
-    ngAfterViewInit(): void {
-        this.CD.detectChanges();
     }
 
     private SaveCompletedEvent: any = null;
@@ -150,10 +143,27 @@ export class GLAccountOverviewComponent extends BaseComponent {
         //this.LoadGLAccountFollowUpData();
 
     }
+    //LoadGLAccountFollowUpData() {
+    //    this.gLAccountFollowUpDataPMService.getByAccountId(this.EntityPM.Id).subscribe((myResult: any) => {
 
-    
+    //        var mm: ServiceResponse = myResult;
+    //        if (!mm.HasError) {
+    //            this.gLAccountFollowUpDataPM = mm.Result;
+    //        }
+    //        else {
+    //        }
+    //    });
+
+    //}
+    //#region Properties
+    //get DisplayNumber() { return this.EntityPM.DisplayNumber; }
+    //set DisplayNumber(value: string) {
+    //    if (this.EntityPM.DisplayNumber != value) {
+    //        this.EntityPM.DisplayNumber = value;
+    //    }
+    //}
+    //#endregion
     TenantCurrency:string;
-    AmitalBrowserInUse: boolean = AmitalGatewayUtil.Instance.AmitalBrowserInUse;
     accountCardlist: CardList[];
     accountCardnumberLists:string[]=[];
     GLaccountConnectedMoreOneCardText:string =TextCodeTranslator.Translate("GLAccount.O.GLaccountConnectedMoreOneCard");
@@ -249,14 +259,25 @@ export class GLAccountOverviewComponent extends BaseComponent {
             });
 
 
-        if (SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "CTP")[0]) {
-            this._GLAccountExtendedListService.GetTotalOpenChequesInLocalCurById(this.EntityPM.Id).subscribe((myResult) => {           
-                this.TotalOpenChequesInLocalCur = myResult;
-            });
-        }
-        else {
-            this.TotalOpenChequesInLocalCur = this.EntityPM.TotalOpenChequesInLocalCur;
-        }
+
+
+
+        // Get connect card
+        // this._CardListService.getSingle(this.EntityPM.CardId).subscribe((myResult:any) => {
+        //     console.log("_CardListService.getSingle", myResult);
+        //     var result: ServiceResponse = myResult;
+        //     if (!result.HasError)
+        //     {
+        //         this.accountCardlist = result.Result;
+        //         this.LoadCreditDetailsData();
+
+        //     }
+        //     else {
+        //         console.log("[!] cannot get glaccount card");
+
+        //     }
+        // });
+
 
         // Get tenant currency
         this.TenantCurrency = SessionLocator.TenantPM.CurrencyCode;
@@ -783,62 +804,12 @@ export class GLAccountOverviewComponent extends BaseComponent {
     GetTotalObligo() {
         return this.OpenShipments +
             ((this.GLAccountMoreData.TotFutureOpenChequesInLocalCur ? this.GLAccountMoreData.TotFutureOpenChequesInLocalCur : 0)) +
-            (this.GLAccountMoreData.BalanceInLocalCurrency ?this. GLAccountMoreData.BalanceInLocalCurrency : 0) +
-            ((SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "CTP")[0] && this.TotalOpenChequesInLocalCur )? this.TotalOpenChequesInLocalCur : 0);
+            (this.GLAccountMoreData.BalanceInLocalCurrency ?this. GLAccountMoreData.BalanceInLocalCurrency : 0);
     }
-
-    /**
-     * Handler for "Display Open Files" link click.
-     * @param accountCardlist list of account cards, each may contain an OpenFiles array
-     */
-    DisplayOpenFilesClicked(accountCardlist: any[]): void {
-        // guard against empty input
-        if (!accountCardlist?.length) {
-            console.info('No account cards provided.');
-            return;
-        }
-
-        const myViewModelName = 'Logitude.Accounting.Components.EditTabs.GLAccount.MyEnterViewUnifreightController';
-
-
-        SessionLocator.SelectedSession.StartBusyIndicatorLoading();
-        const sub = AmitalGatewayUtil.Instance.UnifaceRequestArrived
-            .subscribe(
-                (mess: UnifreightMessageM) => {
-                    const isMatchUnifreightCallbackCommand = (
-                        mess.LogitudeEntity === AmitalGatewayUtil.Instance.GeneralMessaging.ShowOpenFiles &&
-                        mess.LogitudeEntityNumber === this.EntityPM.Id &&
-                        mess.LogitudeViewModel === myViewModelName);
-                    if (isMatchUnifreightCallbackCommand) {
-                        sub.unsubscribe();
-                        SessionLocator.SelectedSession.CurrentEditComponent.ReloadEntityPM();
-                    }
-                    SessionLocator.SelectedSession.StopBusyIndicator();
-                }
-            );
-
-        const cardNumber = this.accountCardnumberLists?.[0];
-
-        var message =
-            AmitalGatewayUtil.Instance.
-                DeclarationMessaging.GetMessage(cardNumber, this.EntityPM.Id, myViewModelName
-                    , 'GNDUNF');
-        message.Requset.push(['CardList', this.accountCardnumberLists?.toString()]);
-
-        AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
-            'ScriptableGatewayUtil.ShowOpenFiles',
-            'GNDHMAIN.LogitudeTask',
-            'ShowOpenFiles',
-            message,
-            'Show Open Files');
-    }
-
+    //
 
     //#endregion
 
-
-
-    
     //#region Aging Details
     chartId: string = "";
 

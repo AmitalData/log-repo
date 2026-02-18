@@ -44,16 +44,7 @@ export class ReportExecutionLogPMService {
             }),
             catchError(ServiceHelper.HandleServiceError));
     }
-
-    SendToBackground(reportId: string) {
-        return this._http.post(this._apiUrl + '/PostSendToBackground?reportId=' + reportId, null, ServiceHelper.GetHttpHeaders()).pipe(
-            map(response => {
-                let serviceResponse = response;
-                return serviceResponse;
-            }),
-            catchError(ServiceHelper.HandleServiceError));
-    }
-
+    
     MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: ReportExecutionLogPM = null) {
         if (!entityPM) {
             entityPM = new ReportExecutionLogPM();

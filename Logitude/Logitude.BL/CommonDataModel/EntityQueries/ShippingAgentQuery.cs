@@ -23,7 +23,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         ShippingAgentRepository repository;
 
-
+        public ShippingAgentQuery()
+        {
+            repository = new ShippingAgentRepository(); 
+        }
 
         public ShippingAgentQuery(int tenant)
         {

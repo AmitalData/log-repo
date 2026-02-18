@@ -74,10 +74,6 @@
         -ms-animation-iteration-count: 1;
         -ms-transform-origin: 50% 50%;
     }
-     
-    .ShortTitleBox {
-        width: 100%;
-    }
 
     @keyframes animationFrames {
         0% {
@@ -268,8 +264,8 @@
                                                 <div></div>
                                             </td>
 
-                                            <td class="ShortTitleBox">
-                                                <div class="MediaFill" style="overflow: hidden;">
+                                            <td>
+                                                <div class="MediaFill" >
                                                     <div #ShortTitle *ngIf="HasShortTitle"></div>
                                                 </div>
                                             </td>
