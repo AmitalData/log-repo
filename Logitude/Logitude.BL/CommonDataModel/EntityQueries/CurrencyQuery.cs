@@ -17,7 +17,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         CurrencyRepository repository;
 
-
+        public CurrencyQuery()
+        {
+            repository = new CurrencyRepository(); 
+        }
 
         public CurrencyQuery(int tenant)
         {
