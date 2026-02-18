@@ -53,7 +53,7 @@ namespace Logitude.Customs.BL.Messaging.Customs.SignQueueBL
             var sw = Stopwatch.StartNew();
 
             var signQueueHSMService = new SignQueueHSMService();
-            if (!signQueueHSMService.IsHSMSign_IsOn(requestParams.Tenant, requestParams.HsmStationContext))
+            if (!signQueueHSMService.IsHSMSign_IsOn(requestParams.Tenant))
             {
                 Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance
 .AppendLine("!signQueueHSMService.IsHSMSign_IsOn(requestParams.Tenant)");

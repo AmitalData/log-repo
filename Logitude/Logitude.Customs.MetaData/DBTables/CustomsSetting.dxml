@@ -249,13 +249,6 @@
     <Constraints
       Nullable="true" />
   </Column>
-  <Column
-    Name="CustomsBookToken"
-    Type="varchar"
-    Size="1024">
-    <Constraints
-      Nullable="true" />
-  </Column>
   <Relation
     ForeignKeyColumn="DefaultNotificationAssignee"
     ReferencedTable="Users"
