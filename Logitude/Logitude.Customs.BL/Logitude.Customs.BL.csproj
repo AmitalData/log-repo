@@ -356,17 +356,17 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="UnifreightIIG.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\UnifreightIIG.4.0.9\lib\Net40\UnifreightIIG.Common.dll</HintPath>
+      <HintPath>..\packages\UnifreightIIG.4.0.7\lib\Net40\UnifreightIIG.Common.dll</HintPath>
     </Reference>
     <Reference Include="UnifreightIIG.DCA, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\UnifreightIIG.4.0.9\lib\Net40\UnifreightIIG.DCA.dll</HintPath>
+      <HintPath>..\packages\UnifreightIIG.4.0.7\lib\Net40\UnifreightIIG.DCA.dll</HintPath>
     </Reference>
     <Reference Include="UnifreightIIG.Resources, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\UnifreightIIGResources.1.0.6\lib\Net40\UnifreightIIG.Resources.dll</HintPath>
     </Reference>
     <Reference Include="UnifreightIIG.UServer, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\UnifreightIIG.4.0.9\lib\Net40\UnifreightIIG.UServer.dll</HintPath>
+      <HintPath>..\packages\UnifreightIIG.4.0.7\lib\Net40\UnifreightIIG.UServer.dll</HintPath>
     </Reference>
     <Reference Include="WindowsAzureEventSource, Version=2.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.WindowsAzure.SDK.2.9.0\lib\WindowsAzureEventSource.dll</HintPath>
@@ -381,7 +381,6 @@
     <Compile Include="AmitalContextUtil.cs" />
     <Compile Include="AzureSearch\AzureSearchServiceFilterHelper.cs" />
     <Compile Include="AzureSearch\CustomsBookAzureSearchService.cs" />
-    <Compile Include="AzureSearch\JournalAzureSearchService.cs" />
     <Compile Include="BL\AutomatedCourierMessagingService.cs" />
     <Compile Include="BL\AutoMsgScope.cs" />
     <Compile Include="AzureSearch\DeclarationAzureSearchService.cs" />
@@ -394,25 +393,16 @@
     <Compile Include="BL\CreateContainerization.cs" />
     <Compile Include="BL\CancelOldCommunicationLogs.cs" />
     <Compile Include="BL\EFIFILEMDataInExportDeclarationClosing.cs" />
-    <Compile Include="BL\ExportDeclarationsBatchActionsService.cs" />
     <Compile Include="BL\ExternalFieldMappingBL.cs" />
     <Compile Include="BL\PrivacyProtection.cs" />
     <Compile Include="BL\ReferantUnifreightStatuses.cs" />
     <Compile Include="BL\CourierSchedulerService.cs" />
     <Compile Include="BL\ServerNamesRestartServiceScriptService.cs" />
-    <Compile Include="BL\SIIRequest\SIIRequestApiDataMapper.cs" />
-    <Compile Include="BL\SIIRequest\SIIRequestApiRequestBuilder.cs" />
-    <Compile Include="BL\SIIRequest\SIIRequestApiRequestFactory.cs" />
-    <Compile Include="BL\SIIRequest\SIIRequestApiResponseSaver.cs" />
-    <Compile Include="BL\SIIRequest\SIIRequestApiSender.cs" />
-    <Compile Include="BL\SIIRequest\SIIRequestValidator.cs" />
-    <Compile Include="BL\SIIRequest\SIIRequestWebApiEndpointConfig.cs" />
-    <Compile Include="BL\SIIRequest\SiiStatusUpdateService.cs" />
     <Compile Include="BL\SIModificationByCustomerCommissionService.cs" />
-    <Compile Include="CloseTables\Codes\DeclarationDirection.cs" />
-     <Compile Include="CloseTables\Codes\EventStatuses.cs" />
+     <Compile Include="CloseTables\Codes\DeclarationDirection.cs" />
+    <Compile Include="CloseTables\Codes\EventStatuses.cs" />
     <Compile Include="CloseTables\Codes\UserCodes.cs" />
-    <Compile Include="CloseTables\CustomsCargoSealStatus.cs" />
+     <Compile Include="CloseTables\CustomsCargoSealStatus.cs" />
     <Compile Include="CloseTables\CustomsAutonomyKeywordDetails.cs" />
     <Compile Include="CloseTables\CustomRabbitMQQueue.cs" />
     <Compile Include="CloseTables\CustomsPartnerFtpDetails.cs" />
@@ -586,8 +576,6 @@
     <Compile Include="CloseTables\DetailsClassesGenerated\SalesTaxExemptionTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\SecurityClearenceTypeCodeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\SignatureTypeDetails.Generated.cs" />
-    <Compile Include="CloseTables\DetailsClassesGenerated\SIIDocumentTypeDetails.Generated.cs" />
-    <Compile Include="CloseTables\DetailsClassesGenerated\SIIRequestLineStatusDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\SIIRequestStatusDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\SiteLookupDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\SpecialActionDescriptionTypeDetails.Generated.cs" />
@@ -608,7 +596,7 @@
     <Compile Include="CloseTables\DetailsClassesGenerated\TransactionNatureTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DeclaraionDetails.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\TransportMeansTypeDetails.Generated.cs" />
-    <Compile Include="CloseTables\DetailsClassesGenerated\UnloadingSiteTypeDetails.Generated.cs" />
+     <Compile Include="CloseTables\DetailsClassesGenerated\UnloadingSiteTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\ValidCustomsItemDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\VehicleManufacturerDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\VehiclePoolTypeDetails.Generated.cs" />
@@ -630,7 +618,7 @@
     <Compile Include="CloseTables\EnumGenerated\AmendmentFieldReasonTypeStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\AmendmentFieldStatusTypeStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\AmendmentRequestStatusStruct.Generated.cs" />
-     <Compile Include="CloseTables\EnumGenerated\AmendmentStatusStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\AmendmentStatusStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\AmendRequestRejectReasonTypeStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\AssigneeNotificationTypeStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\AttachmentTypeStruct.Generated.cs" />
@@ -681,7 +669,7 @@
     <Compile Include="CloseTables\EnumGenerated\CustomerTypeGeneralStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\CustomMetaDataTypeStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\CustomsAddressTypeStruct.Generated.cs" />
-    <Compile Include="CloseTables\EnumGenerated\CustomsBookTypeStruct.Generated.cs" />
+     <Compile Include="CloseTables\EnumGenerated\CustomsBookTypeStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\CustomsBranchStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\CustomsDocumentStatusTypeStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\CustomsDocumentUploadStruct.Generated.cs" />
@@ -786,8 +774,6 @@
     <Compile Include="CloseTables\EnumGenerated\SealUpdateReasonTypeStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\SecurityClearenceTypeCodeStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\SignatureTypeStruct.Generated.cs" />
-    <Compile Include="CloseTables\EnumGenerated\SIIDocumentTypeStruct.Generated.cs" />
-    <Compile Include="CloseTables\EnumGenerated\SIIRequestLineStatusStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\SIIRequestStatusStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\SiteLookupStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\SpecialActionDescriptionTypeStruct.Generated.cs" />
@@ -1621,9 +1607,7 @@
     <Compile Include="EntityDataMappings\Generated\ServersNameDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\SignatureTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\SignStationDataMapping.Generated.cs" />
-    <Compile Include="EntityDataMappings\Generated\SIIDocumentTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\SIIRequestDataMapping.Generated.cs" />
-    <Compile Include="EntityDataMappings\Generated\SIIRequestLineStatusDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\SIIRequestStatusDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\SiteLookupDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\SiteTypeDataMapping.Generated.cs" />
@@ -1834,9 +1818,7 @@
     <Compile Include="EntityDataMappings\ServersNameDataMapping.cs" />
     <Compile Include="EntityDataMappings\SignatureTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\SignStationDataMapping.cs" />
-    <Compile Include="EntityDataMappings\SIIDocumentTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\SIIRequestDataMapping.cs" />
-    <Compile Include="EntityDataMappings\SIIRequestLineStatusDataMapping.cs" />
     <Compile Include="EntityDataMappings\SIIRequestStatusDataMapping.cs" />
     <Compile Include="EntityDataMappings\SiteLookupDataMapping.cs" />
     <Compile Include="EntityDataMappings\SiteTypeDataMapping.cs" />
@@ -1928,11 +1910,7 @@
     <Compile Include="EntityQueryServices\Generated\DeficitQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ExportReferenceQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ProceduralFaultQueryService.Generated.cs" />
-    <Compile Include="EntityQueryServices\Generated\SIIRequestLineStatusQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\RemarksClassificationQueryService.cs" />
-    <Compile Include="EntityQueryServices\Generated\SIIDocumentTypeQueryService.Generated.cs" />
-    <Compile Include="EntityQueryServices\UnloadingSiteTypeQueryService.cs" />
-    <Compile Include="EntityQueryServices\SupplierInvoiceItemsReqListQueryService.cs" />
     <Compile Include="EntityQueryServices\SIIRequestQueryService.cs" />
     <Compile Include="EntityQueryServices\Generated\CB_PreferenceQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CB_RuleClassificationQueryService.Generated.cs" />
@@ -2253,6 +2231,7 @@
     <Compile Include="EntityQueryServices\MeasurmentUnitQueryService.cs" />
     <Compile Include="EntityQueryServices\ReferantExceptionQueryService.cs" />
     <Compile Include="EntityQueryServices\SupplierInvoiceFreightAmountQueryService.cs" />
+    <Compile Include="EntityQueryServices\SupplierInvoiceItemsReqListQueryService.cs" />
     <Compile Include="EntityQueryServices\SupplierInvoiceItemVehicleAddQueryService.cs" />
     <Compile Include="EntityQueryServices\CustomsBookQueryService.cs" />
     <Compile Include="EntityQueryServices\CustomsBranchQueryService.cs" />
@@ -2578,10 +2557,7 @@
     <Compile Include="EntityUpdateServices\Generated\CustomsGeneralUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CustomsPaymentTermUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ProceduralFaultUpdateService.Generated.cs" />
-    <Compile Include="EntityUpdateServices\Generated\SIIDocumentTypeUpdateService.Generated.cs" />
-    <Compile Include="EntityUpdateServices\Generated\SIIRequestLineStatusUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\SIIRequestUpdateService.cs" />
-    <Compile Include="EntityUpdateServices\Generated\SIIDocumentTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\RequestHandlingAuthorityUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\SIIRequestStatusUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\SIIRequestUpdateService.Generated.cs" />
@@ -3514,7 +3490,6 @@
   <ItemGroup>
     <Folder Include="DummyData\" />
     <Folder Include="Messaging\Customs\Save\" />
-    <Folder Include="Messaging\SIIRequest\" />
     <Folder Include="Tools\" />
   </ItemGroup>
   <ItemGroup>
