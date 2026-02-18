@@ -1,34 +1,32 @@
-﻿using ICSharpCode.SharpZipLib.Core;
-using ICSharpCode.SharpZipLib.Zip;
-using Logitude.BL.CommonDataModel.EntityPMs;
-using Logitude.BL.CommonDataModel.EntityQueries;
-using Logitude.SystemLogs;
-using NPOI.SS.Formula.Functions;
-using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; 
-using Simplog.Data.CommonDataModel.Repositories;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Web.Http;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.Repositories;
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Logitude.BL.CommonDataModel.EntityPMs;
+using WebFreight.Web.Controllers.DigitalPortal.Helpers;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Net;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Text;
+using WebFreight.Web.Helpers;
+using Simplog.Data.CommonDataModel.Repositories;
+using WebFreight.Web.Security;
 using System.Web;
-using System.Web.Http;
-using System.Xml;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.SystemLogs;
+using System.Net.Http;
+using System.Net;
+using WebFreight.Web.WebServices;
+using System.IO;
+using System.Net.Http.Headers;
 using System.Xml.Linq;
 using System.Xml.XPath;
+using System.Xml;
 using System.Xml.Xsl;
-using WebFreight.Web.Controllers.DigitalPortal.Helpers;
-using WebFreight.Web.Helpers;
-using WebFreight.Web.Security;
-using WebFreight.Web.WebServices;
+using ICSharpCode.SharpZipLib.Core;
+using ICSharpCode.SharpZipLib.Zip;
+using System.Linq.Expressions;
+using NPOI.SS.Formula.Functions;
 
 namespace WebFreight.Web.Controllers.DigitalPortal
 {
@@ -179,18 +177,19 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
 
 
+
+
+
                         }
                         else
                         {
-                             string documentName = $"{filename}.{documentExtension}";
-                             _response = Request.CreateResponse(HttpStatusCode.OK);
-                            _response.Content.Headers.ContentLength = _DatainByte.LongLength;
+                            string documentName = $"{filename}.{documentExtension}";
+                            _response = Request.CreateResponse(HttpStatusCode.OK);
+                            _response.Headers.Add("Content-Length", _DatainByte.Length.ToString());
                             _response.Content = new StreamContent(new MemoryStream(_DatainByte));
-                             _response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
-                             _response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment");
-                             _response.Content.Headers.ContentDisposition.FileName = documentName;
-                          
-
+                            _response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+                            _response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment");
+                            _response.Content.Headers.ContentDisposition.FileName = documentName;
 
                         }
 
@@ -199,7 +198,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                     {
                         string documentName = $"{filename}.{documentExtension}";
                         _response = Request.CreateResponse(HttpStatusCode.OK);
-                        _response.Content.Headers.ContentLength = 0;
+                        _response.Headers.Add("Content-Length", "0");
                         _response.Content = new StreamContent(new MemoryStream());
                         _response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
                         _response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment");
@@ -396,16 +395,14 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 string compressedFileName = "Documents";
                 string shipmentNumber = null;
 
-                
+                if (domainName == "cargo" || domainName == "DigitalPortal")
+                {
+                    compressedFileName = $"{shipment.ShipmentNumber}_Documents";
+                    shipmentNumber = shipment.ShipmentNumber;
+                }
 
                 if (shipment != null)
                 {
-                    if (domainName == "cargo" || domainName == "DigitalPortal")
-                    {
-                        compressedFileName = $"{shipment.ShipmentNumber}_Documents";
-                        shipmentNumber = shipment.ShipmentNumber;
-                    }
-
                     var documents = up.GetDocumentByEntityAndTenant(EntityId, tenant);
 
                     if (!string.IsNullOrWhiteSpace(forwardingShipmentEntityId))
@@ -490,7 +487,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                         byte[] CompressedData = CompressionData("Documents", CompressedArray, false);
                         response = Request.CreateResponse(HttpStatusCode.OK);
-                        response.Content.Headers.ContentLength = CompressedData.LongLength;
+                        response.Headers.Add("Content-Length", CompressedData.Length.ToString());
                         response.Content = new StreamContent(new MemoryStream(CompressedData));
                         response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/zip");
                         response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment");

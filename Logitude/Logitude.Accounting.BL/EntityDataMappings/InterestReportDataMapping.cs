@@ -73,7 +73,6 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 customerPM = customerQuery.GetBasicSinglePM(entityPM.CustomerId, entityPM.Tenant, true);
                 entityPM.CustomerName = customerPM.EnglishName;
                 entityPM.CustomerLocalName = customerPM.LocalName;
-                entityPM.VatNumber = customerPM.VatNumber;
 
             }
            
@@ -143,16 +142,10 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 entityPM.CustomerLocalName = customerPM.LocalName;
 
             }
-            if (entityPOCO.ReportCurrencyId != null)
-            {
-                CurrencyQuery currencyQuery = new CurrencyQuery(entityPOCO.Tenant);
-                CurrencyPM currencyPM = currencyQuery.GetSinglePM(entityPOCO.ReportCurrencyId, entityPOCO.Tenant);
 
-                entityPM.ReportCurrencyCode = currencyPM?.Code;
-            }
+           
 
-
-
+ 
             if (entityPM.InterestReportStatusCode=="1")
             {
                 entityPM.IsFirstReport = IsCustomerHasReportNotCancelled(entityPM);

@@ -11,7 +11,5 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
         public string ExistingExternalJournal { get; set; }
 
         public bool? DoNotCreateJournal { get; set; }
-
-        public bool? IsUNFGeneralInvoice { get; set; }
     }
 }

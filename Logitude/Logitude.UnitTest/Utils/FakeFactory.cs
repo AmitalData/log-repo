@@ -19,7 +19,7 @@ namespace Logitude.UnitTest.Utils
     public  class FakeFactory
     {
 
-        public I Register<I>(Action<I> InitAction) where I : class
+        public I Register<I>(Action<I> InitAction)
         {
             var fake = A.Fake<I>();
             ContainerAccessor.Container.RegisterInstance<I>(fake);
