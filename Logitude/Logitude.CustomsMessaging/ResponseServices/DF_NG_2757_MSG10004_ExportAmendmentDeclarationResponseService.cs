@@ -173,9 +173,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     declarationPM.AutoSending = declarationOrg.AutoSending;
                     declarationPM.ImporterAddress = declarationOrg.ImporterAddress;
                     declarationPM.ImporterName = declarationOrg.ImporterName;
-                    declarationPM.ImporterCode = declarationOrg.ImporterCode;
-                    declarationPM.ImporterPassportNumber = declarationOrg.ImporterPassportNumber;
-
                     if (declarationOrg.IsCourierDeclaration)
                     {
                         declarationPM.IsCourierDeclaration = true;
@@ -506,36 +503,29 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                     declarationPM.ImporterName = importer.DMExtensions.Name;
 
                                 if (importer.ID.schemeID == "2" || importer.ID.schemeID == "3") declarationPM.ImporterPassCountryCode = GetValueTextType(importer.DMExtensions.IssueLocation);
-                                
-                                if (declarationPM.ImporterCode == null)
+
+                                switch (importer.ID.schemeID)
                                 {
-                                    switch (importer.ID.schemeID)
-                                    {
-                                        case "1":
-                                            {
-                                                var queryService = new ClientQueryService(context);
-                                                var importerPM = queryService.GetClientByCode(importer.ID.Value, tenant);
-                                                if (importerPM == null)
-                                                    declarationPM.ImporterCode = importer.ID.Value;
-                                                else
-                                                {
-                                                    declarationPM.ImporterCode = importerPM.Code;
-                                                    declarationPM.ImporterId = importerPM.Id;
-                                                }
-                                                break;
-                                            }
-                                        case "3":
-                                        case "2":
-                                            {
+                                    case "1":
+                                        {
+                                            var queryService = new ClientQueryService(context);
+                                            var importerPM = queryService.GetClientByCode(importer.ID.Value, tenant);
+                                            if (importerPM == null)
                                                 declarationPM.ImporterCode = importer.ID.Value;
-                                                declarationPM.ImporterPassportNumber = importer.ID.Value;
-                                                break;
+                                            else
+                                            {
+                                                declarationPM.ImporterCode = importerPM.Code;
+                                                declarationPM.ImporterId = importerPM.Id;
                                             }
-                                    }
-                                }
-                                if (declarationPM.ImporterPassportNumber == null)
-                                {
-                                    declarationPM.ImporterPassportNumber = importer.ID.Value;
+                                            break;
+                                        }
+                                    case "3":
+                                    case "2":
+                                        {
+                                            declarationPM.ImporterCode = importer.ID.Value;
+                                            declarationPM.ImporterPassportNumber = importer.ID.Value;
+                                            break;
+                                        }
                                 }
                                 break;
                             }

@@ -252,11 +252,7 @@ export class APInvoiceLinePM {
     public set LocalAmountWithVatRecognized(newValue: number) { if (this.localAmountWithVatRecognized != newValue) { this.localAmountWithVatRecognized = newValue; this.MarkAsDirty("LocalAmountWithVatRecognized"); } }
        
 	 
-    private isPrepaidExpenses: boolean;
-    public get IsPrepaidExpenses() { return this.isPrepaidExpenses; }
-    public set IsPrepaidExpenses(newValue: boolean) { if (this.isPrepaidExpenses != newValue) { this.isPrepaidExpenses = newValue; this.MarkAsDirty("IsPrepaidExpenses"); } }
-       
-	 
+
     public OldEntityPM: APInvoiceLinePM;
 	
     private entityParentPM: any;
@@ -296,4 +292,4 @@ export class APInvoiceLinePM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

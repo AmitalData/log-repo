@@ -39,9 +39,6 @@ namespace Simplog.Data.InvoiceModel
         IDbSet<ExternalSystemsTablesCode> ExternalSystemsTablesCodes { get; }
         IDbSet<ExternalSystemsMissingTranslation> ExternalSystemsMissingTranslations { get; }
         IDbSet<ExternalSystemsSyncStatus> ExternalSystemsSyncStatuses { get; set; }
-        IDbSet<ExpenseAllocationSetting> ExpenseAllocationSettings { get; set; }
-        IDbSet<ExpenseAllocationFlow> ExpenseAllocationFlows { get; set; }
-
         IDbSet<AccountingSystemsSetting> AccountingSystemsSettings { get; set; }
         IDbSet<AccountingSystemsSyncStatus> AccountingSystemsSyncStatuses { get; set; }
         IDbSet<QuickbooksSyncRequestTicket> QuickbooksSyncRequestTickets { get; set; }
@@ -70,8 +67,6 @@ namespace Simplog.Data.InvoiceModel
         IDbSet<ConfirmationNumberStatus> ConfirmationNumberStatuses { get; }
 
         IDbSet<ConfirmationNumberDefault> ConfirmationNumberDefaults { get; }
-        IDbSet<MasavInterface> MasavInterfaces { get; }
-        IDbSet<MasavInterfaceStatus> MasavInterfaceStatuses { get; }
 
         void SetAsModified(object entity);
         void DetectChanges();
