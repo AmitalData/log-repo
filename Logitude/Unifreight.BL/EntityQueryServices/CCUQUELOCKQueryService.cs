@@ -23,15 +23,15 @@ namespace Unifreight.BL.EntityQueryServices
             mapping = new CCUQUELOCKDataMapping();
         }
 
-        public CCUQUELOCKPM GetSingle(string ENTNAME, string FILENO,int tenant,  bool getComposition)
+        public CCUQUELOCKPM GetSingle(string ENTNAME, string FILENO, bool getComposition)
         {
-            var keys = new CCUQUELOCKKeys() { ENTNAME = ENTNAME, FILENO = FILENO , Tenant=tenant };
+            var keys = new CCUQUELOCKKeys() { ENTNAME = ENTNAME, FILENO = FILENO };
             return base.GetSingle(keys, getComposition, false);
         }
 
         protected override Simplog.Server.Infrastructure.EntityKeyFields GetKeys(CCUQUELOCK entityPOCO)
         {
-            return new CCUQUELOCKKeys() { ENTNAME = entityPOCO.ENTNAME, FILENO = entityPOCO.FILE_NO, Tenant = entityPOCO.TENANT };
+            return new CCUQUELOCKKeys() { ENTNAME = entityPOCO.ENTNAME, FILENO = entityPOCO.FILE_NO, };
         }
     }
 }
