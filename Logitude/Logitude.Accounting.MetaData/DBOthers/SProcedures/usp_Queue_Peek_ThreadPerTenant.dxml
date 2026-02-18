@@ -28,7 +28,7 @@ BEGIN TRAN
 				@MessageBody = qm.MessageBody,
 				@RetryNumber = qm.RetryNumber
 				FROM [dbo].[QueueMessages] qm WITH (UPDLOCK, READPAST, ROWLOCK)
-				JOIN [dbo].[TenantIdleStatuses] tis WITH (UPDLOCK, HOLDLOCK, ROWLOCK)
+				JOIN [dbo].[TenantIdleStatuses] tis WITH (UPDLOCK, READPAST, ROWLOCK)
 				ON qm.Tenant = tis.Tenant AND tis.ObjectTable = @ObjectTable AND tis.Idle = 0
 				WHERE
 				qm.QueueDefinitionCode = @QueueDefinitionCode

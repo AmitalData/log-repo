@@ -1,13 +1,15 @@
-
+ 
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Data.EntityKeys;
 using Simplog.Server.Infrastructure;
-using System.Data.Entity;
+using Simplog.Server.Infrastructure.Helpers;
 
 namespace Logitude.Customs.Data.Repsitories
 {
@@ -47,23 +49,6 @@ namespace Logitude.Customs.Data.Repsitories
                     where a.CustomFileNo == customFileNumber && a.Tenant == tenant
                     select a).ToList();
         }
-        public bool HasBlockingRequests(string customFileNumber, int tenant, string interfaceTypeCode)
-        {
-            const string AnalyzedStatusCode = "30";
-            const string CanceledStatusCode = "99";
-
-            return context.CustomsRequestsSheets
-                .Where(a =>
-                    a.CustomFileNo == customFileNumber &&
-                    a.Tenant == tenant &&
-                    a.InterfaceTypeCode == interfaceTypeCode &&
-                    a.RequestStatusCode != AnalyzedStatusCode &&
-                    a.RequestStatusCode != CanceledStatusCode
-                )
-                .AsNoTracking()
-                .Any();
-        }
-
 
         public List<CustomsRequestsSheet> GetEntityRequestsSheets(string objectTableId, string entityId, int tenant)
         {

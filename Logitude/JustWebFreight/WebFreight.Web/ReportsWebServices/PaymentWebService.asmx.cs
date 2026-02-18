@@ -441,12 +441,12 @@ namespace WebFreight.Web.ReportsWebServices
                                  List<ReconciliationLine> recoLine = recoLineQuery.GetLinesByReconciliationIdAndTenant(item.Id,tenant);
                                  var ledgerTransactionQueryService = new LedgerTransactionQueryService(AccountingContext.GetContext(tenant));
                                  var ledgerTransactions= ledgerTransactionQueryService.GetLedgerTransactionPMsByIdList(recoLine.Select(a=>a.TransactionId).ToList(), tenant);
-                                    Dictionary<string, string> ltIds = ledgerTransactions
-                                        .ToDictionary(d => d.Id, d => d.JournalId);
-                                    foreach (var kvp in ltIds) 
+                                    Dictionary<string, string> journalIds = ledgerTransactions
+                                        .ToDictionary(d => d.JournalId, d => d.Id);
+                                    foreach (var kvp in journalIds) 
                                     {
-                                        string transactionId = kvp.Key;
-                                        string journalId = kvp.Value;
+                                        string journalId = kvp.Key;
+                                        string transactionId = kvp.Value;
 
                                         var journal =journalQueryService.GetSingle(journalId, false,false);
                                       if (journal == null || journal.AccountingEntityCode != AccountingEntityValues.ARInvoice)
