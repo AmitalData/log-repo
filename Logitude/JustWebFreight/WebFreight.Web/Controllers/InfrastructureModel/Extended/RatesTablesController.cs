@@ -6,8 +6,7 @@ using WebFreight.Web.Helpers;
 using Logitude.Server.Tools.Helpers;
 using System.Web;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; 
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
@@ -52,7 +51,6 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                         service.Create(entityPM);
 
                         List<CurrencyRatePM> currencyRates = request.CurrencyRates;
-                        currencyRates.ForEach(currencyRate => currencyRate.Rate = CalculateRateAccordingUnits(currencyRate.Rate, entityPM.Unit));
                         CurrencyRateService currencyRateUpdateService = new CurrencyRateService(MyContext, entityPM.Tenant);
                         currencyRateUpdateService.Create(currencyRates, entityPM);
 
@@ -113,18 +111,6 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                 }
             }
             return (double)ratesTable.Rate;
-
-        }
-        private double CalculateRateAccordingUnits(double rate,int? unit)
-        {
-            if (unit != null)
-            {
-                if (unit > 0)
-                {
-                    return (double)(rate / unit);
-                }
-            }
-            return (double)rate;
 
         }
 

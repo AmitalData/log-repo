@@ -93,11 +93,4 @@ export interface FastSearchResult {
     recentEditScreenParam: string;
     addAsteriskToNumberSearch: string;
     DDLWidth: string;
-    minimumSearchQueryLength: number;
-    left: number;
-    showSeparator: boolean;
-    showHeader : boolean;
-    tableName: string;
-    highlightSearchResults: boolean;
-
 }
