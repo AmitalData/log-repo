@@ -39,6 +39,7 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public DateTime? DueDate { get; set; }
+        public DateTime? ReferenceDate { get; set; }
         public double? InvoiceCurrencyExchangeRate { get; set; }
         public DateTime? ExchangeRateDate { get; set; }
 
@@ -360,10 +361,7 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public bool IsEquipment { get; set; }
         public string ConnectedPaymentsNumbers { get; set; }
         public string TotalEquation { get; set; }
-        public bool IsPrepaidExpenses { get; set; }
 
-        public bool HasExpenseAllocationSetting { get; set; }
-        public DateTime ExpenseAllocationStartDate { get; set; }
-
+       
     }
 }

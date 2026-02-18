@@ -90,9 +90,9 @@ using Logitude.Server.Tools;
 				   temp.Description = item.Description;
 				   temp.LocalDescription = item.LocalDescription;
 				   temp.ChargeTypeGLAccountId = item.ChargeTypeGLAccountId; 
-					temp.IsPrepaidExpenses = item.IsPrepaidExpenses;
 
-                    if (item.PrepaidCollectId != null)
+			  
+				   if(item.PrepaidCollectId != null)
 				   {
 					   PrepaidCollectQueryService PrepaidCollectService3 = new PrepaidCollectQueryService(Tenant);
 					   					   temp.PrepaidCollect = PrepaidCollectService3.GetPrepaidCollectById(item.PrepaidCollectId,Tenant,ComputingPartnerName); 
@@ -110,7 +110,8 @@ using Logitude.Server.Tools;
 					   				   }
 				   
 				   temp.Quantity = item.Quantity;
-					temp.ExcludeFromTaxReport = item.ExcludeFromTaxReport;
+                    temp.ExcludeFromTaxReport = item.ExcludeFromTaxReport;
+                    temp.ReferenceDate = item.OperationalDate;
 
                     MyList.Add(temp);
 				}
@@ -317,14 +318,10 @@ using Logitude.Server.Tools;
 					{							
 						temp.ChargeTypeGLAccountId = item.ChargeTypeGLAccountId;
 
-										}
+										}  
 
-                    if (!IsUpdate)
-                    {
-                        temp.IsPrepaidExpenses = item.IsPrepaidExpenses;
-
-                    }
-                    PrepaidCollectQueryService PrepaidCollectPrepaidCollectService = new PrepaidCollectQueryService(Tenant);
+					
+					PrepaidCollectQueryService PrepaidCollectPrepaidCollectService = new PrepaidCollectQueryService(Tenant);
 					if(item.PrepaidCollect != null)
 					{
 						var myPrepaidCollectPM = PrepaidCollectPrepaidCollectService.PrepaidCollectDataMappingAndValidatin(item.PrepaidCollect,Tenant,ComputingPartnerName,IsUpdate);
@@ -385,7 +382,7 @@ using Logitude.Server.Tools;
                     if (!IsUpdate)
                     {
                         temp.ExcludeFromTaxReport = item.ExcludeFromTaxReport;
-
+                        temp.OperationalDate = item.ReferenceDate;
                     }
 
 

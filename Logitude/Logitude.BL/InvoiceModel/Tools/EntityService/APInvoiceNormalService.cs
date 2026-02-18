@@ -1,65 +1,62 @@
-﻿using Logitude.Accounting.Data.EntityPOCOs;
-using Logitude.Accounting.Data.EntityPOCOs;
-using Logitude.Accounting.Data.Repositories;
-using Logitude.Accounting.Def.EntityPMs;
-using Logitude.Accounting.Def.EntityQueryServicesExt;
-using Logitude.Accounting.Def.EntityUpdateServicesExt;
-using Logitude.BL.AnalyticTableServices;
-using Logitude.BL.CommonDataModel.APIDataContract;
-using Logitude.BL.CommonDataModel.APIDataContract;
-using Logitude.BL.CommonDataModel.EntityPMs;
-using Logitude.BL.CommonDataModel.EntityQueries;
-using Logitude.BL.DataContracts;
-using Logitude.BL.ExternalService;
-using Logitude.BL.Helpers;
-using Logitude.BL.InfrastructureModel.EntityLists;
-using Logitude.BL.InfrastructureModel.EntityQueries;
-using Logitude.BL.InvoiceModel.EntityOtherServices;
-using Logitude.BL.InvoiceModel.EntityPMs;
-using Logitude.BL.InvoiceModel.EntityQueries;
-using Logitude.BL.InvoiceModel.Enums;
-using Logitude.BL.InvoiceModel.Tools.Behaviours;
-using Logitude.BL.InvoiceModel.Tools.Behaviours.APInvoiceBehaviours;
-using Logitude.BL.InvoiceModel.Tools.DataMapping;
-using Logitude.BL.InvoiceModel.Tools.Initializers;
-using Logitude.BL.InvoiceModel.Tools.TraceEvents;
-using Logitude.BL.InvoiceModel.Tools.Validating;
-using Logitude.BL.Resolvers;
-using Logitude.Server.Tools;
-using Logitude.Server.Tools.Counters;
-using Logitude.Server.Tools.Helpers;
-using Logitude.Server.Tools.Utils;
-using Microsoft.Practices.Unity;
-using Simplog.Data.CommonDataModel.EntityPOCOs; 
-using Simplog.Data.CommonDataModel.Mocks;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.CommonDataModel.Mocks;
 using Simplog.Data.Helpers;
-using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; 
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.InvoiceModel;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel.Mocks;
 using Simplog.Data.InvoiceModel.Repositories;
-using Simplog.Data.ShipmentsModel;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.Mocks;
 using Simplog.Data.ShipmentsModel.Repositories;
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Simplog.Global.Data.GlobalModel.Repositories;
+using Logitude.BL.DataContracts;
+using Logitude.BL.Helpers;
+using Logitude.BL.InvoiceModel.EntityPMs;
+using Logitude.BL.InvoiceModel.Tools.DataMapping;
+using Logitude.BL.InvoiceModel.Tools.TraceEvents;
+using Logitude.BL.InvoiceModel.Tools.Validating;
+using Logitude.Server.Tools.Counters;
 using Simplog.Server.Infrastructure;
+using Logitude.Server.Tools.Helpers;
+using Logitude.Accounting.Def.EntityPMs;
+using Logitude.Accounting.Def.EntityUpdateServicesExt;
+using Logitude.Server.Tools;
+using Microsoft.Practices.Unity;
+using Logitude.Accounting.Def.EntityQueryServicesExt;
+using Logitude.BL.InvoiceModel.EntityOtherServices;
+using Logitude.BL.InvoiceModel.EntityQueries;
+using Logitude.Accounting.Data.Repositories;
+using Simplog.Data.ShipmentsModel;
+using Logitude.BL.InfrastructureModel.EntityQueries;
+using Logitude.BL.InfrastructureModel.EntityLists;
+using Simplog.Data.InfrastructureModel;
+using Logitude.BL.InvoiceModel.Tools.Initializers;
+using Logitude.BL.ExternalService;
+using Logitude.BL.InvoiceModel.Tools.Behaviours;
+using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.InvoiceModel.Tools.Behaviours.APInvoiceBehaviours;
+using Logitude.BL.Resolvers;
+using Logitude.BL.AnalyticTableServices;
 using Simplog.Server.Infrastructure.Helpers;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Common;
 using System.Data.SqlClient;
-using System.IdentityModel.Metadata;
-using System.Linq;
+using System.Data;
 using System.Transactions;
+using System.Data.Common;
+using Simplog.Global.Data.GlobalModel.Repositories;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Logitude.Server.Tools.Utils;
+using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.BL.CommonDataModel.APIDataContract;
 using GLAccountPM = Logitude.Accounting.Def.EntityPMs.GLAccountPM;
+using Logitude.BL.InvoiceModel.Enums;
+using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.BL.CommonDataModel.APIDataContract;
 
 namespace Logitude.BL.InvoiceModel.Tools.EntityService
 {
@@ -396,54 +393,20 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             {
                 IJournalQueryServiceExt journalQuery = ContainerAccessor.Container.Resolve(typeof(IJournalQueryServiceExt), "JournalQueryServiceExt", new ParameterOverride(string.Empty, 1)) as IJournalQueryServiceExt;
                 JournalPM journalPM = journalQuery.GetJournalByAccountingEntityIdAndCode(entityPM.Id, "4", entityPM.Tenant);
-                var journalUpdate = ContainerAccessor.Container.Resolve(typeof(IJournalVoidUpdateServiceExt), "JournalVoidUpdateServiceExt", new ParameterOverride(string.Empty, 1)) as IJournalVoidUpdateServiceExt;
 
                 if (journalPM != null)
                 {
                     CheckJournalInactiveAccounts(entityPM, journalPM);
+
+                    var journalUpdate = ContainerAccessor.Container.Resolve(typeof(IJournalVoidUpdateServiceExt), "JournalVoidUpdateServiceExt", new ParameterOverride(string.Empty, 1)) as IJournalVoidUpdateServiceExt;
                     AddAccountingEntitieJournal(journalPM, AccountingEntityJournalActions.APInvoiceVoid, journalPM.Id);
                     journalUpdate.Update(journalPM, new StornoOverrideM()
                     {
+                        DocumentDate = journalPM.DocumentDate,
                         AccountingEntityCode = "4",
                         AccountingEntityId = entityPM.Id,
                         AccountingEntityReference = entityPM.InvoiceNumber
                     });
-                }
-                if(entityPM.IsPrepaidExpenses){
-
-                    ObjectTableRepository objectTableRepository = new ObjectTableRepository(tenant);
-                    var objectTable = objectTableRepository.GetObjectTableByName("APInvoice", tenant, true);
-                    IInvoiceContext MyContext = InvoiceContext.GetContext(tenant);
-                    ExpenseAllocationFlowRepository expenseAllocationFlowRepository = new ExpenseAllocationFlowRepository(MyContext);
-                    List<ExpenseAllocationFlow> entityPocos = expenseAllocationFlowRepository.GetListByEntityIAndObjectTable(tenant, objectTable?.Id, entityPM.Id).ToList();
-                    if (entityPocos != null)
-                    {
-                       foreach (var expenseAllocationFlow in entityPocos)
-                        {
-                            if (expenseAllocationFlow.JournalId == null) {
-                                expenseAllocationFlowRepository.Remove(expenseAllocationFlow);
-                                expenseAllocationFlowRepository.SubmitChanges();
-                                continue;
-                            }
-                            JournalPM journal = journalQuery.GetJournalById(expenseAllocationFlow.JournalId,entityPM.Tenant);
-                            if(journal == null)
-                            {
-                                continue;
-                            }
-                            AddAccountingEntitieJournal(journal, AccountingEntityJournalActions.APInvoiceVoid, expenseAllocationFlow.Id);
-                            journalUpdate.Update(journal, new StornoOverrideM()
-                            {
-                                AccountingEntityCode = "4",
-                                AccountingEntityId = entityPM.Id,
-                                AccountingEntityReference = entityPM.InvoiceNumber
-                            });
-                             journal = journalQuery.GetJournalById(expenseAllocationFlow.JournalId, entityPM.Tenant);
-                            expenseAllocationFlow.JournalId = journal?.VoidedByJournalId;
-                            expenseAllocationFlowRepository.Update(expenseAllocationFlow);
-                            expenseAllocationFlowRepository.SubmitChanges();
-                        }
-                    }
-
                 }
             }
         }
@@ -2156,22 +2119,13 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         private void AddAPInvoiceJournalAndJournalLines(APInvoicePM theEntityPm, bool setApproved)
         {
             int tenant = theEntityPm.Tenant;
-            
             if (setApproved)
             {
                 TenantRepository tenantRepository = new TenantRepository(tenant);
                 Tenant tenantPOCO = tenantRepository.GetSingleTenant(tenant);
-                FullAccountingSettingPM accountingSettings = getFullAccountingSettings(theEntityPm.Tenant);
+
                 if (tenantPOCO.AccountingActivated)
                 {
-                    if (theEntityPm.IsPrepaidExpenses){
-                       
-                        if(accountingSettings == null || string.IsNullOrEmpty(accountingSettings.PrepaidExpensesGLAccountId))
-                        {
-                            throw new Exception("Please configure Prepaid Expenses GL Account in Full Accounting Settings before approving Prepaid Expenses Invoice.");
-                        }
-                       
-                     }
                     // Insert Journal 
                     JournalPM journal = new JournalPM();
                     journal.Tenant = tenant;
@@ -2245,10 +2199,10 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                                             ActionCode = AccountingActionCodes.Debit,
                                                             ActionTypeCodeEnum = JournalActionTypeEnum.Debit,
                                                             JournalId = journal.Id,
-                                                            DebitAccountId = d.IsPrepaidExpenses == true ? accountingSettings?.PrepaidExpensesGLAccountId :  d.ChargeTypeGLAccountId,
+                                                            DebitAccountId = d.ChargeTypeGLAccountId,
                                                             CreditAccountId = theEntityPm.VendorGLAccountId,
                                                             Line = ++counter,
-                                                            DocumentDate = theEntityPm.InvoiceDate.Value,
+                                                            DocumentDate = d.OperationalDate.HasValue? d.OperationalDate.Value : theEntityPm.InvoiceDate.Value,
                                                             AccountingDate = theEntityPm.AccountingDate != null ? theEntityPm.AccountingDate.Value : TenantServerConfigration.GetCurrentDateTime(tenant),
                                                             DueDate = theEntityPm.DueDate.Value,
                                                             LocalAmount = Math.Round(d.VatRecognizedPercentage == null ? (decimal)d.LocalCurrencyAmount.Value : (decimal)d.LocalAmountWithVatRecognized.Value, 2),
@@ -2274,6 +2228,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     counter = journal.JournalLines.Count();
 
                     // Accounting settings 
+                    FullAccountingSettingPM accountingSettings = getFullAccountingSettings(theEntityPm.Tenant);
                     decimal localForVAT = 0m;
                     foreach (APInvoiceTotalVATPM vat in totalVats)
                     {
@@ -2286,7 +2241,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                             JournalId = journal.Id,
                             DebitAccountId = accountingSettings != null ? accountingSettings.VATInputsGLAccountId : string.Empty,
                             Line = ++counter,
-                            DocumentDate = theEntityPm.InvoiceDate.Value,
+                            DocumentDate = theEntityPm.InvoiceDate.Value, //?
                             AccountingDate = theEntityPm.AccountingDate != null ? theEntityPm.AccountingDate.Value : TenantServerConfigration.GetCurrentDateTime(tenant),
                             DueDate = theEntityPm.DueDate.Value,
                             LocalAmount = vat.LocalVatAmountWithVatRecognized,
@@ -2334,7 +2289,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                             journalLine.Reference3 = !string.IsNullOrEmpty(theEntityPm.HouseNumber) ? theEntityPm.HouseNumber : theEntityPm.MasterNumber;
                             journalLine.Notes = theEntityPm.InternalNotes;
                             journalLine.CreditAccountId = glAccount.Id;
-                            journalLine.DebitAccountId = theEntityPm.IsPrepaidExpenses ? accountingSettings?.PrepaidExpensesGLAccountId : SetDebitAccountForSingleLineAPInvoice(theEntityPm);
+                            journalLine.DebitAccountId = SetDebitAccountForSingleLineAPInvoice(theEntityPm);
                             journalLine.ChangeSetOp = ChangeSetOperation.Insert;
                             journal.JournalLines.Add(journalLine);
                         }
@@ -2352,12 +2307,9 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     IJournalUpdateServiceExt journalUpdate = ContainerAccessor.Container.Resolve(typeof(IJournalUpdateServiceExt), "JournalUpdateServiceExt", new ParameterOverride(string.Empty, 1)) as IJournalUpdateServiceExt;
                     AddAccountingEntitieJournal(journal, AccountingEntityJournalActions.APInvoiceApprove);
                     journalUpdate.Update(journal);
-
-                   
                 }
             }
         }
-      
         private JournalLinePM CreateJournalLinePM(APInvoicePM theEntityPm, int lineNo, string journalId, string glAccountId)
         {
             JournalLinePM journalLine = new JournalLinePM();
@@ -2366,7 +2318,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             journalLine.Line = lineNo;
             journalLine.ActionCode = AccountingActionCodes.Credit;
             journalLine.ActionTypeCodeEnum = JournalActionTypeEnum.Credit;
-            journalLine.DocumentDate = theEntityPm.InvoiceDate.Value;
+            journalLine.DocumentDate = theEntityPm.InvoiceDate.Value; //?
             journalLine.AccountingDate = theEntityPm.AccountingDate != null ? theEntityPm.AccountingDate.Value : TenantServerConfigration.GetCurrentDateTime(tenant);
             journalLine.DueDate = theEntityPm.DueDate.Value;
 
@@ -2376,7 +2328,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             journalLine.Notes = theEntityPm.InternalNotes;
             journalLine.CreditAccountId = glAccountId;
             
-            journalLine.DebitAccountId =   SetDebitAccountForSingleLineAPInvoice(theEntityPm);
+            journalLine.DebitAccountId = SetDebitAccountForSingleLineAPInvoice(theEntityPm);
             journalLine.ChangeSetOp = ChangeSetOperation.Insert;
             return journalLine;
         }
@@ -2387,7 +2339,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             service.AddAccountingEntitieJournal(entityPM, action, ChildEntityId);
         }
 
-        public  GLAccountPM GetInvoiceGLAccount(APInvoicePM invoicePM)
+        private static GLAccountPM GetInvoiceGLAccount(APInvoicePM invoicePM)
         {
             GLAccountPM glAccount;
             if (invoicePM.VendorGLAccountId != null)
@@ -2423,7 +2375,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             accountingSettings = query.GetFullAccountingSettingByTenant(tenant);
             return accountingSettings;
         }
-        public string SetDebitAccountForSingleLineAPInvoice(APInvoicePM invoice)
+        private string SetDebitAccountForSingleLineAPInvoice(APInvoicePM invoice)
         {
             if (invoice.InvoiceLines.Count == 1)
             {

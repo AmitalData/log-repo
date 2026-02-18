@@ -126,7 +126,5 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
 
     public string ConfirmationNumber { get; set; }
 
-    public bool IsPrepaidExpenses { get; set; }
-
     }
 } 
