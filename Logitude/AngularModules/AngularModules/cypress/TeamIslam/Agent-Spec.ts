@@ -2,6 +2,7 @@
 
 import { NewAgent } from './Agent';
 import { NewAgentScenario } from './AgentScenario';
+import { LoginComp } from ".././login/Login.po";
 
 
 

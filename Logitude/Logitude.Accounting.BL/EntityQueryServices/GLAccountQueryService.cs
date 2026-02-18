@@ -130,16 +130,6 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                 }).FirstOrDefault();
             return glAccountPM;
         }
-
-        public GLAccount GetAccountControlAndRecoMethods(string accountId, int tenant)
-        {
-            return (from a in context.GLAccounts
-                    where a.Tenant == tenant && a.Id == accountId
-                    select a).FirstOrDefault();
-        }
-
-
-
         public IQueryable<string> GetQGLAccIdBySalesmanId(int tenant, string SalesmanId, string AccountTypeCode)
         {
             IQueryable<string> q = (
@@ -843,10 +833,6 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         {
             List<GLAccount> pocos = this.repository.GetByDisplayNumber(displayNumber, tenant);
             return pocos.Select(rec => this.GetEntityPM(rec)).ToList();
-        }
-        public decimal GetTotalOpenChequesInLocalCurById(string Id, int tenant)
-        {
-            return this.repository.GetTotalOpenChequesInLocalCurById(Id, tenant);
         }
         public List<GLAccountPM> GetByDisplayNumberEnding(string displayNumberEnding, int tenant)
         {

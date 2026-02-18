@@ -207,7 +207,7 @@ export class NewTaxDeductionReportComponent extends BaseComponent {
             this.entityPM.Month.getMonth() <= this.entityPM.FromMonth.getMonth()) {
             errors.push(TextCodeTranslator.Translate('TaxDeductionReport.O.InvalidMonthPeriod'));
         }
-        this.entityPM.FromMonth.setFullYear(this.entityPM.TaxYear);
+        
         this.entityPM.Month.setFullYear(this.entityPM.TaxYear);
         this.ValidationErrorsList = errors;
 
