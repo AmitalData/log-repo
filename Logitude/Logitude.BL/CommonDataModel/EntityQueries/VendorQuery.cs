@@ -23,7 +23,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         VendorRepository repository;
 
-
+        public VendorQuery()
+        {
+            repository = new VendorRepository(); 
+        }
 
         public VendorQuery(int tenant)
         {
@@ -64,8 +67,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                    InvoiceCurrencyId = a.Card.InvoiceCurrencyId,
                                    VatTypeId = a.Card.VatTypeId,
                                    AccountNumber = a.Card.AccountNumber,
-                                   BankBranch = a.Card.BankBranch,
-                                   BankCodeId = a.Card.BankCodeId,
                                    Swift = a.Card.Swift,
                                    IBANNumber = a.Card.IBANNumber,
                                    BankName = a.Card.BankName,
@@ -176,8 +177,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                    InvoiceCurrencyId = a.Card.InvoiceCurrencyId,
                                    VatTypeId = a.Card.VatTypeId,
                                    AccountNumber = a.Card.AccountNumber,
-                                   BankBranch = a.Card.BankBranch,
-                                   BankCodeId = a.Card.BankCodeId,
                                    Swift = a.Card.Swift,
                                    IBANNumber = a.Card.IBANNumber,
                                    BankName = a.Card.BankName,
@@ -278,8 +277,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                    InvoiceCurrencyId = a.Card.InvoiceCurrencyId,
                                    VatTypeId = a.Card.VatTypeId,
                                    AccountNumber = a.Card.AccountNumber,
-                                   BankBranch = a.Card.BankBranch,
-                                   BankCodeId = a.Card.BankCodeId,
                                    Swift = a.Card.Swift,
                                    IBANNumber = a.Card.IBANNumber,
                                    BankName = a.Card.BankName,
@@ -615,8 +612,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                    AccountNumber = a.Card.AccountNumber,
                                    Swift = a.Card.Swift,
                                    IBANNumber = a.Card.IBANNumber,
-                                   BankBranch = a.Card.BankBranch,
-                                   BankCodeId = a.Card.BankCodeId,
                                    BankName = a.Card.BankName,
                                    BankAddress = a.Card.BankAddress,
                                    PrimaryContactId = a.Card.PrimaryContactId,
