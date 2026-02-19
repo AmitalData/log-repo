@@ -19,10 +19,8 @@ export function FillTrailBalanceReportDetails(tailBalanceReportDetails:TrailBala
 }
 
 export function RunTrailBalanceReport() {
-    cy.Click(TrailBalanceReportSelectors.SelectReportRun, null, true);    
-    cy.wait(1000); // Wait for report button to become available
-    // Wait for the green button to exist and be visible, then click it
-    cy.get('.greenButton, .GreenButton', { timeout: 10000 }).first().should('exist').click({ force: true });
+    cy.Click(TrailBalanceReportSelectors.SelectReportRun, null);    
+    cy.Click(TrailBalanceReportSelectors.RunReportButton, null);
 }
 
 export function AssertRunTrailBalanceReport() {

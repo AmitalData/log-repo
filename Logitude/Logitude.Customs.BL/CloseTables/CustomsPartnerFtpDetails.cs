@@ -52,7 +52,7 @@ namespace Logitude.Customs.BL.CloseTables
         public const string InterfaceName_DownloadCustomsFilesFromSftp = "DWN_CUSTOMS_SFTP";
         public const string InterfaceName_UploadNotNeeded9100FilesToSftp = "UPLOAD_NOTNEEDED9100_TOSFTP";
         public const string InterfaceName_Customs = "Customs";
-        public const string InterfaceName_SIIRequestStatus = "SII_REQUEST_STATUS";
+
         public const string PartnerCode_Mamam = "MAMAN";
         public const string PartnerCode_ILOVS = "ILOVS";
         public const string PartnerCode_ILSWS = "ILSWS";
@@ -438,17 +438,8 @@ namespace Logitude.Customs.BL.CloseTables
                 TypeCode = TypeCode_Out,
                 Partner = PartnerCode_CUSTOMS,
                 ViaMethod = GetViaMethods().First(r => r.Key == "FTP").Key,
-            },
-           new InterfaceDetails()
-            {
-                Code = InterfaceName_SIIRequestStatus,
-                Name = "מכון תקנים - סטטוס בקשה",
-                TypeCode = TypeCode_In,
-                Partner = PartnerCode_SII,
-                ViaMethod = GetViaMethods().First(r => r.Key == "WEBAPI").Key,
             }
             };
-
             ///
 
             //all.Add(new KeyValuePair<string, string>("TST", "Test"));

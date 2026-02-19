@@ -97,7 +97,9 @@ namespace Logitude.Customs.Def.EntityPMs
 		 }
 	   }
 	  private int lineNumber ;
-	  	  
+	  
+       [Key]
+	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -696,98 +698,6 @@ namespace Logitude.Customs.Def.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="VendorName",OldValue=vendorName,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   vendorName=value;
-		   }
-			
-		 }
-	   }
-	  private string statusCode ;
-	  	  
-       
-	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string StatusCode  
-	   {
-	    
-	     get
-		{
-		   return statusCode;
-		 }
-		 set
-		 {
-		   if(statusCode != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="StatusCode",OldValue=statusCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   statusCode=value;
-		   }
-			
-		 }
-	   }
-	  private DateTime? statusDate ;
-	  	  
-       
-	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
-	   [DataMember]
-       public DateTime? StatusDate  
-	   {
-	    
-	     get
-		{
-		   return statusDate;
-		 }
-		 set
-		 {
-		   if(statusDate != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="StatusDate",OldValue=statusDate,NewValue=value,PropertyType="DateTime?"};
-		    NotifyPropertyChanged(values);
-		   statusDate=value;
-		   }
-			
-		 }
-	   }
-	  private string distApprovalAttachmentPath ;
-	  	  
-       
-	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string DistApprovalAttachmentPath  
-	   {
-	    
-	     get
-		{
-		   return distApprovalAttachmentPath;
-		 }
-		 set
-		 {
-		   if(distApprovalAttachmentPath != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DistApprovalAttachmentPath",OldValue=distApprovalAttachmentPath,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   distApprovalAttachmentPath=value;
-		   }
-			
-		 }
-	   }
-	  private string statusName ;
-	  	  
-       
-	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string StatusName  
-	   {
-	    
-	     get
-		{
-		   return statusName;
-		 }
-		 set
-		 {
-		   if(statusName != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="StatusName",OldValue=statusName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   statusName=value;
 		   }
 			
 		 }

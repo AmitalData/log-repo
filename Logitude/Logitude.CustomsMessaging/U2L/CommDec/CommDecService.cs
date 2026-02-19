@@ -195,11 +195,8 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
 				ICustomContext dbContext = CustomContext.GetContext(_tenant);
 				DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(dbContext, new Dictionary<string, IContext>(), _tenant);
 				DefaultValueQueryService defaultValueQueryService = new DefaultValueQueryService(_tenant);
-                var setting = CustomsSettingQueryService.GetSettingByTenant(_tenant);
 
-                IsConnectedToUniFreight = setting != null && setting.IsConnectedToUniFreight;
-
-                if (!String.IsNullOrWhiteSpace(MoreParams))
+				if (!String.IsNullOrWhiteSpace(MoreParams))
 				{
 					AppendLogLine("MoreParams: " + MoreParams);
 					var unifreightListsParams = UnifreightListsUtil.Deserialize(MoreParams);
@@ -2705,19 +2702,10 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
 						ClasificationQtyTypes.Add(SupplierInvoiceItemPM.ClassificationCode, invoiceQuantityType);
 					}
 				}
-				 if (string.IsNullOrWhiteSpace(invoiceQuantityType) && !string.IsNullOrWhiteSpace(invoiceItem.QUANTITY_TYPE))
-                {
-                    invoiceQuantityType = TranslateMeasurmentUnit(invoiceItem.QUANTITY_TYPE);
-                    if (invoiceQuantityType != null &&
-                        invoiceQuantityType == "KGM" &&
-                        string.IsNullOrWhiteSpace(invoiceItem.ITEM_WEIGHT))
-                    {
-                        if (decimal.TryParse(invoiceItem.ITEM_WEIGHT, out decimal decimalValue))
-                        {
-                            SupplierInvoiceItemPM.InvoiceQuantity = decimalValue;
-                        }
-                    }
-                }
+				if (string.IsNullOrWhiteSpace(invoiceQuantityType) && !string.IsNullOrWhiteSpace(invoiceItem.QUANTITY_TYPE))
+				{
+					invoiceQuantityType = TranslateMeasurmentUnit(invoiceItem.QUANTITY_TYPE);
+				}
 				if (!string.IsNullOrWhiteSpace(invoiceQuantityType))
 				{
 					SupplierInvoiceItemPM.InvoiceQuantityType = invoiceQuantityType;

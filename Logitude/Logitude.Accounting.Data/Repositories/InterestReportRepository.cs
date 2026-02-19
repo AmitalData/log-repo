@@ -89,45 +89,40 @@ namespace Logitude.Accounting.Data.Repositories
         }
 
 
-        public decimal? GetInterestReportOpenBalance(DateTime inputDate, string glAccountId, int tenant ,bool isForeignCurrency)
+        public decimal? GetInterestReportOpenBalance(DateTime inputDate, string glAccountId, int tenant)
         {
             var firstOfMonth = new DateTime(inputDate.Year, inputDate.Month, 1);
 
 
-            var openBalance = GetLedgerOpenBalance(glAccountId, tenant, firstOfMonth, isForeignCurrency);
-            var interestDeltas = GetInterestAdjustments(glAccountId, tenant, firstOfMonth,isForeignCurrency);
+            var openBalance = GetLedgerOpenBalance(glAccountId, tenant, firstOfMonth);
+            var interestDeltas = GetInterestAdjustments(glAccountId, tenant, firstOfMonth);
 
             return openBalance - interestDeltas.AfterValueDate - interestDeltas.BeforeValueDateWithoutReport;
         }
 
-        private decimal? GetLedgerOpenBalance(string glAccountId, int tenant, DateTime beforeDate, bool isForeignCurrency)
+        private decimal? GetLedgerOpenBalance(string glAccountId, int tenant, DateTime beforeDate)
         {
             var relevantGLAccountIds =new List<string>();
-          
-             relevantGLAccountIds = (from c in context.GLAccountCurrencies
-                                        join gl in context.GLAccounts on c.GLAccountId equals gl.Id
-                                        where c.Tenant == tenant
-                                              && c.MainGLAccountId == glAccountId
-                                              && gl.ActiveForInterest
-                                        select c.GLAccountId).ToList();
+            relevantGLAccountIds = context.GLAccountCurrencies
+                     .Where(c => c.Tenant == tenant && c.MainGLAccountId == glAccountId)
+                     .Select(c => c.GLAccountId)
+                     .ToList();
 
             relevantGLAccountIds.Add(glAccountId);
 
             return context.LedgerTransactions
                         .Where(x => relevantGLAccountIds.Contains(x.AccountId) &&
                                                                    x.AccountingDate < beforeDate && x.Tenant == tenant)
-                         .Sum(x => (decimal?)((isForeignCurrency ? x.ForeignAmountDebit : x.LocalAmountDebit) - (isForeignCurrency ? x.ForeignAmountCredit : x.LocalAmountCredit))) ?? decimal.Zero;
+                         .Sum(x => (decimal?)(x.LocalAmountDebit - x.LocalAmountCredit)) ?? decimal.Zero;
         }
 
-        private (decimal? AfterValueDate, decimal? BeforeValueDateWithoutReport) GetInterestAdjustments(string glAccountId, int tenant, DateTime beforeDate,bool IsForeignCurrency)
+        private (decimal? AfterValueDate, decimal? BeforeValueDateWithoutReport) GetInterestAdjustments(string glAccountId, int tenant, DateTime beforeDate)
         {
             var relevantGLAccountIds = new List<string>();
-            relevantGLAccountIds = (from c in context.GLAccountCurrencies
-                                    join gl in context.GLAccounts on c.GLAccountId equals gl.Id
-                                    where c.Tenant == tenant
-                                          && c.MainGLAccountId == glAccountId
-                                          && gl.ActiveForInterest
-                                    select c.GLAccountId).ToList();
+            relevantGLAccountIds = context.GLAccountCurrencies
+                                       .Where(c => c.Tenant == tenant && c.MainGLAccountId == glAccountId)
+                                       .Select(c => c.GLAccountId)
+                                       .ToList();
 
             relevantGLAccountIds.Add(glAccountId);
             bool hasInvalidRecords = context.InterestTransactions
@@ -153,8 +148,8 @@ namespace Logitude.Accounting.Data.Repositories
                             x.it.Tenant == tenant && x.it.InterestEntityTypeCode != InterestEntities.OpenBalance)
                 .Select(x => new
                 {
-                    InterestAfter = (x.it.InterestValueDate >= beforeDate) ? (IsForeignCurrency ? x.it.ForeignAmount : x.it.LocalAmount) : 0,
-                    InterestBeforeUnreported = (x.it.InterestValueDate < beforeDate && x.it.InterestReportId == null) ? (IsForeignCurrency ? x.it.ForeignAmount : x.it.LocalAmount) : 0
+                    InterestAfter = (x.it.InterestValueDate >= beforeDate) ? x.it.LocalAmount : 0,
+                    InterestBeforeUnreported = (x.it.InterestValueDate < beforeDate && x.it.InterestReportId == null) ? x.it.LocalAmount : 0
                 });
             var AfterValueDate = query.Sum(x => (decimal?)x.InterestAfter) ?? 0;
             var BeforeValueDateWithoutReport = query.Sum(x => (decimal?)x.InterestBeforeUnreported) ?? 0;
@@ -178,7 +173,6 @@ namespace Logitude.Accounting.Data.Repositories
                                                      where a.Tenant == tenant && a.GLAccountId == glaccountId
                            && ((a.InterestCalculationDate >= ga.InterestCalculationStartDate) || ga.InterestCalculationStartDate == null)
                            && (a.InterestReportStatusCode == InterestReportStatusCodes.Invoiced
-                           || a.InterestReportStatusCode == InterestReportStatusCodes.InvoicePrintingFailed
                            || a.InterestReportStatusCode == InterestReportStatusCodes.ClosedWithoutInvoice)
                                                      orderby a.InterestCalculationDate descending
                                                      select new CloseBalanceInterestReportData()

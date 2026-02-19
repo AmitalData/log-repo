@@ -26,7 +26,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class TaxDeductionReportUpdateClass
    {  		
-		public const string HashString = "d197c891dee0a14e8ca94cfa1d370420";
+		public const string HashString = "529d725e6ef5ae1a395f233f52bcf77c";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -1690,9 +1690,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode TaxDeductionReportTextCode_TaxDeductionReportOTotalDeductionsWODividend = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxDeductionReport.O.TotalDeductionsWODividend", DefaultText = "Total Deductions without Dividend",LocalDefaultText = @"BS64:Iteh15QnJ9ebINeg15nXm9eV15nXmdedINec15zXkCDXk9eZ15HXmdeT16DXkyI=", ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode TaxDeductionReportTextCode_TaxDeductionReportOReportGenerationMessage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxDeductionReport.O.ReportGenerationMessage", DefaultText = "The report is being generated",LocalDefaultText = @"הדוח עבר להפקה", ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode TaxDeductionReportTextCode_TaxDeductionReportOReportGenerationMessage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxDeductionReport.O.ReportGenerationMessage", DefaultText = "The report is being generated",LocalDefaultText = @"הדוח עבר להפקה", ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode TaxDeductionReportTextCode_TaxDeductionReportOInProgress = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxDeductionReport.O.InProgress", DefaultText = "In Progress",LocalDefaultText = @"בתהליך", ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode TaxDeductionReportTextCode_TaxDeductionReportOInProgress = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxDeductionReport.O.InProgress", DefaultText = "In Progress",LocalDefaultText = @"בתהליך", ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

@@ -391,8 +391,6 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
     PartnersPopupTop: string;
     PartnersPopupLeft: string;
     _KeyDownSubscribe: any;
-    _PasteSubscribe : any;
-
     @Output() KeyDownEvent: EventEmitter<any> = new EventEmitter();
     @Input() ColumnsWidths: ColumnsWidths[] = [];
     @Input() ForceShowLanguageFilterOnSearchWindow: boolean = false;
@@ -450,20 +448,40 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                 fromEvent(input, 'keydown').pipe(
                     debounceTime(debounceTimeVal))
                     .subscribe(keyboardEvent => {
-                    
-                        this.HandleSearchTextChanged(keyboardEvent);
+                        var TABKEY = 9;
+                        var ENTERKEY = 13;
+                        var DOWNKEY = 40;
+                        var UPKEY = 38;
+                        var ESC = 27;
+                        var END = 35;
+                        var HOME = 36;
+                        var CTRL = 17;
+                        var BACKSPACE = 8;
 
-                    });
-            this._PasteSubscribe =
-                   fromEvent(input, 'input')
-                       .subscribe((keyboardEvent) => {
-                        const inputEvent = keyboardEvent as InputEvent;
-                        if(inputEvent.inputType === "insertFromPaste")
-                            this.HandleSearchTextChanged(keyboardEvent);   
-                        else
+                        var which = logLoveReturnWhich(keyboardEvent);
+
+                        if (which == TABKEY || which == ENTERKEY || which == DOWNKEY || which == UPKEY
+                            || which == ESC || which == END || which == HOME || which == 220 || which == CTRL || this.IsCTRLDown) {
                             return;
-                       });
-                
+                        }
+
+
+
+
+                        if (this.SearchTextNgModel != undefined) {
+
+                            this.OldSearchInput = this.SearchTextNgModel;
+                            this.IsDropDownVisible = true;
+                            this.IsOpen = true;
+
+                            this.Populate(this.SearchTextNgModel);
+                            this.searchTextChanged = true;
+                        }
+                        if (!this.SearchTextNgModel) {
+                            this.OnDeleteValue();
+                        }
+                    });
+
             if (this.FocusOnMe) {
                 var element = document.getElementById(this.ElementId);
                 element.focus();
@@ -474,35 +492,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
             }
         }
     }
-    private HandleSearchTextChanged(keyboardEvent?: any) {
-        var TABKEY = 9;
-        var ENTERKEY = 13;
-        var DOWNKEY = 40;
-        var UPKEY = 38;
-        var ESC = 27;
-        var END = 35;
-        var HOME = 36;
-        var CTRL = 17;
-       
 
-        var which = logLoveReturnWhich(keyboardEvent);
-
-        if (which == TABKEY || which == ENTERKEY || which == DOWNKEY || which == UPKEY
-            || which == ESC || which == END || which == HOME || which == 220 || which == CTRL || this.IsCTRLDown) {
-            return;
-        }
-        if (this.SearchTextNgModel !== undefined) {
-            this.OldSearchInput = this.SearchTextNgModel;
-            this.IsDropDownVisible = true;
-            this.IsOpen = true;
-            this.Populate(this.SearchTextNgModel);
-            this.searchTextChanged = true;
-        }
-    
-        if (!this.SearchTextNgModel) {
-            this.OnDeleteValue();
-        }
-    }    
     ngOnInit() {
         this.LookUpTable = window.ObjectTables.filter(d => d.Name === this.LookUpTableName)[0];
         this._entityResourceService.getEntityResourceByTableName(this.LookUpTableName, 0).subscribe((res: any) => {
@@ -583,9 +573,6 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
 
         if (this._KeyDownSubscribe) {
             this._KeyDownSubscribe.unsubscribe();
-        }
-        if (this._PasteSubscribe) {
-            this._PasteSubscribe.unsubscribe();
         }
         if (this.PropertyChangedSubscribtion != null && this.PropertyChangedSubscribtion != undefined) {
             this.PropertyChangedSubscribtion.unsubscribe();
@@ -1556,7 +1543,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         const ESC = 27;
         const CTRL = 17;
         const SHIFT = 16;
-       
+
         if ($event.keyCode === CTRL) {
             this.IsCTRLDown = true;
         }
@@ -3501,7 +3488,6 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                     //turn loading flag off
                     this.isLoading = false;
                 }
-                if (this.CD) this.CD.detectChanges();
             })
         });
     }
@@ -3568,8 +3554,8 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
     }
 
     OnSearchInputKeyUP($event) {
-       var CTRL = 17;
-       if ($event.keyCode == CTRL) {
+        var CTRL = 17;
+        if ($event.keyCode == CTRL) {
             this.IsCTRLDown = false;
         }
     }

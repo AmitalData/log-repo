@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Script DBType="Global" Module="Customs">
-	<Sql Version="8">
+	<Sql Version="4">
 		<![CDATA[
 		/* ---------- Cloud Tenant ---------- */
     IF NOT EXISTS (
@@ -48,21 +48,6 @@
                 'SII Application Name', 'SII Application Name',
                 'System.String', 'System.String');
     END
-	/* ---------- SII Application Name Not By Amital ---------- */
-    IF NOT EXISTS (
-        SELECT 1
-        FROM   DefaultAndConfigurationKeys
-        WHERE  Tenant = 0
-          AND  SetKey = 'SIIApplicationNameNotByAmital'
-    )
-    BEGIN
-        INSERT INTO DefaultAndConfigurationKeys
-              (Tenant, CreateDate, SetKey, ShortDescription,
-               FullDesctiption, SetType1, SetType2)
-        VALUES (0, GETDATE(), 'SIIApplicationNameNotByAmital',
-                'SII Application Name Not By Amital', 'SII Application Name Not By Amital',
-                'System.String', 'System.String');
-    END
 	/* ---------- Download Document URL ---------- */
     IF NOT EXISTS (
         SELECT 1
@@ -78,57 +63,9 @@
                 'Download Document URL', 'Download Document URL',
                 'System.String', 'System.String');
     END
-
-	/* ---------- SII Status Queue Connection String ---------- */
-    IF NOT EXISTS (
-        SELECT 1
-        FROM   DefaultAndConfigurationKeys
-        WHERE  Tenant = 0
-          AND  SetKey = 'SIIStatusQueueConn'
-    )
-    BEGIN
-        INSERT INTO DefaultAndConfigurationKeys
-              (Tenant, CreateDate, SetKey, ShortDescription,
-               FullDesctiption, SetType1, SetType2)
-        VALUES (0, GETDATE(), 'SIIStatusQueueConn',
-                'SII Status Queue Connection String', 'SII Status Queue Connection String',
-                'System.String', 'System.String');
-    END
-
-	/* ---------- SII Status Queue Prefix ---------- */
-    IF NOT EXISTS (
-        SELECT 1
-        FROM   DefaultAndConfigurationKeys
-        WHERE  Tenant = 0
-          AND  SetKey = 'SIIStatusQueuePrefix'
-    )
-    BEGIN
-        INSERT INTO DefaultAndConfigurationKeys
-              (Tenant, CreateDate, SetKey, ShortDescription,
-               FullDesctiption, SetType1, SetType2)
-        VALUES (0, GETDATE(), 'SIIStatusQueuePrefix',
-                'SII Status Queue Prefix', 'SII Status Queue Prefix',
-                'System.String', 'System.String');
-    END
-
-    /* ---------- SII Applicant System Id ---------- */
-    IF NOT EXISTS (
-        SELECT 1
-        FROM   DefaultAndConfigurationKeys
-        WHERE  Tenant = 0
-          AND  SetKey = 'SIIApplicantSystemId'
-    )
-    BEGIN
-        INSERT INTO DefaultAndConfigurationKeys
-              (Tenant, CreateDate, SetKey, ShortDescription,
-               FullDesctiption, SetType1, SetType2)
-        VALUES (0, GETDATE(), 'SIIApplicantSystemId',
-                'SII Applicant System Id', 'SII Applicant System Id',
-                'System.String', 'System.String');
-    END
     ]]>
 	</Sql>
-	<Oracle Version="8">
+	<Oracle Version="3">
 		<![CDATA[
    MERGE INTO DefaultAndConfigurationKeys d
 USING (SELECT 0               AS Tenant,
@@ -178,7 +115,6 @@ WHEN NOT MATCHED THEN
       VALUES (src.Tenant, SYSDATE, src.SetKey,
               src.ShortDescription, src.FullDesctiption,
               src.SetType1, src.SetType2);
-
 			  /* ---------- Download Document URL ---------- */
     MERGE INTO DefaultAndConfigurationKeys d
     USING (SELECT 0               AS Tenant,
@@ -195,74 +131,6 @@ WHEN NOT MATCHED THEN
       VALUES (src.Tenant, SYSDATE, src.SetKey,
               src.ShortDescription, src.FullDesctiption,
               src.SetType1, src.SetType2);
-
-	  /* ---------- SII Status Queue Connection String ---------- */
-    MERGE INTO DefaultAndConfigurationKeys d
-    USING (SELECT 0                            AS Tenant,
-                  'SIIStatusQueueConn'         AS SetKey,
-                  'SII Status Queue Connection String' AS ShortDescription,
-                  'SII Status Queue Connection String' AS FullDesctiption,
-                  'System.String'              AS SetType1,
-                  'System.String'              AS SetType2
-           FROM dual) src
-    ON (d.Tenant = src.Tenant AND d.SetKey = src.SetKey)
-    WHEN NOT MATCHED THEN
-      INSERT (Tenant, CreateDate, SetKey, ShortDescription,
-              FullDesctiption, SetType1, SetType2)
-      VALUES (src.Tenant, SYSDATE, src.SetKey,
-              src.ShortDescription, src.FullDesctiption,
-              src.SetType1, src.SetType2);
-
-	  /* ---------- SII Status Queue Prefix ---------- */
-    MERGE INTO DefaultAndConfigurationKeys d
-    USING (SELECT 0                        AS Tenant,
-                  'SIIStatusQueuePrefix'   AS SetKey,
-                  'SII Status Queue Prefix' AS ShortDescription,
-                  'SII Status Queue Prefix' AS FullDesctiption,
-                  'System.String'          AS SetType1,
-                  'System.String'          AS SetType2
-           FROM dual) src
-    ON (d.Tenant = src.Tenant AND d.SetKey = src.SetKey)
-    WHEN NOT MATCHED THEN
-      INSERT (Tenant, CreateDate, SetKey, ShortDescription,
-              FullDesctiption, SetType1, SetType2)
-      VALUES (src.Tenant, SYSDATE, src.SetKey,
-              src.ShortDescription, src.FullDesctiption,
-              src.SetType1, src.SetType2);
-
-    /* ---------- SII Applicant System Id ---------- */
-    MERGE INTO DefaultAndConfigurationKeys d
-    USING (SELECT 0                        AS Tenant,
-                  'SIIApplicantSystemId'   AS SetKey,
-                  'SII Applicant System Id' AS ShortDescription,
-                  'SII Applicant System Id' AS FullDesctiption,
-                  'System.String'          AS SetType1,
-                  'System.String'          AS SetType2
-           FROM dual) src
-    ON (d.Tenant = src.Tenant AND d.SetKey = src.SetKey)
-    WHEN NOT MATCHED THEN
-      INSERT (Tenant, CreateDate, SetKey, ShortDescription,
-              FullDesctiption, SetType1, SetType2)
-      VALUES (src.Tenant, SYSDATE, src.SetKey,
-              src.ShortDescription, src.FullDesctiption,
-              src.SetType1, src.SetType2);
-			  /* ---------- SII Application Name Not By Amital ---------- */
-MERGE INTO DefaultAndConfigurationKeys d
-USING (SELECT 0                               AS Tenant,
-              'SIIApplicationNameNotByAmital' AS SetKey,
-              'SII Application Name Not By Amital' AS ShortDescription,
-              'SII Application Name Not By Amital' AS FullDesctiption,
-              'System.String'                 AS SetType1,
-              'System.String'                 AS SetType2
-       FROM dual) src
-ON (d.Tenant = src.Tenant AND d.SetKey = src.SetKey)
-WHEN NOT MATCHED THEN
-  INSERT (Tenant, CreateDate, SetKey, ShortDescription,
-          FullDesctiption, SetType1, SetType2)
-  VALUES (src.Tenant, SYSDATE, src.SetKey,
-          src.ShortDescription, src.FullDesctiption,
-          src.SetType1, src.SetType2);
-
     ]]>
 	</Oracle>
 

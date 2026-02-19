@@ -154,7 +154,6 @@ export class ListComponent implements OnInit, AfterViewInit {
     $fastSearchEnable: BehaviorSubject<boolean> = null;
     fastSearchAllow: boolean = false;
     intialAdditionalFilters: string[] = [];
-    searchRun = false;
 
     onOpenFilterAreaClick() {
         this.IsAdvancedSearchOpened = true;
@@ -204,12 +203,7 @@ export class ListComponent implements OnInit, AfterViewInit {
         
         if (this.fastSearchService.$fastSearchEnable.value) {
             try {
-                if (this.searchFields?.length < this.fastSearchService.Settings.minimumSearchQueryLength) return;
-
-                this.searchRun = true;
-                this.CD.detectChanges();
                 this.searchDropdownOptions = await this.fastSearchService.search(this.CurrentQueryFilters, this.searchFields)
-                this.searchRun = false;
                 if (this.searchDropdownOptions) {
                     this.CD.detectChanges();
                     return;
@@ -217,8 +211,6 @@ export class ListComponent implements OnInit, AfterViewInit {
             } catch (error) {
                 if(error instanceof HttpErrorResponse && error.error.ErrorType === "FieldsNotExistsInIndexException")
                     this.fastSearchCheckbox(false);
-            } finally {
-                this.searchRun = false;
             }
         }
             
@@ -251,7 +243,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     }
 
     async showRecentSearches() {
-        if (!this.fastSearchService.$fastSearchEnable.value || this.searchFields?.length >= this.fastSearchService.Settings.minimumSearchQueryLength) return;
+        if (!this.fastSearchService.$fastSearchEnable.value || this.searchFields?.length > 0) return;
 
         this.searchDropdownOptions = await this.fastSearchService.getRecentSearches();
         this.CD.detectChanges();    
@@ -1245,7 +1237,7 @@ export class ListComponent implements OnInit, AfterViewInit {
             return false;
         if (FeatureLocator.IsFeatureGrantedByUniqeCode("General.Customization.DeploymentPackage"))
             return false;
-        if ((SessionLocator.LoggedUserPM.IsCustomerCare || SessionLocator.LoggedUserPM.IsDistributor || ObjectsLocator.GlobalSetting?.DeploymentStage == "Dev"))
+        if ((SessionLocator.LoggedUserPM.IsCustomerCare || SessionLocator.LoggedUserPM.IsDistributor || ObjectsLocator.GlobalSetting.DeploymentStage == "Dev"))
             return true;
         return false;
     }
@@ -1309,7 +1301,7 @@ export class ListComponent implements OnInit, AfterViewInit {
         }
 
         this.CheckIfQueriesConatinDefaultPerspectiveQuery();
-        let forceExistQuery = (ObjectsLocator.GlobalSetting?.WorkEnvironment == "customs");
+        let forceExistQuery = (ObjectsLocator.GlobalSetting.WorkEnvironment == "customs");
 
         if (/*forceExistQuery &&*/  this.SelectedQuery != null) {
             let existSelectedQuery: boolean = false;
@@ -1442,7 +1434,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     ClearMySearch: boolean = false;
     QueryValueChanged(Args) {
         this.AdvanceFilters = new ApiQueryFilters();
-        if (ObjectsLocator.GlobalSetting?.WorkEnvironment != "customs") {
+        if (ObjectsLocator.GlobalSetting.WorkEnvironment != "customs") {
             if (Args.IgnoreSearchFields != true) {
                 this.searchFields = "";
             }
@@ -2107,8 +2099,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                             }
 
                             case "DefaultAndConfiguration": {
-                                logWindow.Height = 275;
-                                logWindow.Width = 870;
+                                logWindow.Height = 400;
                                 break;
                             }
 
@@ -3567,14 +3558,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                         logWindow.Height = 200;
                         break;
                     }
-                case "MasavInterface":
 
-                    {
-
-                        logWindow.Width = 400;
-                        logWindow.Height = 300;
-                        break;
-                    }
                 case "TaxDeductionReport":
 
                     {
@@ -3612,12 +3596,8 @@ export class ListComponent implements OnInit, AfterViewInit {
                         logWindow.Height = 200;
                         break;
                     }
-                case "DefaultAndConfiguration": 
-                    {
-                        logWindow.Height = 275;
-                        logWindow.Width = 870;
-                        break;
-                    }
+
+
             }
 
             var useLocal = !SessionLocator.LoggedUserPM.DontShowLocal;
@@ -4308,7 +4288,7 @@ export class ListComponent implements OnInit, AfterViewInit {
 
     IsUseCardSearchMechanism() {
         var result: boolean = false;
-        if (this.ObjectTableName == "Customer" && ObjectsLocator.GlobalSetting?.WorkEnvironment != "customs") {
+        if (this.ObjectTableName == "Customer" && ObjectsLocator.GlobalSetting.WorkEnvironment != "customs") {
             result = true;
         }
         return result;

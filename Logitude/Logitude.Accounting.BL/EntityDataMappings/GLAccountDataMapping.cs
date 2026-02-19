@@ -438,7 +438,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 var poco = myGLAccountMoreDataRepository.GetSingle(entityPOCO.Id, entityPOCO.Tenant);
                 if (poco != null)
                 {
-                    entityPM.NextDueDate = (entityPOCO.AccountTypeCode == "2" || entityPOCO.AccountTypeCode == "3") ? poco.NextDueDate : null ;
+                    entityPM.NextDueDate = poco.NextDueDate;
                     entityPM.LocalBalanceInDue = poco.LocalBalanceInDue;
                     entityPM.BalanceInLocalCurrency = poco.BalanceInLocalCurrency;
                     entityPM.BalanceInForeignCurrency = poco.BalanceInForeignCurrency;
@@ -608,15 +608,14 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             {
 			  entityPM.CustomerDebtNotification = GetCustomerDebtNotificationByAccountId(entityPM);
             }
-
         }
-
         private CustomerDebtNotificationPM GetCustomerDebtNotificationByAccountId(GLAccountPM accountPM)
         {
 			IAccountingContext MyContext = AccountingContext.GetContext(accountPM.Tenant);
 			CustomerDebtNotificationQueryService customerDebtNotificationQueryServiceQuery = new CustomerDebtNotificationQueryService(MyContext);
 			return customerDebtNotificationQueryServiceQuery.GetCustomerDebtNotificationByAccountId(accountPM.Tenant, accountPM.Id);
 		}
+
 		private static void ResetAccountBalances(GLAccountPM account)
         {
             account.BalanceInForeignCurrency = 0;

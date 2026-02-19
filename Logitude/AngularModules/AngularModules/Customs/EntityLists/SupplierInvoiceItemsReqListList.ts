@@ -26,7 +26,6 @@ export class SupplierInvoiceItemsReqListList {
 	InvoiceQuantityType: string;
 	StatisticQuantity: number;
 	StatisticQuantityType: string;
-	StatusCode: string;
 	
 }
  
