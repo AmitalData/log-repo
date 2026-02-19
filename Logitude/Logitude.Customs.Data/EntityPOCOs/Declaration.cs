@@ -498,6 +498,7 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string ShipmentId { get; set; }
 	      
         public virtual Shipment Shipment { get; set; }
+     
     }
 }
 	 

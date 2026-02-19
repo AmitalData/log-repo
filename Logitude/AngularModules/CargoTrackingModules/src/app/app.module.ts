@@ -1,6 +1,6 @@
 import { CargoTrackingSearchService } from '../CargoTracking/Services/Others/CargoTrackingSearchService';
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule  } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CargoTrackingBrandingDataExtendedService } from '../CargoTracking/Services/Others/CargoTrackingBrandingDataExtendedService';// '../../../../../Services/Others/CargoTrackingDataExtendedService';
 import { AppRoutingModule } from './app-routing.module';
@@ -57,9 +57,7 @@ import { LogitudeGridExportToExcelService } from 'src/CargoTracking/Services/Oth
 import { SafePipe } from 'src/Infrastructure/Pipes/SafePipe';
 import { StopLoopPipe } from 'src/Infrastructure/Pipes/StopLoopPipe';
 import { TenantManagementService } from 'src/CargoTracking/Services/Others/TenantManagementService';
-import { UserExtendedService } from 'src/CargoTracking/Services/Others/UserExtendedService';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { CookieconsentComponent } from 'src/CargoTracking/Components/cookieconsent/cookieconsent.component';
 
 export function getBaseUrl() {
     return document.getElementsByTagName('base')[0].href;
@@ -96,8 +94,7 @@ export function getBaseUrl() {
         CustomLabelComponent,
         LabelUtilContentDirective,
         LabelUtilElementDirective,
-        CookieconsentComponent,
-        
+
         //Erros
         Error401Component
 
@@ -144,7 +141,6 @@ export function getBaseUrl() {
         LogboxShipmentExportExcelService,
         LogitudeGridExportToExcelService,
         TenantManagementService,
-        UserExtendedService,
         { provide: 'BASE_URL', useFactory: getBaseUrl, deps: [] },
         { provide: MAT_DIALOG_DATA, useValue: {} },
         { provide: MatDialogRef, useValue: {} }
