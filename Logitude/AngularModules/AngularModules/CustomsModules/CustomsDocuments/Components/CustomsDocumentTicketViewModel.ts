@@ -1195,13 +1195,14 @@ export class CustomsDocumentTicketViewModel {
         var message: string = "";
         if (this.customsDocumentsTicketPM) {
             var entitySpecialCondition = this.iCustomsDocumentsController.GetAddEditDocumentsEntitySpecialCondition();
-            if ((this.isDisplayOnly || !entitySpecialCondition) && AppTool.IsNullOrEmpty(this.customsDocumentsTicketPM.RequestedCustomsDocId) && !this.DataContext.EntityPM.FromCancelDeclaration) {//(Regular doc in a paid declaration) or just disabled declaration
+            if ((this.isDisplayOnly || !entitySpecialCondition) && AppTool.IsNullOrEmpty(this.customsDocumentsTicketPM.RequestedCustomsDocId)) {//(Regular doc in a paid declaration) or just disabled declaration
                 applyDisconnect = false;
                 message = "ההצהרה לתצוגה בלבד - לא ניתן לנתק מסמכים";
             }
             if (this.isDisplayOnly && AppTool.IsNullOrEmpty(this.customsDocumentsTicketPM.RequestedCustomsDocId) && !AppTool.IsNullOrEmpty(this.customsDocumentsTicketPM.CustomsDocId)) {//(Regular doc that was already sent to customs)
                 applyDisconnect = false;
                 message = TextCodeTranslator.Translate("Customs.General.O.CannotDetachDocumentWithCustomsDocId")
+
             }
 
             if (!AppTool.IsNullOrEmpty(this.customsDocumentsTicketPM.RequestedCustomsDocId) && !AppTool.IsNullOrEmpty(this.customsDocumentsTicketPM.VerificationStatusTypeCode)) {//(Requested doc that was verified/denied/in verification process)
@@ -1410,7 +1411,8 @@ export class CustomsDocumentTicketViewModel {
     }
 
     OnAddEditWindowClosed(event) {
-        if (event != 'cancel' && this.isDisplayOnly && !this.customsDocumentsTicketPM.RequestedCustomsDocId && !this.DataContext.EntityPM.FromCancelDeclaration) {
+
+        if (event != 'cancel' && this.isDisplayOnly && !this.customsDocumentsTicketPM.RequestedCustomsDocId) {
             var messageWindow = new MessageWindow();
             messageWindow.Width = 400;
             messageWindow.Height = 200;

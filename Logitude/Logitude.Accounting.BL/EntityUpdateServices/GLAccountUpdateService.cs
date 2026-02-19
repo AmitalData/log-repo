@@ -76,9 +76,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 {
                     if (entityPM.ChartOfAccountsTypeCode == "3" || entityPM.ChartOfAccountsTypeCode == "4")
                     {
-                        var isChildMatazAccount = entityPM.IsMultiCurrency != true && !string.IsNullOrEmpty(entityPM.CurrencyCode) && entityPM.DisplayNumber?.Split('\\')?.Length > 1;
-                        if (fullAccountingSetting.NumberingByChartOfAccount 
-                            && !(FeatureToggleHelper.HasFeatureToggle("OCA", entityPM.Tenant) && isChildMatazAccount))
+                        if (fullAccountingSetting.NumberingByChartOfAccount)
                         {
                             SetDisplayNumber(entityPM);
                         }
@@ -90,7 +88,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 }
 
             }
-            if (!string.IsNullOrEmpty(entityPM.Id)) AddAcitivityLog(entityPM, "N");
+            AddAcitivityLog(entityPM, "N");
                        
             ContactPM loggedUser = GetLoggedContact(entityPM.Tenant);
             entityPM.CreatedByUserId = loggedUser?.Id;
@@ -842,12 +840,6 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             string vatNumbers = string.Join(",", cardLists.Where(card => !string.IsNullOrEmpty(card?.VatNumber)).Select(card => card.VatNumber));
 
             entityPM.SearchFields = entityPM.DisplayNumber + "," + entityPM.EnglishName + "," + entityPM.LocalName + "," + vatNumbers;
-            const int maxLength = 845;
-            if (!string.IsNullOrEmpty(entityPM.SearchFields) && entityPM.SearchFields.Length > maxLength)
-            {
-                entityPM.SearchFields = entityPM.SearchFields.Substring(0, maxLength);//We must limit the size of SearchFields because of the nonclustered index key size limit (1700 bytes).
-            }
-
         }
 
         private void FillForeignFields(GLAccountPM entityPM)

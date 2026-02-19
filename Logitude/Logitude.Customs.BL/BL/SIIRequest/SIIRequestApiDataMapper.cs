@@ -4,7 +4,7 @@ using Logitude.BL.Helpers;
 using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.Data;
 using Logitude.Customs.Data.DataContracts.SIIRequest;
-using Logitude.Customs.Data.DataContracts.SIIRequest;
+using Logitude.Customs.Data.EntityKeys;
 using Logitude.Customs.Data.EntityKeys.Extended;
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.Repsitories;
@@ -17,6 +17,7 @@ using Simplog.Data.InfrastructureModel.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.IO;
 using System.Linq;
 using System.Web;
 
@@ -62,15 +63,12 @@ namespace Logitude.Customs.BL.BL.SIIRequest
 
         public ReleaseRequestApiDto Build(CredentialsDto credentials,
             string siiRequestId,
-            SiiSendRequestBodyDto body)
+            List<SiiSelectedRowDto> requestItemsKeys)
         {
             try
             {
-                var requestItemsKeys = body?.SelectedRows;
                 if (requestItemsKeys == null || requestItemsKeys.Count == 0)
                     throw new ArgumentException("No items selected", nameof(requestItemsKeys));
-
-                var processType = (body == null || body.ProcessType == 0)? SiiProcessType.Amital: body.ProcessType;
 
                 var context = CustomContext.GetContext(_tenant);
                 var siiService = new SIIRequestQueryService(context);
@@ -156,7 +154,7 @@ namespace Logitude.Customs.BL.BL.SIIRequest
                     }
                 }
 
-                var form = BuildForm(sii, dec, importer, contact, defService, siiService, processType);
+                var form = BuildForm(sii, dec, importer, contact, defService, siiService);
                 form.formAttachmentIndex = mainFormAttachmentIndexes.Count > 0
                     ? mainFormAttachmentIndexes[0]
                     : -1;
@@ -226,7 +224,6 @@ namespace Logitude.Customs.BL.BL.SIIRequest
                 partnerCode = computingPartnerTranslationQuery.GetPartnerCodeTranslation(logitudeCode, partner.Id, objectTable.Id, tenant);
             }
 
-
             return partnerCode;
         }
         private ReleaseRequestFormDto BuildForm(
@@ -235,39 +232,18 @@ namespace Logitude.Customs.BL.BL.SIIRequest
             UserPM importer,
             Contact contact,
             DefaultValueQueryService defService,
-            SIIRequestQueryService siiService,
-            SiiProcessType processType)
+            SIIRequestQueryService siiService)
         {
             var agentName = defService.GetDefault("ISRAEL", "GGG_COMP_NAM_L", "NON", "NON", _tenant);
-
-            string GetDefaultOrNull(string key) => DefaultService.Instance.Get(_tenant, key, key)?.Value1;
-
-            string ResolveCompanyPrefix()
-            {
-                if (processType == SiiProcessType.NotAmital)
-                {
-                    var v = GetDefaultOrNull("SIIApplicationNameNotByAmital");
-                    return string.IsNullOrWhiteSpace(v) ? "STD" : v.Trim();
-                }
-
-                var amital = GetDefaultOrNull("SIIApplicationName");
-                if (string.IsNullOrWhiteSpace(amital))
-                    throw new InvalidOperationException("Default 'SIIApplicationName' is missing.");
-                return amital.Trim();
-            }
-
-            var applicantSystemId = ToLong(GetMandatoryDefault(_tenant, "SIIApplicantSystemId"), "SIIApplicantSystemId");
-
-            var prefix = ResolveCompanyPrefix();
+            string GetSiiCompanyName() => DefaultService.Instance.Get(_tenant, "SIIApplicationName", "SIIApplicationName")?.Value1
+                ?? throw new InvalidOperationException("Default 'SIIApplicationName' is missing.");
 
             var formApplicationId = !string.IsNullOrWhiteSpace(sii.FromApplicationId)
                 ? sii.FromApplicationId
-                : $"{prefix}-{siiService.GetSIIFormApplicationMaxNumber(_tenant) + 1}";
-
+                : $"{GetSiiCompanyName()}-{siiService.GetSIIFormApplicationMaxNumber(_tenant) + 1}";
 
             var contactName = contact?.LocalName;
 
-            var destPortStr = GetComputingPartnerCodeTranslation(sii.UnloadPortCode,SIIRequestComputingPartner,ComputingPartnerTableUnloadingSiteType,_tenant);
             return new ReleaseRequestFormDto
             {
                 formApplicationId = formApplicationId,
@@ -288,7 +264,6 @@ namespace Logitude.Customs.BL.BL.SIIRequest
                 importerFax = SanitizePhone(sii.ContactFax),
 
                 applicantFullName = contactName,
-                applicantSystemId = applicantSystemId,
                 applicantIdNumber = contact == null
                     ? null
                     : new UserQuery(_tenant).GetPersonalIdByUserId(contact.Id, _tenant),
@@ -310,8 +285,16 @@ namespace Logitude.Customs.BL.BL.SIIRequest
 
                 warehouseLocationName = sii.WareHouseAddress,
                 warehouseSettlement = string.IsNullOrEmpty(sii.WareHouseCity)? null: new IdDto { id = ToInt(sii.WareHouseCity, "WareHouseCity") },
-                destinationPort = string.IsNullOrWhiteSpace(destPortStr)? null: new IdDto { id = ToInt(destPortStr, "destinationPort") },
-                DestinationPortLogitudeCode = sii.UnloadPortCode,
+                destinationPort = new IdDto
+                {
+                    id = ToInt(
+                        GetComputingPartnerCodeTranslation(
+                            sii.UnloadPortCode,
+                            SIIRequestComputingPartner,
+                            ComputingPartnerTableUnloadingSiteType,
+                            _tenant),
+                        "destinationPort")
+                }
 
             };
         }
@@ -320,7 +303,7 @@ namespace Logitude.Customs.BL.BL.SIIRequest
             SiiSelectedRowDto key,
             SupplierInvoiceItemsReqListQueryService service)
         {
-            var item = service.GetRequestLine(
+            var item = service.GetRequest(
                 key.SIIRequestID,
                 key.DeclarationId,
                 key.InvoiceCounterKey,
@@ -335,10 +318,6 @@ namespace Logitude.Customs.BL.BL.SIIRequest
                     $"{lineLbl} {key.UiIndex} - {dataMsg}");
             }
 
-            if (item.ClassificationCode.Length == 11) 
-            {
-                item.ClassificationCode = item.ClassificationCode.Insert(10, "/");
-            }
             var line = new ReleaseRequestLineDto
             {
                 lineSerialNumber = ++_lineCounter,
@@ -372,9 +351,7 @@ namespace Logitude.Customs.BL.BL.SIIRequest
                                           .Replace(item.VendorName, "")
                                           .Trim().Length)),
                 formAttachmentIndexes = new List<int>(),
-                UiLineNumber = key.UiIndex,
-                InvoiceCounterKey = key.InvoiceCounterKey,
-                InvoiceItemLineNumber = key.InvoiceItemLineNumber,
+               UiLineNumber = key.UiIndex
             };
 
             if (string.IsNullOrWhiteSpace(item.ProductFileNumber))
@@ -419,7 +396,6 @@ namespace Logitude.Customs.BL.BL.SIIRequest
 
             return ext.ToLowerInvariant();
         }
-
 
     }
 }

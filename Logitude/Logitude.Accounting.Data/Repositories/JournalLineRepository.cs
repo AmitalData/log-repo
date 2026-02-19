@@ -39,13 +39,19 @@ namespace Logitude.Accounting.Data.Repositories
         }
         public List<JournalLine> GetJournalLineByLedgerTransactionIdList(List<String> idList, int tenant)
         {
+            // Fetch LedgerTransactions that match the provided idList
+            var qLedgerTransactions = context.LedgerTransactions
+                                             .Where(a => idList.Contains(a.Id) && a.Tenant == tenant)
+                                             .ToList();
 
-            var q = from j in context.JournalLines
-                    join l in context.LedgerTransactions
-                        on new { j.JournalId, Line = j.Line }
-                        equals new { l.JournalId, Line = l.JournalLineNumber }
-                    where idList.Contains(l.Id) && l.Tenant == tenant && j.Tenant == tenant
-                    select j;
+            // Fetch all JournalLines for the given tenant into memory
+            var allJournalLines = GetAll(tenant).ToList();
+
+            // Join JournalLines with filtered LedgerTransactions using LINQ to Objects
+            var q = (from j in allJournalLines
+                     join l in qLedgerTransactions
+                     on new { j.JournalId, j.Line } equals new { l.JournalId, Line = l.JournalLineNumber }
+                     select j);
 
             return q.ToList();
         }

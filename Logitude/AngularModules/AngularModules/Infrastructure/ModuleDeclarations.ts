@@ -220,7 +220,6 @@ import { GeneralLockListTemplate } from './Components/Templates/GeneralLockListT
 import { SearchListDDLDirective } from './Directives/SearchListDDL/SearchListDDLDirective';
 import { SearchListDDLComponent } from './Directives/SearchListDDL/SearchListDDLComponent';
 import { LandingPageComponent } from './Components/LandingPage/LandingPageComponent';
-import { HighlightAISearch } from './Pipes/HighlightAISearch';
 
  //import { ScrollingModule } from '@angular/cdk/scrolling';
 export const Directives = [
@@ -240,7 +239,6 @@ export const Pipes = [
     PaddingPipe,
     ReplacePipe,
     HighlightSearch,
-    HighlightAISearch,
     StringToColorPipe,
     DateTimeToTimePipe,
     AttatchmentIconPipe,

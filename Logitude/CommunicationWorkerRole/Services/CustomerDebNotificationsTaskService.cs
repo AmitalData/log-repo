@@ -47,7 +47,21 @@ namespace CommunicationWorkerRole.Services
     public class CustomerDebNotificationsTaskService
 	{
 
-      
+        int trackerCounter = 0;
+        string[,] trackerLogs = new string[,] //tracker(Step, DateTime)
+        {
+            {"Prepare report scheduler details", null},
+            {"Get report filters", null},
+            {"Build Report Data Provider and get stimul report", null},
+            {"Export pdf report", null},
+            {"Stored pdf report in Blob", null},
+            {"Send email to reciepents", null},
+            {"", null},
+            {"", null},
+            {"", null},
+
+        };
+
         TaskManagerBase currentTask;
 		ReportSchedulerTaskService reportSchedulerTaskService;
 
@@ -70,21 +84,20 @@ namespace CommunicationWorkerRole.Services
 					this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("Customer Debt Notification Task is not active or not found."));
 					return;
 				}
-				GLAccountRepository glAccountRepository = new GLAccountRepository(reportTask.Tenant);
-				if (!string.IsNullOrEmpty(customerDebtNotification.AccountId))
+                if (!string.IsNullOrEmpty(customerDebtNotification.AccountId))
                 {
-					var glaccount = glAccountRepository.GetSingle(customerDebtNotification.AccountId, reportTask.Tenant);	
-					SendReport(reportTask, customerDebtNotification, glaccount);
+                    SendReport(reportTask, customerDebtNotification, customerDebtNotification.AccountId);
                 }
                 else if (customerDebtNotification.InActive == IsActiveEnum.ActiveAllCustomers)
                 {
 					this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("status TasksScheduler Maintainence ActiveAllCustomers"));
 
+					GLAccountRepository glAccountRepository = new GLAccountRepository(reportTask.Tenant);
                     var GLAccountByTenantAndCustomerDebtNotification = glAccountRepository.GetGLAccountByTenantAndCustomerDebtNotification(reportTask.Tenant);
 
                     foreach (var account in GLAccountByTenantAndCustomerDebtNotification)
                     {
-                        SendReport(reportTask, customerDebtNotification, account);
+                        SendReport(reportTask, customerDebtNotification, account.Id);
                     }
                 }
                 else
@@ -105,10 +118,11 @@ namespace CommunicationWorkerRole.Services
             }
         }
 
-		private void SendReport(TasksSchedulerPM reportTask, CustomerDebtNotification customerDebtNotification,GLAccount glaccount)
+		private void SendReport(TasksSchedulerPM reportTask, CustomerDebtNotification customerDebtNotification,string accountId)
 		{
-			if (!CalculateDebts(customerDebtNotification, glaccount))
+			if (!CalculateDebts(customerDebtNotification, accountId))
 			{
+				this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("No Debt for GLAccountId: " + accountId + "task cancelled"));
 				return;
 			}
 			else
@@ -118,21 +132,22 @@ namespace CommunicationWorkerRole.Services
 				SchedulerDetails schedulerDetails = this.reportSchedulerTaskService.GetSchedulerDetails(reportTask);
 				if (string.IsNullOrEmpty(schedulerDetails.ReportDetails.Recepients.To))
 				{
-					schedulerDetails.ReportDetails.Recepients.To = GetAllContatByGLAccountId(reportTask.Tenant, glaccount.Id);
+					schedulerDetails.ReportDetails.Recepients.To = GetAllContatByGLAccountId(reportTask.Tenant, accountId);
                     if (string.IsNullOrEmpty(schedulerDetails.ReportDetails.Recepients.To))
                     {
-                        this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine($"No recipients found for GLAccount: {glaccount.EnglishName} ({glaccount.DisplayNumber}). Task cancelled."));
+                        this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("No recepients found for GLAccountId: " + accountId + ". Task cancelled."));
                         return;
                     }
 				}
-				this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine($"Preparing report scheduler details for GLAccount: {glaccount.EnglishName} ({glaccount.DisplayNumber})"));
-				
+				this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("Preparing report scheduler details" + accountId));
+				this.trackerLogs[trackerCounter, 1] = DateTime.Now.ToString();
+				this.trackerCounter += 1;
 
 
 				schedulerDetails.ReportDetails.ReportFilterItems.ForEach(filterItem => {
 					if (filterItem.FieldName == "GLAccountId")
 					{
-						filterItem.FieldValue = glaccount.Id;
+						filterItem.FieldValue = accountId;
 					}
 				});
 				reportTask.CreatedBy = schedulerDetails.ReportDetails.CreatedByUserId;
@@ -148,13 +163,12 @@ namespace CommunicationWorkerRole.Services
 				}
 			}
 		}
-		private bool CalculateDebts(CustomerDebtNotification customerDebtNotification, GLAccount glaccount)
+		private bool CalculateDebts(CustomerDebtNotification customerDebtNotification,string accountId)
 		{
 			GLAccountMoreDataRepository glaccountMoreDataRepository = new GLAccountMoreDataRepository(customerDebtNotification.Tenant);
-            GLAccountMoreData glAccountMoreData = glaccountMoreDataRepository.GetSingle(glaccount.Id, customerDebtNotification.Tenant);
+            GLAccountMoreData glAccountMoreData = glaccountMoreDataRepository.GetSingle(accountId, customerDebtNotification.Tenant);
             bool isDebt = false;
-			var reason = string.Empty;
-			switch (customerDebtNotification.TypesDebts)
+            switch (customerDebtNotification.TypesDebts)
             {
 				case TypesDebtsEnum.Obligato:
                     decimal obligoAmount = (glAccountMoreData.TotFutureOpenChequesInLocalCur ?? 0m) + glAccountMoreData.BalanceInLocalCurrency;
@@ -162,28 +176,19 @@ namespace CommunicationWorkerRole.Services
 					if (customerDebtNotification.DebtLevel == DebtLevelEnum.TotalAmount)
                     {
 						isDebt = obligoAmount > customerDebtNotification.DebtLevelAmount;
-						reason = $"Obligato - TotalAmount: (ObligoAmount({obligoAmount}) > DebtLevelAmount({customerDebtNotification.DebtLevelAmount}))";
 					}
 					else if(customerDebtNotification.DebtLevel == DebtLevelEnum.Percentage)
 					{
-						decimal threshold = obligoAmount * ((customerDebtNotification.DebtLevelAmount / 100) + 1);
-						isDebt = glAccountMoreData.BalanceInLocalCurrency < threshold;
-						reason = $"Obligato - Percentage: (BalanceInLocalCurrency({glAccountMoreData.BalanceInLocalCurrency}) < ObligMatchingThreshold({threshold}))";
+						isDebt = glAccountMoreData.BalanceInLocalCurrency < (obligoAmount * ((customerDebtNotification.DebtLevelAmount / 100) + 1));
 					}
 					break;
 				case TypesDebtsEnum.AccountingBalance:
 					isDebt = glAccountMoreData.BalanceInLocalCurrency > customerDebtNotification.DebtLevelAmount;
-					reason = $"AccountingBalance: (BalanceInLocalCurrency({glAccountMoreData.BalanceInLocalCurrency}) > DebtLevelAmount({customerDebtNotification.DebtLevelAmount}))";
 					break;
 				case TypesDebtsEnum.BalanceRegarding:
 					isDebt = glAccountMoreData.LocalBalanceInDue > customerDebtNotification.DebtLevelAmount;
-					reason = $"BalanceRegarding: (LocalBalanceInDue({glAccountMoreData.LocalBalanceInDue}) > DebtLevelAmount({customerDebtNotification.DebtLevelAmount}))";
 					break;
-			}
-
-			if (!isDebt)
-				this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine($"No Debt for GLAccount: {glaccount.EnglishName} ({glaccount.DisplayNumber}). Reason: {reason}. Task cancelled."));
-
+			}     
 			return isDebt;
 		}
         private string GetAllContatByGLAccountId(int tenant,string glaccountId)
