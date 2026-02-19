@@ -286,21 +286,6 @@ export class BankAccountPM {
     public set FactoringBank(newValue: boolean) { if (this.factoringBank != newValue) { this.factoringBank = newValue; this.MarkAsDirty("FactoringBank"); } }
        
 	 
-    private masavGLAcccountId: string;
-    public get MasavGLAcccountId() { return this.masavGLAcccountId; }
-    public set MasavGLAcccountId(newValue: string) { if (this.masavGLAcccountId != newValue) { this.masavGLAcccountId = newValue; this.MarkAsDirty("MasavGLAcccountId"); } }
-       
-	 
-    private masavGLAcccountLocalName: string;
-    public get MasavGLAcccountLocalName() { return this.masavGLAcccountLocalName; }
-    public set MasavGLAcccountLocalName(newValue: string) { if (this.masavGLAcccountLocalName != newValue) { this.masavGLAcccountLocalName = newValue; this.MarkAsDirty("MasavGLAcccountLocalName"); } }
-       
-	 
-    private masavGLAcccountEnglishName: string;
-    public get MasavGLAcccountEnglishName() { return this.masavGLAcccountEnglishName; }
-    public set MasavGLAcccountEnglishName(newValue: string) { if (this.masavGLAcccountEnglishName != newValue) { this.masavGLAcccountEnglishName = newValue; this.MarkAsDirty("MasavGLAcccountEnglishName"); } }
-       
-	 
 
     public OldEntityPM: BankAccountPM;
 		

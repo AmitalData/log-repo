@@ -63,7 +63,7 @@ export class CustomizationMainComponent {
     }
 
     SetIsObjectTableFilterEnabled(): boolean {
-        if (SessionLocator.LoggedUserPM.IsCustomerCare || ObjectsLocator.GlobalSetting?.DeploymentStage == "Dev" || SessionLocator.LoggedUserPM.IsDistributor) {
+        if (SessionLocator.LoggedUserPM.IsCustomerCare || ObjectsLocator.GlobalSetting.DeploymentStage == "Dev" || SessionLocator.LoggedUserPM.IsDistributor) {
             return false;
         }
         return true;

@@ -15,7 +15,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     public class CustomerFieldsUpdateSettingQuery
     {
         CustomerFieldsUpdateSettingRepository repository;
-
+        public CustomerFieldsUpdateSettingQuery()
+        {
+            repository = new CustomerFieldsUpdateSettingRepository();
+        }
 
         public CustomerFieldsUpdateSettingQuery(int tenant)
         {
