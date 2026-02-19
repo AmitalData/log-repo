@@ -12,7 +12,6 @@ import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator
 import {VatTypeList} from '../../../EntityLists/VatTypeList';
 import {VatTypeListService} from '../../../Services/StandardLists/VatTypeListService';
 import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
-import { ChargesTypePMInitService } from 'Common/EntityPMInitServices/ChargesTypePMInitService';
 
 @Component({
     
@@ -26,24 +25,18 @@ export class NewChargesTypeComponent extends BaseComponent {
     private CurrentSession = SessionLocator.SelectedSession;
     public MeasurementsQueryFilters: ApiQueryFilters;
     public IsChargeTypesRestrictedFeatureToggleOn = false;
-    public _chargesTypePMService: ChargesTypePMService = new ChargesTypePMService();
-    public AccountingActivated: boolean;
-    public ReceivableCreditGLAccountFilterItems: ApiQueryFilters;
-    public PayableDebitGLAcountFilterItems: ApiQueryFilters;
 
     constructor() {
         super();
 
-        this.AccountingActivated = SessionLocator.TenantPM.AccountingActivated && !document.getElementById('GeneralMHCRM')
-
-        this.EntityPM = this._chargesTypePMService.GetNewEntityPM();
-        if (this.AccountingActivated) {
-            ChargesTypePMInitService.InitValuesForAccounting(this.EntityPM, true);
-        }
-        else {
-            ChargesTypePMInitService.InitValues(this.EntityPM, true);
-        }
+        this.EntityPM = new ChargesTypePM();
+        this.EntityPM.Tenant = SessionLocator.Tenant;
         this.EntityPM.AddedManually = true;
+        this.IsAir = true;
+        this.IsInland = true;
+        this.IsOcean = true;
+        this.AWBPrintDescription = true;
+        this.ViewOrder = 100;
 
         if (SessionLocator.TenantPM.TenantVATManagement == false) {
             var myService = new VatTypeListService();
@@ -64,11 +57,6 @@ export class NewChargesTypeComponent extends BaseComponent {
         this.SetUIProperties();
         this.SetUIProperties_DirectionFields();
         this.ReadChargeTypesRestrictedFeatureToggleFeature();
-
-        this.ReceivableCreditGLAccountFilterItems = new ApiQueryFilters();
-        this.PayableDebitGLAcountFilterItems = new ApiQueryFilters();
-        this.ReceivableCreditGLAccountFilterItems.addAdditionalFilter("ReceivableCreditFilter", "1", null, null, "Equals", true, false, false, "string", false, true);
-        this.PayableDebitGLAcountFilterItems.addAdditionalFilter("PayableDebitFilter", "2", null, null, "Equals", true, false, false, "string", false, true);
     }
 
     ReadChargeTypesRestrictedFeatureToggleFeature() {
@@ -326,36 +314,6 @@ export class NewChargesTypeComponent extends BaseComponent {
     public IsNextEnabled: boolean = true;
     public IsFinishEnabled: boolean = false;
 
-    get PayableDebitAccount() { return this.EntityPM.PayableDebitAccount; }
-    set PayableDebitAccount(value: string) {
-        if (this.EntityPM.PayableDebitAccount != value) {
-            this.EntityPM.PayableDebitAccount = value;
-        }
-    }
-
-    get PayableDebitGLAcountId() { return this.EntityPM.PayableDebitGLAcountId; }
-    set PayableDebitGLAcountId(value: string) {
-        if (this.EntityPM.PayableDebitGLAcountId != value) {
-            this.EntityPM.PayableDebitGLAcountId = value;
-            if (this.EntityPM.PayableDebitGLAcountId == null) this.EntityPM.PayDebitGLAcountLocalName = null;
-        }
-    }
-    
-    get ReceivableCreditAccount() { return this.EntityPM.ReceivableCreditAccount; }
-    set ReceivableCreditAccount(value: string) {
-        if (this.EntityPM.ReceivableCreditAccount != value) {
-            this.EntityPM.ReceivableCreditAccount = value;
-        }
-    }
-
-    get ReceivableCreditGLAccountId() { return this.EntityPM.ReceivableCreditGLAccountId; }
-    set ReceivableCreditGLAccountId(value: string) {
-        if (this.EntityPM.ReceivableCreditGLAccountId != value) {
-            this.EntityPM.ReceivableCreditGLAccountId = value;
-            if (this.EntityPM.ReceivableCreditGLAccountId == null) this.EntityPM.RecCreditGLAcountLocalName = null;
-        }
-    }
-    
     // Commands
     PreviousButtonClicked() {
         this.IsFinishEnabled = true;
@@ -424,7 +382,8 @@ export class NewChargesTypeComponent extends BaseComponent {
 
             this.CurrentSession.StartBusyIndicatorSaving();
             
-            this._chargesTypePMService.insert(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
+            var myService: ChargesTypePMService = new ChargesTypePMService();
+            myService.insert(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
 
                 this.CurrentSession.StopBusyIndicator();
 
