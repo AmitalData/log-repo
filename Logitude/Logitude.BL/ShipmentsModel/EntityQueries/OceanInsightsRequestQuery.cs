@@ -38,11 +38,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                          BLNumber = a.BLNumber,
                                                          FromPushPage = a.FromPushPage,
 														 System = a.System,
-                                                         IsClosed = a.IsClosed,
-                                                         Method = a.Method,
-                                                         OriginalResponse = a.OriginalResponse,
-                                                         ApiStatus = a.ApiStatus
-                                                         
+                                                         IsClosed = a.IsClosed
 											   }).FirstOrDefault();
 
               
@@ -66,10 +62,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                    BLNumber = a.BLNumber,
                                                    FromPushPage = a.FromPushPage,
 												   System = a.System,
-                                                   IsClosed = a.IsClosed,
-                                                   Method = a.Method,
-                                                   OriginalResponse = a.OriginalResponse,
-                                                   ApiStatus = a.ApiStatus
+                                                   IsClosed = a.IsClosed
                                                }).FirstOrDefault();
 
 
@@ -93,10 +86,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                    BLNumber = a.BLNumber,
                                                    FromPushPage = a.FromPushPage,
 												   System = a.System,
-                                                   IsClosed = a.IsClosed,
-                                                   Method = a.Method,
-                                                   OriginalResponse = a.OriginalResponse,
-                                                   ApiStatus = a.ApiStatus
+                                                   IsClosed = a.IsClosed
                                                }).FirstOrDefault();
 
 
@@ -120,10 +110,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                    BLNumber = a.BLNumber,
                                                    FromPushPage = a.FromPushPage,
 												   System = a.System,
-                                                   IsClosed = a.IsClosed,
-                                                   Method = a.Method,
-                                                   OriginalResponse = a.OriginalResponse,
-                                                   ApiStatus = a.ApiStatus
+                                                   IsClosed = a.IsClosed
                                                }).ToList();
 
 
@@ -133,7 +120,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         public OceanInsightsRequestPM GetSinglePMByOceanInsightsByScacCodeContainerNoTenant(string ScacCode, string ContainerNo, int Tenant,string System="")
         {
             OceanInsightsRequestPM myResult = (from a in repository.Context.OceanInsightsRequests
-                                               where a.ContainerNumber == ContainerNo && a.SCACCode == ScacCode && a.Tenant == Tenant && ((string.IsNullOrEmpty(System) && string.IsNullOrEmpty(a.System)) || a.System== System) && !a.IsClosed
+                                               where a.ContainerNumber == ContainerNo && a.SCACCode == ScacCode && a.Tenant == Tenant && a.System== System && !a.IsClosed
                                                select new OceanInsightsRequestPM()
                                                {
                                                    Id = a.Id,
@@ -147,10 +134,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                    BLNumber = a.BLNumber,
                                                    FromPushPage = a.FromPushPage,
 												   System = a.System,
-                                                   IsClosed = a.IsClosed,
-                                                   Method = a.Method,
-                                                   OriginalResponse = a.OriginalResponse,
-                                                   ApiStatus = a.ApiStatus
+                                                   IsClosed = a.IsClosed
                                                }).FirstOrDefault();
 
 
@@ -160,7 +144,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         public OceanInsightsRequestPM GetSinglePMByOceanInsightsByCareierScacBLNoTenant(string CarrierScac, string BLNumber, int Tenant,string System="")
         {
             OceanInsightsRequestPM myResult = (from a in repository.Context.OceanInsightsRequests
-                                               where a.BLNumber == BLNumber && a.SCACCode == CarrierScac && a.Tenant == Tenant && ((string.IsNullOrEmpty(System) && string.IsNullOrEmpty(a.System)) || a.System == System) && !a.IsClosed
+                                               where a.BLNumber == BLNumber && a.SCACCode == CarrierScac && a.Tenant == Tenant && a.System == System && !a.IsClosed
                                                select new OceanInsightsRequestPM()
                                                {
                                                    Id = a.Id,
@@ -173,10 +157,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                    Type = a.Type,
                                                    BLNumber = a.BLNumber,
                                                    FromPushPage = a.FromPushPage,
-                                                   IsClosed = a.IsClosed,
-                                                   Method = a.Method,
-                                                   OriginalResponse = a.OriginalResponse,
-                                                   ApiStatus = a.ApiStatus
+                                                   IsClosed = a.IsClosed
                                                }).FirstOrDefault();
 
 
@@ -201,10 +182,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 												   BLNumber = a.BLNumber,
 												   FromPushPage = a.FromPushPage,
 												   System = a.System,
-                                                   IsClosed = a.IsClosed,
-                                                   Method = a.Method,
-                                                   OriginalResponse = a.OriginalResponse,
-                                                   ApiStatus = a.ApiStatus
+                                                   IsClosed = a.IsClosed
                                                }).FirstOrDefault();
 
 
@@ -228,10 +206,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 												   BLNumber = a.BLNumber,
 												   FromPushPage = a.FromPushPage,
 												   System = a.System,
-                                                   IsClosed = a.IsClosed,
-                                                   Method = a.Method,
-                                                   OriginalResponse = a.OriginalResponse,
-                                                   ApiStatus = a.ApiStatus
+                                                   IsClosed = a.IsClosed
                                                }).FirstOrDefault();
 
 
@@ -255,10 +230,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                          BLNumber = a.BLNumber,
                                                          FromPushPage = a.FromPushPage,
 														 System = a.System,
-                                                         IsClosed = a.IsClosed,
-                                                         Method = a.Method,
-                                                         OriginalResponse = a.OriginalResponse,
-                                                         ApiStatus = a.ApiStatus
+                                                         IsClosed = a.IsClosed
                                                      }).ToList(); 
             return myResult;
         }

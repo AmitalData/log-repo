@@ -30,7 +30,6 @@ export class ChargesTypeGeneralTabComponent extends BaseComponent implements OnI
     constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = this.entityArgs.EntityPM;
-        this.EntityPM.DisableMarkAsDirty = SessionLocator.TenantPM.IsHybrid && this.EntityPM.Code == "OTHC";
 
         if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF40") {
             this.DisplaySATSettings = true;

@@ -71,15 +71,6 @@
             </div>
         </td>
 
-        <td>
-            <div class="RadioButton" style="width: 100px;">
-                <input [attr.id]="RadioButtonChoice5Id"  [attr.name]="NameRadioButtonChoice" type="radio" (change)="RadioButtonChoice(FromTenantZero)"  />
-                <label [attr.for]="RadioButtonChoice5Id" style="font-size: 12px">
-                    {{ ('DocumentTypeTemplate.O.FromTenantZero' | TextCodeTranslationPipe) || "From Tenant 0"}}
-                </label>
-            </div>
-        </td>
-
         <td style="width:100%"><div></div></td>
     </tr>
 </table>
@@ -112,6 +103,10 @@
                             </div>
                         </td>
 
+
+
+                       
+
                         <td style="width:100%"><div></div></td>
                     </tr>
                 </table>
@@ -130,7 +125,7 @@
 
         <tr style="vertical-align:top;height:25px">
 
-            <td *ngIf="ValueRadioChoice != FromTenantZero">
+            <td>
                 <table>
                     <tr>
 

@@ -30,21 +30,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
             entityPOCO.Id = entityPM.Id;
             BuildSearchFields(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
             entityPOCO.SearchFields = entityPM.SearchFields;
-
-
-            if (!string.IsNullOrWhiteSpace(entityPOCO.UnifreightLeadingFile) && string.IsNullOrWhiteSpace(entityPM.UnifreightLeadingFile))
-            {
-                entityPM.UnifreightLeadingFile = entityPOCO.UnifreightLeadingFile;
-                NetCommonHelper.Logger.DevLog.Instance.WriteError(
-                    "!!! UnifreightLeadingFile WILL BE DELETED !!! " +
-                    "Id=" + entityPOCO.Id +
-                    " DB='" + entityPOCO.UnifreightLeadingFile + "'" +
-                    " PM='(empty)'" +
-                    Environment.NewLine +
-                    "STACK:" + Environment.NewLine +
-                    Environment.StackTrace
-                );
-            }
         }
 
         public void CustomPOCOToPM(CourierMasterPM entityPM, CourierMaster entityPOCO)
@@ -62,7 +47,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
             this.CustomMappedPMProperties.Add(PMPropertyNames.StorageSiteName);
             this.CustomMappedPMProperties.Add(PMPropertyNames.IntegratorName);
             this.CustomMappedPMProperties.Add(PMPropertyNames.IntegratorNumber);
-            this.CustomMappedPMProperties.Add(PMPropertyNames.UnifreightLeadingFile);
 
             var rep = new CustomsAirlineQueryService(entityPM.Tenant);
             UserRepository userRep = new UserRepository(entityPM.Tenant);
