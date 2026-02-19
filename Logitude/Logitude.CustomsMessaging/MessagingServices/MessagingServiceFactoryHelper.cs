@@ -668,11 +668,6 @@ namespace Logitude.CustomsMessaging.MessagingServices
            ((new DCAInGet_CB_MSG_8318_CustomItemMekachMessagingService()).MainInterfaceCode);
         
             
-              ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
-           GetDOC8318_Web_GetAttachmentMessagingService>
-           ((new GetDOC8318_Web_GetAttachmentMessagingService()).MainInterfaceCode);
-        
-            
             ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
                 DCAInUCB8373_MsgMessagingService>
                 ((new DCAInUCB8373_MsgMessagingService()).MainInterfaceCode);

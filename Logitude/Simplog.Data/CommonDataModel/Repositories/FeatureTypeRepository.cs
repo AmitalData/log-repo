@@ -9,7 +9,11 @@ namespace Simplog.Data.CommonDataModel.Repositories
     {
 
         ICommonDataContext commonDataContext;
+        public FeatureTypeRepository()
+        {
+            commonDataContext = new CommonDataContext();
 
+        }
         public FeatureTypeRepository(ICommonDataContext context)
         {
             commonDataContext = context;
