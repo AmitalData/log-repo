@@ -27,6 +27,7 @@ namespace Logitude.Accounting.Data.Repositories
                     where a.ExternalID == externalId && a.Tenant == tenant
                     select a).FirstOrDefault();
         }
+        
 
     }
 

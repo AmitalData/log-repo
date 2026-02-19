@@ -33,11 +33,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 entityPOCO.DeclarationId = entityPM.DeclarationId;
                 entityPOCO.InvoiceCounterKey = entityPM.InvoiceCounterKey;
                 entityPOCO.InvoiceItemLineNumber = entityPM.InvoiceItemLineNumber;
+                entityPOCO.LineNumber = entityPM.LineNumber;
                 entityPOCO.Tenant = entityPM.Tenant;
                 entityPOCO.SIIRequestID = entityPM.SIIRequestID;
             }
-            entityPOCO.LineNumber = entityPM.LineNumber;
-
         }
 
         public void CustomPOCOToPM(SupplierInvoiceItemsReqListPM entityPM, SupplierInvoiceItemsReqList entityPOCO)
@@ -125,12 +124,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
             {
                 entityPM.StatisticQuantityType =
                     muQS.GetSingle(item.StatisticQuantityType, false, true)?.LocalName;
-            }
-            if (!String.IsNullOrWhiteSpace(entityPOCO.StatusCode))
-            {
-                var sIIRequestLineStatusQueryService = new SIIRequestLineStatusQueryService(entityPOCO.Tenant);
-                var pm = sIIRequestLineStatusQueryService.GetSingle(entityPOCO.StatusCode, false, true);
-                entityPM.StatusName = pm?.LocalName;
             }
         }
     }

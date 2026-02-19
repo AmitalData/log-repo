@@ -160,7 +160,6 @@ namespace WebFreight.Web.MetaDataUpdate.DetailClasses
         public string NavigationPropertyName { get; set; }
         public bool NoMetaDataField { get; set; }     
         public string ObjectFieldDataMapping { get; set; }
-        public bool ObjectFieldDBOnly { get; set; }
 
     }
 }

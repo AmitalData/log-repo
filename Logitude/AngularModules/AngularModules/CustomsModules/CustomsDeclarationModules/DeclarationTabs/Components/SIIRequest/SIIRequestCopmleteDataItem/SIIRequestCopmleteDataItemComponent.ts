@@ -10,6 +10,7 @@ import { EntityResourceService } from 'Infrastructure/Services/EntityResourceSer
 import { SIIRequestWebService } from 'Customs/Services/WebServices/SIIRequestWebService';
 import { SupplierInvoiceItemsReqListWebService } from 'Customs/Services/WebServices/SupplierInvoiceItemsReqListWebService';
 import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
+import { SupplierInvoiceItemsReqListPMService } from 'Customs/Services/StandardPMs/SupplierInvoiceItemsReqListPMService';
 import { CompleteStatuses, SupplierInvoiceItemsForSIIRequestLine } from '../SIIRequestTabs/SIIRequestComponent';
 import { SessionLocator } from 'Infrastructure/Utilities/SessionLocator';
 import { LogitudeWindow } from 'Controls/Windows/LogitudeWindow';
@@ -33,6 +34,7 @@ export class SIIRequestCopmleteDataItemComponent extends BaseComponent implement
     public siiRequestWebService: SIIRequestWebService;
     public siiRequestPMService: SIIRequestPMService = new SIIRequestPMService();
     public supplierInvoiceItemsReqListWebService: SupplierInvoiceItemsReqListWebService;
+    public supplierInvoiceItemsReqListPMService: SupplierInvoiceItemsReqListPMService = new SupplierInvoiceItemsReqListPMService();
     public currentSiiRequest: SIIRequestPM = new SIIRequestPM();
     public entityPM: SupplierInvoiceItemsReqListPM;
     public DecalarationData: DeclarationPM;
@@ -51,7 +53,7 @@ export class SIIRequestCopmleteDataItemComponent extends BaseComponent implement
         super();
         this.siiRequestWebService = new SIIRequestWebService();
         this.supplierInvoiceItemsReqListWebService = new SupplierInvoiceItemsReqListWebService();
-        this.entityPM = new SupplierInvoiceItemsReqListPM(this.currentSiiRequest);
+        this.entityPM = new SupplierInvoiceItemsReqListPM();
     }
 
     ngOnInit(): void {
@@ -73,32 +75,23 @@ export class SIIRequestCopmleteDataItemComponent extends BaseComponent implement
         this.invoiceItemReq = args.invoiceItemReq;
         this.IsNewOrEdit = args.IsNewOrEdit;
         this.isAllowChange = args.isAllowChange;
-        this.IsDisplayOnly = !this.isAllowChange;
         this.filterAgrs = args.filterAgrs;
+        this.entityArgs.EntityPM = this.EntityPM;
+        this.entityArgs.ObjectTableName = "Customs.SupplierInvoiceItemsReqList";
         this.entityPM = args.entityPMSupplierInvoiceItemsReqListPM;
         this.oldRequestRequiredStatus = this.entityPM?.RequestRequiredStatus;
-        this.SetPropertiesEnabled();
     }
 
     SetPropertiesEnabled() {
-    const editable = this.isAllowChange; // false in display-only
-
-    // Editable fields (locked when display-only)
-    this.UIProperties.SetEnabled("ItemNo", this.ObjectTableName, editable);
-    this.UIProperties.SetEnabled("ProductFileNumber", this.ObjectTableName, editable); // even though textbox has ForceDisabled, this keeps it consistent
-    this.UIProperties.SetEnabled("ItemName", this.ObjectTableName, editable);
-    this.UIProperties.SetEnabled("ManufactureCountryCode", this.ObjectTableName, editable);
-    this.UIProperties.SetEnabled("ManufacturerName", this.ObjectTableName, editable);
-    this.UIProperties.SetEnabled("Remarks", this.ObjectTableName, editable);
-    this.UIProperties.SetEnabled("DutchRequested", this.ObjectTableName, editable);
-
-    // Always read-only (as in your HTML: ForceDisabled / just for info)
-    this.UIProperties.SetEnabled("InvoiceQuantityType", this.ObjectTableName, false);
-    this.UIProperties.SetEnabled("InvoiceQuantity", this.ObjectTableName, false);
-    this.UIProperties.SetEnabled("StatisticQuantity", this.ObjectTableName, false);
-    this.UIProperties.SetEnabled("StatisticQuantityType", this.ObjectTableName, false);
-}
-
+        let enabled: boolean = !this.IsDisplayOnly;
+        this.UIProperties.SetEnabled("ManufactureCountryCode", this.ObjectTableNameSiiRequest, enabled);
+        this.UIProperties.SetEnabled("ItemNo", this.ObjectTableNameSiiRequest, enabled);
+        this.UIProperties.SetEnabled("ItemName", this.ObjectTableNameSiiRequest, enabled);
+        this.UIProperties.SetEnabled("InvoiceQuantity", this.ObjectTableNameSiiRequest, !enabled);
+        this.UIProperties.SetEnabled("InvoiceQuantityType", this.ObjectTableNameSiiRequest, !enabled);
+        this.UIProperties.SetEnabled("StatisticQuantity", this.ObjectTableNameSiiRequest, !enabled);
+        this.UIProperties.SetEnabled("StatisticQuantityType", this.ObjectTableNameSiiRequest, !enabled);
+    }
     // #endregion initialization data
 
 
@@ -167,10 +160,6 @@ export class SIIRequestCopmleteDataItemComponent extends BaseComponent implement
 
     //#region acations methods:
     async SaveAndSearchSupplierInvoiceItemsReqList(): Promise<void> {
-        if (!this.isAllowChange) {
-            return;
-        }
-
         this.validationErrors = [];
         this.checkMandatoryFields();
         if (this.errorsList.length > 0) {
@@ -203,17 +192,11 @@ export class SIIRequestCopmleteDataItemComponent extends BaseComponent implement
 
             this.CurrentSession.StopBusyIndicator();
 
-            const productFileId = sr && sr.Result as any;
+            const productFileId = sr && sr.Result as any;              
 
             if (productFileId) {
                 this.ProductFileNumber = productFileId;
-                this.checkMandatoryFields();
-
-                if (this.errorsList.length === 0 && !AppTool.IsNullOrEmpty(this.ProductFileNumber)) {
-                    this.RequestRequiredStatus = CompleteStatuses.FullyCompleted;
-                }
-
-                this.generalErrors = [];
+                this.generalErrors = []; 
                 this.SaveSupplierInvoiceItemsReqList();
                 return;
             }
@@ -224,7 +207,7 @@ export class SIIRequestCopmleteDataItemComponent extends BaseComponent implement
             ];
             this.displayErrorsMsg();
 
-        } catch (error) {
+        } catch (error) { 
             this.CurrentSession.StopBusyIndicator();
             const errorBody =
                 (error && error.error && (error.error.error || error.error.ErrorMessage))
@@ -295,35 +278,43 @@ export class SIIRequestCopmleteDataItemComponent extends BaseComponent implement
     }
 
     private saveItemCompletionData() {
-
-
-
-        this.siiRequestPMService.update(this.currentSiiRequest).subscribe({
-            next: (myResult: ServiceResponse) => {
-                if (!myResult?.HasError && myResult?.Result) {
+        this.entityPM.DeclarationId = AppTool.IsNullOrEmpty(this.entityPM.DeclarationId) ? this.DecalarationData?.Id : this.entityPM.DeclarationId;
+        this.entityPM.InvoiceCounterKey = AppTool.IsNullOrEmpty(this.entityPM.InvoiceCounterKey) ? this.invoiceItemReq?.InvoiceCounterKey : this.entityPM.InvoiceCounterKey;
+        this.entityPM.InvoiceItemLineNumber = AppTool.IsNullOrEmpty(this.entityPM.InvoiceItemLineNumber) ? this.invoiceItemReq?.InvoiceLineNumber : this.entityPM.InvoiceItemLineNumber;
+        this.entityPM.LineNumber = AppTool.IsNullOrEmpty(this.entityPM.LineNumber) ? this.invoiceItemReq?.LineNumber : this.entityPM.LineNumber;
+        if (this.oldRequestRequiredStatus === CompleteStatuses.PartiallyCompleted || this.oldRequestRequiredStatus === CompleteStatuses.FullyCompleted) {
+            this.supplierInvoiceItemsReqListPMService.update(this.entityPM).subscribe(myResult => {
+                let myResponse: ServiceResponse = myResult;
+                if (!myResponse?.HasError && myResponse?.Result) {
                     this.generalErrors = [];
-                } else {
-                    this.generalErrors = myResult?.ErrorsArray || ['Unknown error'];
                 }
-
+                else this.generalErrors = myResponse?.ErrorsArray;
                 this.RefreshEntity();
                 this.CurrentSession.CloseCurrentWindowData(this.entityPM);
-            },
-            error: (error: any) => {
-                this.generalErrors = [error?.message || 'Unknown error'];
-                console.error('Error saving SIIRequest with SupplierInvoiceItemsReqList:', error);
-            }
-        });
+            }, error => {
+                this.generalErrors = [error?.message];
+                console.error('Error updating SupplierInvoiceItemsReqList:', error);
+            });
+        }
+        else {
+            this.supplierInvoiceItemsReqListPMService.insert(this.entityPM).subscribe(myResult => {
+                let myResponse: ServiceResponse = myResult;
+                if (!myResponse?.HasError && myResponse?.Result) {
+                    this.generalErrors = [];
+                }
+                else this.generalErrors = myResponse?.ErrorsArray;
+                this.RefreshEntity();
+                this.CurrentSession.CloseCurrentWindowData(this.entityPM);
+            }, error => {
+                this.generalErrors = [error?.message];
+                console.error('Error saving SupplierInvoiceItemsReqList:', error);
+            });
+        }
     }
 
-    oldEntityPM: SupplierInvoiceItemsReqListPM = new SupplierInvoiceItemsReqListPM(this.currentSiiRequest);
+    oldEntityPM: SupplierInvoiceItemsReqListPM = new SupplierInvoiceItemsReqListPM();
     CancelSupplierInvoiceItemsReqList() {
-        if (!this.isAllowChange || this.IsDisplayOnly) {
-            this.CurrentSession.CloseCurrentWindow();
-            return;
-        }
-
-        if (this.entityPM.IsDirty) {
+        if (this.entityPM.IsDirty && !this.IsDisplayOnly) {
             const confirm = new ConfirmWindow();
             confirm.YesButtonText = TextCodeTranslator.Translate("General.B.Yes");
             confirm.ShowNoButton = true;

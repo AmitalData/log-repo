@@ -22,10 +22,8 @@ namespace Logitude.Server.Tools
         public string InnerErrorMessage { get; set; }
 
         public List<QueueTask> Tasks { get; set; }
-        public string SystemId { get; set; }
 
-
-
+       
     }
 
     public class QueueTask
