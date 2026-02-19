@@ -423,7 +423,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             {
                 EventTracer.CreateTraceEvent(new EventTracerArgs()
                 {
-                    Tenant = this.tenant,
+                    Tenant = 0,
                     EventTypeCode = "UPMG",
                     UserId = this.loggedContactId,
                     EntityId = tenant.ToString(),
