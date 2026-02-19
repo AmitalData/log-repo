@@ -45,7 +45,9 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         [ForeignKey("ReportId")]
         public virtual Report Report { get; set; }
 
-
+        [ForeignKey("ReportTemplateId")]
+        public virtual ReportsTemplate ReportsTemplate { get; set; }
+         
 
     }
 }

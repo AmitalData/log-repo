@@ -42,7 +42,7 @@
   <Column
     Name="DebtLevelAmount"
     Type="decimal"
-    Precision="10"
+    Precision="6"
     Scale="3">
     <Constraints
       Nullable="false" />

@@ -180,6 +180,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             var sw = Stopwatch.StartNew();
             TransactionScope scope = null;
             var statusDateTime = DateTime.Now;
+            var isConnectedToUniFreight = CustomsSettingQueryService.GetSettingByTenant(dirtyImporterDespositionPM.Tenant).IsConnectedToUniFreight;
 
             if (!DbContextBaseUtil.UnifreightDataIncludedInMain_FeatureOn)
             {
@@ -238,9 +239,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     USRCODE = unifreightUser,
                     ARCHIVE = "F",
                 };
-                
-                myYCULTASKPM.Tenant = dirtyImporterDespositionPM.Tenant;
-                
+                if (!isConnectedToUniFreight)
+                {
+                    myYCULTASKPM.Tenant = dirtyImporterDespositionPM.Tenant;
+                }
                 _AmitalContext = AmitalContext.GetContext(dirtyImporterDespositionPM.Tenant);
                 var myGGGQUpdateService = new GGGQUpdateService(_AmitalContext);
                 myGGGQUpdateService.DontAddTransaction = true;
@@ -264,9 +266,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     DONEOPERATION = "D",
                     //GSTRING1 = myYCULTASKPM.TASKID,
                 };
-                
-                myGGGQPM.Tenant = dirtyImporterDespositionPM.Tenant;
-                
+                if (!isConnectedToUniFreight)
+                {
+                    myGGGQPM.Tenant = dirtyImporterDespositionPM.Tenant;
+                }
                 myGGGQUpdateService.Update(myGGGQPM, true);
                 
                 
