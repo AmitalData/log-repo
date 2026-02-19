@@ -305,11 +305,6 @@ private selectedItems:ObservableCollection;
 
         }
   }
-
-
-  IsShowPrintedInvoiceEnabled: boolean = true;
-  IsShowSignedInvoiceEnabled: boolean = true;
-
   private showSignedinvoice: boolean = false;
   public get ShowSignedInvoice() { return this.showSignedinvoice; }
   public set ShowSignedInvoice(value: boolean) {
@@ -320,8 +315,7 @@ private selectedItems:ObservableCollection;
          this.ValidateDate(null);
 
     }
-    this.IsShowPrintedInvoiceEnabled = !this.showSignedinvoice
-  }
+    }
   private showPrintedInvoice: boolean = false;
   public get ShowPrintedInvoice() { return this.showPrintedInvoice; }
   public set ShowPrintedInvoice(value: boolean) {
@@ -332,18 +326,17 @@ private selectedItems:ObservableCollection;
         this.ValidateDate(null);
 
     }
-    this.IsShowSignedInvoiceEnabled = !this.showPrintedInvoice;
-  }
-  private attachReportWithEachInvoice: boolean = false;
-  public get AttachReportWithEachInvoice() { return this.attachReportWithEachInvoice; }
-  public set AttachReportWithEachInvoice(value: boolean) {
-    if (this.attachReportWithEachInvoice != value) {
-        this.attachReportWithEachInvoice = value;
-      }
     }
+    private attachReportWithEachInvoice: boolean = false;
+    public get AttachReportWithEachInvoice() { return this.attachReportWithEachInvoice; }
+    public set AttachReportWithEachInvoice(value: boolean) {
+      if (this.attachReportWithEachInvoice != value) {
+          this.attachReportWithEachInvoice = value;
+       }
+      }
 
-  public IsSelectedItemsTextVisibile: boolean = false;
-  public IsSelectAllEnabled: boolean = true;
+    public IsSelectedItemsTextVisibile: boolean = false;
+    public IsSelectAllEnabled: boolean = true;
   private allSelected: boolean = false; 
   public get AllSelected() { return this.allSelected; }
   public set AllSelected(value: boolean) {
@@ -387,10 +380,10 @@ private selectedItems:ObservableCollection;
     filters.GetCount = true;
    
     if (this.ShowPrintedInvoice) {
-      filters.addAdditionalFilter("IsSigned", "3", null, null, "NotEqual", false, false, false, "string");
+      filters.addAdditionalFilter("IsPrinted", true, null, null, "Equal", false, false, false, "Boolean")
     }
     if (this.ShowSignedInvoice) {
-      filters.addAdditionalFilter("IsSigned", "3", null, null, "Equal", false, false, false, "string");
+      filters.addAdditionalFilter("IsSigned", "3", null, null, "Equal", false, false, false, "string")
     }
     filters.addAdditionalFilter("InvoiceDate", this.fromDate, this.toDate, null, "Between", false, false, false, "DateTime"); 
     filters.addAdditionalFilter("ARInvoiceTypeCode", "IT", null ,null, "Equal", false, false, false, "string"); 
@@ -515,14 +508,44 @@ GetNumberOfDocumentNotPrinted(isReportsAttached: boolean) {
   this.ValidationErrorsList = [];
   if (this.SelectedItemsCount == 0) {
     this.ValidationErrorsList.push(TextCodeTranslator.Translate("InterestReport.O.SelectAtLeastOnLine"));
-  } 
-  else { 
+  } else { 
+    //  this.OpenWindow();
     var interestReportArgs: InterestReportArguments=  this.FillInterestReportArgs();  
+    this.interestReportExtendedListService.GetNumberOfDocumentNotPrinted(interestReportArgs).subscribe((response: ServiceResponse) => {
+    this.CurrentSession.StopBusyIndicator();
+    var mm: ServiceResponse = response;
+    if (!mm.HasError) {
+    var pDFDocumentInvoices:PDFDocumentInvoices = mm.Result;
+    if((!AppTool.IsNullOrEmpty(pDFDocumentInvoices.ARInvoiceNumbersNotPrinted) && pDFDocumentInvoices.ARInvoiceNumbersNotPrinted.length>0 ) ||  (!AppTool.IsNullOrEmpty(pDFDocumentInvoices.InterestReportNumbersNotPrinted) && pDFDocumentInvoices.InterestReportNumbersNotPrinted.length >0 )){
+      // if(this.newWindow){
+      //   this.newWindow.blur();
+      //   this.newWindow.close();
+      // }
+      this.ShowBtatchPrintWarningComponent(pDFDocumentInvoices,interestReportArgs);
+    }
+    else{
+      this.CurrentSession.StartBusyIndicatorLoading();
       setTimeout(() =>  this.CreateInvoiceButtonClicked(interestReportArgs),200);
     }
     
+    }
+    else {
+      // if(this.newWindow){
+      //   this.newWindow.blur();
+      //   this.newWindow.close();
+      // }
+      if(mm.ErrorsArray){
+        var msg = new MessageWindow();
+        msg.RTL = this.isRTL;
+        msg.Width = 400;
+        msg.Show(mm.ErrorsArray[0]);
+    }
+    }
+
+  });
+    }
     this.DropdownClose();
-}
+    }
 
 SendSignedInvoices() {
       this.ValidationErrorsList = [];

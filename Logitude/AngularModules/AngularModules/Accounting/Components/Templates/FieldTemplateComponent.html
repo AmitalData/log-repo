@@ -199,8 +199,44 @@
                 <!-- Journal -->
                 <div *ngIf="ObjectTableName == 'Journal'">
                     <div *ngIf="FieldName == 'StatusName'" [style.text-align]="isRTL ? 'right' : 'left'">
-                        <div [style.color]="ColorByStatus[FieldValue]">
+                        <div *ngIf="FieldValue == 'Draft'">
                             {{ showLocal ? Entity.StatusLocalName : Entity.StatusName }}
+                        </div>
+                        <div *ngIf="FieldValue == 'Waiting for Approval'" style="color: darkorange;">
+                            {{
+ showLocal ?
+                            Entity.StatusLocalName : Entity.StatusName
+                            }}
+                        </div>
+                        <div *ngIf="FieldValue == 'Approved'" style="color: green;">
+                            {{
+ showLocal ?
+                            Entity.StatusLocalName : Entity.StatusName
+                            }}
+                        </div>
+                        <div *ngIf="FieldValue == 'Voided'" style="color: darkred;">
+                            {{
+ showLocal ?
+                            Entity.StatusLocalName : Entity.StatusName
+                            }}
+                        </div>
+                        <div *ngIf="FieldValue == 'Cancelled'" style="color: darkred;">
+                            {{
+ showLocal ?
+                            Entity.StatusLocalName : Entity.StatusName
+                            }}
+                        </div>
+                        <div *ngIf="FieldValue == 'In processing'" style="color: rgb(114, 19, 238);">
+                            {{
+ showLocal ?
+                            Entity.StatusLocalName : Entity.StatusName
+                            }}
+                        </div>
+                        <div *ngIf="FieldValue == 'Failed'" style="color: rgb(4, 159, 152);">
+                            {{
+ showLocal ?
+                            Entity.StatusLocalName : Entity.StatusName
+                            }}
                         </div>
                     </div>
                  
@@ -416,13 +452,13 @@
 
                     <div *ngIf="FieldName == 'Status'">
                         <div *ngIf="IsHeaderScreenTemplate" style="padding-left: 3px;"
-                             [style.text-align]="isRTL ? 'right' : 'left'" [style.color]="textColor">
+                             [style.text-align]="isRTL ? 'right' : 'left'">
                             {{
                             FieldValue
                             }}
                         </div>
                         <div *ngIf="!IsHeaderScreenTemplate" style=" padding-left: 3px;"
-                             [style.text-align]="isRTL ? 'right' : 'left'" [style.color]="textColor">
+                             [style.text-align]="isRTL ? 'right' : 'left'">
                             {{
                             FieldValue
                             }}
@@ -554,10 +590,7 @@
                     </div>
 
 
-                   <div *ngIf="FieldName == 'Month'">
-                        <div *ngIf="FieldValue" [style.text-align]="isRTL ? 'right' : 'left'">{{ FieldValue | DateToMonthPipe }} </div>
-                    </div>
-                    <div *ngIf="FieldName == 'FromMonth'">
+                    <div *ngIf="FieldName == 'Month'">
                         <div *ngIf="FieldValue" [style.text-align]="isRTL ? 'right' : 'left'">{{ FieldValue | DateToMonthPipe }} </div>
                     </div>
 
@@ -600,17 +633,7 @@
                         </div>
                     </div>
                 </div>
-                <div *ngIf="ObjectTableName == 'InvoiceApiCommunicationLog'">
-                   
-                    <div *ngIf="IsHeaderScreenTemplate">
-                        <a href="#" (click)="OpenARInvoice(Entity.ARInvoiceId)">{{Entity.InvoiceNumber}}</a>
-                    </div>
 
-                    <div *ngIf="!IsHeaderScreenTemplate">
-                        {{Entity.InvoiceNumber}}
-                    </div>
-
-                </div>
 
             </div>
         </td>
