@@ -11,6 +11,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
         ICommonDataContext commonDataContext;
 
+        public MentionRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
 
         public MentionRepository(ICommonDataContext context)
         {

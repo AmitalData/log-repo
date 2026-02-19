@@ -26,7 +26,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class JournalUpdateClass
    {  		
-		public const string HashString = "98990e8ac488492cb010b06d221bc94f";
+		public const string HashString = "134c0faa2fe5b53ea26558f275c56dde";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -3634,70 +3634,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
-
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
-					 
-					 						FieldName =  "InvoicesXml",
-					  						ObjectTableName =  "Journal",
-					  						FieldsDataType =  "nText",
-					  						MinLength =  0,
-					  						MaxLength =  8000,
-					  						IsRequired =  false,
-					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
-					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
-					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  8000,
-					  						DisplayInList =  false,
-					  						IsCustomFilter =  false,
-					  						IsListFilter =  false,
-					  						MultiLine =  true,
-					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "InvoicesXml",
-					  						ListPropertyPath =  "InvoicesXml",
-					  						DisplayInLookUpIndex =  0,
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
-					  						IsMulti =  false,
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Journal",
-					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						InActive =  false,
-					  						DisplayLongName =  false,
-					  						FullFieldLable =  "InvoicesXml",
-					  						DefaultText =  "InvoicesXml",
-					  						FullLocalDefaultText =  "InvoicesXml",
-					  						ListFieldLable =  "InvoicesXmlListLable",
-					  						ListLableDefaultText =  "InvoicesXml",
-					  						IsForeignKey =  false,
-					  						IsMaxLength =  true,
-					  						NoMetaDataField =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
-					  						DisplayInRequiredFields =  false,
-					  						HasTemplate =  false,
-					  						IsCustom =  false,
-					  						EnableFullscreenTextBox =  false,
-					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
- 
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups ,int contextTenant)
@@ -3982,8 +3918,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		   Feature JournalFeature_LOADJOURNALCSV = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "LOADJOURNALCSV", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = JournalObjectTable.Id, Tenant = 0, NameTextCodeCode = "Journal.Features.LOADJOURNALCSV", NameTextCodeDefaultText = @"Load Journal From CSV" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,JournalObjectTable,contextTenant);
 
 		   Feature JournalFeature_Journal_Feature_ManageSecurity = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Journal.Feature.ManageSecurity", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = JournalObjectTable.Id, Tenant = 0, NameTextCodeCode = "Journal.Features.Journal.Feature.ManageSecurity", NameTextCodeDefaultText = @"Manage Security" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,JournalObjectTable,contextTenant);
-
-		   Feature JournalFeature_LOADJOURNALMICHPAL = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "LOADJOURNALMICHPAL", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = JournalObjectTable.Id, Tenant = 0, NameTextCodeCode = "Journal.Features.LOADJOURNALMICHPAL", NameTextCodeDefaultText = @"Load michpal file" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,JournalObjectTable,contextTenant);
 
    
 	    
@@ -4557,10 +4491,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode JournalTextCode_JournalOConfirmVoidJournal = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.ConfirmVoidJournal", DefaultText = "Are you sure you want to cancel this Journal?",LocalDefaultText = @"BS64:IteQ16DXkCDXkNep16gg15DXqiDXkdeZ15jXldecINek16fXldeT16og15TXmdeV157XnyAgIg==", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode JournalTextCode_JournalODuplicateLinesSkipped = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.DuplicateLinesSkipped", DefaultText = "Duplicate Lines Skipped",LocalDefaultText = @"BS64:Itep15XXqNeV16og15vXpNeV15zXldeqINeQ15XXqteo15Ug15XXnNeQINeg16fXnNeY15Ui", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
-
- 		   TextCode JournalTextCode_JournalOOnlyDuplicates = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.OnlyDuplicates", DefaultText = "All lines in the file already exist in the system. The file was rejected.",LocalDefaultText = @"BS64:Iteb15wg15TXqdeV16jXldeqINeR16fXldeR16Ug15vXkdeoINen15nXmdee15XXqiDXkdee16LXqNeb16ouINeU16fXldeR16Ug15zXkCDXoNen15zXmCI=", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
-
  		   TextCode JournalTextCode_JournalODifferenceExchangeRate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.DifferenceExchangeRate", DefaultText = "Difference between new and old value is more than 5 Percent Exchange rate",LocalDefaultText = @"BS64:IteU16nXoteoINeU15fXk9epINen15jXn1zXkteT15XXnCDXkdeZ15XXqteoINee15fXnteZ16nXlCDXkNeX15XXlteZ150g157XlNep16LXqCDXlNen15XXk9edIg==", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
  		   TextCode JournalTextCode_JournalREAccountingDateRequired = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.RE.AccountingDateRequired", DefaultText = "Accounting Date is Required",LocalDefaultText = @"BS64:Iteq15DXqNeZ15og15fXqdeR15XXoNeQ15kg15TXmdeg15Ug16nXk9eUINeX15XXkdeUIg==", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
@@ -4592,8 +4522,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode JournalTextCode_JournalOAccountIsAccountControl = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.AccountIsAccountControl", DefaultText = "{account} is a control account",LocalDefaultText = @"BS64:InthY2NvdW50fSDXlNeV15Ag15fXqdeR15XXnyDXnteo15vXliI=", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
  		   TextCode JournalTextCode_JournalOSplitByDifferentExchangeRate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.SplitByDifferentExchangeRate", DefaultText = "The %debitAccountName card has a conversion rate of %debitExchangeRateName and the %creditAccountName card has a conversion rate of %creditExchangeRateName. A debit/credit transaction cannot be recorded. Please split the transactions.",LocalDefaultText = @"BS64:Itec15vXqNeY15nXoSAlZGViaXRBY2NvdW50TmFtZSDXnteV15LXk9eoINep16LXqCDXlNee16jXlCAlZGViaXRFeGNoYW5nZVJhdGVOYW1lINeV15zXm9eo15jXmdehICVjcmVkaXRBY2NvdW50TmFtZSDXnteV15LXk9eoINep16LXqCDXlNee16jXlCAlY3JlZGl0RXhjaGFuZ2VSYXRlTmFtZSwg15zXkCDXoNeZ16rXnyDXnNeo16nXldedINeq16DXldei16og15fXmdeV15Ev15bXmdeb15XXmSwg16DXkCDXnNek16bXnCDXkNeqINeU16rXoNeV16LXldeqIg==", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
-
- 		   TextCode JournalTextCode_JournalOJournalCreated = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.JournalCreated", DefaultText = "Journal Created",LocalDefaultText = @"BS64:Iteg15XXpteo15Qg16TXp9eV15PXqiDXmdeV157XnyI=", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
    
 	    

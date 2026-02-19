@@ -52,14 +52,8 @@ namespace Logitude.Customs.Data.Repsitories
 					where a.Tenant == tenant && a.DeclarationId == declarationId && a.Id == certificateId
                     select a).FirstOrDefault();
 		}
-        public CertificateOfOrigin GetCertificateOfOriginByCounterAndCOONumber(string Counter, string COONumber)
-        {
-            return (from a in context.CertificateOfOrigins
-                    where a.Counter == Counter && a.COONumber == COONumber
-                    select a).FirstOrDefault();
-        }
 
-    }
+	}
 
 }
    

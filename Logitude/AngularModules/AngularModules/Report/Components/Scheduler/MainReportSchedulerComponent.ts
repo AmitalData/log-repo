@@ -1,6 +1,6 @@
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {LocationDirective} from '../../../Infrastructure/Utilities/LocationDirective';
-import {Component, OnInit, QueryList, ViewChildren }  from '@angular/core';
+import {Component, OnInit, QueryList, ViewChildren, ViewChild, ViewContainerRef}  from '@angular/core';
 import { ReportGroupList } from '../../EntityLists/ReportGroupList';
 import { ReportList } from '../../EntityLists/ReportList';
 
@@ -17,12 +17,7 @@ export class MainReportSchedulerComponent implements OnInit {
     public ReportGroupList: ReportGroupList;
     public ReportList: ReportList;
     public BIReportEntity: any;
-    public IsPowerBIReport: boolean;
     public IsQueryReport: any;
-    public IsCustomerDebNotification: any;
-    public GLAccountId: any;
-    public TaskSchedulerId: any;
-    public TaskSchedulerIdMaintenance: any;
 
     constructor() {
     }
@@ -34,13 +29,7 @@ export class MainReportSchedulerComponent implements OnInit {
         this.ReportGroupList = windowArgs.ReportGroupList;
         this.ReportList = windowArgs.ReportList;
         this.BIReportEntity = windowArgs.BIReportEntity;
-        this.IsPowerBIReport = windowArgs.IsPowerBIReport;
         this.IsQueryReport = windowArgs.IsQueryReport;
-        this.IsCustomerDebNotification = windowArgs.IsCustomerDebNotification;
-        this.GLAccountId = windowArgs.GLAccountId;
-        this.TaskSchedulerId = windowArgs.TaskSchedulerId;
-        this.TaskSchedulerIdMaintenance = windowArgs.TaskSchedulerIdMaintenance;
-
         this.RunComponent();
     }
 
@@ -94,10 +83,7 @@ export class MainReportSchedulerComponent implements OnInit {
                         SessionLocator.DynamicLoader.Load('./Report/Components/Scheduler/TaskReportSchedulerComponent', myLocation.viewContainerRef)
                             .then(cmpRef => {
                                 this.PageChild_RETASK = cmpRef.instance;
-                                
-                                this.PageChild_RETASK.SetWindowArgs({ ReportGroupList: this.ReportGroupList, ReportList: this.ReportList, BIReportEntity: this.BIReportEntity, IsPowerBIReport: this.IsPowerBIReport, IsQueryReport: this.IsQueryReport ,
-                                     IsCustomerDebNotification: this.IsCustomerDebNotification ,TaskSchedulerId: this.TaskSchedulerId,GLAccountId: this.GLAccountId, TaskSchedulerIdMaintenance: this.TaskSchedulerIdMaintenance
-                                    });
+                                this.PageChild_RETASK.SetWindowArgs({ ReportGroupList: this.ReportGroupList, ReportList: this.ReportList, BIReportEntity: this.BIReportEntity, IsQueryReport: this.IsQueryReport });
                             });
                     }
                     break;

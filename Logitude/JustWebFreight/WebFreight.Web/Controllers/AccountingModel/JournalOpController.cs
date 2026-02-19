@@ -263,11 +263,19 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated //AccountingPerio
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                string documentId = "";
                 if (fileUploadParamerter != null && !string.IsNullOrEmpty(fileUploadParamerter.Base64String))
                 {
                     byte[] dosBytes = Convert.FromBase64String(fileUploadParamerter.Base64String);
+                    //string decodedString = Encoding.UTF8.GetString(data);
 
-                    string winHebrewString = DecodeHebrewBytes(dosBytes);
+                    //var dosEnc = System.Text.Encoding.GetEncoding("DOS-862"); // ms-dos codepage ( US English )
+                    //var winHebrewEncoding = Encoding.GetEncoding("Windows-1255");
+                    //string dosS = dosEnc.GetString(dosBytes);
+
+                    //var hebBytes = Encoding.Convert(dosEnc, winHebrewEncoding, dosBytes);
+                    //string winHebrewString = winHebrewEncoding.GetString(hebBytes);
+                    string winHebrewString = Encoding.GetEncoding("Windows-1255").GetString(dosBytes);
 
                     var myJournalsCSVFlatFileAnalyser_ISL = new JournalsCSVFlatFileAnalyser_ISL();
                     var journalPM =myJournalsCSVFlatFileAnalyser_ISL.Analyse(authToken.Tenant, winHebrewString);
@@ -290,74 +298,6 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated //AccountingPerio
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
-        }
-
-
-
-        public HttpResponseMessage PostJournalAsCSVWithSkip(ImageParameter fileUploadParamerter)
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                if (fileUploadParamerter != null && !string.IsNullOrEmpty(fileUploadParamerter.Base64String))
-                {
-                    byte[] dosBytes = Convert.FromBase64String(fileUploadParamerter.Base64String);
-                    string winHebrewString = DecodeHebrewBytes(dosBytes);
-
-                    var myJournalsCSVFlatFileAnalyser_ISL = new JournalsCSVFlatFileAnalyser_ISL();
-                    var journalAnalyseResult = myJournalsCSVFlatFileAnalyser_ISL.AnalyseWithSkip(authToken.Tenant, winHebrewString);
-
-
-                    return Request.CreateResponse(HttpStatusCode.OK, journalAnalyseResult);
-
-
-
-                }
-                else
-                {
-                    throw new Exception("fileUploadParamerter is empty");
-                }
-
-
-
-            }
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
-
-        public HttpResponseMessage PostJournalAsMichpal(JournalPM entityPM)
-        {
-              
-                try
-                {
-                    using (TransactionScope scope = TransactionFactory.GetTransaction())
-                    {
-                        string logKey = PerformanceLogger.LogCurrentTime();
-                        string token = HttpContext.Current.Request.Headers["Token"];
-                        AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                        SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                        SecurityUtility.CheckContactFeature("Journal", "NEW", authToken.Tenant);
-                        SecurityUtility.AuthenticationOnEntityTenant("Journal", entityPM.Tenant, authToken.Tenant);
-
-                        IAccountingContext MyContext = AccountingContext.GetContext(entityPM.Tenant);
-                        JournalUpdateService service = new JournalUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
-                        entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;                       
-                        service.JournalAsMichpal(entityPM);         
-                        service.Update(entityPM, true);
-                        scope.Complete();
-                        PerformanceLogger.AddServerExecutionTimeHeader(logKey);
-
-                        return Request.CreateResponse(HttpStatusCode.OK, entityPM);
-                    }
-                }
-
-                catch (Exception ex)
-                {
-                    return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-                }
         }
 
         [HttpPut]
@@ -396,30 +336,6 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated //AccountingPerio
                 return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
             }
         }
-
-
-        public static string DecodeHebrewBytes(byte[] dosBytes)
-        {
-            try
-            {
-                // Try UTF-8 first
-                string decoded = Encoding.UTF8.GetString(dosBytes);
-
-                // If the text has replacement characters (�), it likely means wrong encoding
-                if (decoded.Contains("�"))
-                {
-                    decoded = Encoding.GetEncoding(1255).GetString(dosBytes); // Windows-1255
-                }
-
-                return decoded;
-            }
-            catch
-            {
-                // Fallback to Windows-1255 if UTF-8 throws
-                return Encoding.GetEncoding(1255).GetString(dosBytes);
-            }
-        }
-
 
         public HttpResponseMessage GetFailedJournalInReconcileProcess(string accountId)
         {

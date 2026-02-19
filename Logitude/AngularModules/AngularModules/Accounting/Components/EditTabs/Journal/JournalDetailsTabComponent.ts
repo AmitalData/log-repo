@@ -297,7 +297,7 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
             this.UIProperties.SetVisibility("Reference3", "Journal", false);
             this.UIProperties.SetVisibility("Notes", "Journal", false);
         }
-        else if (this.EntityPM.StatusCode != "0" && this.EntityPM.StatusCode != "1") { // 0-draft and 1-waiting for approval
+        else{
             this.DueDate=new Date();
             this.DocumentDate=new Date();
         }
@@ -1101,10 +1101,11 @@ class JournalLineModel extends BaseComponent {
             this.JournalLinePM.CreditAccountId = value;
             this.glaccountListService.getSingle(value).subscribe((result:ServiceResponse)=>{
                 var entity=result.Result;
-                if(entity ){
-                    this.JournalLinePM.CreditAccountCOACode = this.CreditAccount.ChartOfAccountsTypeCode;
+                if(entity){
                     this.CreditAccount=entity;
                     this.CreditAccountName=this.CreditAccount.LocalName;
+                    this.JournalLinePM.CreditAccountCOACode = this.CreditAccount.ChartOfAccountsTypeCode;
+                    this.GetExchangeRate(this.CurrencyId, ActionCode.Credit);
 
                 }
             });
@@ -1118,11 +1119,11 @@ class JournalLineModel extends BaseComponent {
             this.gLAccountPMService.get(value).subscribe((result:ServiceResponse)=>{
                 var entity=result.Result;
                 if(entity){
-                    this.JournalLinePM.DebitAccountCountryCode = this.DebitAccount.CardCountryCode;
-                    this.JournalLinePM.DebitAccountCOACode = this.DebitAccount.ChartOfAccountsTypeCode;
                     this.DebitAccount=entity;
                     this.DebitAccountName=this.DebitAccount.LocalName;
-                    
+                    this.JournalLinePM.DebitAccountCountryCode = this.DebitAccount.CardCountryCode;
+                    this.JournalLinePM.DebitAccountCOACode = this.DebitAccount.ChartOfAccountsTypeCode;
+                    this.GetExchangeRate(this.CurrencyId ,ActionCode.Debit);
                 }
             });
         }
@@ -1161,7 +1162,11 @@ class JournalLineModel extends BaseComponent {
            
 
         }
-        
+        else {
+            if (this.CurrencyId !== SessionLocator.TenantPM.CurrencyId) {
+                this.GetExchangeRate(value);
+            }
+        }
     }
     ClearAmounts() {
         this.LocalAmount = null;
@@ -1626,7 +1631,6 @@ class JournalLineModel extends BaseComponent {
                     this.parent.EntityWarningsList.push(TextCodeTranslator.Translate("Journal.O.DifferenceExchangeRate"));
                 }
             })
-            this.AmountChanged('foreign', this.LocalAmount, this.ForeignAmount);
             return userExchageRate && Math.abs(this.currencyRate - userExchageRate) > 0.05;
         }
         else {

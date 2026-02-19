@@ -1,19 +1,3 @@
-<style type="text/css">
-
-iframe, .powerBiReport {
-    width: 100%;
-    height: 80vh;
-    border: 0;
-}
-
-.ReportScheduler{
-    width:23px;
-    margin-left: 10px;
-    margin-bottom: 2px;
-    cursor: pointer;
-}
-
-</style>
 
 <table *ngIf="IsResourcesReady">
     <tr style="height:21px;" *ngIf="IsMenuVisible">
@@ -22,8 +6,6 @@ iframe, .powerBiReport {
                 <li id="{{'Report' | IdGeneratorAsyncPipe | async}}" *ngIf="IsReportItemVisible"  [class.SelectedPageMenu]="SelectedItem == 'Report'" (click)="SelectedItem = 'Report'">Reports</li>
 
                 <li id="{{'BI' | IdGeneratorAsyncPipe | async}}" *ngIf="IsBIItemVisible" [class.SelectedPageMenu]="SelectedItem == 'BI'" (click)="SelectedItem = 'BI'">BI</li>               
-
-                <li id="{{'PowerBI' | IdGeneratorAsyncPipe | async}}" *ngIf="IsBIItemVisible" [class.SelectedPageMenu]="SelectedItem == 'PowerBI'" (click)="SelectedItem = 'PowerBI'">Power BI</li>               
             </ul>
         </td>
     </tr>
@@ -44,33 +26,6 @@ iframe, .powerBiReport {
                 <div LocationDirective Code="BI"></div>
             </div>
 
-            <div *ngIf="SelectedItem === 'PowerBI'" style="height: inherit;">
-
-                <div *ngIf="!SelectedPowerBIReport">
-                    <div *ngFor="let report of PowerBiReports">
-                        <table>
-                            <tr>
-                                <td style="width: 130px;">
-                                    <HyperlinkQuery (click)="SelectPowerBiReport(report)">{{report.Name}}</HyperlinkQuery>
-                                </td>
-                                <td *ngIf="report.Report && report.Report.AvailableForScheduling">
-                                    <img class="ReportScheduler" (click)="onReportSchedulerClick(null, report.Report)" title="Report Scheduler" src="./Images/ReportScheduler.png" />
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-
-                <div *ngIf="SelectedPowerBIReport" >
-                    <div style="width: 60px; display: flex;">
-                        <td style="width: 60px">
-                            <BackButton (click)="SelectedPowerBIReport = null"></BackButton>
-                        </td>
-                    </div>
-
-                    <div #reportContainer class="powerBiReport"></div>
-                </div>
-            </div>
         </td>
     </tr>
 </table>

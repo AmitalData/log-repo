@@ -62,11 +62,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         OcrToken, 
 	         MaxItemsSendInteractive, 
 	         MaxSISendInteractive, 
-	         CourierDocToken, 
-	         ForbiddenSigns, 
-	         CB_LastUpdateDate, 
-	         CustomsBookToken,
-	      }
+ 	         ForbiddenSigns,
+ 	         CourierDocToken, 
+ 	      }
 
 
 	      public enum PMPropertyNames
@@ -109,11 +107,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         OcrToken, 
 	         MaxItemsSendInteractive, 
 	         MaxSISendInteractive, 
-	         CourierDocToken, 
-	         ForbiddenSigns, 
-	         CB_LastUpdateDate, 
-	         CustomsBookToken,
-	      }
+ 	         ForbiddenSigns,
+ 	         CourierDocToken, 
+ 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
         List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
@@ -286,25 +282,15 @@ namespace Logitude.Customs.BL.EntityDataMappings
 				entityPOCO.MaxSISendInteractive = entityPM.MaxSISendInteractive;
 			}
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CourierDocToken))
-            {
-				entityPOCO.CourierDocToken = entityPM.CourierDocToken;
-			}
-			
+ 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ForbiddenSigns))
             {
 				entityPOCO.ForbiddenSigns = entityPM.ForbiddenSigns;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CB_LastUpdateDate))
+ 			}
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CourierDocToken))
             {
-				entityPOCO.CB_LastUpdateDate = entityPM.CB_LastUpdateDate;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomsBookToken))
-            {
-				entityPOCO.CustomsBookToken = entityPM.CustomsBookToken;
-			}
+				entityPOCO.CourierDocToken = entityPM.CourierDocToken;
+ 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
 		  }
@@ -481,26 +467,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
             {
 					entityPM.MaxSISendInteractive = entityPOCO.MaxSISendInteractive;
             }
+ 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ForbiddenSigns))
+            {
+					entityPM.ForbiddenSigns = entityPOCO.ForbiddenSigns;
+             }
 
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CourierDocToken))
             {
 					entityPM.CourierDocToken = entityPOCO.CourierDocToken;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ForbiddenSigns))
-            {
-					entityPM.ForbiddenSigns = entityPOCO.ForbiddenSigns;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CB_LastUpdateDate))
-            {
-					entityPM.CB_LastUpdateDate = entityPOCO.CB_LastUpdateDate;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CustomsBookToken))
-            {
-					entityPM.CustomsBookToken = entityPOCO.CustomsBookToken;
-            }
+             }
 
 		}
 
@@ -672,26 +648,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
             {
                 oldEntityPM.MaxSISendInteractive = entityPM.MaxSISendInteractive;
             }
+ 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ForbiddenSigns))
+            {
+                oldEntityPM.ForbiddenSigns = entityPM.ForbiddenSigns;
+             }
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CourierDocToken))
             {
                 oldEntityPM.CourierDocToken = entityPM.CourierDocToken;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ForbiddenSigns))
-            {
-                oldEntityPM.ForbiddenSigns = entityPM.ForbiddenSigns;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CB_LastUpdateDate))
-            {
-                oldEntityPM.CB_LastUpdateDate = entityPM.CB_LastUpdateDate;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomsBookToken))
-            {
-                oldEntityPM.CustomsBookToken = entityPM.CustomsBookToken;
-            }
+             }
 			
 		}
 

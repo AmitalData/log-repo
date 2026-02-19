@@ -139,7 +139,7 @@ export class ArchivoExportadoComponent extends BaseComponent implements OnInit {
         this.ValidationErrorsList = errors;
         return errors.length == 0;
     }
-    RunButtonClicked(isInteractive: boolean) {
+    RunButtonClicked() {
         this.SetUIProperties();
 
        
@@ -150,7 +150,6 @@ export class ArchivoExportadoComponent extends BaseComponent implements OnInit {
             myReportFliter.NumberOfPage = 1;
             myReportFliter.ProcessType = "GenerateReport";
             myReportFliter.QueryFilterItemLists = this.GetQueryFilterItems();
-            myReportFliter.IsInteractive = isInteractive;
             this.RunReportEvent.emit(myReportFliter);
         }
     }

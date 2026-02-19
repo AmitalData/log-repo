@@ -18,6 +18,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         AgentSharedDocumentRepository repository;
 
+        public AgentSharedDocumentQuery()
+        {
+            repository = new AgentSharedDocumentRepository();
+        }
 
         public AgentSharedDocumentQuery(int tenant)
         {
