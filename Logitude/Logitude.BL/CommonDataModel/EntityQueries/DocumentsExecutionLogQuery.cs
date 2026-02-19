@@ -20,7 +20,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         DocumentsExecutionLogRepository repository;
 
-
+        public DocumentsExecutionLogQuery()
+        {
+            repository = new DocumentsExecutionLogRepository();
+        }
 
         public DocumentsExecutionLogQuery(int tenant)
         {

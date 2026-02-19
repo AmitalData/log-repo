@@ -78,8 +78,6 @@ namespace Logitude.CustomsMessaging.RequestServices
                 {
                     case SendRequestVIA.WebServiceInteractive:
                         var myDF_MSG10000_ImportDeclarationRequestService = new DF_MSG10000_ImportDeclarationRequestService();
-                        DeclarationQueryService DeclarationQueryService = new DeclarationQueryService(this.dbContext);
-                        requestParams.DeclarationDirection = DeclarationQueryService.GetSingle(requestParams.LoggingEntityId, true, false)?.Direction;
                         myDF_MSG10000_ImportDeclarationRequestService.ManipulateRequestParams(requestParams);
                         break;
                     case SendRequestVIA.WebServiceBatch:
@@ -303,7 +301,7 @@ namespace Logitude.CustomsMessaging.RequestServices
                 throw new BusinessErrorException("_DirtyDeclarationPaymentPM.DeclarationId could not convert to long ");
             }
             var myCCUFILEMRepository = new CCUFILEMRepository(declarationPM.Tenant);
-            var ccufilem = myCCUFILEMRepository.GetFILENOByCUSTOMFILENO(lCUSTOMFILENO, declarationPM.Tenant);
+            var ccufilem = myCCUFILEMRepository.GetFILENOByCUSTOMFILENO(lCUSTOMFILENO);
 
 
             var myCCUQUELOCKRepository = new CCUQUELOCKRepository(requestParams.Tenant);

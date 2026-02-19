@@ -142,11 +142,11 @@
 
                     <!-- 2 -->
                     <td style="width:245px">
-                        <LogLov  [ForceDisabled]="IsDisableGlaccountId"  style="display: block;width: 150px;" float-start [ObjectFieldName]="'GLAccountId'"
+                        <LogLov  [ShowInActive]="true" style="display: block;width: 150px;" float-start [ObjectFieldName]="'GLAccountId'"
                             [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
                             [LookUpTableName]="'GLAccount'" [QueryFilterItems]="GLAccountFilterItems"
                             (SelectedItemChanged)="GLAccount = $event" [ForceShowAddLink]="true" [HideAddLink]="true"
-                            [HideColumns]="true" [StartSearchFromChar]="3" [StartSearchFromNumber]="5" >
+                            [HideColumns]="true" [StartSearchFromChar]="3" [StartSearchFromNumber]="5">
 
                         </LogLov>
                     </td>
@@ -249,9 +249,7 @@
 
                     <!-- 6 -->
                     <td>
-                        <div style="width: 100px;" float-left>
-                            <app-run-report-toggle [isRTL]="isRTL" [IsSchedulerReport]="IsSchedulerReport" (runReport)="RunButtonClicked($event)"></app-run-report-toggle>
-                        </div>
+                        <div></div>
                     </td>
 
                     <!-- 7 -->
@@ -322,6 +320,22 @@
                                 {{'LedgerTransaction.O.IncludeRelatedCurrenciesAccount' | TextCodeTranslationPipe}}
                             </div>
                         </div>
+                    </td>
+
+
+                    <!-- 6 -->
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <!-- 7 -->
+                    <td>
+                        <div style="width: 100px;" float-left>
+                            <button class="GreenButton" (click)="RunButtonClicked()">
+                                {{RunReportTitle}}
+                            </button>
+                        </div>
+
                     </td>
 
                 </tr>
