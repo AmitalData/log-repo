@@ -26,7 +26,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class InvoiceApiCommunicationLogUpdateClass
    {  		
-		public const string HashString = "de0d2acac66e1e7b888c2a0b1b7a11ab";
+		public const string HashString = "a99ba55626018d5a8c51bddf9d6ea09a";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -349,12 +349,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "DocumentId",
+					 						FieldName =  "CommunicationId",
 					  						ObjectTableName =  "InvoiceApiCommunicationLog",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
 					  						MaxLength =  15,
-					  						IsRequired =  false,
+					  						IsRequired =  true,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
@@ -368,8 +368,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "DocumentId",
-					  						ListPropertyPath =  "DocumentId",
+					  						PMPropertyPath =  "CommunicationId",
+					  						ListPropertyPath =  "CommunicationId",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -387,13 +387,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "DocumentId",
-					  						DefaultText =  "DocumentId",
-					  						FullLocalDefaultText =  "DocumentId",
-					  						ListFieldLable =  "DocumentIdListLable",
-					  						ListLableDefaultText =  "DocumentId",
-					  						ListLocalDefaultText =  "DocumentId",
-					  						IsForeignKey =  false,
+					  						FullFieldLable =  "CommunicationId",
+					  						DefaultText =  "CommunicationId",
+					  						FullLocalDefaultText =  "CommunicationId",
+					  						ListFieldLable =  "CommunicationIdListLable",
+					  						ListLableDefaultText =  "CommunicationId",
+					  						ListLocalDefaultText =  "CommunicationId",
+					  						IsForeignKey =  true,
+					  						ForeignEntity =  "CommunicationLog",
+					  						NavigationPropertyName =  "CommunicationLog",
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
@@ -454,10 +456,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Step",
 					  						DefaultText =  "Step",
-					  						FullLocalDefaultText =  "קוד שלב",
+					  						FullLocalDefaultText =  "שלב",
 					  						ListFieldLable =  "StepListLable",
 					  						ListLableDefaultText =  "Step",
-					  						ListLocalDefaultText =  "קוד שלב",
+					  						ListLocalDefaultText =  "שלב",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "InvoiceApiStep",
 					  						NavigationPropertyName =  "InvoiceApiStep",
@@ -521,10 +523,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "StatusCode",
 					  						DefaultText =  "StatusCode",
-					  						FullLocalDefaultText =  "קוד סטטוס",
+					  						FullLocalDefaultText =  "סטטוס",
 					  						ListFieldLable =  "StatusCodeListLable",
 					  						ListLableDefaultText =  "StatusCode",
-					  						ListLocalDefaultText =  "קוד סטטוס",
+					  						ListLocalDefaultText =  "סטטוס",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "InvoiceApiStatus",
 					  						NavigationPropertyName =  "InvoiceApiStatus",
@@ -609,404 +611,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
-
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
-					 
-					 						FieldName =  "StatusName",
-					  						ObjectTableName =  "InvoiceApiCommunicationLog",
-					  						FieldsDataType =  "nText",
-					  						MinLength =  0,
-					  						MaxLength =  30,
-					  						IsRequired =  false,
-					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
-					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  true,
-					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  30,
-					  						DisplayInList =  true,
-					  						IsCustomFilter =  false,
-					  						IsListFilter =  true,
-					  						Operator =  "Contains",
-					  						MultiLine =  false,
-					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "StatusName",
-					  						ListPropertyPath =  "StatusName",
-					  						DisplayInLookUpIndex =  0,
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
-					  						IsMulti =  false,
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "InvoiceApiCommunicationLog",
-					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						InActive =  false,
-					  						DisplayLongName =  false,
-					  						FullFieldLable =  "StatusName",
-					  						DefaultText =  "Status",
-					  						FullLocalDefaultText =  "סטטוס",
-					  						ListFieldLable =  "StatusNameListLable",
-					  						ListLableDefaultText =  "Status",
-					  						ListLocalDefaultText =  "סטטוס",
-					  						IsForeignKey =  false,
-					  						IsMaxLength =  false,
-					  						NoMetaDataField =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
-					  						DisplayInRequiredFields =  false,
-					  						HasTemplate =  false,
-					  						IsCustom =  false,
-					  						EnableFullscreenTextBox =  false,
-					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
- 
-
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
-					 
-					 						FieldName =  "StepName",
-					  						ObjectTableName =  "InvoiceApiCommunicationLog",
-					  						FieldsDataType =  "nText",
-					  						MinLength =  0,
-					  						MaxLength =  30,
-					  						IsRequired =  false,
-					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
-					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  true,
-					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  30,
-					  						DisplayInList =  true,
-					  						IsCustomFilter =  false,
-					  						IsListFilter =  true,
-					  						Operator =  "Contains",
-					  						MultiLine =  false,
-					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "StepName",
-					  						ListPropertyPath =  "StepName",
-					  						DisplayInLookUpIndex =  0,
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
-					  						IsMulti =  false,
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "InvoiceApiCommunicationLog",
-					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						InActive =  false,
-					  						DisplayLongName =  false,
-					  						FullFieldLable =  "StepName",
-					  						DefaultText =  "Step",
-					  						FullLocalDefaultText =  "שלב",
-					  						ListFieldLable =  "StepNameListLable",
-					  						ListLableDefaultText =  "Step",
-					  						ListLocalDefaultText =  "שלב",
-					  						IsForeignKey =  false,
-					  						IsMaxLength =  false,
-					  						NoMetaDataField =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
-					  						DisplayInRequiredFields =  false,
-					  						HasTemplate =  false,
-					  						IsCustom =  false,
-					  						EnableFullscreenTextBox =  false,
-					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
- 
-
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
-					 
-					 						FieldName =  "ExternalID",
-					  						ObjectTableName =  "InvoiceApiCommunicationLog",
-					  						FieldsDataType =  "nText",
-					  						MinLength =  0,
-					  						MaxLength =  100,
-					  						IsRequired =  false,
-					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
-					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  true,
-					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  100,
-					  						DisplayInList =  true,
-					  						IsCustomFilter =  false,
-					  						IsListFilter =  true,
-					  						Operator =  "Contains",
-					  						MultiLine =  false,
-					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "ExternalID",
-					  						ListPropertyPath =  "ExternalID",
-					  						DisplayInLookUpIndex =  0,
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
-					  						IsMulti =  false,
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "InvoiceApiCommunicationLog",
-					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						InActive =  false,
-					  						DisplayLongName =  false,
-					  						FullFieldLable =  "ExternalID",
-					  						DefaultText =  "External ID",
-					  						FullLocalDefaultText =  "מזהה חיצוני",
-					  						ListFieldLable =  "ExternalIDListLable",
-					  						ListLableDefaultText =  "External ID",
-					  						ListLocalDefaultText =  "מזהה חיצוני",
-					  						IsForeignKey =  false,
-					  						IsMaxLength =  false,
-					  						NoMetaDataField =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
-					  						DisplayInRequiredFields =  false,
-					  						HasTemplate =  false,
-					  						IsCustom =  false,
-					  						EnableFullscreenTextBox =  false,
-					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
- 
-
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
-					 
-					 						FieldName =  "ARInvoiceId",
-					  						ObjectTableName =  "InvoiceApiCommunicationLog",
-					  						FieldsDataType =  "Text",
-					  						MinLength =  0,
-					  						MaxLength =  15,
-					  						IsRequired =  false,
-					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
-					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  true,
-					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  15,
-					  						DisplayInList =  true,
-					  						IsCustomFilter =  false,
-					  						IsListFilter =  true,
-					  						Operator =  "Equals",
-					  						MultiLine =  false,
-					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "ARInvoiceId",
-					  						ListPropertyPath =  "ARInvoiceId",
-					  						DisplayInLookUpIndex =  0,
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
-					  						IsMulti =  false,
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "InvoiceApiCommunicationLog",
-					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						InActive =  false,
-					  						DisplayLongName =  false,
-					  						FullFieldLable =  "ARInvoiceId",
-					  						DefaultText =  "ARInvoice Id",
-					  						FullLocalDefaultText =  "מזהה פנימי לחשבונית",
-					  						ListFieldLable =  "ARInvoiceIdListLable",
-					  						ListLableDefaultText =  "ARInvoice Id",
-					  						ListLocalDefaultText =  "מזהה פנימי לחשבונית",
-					  						IsForeignKey =  true,
-					  						ForeignEntity =  "ARInvoice",
-					  						NavigationPropertyName =  "ARInvoice",
-					  						IsMaxLength =  false,
-					  						NoMetaDataField =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
-					  						DisplayInRequiredFields =  false,
-					  						HasTemplate =  false,
-					  						IsCustom =  false,
-					  						EnableFullscreenTextBox =  false,
-					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
- 
-
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
-					 
-					 						FieldName =  "InvoiceNumber",
-					  						ObjectTableName =  "InvoiceApiCommunicationLog",
-					  						FieldsDataType =  "Text",
-					  						MinLength =  0,
-					  						MaxLength =  15,
-					  						IsRequired =  false,
-					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
-					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  true,
-					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  15,
-					  						DisplayInList =  true,
-					  						IsCustomFilter =  false,
-					  						IsListFilter =  true,
-					  						Operator =  "StartsWith",
-					  						MultiLine =  false,
-					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "InvoiceNumber",
-					  						ListPropertyPath =  "InvoiceNumber",
-					  						DisplayInLookUpIndex =  0,
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
-					  						IsMulti =  false,
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "InvoiceApiCommunicationLog",
-					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						InActive =  false,
-					  						DisplayLongName =  false,
-					  						FullFieldLable =  "InvoiceNumber",
-					  						DefaultText =  "InvoiceNumber",
-					  						FullLocalDefaultText =  "מספר חשבונית",
-					  						ListFieldLable =  "InvoiceNumberListLable",
-					  						ListLableDefaultText =  "InvoiceNumber",
-					  						ListLocalDefaultText =  "מספר חשבונית",
-					  						IsForeignKey =  false,
-					  						IsMaxLength =  false,
-					  						NoMetaDataField =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
-					  						DisplayInRequiredFields =  false,
-					  						HasTemplate =  true,
-					  						IsCustom =  false,
-					  						EnableFullscreenTextBox =  false,
-					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
- 
-
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
-					 
-					 						FieldName =  "ExternalInvoiceNumber",
-					  						ObjectTableName =  "InvoiceApiCommunicationLog",
-					  						FieldsDataType =  "nText",
-					  						MinLength =  0,
-					  						MaxLength =  100,
-					  						IsRequired =  false,
-					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
-					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  true,
-					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  100,
-					  						DisplayInList =  true,
-					  						IsCustomFilter =  false,
-					  						IsListFilter =  true,
-					  						Operator =  "StartsWith",
-					  						MultiLine =  false,
-					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "ExternalInvoiceNumber",
-					  						ListPropertyPath =  "ExternalInvoiceNumber",
-					  						DisplayInLookUpIndex =  0,
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
-					  						IsMulti =  false,
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "InvoiceApiCommunicationLog",
-					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						InActive =  false,
-					  						DisplayLongName =  false,
-					  						FullFieldLable =  "ExternalInvoiceNumber",
-					  						DefaultText =  "External Invoice Number",
-					  						FullLocalDefaultText =  "מספר חשבונית חיצונית",
-					  						ListFieldLable =  "ExternalInvoiceNumberListLable",
-					  						ListLableDefaultText =  "External Invoice Number",
-					  						ListLocalDefaultText =  "מספר חשבונית חיצונית",
-					  						IsForeignKey =  false,
-					  						IsMaxLength =  false,
-					  						NoMetaDataField =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
-					  						DisplayInRequiredFields =  false,
-					  						HasTemplate =  false,
-					  						IsCustom =  false,
-					  						EnableFullscreenTextBox =  false,
-					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
- 
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups ,int contextTenant)
@@ -1047,15 +651,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 			 QueryColumn TodayInvoiceApiQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayInvoiceApiQuery.Id,QueryCode = TodayInvoiceApiQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "InvoiceApiCommunicationLog.CreateDate" , ColumnWidth = 130 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn TodayInvoiceApiQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayInvoiceApiQuery.Id,QueryCode = TodayInvoiceApiQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "InvoiceApiCommunicationLog.ExternalInvoiceNumber" , ColumnWidth = 130 }, addedQueryColumns,contextTenant);
+			 QueryColumn TodayInvoiceApiQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayInvoiceApiQuery.Id,QueryCode = TodayInvoiceApiQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "InvoiceApiCommunicationLog.CommunicationId" , ColumnWidth = 130 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn TodayInvoiceApiQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayInvoiceApiQuery.Id,QueryCode = TodayInvoiceApiQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "InvoiceApiCommunicationLog.InvoiceNumber" , ColumnWidth = 100 }, addedQueryColumns,contextTenant);
-
-			 QueryColumn TodayInvoiceApiQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayInvoiceApiQuery.Id,QueryCode = TodayInvoiceApiQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "InvoiceApiCommunicationLog.Exception" , ColumnWidth = 130 }, addedQueryColumns,contextTenant);
-
-			 QueryColumn TodayInvoiceApiQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayInvoiceApiQuery.Id,QueryCode = TodayInvoiceApiQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "InvoiceApiCommunicationLog.StepName" , ColumnWidth = 130 }, addedQueryColumns,contextTenant);
-
-			 QueryColumn TodayInvoiceApiQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayInvoiceApiQuery.Id,QueryCode = TodayInvoiceApiQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "InvoiceApiCommunicationLog.StatusCode" , ColumnWidth = 130 }, addedQueryColumns,contextTenant);
+			 QueryColumn TodayInvoiceApiQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayInvoiceApiQuery.Id,QueryCode = TodayInvoiceApiQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "InvoiceApiCommunicationLog.StatusCode" , ColumnWidth = 50 }, addedQueryColumns,contextTenant);
 
              AdvancedQueryFilter TodayInvoiceApiQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "InvoiceApiCommunicationLog.CreateDate", PredefinedValue = "Today",PredefinedValue2 = null, CustomPredefined = false, QueryId = TodayInvoiceApiQuery.Id,QueryCode = TodayInvoiceApiQuery.UniqueCode, Tenant = 0}, addedQueryFilters,contextTenant);
 
@@ -1063,19 +661,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	      
 
 			  Query AllInvoiceApiQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = InvoiceApiCommunicationLogTextCode_1.Id, NameTextCodeCode = InvoiceApiCommunicationLogTextCode_1.Code, ObjectTableName = "InvoiceApiCommunicationLog", Code = "All Invoice Api",  QueryGroupCode = "e2e4", IndexOrder = 1, Tenant = 0, ObjectTableId = InvoiceApiCommunicationLogObjectTable.Id, QuerySection = "InvoiceApiCommunicationLog", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = InvoiceApiCommunicationLogFeature_1.Id,FeatureUniqeCode= InvoiceApiCommunicationLogFeature_1.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries,contextTenant);
-	
-			 QueryColumn AllInvoiceApiQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllInvoiceApiQuery.Id,QueryCode = AllInvoiceApiQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "InvoiceApiCommunicationLog.CreateDate" , ColumnWidth = 130 }, addedQueryColumns,contextTenant);
-
-			 QueryColumn AllInvoiceApiQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllInvoiceApiQuery.Id,QueryCode = AllInvoiceApiQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "InvoiceApiCommunicationLog.ExternalInvoiceNumber" , ColumnWidth = 130 }, addedQueryColumns,contextTenant);
-
-			 QueryColumn AllInvoiceApiQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllInvoiceApiQuery.Id,QueryCode = AllInvoiceApiQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "InvoiceApiCommunicationLog.InvoiceNumber" , ColumnWidth = 100 }, addedQueryColumns,contextTenant);
-
-			 QueryColumn AllInvoiceApiQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllInvoiceApiQuery.Id,QueryCode = AllInvoiceApiQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "InvoiceApiCommunicationLog.Exception" , ColumnWidth = 130 }, addedQueryColumns,contextTenant);
-
-			 QueryColumn AllInvoiceApiQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllInvoiceApiQuery.Id,QueryCode = AllInvoiceApiQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "InvoiceApiCommunicationLog.StepName" , ColumnWidth = 130 }, addedQueryColumns,contextTenant);
-
-			 QueryColumn AllInvoiceApiQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllInvoiceApiQuery.Id,QueryCode = AllInvoiceApiQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "InvoiceApiCommunicationLog.StatusName" , ColumnWidth = 130 }, addedQueryColumns,contextTenant);
-			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes,contextTenant);
+				SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes,contextTenant);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures,contextTenant);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries,contextTenant);
 			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns,contextTenant);
@@ -1091,16 +677,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		       
 	      
 
-	         Screen InvoiceApiCommunicationLogHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "InvoiceApiCommunicationLog.FullAccHeaderScreen", Name = "Header Screen", ObjectTableId = InvoiceApiCommunicationLogObjectTable.Id, NumberOfColumns = 3, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens,contextTenant);
-      
-             ScreenField InvoiceApiCommunicationLogInvoiceApiCommunicationLogFullAccHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = InvoiceApiCommunicationLogHeaderScreenScreen0.Id,ScreenCode = InvoiceApiCommunicationLogHeaderScreenScreen0.Code, ObjectFieldCode = "InvoiceApiCommunicationLog.CreateDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields,contextTenant);
-	          
-             ScreenField InvoiceApiCommunicationLogInvoiceApiCommunicationLogFullAccHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = InvoiceApiCommunicationLogHeaderScreenScreen0.Id,ScreenCode = InvoiceApiCommunicationLogHeaderScreenScreen0.Code, ObjectFieldCode = "InvoiceApiCommunicationLog.ExternalInvoiceNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields,contextTenant);
-	          
-             ScreenField InvoiceApiCommunicationLogInvoiceApiCommunicationLogFullAccHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = InvoiceApiCommunicationLogHeaderScreenScreen0.Id,ScreenCode = InvoiceApiCommunicationLogHeaderScreenScreen0.Code, ObjectFieldCode = "InvoiceApiCommunicationLog.InvoiceNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields,contextTenant);
-	          	
-		    InvoiceApiCommunicationLogObjectTable.HeaderScreenId = InvoiceApiCommunicationLogHeaderScreenScreen0.Id;
-		    InvoiceApiCommunicationLogObjectTable.HeaderScreenCode = InvoiceApiCommunicationLogHeaderScreenScreen0.Code;
+	         Screen InvoiceApiCommunicationLogInvoiceApiCommunicationLogHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "InvoiceApiCommunicationLog.HeaderScreen", Name = "InvoiceApiCommunicationLogHeaderScreen", ObjectTableId = InvoiceApiCommunicationLogObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens,contextTenant);
+      	
+		    InvoiceApiCommunicationLogObjectTable.HeaderScreenId = InvoiceApiCommunicationLogInvoiceApiCommunicationLogHeaderScreenScreen0.Id;
+		    InvoiceApiCommunicationLogObjectTable.HeaderScreenCode = InvoiceApiCommunicationLogInvoiceApiCommunicationLogHeaderScreenScreen0.Code;
 
 	   		  
 
@@ -1113,18 +693,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
                  
 			   TextCode InvoiceApiCommunicationLogDetailsTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InvoiceApiCommunicationLog.TH.Details", DefaultText = "Details",LocalDefaultText = "פרטים", ObjectTableId = InvoiceApiCommunicationLogObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes,contextTenant);
 			   Feature InvoiceApiCommunicationLogDetailsFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "InvoiceApiCommunicationLog.Tab.Details", ObjectTableId = InvoiceApiCommunicationLogObjectTable.Id, Tenant = 0, NameTextCodeCode = "InvoiceApiCommunicationLogFeatures.MGGT", NameTextCodeDefaultText = "Details", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,InvoiceApiCommunicationLogObjectTable,contextTenant);
- 
-                 
-			   TextCode InvoiceApiCommunicationLogEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InvoiceApiCommunicationLog.TH.Events", DefaultText = "Events",LocalDefaultText = "אירועים", ObjectTableId = InvoiceApiCommunicationLogObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes,contextTenant);
-			   Feature InvoiceApiCommunicationLogEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "InvoiceApiCommunicationLog.Tab.Events", ObjectTableId = InvoiceApiCommunicationLogObjectTable.Id, Tenant = 0, NameTextCodeCode = "InvoiceApiCommunicationLogFeatures.ICEV", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,InvoiceApiCommunicationLogObjectTable,contextTenant);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "MGGT",HtmlComponentName = "InvoiceApiCommunicationLogDetailsTabComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/InvoiceApi/InvoiceApiCommunicationLogDetailsTabComponent", FeatureId = InvoiceApiCommunicationLogDetailsFeature_TH0.Id,FeatureUniqeCode = InvoiceApiCommunicationLogDetailsFeature_TH0.FeatureUniqeCode, ControlPath = "./Accounting/Components/EditTabs/InvoiceApi/InvoiceApiCommunicationLogDetailsTabComponent", ObjectTableId = InvoiceApiCommunicationLogObjectTable.Id, TabNameTextCodeId = InvoiceApiCommunicationLogDetailsTextCode_TH0.Id, TabNameTextCodeCode = InvoiceApiCommunicationLogDetailsTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs,contextTenant);
-   
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "ICEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = InvoiceApiCommunicationLogEventsFeature_TH1.Id,FeatureUniqeCode = InvoiceApiCommunicationLogEventsFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = InvoiceApiCommunicationLogObjectTable.Id, TabNameTextCodeId = InvoiceApiCommunicationLogEventsTextCode_TH1.Id, TabNameTextCodeCode = InvoiceApiCommunicationLogEventsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs,contextTenant);
    
 	    } 
 	
@@ -1171,24 +745,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
                 Code =  "UPEV",
                 EnglishName =  "Updated",
                 LocalName =  "Updated",
-                IsManualEntry =  false,
-                ShortView =  false,
-                IsAgentView =  false,
-                IsCustomerView =  false,
-                IsSharedLogisticsEnabled =  false,
-                AllowedInAutomation =  false,
-                ManualActivatedFollowUp =  false,
-                IsFollowUp =  false,
-                ObjectTableId = InvoiceApiCommunicationLogObjectTable.Id,
-				 
-            }, EventTypeRepository, tenantEventTypes,contextTenant);
-
-
-            AddEventTypes.AddEventType(new EventTypeDetails()
-            {
-                Code =  "ICFD",
-                EnglishName =  "Failed",
-                LocalName =  "Failed",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,

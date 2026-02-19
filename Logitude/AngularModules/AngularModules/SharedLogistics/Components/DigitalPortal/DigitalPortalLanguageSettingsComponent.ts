@@ -50,7 +50,7 @@ export class DigitalPortalLanguageSettingsComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.IsCloud = ObjectsLocator.GlobalSetting?.WorkEnvironment == "cloud";
+        this.IsCloud = ObjectsLocator.GlobalSetting.WorkEnvironment == "cloud";
         this.IsUploadButtonEnabled = true;
         this.IsFileImportedSuccessfully = true;
         this.Run();

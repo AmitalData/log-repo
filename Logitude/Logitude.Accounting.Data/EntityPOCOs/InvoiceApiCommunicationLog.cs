@@ -34,8 +34,11 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public DateTime? CreateDate { get; set; }
         [Column("SearchFields")]
 	    public string SearchFields { get; set; }
-        [Column("DocumentId")]
-	    public string DocumentId { get; set; }
+        [ForeignKey("CommunicationLog")]
+        [Column("CommunicationId")]
+	    public string CommunicationId { get; set; }
+	      
+        public virtual CommunicationLog CommunicationLog { get; set; }
         [ForeignKey("InvoiceApiStep")]
         [Column("Step")]
 	    public string Step { get; set; }
@@ -48,13 +51,6 @@ namespace Logitude.Accounting.Data.EntityPOCOs
         public virtual InvoiceApiStatus InvoiceApiStatus { get; set; }
         [Column("Exception")]
 	    public string Exception { get; set; }
-        [Column("ExternalID")]
-	    public string ExternalID { get; set; }
-        [ForeignKey("ARInvoice")]
-        [Column("ARInvoiceId")]
-	    public string ARInvoiceId { get; set; }
-	      
-        public virtual ARInvoice ARInvoice { get; set; }
     }
 }
 	 
