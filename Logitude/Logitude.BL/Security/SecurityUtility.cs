@@ -86,7 +86,7 @@ namespace Logitude.BL.Security
 
                 if (contactinfo != null)
                 {
-                    if (contactinfo.IsLogitudeAdmin || contactinfo.IsApi)
+                    if (contactinfo.IsApi)
                     {
                         exists = true;
                     }
@@ -276,7 +276,7 @@ namespace Logitude.BL.Security
                         if (contact.Tenant == 0 && tenant != 0)
                         {
                             UserRepository userRep = new UserRepository(tenant);
-                            User zeroUser = userRep.GetSingleUserByEmail(email, 0, true);
+                            User zeroUser = userRep.GetSingleUserByEmail(email, tenant, true);
                             if (zeroUser != null)
                             {
                                 isCustomerCare = true;
@@ -422,7 +422,7 @@ namespace Logitude.BL.Security
                             if (contact.Tenant == 0 && tenant != 0)
                             {
                                 UserRepository userRep = new UserRepository(tenant);
-                                User zeroUser = userRep.GetSingleUserByEmail(email, 0, true);
+                                User zeroUser = userRep.GetSingleUserByEmail(email, tenant, true);
                                 if (zeroUser != null)
                                 {
                                     isCustomerCare = true;

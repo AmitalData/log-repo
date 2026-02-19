@@ -158,7 +158,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                 return;
             }
             UserRepository userRepository = new UserRepository(tenant);
-            User user = userRepository.GetSingleUser(eventUserId, 0, true);
+            User user = userRepository.GetSingleUser(eventUserId, tenant, true);
             if (user == null)
             {
                 return;

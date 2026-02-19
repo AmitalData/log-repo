@@ -16,6 +16,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         TarrifStepRepository repository;
 
+        public TarrifStepQuery()
+        {
+            repository = new TarrifStepRepository(); 
+        }
 
         public TarrifStepQuery(int tenant)
         {
