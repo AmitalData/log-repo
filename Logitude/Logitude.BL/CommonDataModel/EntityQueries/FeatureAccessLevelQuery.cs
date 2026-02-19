@@ -16,7 +16,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         FeatureAccessLevelRepository repository;
 
-
+        public FeatureAccessLevelQuery()
+        {
+            repository = new FeatureAccessLevelRepository();
+        }
 
         public FeatureAccessLevelQuery(int tenant)
         {

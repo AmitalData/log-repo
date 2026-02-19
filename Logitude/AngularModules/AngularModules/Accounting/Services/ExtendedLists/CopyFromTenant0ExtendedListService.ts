@@ -36,19 +36,18 @@ export class CopyFromTenant0ExtendedListService {
   
     }
 
-    copyTableFromTenant0(tableName: string, entityId?: string) {
+    copyTableFromTenant0(tableName:string) {
  
-        let data = "tableName=" + tableName;
-        if (entityId) {
-            data += "&entityId=" + entityId;
-        }
 
-        return this.httpClient.get(this._apiUrl + '/CopyTableFromTenant0?' + data,  ServiceHelper.GetHttpHeaders()).pipe(
+
+        return this.httpClient.get(this._apiUrl + '/CopyTableFromTenant0?tableName=' + tableName,  ServiceHelper.GetHttpHeaders()).pipe(
             map(response => {
                 var allLists = response;
                return allLists;
             }),
             catchError(ServiceHelper.HandleServiceError)); 
+
+  
     }
 
     MapJsonToEntityList(jsonList: any) {
