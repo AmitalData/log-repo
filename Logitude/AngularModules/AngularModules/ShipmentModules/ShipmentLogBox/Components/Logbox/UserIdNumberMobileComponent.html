@@ -1,4 +1,3 @@
-
 <style>
     .BlueTitle {
         font-size: 20px;
@@ -124,7 +123,7 @@
                                                     <table>
                                                         <tr>
                                                             <td>
-                                                                <span [style.width]="(ScreenWidth-178).toString() + 'px'" style="font-size:20px;color:#1B90CB;float:left;font-family:sans-serif;padding-right:10px;">הזנת פרטים למשלוח </span>
+                                                                <span [style.width]="(ScreenWidth-178).toString() + 'px'" style="font-size:20px;color:#1B90CB;float:left;font-family:sans-serif;padding-right:10px;">{{'Shipment.LogBox.EnterDetailsForShipment' | TextCodeTranslationPipe}} </span>
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -146,7 +145,7 @@
                                             <tr>
                                                 <td [style.width]="(ScreenWidth/3).toString() + 'px'" style="height: 22px">
                                                     <div [style.width]="(ScreenWidth/3).toString() + 'px'" class="MyLabel">
-                                                        לכבוד
+                                                        {{'Shipment.LogBox.For' | TextCodeTranslationPipe}}
                                                     </div>
                                                 </td>
                                                 <td style="width:10px;"><span></span></td>
@@ -160,7 +159,7 @@
                                             <tr>
                                                 <td [style.width]="(ScreenWidth/3).toString() + 'px'" style="height:22px;">
                                                     <div [style.width]="(ScreenWidth/3).toString() + 'px'" class="MyLabel">
-                                                        כתובת
+                                                        {{'Shipment.LogBox.Address' | TextCodeTranslationPipe}}
                                                     </div>
                                                 </td>
                                                 <td style="width:10px"><span></span></td>
@@ -181,7 +180,7 @@
                                             <tr>
                                                 <td [style.width]="(ScreenWidth/3).toString() + 'px'" style="height: 22px">
                                                     <div [style.width]="(ScreenWidth/3).toString() + 'px'" class="MyLabel">
-                                                        פרטי השולח
+                                                        {{'Shipment.LogBox.SenderDetails' | TextCodeTranslationPipe}}
                                                     </div>
                                                 </td>
                                                 <td style="width:10px;"><span></span></td>
@@ -195,7 +194,7 @@
                                             <tr>
                                                 <td [style.width]="(ScreenWidth/3).toString() + 'px'" style="height:22px;">
                                                     <div [style.width]="(ScreenWidth/3).toString() + 'px'" class="MyLabel">
-                                                        תיאור טובין
+                                                        {{'Shipment.LogBox.GoodsDescription' | TextCodeTranslationPipe}}
                                                     </div>
                                                 </td>
                                                 <td style="width:10px"><span></span></td>
@@ -215,7 +214,7 @@
                                             <tr>
                                                 <td [style.width]="(ScreenWidth/3).toString() + 'px'" style="height: 22px">
                                                     <div [style.width]="(ScreenWidth/3).toString() + 'px'" class="MyLabel">
-                                                        ערך משלוח בש"ח
+                                                        {{'Shipment.LogBox.ShipmentValueInNIS' | TextCodeTranslationPipe}}
                                                     </div>
                                                 </td>
                                                 <td style="width:10px"><span></span></td>
@@ -228,7 +227,7 @@
                                             <tr>
                                                 <td [style.width]="(ScreenWidth/3).toString() + 'px'" style="height: 22px">
                                                     <div [style.width]="(ScreenWidth/3).toString() + 'px'" class="MyLabel">
-                                                        כמות
+                                                        {{'Shipment.LogBox.Quantity' | TextCodeTranslationPipe}}
                                                     </div>
                                                 </td>
                                                 <td style="width:10px"><span></span></td>
@@ -241,7 +240,7 @@
                                             <tr>
                                                 <td [style.width]="(ScreenWidth/3).toString() + 'px'" style="height: 22px">
                                                     <div [style.width]="(ScreenWidth/3).toString() + 'px'" class="MyLabel">
-                                                        משקל
+                                                        {{'Shipment.LogBox.Weight' | TextCodeTranslationPipe}}
                                                     </div>
                                                 </td>
                                                 <td style="width:10px"><span></span></td>
@@ -265,7 +264,7 @@
                                                     <div style="vertical-align:middle;text-align:center;">
                                                         <div style="display:inline-block;padding-top:5px;font-size:12px;font-family:sans-serif;" class="TextTrimming">
                                                             <span style="text-align:center;font-size:13px;">
-                                                                נא להזין תעודת זהות (מעל גיל 18)
+                                                                {{'Shipment.LogBox.PleaseEnterID' | TextCodeTranslationPipe}}
                                                             </span>
                                                         </div>
                                                     </div>
@@ -285,7 +284,7 @@
                                                     <div style="vertical-align:middle;text-align:center;">
                                                         <div (click)="SendButtonClicked()" style="width:170px;height:35px;background-color:cornflowerblue;display:inline-block;font-size:13px;padding-top:5px;">
                                                             <span style="text-align:center;font-size:13px;">
-                                                                <a style="color:white;font-size:14px;font-family: sans-serif;">עדכן נתונים</a>
+                                                                <a style="color:white;font-size:14px;font-family: sans-serif;">{{'Shipment.LogBox.UpdateData' | TextCodeTranslationPipe}}</a>
                                                             </span>
                                                         </div>
                                                     </div>
@@ -348,8 +347,8 @@
         <div class="section-header-right">
           <h1 class="header">PERSONAL INFO</h1>
           <div>
-            <h3 class="subheader">הזנת פרטים למשלוח</h3>
-            <h3 class="shipment">משלוח # {{Hawb}}</h3>
+            <h3 class="subheader">{{'Shipment.LogBox.EnterDetailsForShipment' | TextCodeTranslationPipe}}</h3>
+            <h3 class="shipment">{{'Shipment.LogBox.Shipment' | TextCodeTranslationPipe}} # {{Hawb}}</h3>
           </div>
         </div>
         <div class="section-header-left">
@@ -361,40 +360,40 @@
   
       <div class="details">
         <section class="section">
-          <h3>פרטי הלקוח</h3>
-          <p><span>לכבוד: {{CustomerName}}</span></p>
-          <p><span>כתובת: {{CustomerAddress}}</span></p>
+          <h3>{{'Shipment.LogBox.CustomerDetails' | TextCodeTranslationPipe}}</h3>
+          <p><span>{{'Shipment.LogBox.For' | TextCodeTranslationPipe}}: {{CustomerName}}</span></p>
+          <p><span>{{'Shipment.LogBox.Address' | TextCodeTranslationPipe}}: {{CustomerAddress}}</span></p>
         </section>
   
         <section class="section">
-          <h3>פרטי השולח</h3>
-          <p><span>מאת: {{SenderDetails}}</span></p>
-          <p><span>תיאור טובין: {{GoodsDescritpion}}</span></p>
+          <h3>{{'Shipment.LogBox.SenderDetails' | TextCodeTranslationPipe}}</h3>
+          <p><span>{{'Shipment.LogBox.From' | TextCodeTranslationPipe}}: {{SenderDetails}}</span></p>
+          <p><span>{{'Shipment.LogBox.GoodsDescription' | TextCodeTranslationPipe}}: {{GoodsDescritpion}}</span></p>
         </section>
   
         <section class="section">
-          <h3>פרטי חבילה</h3>
-          <p><span>ערך משלוח: {{ShipmentValueInNIS | number : '1.0-1'}}</span></p>
-          <p><span>כמות אריזות: {{Quantity}}</span></p>
-          <p><span>משקל: {{Weight}} ק"ג</span></p>
+          <h3>{{'Shipment.LogBox.PackageDetails' | TextCodeTranslationPipe}}</h3>
+          <p><span>{{'Shipment.LogBox.ShipmentValue' | TextCodeTranslationPipe}}: {{ShipmentValueInNIS | number : '1.0-1'}}</span></p>
+          <p><span>{{'Shipment.LogBox.QuantityOfPackages' | TextCodeTranslationPipe}}: {{Quantity}}</span></p>
+          <p><span>{{'Shipment.LogBox.Weight' | TextCodeTranslationPipe}}: {{Weight}} ק"ג</span></p>
         </section>
       </div>
   
       <div class="section-3">        
-          <h4 class="idnumber-label">נא להזין תעודת זהות (מעל גיל 18)</h4>
+          <h4 class="idnumber-label">{{'Shipment.LogBox.PleaseEnterID' | TextCodeTranslationPipe}}</h4>
           <input class="idnumber" type="number" [(ngModel)]="UserIdNumber">        
       </div>
   
       <div class="btn-payment">
-        <button (click)="SendButtonClicked()">עדכן נתונים</button>
+        <button (click)="SendButtonClicked()">{{'Shipment.LogBox.UpdateData' | TextCodeTranslationPipe}}</button>
       </div>
       <p class="vlidation-msg" *ngIf="ValidationList != null && ValidationList.length != 0">{{ValidationList}}</p>
   
       <div class="footer">
         <div class="footer-right">
-          <span>לברורים בנושא עלויות או כל מידע נוסף אודות המשלוח</span>
+          <span>{{'Shipment.LogBox.ForClarifications' | TextCodeTranslationPipe}}</span>
           <br>
-          <a  href="mailto:{{EcommerceSupportEmail}}?subject=Shipment <{{Hawb}}> ">לחץ כאן</a>
+          <a  href="mailto:{{EcommerceSupportEmail}}?subject=Shipment <{{Hawb}}> ">{{'Shipment.LogBox.ClickHere' | TextCodeTranslationPipe}}</a>
         </div>
         <div class="footer-left">
           <img src="./Images/mobile_payment/orian_logo_mobile.png" />
@@ -403,13 +402,12 @@
     </div>
     <div class="modal" *ngIf="showDialogUserAcceptSave">
         <div [@dialog] class="modal-body">
-          <h1 class="header">שאלה קטנה...</h1>
-          <p>לצורך טיפול מהיר ביותר במשלוחים עתידיים אנא אשר לחברת אוריין לשמור את פרטייך בצורה מאובטחת</p>
+          <h1 class="header">{{'Shipment.LogBox.AQuickQuestion' | TextCodeTranslationPipe}}</h1>
+          <p>{{'Shipment.LogBox.ForFasterService' | TextCodeTranslationPipe}}</p>
           <div>
-            <button (click)="$userAcceptSave.next(true)">אני מסכים</button>
-            <button (click)="$userAcceptSave.next(false)" class="btn-not-agreed">איני מסכים</button>
+            <button (click)="$userAcceptSave.next(true)">{{'Shipment.LogBox.IAgree' | TextCodeTranslationPipe}}</button>
+            <button (click)="$userAcceptSave.next(false)" class="btn-not-agreed">{{'Shipment.LogBox.IDisagree' | TextCodeTranslationPipe}}</button>
           </div>
         </div>
       </div>
   </div>
-  

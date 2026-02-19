@@ -6,7 +6,7 @@
                 <a href="#" role="button" (click)="showAddComment = !showAddComment" aria-controls="commentPanel"
                     class="icon-close"></a>
             </div>
-            <h3>כתיבת הערה חדשה ל:</h3>
+            <h3>{{'General.O.AddNewCommentTo' | TextCodeTranslationPipe}}</h3>
             <div class="commentWritesTo">
                 <div class="commentWritesTo_read">
                     <div>
@@ -17,14 +17,16 @@
         </div>
         <div class="sidePanel_body">
             <div class="sidePanel_addComment">
-                <label>תוכן ההערה</label>
+                <label>{{'General.O.CommentContent' | TextCodeTranslationPipe}}</label>
                 <textarea [(ngModel)]="commentText" (input)="updateCommentText($event)"
                     placeholder="הקלידו תיאור/ שמות פריטים/ מידע עבור פרט מכס זה..."></textarea>
             </div>
             <div class="addComment_submit" (click)="sendComment()">
-                <button [class.disabled]="commentText?.length < 1 || allComments?.length > 1">שמירת הערה</button>
+                <button [class.disabled]="commentText?.length < 1 || allComments?.length > 1">{{'   ' | TextCodeTranslationPipe}}</button>
             </div>
         </div>
-        <div class="sidePanel_trapFocus"><a href="#" role="button">חזור לתחילת הפאנל</a></div>
+        <div class="sidePanel_trapFocus"><a href="#" role="button">{{'General.O.BackToPanel ' | TextCodeTranslationPipe}}</a></div>
+
+
     </div>
 </div>

@@ -1,14 +1,12 @@
 declare var window: any;
-import { AfterViewInit, Component, HostListener, Input, OnInit, SimpleChanges } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, HostListener, Input, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { DataRowComponent } from '../data-row/data-row.component';
 import { DetailsFrameComponent } from '../details-frame/details-frame.component';
 import { TableTopComponent, TableTopState } from '../table-top/table-top.component';
 import { CommonModule, NgFor, NgForOf, NgIf, NgStyle } from '@angular/common';
 import { trigger, style, animate, transition } from '@angular/animations';
-//@ts-ignore
-import { mockData } from '../../../../../mock_data';
 import { API_MainService, Filters } from '../../../core/API_MainService';
-import { BehaviorSubject, filter } from 'rxjs';
+import { BehaviorSubject, Subject, takeUntil } from 'rxjs';
 import { SearchBy, SearchService } from '../page-top/service/top-page.service';
 import { FormsModule, NgModel } from '@angular/forms';
 import { HeaderService, searchState } from '../app-header/service/header.service';
@@ -18,19 +16,19 @@ import { SessionInfo } from '../../../core/Infrastructure/Utilities/SessionInfo'
 import { FeatureLocator } from '../../../core/Infrastructure/Utilities/FeatureLocator';
 import { InfrastructureDomainService } from '../../../core/Infrastructure/Services/InfrastructureDomainService';
 import { LoginService } from '../../../core/Infrastructure/Services/LoginService';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { RomanToolService } from '../../services/roman-tool.service';
 import { AddCommentService } from '../add-comment/service/add-comment.service';
 import { PreferenceMenuComponent } from '../preference-menu/preference-menu';
 import { PreferencesService } from '../preference-menu/PreferencesService';
-import { AppTool } from '../../../core/Infrastructure/Tools';
-
+import { Pipes } from '../../../core/Infrastructure/ModuleDeclarations';
 @Component({
 	selector: 'app-main-display',
 	standalone: true,
-	imports: [NgFor, NgForOf, NgIf, DataRowComponent, DetailsFrameComponent, TableTopComponent, AddCommentComponent, FormsModule, NgStyle, PreferenceMenuComponent],
+	imports: [NgFor, NgForOf, NgIf, DataRowComponent, DetailsFrameComponent, TableTopComponent, AddCommentComponent, FormsModule, NgStyle, Pipes],
 	templateUrl: './main-display.component.html',
 	styleUrl: './main-display.component.css',
+	changeDetection: ChangeDetectionStrategy.OnPush,
 	animations: [
 		trigger('inOutAnimation', [
 			transition(':enter', [
@@ -44,12 +42,14 @@ import { AppTool } from '../../../core/Infrastructure/Tools';
 		]),
 	],
 })
-export class MainDisplayComponent implements OnInit {
+export class MainDisplayComponent implements OnInit, OnDestroy {
 	@Input() showChiledren: boolean = false;
 	@Input() itemsData: BehaviorSubject<CB_CustomsItemComputedDataList[]>;
 	@Input() isLoadingMode: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 	@Input() isFeaturePermessionCB: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 	selectSearchBy: string = SearchBy.searchBy_form01;
+
+	private destroy$ = new Subject<void>();
 	showDetails: boolean = false;
 	showCommentsIsOpen: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 	showRulesIsOpen: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
@@ -68,32 +68,49 @@ export class MainDisplayComponent implements OnInit {
 	isExpand: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 	defualtCbCollapseSearchHierarchy: boolean = false;
 
-	constructor(private API_MainService: API_MainService, private searchService: SearchService, private headerService: HeaderService, private preferencesService: PreferencesService,
-		private route: ActivatedRoute, private filterPopupService: FilterPopupService, private addCommentService: AddCommentService, private loginService: LoginService,
-		private myInfrastructureDomainService: InfrastructureDomainService, private router: Router, private romanTool: RomanToolService) {
+	constructor(
+		private API_MainService: API_MainService, 
+		private searchService: SearchService, 
+		private headerService: HeaderService, 
+		private preferencesService: PreferencesService,
+		private filterPopupService: FilterPopupService, 
+		private addCommentService: AddCommentService, 
+		private loginService: LoginService,
+		private myInfrastructureDomainService: InfrastructureDomainService, 
+		private router: Router, 
+		private romanTool: RomanToolService,
+		private cdr: ChangeDetectorRef
+	) {
 		this.screenWidth = window.innerWidth;
 	}
 	searchState: string = searchState.יבוא;
 
 
 	ngOnInit() {
-		sessionStorage.removeItem('FullClassification');
-		this.headerService.searchState$.subscribe((data) => {
-			if (!searchState[data]) return;
+		this.headerService.searchState$
+			.pipe(takeUntil(this.destroy$))
+			.subscribe((data) => {
+				if (!searchState[data]) return;
 
-			if (this.searchState != searchState[data]) {
-				this.searchState = searchState[data];
-				this.InitData();
-			}
-		});
-		// listen to loading mode changes:
-		this.isLoadingMode.subscribe((isLoading) => {
-			this.isLoading = isLoading;
-		});
+				if (this.searchState != searchState[data]) {
+					this.searchState = searchState[data];
+					this.InitData();
+					this.cdr.markForCheck();
+				}
+			});
+
 		this.checkDefaultCB_CollapseSearchHierarchy();
 		this.ListenToItemsSearched();
 		this.getByIsDiscountCodes();
-		this.updateFullClassificationByClick();
+	}
+
+	ngOnDestroy() {
+		this.destroy$.next();
+		this.destroy$.complete();
+	}
+
+	trackByCustomsItem(index: number, item: CB_CustomsItemComputedDataList): number {
+		return item.ID || index;
 	}
 
 	InitData() {
@@ -101,82 +118,144 @@ export class MainDisplayComponent implements OnInit {
 		else this.checkIsFeaturePermessionCustomsBook(() => this.GetAllCustomsBookMainView());
 
 		this.getCustomsBookLastUpdateDate();
-		this.isFeaturePermessionCB.subscribe((isFeaturePermessionCB) => {
-			this.isFeaturePermessionCBMsg = isFeaturePermessionCB;
-		});
+		this.isLoadingMode
+			.pipe(takeUntil(this.destroy$))
+			.subscribe({
+				next: (isLoading) => {
+					this.isLoading = isLoading;
+					this.cdr.markForCheck();
+				},
+				error: (error) => {
+					console.error('Error in loading mode subscription:', error);
+					this.cdr.markForCheck();
+				}
+			});
+		this.isFeaturePermessionCB
+			.pipe(takeUntil(this.destroy$))
+			.subscribe({
+				next: (isFeaturePermessionCB) => {
+					this.isFeaturePermessionCBMsg = isFeaturePermessionCB;
+					this.cdr.markForCheck();
+				},
+				error: (error) => {
+					console.error('Error in feature permission subscription:', error);
+					this.cdr.markForCheck();
+				}
+			});
 	}
 
 	getCustomsBookLastUpdateDate() {
-
-		this.API_MainService.GetCustomsBookLastUpdateDateByTenant(SessionInfo.LoggedUserTenant).subscribe(
-			(data: any) => {
-
-				const result = data.body;
-				if (!result) return;
-				console.log(result);
-				this.headerService.setLastUpdateTaskScheduled(result);
-			},
-			(error) => {
-				this.isLoadingMode.next(false);
-				this.itemsData.next([]);
-				console.log(error.message);
-			}
-		);
+		this.API_MainService.GetCustomsBookLastUpdateDateByTenant(SessionInfo.LoggedUserTenant)
+			.pipe(takeUntil(this.destroy$))
+			.subscribe({
+				next: (data: any) => {
+					const result = data?.body;
+					if (!result) return;
+					console.log(result);
+					this.headerService.setLastUpdateTaskScheduled(result);
+					this.cdr.markForCheck();
+				},
+				error: (error) => {
+					console.error('Error getting customs book last update date:', error);
+					this.cdr.markForCheck();
+				}
+			});
 	}
 
 	checkDefaultCB_CollapseSearchHierarchy() {
-		this.API_MainService.GetDefaultCB_CollapseSearchHierarchy(SessionInfo.LoggedUserTenant).subscribe((data: any) => {
-			if (!data?.body) return;
-			this.defualtCbCollapseSearchHierarchy = data?.body === true;
-		});
+		this.API_MainService.GetDefaultCB_CollapseSearchHierarchy(SessionInfo.LoggedUserTenant)
+			.pipe(takeUntil(this.destroy$))
+			.subscribe({
+				next: (data: any) => {
+					if (!data?.body) return;
+					this.defualtCbCollapseSearchHierarchy = data?.body === true;
+					this.cdr.markForCheck();
+				},
+				error: (error) => {
+					console.error('Error getting default collapse search hierarchy:', error);
+					this.cdr.markForCheck();
+				}
+			});
 	}
 
 	errorPermessionCustomsBook: string = "You have no permission to access this feature";
 	checkIsFeaturePermessionCustomsBook(onSuccess: () => void) {
-		this.loginService.GetObjectTables().subscribe((myResult: any) => {
-			if (!myResult) return true;
-			window.ObjectTables = myResult;
-			this.myInfrastructureDomainService.GetAllowedFeaturesForLoggedUser().subscribe((myResponse: any) => {
-				if (!myResponse) return true;
-				if (!FeatureLocator.HasFeaturePermession("Customs.CB_CustomsItemComputedData", "CustomsBookFeature")) {
-					this.data = [];
-					this.fullData = [];
-					this.originalDataByIsDiscountCodes = [];
-					this.isLoadingMode.next(false);
-					this.isFeaturePermessionCB.next(true);
-				}
-				else {
-					this.isFeaturePermessionCB.next(false);
-					onSuccess();
+		this.loginService.GetObjectTables()
+			.pipe(takeUntil(this.destroy$))
+			.subscribe({
+				next: (myResult: any) => {
+					if (!myResult) return true;
+					window.ObjectTables = myResult;
+					this.myInfrastructureDomainService.GetAllowedFeaturesForLoggedUser()
+						.pipe(takeUntil(this.destroy$))
+						.subscribe({
+							next: (myResponse: any) => {
+								if (!myResponse) return true;
+								if (!FeatureLocator.HasFeaturePermession("Customs.CB_CustomsItemComputedData", "CustomsBookFeature")) {
+									this.data = [];
+									this.fullData = [];
+									this.originalDataByIsDiscountCodes = [];
+									this.isLoadingMode.next(false);
+									this.isFeaturePermessionCB.next(true);
+								}
+								else {
+									this.isFeaturePermessionCB.next(false);
+									onSuccess();
+								}
+								this.cdr.markForCheck();
+							},
+							error: (error) => {
+								console.error('Error getting allowed features:', error);
+								this.cdr.markForCheck();
+							}
+						});
+				},
+				error: (error) => {
+					console.error('Error getting object tables:', error);
+					this.cdr.markForCheck();
 				}
 			});
-		});
 	}
 	getByIsDiscountCodes() {
-		this.headerService.IsDiscountCodes.subscribe((value) => {
-			this.IsDiscountCodes = value;
-			if (this.searchService.GetSearchText()) this.getSearchDataByFilter(this.filterPopupService.getFilters());
-			else this.InitData();
-		});
+		this.headerService.IsDiscountCodes
+			.pipe(takeUntil(this.destroy$))
+			.subscribe({
+				next: (value) => {
+					this.IsDiscountCodes = value;
+					if (this.searchService.GetSearchText()) this.getSearchDataByFilter(this.filterPopupService.getFilters());
+					else this.InitData();
+					this.cdr.markForCheck();
+				},
+				error: (error) => {
+					console.error('Error getting discount codes:', error);
+					this.cdr.markForCheck();
+				}
+			});
 	}
 
 	IsDiscountCodes: boolean = false;
 	GetAllCustomsBookMainView() {
+
 		this.isLoadingMode.next(true);
 		let filters: Filters = {
 			CustomsBookType: this.searchState,
 			Tenant: SessionInfo.LoggedUserTenant,
 			SearchFields: ''
 		};
+
 		filters.IsDiscountCodes = this.headerService.IsDiscountCodes?.getValue();
+
 		this.getRulesData();
 		this.getCommentsData(SessionInfo.LoggedUserTenant);
+
+
 
 		this.API_MainService.GetCustomsBookMainView(filters).subscribe((data: any) => {
 			const result: CB_CustomsItemComputedDataList[] = data.body;
 			if (!result) return; // TODO: add error message
 			this.countSearchResult = 0;
 			this.handleClearResults();
+
 
 			this.data = this.orderedData(result);
 			if (this.data.length > 0) {
@@ -217,41 +296,55 @@ export class MainDisplayComponent implements OnInit {
 	searchValue: string = '';
 	countSearchResult: number = 0;
 	ListenToItemsSearched() {
-		// listen to search text changes:
-		this.searchService.searchText$.subscribe((searchText) => {
-			if (searchText === "") this.handleClearResults();
-		});
-
-		// listen to itemsData changes:
-		this.itemsData.subscribe((data: CB_CustomsItemComputedDataList[] = []) => {
-			if (data.length == 0 && this.searchService.GetSearchText() !== "") {
-				this.data = [];
-				this.countSearchResult = 0;
-				this.searchMode = TableTopState.Search;
-				this.searchValue = "";
-				return;
-			}
-
-			if (this.itemsData.getValue().length > 0) {
-				// remove duplicates customsItemID:
-				data = data.filter((v, i, a) => a.findIndex(t => (t.CustomsItemID === v.CustomsItemID)) === i);
-
-				this.countSearchResult = data.length;
-				// update list:
-				this.data = this.orderedDataForSearch(data);
-				if (this.defualtCbCollapseSearchHierarchy && this.searchService.selectSearchBy === SearchBy.searchBy_form01)
-					this.toggleVisibilitySearch(true, this.data);
-				else
-					this.toggleVisibility(true, this.data);
-				this.searchMode = TableTopState.Search;
-				this.searchValue = this.searchService.GetSearchText();
-				if (this.showDetails) {
-					this.selectedItemId = null;
-					this.updateShowDetailsClick();
+		this.searchService.searchText$
+			.pipe(takeUntil(this.destroy$))
+			.subscribe({
+				next: (searchText) => {
+					if (searchText === "") this.handleClearResults();
+					this.cdr.markForCheck();
+				},
+				error: (error) => {
+					console.error('Error in search text subscription:', error);
+					this.cdr.markForCheck();
 				}
-			}
-			else this.countSearchResult = 0;
-		});
+			});
+
+		this.itemsData
+			.pipe(takeUntil(this.destroy$))
+			.subscribe({
+				next: (data: CB_CustomsItemComputedDataList[] = []) => {
+					if (data.length == 0 && this.searchService.GetSearchText() !== "") {
+						this.data = [];
+						this.countSearchResult = 0;
+						this.searchMode = TableTopState.Search;
+						this.searchValue = "";
+						return;
+					}
+
+					if (this.itemsData.getValue().length > 0) {
+						data = data.filter((v, i, a) => a.findIndex(t => (t.CustomsItemID === v.CustomsItemID)) === i);
+
+						this.countSearchResult = data.length;
+						this.data = this.orderedDataForSearch(data);
+						if (this.defualtCbCollapseSearchHierarchy && this.searchService.selectSearchBy === SearchBy.searchBy_form01)
+							this.toggleVisibilitySearch(true, this.data);
+						else
+							this.toggleVisibility(true, this.data);
+						this.searchMode = TableTopState.Search;
+						this.searchValue = this.searchService.GetSearchText();
+						if (this.showDetails) {
+							this.selectedItemId = null;
+							this.updateShowDetailsClick();
+						}
+					}
+					else this.countSearchResult = 0;
+					this.cdr.markForCheck();
+				},
+				error: (error) => {
+					console.error('Error in items data subscription:', error);
+					this.cdr.markForCheck();
+				}
+			});
 	}
 
 	showCommentsOpen(isOpenComment: boolean) {
@@ -316,8 +409,7 @@ export class MainDisplayComponent implements OnInit {
 	showDetailsClick(CustomsItemID: number, item: CB_CustomsItemComputedDataList) {
 		this.selectedItemId = CustomsItemID;
 		if (this.currentItem.getValue()?.CustomsItemID == CustomsItemID) {
-			this.updateShowDetailsClick(item);
-
+			this.updateShowDetailsClick();
 			return;
 		}
 		else if (!this.showDetails) {
@@ -327,7 +419,7 @@ export class MainDisplayComponent implements OnInit {
 		return this.showDetails;
 	}
 
-	updateShowDetailsClick(item?: CB_CustomsItemComputedDataList) {
+	updateShowDetailsClick() {
 		this.showDetails = !this.showDetails;
 		this.showDetailsOpen.next(this.showDetails);
 		this.preferencesService.showSettingsClick(false);
@@ -337,34 +429,7 @@ export class MainDisplayComponent implements OnInit {
 		}
 		else {
 			this.filterPopupService.toggleFilterPopup(false);
-			if (item)
-				this.currentItem.next(item);
 		}
-	}
-
-	updateUrlWithClassification(fullClassification: string) {
-		sessionStorage.setItem('FullClassification', fullClassification);
-		const url = this.searchService.getDecodeUrl(window.location.href);
-		const currentUrl = new URL(url);
-		if (fullClassification) {
-			currentUrl.searchParams.set("FullClassification", fullClassification);
-			window.history.replaceState({}, "", currentUrl.toString());
-		}
-		else {
-			currentUrl.searchParams.delete("FullClassification");
-			window.history.replaceState({}, "", currentUrl.toString());
-		}
-	}
-
-	updateFullClassificationByClick() {
-		this.showDetailsOpen.subscribe((isOpen) => {
-			if (!isOpen)
-				this.updateUrlWithClassification(null);
-		});
-		this.currentItem.subscribe((item) => {
-			if (item && this.showDetails)
-				this.updateUrlWithClassification(item?.FullClassification);
-		});
 	}
 
 	ngOnChanges(changes: SimpleChanges) {
@@ -492,19 +557,7 @@ export class MainDisplayComponent implements OnInit {
 		this.searchService.SetSearchText("");
 	}
 
-	clearSearchValue() {
-		const url = this.searchService.getDecodeUrl(window.location.href);
-		let searchValue = this.searchService.getParameterByName('searchValue', url);
-		if (!AppTool.IsNullOrEmpty(searchValue)) {
-			const currentUrl = new URL(url);
-			currentUrl.searchParams.set("searchValue", "");
-			window.history.replaceState({}, "", currentUrl.toString());
-			window.location.reload();
-		}
-	}
-
 	handleClearResults() {
-		this.clearSearchValue();
 		this.searchMode = TableTopState.ViewAll;
 		this.selectedItemId = null;
 		this.showDetails = false;
@@ -515,6 +568,7 @@ export class MainDisplayComponent implements OnInit {
 		this.searchValue = "";
 		this.countSearchResult = 0;
 		this.filterPopupService.toggleFilterPopup(false);
+		// this.data = this.fullData;
 		this.data = !this.IsDiscountCodes ? this.fullData : this.originalDataByIsDiscountCodes;
 		if (this.IsDiscountCodes && this.originalDataByIsDiscountCodes?.length == 0) this.GetAllCustomsBookMainView();
 		this.toggleVisibility(false, this.data);
@@ -785,18 +839,9 @@ export class ClassifGuidanceAttached {
 
 export class Mekach {
 	mekachNumber: number; // מס מק"ת/מק"ח
-	attachedMekahFile: string; // מזהה קובץ מצורף
+	attachedMekahFile: string; // קובץ מצורף (נתיב לקובץ)
 	validityDate: Date; // בתוקף מיום
 	changeDescription: string; // דברי הסבר
 	customsItemId?: number;
 	tenant?: number;
-}
-export class AttachedMekahFileData {
-	attachmentID: string;
-	fileName: string;
-	content: string;
-}
-
-export class AttachmentResponseData {
-	AttachedMekahFileData: AttachedMekahFileData;
 }

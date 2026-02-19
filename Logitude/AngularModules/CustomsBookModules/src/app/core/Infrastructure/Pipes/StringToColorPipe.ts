@@ -1,7 +1,7 @@
 import {Pipe} from '@angular/core';
 import {AppTool, FormatTool, FontTool, DateTool} from '../Tools';
 
-@Pipe({ name: 'StringToColorPipe' })
+@Pipe({ name: 'StringToColorPipe', standalone: true })
 
 export class StringToColorPipe {
 
@@ -83,12 +83,6 @@ export class StringToColorPipe {
             case "Sent":
             case "Transferred":
             case "In Progress":
-            case "Arrival_referant":
-
-                {
-                    color = "#27AAE1";
-                    break;
-                }
             case "Arrival_referant":
 
                 {

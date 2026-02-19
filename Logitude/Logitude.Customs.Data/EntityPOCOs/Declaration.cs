@@ -20,484 +20,484 @@ using Simplog.Data.InvoiceModel.EntityPOCOs;
 
 namespace Logitude.Customs.Data.EntityPOCOs
 {
-   
+
     public class Declaration
     {
-	 string dbms;
+        string dbms;
 
         [Key]
         [Column("Id")]
-	    public string Id { get; set; }
+        public string Id { get; set; }
         [Column("Tenant")]
-	    public int Tenant { get; set; }
+        public int Tenant { get; set; }
         [Column("CustomFileNo")]
-	    public string CustomFileNo { get; set; }
+        public string CustomFileNo { get; set; }
         [ForeignKey("CustomerCard")]
         [Column("CustomerId")]
-	    public string CustomerId { get; set; }
-	      
+        public string CustomerId { get; set; }
+
         public virtual Card CustomerCard { get; set; }
         [ForeignKey("Importer")]
         [Column("ImporterId")]
-	    public string ImporterId { get; set; }
-	      
+        public string ImporterId { get; set; }
+
         public virtual Client Importer { get; set; }
         [Column("SearchFields")]
-	    public string SearchFields { get; set; }
+        public string SearchFields { get; set; }
         [Column("DeclarationNumber")]
-	    public string DeclarationNumber { get; set; }
+        public string DeclarationNumber { get; set; }
         [Column("VersionId")]
-	    public string VersionId { get; set; }
+        public string VersionId { get; set; }
         [Column("ExternalDeclarationNumber")]
-	    public string ExternalDeclarationNumber { get; set; }
+        public string ExternalDeclarationNumber { get; set; }
         [ForeignKey("DeclarationOffice")]
         [Column("DeclarationOfficeCode")]
-	    public string DeclarationOfficeCode { get; set; }
-	      
+        public string DeclarationOfficeCode { get; set; }
+
         public virtual CustomsHouseType DeclarationOffice { get; set; }
         [Column("TaxationDateTime")]
-	    public DateTime? TaxationDateTime { get; set; }
+        public DateTime? TaxationDateTime { get; set; }
         [Column("AgentId")]
-	    public string AgentId { get; set; }
+        public string AgentId { get; set; }
         [ForeignKey("GovernmentProcedureCurrent")]
         [Column("ProcedureCurrentCode")]
-	    public string ProcedureCurrentCode { get; set; }
-	      
+        public string ProcedureCurrentCode { get; set; }
+
         public virtual GovernmentProcedureType GovernmentProcedureCurrent { get; set; }
         [ForeignKey("AutonomyRegionType")]
         [Column("AutonomyRegionTypeCode")]
-	    public string AutonomyRegionTypeCode { get; set; }
-	      
+        public string AutonomyRegionTypeCode { get; set; }
+
         public virtual AutonomyType AutonomyRegionType { get; set; }
         [ForeignKey("ImporterPassCountry")]
         [Column("ImporterPassCountryCode")]
-	    public string ImporterPassCountryCode { get; set; }
-	      
+        public string ImporterPassCountryCode { get; set; }
+
         public virtual CustomsCountry ImporterPassCountry { get; set; }
         [ForeignKey("TransferImporter")]
         [Column("TransferImporterId")]
-	    public string TransferImporterId { get; set; }
-	      
+        public string TransferImporterId { get; set; }
+
         public virtual Client TransferImporter { get; set; }
         [ForeignKey("TransferImporterCountry")]
         [Column("TransferImporterCountryCode")]
-	    public string TransferImporterCountryCode { get; set; }
-	      
+        public string TransferImporterCountryCode { get; set; }
+
         public virtual CustomsCountry TransferImporterCountry { get; set; }
         [ForeignKey("EntitleImporter")]
         [Column("EntitleImporterId")]
-	    public string EntitleImporterId { get; set; }
-	      
+        public string EntitleImporterId { get; set; }
+
         public virtual Client EntitleImporter { get; set; }
         [ForeignKey("ImporterEntitlementType")]
         [Column("ImporterEntitlementTypeCode")]
-	    public string ImporterEntitlementTypeCode { get; set; }
-	      
+        public string ImporterEntitlementTypeCode { get; set; }
+
         public virtual EntitlementType ImporterEntitlementType { get; set; }
         [ForeignKey("EntitleImporterCountry")]
         [Column("EntitleImporterCountryCode")]
-	    public string EntitleImporterCountryCode { get; set; }
-	      
+        public string EntitleImporterCountryCode { get; set; }
+
         public virtual CustomsCountry EntitleImporterCountry { get; set; }
         [Column("DeclarationDocumentId")]
-	    public string DeclarationDocumentId { get; set; }
+        public string DeclarationDocumentId { get; set; }
         [ForeignKey("DeclarationDocumentType")]
         [Column("DeclarationDocumentTypeCode")]
-	    public string DeclarationDocumentTypeCode { get; set; }
-	      
+        public string DeclarationDocumentTypeCode { get; set; }
+
         public virtual LeadDocumentType DeclarationDocumentType { get; set; }
         [ForeignKey("CreatedByUser")]
         [Column("CreatedByUserId")]
-	    public string CreatedByUserId { get; set; }
-	      
+        public string CreatedByUserId { get; set; }
+
         public virtual User CreatedByUser { get; set; }
         [Column("IsChanged")]
-	    public bool IsChanged { get; set; }
+        public bool IsChanged { get; set; }
         [Column("PaymentDate")]
-	    public DateTime? PaymentDate { get; set; }
+        public DateTime? PaymentDate { get; set; }
         [Column("HatraDate")]
-	    public DateTime? HatraDate { get; set; }
+        public DateTime? HatraDate { get; set; }
         [ForeignKey("DeclarationStatusType")]
         [Column("DeclarationStatusTypeCode")]
-	    public string DeclarationStatusTypeCode { get; set; }
-	      
+        public string DeclarationStatusTypeCode { get; set; }
+
         public virtual DeclarationStatusType DeclarationStatusType { get; set; }
         [Column("LoadingFactor")]
-	    public decimal? LoadingFactor { get; set; }
+        public decimal? LoadingFactor { get; set; }
         [Column("DealValue")]
-	    public decimal? DealValue { get; set; }
+        public decimal? DealValue { get; set; }
         [Column("CIFValue")]
-	    public decimal? CIFValue { get; set; }
+        public decimal? CIFValue { get; set; }
         [Column("TotalTax")]
-	    public decimal? TotalTax { get; set; }
+        public decimal? TotalTax { get; set; }
         [Column("FileState")]
-	    public string FileState { get; set; }
+        public string FileState { get; set; }
         [ForeignKey("TransportMode")]
         [Column("TransportModeId")]
-	    public string TransportModeId { get; set; }
-	      
+        public string TransportModeId { get; set; }
+
         public virtual TransportMode TransportMode { get; set; }
         [Column("ErrosXml")]
-	    public string ErrosXml { get; set; }
+        public string ErrosXml { get; set; }
         [Column("ImporterName")]
-	    public string ImporterName { get; set; }
+        public string ImporterName { get; set; }
         [ForeignKey("Department")]
         [Column("DepartmentId")]
-	    public string DepartmentId { get; set; }
-	      
+        public string DepartmentId { get; set; }
+
         public virtual Department Department { get; set; }
         [ForeignKey("ReferentUser")]
         [Column("ReferentUserId")]
-	    public string ReferentUserId { get; set; }
-	      
+        public string ReferentUserId { get; set; }
+
         public virtual User ReferentUser { get; set; }
         [ForeignKey("DeliverySiteType")]
         [Column("StorageSiteCode")]
-	    public string StorageSiteCode { get; set; }
-	      
+        public string StorageSiteCode { get; set; }
+
         public virtual DeliverySiteType DeliverySiteType { get; set; }
         [Column("PlatformFee")]
-	    public decimal? PlatformFee { get; set; }
+        public decimal? PlatformFee { get; set; }
         [Column("CreateDateTime")]
-	    public DateTime? CreateDateTime { get; set; }
+        public DateTime? CreateDateTime { get; set; }
         [Column("UpdateDateTime")]
-	    public DateTime? UpdateDateTime { get; set; }
+        public DateTime? UpdateDateTime { get; set; }
         [Column("IsCancelled")]
-	    public bool IsCancelled { get; set; }
+        public bool IsCancelled { get; set; }
         [Column("EntitleImporterName")]
-	    public string EntitleImporterName { get; set; }
+        public string EntitleImporterName { get; set; }
         [Column("TransferImporterName")]
-	    public string TransferImporterName { get; set; }
+        public string TransferImporterName { get; set; }
         [Column("DealValueWithoutFactor")]
-	    public decimal? DealValueWithoutFactor { get; set; }
+        public decimal? DealValueWithoutFactor { get; set; }
         [Column("ImporterCode")]
-	    public string ImporterCode { get; set; }
+        public string ImporterCode { get; set; }
         [Column("TransferImporterCode")]
-	    public string TransferImporterCode { get; set; }
+        public string TransferImporterCode { get; set; }
         [Column("EntitleImporterCode")]
-	    public string EntitleImporterCode { get; set; }
+        public string EntitleImporterCode { get; set; }
         [Column("ConcurrencyGUID")]
-	    public string ConcurrencyGUID { get; set; }
+        public string ConcurrencyGUID { get; set; }
         [ForeignKey("ImporterType")]
         [Column("ImporterTypeCode")]
-	    public string ImporterTypeCode { get; set; }
-	      
+        public string ImporterTypeCode { get; set; }
+
         public virtual CustomerIdentifyType ImporterType { get; set; }
         [ForeignKey("TransferImporterType")]
         [Column("TransferImporterTypeCode")]
-	    public string TransferImporterTypeCode { get; set; }
-	      
+        public string TransferImporterTypeCode { get; set; }
+
         public virtual CustomerIdentifyType TransferImporterType { get; set; }
         [ForeignKey("EntitleImporterType")]
         [Column("EntitleImporterTypeCode")]
-	    public string EntitleImporterTypeCode { get; set; }
-	      
+        public string EntitleImporterTypeCode { get; set; }
+
         public virtual CustomerIdentifyType EntitleImporterType { get; set; }
         [Column("UserNotes")]
-	    public string UserNotes { get; set; }
+        public string UserNotes { get; set; }
         [Column("HasConstraint")]
-	    public bool HasConstraint { get; set; }
+        public bool HasConstraint { get; set; }
         [Column("PrimaryInvoiceCounterKey")]
-	    public string PrimaryInvoiceCounterKey { get; set; }
+        public string PrimaryInvoiceCounterKey { get; set; }
         [Column("PaymentOrderNumber")]
-	    public string PaymentOrderNumber { get; set; }
+        public string PaymentOrderNumber { get; set; }
         [ForeignKey("PaymentOrderStatus")]
         [Column("PaymentStatusCode")]
-	    public string PaymentStatusCode { get; set; }
-	      
+        public string PaymentStatusCode { get; set; }
+
         public virtual PaymentOrderStatus PaymentOrderStatus { get; set; }
         [Column("IsSignedVersion")]
-	    public bool IsSignedVersion { get; set; }
+        public bool IsSignedVersion { get; set; }
         [ForeignKey("SignedByUser")]
         [Column("SignedByUserId")]
-	    public string SignedByUserId { get; set; }
-	      
+        public string SignedByUserId { get; set; }
+
         public virtual User SignedByUser { get; set; }
         [Column("StorageSiteName")]
-	    public string StorageSiteName { get; set; }
+        public string StorageSiteName { get; set; }
         [Column("SignerPersonalId")]
-	    public string SignerPersonalId { get; set; }
+        public string SignerPersonalId { get; set; }
         [Column("IsConvertedDeclaration")]
-	    public bool IsConvertedDeclaration { get; set; }
+        public bool IsConvertedDeclaration { get; set; }
         [Column("CorrectionsXml")]
-	    public string CorrectionsXml { get; set; }
+        public string CorrectionsXml { get; set; }
         [Column("IsReleaseFile")]
-	    public bool IsReleaseFile { get; set; }
+        public bool IsReleaseFile { get; set; }
         [Column("IsConnectedToUnifreight")]
-	    public bool IsConnectedToUnifreight { get; set; }
+        public bool IsConnectedToUnifreight { get; set; }
         [ForeignKey("EntitlementType")]
         [Column("MainImporterEntitlemntTypeCode")]
-	    public string MainImporterEntitlemntTypeCode { get; set; }
-	      
+        public string MainImporterEntitlemntTypeCode { get; set; }
+
         public virtual EntitlementType EntitlementType { get; set; }
         [Column("TransImporterEntitleTypeCode")]
-	    public string TransImporterEntitleTypeCode { get; set; }
+        public string TransImporterEntitleTypeCode { get; set; }
         [Column("ImporterAddress")]
-	    public string ImporterAddress { get; set; }
+        public string ImporterAddress { get; set; }
         [Column("TransferImporterAddress")]
-	    public string TransferImporterAddress { get; set; }
+        public string TransferImporterAddress { get; set; }
         [Column("EntitleImporterAddress")]
-	    public string EntitleImporterAddress { get; set; }
+        public string EntitleImporterAddress { get; set; }
         [Column("ImporterPassportNumber")]
-	    public string ImporterPassportNumber { get; set; }
+        public string ImporterPassportNumber { get; set; }
         [Column("TransferPassportNumber")]
-	    public string TransferPassportNumber { get; set; }
+        public string TransferPassportNumber { get; set; }
         [Column("EntitlePassportNumber")]
-	    public string EntitlePassportNumber { get; set; }
+        public string EntitlePassportNumber { get; set; }
         [ForeignKey("StorageStatus")]
         [Column("StorageStatusCode")]
-	    public string StorageStatusCode { get; set; }
-	      
+        public string StorageStatusCode { get; set; }
+
         public virtual StorageStatus StorageStatus { get; set; }
         [Column("CasualSupplierName")]
-	    public string CasualSupplierName { get; set; }
+        public string CasualSupplierName { get; set; }
         [Column("CasualSupplierAddress")]
-	    public string CasualSupplierAddress { get; set; }
+        public string CasualSupplierAddress { get; set; }
         [Column("IsCourierDeclaration")]
-	    public bool IsCourierDeclaration { get; set; }
+        public bool IsCourierDeclaration { get; set; }
         [ForeignKey("ManifestCargoStatus")]
         [Column("ManifestCargoStatusCode")]
-	    public string ManifestCargoStatusCode { get; set; }
-	      
+        public string ManifestCargoStatusCode { get; set; }
+
         public virtual ManifestCargoStatus ManifestCargoStatus { get; set; }
         [Column("ManifestErrorXml")]
-	    public string ManifestErrorXml { get; set; }
+        public string ManifestErrorXml { get; set; }
         [Column("CourierHAWB")]
-	    public string CourierHAWB { get; set; }
+        public string CourierHAWB { get; set; }
         [Column("ExcludeConsignment")]
-	    public bool ExcludeConsignment { get; set; }
+        public bool ExcludeConsignment { get; set; }
         [ForeignKey("CourierCustomStatus")]
         [Column("CourierCustomStatusCode")]
-	    public string CourierCustomStatusCode { get; set; }
-	      
+        public string CourierCustomStatusCode { get; set; }
+
         public virtual CourierCustomStatus CourierCustomStatus { get; set; }
         [ForeignKey("AgentTalkBackType")]
         [Column("CourierSuspentionReasonCode")]
-	    public string CourierSuspentionReasonCode { get; set; }
-	      
+        public string CourierSuspentionReasonCode { get; set; }
+
         public virtual AgentTalkBackType AgentTalkBackType { get; set; }
         [Column("CourierReleaseStatusCode")]
-	    public string CourierReleaseStatusCode { get; set; }
+        public string CourierReleaseStatusCode { get; set; }
         [Column("CourierHataraStatusCode")]
-	    public string CourierHataraStatusCode { get; set; }
+        public string CourierHataraStatusCode { get; set; }
         [Column("DealValueWithFactor")]
-	    public decimal? DealValueWithFactor { get; set; }
+        public decimal? DealValueWithFactor { get; set; }
         [Column("IsValueForCustomsOnly")]
-	    public bool IsValueForCustomsOnly { get; set; }
+        public bool IsValueForCustomsOnly { get; set; }
         [ForeignKey("FreightPaymentMethod")]
         [Column("WeightValue")]
-	    public string WeightValue { get; set; }
-	      
+        public string WeightValue { get; set; }
+
         public virtual FreightPaymentMethod FreightPaymentMethod { get; set; }
         [Column("CourierSearchFields")]
-	    public string CourierSearchFields { get; set; }
+        public string CourierSearchFields { get; set; }
         [ForeignKey("AcceptanceStatus")]
         [Column("AcceptanceStatusCode")]
-	    public string AcceptanceStatusCode { get; set; }
-	      
+        public string AcceptanceStatusCode { get; set; }
+
         public virtual AcceptanceStatus AcceptanceStatus { get; set; }
         [Column("CasualImporterAddress1")]
-	    public string CasualImporterAddress1 { get; set; }
+        public string CasualImporterAddress1 { get; set; }
         [Column("CasualImporterAddress2")]
-	    public string CasualImporterAddress2 { get; set; }
+        public string CasualImporterAddress2 { get; set; }
         [Column("CasualImporterCity")]
-	    public string CasualImporterCity { get; set; }
+        public string CasualImporterCity { get; set; }
         [Column("CasualImporterZipCode")]
-	    public string CasualImporterZipCode { get; set; }
+        public string CasualImporterZipCode { get; set; }
         [Column("CasualImporterFax")]
-	    public string CasualImporterFax { get; set; }
+        public string CasualImporterFax { get; set; }
         [Column("CasualImporterEmail")]
-	    public string CasualImporterEmail { get; set; }
+        public string CasualImporterEmail { get; set; }
         [Column("CasualImporterTel")]
-	    public string CasualImporterTel { get; set; }
+        public string CasualImporterTel { get; set; }
         [Column("CasualImporterContact")]
-	    public string CasualImporterContact { get; set; }
+        public string CasualImporterContact { get; set; }
         [Column("ItemsProcessTypesList")]
-	    public string ItemsProcessTypesList { get; set; }
+        public string ItemsProcessTypesList { get; set; }
         [Column("IsClose")]
-	    public bool IsClose { get; set; }
+        public bool IsClose { get; set; }
         [ForeignKey("CourierSuspention")]
         [Column("CourierSuspentionCode")]
-	    public string CourierSuspentionCode { get; set; }
-	      
+        public string CourierSuspentionCode { get; set; }
+
         public virtual DeclarationStatusType CourierSuspention { get; set; }
         [Column("DepositionStatusCode")]
-	    public string DepositionStatusCode { get; set; }
+        public string DepositionStatusCode { get; set; }
         [Column("CargoDescription")]
-	    public string CargoDescription { get; set; }
+        public string CargoDescription { get; set; }
         [Column("IsPaymentProtested")]
-	    public bool IsPaymentProtested { get; set; }
+        public bool IsPaymentProtested { get; set; }
         [Column("AmendmentRequestNumber")]
-	    public string AmendmentRequestNumber { get; set; }
+        public string AmendmentRequestNumber { get; set; }
         [Column("AmendmentStatus")]
-	    public string AmendmentStatus { get; set; }
+        public string AmendmentStatus { get; set; }
         [Column("AmendmentissueDate")]
-	    public DateTime? AmendmentissueDate { get; set; }
+        public DateTime? AmendmentissueDate { get; set; }
         [Column("AmendmentRemarks")]
-	    public string AmendmentRemarks { get; set; }
+        public string AmendmentRemarks { get; set; }
         [Column("AmendmentDeficitInitiated")]
-	    public bool? AmendmentDeficitInitiated { get; set; }
+        public bool? AmendmentDeficitInitiated { get; set; }
         [Column("AmendDeficitInitiatedReasTo")]
-	    public string AmendDeficitInitiatedReasTo { get; set; }
+        public string AmendDeficitInitiatedReasTo { get; set; }
         [ForeignKey("AmendmentCorrectedByUser")]
         [Column("AmendmentCorrectedByUserId")]
-	    public string AmendmentCorrectedByUserId { get; set; }
-	      
+        public string AmendmentCorrectedByUserId { get; set; }
+
         public virtual User AmendmentCorrectedByUser { get; set; }
         [Column("AmendmentRejectionReason")]
-	    public string AmendmentRejectionReason { get; set; }
+        public string AmendmentRejectionReason { get; set; }
         [Column("IsAmendment")]
-	    public bool? IsAmendment { get; set; }
+        public bool? IsAmendment { get; set; }
         [Column("AmendmentOriginalDeclartation")]
-	    public string AmendmentOriginalDeclartation { get; set; }
+        public string AmendmentOriginalDeclartation { get; set; }
         [Column("IsDiamondDeclaration")]
-	    public bool IsDiamondDeclaration { get; set; }
+        public bool IsDiamondDeclaration { get; set; }
         [Column("AmendmentDontDisplayInList")]
-	    public bool AmendmentDontDisplayInList { get; set; }
+        public bool AmendmentDontDisplayInList { get; set; }
         [Column("IsMissMandatoryDiamond")]
-	    public bool IsMissMandatoryDiamond { get; set; }
+        public bool IsMissMandatoryDiamond { get; set; }
         [Column("IsValidTicketsDiamond")]
-	    public bool IsValidTicketsDiamond { get; set; }
+        public bool IsValidTicketsDiamond { get; set; }
         [Column("AvailabilityDate")]
-	    public DateTime? AvailabilityDate { get; set; }
+        public DateTime? AvailabilityDate { get; set; }
         [Column("LoadingDateTime")]
-	    public DateTime? LoadingDateTime { get; set; }
+        public DateTime? LoadingDateTime { get; set; }
         [ForeignKey("CustomsShip")]
         [Column("ShipCode")]
-	    public string ShipCode { get; set; }
-	      
+        public string ShipCode { get; set; }
+
         public virtual CustomsShip CustomsShip { get; set; }
         [Column("IsExporterConfirmation")]
-	    public bool IsExporterConfirmation { get; set; }
+        public bool IsExporterConfirmation { get; set; }
         [Column("Direction")]
-	    public string Direction { get; set; }
+        public string Direction { get; set; }
         [Column("AgentRoleCode")]
-	    public string AgentRoleCode { get; set; }
+        public string AgentRoleCode { get; set; }
         [Column("ExportFile")]
-	    public string ExportFile { get; set; }
+        public string ExportFile { get; set; }
         [ForeignKey("CustomsCountry")]
         [Column("DestinationCountryCode")]
-	    public string DestinationCountryCode { get; set; }
-	      
+        public string DestinationCountryCode { get; set; }
+
         public virtual CustomsCountry CustomsCountry { get; set; }
         [ForeignKey("ExportAutonomyRegionType")]
         [Column("ExportAutonomyRegionTypeCode")]
-	    public string ExportAutonomyRegionTypeCode { get; set; }
-	      
+        public string ExportAutonomyRegionTypeCode { get; set; }
+
         public virtual AutonomyRegionType ExportAutonomyRegionType { get; set; }
         [ForeignKey("DeclarationType")]
         [Column("DeclarationTypeCode")]
-	    public string DeclarationTypeCode { get; set; }
-	      
+        public string DeclarationTypeCode { get; set; }
+
         public virtual LeadDocumentType DeclarationType { get; set; }
         [ForeignKey("CancelRequestReason")]
         [Column("CancelRequestReasonCode")]
-	    public string CancelRequestReasonCode { get; set; }
-	      
+        public string CancelRequestReasonCode { get; set; }
+
         public virtual CancellationReasonRequestType CancelRequestReason { get; set; }
         [Column("CancelRequestReasonExplanation")]
-	    public string CancelRequestReasonExplanation { get; set; }
+        public string CancelRequestReasonExplanation { get; set; }
         [Column("CancelRequestNumber")]
-	    public int? CancelRequestNumber { get; set; }
+        public int? CancelRequestNumber { get; set; }
         [Column("CustomCancelRequestRemarks")]
-	    public string CustomCancelRequestRemarks { get; set; }
+        public string CustomCancelRequestRemarks { get; set; }
         [ForeignKey("CancelRequestStatus")]
         [Column("CancelRequestStatusCode")]
-	    public string CancelRequestStatusCode { get; set; }
-	      
+        public string CancelRequestStatusCode { get; set; }
+
         public virtual CancellationRequestStatus CancelRequestStatus { get; set; }
         [ForeignKey("CancelRequestRejectReasonType")]
         [Column("CancelRequestRejectionReason")]
-	    public string CancelRequestRejectionReason { get; set; }
-	      
+        public string CancelRequestRejectionReason { get; set; }
+
         public virtual CancelRequestRejectReasonType CancelRequestRejectReasonType { get; set; }
         [Column("CancelRequestApproveDate")]
-	    public DateTime? CancelRequestApproveDate { get; set; }
+        public DateTime? CancelRequestApproveDate { get; set; }
         [Column("IsClaimable")]
-	    public bool? IsClaimable { get; set; }
+        public bool? IsClaimable { get; set; }
         [Column("ReplacingRepairRequest")]
-	    public string ReplacingRepairRequest { get; set; }
+        public string ReplacingRepairRequest { get; set; }
         [Column("AmendmentErrorXml")]
-	    public string AmendmentErrorXml { get; set; }
+        public string AmendmentErrorXml { get; set; }
         [Column("FOBValueNIS")]
-	    public decimal? FOBValueNIS { get; set; }
+        public decimal? FOBValueNIS { get; set; }
         [Column("FOBValueDollar")]
-	    public decimal? FOBValueDollar { get; set; }
+        public decimal? FOBValueDollar { get; set; }
         [Column("TransshipmentApprovalDateTime")]
-	    public DateTime? TransshipmentApprovalDateTime { get; set; }
+        public DateTime? TransshipmentApprovalDateTime { get; set; }
         [ForeignKey("LoadingSiteType")]
         [Column("FinalLoadingSite")]
-	    public string FinalLoadingSite { get; set; }
-	      
+        public string FinalLoadingSite { get; set; }
+
         public virtual LoadingSiteType LoadingSiteType { get; set; }
         [Column("PalestinianCode")]
-	    public string PalestinianCode { get; set; }
+        public string PalestinianCode { get; set; }
         [Column("RequestedCustomsDocId")]
-	    public int? RequestedCustomsDocId { get; set; }
+        public int? RequestedCustomsDocId { get; set; }
         [ForeignKey("ExportDeclarationOffice")]
         [Column("ExportDeclarationOfficeCode")]
-	    public string ExportDeclarationOfficeCode { get; set; }
-	      
+        public string ExportDeclarationOfficeCode { get; set; }
+
         public virtual CustomsHouseType ExportDeclarationOffice { get; set; }
         [ForeignKey("PhysicalCheckCode")]
         [Column("PhysicalCheck")]
-	    public string PhysicalCheck { get; set; }
-	      
+        public string PhysicalCheck { get; set; }
+
         public virtual PhysicalCheckCode PhysicalCheckCode { get; set; }
         [Column("IsSubmitDeclaration")]
-	    public bool? IsSubmitDeclaration { get; set; }
+        public bool? IsSubmitDeclaration { get; set; }
         [ForeignKey("CustomsAmedmentType")]
         [Column("AmedmentType")]
-	    public string AmedmentType { get; set; }
-	      
+        public string AmedmentType { get; set; }
+
         public virtual AmedmentType CustomsAmedmentType { get; set; }
         [Column("IsExportClosed")]
-	    public bool IsExportClosed { get; set; }
+        public bool IsExportClosed { get; set; }
         [Column("ExportClosedErrorXML")]
-	    public string ExportClosedErrorXML { get; set; }
+        public string ExportClosedErrorXML { get; set; }
         [ForeignKey("ExportLoadingPort")]
         [Column("ExportLoadingPortCode")]
-	    public string ExportLoadingPortCode { get; set; }
-	      
+        public string ExportLoadingPortCode { get; set; }
+
         public virtual LoadingSiteType ExportLoadingPort { get; set; }
         [ForeignKey("ReleaseMessageTypeCode")]
         [Column("ReleaseStatusTypeCode")]
-	    public string ReleaseStatusTypeCode { get; set; }
-	      
+        public string ReleaseStatusTypeCode { get; set; }
+
         public virtual ReleaseMessageType ReleaseMessageTypeCode { get; set; }
         [Column("ClosingXml")]
-	    public string ClosingXml { get; set; }
+        public string ClosingXml { get; set; }
         [Column("ExportCloseAmendRequestNumber")]
-	    public string ExportCloseAmendRequestNumber { get; set; }
+        public string ExportCloseAmendRequestNumber { get; set; }
         [ForeignKey("AmendmentRequestStatus")]
         [Column("ExportCloseAmendmentStatus")]
-	    public string ExportCloseAmendmentStatus { get; set; }
-	      
+        public string ExportCloseAmendmentStatus { get; set; }
+
         public virtual AmendmentRequestStatus AmendmentRequestStatus { get; set; }
         [Column("CasualImporterCountry")]
-	    public string CasualImporterCountry { get; set; }
+        public string CasualImporterCountry { get; set; }
         [Column("ExcludeManifest")]
-	    public bool ExcludeManifest { get; set; }
+        public bool ExcludeManifest { get; set; }
         [Column("ForwarderFiles")]
-	    public string ForwarderFiles { get; set; }
+        public string ForwarderFiles { get; set; }
         [Column("ShortProcedure")]
-	    public bool ShortProcedure { get; set; }
+        public bool ShortProcedure { get; set; }
         [Column("ExportFlightDate")]
-	    public DateTime? ExportFlightDate { get; set; }
+        public DateTime? ExportFlightDate { get; set; }
         [Column("UNFCourier")]
-	    public bool UNFCourier { get; set; }
+        public bool UNFCourier { get; set; }
         [Column("AutoSending")]
-	    public bool AutoSending { get; set; }
+        public bool AutoSending { get; set; }
         [ForeignKey("SystemConnectionCode")]
         [Column("SystemConnection")]
-	    public string SystemConnection { get; set; }
-	      
+        public string SystemConnection { get; set; }
+
         public virtual NUnicloud SystemConnectionCode { get; set; }
         [ForeignKey("Shipment")]
         [Column("ShipmentId")]
-	    public string ShipmentId { get; set; }
-	      
+        public string ShipmentId { get; set; }
+
         public virtual Shipment Shipment { get; set; }
+     
     }
 }
-	 

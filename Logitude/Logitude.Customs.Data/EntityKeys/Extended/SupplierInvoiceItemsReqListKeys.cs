@@ -7,12 +7,6 @@ using System.Threading.Tasks;
 
 namespace Logitude.Customs.Data.EntityKeys.Extended
 {
-    public class SiiSendRequestBodyDto
-    {
-        public List<SiiSelectedRowDto> SelectedRows { get; set; }
-        public SiiProcessType ProcessType { get; set; } 
-                                                
-    }
     public class SiiSelectedRowDto
     {
 
@@ -22,10 +16,5 @@ namespace Logitude.Customs.Data.EntityKeys.Extended
         public int InvoiceItemLineNumber { get; set; }
         public int UiIndex { get; set; }
 
-    }
-    public enum SiiProcessType
-    {
-        Amital = 1,
-        NotAmital = 2
     }
 }

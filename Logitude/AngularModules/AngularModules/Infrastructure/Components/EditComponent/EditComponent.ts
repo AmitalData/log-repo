@@ -150,7 +150,7 @@ export class EditComponent implements OnDestroy, AfterViewInit {
         this.ComponentId = "EditComponent_" + this.CurrentSession.SessionIndex + "_" + this.ComponentIndex;
         this.EditComponentCellId = "EditComponentCellId_" + this.CurrentSession.SessionIndex + "_" + this.ComponentIndex;
         this.LayoutDirection = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
-        this.WorkEnvironment = ObjectsLocator.GlobalSetting == undefined ? "logitude" : ObjectsLocator.GlobalSetting?.WorkEnvironment;
+        this.WorkEnvironment = ObjectsLocator.GlobalSetting == undefined ? "logitude" : ObjectsLocator.GlobalSetting.WorkEnvironment;
         if (this.WorkEnvironment == "Customs") {
             this.FetchCustomsSetting();
         }
@@ -1967,7 +1967,6 @@ export class EditComponent implements OnDestroy, AfterViewInit {
                 this.CheckDuplicateEntity().then(isDuplicate => {
                     
                     if (!isDuplicate) {
-                        this.StartBusyIndicatorSaving()
                         this.entityPMService.update(this.ObjectTableName, this.EntityPM, this.ClonedEntityPM).then((res: any) => {
                             res.subscribe((myResponse: ServiceResponse) => {
 

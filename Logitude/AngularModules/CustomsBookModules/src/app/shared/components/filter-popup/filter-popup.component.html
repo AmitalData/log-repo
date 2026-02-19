@@ -7,44 +7,44 @@
 	</div>
 	<div id="searchResults_filterPop" class="searchResults_filterPop" [class.shown]="openPopup" aria-hidden="false">
 		<div class="searchResults_filterPop_title">
-			<strong>בחרו סננים</strong>
+			<strong>{{'Accounting.General.O.FilterBy' | TextCodeTranslationPipe}}</strong>
 			<a href="#" class="searchResults_filterPop_clear" (click)="clearFilter()" (click)="$event.preventDefault()"
-				role="button">נקה הכל</a>
+				role="button">{{'General.O.ClearAll' | TextCodeTranslationPipe}}</a>
 		</div>
 		<div class="searchResults_filterPop_list">
-			<b>חפש ב:</b>
+			<b>{{'TraceEvent.O.SearchBy' | TextCodeTranslationPipe}}:</b>
 			<ul>
 				<li>
 					<label><input type="checkbox" id="0" (click)="pickFilter('parts')"
-							[checked]="isMarked('parts')" /><span>חלק</span></label>
+							[checked]="isMarked('parts')" /><span>{{'General.O.Part' | TextCodeTranslationPipe}}</span></label>
 				</li>
 				<li>
 					<label><input type="checkbox" id="1" (click)="pickFilter('chapters')"
-							[checked]="isMarked('chapters')" /><span>פרק</span></label>
+							[checked]="isMarked('chapters')" /><span>{{'General.O.Chapter' | TextCodeTranslationPipe}}</span></label>
 				</li>
 				<li>
 					<label><input type="checkbox" id="2" (click)="pickFilter('details')"
-							[checked]="isMarked('details')" /><span>פריט</span></label>
+							[checked]="isMarked('details')" /><span>{{'General.O.Item' | TextCodeTranslationPipe}}</span></label>
 				</li>
 				<li>
 					<label><input type="checkbox" id="3" (click)="pickFilter('sections')"
-							[checked]="isMarked('sections')" /><span>סעיף</span></label>
+							[checked]="isMarked('sections')" /><span>{{'General.O.Section' | TextCodeTranslationPipe}}</span></label>
 				</li>
 				<li>
 					<label><input type="checkbox" id="4" (click)="pickFilter('customsDetails')"
-							[checked]="isMarked('customsDetails')" /><span>פרט מכס</span></label>
+							[checked]="isMarked('customsDetails')" /><span>{{'General.O.CustomsDetail' | TextCodeTranslationPipe}}</span></label>
 				</li>
 				<li>
 					<label><input type="checkbox" id="5" (click)="pickFilter('rules')"
-							[checked]="isMarked('rules')" /><span>כללים</span></label>
+							[checked]="isMarked('rules')" /><span>{{'General.O.Rule' | TextCodeTranslationPipe}}</span></label>
 				</li>
 				<li>
 					<label><input type="checkbox" id="6" (click)="pickFilter('remarks')"
-							[checked]="isMarked('remarks')" /><span>הערות</span></label>
+							[checked]="isMarked('remarks')" /><span>{{'General.O.Remark' | TextCodeTranslationPipe}}</span></label>
 				</li>
 			</ul>
 		</div>
-		<div class="searchResults_filterPop_submit" (click)="filterClickEvent()"><button>סינון</button></div>
-		<div class="trapFocus"><a role="button">חזור להתחלת הפאנל</a></div>
+		<div class="searchResults_filterPop_submit" (click)="filterClickEvent()"><button>{{'Customs.CourierMaster.O.Filter' | TextCodeTranslationPipe}}</button></div>
+		<div class="trapFocus"><a role="button">{{'General.O.BackToPanel' | TextCodeTranslationPipe}}</a></div>
 	</div>
 </div>

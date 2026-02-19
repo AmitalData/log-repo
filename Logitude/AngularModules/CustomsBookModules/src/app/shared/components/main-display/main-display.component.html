@@ -9,7 +9,7 @@
 					[countSearchResult]="countSearchResult" [searchMode]="searchMode" [showDetails]="showDetails" />
 				<div class="loadingBox"
 					*ngIf="data?.length == 0 && this.searchMode == 'search' && !isLoading; else loading">
-					<span>לא נמצאות תוצאות לחיפוש</span>
+					<span>{{'General.O.NoResFound' | TextCodeTranslationPipe}}</span>
 				</div>
 				<ng-template #loading>
 					<div class="loadingBox" *ngIf="isLoading">
@@ -49,7 +49,7 @@
 														<input class="mainTable_itemChkAllCheckBox" type="checkbox"
 																	 [(ngModel)]="item.children[key2].checked"
 																	 (change)="onToggleAll($event , item.children[key2])">
-														<span>פתח הכל</span>
+														<span>{{'General.O.OpenAll' | TextCodeTranslationPipe}}</span>
 													</label>
 												</li>
 												<ng-container *ngFor="let key3 of Object.keys(item.children[key2].children)">

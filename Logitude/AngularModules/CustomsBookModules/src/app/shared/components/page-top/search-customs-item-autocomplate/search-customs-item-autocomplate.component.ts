@@ -13,11 +13,12 @@ import { RomanToolService } from '../../../services/roman-tool.service';
 import { HeaderService } from '../../app-header/service/header.service';
 import { SearchService } from '../service/top-page.service';
 import { API_MainService } from '../../../../core/API_MainService';
+import { Pipes } from '../../../../core/Infrastructure/ModuleDeclarations';
 
 @Component({
   selector: 'app-search-customs-item-autocomplate',
   standalone: true,
-  imports: [FormsModule, NgIf, MatAutocompleteModule, AsyncPipe, MatSelectModule, CommonModule, MatExpansionModule],
+  imports: [FormsModule, NgIf, MatAutocompleteModule, AsyncPipe, MatSelectModule, CommonModule, MatExpansionModule, Pipes],
   templateUrl: './search-customs-item-autocomplate.component.html',
   styleUrl: './search-customs-item-autocomplate.component.scss'
 })

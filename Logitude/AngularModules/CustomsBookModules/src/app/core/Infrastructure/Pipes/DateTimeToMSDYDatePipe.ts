@@ -5,7 +5,7 @@ import {TextCodeTranslator} from '../Utilities/TextCodeTranslator';
 
 import {AppTool} from '../Tools';
 
-@Pipe({ name: 'DateTimeToMSDYDatePipe' })
+@Pipe({ name: 'DateTimeToMSDYDatePipe', standalone: true })
 
 export class DateTimeToMSDYDatePipe {
     transform(value: Date): string {

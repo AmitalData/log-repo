@@ -60,46 +60,6 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             }
         }
 
-        [HttpPost]
-        public HttpResponseMessage GetCustomsBookMainViewByList([FromBody] CustomsBookListRequest request)
-        {
-            try
-            {
-                Filters filters = new Filters
-                {
-                    CustomsBookType = request.CustomsBookType,
-                    Tenant = request.Tenant,
-                    IsDiscountCodes = request.IsDiscountCodes
-                };
-
-                string token = HttpContext.Current.Request.Headers["Token"];
-                if (token == null)
-                    return Request.CreateResponse(HttpStatusCode.BadRequest,
-                        ApiExceptionBuilder.BuildException(
-                            new Exception("Token is missing")));
-
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                SecurityUtility.AuthenticationOnTenant(request.Tenant);
-
-                CB_CustomsItemComputedDataQueryService customsItemComputedDataQueryService =
-                    new CB_CustomsItemComputedDataQueryService(request.Tenant);
-
-                List<CustomsItemValidationResult> result =
-                    customsItemComputedDataQueryService.GetCustomsBookMainViewByList(
-                        request.Items,
-                        filters.CustomsBookType,
-                        filters.IsDiscountCodes
-                    );
-
-                return Request.CreateResponse(HttpStatusCode.OK, result);
-            }
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest,
-                    ApiExceptionBuilder.BuildException(ex));
-            }
-        }
-
         public HttpResponseMessage GetDefaultCB_CollapseSearchHierarchy(int tenant)
         {
             try
@@ -434,32 +394,6 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             }
 
         }
-       
-        public HttpResponseMessage GetMekachDocument(int documentId, int tenant)
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-
-
-                GetAttachmentRequestParams requestParamsData = new GetAttachmentRequestParams()
-                {
-                    documentId = documentId,
-                    Tenant = tenant
-                };
-                GetDOC8318_Web_GetAttachmentMessagingService messagingService = new GetDOC8318_Web_GetAttachmentMessagingService();
-                AttachmentResponseData responseData = messagingService.Send(requestParamsData);
-                return Request.CreateResponse(HttpStatusCode.OK, responseData);
-
-            }
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-
-        }
 
         public async Task<HttpResponseMessage> GetFromTypesense(string searchValue, string customsBookType)
         {
@@ -500,18 +434,11 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
         }
     }
 
-    public class CustomsBookListRequest
-    {
-        public string Items { get; set; }
-        public string CustomsBookType { get; set; }
-        public int Tenant { get; set; }
-        public bool IsDiscountCodes { get; set; }
-    }
+
     public class Filters
     {
         public string CustomsBookType { get; set; } = "1";
-        public int Tenant { get; set; } = 0;    
-
+        public int Tenant { get; set; } = 0;
         public string SearchFields { get; set; } = null;
         public string CustomsItemHierarchic { get; set; } = null;
         public bool Reamarks { get; set; } = false;

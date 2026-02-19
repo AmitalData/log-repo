@@ -42,7 +42,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Expense Allocation Settings&quot;"
-  Code="&quot;a420&quot;"
+  Code="&quot;bdfe&quot;"
   Name="&quot; Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Invoice&quot;"
@@ -1198,9 +1198,9 @@
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;ExpenseAllocationSetting.O.SpecificDate&quot;"
-      DefaultText="&quot;Specific Day&quot;"
-      LocalDefaultTextBack_up="&quot; יום ספציפי&quot;"
-      LocalDefaultText="&quot;BS64:IiDXmdeV150g16HXpNem15nXpNeZIg==&quot;"
+      DefaultText="&quot;Specific Date&quot;"
+      LocalDefaultTextBack_up="&quot;תאריך ספציפי&quot;"
+      LocalDefaultText="&quot;BS64:Iteq15DXqNeZ15og16HXpNem15nXpNeZIg==&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
@@ -1303,9 +1303,9 @@
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;ExpenseAllocationSetting.O.Months&quot;"
-      DefaultText="&quot;Month(s) &quot;"
-      LocalDefaultTextBack_up="&quot;חודש(ים)   &quot;"
-      LocalDefaultText="&quot;BS64:IteX15XXk9epKNeZ150pICAgIg==&quot;"
+      DefaultText="&quot;Month(s)&quot;"
+      LocalDefaultTextBack_up="&quot;חודש)ים)&quot;"
+      LocalDefaultText="&quot;BS64:IteX15XXk9epKdeZ150pIg==&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
@@ -1317,9 +1317,9 @@
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;ExpenseAllocationSetting.O.RecurrenceCount&quot;"
-      DefaultText="&quot;Finish by number of layouts&quot;"
-      LocalDefaultTextBack_up="&quot;סיום לפי כמות פריסות&quot;"
-      LocalDefaultText="&quot;BS64:Iteh15nXldedINec16TXmSDXm9ee15XXqiDXpNeo15nXodeV16oi&quot;"
+      DefaultText="&quot;Number of layouts&quot;"
+      LocalDefaultTextBack_up="&quot;מספר פריסות&quot;"
+      LocalDefaultText="&quot;BS64:Itee16HXpNeoINek16jXmdeh15XXqiI=&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
@@ -1334,55 +1334,6 @@
       DefaultText="&quot;Amount per layout&quot;"
       LocalDefaultTextBack_up="&quot;סכום לכל פריסה&quot;"
       LocalDefaultText="&quot;BS64:Iteh15vXldedINec15vXnCDXpNeo15nXodeUIg==&quot;"
-      TextCodeTypeCode="&quot;O&quot;"
-      IsSpellChecked="false" />
-    <TextCode
-      Code="&quot;ExpenseAllocationSetting.O.PastDateError&quot;"
-      DefaultText="&quot;You cannot enter a past date&quot;"
-      LocalDefaultTextBack_up="&quot;לא ניתן להזין תאריך בעבר&quot;"
-      LocalDefaultText="&quot;BS64:Itec15Ag16DXmdeq158g15zXlNeW15nXnyDXqteQ16jXmdeaINeR16LXkdeoIg==&quot;"
-      TextCodeTypeCode="&quot;O&quot;"
-      IsSpellChecked="false" />
-    <TextCode
-      Code="&quot;ExpenseAllocationSetting.O.StartDateAfterEndDateError&quot;"
-      DefaultText="&quot;The start date must be greater than or equal to the end date&quot;"
-      LocalDefaultTextBack_up="&quot;תאריך התחלה חייב להיות גדול או שווה לתאריך סיום&quot;"
-      LocalDefaultText="&quot;BS64:Iteq15DXqNeZ15og15TXqteX15zXlCDXl9eZ15nXkSDXnNeU15nXldeqINeS15PXldecINeQ15Ug16nXldeV15Qg15zXqteQ16jXmdeaINeh15nXldedIg==&quot;"
-      TextCodeTypeCode="&quot;O&quot;"
-      IsSpellChecked="false" />
-    <TextCode
-      Code="&quot;ExpenseAllocationSetting.O.EndDateError&quot;"
-      DefaultText="&quot;The start date must be greater than or equal to the accounting date&quot;"
-      LocalDefaultTextBack_up="&quot;תאריך התחלה חייב להיות גדול או זהה לתאריך חשבונאי&quot;"
-      LocalDefaultText="&quot;BS64:Iteq15DXqNeZ15og15TXqteX15zXlCDXl9eZ15nXkSDXnNeU15nXldeqINeS15PXldecINeQ15Ug15bXlNeUINec16rXkNeo15nXmiDXl9ep15HXldeg15DXmSI=&quot;"
-      TextCodeTypeCode="&quot;O&quot;"
-      IsSpellChecked="false" />
-    <TextCode
-      Code="&quot;ExpenseAllocationSetting.O.Weekly&quot;"
-      DefaultText="&quot;Weekly&quot;"
-      LocalDefaultTextBack_up="&quot;שבועי&quot;"
-      LocalDefaultText="&quot;BS64:Itep15HXldei15ki&quot;"
-      TextCodeTypeCode="&quot;O&quot;"
-      IsSpellChecked="false" />
-    <TextCode
-      Code="&quot;ExpenseAllocationSetting.O.Monthly&quot;"
-      DefaultText="&quot;Monthly&quot;"
-      LocalDefaultTextBack_up="&quot;חודשי&quot;"
-      LocalDefaultText="&quot;BS64:IteX15XXk9ep15ki&quot;"
-      TextCodeTypeCode="&quot;O&quot;"
-      IsSpellChecked="false" />
-    <TextCode
-      Code="&quot;ExpenseAllocationSetting.O.Days&quot;"
-      DefaultText="&quot;Days&quot;"
-      LocalDefaultTextBack_up="&quot;ימים&quot;"
-      LocalDefaultText="&quot;BS64:IteZ157XmdedIg==&quot;"
-      TextCodeTypeCode="&quot;O&quot;"
-      IsSpellChecked="false" />
-    <TextCode
-      Code="&quot;ExpenseAllocationSetting.O.EndDateTime&quot;"
-      DefaultText="&quot;End by date&quot;"
-      LocalDefaultTextBack_up="&quot;סיום לפי תאריך&quot;"
-      LocalDefaultText="&quot;BS64:Iteh15nXldedINec16TXmSDXqteQ16jXmdeaIg==&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>

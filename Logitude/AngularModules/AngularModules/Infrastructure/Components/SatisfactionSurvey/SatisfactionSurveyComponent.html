@@ -179,7 +179,7 @@
                     <button type="submit"
                         [disabled]="!surveyForm.valid || formSubmitting || !surveyForm.value.Guid || !surveyForm.value.Hash"
                         [ngClass]="{'disabled': !surveyForm.valid || formSubmitting || !surveyForm.value.Guid || !surveyForm.value.Hash}">
-                        <span *ngIf="!formSubmitting">שלח</span>
+                        <span *ngIf="!formSubmitting">{{'General.Send' | TextCodeTranslationPipe}}</span>
                         <span *ngIf="formSubmitting"><i class="fa fa-spinner fa-spin"></i></span>
                     </button>
 

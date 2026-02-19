@@ -1,7 +1,7 @@
 <div class="detailsSlide_box" *ngIf="tableData1?.data?.length > 0 || tableData2?.data?.length > 0">
 	<div class="detailsSlide_toggle" (click)="expandedArea1 = !expandedArea1">
 		<div>
-			<h3 class="main_title">שיעורי מס</h3>
+			<h3 class="main_title">{{'Customs.SupplierInvoiceItemsTax.F.TaxRate' | TextCodeTranslationPipe}}</h3>
 		</div>
 		<div class="toggle" [class.active]="expandedArea1">
 			<fa-icon [size]="'xl'" class="toggle-close" [fixedWidth]="true" [icon]="faChevronDown"></fa-icon>
@@ -10,7 +10,7 @@
 	<div class="detailsSlide_ddown" [class.active]="expandedArea1" id="detailsSlide_ddown01">
 		<!-- First section: מכס -->
 		<section class="title" *ngIf="!expandedArea1">
-			<h4 class="title">מכס</h4>
+			<h4 class="title">{{'Customs.General.O.Customs' | TextCodeTranslationPipe}}</h4>
 			<div class="tableContainer">
 				<app-generic-table [tableData]="tableData1"></app-generic-table>
 			</div>
@@ -18,7 +18,7 @@
 
 		<!-- Second section: מס קנייה -->
 		<section *ngIf="!expandedArea1">
-			<h4 class="sub_title">מס קנייה</h4>
+			<h4 class="sub_title">{{'Customs.CB_CustomsItem.F.PurchaseTax' | TextCodeTranslationPipe}}</h4>
 			<div class="tableContainer">
 				<app-generic-table [tableData]="tableData2"></app-generic-table>
 			</div>
@@ -29,7 +29,7 @@
 <div class="detailsSlide_box" *ngIf="tableData3?.data?.length > 0 && (tableData3A?.data?.length > 0 || tableData3B?.data?.length > 0)">
 	<div class="detailsSlide_toggle" (click)="expandedArea2 = !expandedArea2">
 		<div>
-			<h3 class="main_title">דרישות חוקיות</h3>
+			<h3 class="main_title">{{'Customs.General.O.CustomItemLegalDemandsQueryMessage' | TextCodeTranslationPipe}}</h3>
 		</div>
 		<div class="toggle" [class.active]="expandedArea2">
 			<fa-icon [size]="'xl'" class="toggle-close" [fixedWidth]="true" [icon]="faChevronDown"></fa-icon>
@@ -96,8 +96,7 @@
 		<section class="title">
 			<div class="tableContainer" [ngStyle]="expandedArea5 ? {'display': 'none'} : {}"
 				*ngIf="!isLoadingMekach && tableData5?.data?.length > 0">
-				<app-generic-table *ngIf="!expandedArea5" [tableData]="tableData5"
-				(buttonClicked)="handleButtonPdfClick($event)"></app-generic-table>
+				<app-generic-table *ngIf="!expandedArea5" [tableData]="tableData5"></app-generic-table>
 			</div>
 			<div class="dataLoadingBox" *ngIf="!expandedArea5 && tableData5?.data?.length == 0">
 				<span *ngIf="isLoadingMekach; else noData">{{ reloadMsg }}</span>

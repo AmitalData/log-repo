@@ -229,7 +229,6 @@
     <Compile Include="DataContracts\SIIRequest\ProductFileRequestDto.cs" />
     <Compile Include="DataContracts\SIIRequest\ReleaseRequestApiDto.cs" />
     <Compile Include="DataContracts\SIIRequest\ReleaseRequestApiResponseDto.cs" />
-    <Compile Include="DataContracts\SIIRequest\SiiStatusEnvelope.cs" />
     <Compile Include="EntityKeys\AcceptanceStatusKeys.cs" />
     <Compile Include="EntityKeys\ActionCodeKeys.cs" />
     <Compile Include="EntityKeys\AgentTalkBackTypeKeys.cs" />
@@ -450,7 +449,6 @@
     <Compile Include="EntityKeys\ServersNameKeys.cs" />
     <Compile Include="EntityKeys\SIIDocumentTypeKeys.cs" />
     <Compile Include="EntityKeys\SIIRequestKeys.cs" />
-    <Compile Include="EntityKeys\SIIRequestLineStatusKeys.cs" />
     <Compile Include="EntityKeys\SIIRequestStatusKeys.cs" />
     <Compile Include="EntityKeys\SplitOrMergeReasonKeys.cs" />
     <Compile Include="EntityKeys\StatusCodeKeys.cs" />
@@ -848,7 +846,6 @@
     <Compile Include="EntityListQueryServices\Generated\ServersNameListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\SignStationListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\SIIDocumentTypeListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\SIIRequestLineStatusListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\SIIRequestListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\SIIRequestStatusListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\SplitOrMergeReasonListQueryService.Generated.cs" />
@@ -939,7 +936,6 @@
     <Compile Include="EntityListQueryServices\ServersNameListQueryService.cs" />
     <Compile Include="EntityListQueryServices\SignStationListQueryService.cs" />
     <Compile Include="EntityListQueryServices\SIIDocumentTypeListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\SIIRequestLineStatusListQueryService.cs" />
     <Compile Include="EntityListQueryServices\SIIRequestListQueryService.cs" />
     <Compile Include="EntityListQueryServices\SIIRequestStatusListQueryService.cs" />
     <Compile Include="EntityListQueryServices\SplitOrMergeReasonListQueryService.cs" />
@@ -1048,7 +1044,6 @@
     <Compile Include="EntityLists\Generated\LevyTrustList.Generated.cs" />
     <Compile Include="EntityLists\Generated\RequestHandlingAuthorityList.Generated.cs" />
     <Compile Include="EntityLists\Generated\SIIDocumentTypeList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\SIIRequestLineStatusList.Generated.cs" />
     <Compile Include="EntityLists\Generated\SIIRequestList.Generated.cs" />
     <Compile Include="EntityLists\Generated\SIIRequestStatusList.Generated.cs" />
     <Compile Include="EntityLists\Generated\SupplierInvioceExportDefaultList.Generated.cs" />
@@ -1435,7 +1430,6 @@
     <Compile Include="EntityMapping\SignStationMap.cs" />
     <Compile Include="EntityMapping\ServersNameMap.cs" />
     <Compile Include="EntityMapping\SIIDocumentTypeMap.cs" />
-    <Compile Include="EntityMapping\SIIRequestLineStatusMap.cs" />
     <Compile Include="EntityMapping\SIIRequestMap.cs" />
     <Compile Include="EntityMapping\SIIRequestStatusMap.cs" />
     <Compile Include="EntityMapping\SplitOrMergeReasonMap.cs" />
@@ -1682,7 +1676,6 @@
     <Compile Include="EntityPOCOs\ServersName.cs" />
     <Compile Include="EntityPOCOs\SIIDocumentType.cs" />
     <Compile Include="EntityPOCOs\SIIRequest.cs" />
-    <Compile Include="EntityPOCOs\SIIRequestLineStatus.cs" />
     <Compile Include="EntityPOCOs\SIIRequestStatus.cs" />
     <Compile Include="EntityPOCOs\SplitOrMergeReason.cs" />
     <Compile Include="EntityPOCOs\StatusCode.cs" />
@@ -2080,7 +2073,6 @@
     <Compile Include="Repsitories\Generated\SignStationRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ServersNameRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\SIIDocumentTypeRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\SIIRequestLineStatusRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\SIIRequestRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\SIIRequestStatusRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\SplitOrMergeReasonRepository.Generated.cs" />
@@ -2170,7 +2162,6 @@
     <Compile Include="Repsitories\SignStationRepository.cs" />
     <Compile Include="Repsitories\ServersNameRepository.cs" />
     <Compile Include="Repsitories\SIIDocumentTypeRepository.cs" />
-    <Compile Include="Repsitories\SIIRequestLineStatusRepository.cs" />
     <Compile Include="Repsitories\SIIRequestRepository.cs" />
     <Compile Include="Repsitories\SIIRequestStatusRepository.cs" />
     <Compile Include="Repsitories\SplitOrMergeReasonRepository.cs" />

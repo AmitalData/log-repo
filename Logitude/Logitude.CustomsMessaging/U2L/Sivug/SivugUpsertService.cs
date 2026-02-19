@@ -808,7 +808,7 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                       var vendorCurrencyList=  vendorCurrencyQueryService.GetVendorCurrencyByVendorId(ResolvedTenant(), this._MySupplierInvoicePM.VendorId);
                         if(vendorCurrencyList!=null&& vendorCurrencyList.Count() == 1)
 						{
-                            this._MySupplierInvoicePM.InvoiceCurrencyTypeCode = vendorCurrencyList[0].Currency == "" ? null : vendorCurrencyList[0].Currency;
+                            this._MySupplierInvoicePM.InvoiceCurrencyTypeCode = vendorCurrencyList[0].Currency;
                         }
                     }
                 }

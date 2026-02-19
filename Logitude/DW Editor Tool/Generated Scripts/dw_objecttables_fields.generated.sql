@@ -2453,9 +2453,6 @@ insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,Is
 declare @Fact_QuotesShipmentNoNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_QuotesShipmentNoNewId OUTPUT,'DWObjectField' 
 insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,ViewFieldDisplayName,DontDisplayInView,IsMultipleSelection,UseUnitSelection) Values(@Fact_QuotesShipmentNoNewId,0,'Fact_Quotes','[Shipment No]','Shipment No','Text','false',0,20,'false','false','true','General','false','false','false','Quote.ShipmentNumber','[Shipment No]','false','false','false')  
-declare @Fact_QuotesCostChargeGroupValNewId varchar(15)
-execute usp_GetNextTableIdValue @Fact_QuotesCostChargeGroupValNewId OUTPUT,'DWObjectField' 
-insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,ViewFieldDisplayName,DontDisplayInView,IsMultipleSelection,UseUnitSelection) Values(@Fact_QuotesCostChargeGroupValNewId,0,'Fact_Quotes','[Cost Charge Group Val]','Cost Charge Group Val ','Text','false',0,30,'false','false','true','Money','false','false','false','QuoteComputedField.CostChargeGroupVal ','[Cost Charge Group Val ]','false','false','false')  
 ------------------------------------------------------------------------------------
 declare @Fact_ShipmentsNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_ShipmentsNewId OUTPUT,'DWObjectTable' 

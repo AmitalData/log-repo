@@ -4,15 +4,15 @@ import { faStar } from '@fortawesome/free-regular-svg-icons';
 import { HeaderService } from './service/header.service';
 import { PageTopComponent } from '../page-top/page-top.component';
 import { SearchService } from '../page-top/service/top-page.service';
-import { NgIf } from '@angular/common';
+import { NgIf, DatePipe } from '@angular/common';
 import { FilterPopupService } from '../filter-popup/service/filter-popup.service';
 import { PreferenceMenuComponent } from '../preference-menu/preference-menu';
-import { CommonModule } from '@angular/common';
+import { Pipes } from '../../../core/Infrastructure/ModuleDeclarations';
 
 @Component({
 	selector: 'app-header',
 	standalone: true,
-	imports: [FontAwesomeModule, PageTopComponent, NgIf, PreferenceMenuComponent, CommonModule],
+	imports: [FontAwesomeModule, PageTopComponent, NgIf, DatePipe, PreferenceMenuComponent, Pipes],
 	templateUrl: './app-header.component.html',
 	styleUrl: './app-header.component.css',
 })

@@ -832,10 +832,7 @@ export class APInvoicePM {
     public get HasExpenseAllocationSetting() { return this.hasExpenseAllocationSetting; }
     public set HasExpenseAllocationSetting(newValue: boolean) { if (this.hasExpenseAllocationSetting != newValue) { this.hasExpenseAllocationSetting = newValue; this.MarkAsDirty("HasExpenseAllocationSetting"); } }
       
-    private expenseAllocationStartDate: Date;
-    public get ExpenseAllocationStartDate() { return this.expenseAllocationStartDate; }
-    public set ExpenseAllocationStartDate(newValue: Date) { if (this.expenseAllocationStartDate != newValue) { this.expenseAllocationStartDate = newValue; this.MarkAsDirty("ExpenseAllocationStartDate"); } }
-      
+
     public OldEntityPM: APInvoicePM;
 		
     public IsDirty: boolean;

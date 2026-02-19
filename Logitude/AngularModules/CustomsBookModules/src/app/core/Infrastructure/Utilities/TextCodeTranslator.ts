@@ -2,10 +2,16 @@ declare var window: any;
 import { SessionLocator } from '../Utilities/SessionLocator';
 import { AppTool } from '../Tools';
 // Replace deprecated import with recommended check
-const isNullOrUndefined = (value: any) => value === undefined || value === null;
 import { ObjectsLocator } from '../Locators/ObjectsLocator';
+import lzString from 'lz-string';
+import { LocalStorageManager } from './LocalStorageManager';
+
+const isNullOrUndefined = (value: any) => value === undefined || value === null;
 
 export class TextCodeTranslator {
+
+
+
 	static BIReportTranslate(value: string) {
 		var translation = '';
 		var translationObject = window.TextCodes.filter((d) => d.Code == value)[0];
@@ -23,18 +29,33 @@ export class TextCodeTranslator {
 	}
 
 	static Translate(value: string, Fix: boolean = true): string {
+			if (isNullOrUndefined(window.TextCodes)) { 
+			let texts = lzString.decompress(LocalStorageManager.GetItem("TextCodes"));
+		
+			if (texts) {
+					texts = JSON.parse(texts);
+				window.TenantTranslations = texts;
+				window.TenantLanguageTranslations = texts;
+				window.TextCodesTranslations = texts;
+				window.TranslationsCache = texts;
+				window.TextCodes = texts;
+				window.TextCodesCache = texts;
+
+			}
+		}
 		if (SessionLocator.UseCachedData) {
 			return this.TranslateCached(value, Fix);
 		}
 		//console.log('88888888888888:', value);
-
+	
 		var translation: string = '';
-		var cachedTranslationObject = window.TranslationsCache.filter((d: any) => d.Code === value)[0];
+
+		var cachedTranslationObject = window.TranslationsCache?.filter((d: any) => d.Code === value)[0];
 
 		if (cachedTranslationObject) {
 			translation = cachedTranslationObject.TranslatedText;
 		} else {
-			var translationObject = window.TextCodesTranslations.filter((d: any) => d.Code == value)[0];
+			var translationObject = window.TextCodesTranslations?.filter((d: any) => d.Code == value)[0];
 			if (translationObject) {
 				translation = translationObject.TranslatedText;
 				window.TranslationsCache.push(translationObject);
@@ -55,10 +76,10 @@ export class TextCodeTranslator {
 		//console.log('88888888888888:', value);
 
 		var translation: string = '';
-		var cachedTranslationObject = window.TextCodesCache.filter((d: any) => d.Code === value)[0];
+		var cachedTranslationObject = window.TextCodesCache?.filter((d: any) => d.Code === value)[0];
 
 		if (cachedTranslationObject) {
-			if (SessionLocator.LoggedUserPM.DontShowLocal) {
+			if (SessionLocator.LoggedUserPM?.DontShowLocal) {
 				translation = cachedTranslationObject.DefaultText;
 			} else {
 				if (cachedTranslationObject.LocalDefaultText) {
@@ -84,7 +105,7 @@ export class TextCodeTranslator {
 				}
 			}
 		} else {
-			var translationObject = window.TextCodes.filter((d) => d.Code == value)[0];
+			var translationObject = window.TextCodes?.filter((d) => d.Code == value)[0];
 			if (translationObject) {
 				if (SessionLocator.LoggedUserPM.DontShowLocal) {
 					translation = translationObject.DefaultText;
@@ -111,17 +132,12 @@ export class TextCodeTranslator {
 					}
 				}
 
-				window.TextCodesCache.push(translationObject);
-			} else {
-				if (this.ShowAlertMessage(value)) {
-					if (SessionLocator.LoggedUserPM.Email.includes('logitudeworld.com')) {
-						alert("This Code '" + value + "' Not Found!");
-					}
-				}
+				window.TextCodesCache?.push(translationObject);
 			}
+
 		}
 
-		if (window.TextCodesCache.length > 200) {
+		if (window.TextCodesCache?.length > 200) {
 			window.TextCodesCache.splice(0, 50);
 		}
 

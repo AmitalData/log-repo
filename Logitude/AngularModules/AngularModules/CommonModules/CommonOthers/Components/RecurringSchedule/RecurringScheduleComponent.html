@@ -1,26 +1,176 @@
-<style>
-    .disabled-div {
-        pointer-events: none;
-        opacity: 0.7;
-    }
-</style>
-<tr
-    *ngIf="validationErrorsList != null && validationErrorsList.length > 0"
-    style="height: 1px; width: 100%"
->
-    <td style="width: 450px">
-        <ValidationSummary
-            [ItemsSource]="validationErrorsList"
-        ></ValidationSummary>
-    </td>
-</tr>
-<div *ngIf="isReady" [class.disabled-div]="disabled">
-    <tr style="height: 100px">
-        <td style="vertical-align: top">
-            <table>
-                <tr style="height: 1px">
-                    <td>
+<tr style="height: 100px">
+    <td style="vertical-align: top">
+        <table>
+            <tr style="height: 1px">
+                <td>
+                    <table>
+                        <tr>
+                            <td style="width: 10px"></td>
+                            <td style="width: 80px">
+                                <RadioButton
+                                    style="display: inline"
+                                    [Name]="'TriggerRadio'"
+                                    [IsChecked]="IsWeekly == true"
+                                    (Checked)="setTrigger('W')"
+                                    [Text]="'Weekly'"
+                                    [Top]="5"
+                                ></RadioButton>
+                            </td>
+                            <td style="width: 80px">
+                                <RadioButton
+                                    style="display: inline"
+                                    [Name]="'TriggerRadio'"
+                                    [IsChecked]="IsMonthly == true"
+                                    (Checked)="setTrigger('M')"
+                                    [Text]="'Monthly'"
+                                    [Top]="5"
+                                ></RadioButton>
+                            </td>
+                            <td></td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr style="height: 10px"></tr>
+            <tr>
+                <td>
+                    <div [style.direction]="isRTL ? 'rtl' : 'ltr'">
                         <table>
+                            <tr class="FormFieldRow" *ngIf="IsMonthly">
+                                <td
+                                    style="width: 25px"
+                                    [style.text-align]="isRTL ? 'right' : 'left'"
+                                >
+                                    {{'ExpenseAllocationSetting.O.InEvery' |
+                                    TextCodeTranslationPipe}}
+                                </td>
+                                <td style="width: 10px">
+                                    <div></div>
+                                </td>
+                                <div style="display: flex">
+                                    <div
+                                        style="
+                                            height: 22px;
+                                            width: 95px;
+                                            position: relative;
+                                            top: 10px;
+                                        "
+                                        [style.text-align]="isRTL ? 'right' : 'left'"
+                                    >
+                                        <div
+                                            tabindex="0"
+                                            class="ToggleButton"
+                                            style="
+                                                margin: auto;
+                                                width: 100% !important;
+                                                height: 100% !important;
+                                            "
+                                            [style.text-align]="isRTL ? 'right' : 'left'"
+                                        >
+                                            <label
+                                                >{{getDisplayText(AllocationDateType)}}</label
+                                            >
+                                            <img
+                                                src="./Images/ToggleIcon.png"
+                                            />
+                                            <div
+                                                [style.right]="isRTL ? 'initial' : '0'"
+                                                [style.left]="isRTL ? '0' : 'initial'"
+                                                class="ToggleButtonMenu"
+                                                style="width: 100px"
+                                            >
+                                                <button
+                                                    [style.text-align]="isRTL ? 'right' : 'left'"
+                                                    *ngFor="let type of allocationTypes"
+                                                    (click)="onSelectAllocationType(type);"
+                                                >
+                                                    {{ getDisplayText(type) }}
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div style="width: 5px"></div>
+                                    <div
+                                        style="
+                                            height: 22px;
+                                            width: 95px;
+                                            position: relative;
+                                            top: 10px;
+                                        "
+                                        [style.text-align]="isRTL ? 'right' : 'left'"
+                                    >
+                                        <div
+                                            tabindex="0"
+                                            class="ToggleButton"
+                                            style="
+                                                margin: auto;
+                                                width: 100% !important;
+                                                height: 100% !important;
+                                            "
+                                            [style.text-align]="isRTL ? 'right' : 'left'"
+                                        >
+                                            <label
+                                                >{{getDisplayTextOfDay(selectedDay)}}</label
+                                            >
+                                            <img
+                                                src="./Images/ToggleIcon.png"
+                                            />
+                                            <div
+                                                [style.right]="isRTL ? 'initial' : '0'"
+                                                [style.left]="isRTL ? '0' : 'initial'"
+                                                class="ToggleButtonMenu"
+                                                style="width: 100px"
+                                            >
+                                                <button
+                                                    [style.text-align]="isRTL ? 'right' : 'left'"
+                                                    *ngFor="let type of days"
+                                                    (click)="onSelectDay(type);"
+                                                    [disabled]="IsDayDisabled"
+                                                >
+                                                    {{ getDisplayTextOfDay(type)
+                                                    }}
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <td style="width: 10px">
+                                    <div></div>
+                                </td>
+                                <td
+                                    style="width: 10px"
+                                    [style.text-align]="isRTL ? 'right' : 'left'"
+                                >
+                                    {{'ExpenseAllocationSetting.O.Every' |
+                                    TextCodeTranslationPipe}}
+                                </td>
+                                <td style="width: 10px">
+                                    <div></div>
+                                </td>
+                                <td style="width: 80px">
+                                    <div
+                                        style="
+                                            width: 80px;
+                                            top: 10px;
+                                            position: relative;
+                                        "
+                                    >
+                                        <NumberInput
+                                            [(ngModel)]="IntervalCount"
+                                            name="no"
+                                            [min]="1"
+                                        ></NumberInput>
+                                    </div>
+                                </td>
+
+                                <td
+                                    style="width: 25px"
+                                    [style.text-align]="isRTL ? 'right' : 'left'"
+                                >
+                                    {{'ExpenseAllocationSetting.O.Months' |
+                                    TextCodeTranslationPipe}}
+                                </td>
+                            </tr>
                             <tr class="FormFieldRow">
                                 <td
                                     style="width: 75px"
@@ -49,638 +199,391 @@
                                 </td>
                             </tr>
                         </table>
-                    </td>
-                </tr>
-                <tr style="height: 10px"></tr>
-
-                <tr style="height: 1px">
-                    <td>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </td>
+</tr>
+<tr style="height: 70px">
+    <td style="vertical-align: top">
+        <table>
+            <tr style="height: 10px"></tr>
+            <tr>
+                <td>
+                    <div [style.direction]="isRTL ? 'rtl' : 'ltr'">
                         <table>
-                            <tr>
-                                <td style="width: 10px"></td>
-                                <td style="width: 80px">
-                                    <RadioButton
-                                        style="display: inline"
-                                        [Name]="'TriggerRadio'"
-                                        [IsChecked]="IsWeekly == true"
-                                        (Checked)="setTrigger('W')"
-                                        [Text]="'ExpenseAllocationSetting.O.Weekly' | TextCodeTranslationPipe"
-                                        [Top]="5"
-                                    ></RadioButton>
+                            <tr class="FormFieldRow">
+                                <td style="width: 400px">
+                                    <table>
+                                        <tr>
+                                            <td style="width: 7px">
+                                                <div style="width: 7px"></div>
+                                            </td>
+
+                                            <td style="width: 100px">
+                                                <div
+                                                    class="RadioButton"
+                                                    style="width: 100px"
+                                                >
+                                                    <input
+                                                        type="radio"
+                                                        id="recurrenceCountRadio"
+                                                        name="paymentRadio"
+                                                        (click)="radioTypeChanged('RecurrenceCount')"
+                                                        [checked]="typeRadio == 'RecurrenceCount'"
+                                                        style="width: 15px"
+                                                    />
+                                                    <label
+                                                        for="recurrenceCountRadio"
+                                                        style="font-size: 12px"
+                                                    >
+                                                        {{'ExpenseAllocationSetting.O.RecurrenceCount'
+                                                        |
+                                                        TextCodeTranslationPipe}}
+                                                    </label>
+                                                </div>
+                                            </td>
+
+                                            <td style="width: 5px">
+                                                <div style="width: 5px"></div>
+                                            </td>
+
+                                            <td style="width: 100px">
+                                                <div
+                                                    class="RadioButton"
+                                                    style="width: 100px"
+                                                >
+                                                    <input
+                                                        type="radio"
+                                                        id="endDateRadio"
+                                                        name="paymentRadio"
+                                                        (click)="radioTypeChanged('EndDateTime') "
+                                                        [checked]="typeRadio == 'EndDateTime'"
+                                                        style="width: 15px"
+                                                    />
+                                                    <label
+                                                        for="endDateRadio"
+                                                        style="font-size: 12px"
+                                                    >
+                                                        {{'ExpenseAllocationSetting.F.EndDateTime'|TextCodeTranslationPipe}}
+                                                    </label>
+                                                </div>
+                                            </td>
+                                            <td></td>
+                                        </tr>
+                                    </table>
                                 </td>
-                                <td style="width: 80px">
-                                    <RadioButton
-                                        style="display: inline"
-                                        [Name]="'TriggerRadio'"
-                                        [IsChecked]="IsMonthly == true"
-                                        (Checked)="setTrigger('M')"
-                                        [Text]= "'ExpenseAllocationSetting.O.Monthly' | TextCodeTranslationPipe"
-                                        [Top]="5"
-                                    ></RadioButton>
-                                </td>
-                                <td></td>
+                                <td style="width: 100px"></td>
                             </tr>
-                        </table>
-                    </td>
-                </tr>
-                <tr style="height: 10px"></tr>
-                <tr>
-                    <td>
-                        <div [style.direction]="isRTL ? 'rtl' : 'ltr'">
-                            <table>
-                                <tr class="FormFieldRow" *ngIf="IsMonthly">
-                                    <td
-                                        style="width: 25px"
-                                        [style.text-align]="isRTL ? 'right' : 'left'"
-                                    >
-                                        {{'ExpenseAllocationSetting.O.InEvery' |
-                                        TextCodeTranslationPipe}}
-                                    </td>
-                                    <td style="width: 10px">
-                                        <div></div>
-                                    </td>
-                                    <div style="display: flex; width: 250px;">
-                                        <div
-                                            style="
-                                                height: 22px;
-                                                width: 95px;
-                                                position: relative;
-                                                top: 10px;
-                                            "
-                                            [style.text-align]="isRTL ? 'right' : 'left'"
-                                        >
-                                            <div
-                                                tabindex="0"
-                                                class="ToggleButton"
-                                                style="
-                                                    margin: auto;
-                                                    width: 100% !important;
-                                                    height: 100% !important;
-                                                "
-                                                [style.text-align]="isRTL ? 'right' : 'left'"
-                                            >
-                                                <label
-                                                    >{{RecurringScheduleComponent.getDisplayText(AllocationDateType)}}</label
-                                                >
-                                                <img
-                                                    src="./Images/ToggleIcon.png"
-                                                />
-                                                <div
-                                                    [style.right]="isRTL ? 'initial' : '0'"
-                                                    [style.left]="isRTL ? '0' : 'initial'"
-                                                    class="ToggleButtonMenu"
-                                                    style="width: 100px"
-                                                >
-                                                    <button
-                                                        [style.text-align]="isRTL ? 'right' : 'left'"
-                                                        *ngFor="let type of allocationTypes"
-                                                        (click)="onSelectAllocationType(type);"
-                                                    >
-                                                        {{ RecurringScheduleComponent.getDisplayText(type)
-                                                        }}
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div style="width: 5px"></div>
-                                        <div
-                                            *ngIf="!IsSpecificDateEnabled && !IsDayDisabled"
-                                            style="
-                                                height: 22px;
-                                                width: 95px;
-                                                position: relative;
-                                                top: 10px;
-                                            "
-                                            [style.text-align]="isRTL ? 'right' : 'left'"
-                                        >
-                                            <div
-                                                tabindex="0"
-                                                class="ToggleButton"
-                                                style="
-                                                    margin: auto;
-                                                    width: 100% !important;
-                                                    height: 100% !important;
-                                                "
-                                                [style.text-align]="isRTL ? 'right' : 'left'"
-                                            >
-                                                <label
-                                                    >{{RecurringScheduleComponent.getDisplayTextOfDay(selectedDay)}}</label
-                                                >
-                                                <img
-                                                    src="./Images/ToggleIcon.png"
-                                                />
-                                                <div
-                                                    [style.right]="isRTL ? 'initial' : '0'"
-                                                    [style.left]="isRTL ? '0' : 'initial'"
-                                                    class="ToggleButtonMenu"
-                                                    style="width: 100px"
-                                                >
-                                                    <button
-                                                        [style.text-align]="isRTL ? 'right' : 'left'"
-                                                        *ngFor="let type of days"
-                                                        (click)="onSelectDay(type);"
-                                                      
-                                                    >
-                                                        {{
-                                                        RecurringScheduleComponent.getDisplayTextOfDay(type)
-                                                        }}
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div
-                                            *ngIf="IsSpecificDateEnabled"
-                                            style="
-                                                height: 22px;
-                                                width: 95px;
-                                                position: relative;
-                                            "
-                                            [style.text-align]="isRTL ? 'right' : 'left'"
-                                        >
-                                            <tr>
-                                                <td style="width: 5px">
-                                                    <div></div>
-                                                </td>
-                                                <td style="width: 95px">
-                                                    <div
-                                                        style="
-                                                            width: 95px;
-                                                            position: relative;
-                                                            top: 10px;
-                                                        "
-                                                    >
-                                                        <NumberInput
-                                                            [(ngModel)]="NumberOfDayInMonth"
-                                                            name="no"
-                                                            [min]="1"
-                                                            [max]="31"
-                                                        ></NumberInput>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        </div>
+
+                            <tr
+                                *ngIf="typeRadio == 'EndDateTime'"
+                                class="FormFieldRow"
+                            >
+                                <td style="width: 100px; height: 50px">
+                                    <div style="width: 100px">
+                                        <LogDatePicker
+                                            [ObjectFieldName]="'EndDateTime'"
+                                            [DataContext]="dataContext"
+                                            [SelectedDateValue]="EndDateTime"
+                                            [HideColumns]="true"
+                                            [NoObjectField]="true"
+                                        ></LogDatePicker>
                                     </div>
-                                    <td style="width: 10px">
-                                        <div></div>
-                                    </td>
-                                    <td
-                                        style="width: 10px"
-                                        [style.text-align]="isRTL ? 'right' : 'left'"
-                                    >
-                                        {{'ExpenseAllocationSetting.O.Every' |
-                                        TextCodeTranslationPipe}}
-                                    </td>
-                                    <td style="width: 10px">
-                                        <div></div>
-                                    </td>
-                                    <td style="width: 80px">
-                                        <div
-                                            style="
-                                                width: 80px;
-                                                top: 10px;
-                                                position: relative;
-                                            "
-                                        >
-                                            <NumberInput
-                                                [(ngModel)]="IntervalCount"
-                                                name="no"
-                                                [min]="1"
-                                            ></NumberInput>
-                                        </div>
-                                    </td>
-
-                                    <td
-                                        style="width: 25px"
-                                        [style.text-align]="isRTL ? 'right' : 'left'"
-                                    >
-                                        {{'ExpenseAllocationSetting.O.Months' |
-                                        TextCodeTranslationPipe}}
-                                    </td>
-                                    <td style="width: 80px">
-                                        <div></div>
-                                    </td>
-                                </tr>
-                               
-                            </table>
-                        </div>
-                    </td>
-                </tr>
-            </table>
-        </td>
-    </tr>
-    <tr style="height: 70px">
-        <td style="vertical-align: top">
-            <table>
-                <tr style="height: 10px"></tr>
-                <tr>
-                    <td>
-                        <div [style.direction]="isRTL ? 'rtl' : 'ltr'">
-                            <table>
-                                <tr class="FormFieldRow">
-                                    <td style="width: 400px">
-                                        <table>
-                                            <tr>
-                                                <td style="width: 7px">
-                                                    <div
-                                                        style="width: 7px"
-                                                    ></div>
-                                                </td>
-
-                                                <td style="width: 150px">
-                                                    <div
-                                                        class="RadioButton"
-                                                        style="width: 150px"
-                                                    >
-                                                        <input
-                                                            type="radio"
-                                                            id="recurrenceCountRadio"
-                                                            name="paymentRadio"
-                                                            (click)="radioTypeChanged('RecurrenceCount')"
-                                                            [checked]="typeRadio == 'RecurrenceCount'"
-                                                            style="width: 15px"
-                                                        />
-                                                        <label
-                                                            for="recurrenceCountRadio"
-                                                            style="
-                                                                font-size: 12px;
-                                                            "
-                                                        >
-                                                            {{'ExpenseAllocationSetting.O.RecurrenceCount'
-                                                            |
-                                                            TextCodeTranslationPipe}}
-                                                        </label>
-                                                    </div>
-                                                </td>
-
-                                                <td style="width: 5px">
-                                                    <div
-                                                        style="width: 5px"
-                                                    ></div>
-                                                </td>
-
-                                                <td style="width: 100px">
-                                                    <div
-                                                        class="RadioButton"
-                                                        style="width: 100px"
-                                                    >
-                                                        <input
-                                                            type="radio"
-                                                            id="endDateRadio"
-                                                            name="paymentRadio"
-                                                            (click)="radioTypeChanged('EndDateTime') "
-                                                            [checked]="typeRadio == 'EndDateTime'"
-                                                            style="width: 15px"
-                                                        />
-                                                        <label
-                                                            for="endDateRadio"
-                                                            style="
-                                                                font-size: 12px;
-                                                            "
-                                                        >
-                                                            {{'ExpenseAllocationSetting.O.EndDateTime'|TextCodeTranslationPipe}}
-                                                        </label>
-                                                    </div>
-                                                </td>
-                                                <td></td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                    <td style="width: 100px"></td>
-                                </tr>
-
-                                <tr
-                                    *ngIf="typeRadio == 'EndDateTime'"
-                                    class="FormFieldRow"
-                                >
-                                    <td style="width: 100px; height: 50px">
-                                        <div style="width: 100px">
-                                            <LogDatePicker
-                                                [ObjectFieldName]="'EndDateTime'"
-                                                [DataContext]="dataContext"
-                                                [SelectedDateValue]="EndDateTime"
-                                                [HideColumns]="true"
-                                                [NoObjectField]="true"
-                                            ></LogDatePicker>
-                                        </div>
-                                    </td>
-                                    <td style="width: 10px">
-                                        <div></div>
-                                    </td>
-                                    <td>
-                                        <div></div>
-                                    </td>
-                                </tr>
-
-                                <tr
-                                    *ngIf="typeRadio == 'RecurrenceCount'"
-                                    class="FormFieldRow"
-                                >
-                                    <td>
-                                        <div
-                                            style="
-                                                width: 80px;
-                                                top: 10px;
-                                                position: relative;
-                                                height: 50px;
-                                            "
-                                        >
-                                            <NumberInput
-                                                [(ngModel)]="RecurrenceCount"
-                                                name="no"
-                                                [min]="1"
-                                            ></NumberInput>
-                                        </div>
-                                    </td>
-                                    <td style="width: 10px">
-                                        <div></div>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td>
-                                        <div></div>
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
-                    </td>
-                </tr>
-            </table>
-        </td>
-    </tr>
-
-    <tr style="height: 70px">
-        <td style="vertical-align: top">
-            <table style="width: 100%">
-                <tr>
-                    <td>
-                        <table *ngIf="IsWeekly">
-                            <tr>
-                                <td style="width: 50px">
-                                    <LogLabel
-                                        [NoObjectField]="true"
-                                        [ObjectFieldName]="'Days'"
-                                        [DataContext]="dataContext"
-                                        [Text]="'ExpenseAllocationSetting.O.Days' | TextCodeTranslationPipe"
-                                    ></LogLabel>
                                 </td>
+                                <td style="width: 10px">
+                                    <div></div>
+                                </td>
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
 
-                                <td colspan="2">
-                                    <table>
-                                        <tr style="height: 28px">
-                                            <td>
-                                                <table>
-                                                    <tr>
-                                                        <td style="width: 20px">
-                                                            <RadioButton
-                                                                style="
-                                                                    display: inline;
-                                                                "
-                                                                [Name]="'DayRadio'"
-                                                                [IsChecked]="selectedDayByWeek === 'Sunday'"
-                                                                (Checked)="onSelectDayByWeek('Sunday')"
-                                                                [Text]="'ExpenseAllocationSetting.O.Sunday' |
-                                        TextCodeTranslationPipe"
-                                                                [Top]="5"
-                                                            ></RadioButton>
-                                                        </td>
+                            <tr
+                                *ngIf="typeRadio == 'RecurrenceCount'"
+                                class="FormFieldRow"
+                            >
+                                <td>
+                                    <div
+                                        style="
+                                            width: 80px;
+                                            top: 10px;
+                                            position: relative;
+                                            height: 50px;
+                                        "
+                                    >
+                                        <NumberInput
+                                            [(ngModel)]="RecurrenceCount"
+                                            name="no"
+                                            [min]="1"
+                                        ></NumberInput>
+                                    </div>
+                                </td>
+                                <td style="width: 10px">
+                                    <div></div>
+                                </td>
+                            </tr>
 
-                                                        <td style="width: 10px">
-                                                            <div></div>
-                                                        </td>
-
-                                                        <td style="width: 20px">
-                                                            <RadioButton
-                                                                style="
-                                                                    display: inline;
-                                                                "
-                                                                [Name]="'DayRadio'"
-                                                                [IsChecked]="selectedDayByWeek === 'Monday'"
-                                                                (Checked)="onSelectDayByWeek('Monday')"
-                                                                [Text]="'ExpenseAllocationSetting.O.Monday' |
-                                        TextCodeTranslationPipe"
-                                                                [Top]="5"
-                                                            ></RadioButton>
-                                                        </td>
-
-                                                        <td style="width: 10px">
-                                                            <div></div>
-                                                        </td>
-
-                                                        <td style="width: 20px">
-                                                            <RadioButton
-                                                                style="
-                                                                    display: inline;
-                                                                "
-                                                                [Name]="'DayRadio'"
-                                                                [IsChecked]="selectedDayByWeek === 'Tuesday'"
-                                                                (Checked)="onSelectDayByWeek('Tuesday')"
-                                                                [Text]="'ExpenseAllocationSetting.O.Tuesday' |
-                                        TextCodeTranslationPipe"
-                                                                [Top]="5"
-                                                            ></RadioButton>
-                                                        </td>
-
-                                                        <td style="width: 10px">
-                                                            <div></div>
-                                                        </td>
-
-                                                        <td style="width: 20px">
-                                                            <RadioButton
-                                                                style="
-                                                                    display: inline;
-                                                                "
-                                                                [Name]="'DayRadio'"
-                                                                [IsChecked]="selectedDayByWeek === 'Wednesday'"
-                                                                (Checked)="onSelectDayByWeek('Wednesday')"
-                                                                [Text]="'ExpenseAllocationSetting.O.Wednesday' |
-                                        TextCodeTranslationPipe"
-                                                                [Top]="5"
-                                                            ></RadioButton>
-                                                        </td>
-                                                        <td style="width: 10px">
-                                                            <div></div>
-                                                        </td>
-                                                        <td style="width: 20px">
-                                                            <RadioButton
-                                                                style="
-                                                                    display: inline;
-                                                                "
-                                                                [Name]="'DayRadio'"
-                                                                [IsChecked]="selectedDayByWeek === 'Thursday'"
-                                                                (Checked)="onSelectDayByWeek('Thursday')"
-                                                                [Text]="'ExpenseAllocationSetting.O.Thursday' |
-                                        TextCodeTranslationPipe"
-                                                                [Top]="5"
-                                                            ></RadioButton>
-                                                        </td>
-
-                                                        <td style="width: 10px">
-                                                            <div></div>
-                                                        </td>
-
-                                                        <td style="width: 20px">
-                                                            <RadioButton
-                                                                style="
-                                                                    display: inline;
-                                                                "
-                                                                [Name]="'DayRadio'"
-                                                                [IsChecked]="selectedDayByWeek === 'Friday'"
-                                                                (Checked)="onSelectDayByWeek('Friday')"
-                                                                [Text]="'ExpenseAllocationSetting.O.Friday' |
-                                        TextCodeTranslationPipe"
-                                                                [Top]="5"
-                                                            ></RadioButton>
-                                                        </td>
-
-                                                        <td style="width: 10px">
-                                                            <div></div>
-                                                        </td>
-
-                                                        <td style="width: 20px">
-                                                            <RadioButton
-                                                                style="
-                                                                    display: inline;
-                                                                "
-                                                                [Name]="'DayRadio'"
-                                                                [IsChecked]="selectedDayByWeek === 'Saturday'"
-                                                                (Checked)="onSelectDayByWeek('Saturday')"
-                                                                [Text]="'ExpenseAllocationSetting.O.Saturday' |
-                                        TextCodeTranslationPipe"
-                                                                [Top]="5"
-                                                            ></RadioButton>
-                                                        </td>
-                                                        <td>
-                                                            <div></div>
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                            </td>
-                                        </tr>
-
-                                       
-                                    </table>
+                            <tr>
+                                <td>
+                                    <div></div>
                                 </td>
                             </tr>
                         </table>
-                    </td>
-                </tr>
-            </table>
-        </td>
-    </tr>
-    <!-- <tr  style="height: 60px">
-        <td>
-            <table>
-                <tr style="width: 100%">
-                    <td>
-                        <table>
-                            <tr>
-                                <td>
-                                    <table>
-                                        <tr style="height: 20px">
-                                            <td text-start class="BlueTitle">
-                                                {{'ExpenseAllocationSetting.O.InvoiceAmount'
-                                                | TextCodeTranslationPipe}}(NIS)
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td
-                                                style="vertical-align: middle"
-                                                class="arp-footer"
-                                            >
-                                                <div float-start class="amount-div">
-                                                    <div class="amount">
-                                                        {{TotalLocalAmount |
-                                                        NumbersPipe:'N2'}}
-                                                    </div>
-                                                </div>
-                                            </td>
-                                           
-                                        </tr>
-                                       
-                                    </table>
-                                </td>
-                                <td style="width: 20px"></td>
-                                <td *ngIf="CurrencyCode != 'NIS'">
-                                    <table>
-                                        <tr style="height: 20px">
-                                            <td text-start class="BlueTitle">
-                                                {{'ExpenseAllocationSetting.O.InvoiceAmount'
-                                                | TextCodeTranslationPipe}}({{CurrencyCode}})
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td
-                                                style="vertical-align: middle"
-                                                class="arp-footer"
-                                            >
-                                                <div float-start class="amount-div">
-                                                    <div class="amount">
-                                                        {{TotalAmount |
-                                                        NumbersPipe:'N2'}}
-                                                    </div>
-                                                </div>
-                                            </td>
-                                           
-                                        </tr>
-                                    </table>
-                                </td>
-                                <td style="width: 20px"></td>
-                                <td>
-                                    <table>
-                                        <tr style="height: 20px">
-                                            <td text-start class="BlueTitle">
-                                                {{'ExpenseAllocationSetting.O.RecurrenceAmount'
-                                                | TextCodeTranslationPipe}}
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td
-                                                style="vertical-align: middle"
-                                                class="arp-footer"
-                                            >
-                                                <div float-start class="amount-div">
-                                                    <div class="amount">
-                                                        {{RecurrenceAmount |
-                                                        NumbersPipe:'N2'}}
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-            </table>
-        </td>
-    </tr> -->
-    <tr style="height: 32px">
-        <td style="vertical-align: bottom">
-            <table style="height: 22px">
-                <tr>
-                    <td>
-                        <div></div>
-                    </td>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </td>
+</tr>
 
-                    <td style="width: 57px">
-                        <button class="Button" (click)="cancelButtonClicked()">
-                            {{'General.B.Cancel' | TextCodeTranslationPipe}}
-                        </button>
-                    </td>
+<tr style="height: 70px">
+    <td style="vertical-align: top">
+        <table style="width: 100%">
+            <tr>
+                <td>
+                    <table *ngIf="IsWeekly">
+                        <tr>
+                            <td style="width: 100px">
+                                <LogLabel
+                                    [NoObjectField]="true"
+                                    [ObjectFieldName]="'Days'"
+                                    [DataContext]="dataContext"
+                                    [Text]="'Days'"
+                                ></LogLabel>
+                            </td>
 
-                    <td style="width: 5px">
-                        <div></div>
-                    </td>
+                            <td colspan="2">
+                                <table>
+                                    <tr style="height: 28px">
+                                        <td>
+                                            <table>
+                                                <tr>
+                                                    <td style="width: 20px">
+                                                        <RadioButton
+                                                            style="
+                                                                display: inline;
+                                                            "
+                                                            [Name]="'DayRadio'"
+                                                            [IsChecked]="selectedDay === 'Sunday'"
+                                                            (Checked)="onSelectDayByWeek('Sunday')"
+                                                            [Text]="'Sunday'"
+                                                            [Top]="5"
+                                                        ></RadioButton>
+                                                    </td>
 
-                    <td style="width: 57px">
-                        <button class="RedButton" (click)="okButtonClicked()">
-                            {{'General.B.Ok' | TextCodeTranslationPipe}}
-                        </button>
-                    </td>
-                </tr>
-            </table>
-        </td>
-    </tr>
-</div>
+                                                    <td style="width: 10px">
+                                                        <div></div>
+                                                    </td>
+
+                                                    <td style="width: 20px">
+                                                        <RadioButton
+                                                            style="
+                                                                display: inline;
+                                                            "
+                                                            [Name]="'DayRadio'"
+                                                            [IsChecked]="selectedDay === 'Monday'"
+                                                            (Checked)="onSelectDayByWeek('Monday')"
+                                                            [Text]="'Monday'"
+                                                            [Top]="5"
+                                                        ></RadioButton>
+                                                    </td>
+
+                                                    <td style="width: 10px">
+                                                        <div></div>
+                                                    </td>
+
+                                                    <td style="width: 20px">
+                                                        <RadioButton
+                                                            style="
+                                                                display: inline;
+                                                            "
+                                                            [Name]="'DayRadio'"
+                                                            [IsChecked]="selectedDay === 'Tuesday'"
+                                                            (Checked)="onSelectDayByWeek('Tuesday')"
+                                                            [Text]="'Tuesday'"
+                                                            [Top]="5"
+                                                        ></RadioButton>
+                                                    </td>
+
+                                                    <td style="width: 10px">
+                                                        <div></div>
+                                                    </td>
+
+                                                    <td style="width: 20px">
+                                                        <RadioButton
+                                                            style="
+                                                                display: inline;
+                                                            "
+                                                            [Name]="'DayRadio'"
+                                                            [IsChecked]="selectedDay === 'Wednesday'"
+                                                            (Checked)="onSelectDayByWeek('Wednesday')"
+                                                            [Text]="'Wednesday'"
+                                                            [Top]="5"
+                                                        ></RadioButton>
+                                                    </td>
+
+                                                    <td>
+                                                        <div></div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+
+                                    <tr style="height: 28px">
+                                        <td>
+                                            <table>
+                                                <tr>
+                                                    <td style="width: 20px">
+                                                        <RadioButton
+                                                            style="
+                                                                display: inline;
+                                                            "
+                                                            [Name]="'DayRadio'"
+                                                            [IsChecked]="selectedDay === 'Thursday'"
+                                                            (Checked)="onSelectDayByWeek('Thursday')"
+                                                            [Text]="'Thursday'"
+                                                            [Top]="5"
+                                                        ></RadioButton>
+                                                    </td>
+
+                                                    <td style="width: 10px">
+                                                        <div></div>
+                                                    </td>
+
+                                                    <td style="width: 20px">
+                                                        <RadioButton
+                                                            style="
+                                                                display: inline;
+                                                            "
+                                                            [Name]="'DayRadio'"
+                                                            [IsChecked]="selectedDay === 'Friday'"
+                                                            (Checked)="onSelectDayByWeek('Friday')"
+                                                            [Text]="'Friday'"
+                                                            [Top]="5"
+                                                        ></RadioButton>
+                                                    </td>
+
+                                                    <td style="width: 10px">
+                                                        <div></div>
+                                                    </td>
+
+                                                    <td style="width: 20px">
+                                                        <RadioButton
+                                                            style="
+                                                                display: inline;
+                                                            "
+                                                            [Name]="'DayRadio'"
+                                                            [IsChecked]="selectedDay === 'Satarday'"
+                                                            (Checked)="onSelectDayByWeek('Satarday')"
+                                                            [Text]="'Satarday'"
+                                                            [Top]="5"
+                                                        ></RadioButton>
+                                                    </td>
+
+                                                    <td>
+                                                        <div></div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </td>
+</tr>
+<tr style="height: 60px">
+    <td>
+        <table>
+            <tr style="width: 100%">
+                <td>
+                    <table>
+                        <tr>
+                            <td>
+                                <table>
+                                    <tr style="height: 20px">
+                                        <td text-start class="BlueTitle">
+                                            {{'ExpenseAllocationSetting.O.InvoiceAmount'
+                                            | TextCodeTranslationPipe}}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td
+                                            style="vertical-align: middle"
+                                            class="arp-footer"
+                                        >
+                                            <div float-start class="amount-div">
+                                                <div class="amount">
+                                                    {{TotalAmount |
+                                                    NumbersPipe:'N2'}}
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td style="width: 20px"></td>
+                            <td>
+                                <table>
+                                    <tr style="height: 20px">
+                                        <td text-start class="BlueTitle">
+                                            {{'ExpenseAllocationSetting.O.RecurrenceAmount'
+                                            | TextCodeTranslationPipe}}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td
+                                            style="vertical-align: middle"
+                                            class="arp-footer"
+                                        >
+                                            <div float-start class="amount-div">
+                                                <div class="amount">
+                                                    {{RecurrenceAmount |
+                                                    NumbersPipe:'N2'}}
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </td>
+</tr>
+<tr style="height: 32px">
+    <td style="vertical-align: bottom">
+        <table style="height: 22px">
+            <tr>
+                <td>
+                    <div></div>
+                </td>
+
+                <td style="width: 57px">
+                    <button class="Button" (click)="cancelButtonClicked()">
+                        {{'General.B.Cancel' | TextCodeTranslationPipe}}
+                    </button>
+                </td>
+
+                <td style="width: 5px">
+                    <div></div>
+                </td>
+
+                <td style="width: 57px">
+                    <button class="RedButton" (click)="okButtonClicked()">
+                        {{'General.B.Ok' | TextCodeTranslationPipe}}
+                    </button>
+                </td>
+            </tr>
+        </table>
+    </td>
+</tr>

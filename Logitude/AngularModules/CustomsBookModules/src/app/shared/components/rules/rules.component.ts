@@ -7,11 +7,12 @@ import { faChevronLeft, faChevronDown } from '@fortawesome/free-solid-svg-icons'
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 import { SearchService } from '../page-top/service/top-page.service';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { Pipes } from '../../../core/Infrastructure/ModuleDeclarations';
 
 @Component({
   selector: 'app-rules',
   standalone: true,
-  imports: [FontAwesomeModule, NgIf, NgFor, CommonModule],
+  imports: [FontAwesomeModule, NgIf, NgFor, CommonModule, Pipes],
   templateUrl: './rules.component.html',
   styleUrl: './rules.component.css'
 })
@@ -109,7 +110,7 @@ export class RulesComponent implements OnInit, OnChanges {
     // Find root rules
     const rootRules = rulesList?.filter(rule => rule.ParentID == 0 || rule.ParentID == null || rule.Index == "-");
     // Build the hierarchy for root rules
-    const rulesListData = rootRules?.map(rootRule => {
+    const rulesListData = rootRules.map(rootRule => {
       const children = getChildren(rootRule);
       return {
         ...rootRule,
@@ -118,7 +119,7 @@ export class RulesComponent implements OnInit, OnChanges {
     });
 
     // Group rules by title
-    const grouped: GroupedRules[] = rulesListData?.reduce((acc: GroupedRules[], rule) => {
+    const grouped: GroupedRules[] = rulesListData.reduce((acc: GroupedRules[], rule) => {
       const key = rule.CB_ID;
       let group = acc.find(g => g.id === key);
 

@@ -41,8 +41,6 @@ import { ExpenseAllocationSettingExtendedService } from 'Invoice/Services/Extend
 import { ExpenseAllocationSettingPM } from 'Invoice/EntityPMs/ExpenseAllocationSettingPM';
 import { ExpenseAllocationSettingList } from 'Invoice/EntityLists/ExpenseAllocationSettingList';
 import { ExpenseAllocationSettingPMService } from 'Invoice/Services/StandardPMs/ExpenseAllocationSettingPMService';
-import { ExpenseAllocationFlowPM } from 'Invoice/EntityPMs/ExpenseAllocationFlowPM';
-import { ExpenseAllocationFlowPMService } from 'Invoice/Services/StandardPMs/expenseAllocationFlowPMService';
 declare var window: any;
 
 @Component({
@@ -72,6 +70,7 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     ColumnsWidths: any[] = [];
     public IsUsingVirtuallization: boolean = false;
     public GLAccountsFilterItems: ApiQueryFilters;
+    public ShowOperationalDate: boolean = false;
 
     constructor(private entityArgs: EntityArgs) {
         super();
@@ -150,6 +149,9 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         if (hideVatTypesFeature) {
             this.AllowVatTypes = false;
         }
+
+        const invoiceReferenceDate = FeatureLocator.Features.filter(f => f.Code == "InvoiceReferenceDate");
+        this.ShowOperationalDate = invoiceReferenceDate?.length > 0;
     }
 
 
@@ -161,7 +163,7 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {                   
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
-                    if(this.EntityPM.IsPrepaidExpenses && this.EntityPM.HasExpenseAllocationSetting)
+                    if(this.EntityPM.IsPrepaidExpenses)
                         this.saveExpenseAllocationSetting();
                     this.SetUIProperties();
                     this.BuildInvoiceLines();
@@ -222,6 +224,7 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
             this.UIProperties.SetEnabled("InvoiceNumber", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("VATNumber", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("InvoiceDate", this.ObjectTableName, false);
+            this.UIProperties.SetEnabled("OperationalDate", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("AccountingDate", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("InvoiceCurrencyId", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("VatTypeId", this.ObjectTableName, false);
@@ -239,13 +242,12 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
             this.UIProperties.SetEnabled("InvoiceNumber", this.ObjectTableName, true);
             this.UIProperties.SetEnabled("VATNumber", this.ObjectTableName, true);
             this.UIProperties.SetEnabled("InvoiceDate", this.ObjectTableName, true);
+            this.UIProperties.SetEnabled("OperationalDate", this.ObjectTableName, true);
             this.UIProperties.SetEnabled("AccountingDate", this.ObjectTableName, true);
             this.UIProperties.SetEnabled("InvoiceCurrencyId", this.ObjectTableName, true);
             this.UIProperties.SetEnabled("VatTypeId", this.ObjectTableName, true);
             this.UIProperties.SetEnabled("LocalDescription", this.ObjectTableName, true);
             this.UIProperties.SetEnabled("PayableDebitGLAcountId", this.ObjectTableName, true);
-            this.UIProperties.SetEnabled("IsPrepaidExpenses", this.ObjectTableName, true);
-
 
             if (this.EntityPM.InvoicePayments.length > 0) {
                 this.UIProperties.SetEnabled("VendorId", this.ObjectTableName, false);
@@ -371,7 +373,6 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
                                  if(res.Result){
                                     this.expenseAllocationSetting = res.Result;
                                     this.EntityPM.HasExpenseAllocationSetting = true;
-                                    this.EntityPM.ExpenseAllocationStartDate = this.expenseAllocationSetting.StartDateTime;
                                  }
                                     
                                 else{
@@ -387,12 +388,6 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
                         })
 
                     }
-                    else{
-                        this.expenseAllocationSetting = new ExpenseAllocationSettingPM();
-                        this.expenseAllocationSetting.CreateDate = DateTool.GetCurrentDateAsUtc();
-                        this.expenseAllocationSetting.CreatedByUserId = SessionLocator.LoggedUserId;
-                    }
-                    
                     if (!myResponse2.HasError) {
                         this.VatTypePercentagesList = myResponse2.Result;
                     }
@@ -410,64 +405,17 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     }
 
     saveExpenseAllocationSetting(){
-        var approved = this.EntityPM?.StatusCode === "AD";
-        if(this.EntityPM?.Id){
-            this.expenseAllocationSetting.EntityId = this.EntityPM?.Id;
-            if(this.expenseAllocationSetting?.Id){
-                this.CurrentSession.StartBusyIndicatorSaving();
-                this.expenseAllocationSettingPMService.update(this.expenseAllocationSetting).subscribe((res: ServiceResponse) => {
-                    if (!res.HasError) {
-                        this.expenseAllocationSetting = res.Result;
-                        if(approved){
-                            
-                            this.addExpenseAllocationFlow();
 
-                        }
-                            
-                        else{
-                            this.CurrentSession.StopBusyIndicator();
-                        }
-                    }  
-                    else{
-                        this.CurrentSession.StopBusyIndicator();
-                    }                
+        if(this.EntityPM?.Id){
+            if(this.expenseAllocationSetting?.Id){
+                this.expenseAllocationSettingPMService.update(this.expenseAllocationSetting).subscribe((res: ServiceResponse) => {                  
                 })
             }
             else{
-                this.CurrentSession.StartBusyIndicatorSaving();
-                this.expenseAllocationSettingPMService.insert(this.expenseAllocationSetting).subscribe((res: ServiceResponse) => {   
-                    if (!res.HasError) {
-                        this.expenseAllocationSetting = res.Result;
-                        if(approved){
-                            
-                            this.addExpenseAllocationFlow();
-                        }
-                        else{
-                            this.CurrentSession.StopBusyIndicator();
-                        }
-                            
-                    }     
-                    else{
-                        this.CurrentSession.StopBusyIndicator();
-                    }                 
+                this.expenseAllocationSettingPMService.insert(this.expenseAllocationSetting).subscribe((res: ServiceResponse) => {                     
                 })
             }
         }
-    }
-    expenseAllocationFlowPMService: ExpenseAllocationFlowPMService = new ExpenseAllocationFlowPMService();
-    addExpenseAllocationFlow(jounalId: string = null){
-        var expenseAllocationFlowPM : ExpenseAllocationFlowPM = new ExpenseAllocationFlowPM();
-        expenseAllocationFlowPM.Tenant = SessionLocator.Tenant;
-        expenseAllocationFlowPM.SettingId = this.expenseAllocationSetting?.Id;
-        expenseAllocationFlowPM.Status = "Done";
-        expenseAllocationFlowPM.RunDate = this.expenseAllocationSetting.StartDateTime;
-        expenseAllocationFlowPM.JournalId = jounalId;
-        this.expenseAllocationFlowPMService.insert(expenseAllocationFlowPM).subscribe((res: ServiceResponse) => {
-           
-                this.CurrentSession.StopBusyIndicator();
-            
-        });
-
     }
     UpdateData() {
         this.CurrentSession.StartBusyIndicatorLoading();
@@ -908,8 +856,6 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         if (this.EntityPM.AmountInInvoiceCurrency != setValue) {
             this.EntityPM.AmountInInvoiceCurrency = setValue;
             this.EntityPM.InvoiceExpectedAmount = setValue;
-            this.ComputeTotals();
-
 
            
         }
@@ -1183,23 +1129,19 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     set IsPrepaidExpenses(newValue: boolean) {
         if (this.EntityPM.IsPrepaidExpenses != newValue) {
             this.EntityPM.IsPrepaidExpenses = newValue;  
-            this.setPrepaidExpensesForLines(newValue);
-             if(newValue)
-                this.showRecurringScheduleSettings();
-                     
+            if (newValue) {
+                this.ShowRecurringScheduleSettings();
+            }          
         }
     }
-    setPrepaidExpensesForLines(isPrepaid: boolean){
-        this.ItemsSource.Collection.forEach(item => {
-            item.IsPrepaidExpenses = isPrepaid;
-        });
-    }
     expenseAllocationSettingPMService: ExpenseAllocationSettingPMService = new ExpenseAllocationSettingPMService();
-    showRecurringScheduleSettings(){
+    ShowRecurringScheduleSettings(){
+        const defaultEnd = new Date(this.expenseAllocationSetting?.StartDateTime || this.AccountingDate);
+        defaultEnd.setDate(defaultEnd.getDate() + 364);    
         const paymentType = this.expenseAllocationSetting?.PaymentDateType;
           
-          var IsMonthly = true;
-          var AllocationDateType = null;
+          var IsMonthly = false;
+          var AllocationDateType = '';
           var selectedDay = null;
           var selectedDayByWeek = null;
 
@@ -1216,12 +1158,10 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         var logWindow = new LogitudeWindow();
         logWindow.WindowArgs = { 
             StartDateTime: this.expenseAllocationSetting?.StartDateTime || this.AccountingDate,
-            EndDateTime: this.expenseAllocationSetting?.EndDateTime || this.AccountingDate, 
+            EndDateTime: this.expenseAllocationSetting?.EndDateTime || defaultEnd, 
             RecurrenceCount: this.expenseAllocationSetting?.NumberOfPayments || null, 
             MonthInterval: this.expenseAllocationSetting?.MonthInterval || 1,
-            TotalAmount: this.SubTotalInInvoiceCurrency,
-            TotalLocalAmount: this.SubTotalInLocalCurrency,
-            CurrencyCode: this.InvoiceCurrencyCode,
+            TotalAmount: this.AmountInInvoiceCurrency ,
             MinDate: this.AccountingDate ,
             AllocationDateType: AllocationDateType,
             IsWeekly: !IsMonthly,
@@ -1229,9 +1169,9 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
             SelectedDayByWeek: selectedDayByWeek
             }
             ;
-        logWindow.Width = 550;
-        logWindow.Height = 380;
-        logWindow.Title = TextCodeTranslator.Translate("APInvoice.O.ExpenseAllocationSetting");
+        logWindow.Width = 600;
+        logWindow.Height = 450;
+        logWindow.Title = "Recurring Schedule Settings";
         logWindow.ShowCloseButton =  true;
         logWindow.ComponentLoaded.subscribe(comp => {
             logWindow.WindowClosed.subscribe(s => {
@@ -1249,7 +1189,6 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
                         this.expenseAllocationSetting.Tenant = SessionLocator.Tenant;
                         this.expenseAllocationSetting.UpdateDate = DateTool.GetCurrentDateAsUtc();
                         this.expenseAllocationSetting.UpdatedByUserId = SessionLocator.LoggedUserId;
-                        this.EntityPM.ExpenseAllocationStartDate = this.expenseAllocationSetting.StartDateTime;
                         if(this.expenseAllocationSetting)
                             this.EntityPM.HasExpenseAllocationSetting = true;
                         this.saveExpenseAllocationSetting();
@@ -1279,6 +1218,13 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         }
     }
 
+    get OperationalDate() { return this.EntityPM.OperationalDate; }
+    set OperationalDate(newValue: Date) {
+        if (this.ShowOperationalDate && this.EntityPM.OperationalDate != newValue) {
+            this.EntityPM.OperationalDate = newValue;
+        }
+    }
+
     get ConfirmationNumber() { return this.EntityPM.ConfirmationNumber; }
     set ConfirmationNumber(newValue: string) {
         if (this.EntityPM.ConfirmationNumber != newValue) {
@@ -1300,7 +1246,7 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
             }
             else {
                 this.UIProperties.SetRequired("AccountingDate", this.ObjectTableName, false);
-            }           
+            }
         }
     }
 
@@ -1442,7 +1388,7 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         line.ForiegnCurrencyId = this.InvoiceCurrencyId;
         line.ForiegnCurrencyCode = this.InvoiceCurrencyCode;
         line.ForiegnExchangeRate = this.InvoiceCurrencyExchangeRate;
-        line.IsPrepaidExpenses = this.IsPrepaidExpenses;
+
         var myService: CardListService = new CardListService();
         myService.getSingle(this.VendorId).subscribe((myResult: any) => {
             var myResponse: ServiceResponse = myResult;
@@ -1457,13 +1403,6 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
                 logWindow.DataContext = addEditViewModel;
                 var title = TextCodeTranslator.Translate("APInvoiceLine.O.AddInvoiceLine");
                 logWindow.Title = title;
-                logWindow.ComponentLoaded.subscribe(comp => {
-                    logWindow.WindowClosed.subscribe(s => {
-                                                
-                         this.markSameChargeTypeLinesAsPrepaid(line.ChargesTypeId ,line.IsPrepaidExpenses);
-                       
-                    });
-                });
                 logWindow.Show('./InvoiceModules/APInvoice/Components/EditTabs/AddEditAPGeneralInvoiceLineComponent');
             }
         });
@@ -1473,23 +1412,8 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
             var logWindow = new LogitudeWindow();
             logWindow.Title = TextCodeTranslator.Translate("APInvoiceLine.O.EditInvoiceLine");
             logWindow.DataContext = item;
-            logWindow.ComponentLoaded.subscribe(comp => {
-                logWindow.WindowClosed.subscribe(s => {                  
-                        this.markSameChargeTypeLinesAsPrepaid(item.ChargesTypeId,item.IsPrepaidExpenses);
-                   
-                });
-            });
             logWindow.Show('./InvoiceModules/APInvoice/Components/EditTabs/AddEditAPGeneralInvoiceLineComponent');
         }
-    }
-    markSameChargeTypeLinesAsPrepaid(chargesTypeId: string, isPrepaid: boolean){
-       
-            this.ItemsSource.Collection.forEach(item => {
-                if(item.ChargesTypeId == chargesTypeId){
-                    item.IsPrepaidExpenses = isPrepaid;
-                }
-            });
-        
     }
 }
 export class APInvoiceLineItem extends BaseComponent {
@@ -1544,7 +1468,7 @@ export class APInvoiceLineItem extends BaseComponent {
     get InvoiceCurrencyId() {
         return this.invoicePM.InvoiceCurrencyId;
     }
-     
+
     get ForiegnCurrencyId() { return this.invoiceLinePM.ForiegnCurrencyId; }
     set ForiegnCurrencyId(value: string) {
         if (this.invoiceLinePM.ForiegnCurrencyId != value) {
@@ -1585,18 +1509,7 @@ export class APInvoiceLineItem extends BaseComponent {
     get ForiegnCurrencyCode() {
         return this.invoiceLinePM.ForiegnCurrencyCode;
     }
-    get IsPrepaidExpenses() {
-        return this.invoiceLinePM.IsPrepaidExpenses;
-    }
-    set IsPrepaidExpenses(value: boolean) {
-        if (this.invoiceLinePM != null) {
-            if (this.invoiceLinePM.IsPrepaidExpenses != value) {
-                this.invoiceLinePM.IsPrepaidExpenses = value;
-                this.fatherComponent.markSameChargeTypeLinesAsPrepaid(this.ChargesTypeId, value);
-                
-            }
-        }
-    }
+
     UpdateCurrencyRateClicked() {
 
         var loadingDate = this.fatherComponent.InvoiceDate;
@@ -1731,8 +1644,7 @@ export class APInvoiceLineItem extends BaseComponent {
     SetUIProperties_PayableDebitGLAcountId() {
        this.UIProperties.SetRequired("PayableDebitGLAcountId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.PayableDebitGLAcountId));
        this.UIProperties.SetEnabled("PayableDebitGLAcountId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.chargesTypeList?.PayableDebitGLAcountId));
-       this.UIProperties.SetEnabled("IsPrepaidExpenses", this.ObjectTableName, false);
-
+       
     }
     // Line Properties
     public RefreshLine() {

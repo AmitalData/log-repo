@@ -16,7 +16,6 @@ import { FeaturePM } from '../EntityPMs/FeaturePM';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
-import { Guid } from '../Utilities/Guid';
 import { defer, of } from 'rxjs';
 
 

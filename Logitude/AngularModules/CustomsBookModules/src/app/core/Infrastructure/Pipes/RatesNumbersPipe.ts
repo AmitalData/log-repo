@@ -1,6 +1,6 @@
 ﻿import {Pipe} from '@angular/core';
 
-@Pipe({ name: 'RatesNumbersPipe' })
+@Pipe({ name: 'RatesNumbersPipe', standalone: true })
 
 export class RatesNumbersPipe {
     transform(myNumber: number, myFormat: string): string {

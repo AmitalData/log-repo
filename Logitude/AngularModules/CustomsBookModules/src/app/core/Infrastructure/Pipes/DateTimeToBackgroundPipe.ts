@@ -1,7 +1,7 @@
 ﻿import {Pipe} from '@angular/core';
 import {AppTool, DateTool} from '../Tools';
 
-@Pipe({ name: 'DateTimeToBackgroundPipe' })
+@Pipe({ name: 'DateTimeToBackgroundPipe', standalone: true })
 
 export class DateTimeToBackgroundPipe {
     transform(value: Date): string {
