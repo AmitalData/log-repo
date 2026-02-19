@@ -26,38 +26,29 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.Emit;
-using System.Runtime.Remoting.Contexts;
 using System.Text;
-using System.Text.Json;
 using System.Threading.Tasks;
 using System.Transactions;
 using System.Web;
 using System.Xml.Serialization;
 
-
+//using WebFreight.Web.Helpers;
 
 namespace Logitude.Accounting.BL.CoreBL
 {
     public class TaxDeductionReportService
     {
-        private string _AggregateKey;
-        public static DocumentsFilingPM Create856File(ref TaxDeductionReportPM taxDeductionReportPM, int tenant)
-        {
-            string taxDeductionReportId = taxDeductionReportPM.Id;
 
-            IAccountingContext context = AccountingContext.GetContext(tenant);
-            TaxDeductionReportQueryService taxDeductionReportQueryService = new TaxDeductionReportQueryService(context);
-            
+        public static DocumentsFilingPM Create856File(string taxDeductionReportId, int tenant)
+        {
+            TaxDeductionReportQueryService taxDeductionReportQueryService = new TaxDeductionReportQueryService(tenant);
+            TaxDeductionReportPM taxDeductionReportPM = taxDeductionReportQueryService.GetSingle(taxDeductionReportId, false, false);
 
             List<string> linesArray = new List<string>();
+            //GLAccountQueryService queryService = new GLAccountQueryService(tenant);
             TaxDeductionReportDataProvider deductionReportDataProvider = new TaxDeductionReportDataProvider(taxDeductionReportPM,tenant,null);
             TaxDeductionReportData data = deductionReportDataProvider.GetTaxDeductionReportData();
-
-            // Create an instance of the service to handle saving and updating the tax deduction report with concurrency control (locking)
-            TaxDeductionReportService taxDeductionReportServiceOcrnc = new TaxDeductionReportService();
-            taxDeductionReportServiceOcrnc.SaveAndUpdateReportWithLock(context, taxDeductionReportPM, data, tenant, taxDeductionReportId);
-
-
+            //TaxDeductionReportData data = queryService.GetTaxDeductionReportData(taxDeductionReportPM.TaxYear, tenant);
             string xml = LogitudeXmlSerializer.SerializeObjectToXmlString(data);
             StringBuilder myStringBuilder = new StringBuilder();
             string a = null;
@@ -151,7 +142,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     if (item.GLAccountLocalName != null)
                     {
                         if (item.GLAccountLocalName.Length > 22) item.GLAccountLocalName = item.GLAccountLocalName.Substring(0, 22);
-                        myStringBuilder.Append(item.GLAccountLocalName.ToUpper().PadLeft(22, ' '));
+                        myStringBuilder.AppendFormat(item.GLAccountLocalName.ToUpper().PadLeft(22, ' '));
                     }
 
                     else
@@ -627,21 +618,6 @@ namespace Logitude.Accounting.BL.CoreBL
 
         }
 
-        public static void CreateReportDataForOlderReports(ref TaxDeductionReportPM taxDeductionReportPM, int tenant)
-        {
-            string taxDeductionReportId = taxDeductionReportPM.Id;
-
-            IAccountingContext context = AccountingContext.GetContext(tenant);
-            TaxDeductionReportQueryService taxDeductionReportQueryService = new TaxDeductionReportQueryService(context);
-
-            List<string> linesArray = new List<string>();
-            TaxDeductionReportDataProvider deductionReportDataProvider = new TaxDeductionReportDataProvider(taxDeductionReportPM, tenant, null);
-            TaxDeductionReportData data = deductionReportDataProvider.GetTaxDeductionReportData();
-
-            // Create an instance of the service to handle saving and updating the tax deduction report with concurrency control (locking)
-            TaxDeductionReportService taxDeductionReportServiceOcrnc = new TaxDeductionReportService();
-            taxDeductionReportServiceOcrnc.SaveAndUpdateReportWithLock(context, taxDeductionReportPM, data, tenant, taxDeductionReportId);
-        }
 
         private static DocumentsFilingPM CreateDocumnetFiling(StringBuilder lines,string DeductionFileNumber, TaxDeductionReportPM taxDeductionReport, bool isFromWR = false)
         {
@@ -753,114 +729,114 @@ namespace Logitude.Accounting.BL.CoreBL
         }
 
 
+        //public static DocumentOutPM CreateDocumentOut(string documentTypeId, string entityId, string childEntityId, string childReference, string objectTableId, int tenant, string userId = null)
+        //{
+        //    try
+        //    {
+        //        ICommonDataContext objectContext = CommonDataContext.GetContext(tenant);
+        //        DocumentOutRepository documentOutRepository = new DocumentOutRepository(objectContext);
+        //        DocumentTypeQuery documentTypeQuery = new DocumentTypeQuery(tenant);
+        //        DocumentOutQuery documentOutQuery = new DocumentOutQuery(documentOutRepository);
 
-        public void SaveAndUpdateReportWithLock(
-            IAccountingContext context,
-            TaxDeductionReportPM taxDeductionReportPM,
-            TaxDeductionReportData data,
-            int tenant,
-            string entityId)
-        {
-            try
-            {
-                using (TransactionScope scope = TransactionFactory.GetNewTransaction(TimeSpan.FromMinutes(1)))
-                {
-                    try
-                    {
-                        _AggregateKey = "TaxDeductionReportService.SaveAndUpdateReportWithLock-" + entityId; // VarChar 128 
-                        LockIt(tenant);
-                    }
-                    catch (Exception e)
-                    {
-                        var rootEx = e.GetBaseException();
-                        NetCommonHelper.Logger.DevLog.Instance.WriteError(
-                        $"[TaxDeductionReportService.SaveAndUpdateReportWithLock-Locking] Unexpected error occurred. " +
-                        $"Message: {rootEx.Message} | StackTrace: {rootEx.StackTrace}");
-                        throw;
-                    }
-                    if (String.IsNullOrEmpty(taxDeductionReportPM.ReportSavedData))
-                    {
-                        taxDeductionReportPM.ReportSavedData = JsonSerializer.Serialize(data);
-                        taxDeductionReportPM.ChangeSetOp = ChangeSetOperation.Update;
-                        var taxDeductionReportUpdateService = new TaxDeductionReportUpdateService(context, new Dictionary<string, IContext>(), tenant);
-                        taxDeductionReportUpdateService.Update(taxDeductionReportPM, true);
-                    }
-                    if (!String.IsNullOrWhiteSpace(_AggregateKey))
-                    {
-                        TryDeleteLockRow(tenant);
-                    }
-                    scope.Complete();
-                }
-            }
-            catch (Exception e)
-            {
-                var rootEx = e.GetBaseException();
-                string message = rootEx.Message;
-                string stackTrace = rootEx.StackTrace;
-                using (TransactionScope excScope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(1)))
-                {
-                    if (!String.IsNullOrWhiteSpace(_AggregateKey))
-                    {
-                        TryDeleteLockRow(tenant);
-                    }
-                    excScope.Complete();
-                }
+        //        DocumentTypePM documentType = documentTypeQuery.GetSinglePM(documentTypeId, tenant);
+              
 
-                NetCommonHelper.Logger.DevLog.Instance.WriteError(
-                    $"[TaxDeductionReportService.SaveAndUpdateReportWithLock] Unexpected error occurred. " +
-                    $"Message: {message} | StackTrace: {stackTrace}"
-                );
-                throw;
-            }
-        }
+        //        string documentTemplateId = null;
+        //        string emailTemplateId = null;
 
-        private void TryDeleteLockRow(int tenant)
-        {
-            //GeneralLock
-            {
-                try
-                {
-
-                    var repo = new GeneralLockRepository(tenant);
-
-                    repo.FastDelete(_AggregateKey, tenant);
-                    _AggregateKey = "";
-                }
-                catch 
-                {
-                    throw;
-                }
-            }
-        }
-        private void LockIt(int tenant)
-        {
-            var repo = new GeneralLockRepository(tenant);
-
-            var lockPoco = repo.GetSingleGeneralLockNOWAIT(_AggregateKey, tenant);
-            if (lockPoco == null)
-            {
-
-                repo.Add(new GeneralLock()
-                {
-                    Tenant = tenant,
-                    GeneralKey = _AggregateKey,
-                    CreatedAt = TenantServerConfigration.GetCurrentDateTime(tenant)
-                });
-                repo.SubmitChanges();
-
-                lockPoco = repo.GetSingleGeneralLockNOWAIT(_AggregateKey, tenant);
-            }
+        //        documentTemplateId = documentType.DocumentTypeDefaultReportTemplateId;
+        //        emailTemplateId = documentType.DocumentTypeDefaultHTMLTemplateId;
 
 
-            if (lockPoco == null)
-            {
-                throw new InvalidOperationException($"Failed to acquire lock for key {_AggregateKey}.");
-            }
+        //        //---------------------------------------- islam
+        //        DocumentsFilingRepository documentsFilingRepository = new DocumentsFilingRepository(objectContext);
+            
+        //        if (string.IsNullOrEmpty(userId))
+        //        {
+                  
+                 
+        //            User loggedUser = GetLoggedUser(tenant);
+                        
+        //            if (loggedUser != null)
+        //            {
+        //                userId = loggedUser.Id;
+        //            }
+        //        }
+
+        //        DocumentsFiling newDocumentFiling = new DocumentsFiling() { DocumentTypeId = documentTypeId, EntityId = entityId, Tenant = tenant, ObjectTableId = objectTableId, ChildEntityId = childEntityId, ChildEntityReference = childReference, DirectionCode = "O" };
+
+        //        newDocumentFiling.Id = IdCounter.GetNumber("Document", tenant).ToString();
+        //        newDocumentFiling.SecurityId = newDocumentFiling.Id + RandomString(10);
+        //        newDocumentFiling.Code = CodeCounter.GetNumber("DocumentsFiling", tenant).ToString();
+        //        newDocumentFiling.CreatedByUserId = userId;
+        //        newDocumentFiling.OwnerId = userId;
+        //        newDocumentFiling.UpdatedByUserId = userId;
+              
+        //        newDocumentFiling.UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+        //        newDocumentFiling.CreateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+        //        newDocumentFiling.SearchFields = newDocumentFiling.Code + "," + newDocumentFiling.DirectionCode;
+        //        documentsFilingRepository.Add(newDocumentFiling);
+
+        //        //----------------------------------------
+        //        DocumentOut newDocument = new DocumentOut() { EmailTemplateId = emailTemplateId, DocumentTemplateId = documentTemplateId, Tenant = tenant, Issued = false, };
+        //        newDocument.Id = newDocumentFiling.Id;
+        //        documentOutRepository.Add(newDocument);
 
 
-        }
+
+        //        objectContext.SaveChanges();
+        //        string documentTypeOutId = null;
+        //        if(documentType.DocumentTypeCopies.Count > 0)
+        //        {
+        //            documentTypeOutId = documentType.DocumentTypeCopies.FirstOrDefault().Id;
+        //        }
+        //        //ExportDocumentHelper exportDocumentHelper = new ExportDocumentHelper();
+        //        //exportDocumentHelper.ExportDocument2Pdf(documentType.Id, entityId, objectTableId, null, null, newDocument.Id, tenant, documentTypeOutId);
+
+        //        DocumentOutPM docPM = documentOutQuery.GetSinglePM(newDocument.Id, newDocument.Tenant);
+        //        return docPM;
+        //    }
+        //    catch (System.Data.Entity.Validation.DbEntityValidationException e)
+        //    {
+        //        string Error = "";
+        //        foreach (var eve in e.EntityValidationErrors)
+        //        {
+        //            Error += "Entity of type " + eve.Entry.Entity.GetType().Name + " in state " + eve.Entry.State + " has the following validation errors:";
+        //            foreach (var ve in eve.ValidationErrors)
+        //            {
+        //                //Console.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
+        //                //ve.PropertyName, ve.ErrorMessage);
+
+        //                Error += "- Property:" + ve.PropertyName + ", Error:" + ve.ErrorMessage + Environment.NewLine;
+        //            }
+        //        }
 
 
+        //        string authenticateduser = "";
+
+        //        try
+        //        {
+        //            authenticateduser = Logitude.BL.Security.SecurityUtility.GetAuthenticatedUser();
+        //        }
+
+        //        catch
+        //        {
+        //            authenticateduser = "UnKnown";
+        //        }
+        //        string ip = "";
+        //        if (HttpContext.Current != null && HttpContext.Current.Request != null)
+        //        {
+        //            string currentIP = HttpContext.Current.Request.Headers["X-Real-IP"];
+        //            if (string.IsNullOrEmpty(currentIP))
+        //            {
+        //                currentIP = HttpContext.Current.Request.UserHostAddress;
+        //            }
+        //            ip = currentIP;
+        //        }
+        //      //  ExceptionHandler.HandleException(new Exception(Error), DateTime.Now, 0, "", authenticateduser, "", ip);
+        //        throw new ApplicationException(Error);
+        //    }
+        //}
 
         private static string RandomString(int length)
         {

@@ -15,7 +15,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     public class ContactTenantRoleQuery
     {
         ContactTenantRoleRepository repository;
- 
+        public ContactTenantRoleQuery()
+        {
+               repository = new ContactTenantRoleRepository(); 
+        }
 
         public ContactTenantRoleQuery(int tenant)
         {
