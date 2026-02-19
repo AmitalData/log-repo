@@ -58,6 +58,5 @@ namespace Simplog.Data.InvoiceModel.EntityPOCOs
         [ForeignKey("ContainerTypeId")]
         public virtual PackageType ContainerType { get; set; }
         public string PayableDebitGLAcountId { get; set; }
-        public bool? IsPrepaidExpenses { get; set; }
     }
 }

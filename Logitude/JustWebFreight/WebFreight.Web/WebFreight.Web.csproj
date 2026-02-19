@@ -214,9 +214,6 @@
     <Reference Include="JWT, Version=10.0.0.0, Culture=neutral, PublicKeyToken=6f98bca0f40f2ecf, processorArchitecture=MSIL">
       <HintPath>..\..\packages\JWT.10.1.1\lib\net462\JWT.dll</HintPath>
     </Reference>
-    <Reference Include="LibExcel, Version=1.0.0.0, Culture=neutral, PublicKeyToken=ebe6666cba19647a, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Stimulsoft.LibExcel.2022.4.1\lib\net452\LibExcel.dll</HintPath>
-    </Reference>
     <Reference Include="LogicExtensions, Version=0.0.3.0, Culture=neutral, PublicKeyToken=7dc32d555748676e, processorArchitecture=MSIL">
       <HintPath>..\..\packages\LogicExtensions.0.0.3\lib\netstandard2.0\LogicExtensions.dll</HintPath>
     </Reference>
@@ -320,18 +317,6 @@
     <Reference Include="Microsoft.Identity.Client.Extensions.Msal, Version=4.66.1.0, Culture=neutral, PublicKeyToken=0a613f4dd989e8ae, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.Identity.Client.Extensions.Msal.4.66.1\lib\netstandard2.0\Microsoft.Identity.Client.Extensions.Msal.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.IdentityModel.Abstractions, Version=6.35.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.IdentityModel.Abstractions.6.35.0\lib\net472\Microsoft.IdentityModel.Abstractions.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.IdentityModel.JsonWebTokens, Version=6.35.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.IdentityModel.JsonWebTokens.6.35.0\lib\net472\Microsoft.IdentityModel.JsonWebTokens.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.IdentityModel.Logging, Version=6.35.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.IdentityModel.Logging.6.35.0\lib\net472\Microsoft.IdentityModel.Logging.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.IdentityModel.Tokens, Version=6.35.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.IdentityModel.Tokens.6.35.0\lib\net472\Microsoft.IdentityModel.Tokens.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.Owin">
       <HintPath>..\..\packages\Microsoft.Owin.2.1.0\lib\net45\Microsoft.Owin.dll</HintPath>
     </Reference>
@@ -368,8 +353,20 @@
     <Reference Include="Microsoft.Extensions.Primitives, Version=8.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.Extensions.Primitives.8.0.0\lib\net462\Microsoft.Extensions.Primitives.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.IdentityModel.Abstractions, Version=7.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.IdentityModel.Abstractions.7.6.0\lib\net472\Microsoft.IdentityModel.Abstractions.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.IdentityModel.Clients.ActiveDirectory, Version=5.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.IdentityModel.Clients.ActiveDirectory.5.3.0\lib\net45\Microsoft.IdentityModel.Clients.ActiveDirectory.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.JsonWebTokens, Version=7.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.IdentityModel.JsonWebTokens.7.6.0\lib\net472\Microsoft.IdentityModel.JsonWebTokens.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.Logging, Version=7.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.IdentityModel.Logging.7.6.0\lib\net472\Microsoft.IdentityModel.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.Tokens, Version=7.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.IdentityModel.Tokens.7.6.0\lib\net472\Microsoft.IdentityModel.Tokens.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.IO.RecyclableMemoryStream, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.IO.RecyclableMemoryStream.3.0.0\lib\netstandard2.0\Microsoft.IO.RecyclableMemoryStream.dll</HintPath>
@@ -385,9 +382,6 @@
     </Reference>
     <Reference Include="Microsoft.Owin.Security, Version=4.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.Owin.Security.4.2.2\lib\net45\Microsoft.Owin.Security.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.PowerBI.Api, Version=4.22.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.PowerBI.Api.4.22.0\lib\net48\Microsoft.PowerBI.Api.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Practices.Unity, Version=2.1.505.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.1.0.0\lib\Net40\Microsoft.Practices.Unity.dll</HintPath>
@@ -647,38 +641,29 @@
       <EmbedInteropTypes>False</EmbedInteropTypes>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Stimulsoft.Base, Version=2026.1.1.0, Culture=neutral, PublicKeyToken=ebe6666cba19647a, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Stimulsoft.Reports.Engine.2026.1.1\lib\net472\Stimulsoft.Base.dll</HintPath>
+    <Reference Include="Stimulsoft.Base, Version=2017.1.11.0, Culture=neutral, PublicKeyToken=ebe6666cba19647a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\StimulsoftNew.1.0.0\lib\Net40\Stimulsoft.Base.dll</HintPath>
     </Reference>
-    <Reference Include="Stimulsoft.Blockly, Version=2026.1.1.0, Culture=neutral, PublicKeyToken=ebe6666cba19647a, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Stimulsoft.Reports.Engine.2026.1.1\lib\net472\Stimulsoft.Blockly.dll</HintPath>
+    <Reference Include="Stimulsoft.Controls, Version=2017.1.11.0, Culture=neutral, PublicKeyToken=ebe6666cba19647a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\StimulsoftNew.1.0.0\lib\Net40\Stimulsoft.Controls.dll</HintPath>
     </Reference>
-    <Reference Include="Stimulsoft.Data, Version=2026.1.1.0, Culture=neutral, PublicKeyToken=ebe6666cba19647a, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Stimulsoft.Reports.Engine.2026.1.1\lib\net472\Stimulsoft.Data.dll</HintPath>
+    <Reference Include="Stimulsoft.Report, Version=2017.1.11.0, Culture=neutral, PublicKeyToken=ebe6666cba19647a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\StimulsoftNew.1.0.0\lib\Net40\Stimulsoft.Report.dll</HintPath>
     </Reference>
-    <Reference Include="Stimulsoft.Map, Version=2026.1.1.0, Culture=neutral, PublicKeyToken=ebe6666cba19647a, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Stimulsoft.Reports.Engine.2026.1.1\lib\net472\Stimulsoft.Map.dll</HintPath>
+    <Reference Include="Stimulsoft.Report.Check, Version=2017.1.11.0, Culture=neutral, PublicKeyToken=ebe6666cba19647a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\StimulsoftNew.1.0.0\lib\Net40\Stimulsoft.Report.Check.dll</HintPath>
     </Reference>
-    <Reference Include="Stimulsoft.Report, Version=2026.1.1.0, Culture=neutral, PublicKeyToken=ebe6666cba19647a, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Stimulsoft.Reports.Engine.2026.1.1\lib\net472\Stimulsoft.Report.dll</HintPath>
+    <Reference Include="Stimulsoft.Report.Mobile, Version=2017.1.11.0, Culture=neutral, PublicKeyToken=ebe6666cba19647a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\StimulsoftNew.1.0.0\lib\Net40\Stimulsoft.Report.Mobile.dll</HintPath>
     </Reference>
-    <Reference Include="Stimulsoft.Report.Check, Version=2026.1.1.0, Culture=neutral, PublicKeyToken=ebe6666cba19647a, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Stimulsoft.Reports.Engine.2026.1.1\lib\net472\Stimulsoft.Report.Check.dll</HintPath>
+    <Reference Include="Stimulsoft.Report.MobileDesign, Version=2017.1.11.0, Culture=neutral, PublicKeyToken=ebe6666cba19647a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\StimulsoftNew.1.0.0\lib\Net40\Stimulsoft.Report.MobileDesign.dll</HintPath>
     </Reference>
-    <Reference Include="Stimulsoft.Report.Helper, Version=2026.1.1.0, Culture=neutral, PublicKeyToken=ebe6666cba19647a, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Stimulsoft.Reports.Engine.2026.1.1\lib\net472\Stimulsoft.Report.Helper.dll</HintPath>
+    <Reference Include="Stimulsoft.Report.Web, Version=2017.1.11.0, Culture=neutral, PublicKeyToken=ebe6666cba19647a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\StimulsoftNew.1.0.0\lib\Net40\Stimulsoft.Report.Web.dll</HintPath>
     </Reference>
-    <Reference Include="Stimulsoft.Report.Mvc, Version=2026.1.1.0, Culture=neutral, PublicKeyToken=ebe6666cba19647a, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Stimulsoft.Reports.Web.2026.1.1\lib\net472\Stimulsoft.Report.Mvc.dll</HintPath>
-    </Reference>
-    <Reference Include="Stimulsoft.Report.Web, Version=2026.1.1.0, Culture=neutral, PublicKeyToken=ebe6666cba19647a, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Stimulsoft.Reports.Web.2026.1.1\lib\net472\Stimulsoft.Report.Web.dll</HintPath>
-    </Reference>
-    <Reference Include="Stimulsoft.Report.WebDesign, Version=2026.1.1.0, Culture=neutral, PublicKeyToken=ebe6666cba19647a, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Stimulsoft.Reports.Web.2026.1.1\lib\net472\Stimulsoft.Report.WebDesign.dll</HintPath>
-    </Reference>
-    <Reference Include="Stimulsoft.Svg, Version=2026.1.1.0, Culture=neutral, PublicKeyToken=ebe6666cba19647a, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Stimulsoft.Svg.2026.1.1\lib\net472\Stimulsoft.Svg.dll</HintPath>
+    <Reference Include="Stimulsoft.Report.WebDesign, Version=2017.1.11.0, Culture=neutral, PublicKeyToken=ebe6666cba19647a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\StimulsoftNew.1.0.0\lib\Net40\Stimulsoft.Report.WebDesign.dll</HintPath>
     </Reference>
     <Reference Include="Syncfusion.Calculate.Base, Version=10.104.0.44, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Syncfusion.1.0.0\lib\Net40\Syncfusion.Calculate.Base.dll</HintPath>
@@ -745,8 +730,8 @@
       <Private>True</Private>
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.IdentityModel.Tokens.Jwt, Version=6.35.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\System.IdentityModel.Tokens.Jwt.6.35.0\lib\net472\System.IdentityModel.Tokens.Jwt.dll</HintPath>
+    <Reference Include="System.IdentityModel.Tokens.Jwt, Version=7.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.IdentityModel.Tokens.Jwt.7.6.0\lib\net472\System.IdentityModel.Tokens.Jwt.dll</HintPath>
     </Reference>
     <Reference Include="System.IO.Compression, Version=4.1.2.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.IO.Compression.4.3.0\lib\net46\System.IO.Compression.dll</HintPath>
@@ -939,9 +924,6 @@
     <Reference Include="System.Text.Encodings.Web, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.Text.Encodings.Web.8.0.0\lib\net462\System.Text.Encodings.Web.dll</HintPath>
     </Reference>
-    <Reference Include="System.Text.Json, Version=8.0.0.5, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\System.Text.Json.8.0.5\lib\net462\System.Text.Json.dll</HintPath>
-    </Reference>
     <Reference Include="System.Text.RegularExpressions, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.Text.RegularExpressions.4.3.1\lib\net463\System.Text.RegularExpressions.dll</HintPath>
       <Private>True</Private>
@@ -949,6 +931,10 @@
     </Reference>
     <Reference Include="System.Threading.Channels, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.Threading.Channels.8.0.0\lib\net462\System.Threading.Channels.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Text.Json, Version=8.0.0.3, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Text.Json.8.0.3\lib\net462\System.Text.Json.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Threading.Tasks.Dataflow, Version=4.5.24.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.Tpl.Dataflow.4.5.24\lib\portable-net45+win8+wpa81\System.Threading.Tasks.Dataflow.dll</HintPath>
@@ -1047,14 +1033,13 @@
       <HintPath>..\..\packages\UltimatePDF.1.0.0\lib\Net40\UltimatePdf.dll</HintPath>
     </Reference>
     <Reference Include="UnifreightIIG.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\UnifreightIIG.4.0.9\lib\Net40\UnifreightIIG.Common.dll</HintPath>
+      <HintPath>..\..\packages\UnifreightIIG.4.0.8\lib\Net40\UnifreightIIG.Common.dll</HintPath>
     </Reference>
     <Reference Include="UnifreightIIG.DCA, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-
-      <HintPath>..\..\packages\UnifreightIIG.4.0.9\lib\Net40\UnifreightIIG.DCA.dll</HintPath>
+      <HintPath>..\..\packages\UnifreightIIG.4.0.8\lib\Net40\UnifreightIIG.DCA.dll</HintPath>
     </Reference>
     <Reference Include="UnifreightIIG.UServer, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\UnifreightIIG.4.0.9\lib\Net40\UnifreightIIG.UServer.dll</HintPath>
+      <HintPath>..\..\packages\UnifreightIIG.4.0.8\lib\Net40\UnifreightIIG.UServer.dll</HintPath>
     </Reference>
     <Reference Include="WindowsAzureEventSource, Version=2.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.WindowsAzure.SDK.2.9.0\lib\WindowsAzureEventSource.dll</HintPath>
@@ -1119,7 +1104,6 @@
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\NDMessageActionCodeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\SecurityClearenceTypeCodeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\SignStationViewsController.Generated.cs" />
-    <Compile Include="Controllers\CustomsModel\Generated\ListControllers\SIIRequestLineStatusViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\StuffingSiteTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\SupplierInvioceItemCertificatDefaultViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\SupplierPartyTypeViewsController.Generated.cs" />
@@ -1140,7 +1124,6 @@
     <Compile Include="Controllers\AccountingModel\TaxDeductionReportDataController.cs" />
     <Compile Include="Controllers\AccountingModel\InvoiceApiCommunicationLogController.cs" />
     <Compile Include="Controllers\CustomsModel\WebServices\GatepassRequestController.cs" />
-    <Compile Include="Controllers\InfrastructureModel\Extended\DefaultAndConfigurationExtendedController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\ObjectTableExtendedController.cs" />
     <Compile Include="Controllers\AccountingModel\TaxDeductionReportDataController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\AdditionalCurrencyRateViewsController.Generated.cs" />
@@ -1167,17 +1150,7 @@
     <Compile Include="Controllers\CustomsModel\WebServices\DeclarationPaymentWebServiceController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\GeneralLockController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\GeneralLockViewsController.Generated.cs" />
-    <Compile Include="Controllers\InvoiceModel\APPaymentExtendedController.cs" />
     <Compile Include="Controllers\InvoiceModel\ConfirmationNumberDefaultExtendedController.cs" />
-    <Compile Include="Controllers\InvoiceModel\Extended\ExpenseAllocationFlowExtendedController.cs" />
-    <Compile Include="Controllers\InvoiceModel\Extended\ExpenseAllocationSettingExtendedController.cs" />
-    <Compile Include="Controllers\InvoiceModel\Generated\ListControllers\ExpenseAllocationFlowViewsController.Generated.cs" />
-    <Compile Include="Controllers\InvoiceModel\Generated\ListControllers\ExpenseAllocationSettingViewsController.Generated.cs" />
-    <Compile Include="Controllers\InvoiceModel\Generated\PMControllers\ExpenseAllocationFlowController.Generated.cs" />
-    <Compile Include="Controllers\InvoiceModel\Generated\PMControllers\ExpenseAllocationSettingController.Generated.cs" />
-    <Compile Include="Controllers\InvoiceModel\Generated\ListControllers\MasavInterfaceStatusViewsController.Generated.cs" />
-    <Compile Include="Controllers\InvoiceModel\Generated\ListControllers\MasavInterfaceViewsController.Generated.cs" />
-    <Compile Include="Controllers\InvoiceModel\Generated\PMControllers\MasavInterfaceController.Generated.cs" />
     <Compile Include="Controllers\ShipmentsModel\Extended\ShipmentExtendedController.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\FreightForwarderReferenceViewsController.Generated.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\ReferenceTypeViewsController.Generated.cs" />
@@ -1795,7 +1768,7 @@
     <Compile Include="Controllers\CargoTrackingModel\Generated\PMControllers\CargoTrackingWatermarkController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\QuoteGroupSectionViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\ProductTypeModificationsController.cs" />
-    <Compile Include="Controllers\CustomsModel\Generated\CertificateOfOriginMandatoryFieldsController.cs" />
+    <Compile Include="Controllers\CustomsModel\Extended\CertificateOfOriginMandatoryFieldsController.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\CB_TariffExtendedController.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\CB_CustomsItemExtendedController.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\OcrDocumentExtendedController.cs" />
@@ -3933,7 +3906,6 @@
     <Compile Include="Helpers\MixPanel\MixPanelFactory.cs" />
     <Compile Include="Helpers\PasswordParameter.cs" />
     <Compile Include="Helpers\PODMobileDocumentsFilingService.cs" />
-    <Compile Include="Helpers\PowerBIReportHelper.cs" />
     <Compile Include="Helpers\PrivateLabelsBrandingDataService.cs" />
     <Compile Include="Helpers\QuotesRequestService.cs" />
     <Compile Include="Helpers\QuoteTemplateChargeGroupService.cs" />
@@ -4627,12 +4599,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ReferantTeamUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ReferenceInputTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ReferenceStatusUpdateClass.cs" />
-    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\SIIRequestLineStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\GeneralLockUpdateClass.cs" />
-    <Compile Include="MetaDataUpdate\GeneratedUpdate\InvoiceModel\EntityUpdateClasses\ExpenseAllocationFlowUpdateClass.cs" />
-    <Compile Include="MetaDataUpdate\GeneratedUpdate\InvoiceModel\EntityUpdateClasses\ExpenseAllocationSettingUpdateClass.cs" />
-    <Compile Include="MetaDataUpdate\GeneratedUpdate\InvoiceModel\EntityUpdateClasses\MasavInterfaceStatusUpdateClass.cs" />
-    <Compile Include="MetaDataUpdate\GeneratedUpdate\InvoiceModel\EntityUpdateClasses\MasavInterfaceUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\FreightForwarderReferenceUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\ReferenceTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\RefundCustomerActivityTypeUpdateClass.cs" />

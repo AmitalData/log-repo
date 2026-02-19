@@ -26,7 +26,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
    public class ARInvoiceUpdateClass
    {  		
 
-		public const string HashString = "50f43a61e8aca77ca588c845daf1e322";
+		public const string HashString = "40f43a61e8aca77ca588c845daf1e322";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -70,8 +70,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  10,
-                                    LocalDefaultTextBack_up = "חשבונית לקוח",
-                                    LocalDefaultText = "BS64:IteX16nXkdeV16DXmdeqINec16fXldeXIg==",
 			      				    DefaultText =  "A/R Invoice",
 			      				    Code =  "INVC",
 			      				    Name =  "Invoices",

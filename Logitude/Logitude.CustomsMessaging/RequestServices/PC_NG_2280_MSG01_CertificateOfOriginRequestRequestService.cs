@@ -1,8 +1,5 @@
 ﻿using Logitude.AmitalMessaging.Infrastructure.FuStatus;
 using Logitude.Customs.BL.EntityQueryServices;
-using Logitude.Customs.Data;
-using Logitude.Customs.Data.EntityListQueryServices;
-using Logitude.Customs.Data.EntityLists;
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.Repsitories;
 using Logitude.Customs.Def.EntityPMs;
@@ -132,8 +129,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
 				DestinationGroupOfCountries = string.IsNullOrEmpty(certificateOfOrigin.DestinationGroupOfCountries) ? null : (int?)Convert.ToInt32(certificateOfOrigin.DestinationGroupOfCountries),
 				DestinationGroupOfCountriesSpecified = true,
 				Transport = certificateOfOrigin.Transport,
-                PortOfShipment = certificateOfOrigin.CooTypeCode == "3" && declarationPM.TransportModeId == "O" ? certificateOfOrigin.PortOfShipment : null,
-                IsCumulation = certificateOfOrigin.IsCumulation,
+                PortOfShipment = certificateOfOrigin.PortOfShipment,
+				IsCumulation = certificateOfOrigin.IsCumulation,
 				IsCumulationSpecified = true,
 				CumulationCountry = certificateOfOrigin.CumulationCountry,
 				CumulationGroupOfCountries = string.IsNullOrEmpty(certificateOfOrigin.CumulationGroupOfCountries) ? null : (int?)Convert.ToInt32(certificateOfOrigin.CumulationGroupOfCountries),
@@ -158,27 +155,18 @@ namespace Logitude.CustomsMessaging.ResponseServices
 				InsufficentWorkingText = certificateOfOrigin.InsufficentWorkingText,
 			
 			};
-            if (certificateOfOrigin.OriginCountry == "IL")
-                SendManufactureDataByCooTypeCode(certificateOfOrigin, PC_NG_2280_MSG01_CertificateOfOriginRequestCertificateOfOrigin);
 
+			if (certificateOfOrigin.OriginCountry == "IL" && (certificateOfOrigin.CooTypeCode == "1" || certificateOfOrigin.CooTypeCode == "2" || certificateOfOrigin.CooTypeCode == "7"))
+			{
+				PC_NG_2280_MSG01_CertificateOfOriginRequestCertificateOfOrigin.PlaceOfManufacture = string.IsNullOrEmpty(certificateOfOrigin.PlaceOfManufacture) ? null : (int?)Convert.ToInt32(certificateOfOrigin.PlaceOfManufacture);
+				PC_NG_2280_MSG01_CertificateOfOriginRequestCertificateOfOrigin.PlaceOfManufactureSpecified = true;
+				PC_NG_2280_MSG01_CertificateOfOriginRequestCertificateOfOrigin.ZipCodeOfManufacture = string.IsNullOrWhiteSpace(certificateOfOrigin.ZipCodeOfManufacture) ? null : (int?)Convert.ToInt32(certificateOfOrigin.ZipCodeOfManufacture);
+				PC_NG_2280_MSG01_CertificateOfOriginRequestCertificateOfOrigin.ZipCodeOfManufactureSpecified = true;
+			}
+		
             return PC_NG_2280_MSG01_CertificateOfOriginRequestCertificateOfOrigin;
 		}
-
-		public void SendManufactureDataByCooTypeCode(CertificateOfOriginPM certificateOfOrigin, PC_NG_2280_MSG01_CertificateOfOriginRequestCertificateOfOrigin PC_NG_2280_MSG01_CertificateOfOriginRequestCertificateOfOrigin)
-		{
-            ICustomContext MyContext = CustomContext.GetContext(certificateOfOrigin.Tenant);
-            CertificateOfOriginTypeCodeEnumListQueryService certificateOfOriginTypeCodeEnumQuery = new CertificateOfOriginTypeCodeEnumListQueryService(MyContext);
-            CertificateOfOriginTypeCodeEnumList certificateOfOriginTypeCodeEnumList = certificateOfOriginTypeCodeEnumQuery.GetSingle(certificateOfOrigin.CooTypeCode);
-            if (certificateOfOriginTypeCodeEnumList?.IsZipcodeMandatory == true)
-            {
-                PC_NG_2280_MSG01_CertificateOfOriginRequestCertificateOfOrigin.PlaceOfManufacture = string.IsNullOrEmpty(certificateOfOrigin.PlaceOfManufacture) ? null : (int?)Convert.ToInt32(certificateOfOrigin.PlaceOfManufacture);
-                PC_NG_2280_MSG01_CertificateOfOriginRequestCertificateOfOrigin.PlaceOfManufactureSpecified = true;
-                PC_NG_2280_MSG01_CertificateOfOriginRequestCertificateOfOrigin.ZipCodeOfManufacture = string.IsNullOrWhiteSpace(certificateOfOrigin.ZipCodeOfManufacture) ? null : (int?)Convert.ToInt32(certificateOfOrigin.ZipCodeOfManufacture);
-                PC_NG_2280_MSG01_CertificateOfOriginRequestCertificateOfOrigin.ZipCodeOfManufactureSpecified = true;
-            }
-        }
-
-        public PC_NG_2280_MSG01_CertificateOfOriginRequestCertificateOfOriginCertificateOfOriginRequestInvoiceDetail[] GetCertificateOfOriginRequestInvoiceDetail(List<CertificateOfOriginInvoicePM> CertificateOfOriginInvoices, List<CertificateOfOriginItemPM> CertificateOfOriginItems)
+		public PC_NG_2280_MSG01_CertificateOfOriginRequestCertificateOfOriginCertificateOfOriginRequestInvoiceDetail[] GetCertificateOfOriginRequestInvoiceDetail(List<CertificateOfOriginInvoicePM> CertificateOfOriginInvoices, List<CertificateOfOriginItemPM> CertificateOfOriginItems)
         {
             var CertificateOfOriginInvoicesDetails = new List<PC_NG_2280_MSG01_CertificateOfOriginRequestCertificateOfOriginCertificateOfOriginRequestInvoiceDetail>();
 			CertificateOfOriginInvoices = CertificateOfOriginInvoices.FindAll(x => x.IsInvoiceConnected == true);

@@ -67,8 +67,6 @@ export class FullAccountingSettingList {
 	InvoiceNotes: string;
 	InterestInvoiceNotes: string;
 	PrepaidExpensesGLAccountId: string;
-	MasavBankId: string;
-	MasavCode: string;
 	
 }
  

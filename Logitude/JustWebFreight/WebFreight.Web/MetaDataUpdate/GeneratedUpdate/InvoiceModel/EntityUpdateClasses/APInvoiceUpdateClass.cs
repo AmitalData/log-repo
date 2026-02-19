@@ -25,7 +25,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 {
    public class APInvoiceUpdateClass
    {  		
-		public const string HashString = "c5cbb8ab972e4aa2f5a40f080c7cb36d";
+		public const string HashString = "de4cf7cf802ace94087539909d5cf7bc";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -4792,14 +4792,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
+					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						ConverterName =  "Simplog.Infrastructure.Utilities.Converters.DateTimeToDateConverter",
 					  						IsCustomFilter =  false,
 					  						IsListFilter =  false,
+					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -8738,132 +8739,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
-
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
-					 
-					 						FieldName =  "HasExpenseAllocationSetting",
-					  						ObjectTableName =  "APInvoice",
-					  						FieldsDataType =  "Boolean",
-					  						MinLength =  0,
-					  						MaxLength =  0,
-					  						IsRequired =  false,
-					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
-					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
-					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  0,
-					  						DisplayInList =  true,
-					  						IsCustomFilter =  false,
-					  						IsListFilter =  false,
-					  						MultiLine =  false,
-					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "HasExpenseAllocationSetting",
-					  						ListPropertyPath =  "HasExpenseAllocationSetting",
-					  						DisplayInLookUpIndex =  0,
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
-					  						IsMulti =  false,
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "APInvoice",
-					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						InActive =  false,
-					  						DisplayLongName =  false,
-					  						FullFieldLable =  "HasExpenseAllocationSetting",
-					  						DefaultText =  "HasExpenseAllocationSetting",
-					  						ListFieldLable =  "HasExpenseAllocationSettingListLable",
-					  						ListLableDefaultText =  "HasExpenseAllocationSetting",
-					  						IsForeignKey =  false,
-					  						IsMaxLength =  false,
-					  						NoMetaDataField =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
-					  						DisplayInRequiredFields =  false,
-					  						HasTemplate =  false,
-					  						IsCustom =  false,
-					  						EnableFullscreenTextBox =  false,
-					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
- 
-
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
-					 
-					 						FieldName =  "ExpenseAllocationStartDate",
-					  						ObjectTableName =  "APInvoice",
-					  						FieldsDataType =  "DateTime",
-					  						MinLength =  0,
-					  						MaxLength =  0,
-					  						IsRequired =  false,
-					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
-					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
-					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  0,
-					  						DisplayInList =  true,
-					  						IsCustomFilter =  false,
-					  						IsListFilter =  false,
-					  						MultiLine =  false,
-					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "ExpenseAllocationStartDate",
-					  						ListPropertyPath =  "ExpenseAllocationStartDate",
-					  						DisplayInLookUpIndex =  0,
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
-					  						IsMulti =  false,
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "APInvoice",
-					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						InActive =  false,
-					  						DisplayLongName =  false,
-					  						FullFieldLable =  "ExpenseAllocationStartDate",
-					  						DefaultText =  "ExpenseAllocationStartDate",
-					  						ListFieldLable =  "ExpenseAllocationStartDateListLable",
-					  						ListLableDefaultText =  "ExpenseAllocationStartDate",
-					  						IsForeignKey =  false,
-					  						IsMaxLength =  false,
-					  						NoMetaDataField =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
-					  						DisplayInRequiredFields =  false,
-					  						HasTemplate =  false,
-					  						IsCustom =  false,
-					  						EnableFullscreenTextBox =  false,
-					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
- 
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups ,int contextTenant)
@@ -9323,23 +9198,23 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			    
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "PIDE",HtmlComponentName = "",HtmlComponentUrl = "./InvoiceModules/APInvoice/Components/EditTabs/APInvoiceDetailsTabComponent", FeatureId = APInvoiceDetailsFeature_TH0.Id,FeatureUniqeCode = APInvoiceDetailsFeature_TH0.FeatureUniqeCode, ControlPath = "Simplog.InvoiceLib.Views.Tabs.APInvoiceTabs.APInvoiceDetailsTabControl", ObjectTableId = APInvoiceObjectTable.Id, TabNameTextCodeId = APInvoiceDetailsTextCode_TH0.Id, TabNameTextCodeCode = APInvoiceDetailsTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs,contextTenant);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "PIGE",HtmlComponentName = "",HtmlComponentUrl = "./InvoiceModules/APInvoice/Components/EditTabs/APInvoiceGeneralTabComponent", FeatureId = APInvoiceGeneralFeature_TH1.Id,FeatureUniqeCode = APInvoiceGeneralFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = APInvoiceObjectTable.Id, TabNameTextCodeId = APInvoiceGeneralTextCode_TH1.Id, TabNameTextCodeCode = APInvoiceGeneralTextCode_TH1.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs,contextTenant);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "PIGE",HtmlComponentName = "",HtmlComponentUrl = "./InvoiceModules/APInvoice/Components/EditTabs/APInvoiceGeneralTabComponent", FeatureId = APInvoiceGeneralFeature_TH1.Id,FeatureUniqeCode = APInvoiceGeneralFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = APInvoiceObjectTable.Id, TabNameTextCodeId = APInvoiceGeneralTextCode_TH1.Id, TabNameTextCodeCode = APInvoiceGeneralTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs,contextTenant);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "PIDO",HtmlComponentName = "",HtmlComponentUrl = "./InvoiceModules/APInvoice/Components/EditTabs/APInvoiceDocsOutTabComponent", FeatureId = APInvoiceDocsOutFeature_TH2.Id,FeatureUniqeCode = APInvoiceDocsOutFeature_TH2.FeatureUniqeCode, ControlPath = "Simplog.InvoiceLib.Views.Tabs.APInvoiceTabs.APInvoiceDocsOutControl", ObjectTableId = APInvoiceObjectTable.Id, TabNameTextCodeId = APInvoiceDocsOutTextCode_TH2.Id, TabNameTextCodeCode = APInvoiceDocsOutTextCode_TH2.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs,contextTenant);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "PIDO",HtmlComponentName = "",HtmlComponentUrl = "./InvoiceModules/APInvoice/Components/EditTabs/APInvoiceDocsOutTabComponent", FeatureId = APInvoiceDocsOutFeature_TH2.Id,FeatureUniqeCode = APInvoiceDocsOutFeature_TH2.FeatureUniqeCode, ControlPath = "Simplog.InvoiceLib.Views.Tabs.APInvoiceTabs.APInvoiceDocsOutControl", ObjectTableId = APInvoiceObjectTable.Id, TabNameTextCodeId = APInvoiceDocsOutTextCode_TH2.Id, TabNameTextCodeCode = APInvoiceDocsOutTextCode_TH2.Code, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs,contextTenant);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "PIDI",HtmlComponentName = "",HtmlComponentUrl = "./InvoiceModules/APInvoice/Components/EditTabs/APInvoiceDocsInTabComponent", FeatureId = APInvoiceDocsInFeature_TH3.Id,FeatureUniqeCode = APInvoiceDocsInFeature_TH3.FeatureUniqeCode, ControlPath = "Simplog.InvoiceLib.Views.Tabs.APInvoiceTabs.APInvoiceDocsInControl", ObjectTableId = APInvoiceObjectTable.Id, TabNameTextCodeId = APInvoiceDocsInTextCode_TH3.Id, TabNameTextCodeCode = APInvoiceDocsInTextCode_TH3.Code, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs,contextTenant);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "PIDI",HtmlComponentName = "",HtmlComponentUrl = "./InvoiceModules/APInvoice/Components/EditTabs/APInvoiceDocsInTabComponent", FeatureId = APInvoiceDocsInFeature_TH3.Id,FeatureUniqeCode = APInvoiceDocsInFeature_TH3.FeatureUniqeCode, ControlPath = "Simplog.InvoiceLib.Views.Tabs.APInvoiceTabs.APInvoiceDocsInControl", ObjectTableId = APInvoiceObjectTable.Id, TabNameTextCodeId = APInvoiceDocsInTextCode_TH3.Id, TabNameTextCodeCode = APInvoiceDocsInTextCode_TH3.Code, Tenant = 0, IndexOrder = 3 }, objectTableTabsRepository, TenantObjectTableTabs,contextTenant);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "PIAC",HtmlComponentName = "",HtmlComponentUrl = "./InvoiceModules/APInvoice/Components/EditTabs/APInvoiceTransferTabComponent", FeatureId = GeneralTransferDetailsFeature_TH4.Id,FeatureUniqeCode = GeneralTransferDetailsFeature_TH4.FeatureUniqeCode, ControlPath = "Simplog.InvoiceLib.Views.Tabs.APInvoiceTabs.APTransferTabControl", ObjectTableId = APInvoiceObjectTable.Id, TabNameTextCodeId = APInvoiceTransferDetailsTextCode_TH4.Id, TabNameTextCodeCode = APInvoiceTransferDetailsTextCode_TH4.Code, Tenant = 0, IndexOrder = 3 }, objectTableTabsRepository, TenantObjectTableTabs,contextTenant);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "PIAC",HtmlComponentName = "",HtmlComponentUrl = "./InvoiceModules/APInvoice/Components/EditTabs/APInvoiceTransferTabComponent", FeatureId = GeneralTransferDetailsFeature_TH4.Id,FeatureUniqeCode = GeneralTransferDetailsFeature_TH4.FeatureUniqeCode, ControlPath = "Simplog.InvoiceLib.Views.Tabs.APInvoiceTabs.APTransferTabControl", ObjectTableId = APInvoiceObjectTable.Id, TabNameTextCodeId = APInvoiceTransferDetailsTextCode_TH4.Id, TabNameTextCodeCode = APInvoiceTransferDetailsTextCode_TH4.Code, Tenant = 0, IndexOrder = 4 }, objectTableTabsRepository, TenantObjectTableTabs,contextTenant);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "PIPY",HtmlComponentName = "",HtmlComponentUrl = "./InvoiceModules/APInvoice/Components/EditTabs/APInvoicePaymentsTabComponent", FeatureId = APInvoicePaymentsFeature_TH5.Id,FeatureUniqeCode = APInvoicePaymentsFeature_TH5.FeatureUniqeCode, ControlPath = "Simplog.InvoiceLib.Views.Tabs.APInvoiceTabs.APPaymentsTabControl", ObjectTableId = APInvoiceObjectTable.Id, TabNameTextCodeId = APInvoicePaymentsTextCode_TH5.Id, TabNameTextCodeCode = APInvoicePaymentsTextCode_TH5.Code, Tenant = 0, IndexOrder = 4 }, objectTableTabsRepository, TenantObjectTableTabs,contextTenant);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "PIPY",HtmlComponentName = "",HtmlComponentUrl = "./InvoiceModules/APInvoice/Components/EditTabs/APInvoicePaymentsTabComponent", FeatureId = APInvoicePaymentsFeature_TH5.Id,FeatureUniqeCode = APInvoicePaymentsFeature_TH5.FeatureUniqeCode, ControlPath = "Simplog.InvoiceLib.Views.Tabs.APInvoiceTabs.APPaymentsTabControl", ObjectTableId = APInvoiceObjectTable.Id, TabNameTextCodeId = APInvoicePaymentsTextCode_TH5.Id, TabNameTextCodeCode = APInvoicePaymentsTextCode_TH5.Code, Tenant = 0, IndexOrder = 5 }, objectTableTabsRepository, TenantObjectTableTabs,contextTenant);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "APCM",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = APInvoiceCommunicationFeature_TH6.Id,FeatureUniqeCode = APInvoiceCommunicationFeature_TH6.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Communications.CommunicationsControl", ObjectTableId = APInvoiceObjectTable.Id, TabNameTextCodeId = APInvoiceCommunicationTextCode_TH6.Id, TabNameTextCodeCode = APInvoiceCommunicationTextCode_TH6.Code, Tenant = 0, IndexOrder = 5 }, objectTableTabsRepository, TenantObjectTableTabs,contextTenant);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "APCM",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = APInvoiceCommunicationFeature_TH6.Id,FeatureUniqeCode = APInvoiceCommunicationFeature_TH6.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Communications.CommunicationsControl", ObjectTableId = APInvoiceObjectTable.Id, TabNameTextCodeId = APInvoiceCommunicationTextCode_TH6.Id, TabNameTextCodeCode = APInvoiceCommunicationTextCode_TH6.Code, Tenant = 0, IndexOrder = 6 }, objectTableTabsRepository, TenantObjectTableTabs,contextTenant);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "APAU",HtmlComponentName = "APInvoiceAuditTabComponent",HtmlComponentUrl = "./InvoiceModules/APInvoice/Components/EditTabs/APInvoiceAuditTabComponent", FeatureId = APInvoiceAuditFeature_TH7.Id,FeatureUniqeCode = APInvoiceAuditFeature_TH7.FeatureUniqeCode, ControlPath = "./InvoiceModules/APInvoice/Components/EditTabs/APInvoiceAuditTabComponent", ObjectTableId = APInvoiceObjectTable.Id, TabNameTextCodeId = APInvoiceAuditTextCode_TH7.Id, TabNameTextCodeCode = APInvoiceAuditTextCode_TH7.Code, Tenant = 0, IndexOrder = 6 }, objectTableTabsRepository, TenantObjectTableTabs,contextTenant);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "APAU",HtmlComponentName = "APInvoiceAuditTabComponent",HtmlComponentUrl = "./InvoiceModules/APInvoice/Components/EditTabs/APInvoiceAuditTabComponent", FeatureId = APInvoiceAuditFeature_TH7.Id,FeatureUniqeCode = APInvoiceAuditFeature_TH7.FeatureUniqeCode, ControlPath = "./InvoiceModules/APInvoice/Components/EditTabs/APInvoiceAuditTabComponent", ObjectTableId = APInvoiceObjectTable.Id, TabNameTextCodeId = APInvoiceAuditTextCode_TH7.Id, TabNameTextCodeCode = APInvoiceAuditTextCode_TH7.Code, Tenant = 0, IndexOrder = 7 }, objectTableTabsRepository, TenantObjectTableTabs,contextTenant);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "APIE",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = APInvoiceEventsFeature_TH8.Id,FeatureUniqeCode = APInvoiceEventsFeature_TH8.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = APInvoiceObjectTable.Id, TabNameTextCodeId = APInvoiceEventsTextCode_TH8.Id, TabNameTextCodeCode = APInvoiceEventsTextCode_TH8.Code, Tenant = 0, IndexOrder = 7 }, objectTableTabsRepository, TenantObjectTableTabs,contextTenant);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "APIE",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = APInvoiceEventsFeature_TH8.Id,FeatureUniqeCode = APInvoiceEventsFeature_TH8.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = APInvoiceObjectTable.Id, TabNameTextCodeId = APInvoiceEventsTextCode_TH8.Id, TabNameTextCodeCode = APInvoiceEventsTextCode_TH8.Code, Tenant = 0, IndexOrder = 8 }, objectTableTabsRepository, TenantObjectTableTabs,contextTenant);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "PREX",HtmlComponentName = "",HtmlComponentUrl = "./InvoiceModules/APInvoice/Components/EditTabs/APInvoicePrepaidExpensesTabComponent", FeatureId = APInvoicePrepaidExpensesFeature_TH9.Id,FeatureUniqeCode = APInvoicePrepaidExpensesFeature_TH9.FeatureUniqeCode, ControlPath = "Simplog.InvoiceLib.Views.Tabs.APInvoiceTabs.APInvoicePrepaidExpensesControl", ObjectTableId = APInvoiceObjectTable.Id, TabNameTextCodeId = APInvoicePrepaidExpensesTextCode_TH9.Id, TabNameTextCodeCode = APInvoicePrepaidExpensesTextCode_TH9.Code, Tenant = 0, IndexOrder = 8 }, objectTableTabsRepository, TenantObjectTableTabs,contextTenant);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "PREX",HtmlComponentName = "",HtmlComponentUrl = "./InvoiceModules/APInvoice/Components/EditTabs/APInvoicePrepaidExpensesTabComponent", FeatureId = APInvoicePrepaidExpensesFeature_TH9.Id,FeatureUniqeCode = APInvoicePrepaidExpensesFeature_TH9.FeatureUniqeCode, ControlPath = "Simplog.InvoiceLib.Views.Tabs.APInvoiceTabs.APInvoicePrepaidExpensesControl", ObjectTableId = APInvoiceObjectTable.Id, TabNameTextCodeId = APInvoicePrepaidExpensesTextCode_TH9.Id, TabNameTextCodeCode = APInvoicePrepaidExpensesTextCode_TH9.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs,contextTenant);
    
 	    } 
 	
@@ -9879,14 +9754,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
  		   TextCode APInvoiceTextCode_APInvoiceOConfirmationNumberLength = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoice.O.ConfirmationNumberLength", DefaultText = "Confirmation number length should be between 9 to 30 ",LocalDefaultText = @"BS64:Itee16HXpNeoINeU16fXpteQ15Qg16bXqNeZ15og15zXlNeZ15XXqiDXkdeQ15XXqNeaINep15HXmdefIDkg15wtMzAg16rXldeV15nXnSI=", ObjectTableId = APInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
  		   TextCode APInvoiceTextCode_APInvoiceOCopyVatType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoice.O.CopyVatType", DefaultText = "Copy Vat Type",LocalDefaultText = @"BS64:IteU16LXqten16og16HXldeSINee16InJ9eeIg==", ObjectTableId = APInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
-
- 		   TextCode APInvoiceTextCode_APInvoiceOExpenseAllocationSettingIsRequiredForPrepaidExpenses = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoice.O.ExpenseAllocationSettingIsRequiredForPrepaidExpenses", DefaultText = "Expense allocation setting is required for prepaid expenses",LocalDefaultText = @"BS64:Iteg15PXqNep16og15TXkteT16jXqiDXpNeo15nXodeqINeU15XXpteQ15XXqiDXoteR15XXqCDXlNeV16bXkNeV16og157XqNeQ16kuIg==", ObjectTableId = APInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
-
- 		   TextCode APInvoiceTextCode_APInvoiceOExpenseAllocationSettingStartDateError = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoice.O.ExpenseAllocationSettingStartDateError", DefaultText = "The start date of the expense allocation cannot be earlier than the accounting date.",LocalDefaultText = @"BS64:Itec15Ag16DXmdeq158g15zXlNeS15PXmdeoINeq15DXqNeZ15og15TXqteX15zXlCDXqdecINek16jXmdeh16og15TXlNeV16bXkNeV16og157Xlden15PXnSDXnteU16rXkNeo15nXmiDXlNeX16nXkdeV16DXkNeZIg==", ObjectTableId = APInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
-
- 		   TextCode APInvoiceTextCode_APInvoiceOExpenseAllocationSetting = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoice.O.ExpenseAllocationSetting", DefaultText = "Expense Allocation Setting",LocalDefaultText = @"BS64:IteU15LXk9eo15XXqiDXpNeo15nXodeUIg==", ObjectTableId = APInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
-
- 		   TextCode APInvoiceTextCode_APInvoiceOPrepaidExpensesLineRequired = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoice.O.PrepaidExpensesLineRequired", DefaultText = "Prepaid expenses line selection is required.",LocalDefaultText = @"BS64:IteX15XXkdeUINec16HXntefINep15XXqNeUINec15TXldem15DXldeqINee16jXkNepIg==", ObjectTableId = APInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
    
 	    

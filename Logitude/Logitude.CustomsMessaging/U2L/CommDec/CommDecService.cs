@@ -195,11 +195,8 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
 				ICustomContext dbContext = CustomContext.GetContext(_tenant);
 				DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(dbContext, new Dictionary<string, IContext>(), _tenant);
 				DefaultValueQueryService defaultValueQueryService = new DefaultValueQueryService(_tenant);
-                var setting = CustomsSettingQueryService.GetSettingByTenant(_tenant);
 
-                IsConnectedToUniFreight = setting != null && setting.IsConnectedToUniFreight;
-
-                if (!String.IsNullOrWhiteSpace(MoreParams))
+				if (!String.IsNullOrWhiteSpace(MoreParams))
 				{
 					AppendLogLine("MoreParams: " + MoreParams);
 					var unifreightListsParams = UnifreightListsUtil.Deserialize(MoreParams);

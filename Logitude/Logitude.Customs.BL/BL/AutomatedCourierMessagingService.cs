@@ -48,7 +48,7 @@ namespace Logitude.Customs.BL.BL
         }
         public bool CheckAndSendMessageis(DeclarationCourierStatusPM declarationCourierStatusPM)
         {
-            sent = false;
+             sent = false;
 
             if (!_featureSendManifest && !_featureSendDeclaration && !_featureSendPayment && !_featureSendPaymentOn902Close)
             {
@@ -66,12 +66,12 @@ namespace Logitude.Customs.BL.BL
             Declaration declaration;
             using (var ctx = (CustomContext)CustomContext.GetContext(declarationCourierStatusPM.Tenant))
             {
-                declaration = ctx.Declarations
+                declaration = ctx.Declarations      
                                  .AsNoTracking()
                                  .FirstOrDefault(d => d.Id == declarationCourierStatusPM.DeclarationId && d.Tenant == declarationCourierStatusPM.Tenant);
             }
 
-            if (declaration == null || declaration.IsAmendment == true || declaration.HatraDate != null || declaration.PaymentDate != null)
+            if(declaration == null || declaration.IsAmendment == true)
             {
                 Log("DECL:N:D0");
                 return sent;
@@ -204,13 +204,6 @@ namespace Logitude.Customs.BL.BL
             }
             catch (System.Exception ex)
             {
-                CustomsRequestsSheetDomainModelUtil.ReleaseConcurrentVirtualKey(new GenericRequestParams()
-                {
-                    Tenant = declarationCourierStatusPM.Tenant,
-                    LoggingEntityId = declarationCourierStatusPM.DeclarationId,
-                    LoggingObjectTableId = declarationObjectTableId,
-                    InterfaceTypeCode = "1170",
-                });
                 LogMessagingUtil.Instance.AppendLine($"Exception!!!CreateSheetSBQMessage({declarationCourierStatusPM.DeclarationId}) : {ex.Message}");
             }
         }
@@ -250,13 +243,6 @@ namespace Logitude.Customs.BL.BL
             }
             catch (System.Exception ex)
             {
-                CustomsRequestsSheetDomainModelUtil.ReleaseConcurrentVirtualKey(new GenericRequestParams()
-                {
-                    Tenant = declarationCourierStatusPM.Tenant,
-                    LoggingEntityId = declarationCourierStatusPM.DeclarationId,
-                    LoggingObjectTableId = declarationObjectTableId,
-                    InterfaceTypeCode = "2750",
-                });
                 LogMessagingUtil.Instance.AppendLine($"Exception!!!CreateSheetSBQMessage({declarationCourierStatusPM.DeclarationId}) : {ex.Message}");
             }
         }
@@ -305,13 +291,6 @@ namespace Logitude.Customs.BL.BL
             }
             catch (System.Exception ex)
             {
-                CustomsRequestsSheetDomainModelUtil.ReleaseConcurrentVirtualKey(new GenericRequestParams()
-                {
-                    Tenant = declarationCourierStatusPM.Tenant,
-                    LoggingEntityId = declarationCourierStatusPM.DeclarationId,
-                    LoggingObjectTableId = declarationObjectTableId,
-                    InterfaceTypeCode = "2755",
-                });
                 LogMessagingUtil.Instance.AppendLine($"Exception SendPayment!!!CreateSheetSBQMessage({declarationCourierStatusPM.DeclarationId}) : {ex.Message}");
 
             }

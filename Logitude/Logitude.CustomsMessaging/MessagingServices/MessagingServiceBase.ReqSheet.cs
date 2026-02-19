@@ -171,14 +171,16 @@ namespace Logitude.CustomsMessaging.MessagingServices
 				responseData = new TResponseData();
 				try
 				{
-                    if (!requestParams.SuppressSplitWR)
+
+					if (!requestParams.SuppressSplitWR)
 					{
-						SBQMessageService.CreateBasic<CustomsCommandEnum>(CustomsCommandEnum.CustomsCommandGetCustomRequestWR,
+						SBQMessageService.CreateBasic<CustomsCommandEnum>(
+							 CustomsCommandEnum.CustomsCommandGetCustomRequestWR,
 							_CustomsRequestsSheetService.MyCustomsRequestsSheetPM.Tenant,
 							_CustomsRequestsSheetService.MyCustomsRequestsSheetPM.InterfaceTypeCode,
 							_CustomsRequestsSheetService.MyCustomsRequestsSheetPM.Id,
-							this.RequestParams.FutureSendDateTime, _CustomsRequestsSheetService.InterfaceTenantDefinitionManagement.InterfaceManagement.QueueDefinitionGroup
-                            );
+							this.RequestParams.FutureSendDateTime
+							);
 
 						responseData.Succeeded = true;
 						responseData.ContinueProcessInBackground = true;
@@ -938,7 +940,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
 			SFTPService sftpService = new SFTPService(sFTPDeleteTempFilesService);
 			sftpService.LogonWithKey(ftpHostIP, ftpUserName, ftpPrivateKeyPath, ftpPort, ftpFolderName, out p_status, out p_message, ftpPassword);
 
-			if (!string.IsNullOrEmpty(PrivateKeyTempPath) && !string.IsNullOrEmpty(ftpPrivateKeyPath) && File.Exists(ftpPrivateKeyPath))				
+			if (!string.IsNullOrEmpty(ftpPrivateKeyPath) && File.Exists(ftpPrivateKeyPath))				
 			    File.Delete(ftpPrivateKeyPath);
 
 			if (p_status != "0")
@@ -950,7 +952,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
 					throw new ArgumentNullException(nameof(filedata), "The file data was not found!");
 
 
-				sftpService.Upload(fileName, filedata, true, false, out p_status, out p_message);
+				sftpService.Upload(fileName, filedata, false, false, out p_status, out p_message);
 				messageOut = p_message;
 
 				try
@@ -2096,7 +2098,7 @@ Exception:" + ee.Message
 						{
 							SBQMessageService.CreateBasic<CustomsCommandEnum>(
 								 CustomsCommandEnum.CustomsCommandAnalyzeResponseWR,
-								_CustomsRequestsSheetService.MyCustomsRequestsSheetPM.Id, queueSendModel, _CustomsRequestsSheetService.InterfaceTenantDefinitionManagement.InterfaceManagement.QueueDefinitionGroup);
+								_CustomsRequestsSheetService.MyCustomsRequestsSheetPM.Id, queueSendModel);
 						}
 						else
 						{

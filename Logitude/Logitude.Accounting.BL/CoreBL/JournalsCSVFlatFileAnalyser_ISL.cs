@@ -228,7 +228,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     }
                     continue;// remark do nothing ...
                 }
-                var rowtype = rawLine.Split(',')[0]?.Trim();///.Substring(0, 1);
+                var rowtype = rawLine.Split(',')[0];///.Substring(0, 1);
 
                 if (!reading_Lines)
                 {
@@ -401,12 +401,8 @@ namespace Logitude.Accounting.BL.CoreBL
             if(totalDebit != totalCredit) 
             {
 				text = TranslateTextsClassTranslate("JournalsCSV.O.TotalCreditDebitNotEqual", 0, useLocal);
-				if (String.IsNullOrEmpty(text)) text = $"Total debit lines: {totalDebit} is different from total credit lines: {totalCredit}. Please make sure that the rounded amounts are correct in the file and try again.";
-                this.AddErrorRow(text);
-                if (this.MyCSVFlatFileLoadResult.ValidateAccountLineList.Count > 0)
-                {
-                    this.AddErrorRow(string.Join(Environment.NewLine, this.MyCSVFlatFileLoadResult.ValidateAccountLineList));
-                }
+				if (String.IsNullOrEmpty(text)) text = "Total debit lines (after rounding) is different from total credit lines (after rounding). Please make sure that the rounded amounts are correct in the file and try again.";
+				this.AddErrorRow(text);
 			}
 
 		}
@@ -416,7 +412,7 @@ namespace Logitude.Accounting.BL.CoreBL
             JournalLineQueryService journalLineQueryService = new JournalLineQueryService(accountingContext);
             if (journalLineQueryService.ExistsJournalLineByReferenceCreditAccountId(reference1, gLAccountId, tenant))
             {
-                string text = $"The reference: {reference1} already exists in the account: {account}.";
+                string text = "Reference " + reference1 + " exists already in G.L.Account " + account;
                 this.AddAccountLineRow(text);
                 this.DuplicatesSkippedCount += 1;
                 return true;

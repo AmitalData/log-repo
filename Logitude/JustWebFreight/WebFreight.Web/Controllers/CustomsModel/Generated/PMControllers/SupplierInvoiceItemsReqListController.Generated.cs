@@ -46,7 +46,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
     {
 	  
        
-        public HttpResponseMessage GetSingle(string declarationid, string siirequestid, int invoicecounterkey, int invoiceitemlinenumber)
+        public HttpResponseMessage GetSingle(string declarationid, int linenumber, string siirequestid, int invoicecounterkey, int invoiceitemlinenumber)
         {
 		  try
             {
@@ -58,7 +58,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
                 SupplierInvoiceItemsReqListQueryService supplierInvoiceItemsReqListQuery = new SupplierInvoiceItemsReqListQueryService(MyContext);
 				supplierInvoiceItemsReqListQuery.InitializeSettings();
-                SupplierInvoiceItemsReqListPM supplierInvoiceItemsReqListPM = supplierInvoiceItemsReqListQuery.GetSingle(declarationid, siirequestid, invoicecounterkey, invoiceitemlinenumber,true,false);
+                SupplierInvoiceItemsReqListPM supplierInvoiceItemsReqListPM = supplierInvoiceItemsReqListQuery.GetSingle(declarationid, linenumber, siirequestid, invoicecounterkey, invoiceitemlinenumber,true,false);
 
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
             

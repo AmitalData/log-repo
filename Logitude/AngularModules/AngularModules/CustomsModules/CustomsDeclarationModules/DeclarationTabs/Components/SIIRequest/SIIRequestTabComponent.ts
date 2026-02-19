@@ -15,7 +15,6 @@ import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
 import { LogitudeWindow } from '../../../../../Controls/Windows/LogitudeWindow';
 import { TextCodeTranslator } from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { SIIRequestListService } from 'Customs/Services/StandardLists/SIIRequestListService';
-import { DeclarationDisplayOnlyChecks, DisplayOnlyCheckResult } from 'Customs/Utilities/DeclarationDisplayOnlyChecks';
 
 @Component({
   selector: 'SIIRequestTabComponent',
@@ -136,35 +135,14 @@ export class SIIRequestTabComponent extends BaseComponent implements OnInit {
   }
 
   AddNewSIIRequest(siiRequestMode: SiiRequestMode) {
-    const isEdit = (siiRequestMode === SiiRequestMode.IsEdit);
-
-    let siiRequest: SIIRequestPM;
-
-    if (isEdit) {
-      siiRequest = this.selectedSIIRequest;
-    } else {
-      const declarationId =
-        AppTool.IsNullOrEmpty(this.EntityPM.AmendmentOriginalDeclartation)
-          ? this.EntityPM.Id
-          : this.EntityPM.AmendmentOriginalDeclartation;
-
-      siiRequest = new SIIRequestPM();
-      siiRequest.DeclarationId = declarationId;
-      siiRequest.Tenant = this.EntityPM.Tenant;
-    }
-
-    let isAllowChange = this.IsAllowChange;
-
-    if (isEdit && !AppTool.IsNullOrEmpty(siiRequest?.RequestNo)) {
-      isAllowChange = false;
-    }
-
+    const newSIIRequestPM = new SIIRequestPM();
+    newSIIRequestPM.DeclarationId = AppTool.IsNullOrEmpty(this.EntityPM.AmendmentOriginalDeclartation) ? this.EntityPM.Id : this.EntityPM.AmendmentOriginalDeclartation;
+    newSIIRequestPM.Tenant = this.EntityPM.Tenant;
     let args: any = {
       Decalaration: this.EntityPM,
-      SIIRequest: siiRequest,
+      SIIRequest: SiiRequestMode.IsEdit === siiRequestMode ? this.selectedSIIRequest : newSIIRequestPM,
       IsNewOrEdit: siiRequestMode,
-      filterAgrs: this.initFilterArgs(),
-      isAllowChange: isAllowChange
+      filterAgrs: this.initFilterArgs()
     };
 
     if (siiRequestMode === SiiRequestMode.IsNew)
@@ -180,7 +158,7 @@ export class SIIRequestTabComponent extends BaseComponent implements OnInit {
         this.selectedSIIRequest = myResponse.Result;
         args.SIIRequest = myResponse.Result;
         args.errorMassage = [];
-        this.siiRequestWebService.getSupplierInvoiceItemsForSIIRequest(declarationId, this.selectedSIIRequest?.Id).subscribe(myResult => {
+        this.siiRequestWebService.getSupplierInvoiceItemsForSIIRequest(declarationId,this.selectedSIIRequest?.Id).subscribe(myResult => {
           let myResponse: ServiceResponse = myResult;
           if (!myResponse?.HasError && myResponse?.Result) {
             this.supplierInvoiceItemsForSIIRequest = myResponse.Result;
@@ -208,12 +186,7 @@ export class SIIRequestTabComponent extends BaseComponent implements OnInit {
     let logWindow = new LogitudeWindow();
     logWindow.Width = 1030;
     logWindow.Height = 770;
-    let title = TextCodeTranslator.Translate("Customs.Declaration.TH.SIIRequest");
-    const requestNo = this.selectedSIIRequest?.RequestNo || args?.SIIRequest?.RequestNo;
-    if (!AppTool.IsNullOrEmpty(requestNo)) {
-      title += ` - ${requestNo}`;
-    }
-    logWindow.Title = title;
+    logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.TH.SIIRequest");
     logWindow.SubTitle = `${this.EntityPM?.CustomFileNo}`;
     if (!AppTool.IsNullOrEmpty(this.selectedSIIRequest?.ImporterId)) logWindow.SubTitle += ` / ${TextCodeTranslator.Translate("Customs.SIIRequest.F.ImporterId")}: ${this.selectedSIIRequest?.ImporterId}`;
     args.isAllowChange = this.IsAllowChange;
@@ -247,57 +220,21 @@ export class SIIRequestTabComponent extends BaseComponent implements OnInit {
     this.CurrentSession?.CurrentEditComponent?.ReloadEntityPM();
   }
 
-    DisplayOnlyCheck() {
-
-        this.IsDisplayOnly = !!this.CurrentSession?.CurrentEditComponent?.EditComponentController?.InDisplayMode;
-
-        if (this.EntityPM?.AmendmentMessage) {
-            this.DisplayOnlyMessage = this.EntityPM.AmendmentMessage;
-
-            if (this.EntityPM.IsAmendmentDisplayOnly) {
-                this.IsDisplayOnly = true;
-            }
-        }
-        else if (this.IsDisplayOnly) {
-            this.DisplayOnlyMessage = TextCodeTranslator.Translate("Customs.CertificateOfOrigin.O.DisplayOnly");
-        }
-
-        if (this.EntityPM.HatraDate || this.EntityPM.PaymentDate) {
-            this.IsDisplayOnly = true;
-        }
-
-        const declarationDisplayOnlyChecks: DeclarationDisplayOnlyChecks = new DeclarationDisplayOnlyChecks();
-        declarationDisplayOnlyChecks.DeclarationViewDisplayOnlyChecks(this.EntityPM).subscribe((response: any) => {
-
-            const displayOnlyCheckResult: DisplayOnlyCheckResult = response.Result;
-
-            this.IsDisplayOnly = !!displayOnlyCheckResult.IsDisplayOnly;
-
-            if (this.EntityPM.HatraDate || this.EntityPM.PaymentDate) {
-                this.IsDisplayOnly = true;
-            }
-
-            if (this.EntityPM?.AmendmentMessage) {
-                this.DisplayOnlyMessage = this.EntityPM.AmendmentMessage;
-
-                if (this.EntityPM.IsAmendmentDisplayOnly) {
-                    this.IsDisplayOnly = true;
-                }
-            }
-            else if (this.IsDisplayOnly) {
-                const prefix = (TextCodeTranslator.Translate("Customs.CertificateOfOrigin.O.DisplayOnly") || "").trim();
-                const msg = (displayOnlyCheckResult.DisplayOnlyMessage || "").trim();
-
-                this.DisplayOnlyMessage = msg
-                    ? (msg.startsWith(prefix) ? msg : (prefix + msg))
-                    : prefix;
-            }
-            else {
-                this.DisplayOnlyMessage = null;
-            }
-        });
+  DisplayOnlyCheck() {
+    this.IsDisplayOnly = this.CurrentSession?.CurrentEditComponent?.EditComponentController?.InDisplayMode;
+    if (this.EntityPM?.AmendmentMessage) {
+      this.DisplayOnlyMessage = this.EntityPM.AmendmentMessage;
+      if (this.EntityPM.IsAmendmentDisplayOnly) {
+        this.IsDisplayOnly = true;
+      }
+    } else if (this.IsDisplayOnly) {
+      this.DisplayOnlyMessage = TextCodeTranslator.Translate("Customs.CertificateOfOrigin.O.DisplayOnly");
+      ;
     }
-
+    if(this.EntityPM.HatraDate || this.EntityPM.PaymentDate){
+      this.IsDisplayOnly = true;
+    }
+  }
 
   get IsAllowChange(): boolean {
     return !this.IsDisplayOnly;

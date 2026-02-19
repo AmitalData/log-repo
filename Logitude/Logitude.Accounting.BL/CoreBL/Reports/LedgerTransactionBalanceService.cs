@@ -344,8 +344,6 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             MyBlance myBlance = new MyBlance() { SumForeignAmount = 0, SumLocalAmount = 0 };
             if (_Param.PageStartAtRecordIndex > 0)
             {
-                QOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId = LedgerTransactionListQueryService.SetOrderBy(QOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId, _Param);
-
                 var ledgerPrevPages = QOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId
                                     .Take(_Param.PageStartAtRecordIndex);
 
@@ -444,6 +442,10 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             var sw = Stopwatch.StartNew();
             bool includeChildAccounts = false;
 
+            if (_Param.GetCount)
+            {
+                QOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId = QOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId.RemoveSkipTake();
+            }
 
             var qGperiod = (from r in QOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId
                             group r by 1 into g
@@ -677,16 +679,9 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
         public virtual List<LedgerTransactionList> Translate2ListMode(IQueryable<LedgerTransactionList> qOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId, bool isFromExcelGenerater)
         {
             var ledgerTransactionListQueryService = new LedgerTransactionListQueryService(_AccountingContext);
-
-            if (!string.IsNullOrEmpty(_Param.SortBy))
-            {
-                return ledgerTransactionListQueryService.GetLedgerTransactionList(qOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId, _Param, isFromExcelGenerater, IsReconciled);
-            }
-            else
-            {
-                return ledgerTransactionListQueryService.GetLedgerTransactionListForceOrderByDateTypeCodeAndId(qOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId,
-                    _Param, isFromExcelGenerater, IsReconciled);
-            }
+            var list = ledgerTransactionListQueryService.GetLedgerTransactionListForceOrderByDateTypeCodeAndId(qOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId,
+                _Param, isFromExcelGenerater, IsReconciled);
+            return list;
         }
 
 
@@ -708,7 +703,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                 _Param.DateTypeCode, To,
                 _Param.CheckHaveAccountingQueued,
                 includeAccoutingDateLTransaction, false,
-                false, false, _Param);
+                false, false);
             var endAccountBalance = endAccountBalanceService.AccountBalance;
             return endAccountBalance;
         }
@@ -728,7 +723,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                 _Param.DateTypeCode /*GLAccountTotalDateTypeValues.Accountingdate*/, _Param.From,
                 _Param.CheckHaveAccountingQueued,
                 includeAccoutingDateLTransaction, false,
-                _Param.ClacOpenReconciledAmount_OnlyWithout_IncludeRelatedCurrenciesAccount_IncludeChildAccounts, false, _Param);
+                _Param.ClacOpenReconciledAmount_OnlyWithout_IncludeRelatedCurrenciesAccount_IncludeChildAccounts, false);
             var startAccountBalance = startAccountBalanceService.AccountBalance;
             return startAccountBalance;
         }
@@ -836,7 +831,27 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
         public LedgerTransactionBalanceResponse Response { get; set; }
     }
 
-    
+    public static class QueryableExtensions
+    {
+        class SkipTakeRemover : ExpressionVisitor
+        {
+            protected override Expression VisitMethodCall(MethodCallExpression node)
+            {
+                if (node.Method.DeclaringType == typeof(Queryable) && (node.Method.Name == nameof(Queryable.Skip) || node.Method.Name == nameof(Queryable.Take)))
+                {
+                    return Visit(node.Arguments[0]);
+                }
+                return base.VisitMethodCall(node);
+            }
+        }
+
+        public static IQueryable<T> RemoveSkipTake<T>(this IQueryable<T> query)
+        {
+            var newExpression = new SkipTakeRemover().Visit(query.Expression);
+            return query.Provider.CreateQuery<T>(newExpression);
+        }
+    }
+
     class MyBlance
     {
         public decimal SumLocalAmount { get; internal set; }

@@ -7135,14 +7135,5 @@
       IsOld="false"
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
-    <Feature
-      Code="&quot;RaiseStatusOnLandingDate&quot;"
-      FeatureTypeCode="&quot;ACT&quot;"
-      FeatureTextCodeCode="&quot;Customs.CourierMaster.Features.RaiseStatusOnLandingDate&quot;"
-      FeatureDefaultText="&quot;Raise Status On LandingDate Change&quot;"
-      IsPackagable="true"
-      IsOld="false"
-      IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
   </AdditionalFeatures>
 </entity>

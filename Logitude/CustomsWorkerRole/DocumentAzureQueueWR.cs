@@ -253,7 +253,7 @@ namespace CustomsWorkerRole
 
 			return processor;
 		}
-		public static bool CheckIsDocumentPDF(byte[] fileBytes)
+		private bool CheckIsDocumentPDF(byte[] fileBytes)
 		{
 			try
 			{

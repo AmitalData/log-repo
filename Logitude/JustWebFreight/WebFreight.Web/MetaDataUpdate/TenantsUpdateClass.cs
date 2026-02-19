@@ -914,7 +914,6 @@ namespace WebFreight.Web.MetaDataUpdate
                 updateClass.FillOcrStatusTable(tenant);
                 updateClass.FillSIIRequestStatusTable(tenant);
                 updateClass.FillSIIDocumentType(tenant);
-                updateClass.FillSIIRequestLineStatus(tenant);
 
 
                 updateClass.FillSIIDocumentType(tenant);
@@ -1188,7 +1187,7 @@ namespace WebFreight.Web.MetaDataUpdate
             try
             {
                 CargoTrackingUpdateClass modelUpdateClass = new CargoTrackingUpdateClass();
-                modelUpdateClass.CreateAllClosedTables(0);
+                modelUpdateClass.CreateAllClosedTables();
                 performanceTimerLogger.LogMessage("Generated" + ",CargoTrackingModelUpdateClass");
             }
             catch (Exception ex)
