@@ -13,7 +13,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         FeaturePackageTypeRepository repository;
 
-
+        public FeaturePackageTypeQuery()
+        {
+            repository = new FeaturePackageTypeRepository(); 
+        }
 
         public FeaturePackageTypeQuery(int tenant)
         {
