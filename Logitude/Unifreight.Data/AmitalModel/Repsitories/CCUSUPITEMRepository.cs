@@ -24,10 +24,10 @@ namespace Unifreight.Data.AmitalModel.Repsitories
 
 
 
-        public CCUSUPITEM GetSingle(int FILENO, int LINENO, int ACCLINENO , int? tenant)
+        public CCUSUPITEM GetSingle(int FILENO, int LINENO, int ACCLINENO)
         {
             return (from a in context.CCUSUPITEMs
-                    where a.FILENO == FILENO && a.LINENO == LINENO && a.ACCLINENO == ACCLINENO && a.TENANT == tenant
+                    where a.FILENO == FILENO && a.LINENO == LINENO && a.ACCLINENO == ACCLINENO
                     select a).FirstOrDefault();
         }
 
@@ -84,20 +84,20 @@ namespace Unifreight.Data.AmitalModel.Repsitories
         {
             var keys = entityKeys as CCUACCSUPKeys;
             return (from a in context.CCUSUPITEMs
-                    where a.FILENO == keys.FILENO && a.ACCLINENO == keys.LINENO && a.TENANT == keys.Tenant
+                    where a.FILENO == keys.FILENO && a.ACCLINENO == keys.LINENO  
                     select a).ToList();
         }
 
         public CCUSUPITEM GetSingle(EntityKeyFields entityKeys)
         {
             var keys = entityKeys as CCUSUPITEMKeys;
-            return this.GetSingle(keys.FILENO, keys.LINENO, keys.ACCLINENO , keys.TENANT);
+            return this.GetSingle(keys.FILENO, keys.LINENO, keys.ACCLINENO);
         }
 
         public int FastDeleteMulti(EntityKeyFields parentEntityKeys)
         {
             var keys = parentEntityKeys as CCUFILEMKeys;
-            return context.DeleteWhere<CCUSUPITEM>(rec => rec.FILENO == keys.FILENO && rec.TENANT== keys.TENANT);
+            return context.DeleteWhere<CCUSUPITEM>(rec => rec.FILENO == keys.FILENO);
         }
     }
    }

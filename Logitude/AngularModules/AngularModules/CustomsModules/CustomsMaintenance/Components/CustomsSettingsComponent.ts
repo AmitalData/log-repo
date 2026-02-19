@@ -305,9 +305,9 @@ export class CustomsSettingsComponent
         myConfirmWindow.Width = 400;
         myConfirmWindow.Title="כתב ויתור"
         myConfirmWindow.Show(`ניקוי מטמון יבוצע בשרת הנ"ל בלבד 
-        לא יבוצע ניקוי מטמון לשירותים ברקע ובשרתי ההיבריד
-        ניקוי מטמון מביא להאטה בביצועים
-        האם להמשיך?
+        לם יבוצע ניקוי מטמון לשירותים ברקע ובשרתי ההיבריד
+        ניקוי מטמון מבים להםטה בביצועים
+        הםם להמשיך?
         `);
         myConfirmWindow.WindowClosed.subscribe(event => {
             if (myConfirmWindow.Yes) {
@@ -315,7 +315,7 @@ export class CustomsSettingsComponent
 
                     var msg = new MessageWindow();
                     msg.RTL = true;
-                    msg.Show("...אנא שקול אתחול שירותי רקע ");
+                    msg.Show("...םנם שקול םתחול שירותי רקע ");
                 });
             }
      
@@ -332,7 +332,7 @@ export class CustomsSettingsComponent
         logitudeWindow.Width = 1000;
         logitudeWindow.Height = 500;
         logitudeWindow.IsShowCloseButton = true;
-        logitudeWindow.Title = "אתחול סרוויסים";//TextCodeTranslator.Translate("CommunicationLogSteps.O.Log");
+        logitudeWindow.Title = "םתחול סרוויסים";//TextCodeTranslator.Translate("CommunicationLogSteps.O.Log");
         logitudeWindow.WindowArgs = { Log: script , UseTextarea:true };
         logitudeWindow.Show('./InfrastructureModules/InfrastructureCommunications/Components/Communications/LogFieldComponent');
     }
@@ -368,10 +368,10 @@ export class CustomsSettingsComponent
             
 
             if (new Date(this.SuppressIIGMessageFromDate) >= new Date(this.SuppressIIGMessageToDate)) {
-                this.ValidationErrorsList.push("המסרים למכס מושבתים -מתאריך חייב להיות גדול מעד תאריך");
+                this.ValidationErrorsList.push("המסרים למכס מושבתים -מתםריך חייב להיות גדול מעד תםריך");
             }
-        } else if ((this.SuppressIIGMessageFromDate || this.SuppressIIGMessageToDate)) {///קייא אחד לפחות
-            this.ValidationErrorsList.push("המסרים למכס מושבתים -מתאריך חייב להיות גדול מעד תאריך");
+        } else if ((this.SuppressIIGMessageFromDate || this.SuppressIIGMessageToDate)) {///קיים םחד לפחות
+            this.ValidationErrorsList.push("המסרים למכס מושבתים -מתםריך חייב להיות גדול מעד תםריך");
         }
         if (this.ValidationErrorsList.length > 0) {
             return
