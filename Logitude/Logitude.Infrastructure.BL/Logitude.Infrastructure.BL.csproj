@@ -305,6 +305,7 @@
     <Compile Include="EntityUpdateServices\BusinessProcessQueueUpdateService.cs" />
     <None Include="Nlog.config" />
     <None Include="packages.config" />
+    <None Include="Nlog.config" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="APIDataContract\" />

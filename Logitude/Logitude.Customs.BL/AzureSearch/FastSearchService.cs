@@ -79,9 +79,7 @@ namespace Logitude.Customs.BL.AzureSearch
             filters = ManipulateFilters(additionalFilters, filters, tenant);
 
             DefaultAndConfiguration_Ext connectionDetails = GetConnectionDetails(tenant);
-            string indexBaseName = GetIndexBaseName(additionalFilters, filters, tenant, tableName) ?? tableName;
-
-            FastSearchAzureSearchRepo fastSearchAzureSearchRepo = new FastSearchAzureSearchRepo(connectionDetails.Value1, connectionDetails.Value2, indexBaseName);
+            FastSearchAzureSearchRepo fastSearchAzureSearchRepo = new FastSearchAzureSearchRepo(connectionDetails.Value1, connectionDetails.Value2, tableName);
 
             List<string> fieldsNotExistsInIndex = await FieldsNotExistsInIndex(filters, fastSearchAzureSearchRepo);
             if (fieldsNotExistsInIndex.Count > 0)
@@ -106,9 +104,6 @@ namespace Logitude.Customs.BL.AzureSearch
         protected virtual string GetSettingsName(List<QueryFilterItem> additionalFilters, string filters, int tenant) => null;
 
         public static Task<FastSearchSettings> GetIndexSettingsAsync(int tenant, string index) => Task.FromResult(GetIndexSettings(tenant, index));
-
-        protected virtual string GetIndexBaseName(List<QueryFilterItem> additionalFilters, string finalFilters, int tenant, string requestedIndex) => requestedIndex;
-
 
         private static FastSearchSettings GetIndexSettings(int tenant, string index)
         {

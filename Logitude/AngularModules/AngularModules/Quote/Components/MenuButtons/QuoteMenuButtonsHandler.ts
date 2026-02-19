@@ -985,7 +985,7 @@ export class QuoteMenuButtonsHandler {
     CheckAmitalCloudEnviroment() {
         var amitalEnvironment = "amitalstorage";
         var isAmitalCloudEnvironment = false;
-        if (ObjectsLocator.GlobalSetting?.DeploymentStage == amitalEnvironment) {
+        if (ObjectsLocator.GlobalSetting.DeploymentStage == amitalEnvironment) {
             isAmitalCloudEnvironment = true;
         }
         return isAmitalCloudEnvironment;
