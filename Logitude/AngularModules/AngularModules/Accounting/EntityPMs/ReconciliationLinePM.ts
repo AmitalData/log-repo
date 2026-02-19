@@ -189,11 +189,6 @@ export class ReconciliationLinePM {
     public set RefDate(newValue: Date) { if (this.refDate != newValue) { this.refDate = newValue; this.MarkAsDirty("RefDate"); } }
        
 	 
-    private currencyRate: number;
-    public get CurrencyRate() { return this.currencyRate; }
-    public set CurrencyRate(newValue: number) { if (this.currencyRate != newValue) { this.currencyRate = newValue; this.MarkAsDirty("CurrencyRate"); } }
-       
-	 
 
     public OldEntityPM: ReconciliationLinePM;
 	
@@ -236,4 +231,4 @@ export class ReconciliationLinePM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}
