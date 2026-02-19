@@ -6,6 +6,7 @@ import {ObjectTablePM} from '../../EntityPMs/ObjectTablePM';
 import {ObjectFieldPM} from '../../EntityPMs/ObjectFieldPM';
 import {ObjectsLocator} from '../../Locators/ObjectsLocator';
 import { ChildDirective } from '../../Directives/ChildDirective';
+import { Subscription } from 'rxjs';
 @Component({
 
   templateUrl: "./ObjectFieldTemplate.html",
@@ -46,6 +47,9 @@ export class ObjectFieldTemplate implements OnInit, AfterViewInit, OnDestroy {
     //public test: boolean = false;
     public ShowChildTemplate: boolean = false;
     public RowIndex: string;
+    private sessionSub?: Subscription;
+    private destroyed = false;
+
     public get EntityChangedData() {
         return;// this.test;
     }
@@ -276,6 +280,10 @@ export class ObjectFieldTemplate implements OnInit, AfterViewInit, OnDestroy {
 
               SessionLocator.DynamicLoader.Load(myComponentPath, this.Child.Location)
                   .then(cmpRef => {
+                        if (this.destroyed) {
+                            cmpRef.destroy();
+                            return;
+                        }
                       cmpRef.instance.Run({
                           Entity: this.Entity, FieldName: this.FieldName, ObjectTableName: this.ObjectTable.Name, IsHeaderScreenTemplate: this.IsHeaderScreenTemplate,
                           RowIndex: this.RowIndex
@@ -305,7 +313,7 @@ export class ObjectFieldTemplate implements OnInit, AfterViewInit, OnDestroy {
 
           this.DetectChanges();
 
-          this.CurrentSession.SessionEvent.subscribe(s => {
+          this.sessionSub = this.CurrentSession.SessionEvent.subscribe(s => {
             if (s == "SpotLightDetectChanges") {
               this.DetectChanges();
             }
@@ -325,6 +333,27 @@ export class ObjectFieldTemplate implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy() {
+
+    this.destroyed = true;
+
+    // unsubscribe session events
+    this.sessionSub?.unsubscribe();
+    this.sessionSub = null;
+
+    // clear dynamically inserted child components
+    if (this.Child) {
+    this.Child.Location.clear();
+    this.Child = null;
+    }
+
+    // release references
+    this.Entity = null;
+    this.ObjectTable = null;
+    this.ObjectField = null;
+    this.CustomField = null;
+    this.FieldValue = null;
+    this.LookUpFieldValue = null;
+
     this.changeDetector = null;
   }
 }

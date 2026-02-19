@@ -14,8 +14,6 @@ import { CardList } from '../../../../Common/EntityLists/CardList';
 import { FullAccountingSettingPM } from '../../../EntityPMs/FullAccountingSettingPM';
 import { EntityListService } from '../../../../Infrastructure/Services/EntityListService';
 import { TenantPM } from '../../../../Common/EntityPMs/TenantPM';
-import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
-import { MessageWindow } from 'Controls/Windows/MessageWindow';
 
 @Component({
 
@@ -223,25 +221,23 @@ export class GLAccountGeneralTabComponent extends BaseComponent {
 
         }
     }
-    showIsMultiCurrencyCheckbox :boolean = true ;
+    //DownloadButtonClicked() {
+    //    this._GLAccountExtendedListService.CalculateFututreCheques().subscribe((myResult:any) => {
+
+
+
+
+    //    });
+    //}
+    //#region Properties
     get IsMultiCurrency() { return this.EntityPM.IsMultiCurrency == null ? false : this.EntityPM.IsMultiCurrency; }
     set IsMultiCurrency(value: boolean) {
 
         if (this.EntityPM.IsMultiCurrency != value) {
-           
-            if (value && this.EntityPM.ForeignCurrencyInterest){
-                const msg = new MessageWindow();
-                msg.RTL = true;
-                msg.Show(TextCodeTranslator.Translate('GLAccounts.O.ErrMultiCurrencyDueToInterest'));
-                  
-                this.showIsMultiCurrencyCheckbox = false;
-                setTimeout(() => {
-                  this.showIsMultiCurrencyCheckbox = true;
-                }, 0);
-                return ;
-            }
-                
             this.EntityPM.IsMultiCurrency = value;
+
+            if (value != this.oldIsMultiCurrency)
+                GLAccountValidator.ValidateIsMultiCurrency(this.EntityPM);
 
             if (value) {
                 // Change UI Property

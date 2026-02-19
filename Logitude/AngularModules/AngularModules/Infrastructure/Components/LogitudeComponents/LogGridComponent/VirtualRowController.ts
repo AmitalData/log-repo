@@ -1,6 +1,7 @@
 import {EventEmitter, Output, OnInit, OnChanges, Component} from '@angular/core';
 import {ServiceResponse} from '../../../DataContracts/ServiceResponse';
 import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
+import { Subscription } from 'rxjs';
 
 interface IRow {
     pageIndex: number;
@@ -85,7 +86,7 @@ export class VirtualRowController implements OnInit, OnChanges {
                 var result: any[] = [];
                 console.log("this.MyCallTime before" + this.MyCallTime);
                 this.dataSource.getRows(pageIndex * PSize, PSize, sortingCol, sortingDir, getCount, searchfields, Filters).then(res => {
-                    res.subscribe((viewResponse: ServiceResponse) => {
+                    this.dataSourceSub = res.subscribe((viewResponse: ServiceResponse) => {
                         if (!viewResponse.HasError) {
                             // if (this.MyCallTime == null || viewResponse.CallTime > this.MyCallTime) {
                                 this.MyCallTime = viewResponse.CallTime;
@@ -146,6 +147,8 @@ export class VirtualRowController implements OnInit, OnChanges {
         }
 
     }
+    private dataSourceSub?: Subscription;
+
     getCount(rowcount: number) {
         this.requestedRowCount.emit(rowcount);
     }
@@ -153,13 +156,6 @@ export class VirtualRowController implements OnInit, OnChanges {
     setDataSource(dataSource: any) {
         this.dataSource = dataSource;
         this.pageSize = dataSource.pageSize;
-    }
-
-    Clear() {
-        this.cachedData = {};
-        this.cacheBuffer = [];
-        this.rowsRequested = [];
-
     }
 
     public clone(jsonPM: any) {
@@ -185,6 +181,22 @@ export class VirtualRowController implements OnInit, OnChanges {
     public ClearCache() {
         this.cachedData = {};
         this.rowsRequested = [];
+        this.cacheBuffer = [];
+        // this.dataSource = null;
+
+        if (this.dataSourceSub) {
+            this.dataSourceSub.unsubscribe();
+        }
+
+        this.requestedRowsReady.complete();
+        this.requestedRowCount.complete();
+        this.allRecords.complete();
     }
 
+    // ngOnDestroy() {
+    //     this.ClearCache();
+    //     if (this.dataSourceSub) {
+    //         this.dataSourceSub.unsubscribe();
+    //     }
+    // }
 }

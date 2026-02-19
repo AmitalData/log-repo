@@ -1194,23 +1194,22 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
                 this.updateDisplayList();
             });
         }
-
         this.MarkIsChecked.subscribe((res) => {
             this.AllCheckedRecords = res.SelectedLines.Collection;
 
-            const checkedIds = new Set(this.AllCheckedRecords.map(rec => rec.Id ?? rec.rowData.Id));
-            for (const row of this.rows) {
-                if (checkedIds.has(row.rowData.Id)) {
-                    row.rowData.IsChecked = true;
+           for (let i=0 ; i < this.AllCheckedRecords.length ; i++){
+            var checkedRecord = this.AllCheckedRecords[i].Id ? this.AllCheckedRecords[i].Id:this.AllCheckedRecords[i].rowData.Id;
 
-                    const cached = this.controller.cachedData[row.rowIndex];
-                    if (cached && cached.IsChecked != null) {
-                        cached.IsChecked = true;
-                    }
-                }
+
+            var Row = this.rows.filter(a => a.rowData.Id === checkedRecord)[0];
+            if (Row) {
+               Row.rowData.IsChecked = true;
+               if (this.controller.cachedData[Row.rowIndex] && this.controller.cachedData[Row.rowIndex].IsChecked != null) {
+                   this.controller.cachedData[Row.rowIndex].IsChecked = true;//this.controller.cachedData[row.rowIndex] && this.controller.cachedData[row.rowIndex].IsChecked;// == false ? false : true;
+               }
             }
             this.cd.detectChanges();
-
+         }
          var DeleteSelected = this.rows.filter(a => a.rowData.IsChecked ==true);
          for(let i =0 ; i < DeleteSelected.length ; i++){
             
@@ -2371,6 +2370,79 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
         this.HLineSub = null;
         this.pubSubAdvanceQueryFiltersSub = null;
         //console.log(this.Filters != null ? this.Filters.AdditionalFilters.length : "Dest");
+
+        this.controller.ClearCache();
+
+        this.rows = [];
+        this.columns = [];
+        this.cachedPages = [];
+        this.removedItemsTemp = [];
+        this.addedItems = [];
+
+        window.onresize = null;
+
+        /*
+        this.dataSource = null;
+        this.rowModel = null;
+        this.controller = null;
+        this.Filterchangeevent = null;
+        this.pubSubAdvanceQueryFiltersServiceRecived = null;
+        this.Filters = null;
+        this.LogGridElement = null;*/
+
+        if (this.timerToken) {
+            clearTimeout(this.timerToken);
+            this.timerToken = null;
+        }
+          if (this.timer) {
+            clearTimeout(this.timer);
+            this.timer = null;
+        }
+
+            this.detectChanges$.complete();
+
+            this.FiltersChangedsubscription?.unsubscribe();
+            this.QueryChangeEventSub?.unsubscribe();
+            this.ColumnsReadySub?.unsubscribe();
+            this.ColumnsReady1Sub?.unsubscribe();
+            this.MenuHeaderSub?.unsubscribe();
+            this.SearchFieldsSub?.unsubscribe();
+            this.HLineSub?.unsubscribe();
+            this.pubSubAdvanceQueryFiltersSub?.unsubscribe();
+            this.BackFromEditSub?.unsubscribe();
+
+        // 3. Complete EventEmitters (good practice!)
+        this.AfterViewInitCompleted.complete();
+        this.MarkIsChecked.complete();
+        this.DataLoaded.complete();
+        this.CountReady.complete();
+        this.AllRecordsReady.complete();
+        this.FirstRowSelected.complete();
+        this.MenuHeaderchanged.complete();
+        this.RowOverEvent.complete();
+        this.RowOutEvent.complete();
+        this.RowUnselected.complete();
+        this.RemovedListItemsEvent.complete();
+        this.BackFromEdit.complete();
+        this.CustomBackFromEdit.complete();
+        this.rowSelectedEvent.complete();
+        this.CheckBoxChecked.complete();
+        if (this.QueryChangeEvent) this.QueryChangeEvent.complete();
+        if (this.FireCheckBoxChecked) this.FireCheckBoxChecked.complete();
+        if (this.ShowHLineOverRow) this.ShowHLineOverRow.complete();
+        if (this.ColumnsReady) this.ColumnsReady.complete();
+        if (this.CustomColumnsReady) this.CustomColumnsReady.complete();
+        if (this.SearchFieldchangeevent) this.SearchFieldchangeevent.complete();
+        if (this.MenuHeaderchangeevent) this.MenuHeaderchangeevent.complete();
+        if (this.CheckBoxFilterChanged) this.CheckBoxFilterChanged.complete();
+        if (this.FilterChangedEvent) this.FilterChangedEvent.complete();
+        this.ColumnResisedevent.complete();
+        this.RowHoverevent.complete();
+        if (this.SortInvoked) this.SortInvoked.complete();
+        if (this.ChangeCheckBoxesState) this.ChangeCheckBoxesState.complete();
+
+
+
     }
     private countIsHere = true;
     private oldSearchFields: string;
