@@ -80,7 +80,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                     AuthorizedExternalId = customResponse.POA.authorizedExternalId.ToString(),
                                     AuthorizerExternalId = customResponse.POA.authorizerExternalId.ToString(),
                                     AuthorizerPassportNumber = customResponse.POA.authorizerPassportNumber,
-                                    AuthorizerPassportType = string.IsNullOrWhiteSpace(customResponse.POA.authorizerPassportType.ToString())? null: customResponse.POA.authorizerPassportType.ToString(),
+                                    AuthorizerPassportType = customResponse.POA.authorizerPassportType.ToString(),
                                     PoaID = customResponse.POA.poaID.ToString(),
                                     StartDate = customResponse.POA.startDate,
                                     EndDate = item.endDate ?? customResponse.POA.endDate.GetValueOrDefault(),

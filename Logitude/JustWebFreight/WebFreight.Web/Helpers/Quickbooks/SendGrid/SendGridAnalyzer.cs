@@ -113,10 +113,13 @@ namespace WebFreight.Web.Helpers.SendGrid
                     }
                     foreach (var item in emailsList)
                     {
+                        if (item.CommunicationLogCreateDate != null)
+                        {
+                            DateTime? createDate = DateTime.ParseExact(item.CommunicationLogCreateDate, "yyyy-MM-dd HH:mm:ss.fff", System.Globalization.CultureInfo.InvariantCulture);
                             string communicationLogId = item.CommunicationLogId;
                             if (!string.IsNullOrEmpty(communicationLogId))
                             {
-                                var currentLog = commLogrepository.GetSingleCommunicationLogIdAndTenant(communicationLogId, Tenant);
+                                var currentLog = commLogrepository.GetSingleCommunicationLog(communicationLogId, Tenant, createDate);
                                 var NotifyEmailDelivery = "";
 
                                 if (currentLog != null)
@@ -188,7 +191,7 @@ namespace WebFreight.Web.Helpers.SendGrid
                                     }
                                 }
                             }
-                      
+                        }
 
                         myAnalyzeQueue.Status = "D";
                         myAnalyzeQueue.ErrorMessage = null;

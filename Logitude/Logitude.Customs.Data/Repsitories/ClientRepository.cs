@@ -76,27 +76,6 @@ namespace Logitude.Customs.Data.Repsitories
             return client;
 
         }
-        public List<Client> GetClientsByCodes(List<string> codes, int tenant)
-        {
-            (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false;
-
-            if (codes == null || codes.Count == 0)
-                return new List<Client>();
-
-            codes = codes
-                .Where(c => !string.IsNullOrWhiteSpace(c))
-                .Select(c => c.Trim())
-                .Distinct()
-                .ToList();
-
-            if (codes.Count == 0)
-                return new List<Client>();
-
-            return (from a in context.Clients
-                    where a.Tenant == tenant && codes.Contains(a.Code)
-                    select a).ToList();
-        }
-
 
         public List<Client> GetAllLocalClients(int tenant)
         {

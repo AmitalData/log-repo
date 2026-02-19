@@ -152,7 +152,7 @@
                     <CheckBox [IsChecked]="UseBalanceFilter" (Checked)="UseBalanceFilter = $event"></CheckBox>
 
                   </td>
-                  <td style="width:250px">{{'Accounting.General.O.AlsoWithZeroBalance' | TextCodeTranslationPipe}}</td>
+                  <td style="width:250px">{{'Accounting.General.O.WithZeroBalance' | TextCodeTranslationPipe}}</td>
 
                   <td style="width:200px; min-width: 200px;">
                     <ComboBox [ItemsSource]="BalanceOptionsFilterList" [Binding]="showLocal ? 'LocalName' : 'Name'" [SelectedItem]="SelectedBalanceOptionFilter" (SelectedItemChanged)="SelectedBalanceOptionFilter = $event"></ComboBox>

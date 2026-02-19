@@ -29,9 +29,9 @@ namespace Unifreight.BL.EntityQueryServices
             this.mapping = new CCUCUSTITEMDataMapping();
         }
 
-        public SupplierInvoiceItem105PM GetSingle(int FILENO, int LINENO,int tenant, bool getComposition)
+        public SupplierInvoiceItem105PM GetSingle(int FILENO, int LINENO, bool getComposition)
         {
-            var keys = new CCUCUSTITEMKeys() { FILENO = FILENO, LINENO = LINENO , TENANT=tenant};
+            var keys = new CCUCUSTITEMKeys() { FILENO = FILENO, LINENO = LINENO };
 
 
             return base.GetSingle(keys, getComposition, false);
@@ -40,17 +40,17 @@ namespace Unifreight.BL.EntityQueryServices
 
         protected override Simplog.Server.Infrastructure.EntityKeyFields GetKeys(CCUCUSTITEM entityPOCO)
         {
-            return new CCUCUSTITEMKeys() { FILENO = entityPOCO.FILENO, LINENO = entityPOCO.LINENO, TENANT=entityPOCO.TENANT };
+            return new CCUCUSTITEMKeys() { FILENO = entityPOCO.FILENO, LINENO = entityPOCO.LINENO };
         }
 
-        public int? GetFILENOByCUSTOMFILENO(long lCUSTOMFILENO, int tenant)
+        public int? GetFILENOByCUSTOMFILENO(long lCUSTOMFILENO)
         {
-            return (this.Repository as CCUFILEMRepository).GetFILENOByCUSTOMFILENO(lCUSTOMFILENO, tenant);
+            return (this.Repository as CCUFILEMRepository).GetFILENOByCUSTOMFILENO(lCUSTOMFILENO);
         }
 
-        public List<SupplierInvoiceItem105PM> GetFile105(int? FILENO,int tenant,  bool getComposition)
+        public List<SupplierInvoiceItem105PM> GetFile105(int? FILENO, bool getComposition)
         {
-            var entityPOCOs = (this.Repository as CCUCUSTITEMRepository).GetFile105(FILENO, tenant);
+            var entityPOCOs = (this.Repository as CCUCUSTITEMRepository).GetFile105(FILENO);
             List<SupplierInvoiceItem105PM> entityPMs = new List<SupplierInvoiceItem105PM>();
 
             if (getComposition)
