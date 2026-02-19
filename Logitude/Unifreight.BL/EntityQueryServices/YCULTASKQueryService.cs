@@ -33,15 +33,15 @@ namespace Unifreight.BL.EntityQueryServices
         //    return curYCULTASK;
         //}
 
-        public YCULTASKPM GetSingle(string TASKID,int tenant, bool getComposition, bool getFromCache)
+        public YCULTASKPM GetSingle(string TASKID, bool getComposition, bool getFromCache)
         {
-            var EntityKeys = new YCULTASKKeys() { TASKID = TASKID, Tenant=tenant };
+            var EntityKeys = new YCULTASKKeys() { TASKID = TASKID };
             return base.GetSingle(EntityKeys, getComposition, getFromCache);
         }
 
         protected override Simplog.Server.Infrastructure.EntityKeyFields GetKeys(YCULTASK entityPOCO)
         {
-            return  new YCULTASKKeys() { TASKID = entityPOCO.TASKID, Tenant = entityPOCO.TENANT };
+            return  new YCULTASKKeys() { TASKID = entityPOCO.TASKID  };
         }
     }
 }

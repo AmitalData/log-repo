@@ -136,10 +136,6 @@ namespace Logitude.FullAccounting.Test.Models
 
         
         public string ExternalPaymentNotes { get; set; }
-        public string MasavInterfaceId { get; set; }
-        public string VendorBankBranch { get; set; }
-        public string VendorBankAccount { get; set; }
-        public string VendorBankCode { get; set; }
 
     }
 }
