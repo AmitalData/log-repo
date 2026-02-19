@@ -31,8 +31,6 @@ import { SessionLocator } from 'Infrastructure/Utilities/SessionLocator';
 import * as xmlbuilder from 'xmlbuilder';
 import { ConfirmWindow } from 'Controls/Windows/ConfirmWindow';
 import { DeclarationPMService } from 'Customs/Services/StandardPMs/DeclarationPMService';
-import { CertificateOfOriginTypeCodeEnumPM } from 'Customs/EntityPMs/CertificateOfOriginTypeCodeEnumPM';
-import { CertificateOfOriginTypeCodeEnumListService } from 'Customs/Services/StandardLists/CertificateOfOriginTypeCodeEnumListService';
 
 
 class UpdateGeneralArgsParams {
@@ -99,7 +97,6 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
     }
 
     cargoDescription: string = "";
-    certificateOfOriginTypeCodeEnumListService: CertificateOfOriginTypeCodeEnumListService = new CertificateOfOriginTypeCodeEnumListService();
     supplierInvoiceExtendedPMService: SupplierInvoiceExtendedPMService = new SupplierInvoiceExtendedPMService();
     InitTab(EntityPM: CertificateOfOriginPM, currentDeclaration: DeclarationPM, IsNewOrEdit: StatusCertificateOfOrigin, IsDisplayOnly: boolean) {
         this.entityPM = EntityPM;
@@ -110,7 +107,6 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         this.CertificateOriginItemItems = new ObservableCollection([]);
         this.currentDeclaration = currentDeclaration;
         this.cargoDescription = this.currentDeclaration.Consignments[0]?.CargoDescription;
-        this.updatePortOfShipment();
 
         if (IsNewOrEdit === StatusCertificateOfOrigin.IsNew) {
 
@@ -163,14 +159,6 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
 
     }
 
-
-    updatePortOfShipment(): void {
-        this.entityPM.PortOfShipment = this.currentDeclaration.Consignments[0]?.ExportLoadingPortCode;
-        if (this.entityPM?.PortOfShipment === "ILAST")
-            this.entityPM.PortOfShipment = "ILASH";
-        else if (this.entityPM?.PortOfShipment === "ILHBT")
-            this.entityPM.PortOfShipment = "ILHFA";
-    }
 
     setDisplayMessage() {
         if (this.entityPM.UpdateDeclaration == "A") {
@@ -318,8 +306,8 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
             mappedConsignments.Weight = unifreightItem.weight || '';
             mappedConsignments.ContainerIsoCode = unifreightItem.isoContainerType || '';
 
-            if (AppTool.IsNullOrEmpty(mappedConsignments.MarksAndNumbers)) mappedConsignments.MarksAndNumbers = mappedConsignments.ItemDescription;
-
+            if(AppTool.IsNullOrEmpty(mappedConsignments.MarksAndNumbers)) mappedConsignments.MarksAndNumbers = mappedConsignments.ItemDescription;
+            
             const TransportModeOcean = 'O';
             // Find corresponding consignment item by serial or other identifier
             let consignment = this.currentDeclaration.Consignments.filter(c => c.SequenceNumeric == unifreightItem.itemSerial)[0];
@@ -329,7 +317,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
             if (consignment) {
                 const consignmentPackage = consignment.ConsignmentPackages[0];
                 // Update fields if not set by Unifreight data:
-                if (this.currentDeclaration.TransportModeId !== TransportModeOcean) {
+                if(this.currentDeclaration.TransportModeId !== TransportModeOcean){
                     mappedConsignments.MarksAndNumbers = mappedConsignments.MarksAndNumbers || consignmentPackage?.MarksNumbers || '';
                     mappedConsignments.ItemDescription = mappedConsignments.ItemDescription || consignment.CargoDescription || '';
                     mappedConsignments.PackageQuantity = mappedConsignments.PackageQuantity || consignmentPackage?.PackageQuantity || 0;
@@ -340,7 +328,8 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
                 mappedConsignments.MeasureType = consignmentPackage?.GrossMassMeasureTypeCode || '';
                 mappedConsignments.MeasureTypeName = consignmentPackage?.GrossMassMeasureTypeName || '';
 
-
+                mappedConsignments.ItemDescription = mappedConsignments.ItemDescription || consignment.CargoDescription || '';
+                mappedConsignments.ItemId = this.currentDeclaration.SupplierInvoices[0]?.SupplierInvoiceItems[0]?.ClassificationCode?.substring(0, 6) || '';
                 // Initialize ContainerTypeWCO field:
                 this.getContainerTypeWCOData(consignment, mappedConsignments, unifreightItem.manifestNumber);
             }
@@ -548,11 +537,11 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         if (this.currentDeclaration.TransportModeId !== TransportModeOcean && AppTool.IsNullOrEmpty(ManifestNumberFromUnifreight)) {
             consignment.ManifestNumber = consignment.ManifestNumber ? consignment.ManifestNumber : '';
         }
-        else if (AppTool.IsNullOrEmpty(ManifestNumberFromUnifreight)) {
+        else if(AppTool.IsNullOrEmpty(ManifestNumberFromUnifreight)){
             mappedConsignments.ContainerIsoCode = "";
             return;
         }
-        else
+        else    
             consignment.ManifestNumber = ManifestNumberFromUnifreight;
 
         consignment.SecondCargoID = consignment.SecondCargoID ? consignment.SecondCargoID : '';
@@ -757,20 +746,12 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         this.UIProperties.SetWarning("RequestReasonCode", this.ObjectTableName, true);
     }
 
-    SetDisableByCooTypeCode(CooTypeCode: string, IsDisplayOnly: false) { // if CooTypeCode = 1 or 2
-        this.UIProperties.SetEnabled("TradeAgreementCountry1", this.ObjectTableName, IsDisplayOnly);
-        this.UIProperties.SetEnabled("TradeAgreementCountry2", this.ObjectTableName, IsDisplayOnly);
-        this.UIProperties.SetEnabled("TradeAgreementGroupOfCountries", this.ObjectTableName, IsDisplayOnly);
-        this.SetManufactureDataByCooTypeCode(CooTypeCode);
-    }
-    
-    SetManufactureDataByCooTypeCode(CooTypeCode: string) {
-        let enabled: boolean = false;
-        this.certificateOfOriginTypeCodeEnumListService.getSingle(CooTypeCode).subscribe((response: ServiceResponse) => {
-            if (!response.HasError) enabled = response.Result?.IsZipcodeMandatory;
-            this.UIProperties.SetEnabled("PlaceOfManufacture", this.ObjectTableName, enabled);
-            this.UIProperties.SetEnabled("ZipCodeOfManufacture", this.ObjectTableName, enabled);
-        });
+    SetDisableByCooTypeCodeEuro(enabled: boolean) { // if CooTypeCode = 1 or 2
+        this.UIProperties.SetEnabled("TradeAgreementCountry1", this.ObjectTableName, enabled);
+        this.UIProperties.SetEnabled("TradeAgreementCountry2", this.ObjectTableName, enabled);
+        this.UIProperties.SetEnabled("TradeAgreementGroupOfCountries", this.ObjectTableName, enabled);
+        this.UIProperties.SetEnabled("PlaceOfManufacture", this.ObjectTableName, enabled);
+        this.UIProperties.SetEnabled("ZipCodeOfManufacture", this.ObjectTableName, enabled);
     }
 
     mandatoryFielsList = [];
@@ -796,7 +777,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
             this.SetPropertiesEnabledAllFields(!this.IsDisplayOnly);
 
             if (this.entityPM.CooTypeCode != "1" && this.entityPM.CooTypeCode != "2") {
-                this.SetDisableByCooTypeCode(CooTypeCode, this.IsDisplayOnly);
+                this.SetDisableByCooTypeCodeEuro(this.IsDisplayOnly);
             }
         }
 

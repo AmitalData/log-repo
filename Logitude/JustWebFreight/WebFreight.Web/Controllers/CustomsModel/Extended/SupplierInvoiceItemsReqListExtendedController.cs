@@ -26,7 +26,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 {
     public class SupplierInvoiceItemsReqListExtendedController : ApiController
     {
-        public HttpResponseMessage GetSingle(string declarationId, int invoiceCounterKey, int invoiceItemLineNumber, string siiRequestId)
+        public HttpResponseMessage GetSingle(string declarationId, int lineNumber, int invoiceCounterKey, int invoiceItemLineNumber, string siiRequestId)
         {
             try
             {
@@ -42,7 +42,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 ICustomContext ctx = CustomContext.GetContext(authToken.Tenant);
 
                 var qs = new SupplierInvoiceItemsReqListQueryService(ctx);
-                SupplierInvoiceItemsReqListPM pm = qs.GetOrCreate(siiRequestId, declarationId, invoiceCounterKey, invoiceItemLineNumber, authToken.Tenant);
+                SupplierInvoiceItemsReqListPM pm = qs.GetOrCreate(siiRequestId, declarationId, lineNumber, invoiceCounterKey, invoiceItemLineNumber, authToken.Tenant);
 
                 PerformanceLogger.AddServerExecutionTimeHeader(logKey);
                 return Request.CreateResponse(HttpStatusCode.OK, pm);

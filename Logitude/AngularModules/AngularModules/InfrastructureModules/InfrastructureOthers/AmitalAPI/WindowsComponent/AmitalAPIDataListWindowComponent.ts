@@ -23,7 +23,7 @@ export type AmitalAPIDataListWindowParams = {
             <ng-container *ngFor="let clientapi of data.clientAPIs">
                 <h1>API Name: {{clientapi.ApiType}} (Header Params)</h1>
                 <p><span class='label'>address: </span><span class='value'>{{clientapi.Address}}</span></p>
-                <p><span class='label'>partner-token: </span><span class='value'>{{clientapi.PartnerToken}}</span></p>
+                <p><span class='label'>pratner-token: </span><span class='value'>{{clientapi.PartnerToken}}</span></p>
                 <p><span class='label'>api-token: </span><span class='value'>{{clientapi.Id}}</span></p>
                 <p><span class='label'>caller-objectid: </span><span class='value'>{{data.azureManagedApplObjId}}</span></p>
             </ng-container>            

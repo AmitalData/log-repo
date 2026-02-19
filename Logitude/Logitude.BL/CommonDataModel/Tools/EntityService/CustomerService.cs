@@ -625,13 +625,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
                 if (!entityPM.IsHybrid && (string.IsNullOrEmpty(entityPM.Code) || entityPM.Code == "new"))
                 {
-                    var counterAdditionalParameters = new Dictionary<string, string>
-                    {
-                        ["[B]"] = "CS",
-                        ["[BranchName]"] = "CS"
-                    };
                     NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"CustomerService InitializeComponent entityPM.Code:{entityPM.Code} tenant:{entityPM.Tenant}");
-                    entityPM.Code = TableCounter.DoesCounterDefinitionExist("CADC", tenant, "CS") ? TableCounter.GetNumber(entityPM.Tenant, "CADC", "CS", null, counterAdditionalParameters, true) : CodeCounter.GetNumber("Customer", tenant).ToString();
+                    entityPM.Code = CodeCounter.GetNumber("Customer", tenant).ToString();
                     NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"CustomerService InitializeComponent entityPM.Code:{entityPM.Code} tenant:{entityPM.Tenant}");
 
                 }

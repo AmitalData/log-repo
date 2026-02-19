@@ -1,12 +1,20 @@
 
 using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 using Logitude.Server.Tools; 
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Def.EntityPMs; 
+using Logitude.Customs.Data;
 using Simplog.Server.Infrastructure;
 using Logitude.Customs.BL.EntityQueryServices;
 using Simplog.Data.CommonDataModel.Repositories;
 using Logitude.Customs.Data.Repsitories;
+using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using static Logitude.Customs.Data.Repsitories.SIIRequestRepository;
@@ -50,7 +58,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
             this.CustomMappedPMProperties.Add(PMPropertyNames.VesselName);
             this.CustomMappedPMProperties.Add(PMPropertyNames.ManifestNumber);
             this.CustomMappedPMProperties.Add(PMPropertyNames.UnloadDate);
-            this.CustomMappedPMProperties.Add(PMPropertyNames.WareHouseCityName);
 
 
             var siiRepo = new SIIRequestRepository(entityPOCO.Tenant);
@@ -58,20 +65,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
             var contactQuery = new ContactQuery(entityPOCO.Tenant);
 
             var agg = siiRepo.GetAggregateForSii(entityPOCO.Tenant, entityPOCO.DeclarationId);
-            if (agg == null) return;              
-            
+            if (agg == null) return;                       
+
             MapAggregateToPM(entityPM, agg);
             MapContact(entityPM, entityPOCO, agg, defaultValueQueryService, contactQuery);
-
-            if (!string.IsNullOrWhiteSpace(entityPOCO.WareHouseCity))
-            {
-                var cityQueryService = new CityQueryService(entityPOCO.Tenant);
-                var city = cityQueryService.GetSingle(entityPOCO.WareHouseCity, false, true);
-                if (city != null)
-                {
-                    entityPM.WareHouseCityName = city.LocalName;
-                }
-            }
         }
 
 

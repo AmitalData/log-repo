@@ -211,25 +211,15 @@ export class CustomsSettingPM {
     public set MaxSISendInteractive(newValue: number) { if (this.maxSISendInteractive != newValue) { this.maxSISendInteractive = newValue; this.MarkAsDirty("MaxSISendInteractive"); } }
        
 	 
-    private courierDocToken: string;
-    public get CourierDocToken() { return this.courierDocToken; }
-    public set CourierDocToken(newValue: string) { if (this.courierDocToken != newValue) { this.courierDocToken = newValue; this.MarkAsDirty("CourierDocToken"); } }
-       
+        
 	 
     private forbiddenSigns: string;
     public get ForbiddenSigns() { return this.forbiddenSigns; }
     public set ForbiddenSigns(newValue: string) { if (this.forbiddenSigns != newValue) { this.forbiddenSigns = newValue; this.MarkAsDirty("ForbiddenSigns"); } }
-       
-	 
-    private cB_LastUpdateDate: Date;
-    public get CB_LastUpdateDate() { return this.cB_LastUpdateDate; }
-    public set CB_LastUpdateDate(newValue: Date) { if (this.cB_LastUpdateDate != newValue) { this.cB_LastUpdateDate = newValue; this.MarkAsDirty("CB_LastUpdateDate"); } }
-       
-	 
-    private customsBookToken: string;
-    public get CustomsBookToken() { return this.customsBookToken; }
-    public set CustomsBookToken(newValue: string) { if (this.customsBookToken != newValue) { this.customsBookToken = newValue; this.MarkAsDirty("CustomsBookToken"); } }
-       
+     private courierDocToken: string;
+    public get CourierDocToken() { return this.courierDocToken; }
+    public set CourierDocToken(newValue: string) { if (this.courierDocToken != newValue) { this.courierDocToken = newValue; this.MarkAsDirty("CourierDocToken"); } }
+        
 	 
 
     public OldEntityPM: CustomsSettingPM;
@@ -261,4 +251,4 @@ export class CustomsSettingPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

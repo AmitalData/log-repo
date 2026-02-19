@@ -1079,12 +1079,12 @@
     DisplayLongName="false"
     FullFieldLable="&quot;CurrencyId&quot;"
     DefaultText="&quot;Currency&quot;"
-    FullLocalDefaultTextBack_up="&quot;מזהה מטבע&quot;"
-    FullLocalDefaultText="&quot;BS64:Itee15bXlNeUINee15jXkdeiIg==&quot;"
+    FullLocalDefaultTextBack_up="&quot;מטבע&quot;"
+    FullLocalDefaultText="&quot;BS64:Itee15jXkdeiIg==&quot;"
     ListFieldLable="&quot;CurrencyIdListLable&quot;"
     ListLableDefaultText="&quot;Currency&quot;"
-    ListLocalDefaultTextBack_up="&quot;מזהה מטבע&quot;"
-    ListLocalDefaultText="&quot;BS64:Itee15bXlNeUINee15jXkdeiIg==&quot;"
+    ListLocalDefaultTextBack_up="&quot;מטבע&quot;"
+    ListLocalDefaultText="&quot;BS64:Itee15jXkdeiIg==&quot;"
     IsNullable="false"
     IsForeignKey="true"
     ForeignEntity="&quot;Currency&quot;"
@@ -2331,7 +2331,7 @@
     SystemRequired="false"
     ObjectFieldNotRequired="false"
     SystemMaxLength="0"
-    DisplayInList="true"
+    DisplayInList="false"
     IsCustomFilter="false"
     IsListFilter="false"
     Operator="&quot;Equals&quot;"
@@ -2412,7 +2412,7 @@
     SystemRequired="false"
     ObjectFieldNotRequired="false"
     SystemMaxLength="0"
-    DisplayInList="true"
+    DisplayInList="false"
     IsCustomFilter="false"
     IsListFilter="false"
     Operator="&quot;Equals&quot;"
@@ -3144,12 +3144,12 @@
     DisplayLongName="false"
     FullFieldLable="&quot;CurrencySign&quot;"
     DefaultText="&quot;Currency&quot;"
-    FullLocalDefaultTextBack_up="&quot;סימן מטבע&quot;"
-    FullLocalDefaultText="&quot;BS64:Iteh15nXntefINee15jXkdeiIg==&quot;"
+    FullLocalDefaultTextBack_up="&quot;מטבע&quot;"
+    FullLocalDefaultText="&quot;BS64:Itee15jXkdeiIg==&quot;"
     ListFieldLable="&quot;CurrencySignListLable&quot;"
     ListLableDefaultText="&quot;Currency&quot;"
-    ListLocalDefaultTextBack_up="&quot;סימן מטבע&quot;"
-    ListLocalDefaultText="&quot;BS64:Iteh15nXntefINee15jXkdeiIg==&quot;"
+    ListLocalDefaultTextBack_up="&quot;מטבע&quot;"
+    ListLocalDefaultText="&quot;BS64:Itee15jXkdeiIg==&quot;"
     IsNullable="true"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
@@ -3222,12 +3222,12 @@
     DisplayLongName="false"
     FullFieldLable="&quot;OpenAmountCurrencySign&quot;"
     DefaultText="&quot;Open Amount Currency Sign&quot;"
-    FullLocalDefaultTextBack_up="&quot;סימן מטבע סכום פתוח&quot;"
-    FullLocalDefaultText="&quot;BS64:Iteh15nXntefINee15jXkdeiINeh15vXldedINek16rXldeXIg==&quot;"
+    FullLocalDefaultTextBack_up="&quot;מטבע&quot;"
+    FullLocalDefaultText="&quot;BS64:Itee15jXkdeiIg==&quot;"
     ListFieldLable="&quot;OpenAmountCurrencySignListLable&quot;"
     ListLableDefaultText="&quot;Open Amount Currency Sign&quot;"
-    ListLocalDefaultTextBack_up="&quot;סימן מטבע סכום פתוח&quot;"
-    ListLocalDefaultText="&quot;BS64:Iteh15nXntefINee15jXkdeiINeh15vXldedINek16rXldeXIg==&quot;"
+    ListLocalDefaultTextBack_up="&quot;מטבע&quot;"
+    ListLocalDefaultText="&quot;BS64:Itee15jXkdeiIg==&quot;"
     IsNullable="true"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
@@ -6674,105 +6674,6 @@
         CustomPredefined="false" />
     </QueryFilters>
   </Query>
-  <Query
-    Code="&quot;LedgerTransactionsTab&quot;"
-    TextCode="&quot;Ledger Transactions Tab&quot;"
-    LocalTextCodeBack_up="&quot;טאב תנועות&quot;"
-    LocalTextCode="&quot;BS64:IteY15DXkSDXqteg15XXoteV16oi&quot;"
-    QueryGroupCode="&quot;20b2&quot;"
-    IndexOrder="1"
-    ObjectTableName="&quot;LedgerTransaction&quot;"
-    QuerySection="&quot;LedgerTransaction&quot;"
-    SystemLevel="true"
-    IsAddNewEntity="false"
-    IsPackagable="false"
-    DefaultSortName="&quot;AccountingDate&quot;"
-    DefaultSortDirection="&quot;Desending&quot;"
-    IsSpellChecked="false">
-    <QueryColumns>
-      <QueryColumn
-        QueryCode="&quot;LedgerTransactionsTab&quot;"
-        IndexOrder="0"
-        ObjectFieldName="&quot;AccountingDate&quot;"
-        ColumnWidth="85" />
-      <QueryColumn
-        QueryCode="&quot;LedgerTransactionsTab&quot;"
-        IndexOrder="1"
-        ObjectFieldName="&quot;DocumentDate&quot;"
-        ColumnWidth="85" />
-      <QueryColumn
-        QueryCode="&quot;LedgerTransactionsTab&quot;"
-        IndexOrder="2"
-        ObjectFieldName="&quot;DueDate&quot;"
-        ColumnWidth="75" />
-      <QueryColumn
-        QueryCode="&quot;LedgerTransactionsTab&quot;"
-        IndexOrder="3"
-        ObjectFieldName="&quot;Source&quot;"
-        ColumnWidth="100" />
-      <QueryColumn
-        QueryCode="&quot;LedgerTransactionsTab&quot;"
-        IndexOrder="4"
-        ObjectFieldName="&quot;LocalAmountCredit&quot;"
-        ColumnWidth="120" />
-      <QueryColumn
-        QueryCode="&quot;LedgerTransactionsTab&quot;"
-        IndexOrder="5"
-        ObjectFieldName="&quot;CumulativeLocalAmount&quot;"
-        ColumnWidth="120" />
-      <QueryColumn
-        QueryCode="&quot;LedgerTransactionsTab&quot;"
-        IndexOrder="6"
-        ObjectFieldName="&quot;ForeignAmountCredit&quot;"
-        ColumnWidth="120" />
-      <QueryColumn
-        QueryCode="&quot;LedgerTransactionsTab&quot;"
-        IndexOrder="7"
-        ObjectFieldName="&quot;CumulativeForeignAmount&quot;"
-        ColumnWidth="120" />
-      <QueryColumn
-        QueryCode="&quot;LedgerTransactionsTab&quot;"
-        IndexOrder="8"
-        ObjectFieldName="&quot;Reference1&quot;"
-        ColumnWidth="90" />
-      <QueryColumn
-        QueryCode="&quot;LedgerTransactionsTab&quot;"
-        IndexOrder="9"
-        ObjectFieldName="&quot;Reference2&quot;"
-        ColumnWidth="90" />
-      <QueryColumn
-        QueryCode="&quot;LedgerTransactionsTab&quot;"
-        IndexOrder="10"
-        ObjectFieldName="&quot;Reference3&quot;"
-        ColumnWidth="90" />
-      <QueryColumn
-        QueryCode="&quot;LedgerTransactionsTab&quot;"
-        IndexOrder="11"
-        ObjectFieldName="&quot;OppositeAccountDisplayNumber&quot;"
-        ColumnWidth="120" />
-      <QueryColumn
-        QueryCode="&quot;LedgerTransactionsTab&quot;"
-        IndexOrder="12"
-        ObjectFieldName="&quot;JournalNumber&quot;"
-        ColumnWidth="100" />
-      <QueryColumn
-        QueryCode="&quot;LedgerTransactionsTab&quot;"
-        IndexOrder="13"
-        ObjectFieldName="&quot;AccountDisplayNumber&quot;"
-        ColumnWidth="100" />
-      <QueryColumn
-        QueryCode="&quot;LedgerTransactionsTab&quot;"
-        IndexOrder="14"
-        ObjectFieldName="&quot;Notes&quot;"
-        ColumnWidth="200" />
-      <QueryColumn
-        QueryCode="&quot;LedgerTransactionsTab&quot;"
-        IndexOrder="15"
-        ObjectFieldName="&quot;InternalNote&quot;"
-        ColumnWidth="200" />
-    </QueryColumns>
-    <QueryFilters />
-  </Query>
   <Screen
     Name="&quot;LedgerTransactionHeaderScreen&quot;"
     ObjectTableName="&quot;LedgerTransaction&quot;"
@@ -7194,20 +7095,6 @@
       DefaultText="&quot;There are lines that have been reconciled, the references must be disconnected from the draft: &quot;"
       LocalDefaultTextBack_up="&quot;ישנם שורות שהותאמו ,יש לנתק את האסמכתאות מהטיוטה: &quot;"
       LocalDefaultText="&quot;BS64:IteZ16nXoNedINep15XXqNeV16og16nXlNeV16rXkNee15UgLNeZ16kg15zXoNeq16cg15DXqiDXlNeQ16HXnteb16rXkNeV16og157XlNeY15nXldeY15Q6ICI=&quot;"
-      TextCodeTypeCode="&quot;O&quot;"
-      IsSpellChecked="false" />
-    <TextCode
-      Code="&quot;LedgerTransaction.O.TotalLocalAmount&quot;"
-      DefaultText="&quot;TotalLocalAmount&quot;"
-      LocalDefaultTextBack_up="&quot;סכום בש&quot;ח&quot;"
-      LocalDefaultText="&quot;BS64:Iteh15vXldedINeR16ki15ci&quot;"
-      TextCodeTypeCode="&quot;O&quot;"
-      IsSpellChecked="false" />
-    <TextCode
-      Code="&quot;LedgerTransaction.O.TotalForeignAmount&quot;"
-      DefaultText="&quot;Total Foreign Amount&quot;"
-      LocalDefaultTextBack_up="&quot;סכום במט&quot;ז&quot;"
-      LocalDefaultText="&quot;BS64:Iteh15vXldedINeR157XmCLXliI=&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
