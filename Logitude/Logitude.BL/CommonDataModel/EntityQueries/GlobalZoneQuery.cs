@@ -16,7 +16,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         GlobalZoneRepository repository;
 
-
+        public GlobalZoneQuery()
+        {
+            repository = new GlobalZoneRepository(); 
+        }
 
         public GlobalZoneQuery(int tenant)
         {

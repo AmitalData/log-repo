@@ -63,8 +63,8 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
         protected override GenericRequestParams CreateDefaultRequestParamsFromCustomsResponse(DCAInUCSBondedWithResponseContentHeader customsResponse)
         {
-            var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration", customsResponse.tenant);
-            var objectTableId2 = ObjectTableRepository.GetObjectTableByName("DocumentsFiling", customsResponse.tenant);
+            var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
+            var objectTableId2 = ObjectTableRepository.GetObjectTableByName("DocumentsFiling");
             var genericRequestParams = new GenericRequestParams()
             {
                 Tenant = customsResponse.tenant,
@@ -119,8 +119,8 @@ namespace Logitude.CustomsMessaging.MessagingServices
                                                     CultureInfo.InvariantCulture,
                                                     DateTimeStyles.None);
             }
-			var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration", tenant);
-            var objectTableDocumentsFilingId = ObjectTableRepository.GetObjectTableByName("DocumentsFiling", tenant);
+			var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
+            var objectTableDocumentsFilingId = ObjectTableRepository.GetObjectTableByName("DocumentsFiling");
             var customsRequestsSheetQS = new CustomsRequestsSheetQueryService(tenant);
 
             List<CustomsRequestsSheetPM> RequestInProgressList;
@@ -361,7 +361,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                     if (ENDOC == null)
                     {
                         LogitudeSettings.HandleLogMe("ENDOC not exist in DocumentsMetaDataType", false, "SendBondedCustomDocument", stopLogAt);
-                       NetCommonHelper.Logger.DevLog.Instance.WriteError("_DocumentsFilingPM == null");
+                       NetCommonHelper.Logger.DevLog.Instance.WriteDebug("_DocumentsFilingPM == null");
                         return;
 
                     }
@@ -370,7 +370,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                     if (myDocumentsFilingMetaDataValue == null)
                     {
                         LogitudeSettings.HandleLogMe("ENDOC not exist in DocumentsFilingMetaDataValues", false, "SendBondedCustomDocument", stopLogAt);
-                       NetCommonHelper.Logger.DevLog.Instance.WriteError("ENDOC not exist in DocumentsFilingMetaDataValues");
+                       NetCommonHelper.Logger.DevLog.Instance.WriteDebug("ENDOC not exist in DocumentsFilingMetaDataValues");
                         return;
 
                     }
@@ -409,19 +409,15 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 {
                     LogitudeSettings.HandleLogMe("!interactive before cresteCRS", false, "sendOcrDocument", stopLogAt);
                     LogitudeSettings.HandleLogMe("_DocumentsFilingPM.IsNotCustomsDocId" + _DocumentsFilingPM.IsNotCustomsDocId, false, "sendClosing", stopLogAt);
-					NetCommonHelper.Logger.DevLog.Instance.WriteError("_DocumentsFilingPM.IsNotCustomsDocId" + _DocumentsFilingPM.IsNotCustomsDocId);
 
-					string key = ProcessLockTableUtil.Instance.GetKey4UCBUD2LT(_DocumentsFilingPM.Id, _DocumentsFilingPM.Tenant);
-					NetCommonHelper.Logger.DevLog.Instance.WriteError(string.Format("MECHES key {2} id:{0} Tenant {1}", _DocumentsFilingPM.Id, _DocumentsFilingPM.Tenant, key));
-
-					using (var disposableToken =
+                    string key = ProcessLockTableUtil.Instance.GetKey4UCBUD2LT(_DocumentsFilingPM.Id, _DocumentsFilingPM.Tenant);
+                    using (var disposableToken =
                         ProcessLockTableUtil.Instance.GetProcessLockTableDisposable(_DocumentsFilingPM.Tenant, false, key,
 						"UCBNDCD.CRS", true)
                         )
                     {
 						_Stopwatch = Stopwatch.StartNew();
-						NetCommonHelper.Logger.DevLog.Instance.WriteError(string.Format("MECHES CreateCRS tenant: {0} id: {1}", _DocumentsFilingPM.Tenant, _DocumentsFilingPM.Id));
-
+						
 						var myDCAInUCBUD2LT_MsgMessagingService = new DCAInUCSBondedDocument_MessagingService();
                         string RequestInProgressList;
                         string crs = myDCAInUCBUD2LT_MsgMessagingService.CreateCRS(
@@ -433,12 +429,11 @@ namespace Logitude.CustomsMessaging.MessagingServices
                         LogitudeSettings.HandleLogMe("after cresteCRS", false, "sendOcrDocument", stopLogAt);
 
                         LogitudeSettings.HandleLogMe(crs + " " + logData + _DocumentsFilingPM.Code, false, "CreateUCBNDCDService.OK", stopLogAt);
-						NetCommonHelper.Logger.DevLog.Instance.WriteError(string.Format("MECHES crs {1} id:{0} ", _DocumentsFilingPM.Id, crs));
 
 
 
 					}
-				}
+                }
 
             }
             catch (Exception E)
@@ -447,7 +442,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 LogitudeSettings.HandleLogMe(E.ToString() + logData + _DocumentsFilingPM.Code, true, "SendBondedCustomDocument", stopLogAt);
                 LogitudeSettings.HandleLogMe(E.ToString() + logData + _DocumentsFilingPM.Code, true, "sendOcrDocumentError", stopLogAt);
 				LogitudeSettings.HandleLogMe(Environment.NewLine + "1 Took: " + _Stopwatch?.Elapsed.ToString(), false, "CheckLogTime-SendMeces", stopLogAt); _Stopwatch?.Restart();
-				NetCommonHelper.Logger.DevLog.Instance.WriteError(string.Format("MECHES Exception  id:{0} ex: {1}", _DocumentsFilingPM?.Id, E.ToString() + E.StackTrace));
+
 				throw;
             }
             finally

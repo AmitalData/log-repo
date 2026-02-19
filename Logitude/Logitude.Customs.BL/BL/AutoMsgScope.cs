@@ -20,7 +20,7 @@ namespace Logitude.Customs.BL.Infrastructure
             set.Add(declarationId);
             return true;
         }
-        public static void Unstamp(string declarationId) => GetSet().Remove(declarationId);
+
         private static HashSet<string> GetSet()
         {
             if (HttpContext.Current != null)

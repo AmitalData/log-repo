@@ -181,7 +181,7 @@ export class DetailedShipmentChargesAnalysisComponent extends BaseComponent impl
 
         }
     }
-    RunButtonClicked(isInteractive: boolean) {
+    RunButtonClicked() {
         this.SetUIProperties();
 
         if (this.ValidateSelectedFilters()) {
@@ -190,7 +190,6 @@ export class DetailedShipmentChargesAnalysisComponent extends BaseComponent impl
             myReportFliter.NumberOfPage = 1;
             myReportFliter.ProcessType = "GenerateReport";
             myReportFliter.QueryFilterItemLists = this.GetQueryFilterItems();
-            myReportFliter.IsInteractive = isInteractive;
             this.RunReportEvent.emit(myReportFliter);
         }
     }

@@ -479,7 +479,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                   //  int[] myMsgCode = { 7, 8, 9, 16, 22, 23, 24, 25, 26, 27 };
                     
-                    FeatureQuery featureQuery = new FeatureQuery(requestParams.Tenant);
+                    FeatureQuery featureQuery = new FeatureQuery();
                     var features = featureQuery.GetAllowedFeaturesForLoggedUser(requestParams.LoggingUserId, requestParams.Tenant);
                     var feature = features.Features.FirstOrDefault(x => x.Code == "Pending900InDetainedOrPhysicalCheck");
                         if (feature != null && this._MyDeclarationPM.CourierCustomStatusCode == "2")
@@ -580,14 +580,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             if (this._MyDeclarationPM != null && !string.IsNullOrWhiteSpace(notificationStatusCode))
             {
                 LogMessagingUtil.Instance.AppendLine("Sent status " + notificationStatusCode + " to UNF");
-                string messageforUnf = customResponse.MessageToAgent.msgString?.Replace("00:00:00", "");
-                if (!string.IsNullOrWhiteSpace(messageforUnf) && !string.IsNullOrWhiteSpace(customResponse.MessageToAgent?.SenderName))
-                {
-                    var titleFirstName =TranslateTextsClass.Translate("Customs.Notification.O.PrivateName", requestParams.Tenant, true);
-                   
-                    messageforUnf += "\n" + titleFirstName + customResponse.MessageToAgent.SenderName;
-                }
-                RaiseEvent(this._MyDeclarationPM, notificationStatusCode, messageforUnf);
+                RaiseEvent(this._MyDeclarationPM, notificationStatusCode, customResponse.MessageToAgent.msgString?.Replace("00:00:00", ""));
             }
 
             if (!string.IsNullOrWhiteSpace(notificationDefinitionCode))
@@ -624,7 +617,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
             string referentUserId = null;
             if (this._MyDeclarationPM != null)
             {
-                newNotificationPM.ResponseToMessage = responseToMessage;
+                if (this._MyDeclarationPM.Direction == "E")
+                    newNotificationPM.ResponseToMessage = responseToMessage;
 
                 newNotificationPM.EntityId = this._MyDeclarationPM.Id;
                 newNotificationPM.ObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");

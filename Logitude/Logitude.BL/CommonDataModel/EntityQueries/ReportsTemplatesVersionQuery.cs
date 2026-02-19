@@ -21,7 +21,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         ReportsTemplatesVersionRepository repository;
 
-
+        public ReportsTemplatesVersionQuery()
+        {
+            repository = new ReportsTemplatesVersionRepository();
+        }
 
         public ReportsTemplatesVersionQuery(int tenant)
         {

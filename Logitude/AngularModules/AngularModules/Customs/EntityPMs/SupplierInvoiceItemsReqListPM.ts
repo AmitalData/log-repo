@@ -7,7 +7,7 @@
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
 
-import {SIIRequestPM} from './SIIRequestPM';
+import {SupplierInvoiceItemPM} from './SupplierInvoiceItemPM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
@@ -114,11 +114,6 @@ export class SupplierInvoiceItemsReqListPM {
     public set ItemName(newValue: string) { if (this.itemName != newValue) { this.itemName = newValue; this.MarkAsDirty("ItemName"); } }
        
 	 
-    private dutchGroupItem: number;
-    public get DutchGroupItem() { return this.dutchGroupItem; }
-    public set DutchGroupItem(newValue: number) { if (this.dutchGroupItem != newValue) { this.dutchGroupItem = newValue; this.MarkAsDirty("DutchGroupItem"); } }
-       
-	 
     private invoiceQuantity: number;
     public get InvoiceQuantity() { return this.invoiceQuantity; }
     public set InvoiceQuantity(newValue: number) { if (this.invoiceQuantity != newValue) { this.invoiceQuantity = newValue; this.MarkAsDirty("InvoiceQuantity"); } }
@@ -137,61 +132,6 @@ export class SupplierInvoiceItemsReqListPM {
     private statisticQuantityType: string;
     public get StatisticQuantityType() { return this.statisticQuantityType; }
     public set StatisticQuantityType(newValue: string) { if (this.statisticQuantityType != newValue) { this.statisticQuantityType = newValue; this.MarkAsDirty("StatisticQuantityType"); } }
-       
-	 
-    private originCountryCode: string;
-    public get OriginCountryCode() { return this.originCountryCode; }
-    public set OriginCountryCode(newValue: string) { if (this.originCountryCode != newValue) { this.originCountryCode = newValue; this.MarkAsDirty("OriginCountryCode"); } }
-       
-	 
-    private classificationCode: string;
-    public get ClassificationCode() { return this.classificationCode; }
-    public set ClassificationCode(newValue: string) { if (this.classificationCode != newValue) { this.classificationCode = newValue; this.MarkAsDirty("ClassificationCode"); } }
-       
-	 
-    private invoiceQuantityTypeCode: string;
-    public get InvoiceQuantityTypeCode() { return this.invoiceQuantityTypeCode; }
-    public set InvoiceQuantityTypeCode(newValue: string) { if (this.invoiceQuantityTypeCode != newValue) { this.invoiceQuantityTypeCode = newValue; this.MarkAsDirty("InvoiceQuantityTypeCode"); } }
-       
-	 
-    private invoiceNumber: string;
-    public get InvoiceNumber() { return this.invoiceNumber; }
-    public set InvoiceNumber(newValue: string) { if (this.invoiceNumber != newValue) { this.invoiceNumber = newValue; this.MarkAsDirty("InvoiceNumber"); } }
-       
-	 
-    private issueDate: Date;
-    public get IssueDate() { return this.issueDate; }
-    public set IssueDate(newValue: Date) { if (this.issueDate != newValue) { this.issueDate = newValue; this.MarkAsDirty("IssueDate"); } }
-       
-	 
-    private statisticQuantityTypeCode: string;
-    public get StatisticQuantityTypeCode() { return this.statisticQuantityTypeCode; }
-    public set StatisticQuantityTypeCode(newValue: string) { if (this.statisticQuantityTypeCode != newValue) { this.statisticQuantityTypeCode = newValue; this.MarkAsDirty("StatisticQuantityTypeCode"); } }
-       
-	 
-    private vendorName: string;
-    public get VendorName() { return this.vendorName; }
-    public set VendorName(newValue: string) { if (this.vendorName != newValue) { this.vendorName = newValue; this.MarkAsDirty("VendorName"); } }
-       
-	 
-    private statusCode: string;
-    public get StatusCode() { return this.statusCode; }
-    public set StatusCode(newValue: string) { if (this.statusCode != newValue) { this.statusCode = newValue; this.MarkAsDirty("StatusCode"); } }
-       
-	 
-    private statusDate: Date;
-    public get StatusDate() { return this.statusDate; }
-    public set StatusDate(newValue: Date) { if (this.statusDate != newValue) { this.statusDate = newValue; this.MarkAsDirty("StatusDate"); } }
-       
-	 
-    private distApprovalAttachmentPath: string;
-    public get DistApprovalAttachmentPath() { return this.distApprovalAttachmentPath; }
-    public set DistApprovalAttachmentPath(newValue: string) { if (this.distApprovalAttachmentPath != newValue) { this.distApprovalAttachmentPath = newValue; this.MarkAsDirty("DistApprovalAttachmentPath"); } }
-       
-	 
-    private statusName: string;
-    public get StatusName() { return this.statusName; }
-    public set StatusName(newValue: string) { if (this.statusName != newValue) { this.statusName = newValue; this.MarkAsDirty("StatusName"); } }
        
 	 
 

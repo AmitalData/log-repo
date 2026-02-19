@@ -14,7 +14,7 @@ import { DeclarationReferantDataFiltersMenuComponent } from '../FiltersMenu/Decl
 import { AdvancedQueryFiltersPMService } from 'Infrastructure/Services/StandardPMs/AdvancedQueryFiltersPMService';
 import { SessionInfo } from 'Infrastructure/Utilities/SessionInfo';
 import { ServiceArgs } from 'Infrastructure/DataContracts/ServiceArgs';
-import { debounce, throttleTime } from 'rxjs/operators';
+import { debounce, debounceTime } from 'rxjs/operators';
 declare var makeAmBarChart, BarClick, ResetItem: any;
 
 @Component({
@@ -115,7 +115,7 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
             }
             if (AdditionalFilters.length > 0) {
                 listArgs.QuerySection = myResult[0].QueryId;
-            } else {
+            }else{
                 this.applyQueriesCount();
             }
             listArgs.Filters = AdditionalFilters;
@@ -127,7 +127,7 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
     constructor(public _declarationReferantDataWebService: DeclarationReferantDataWebService) {
         this.CurrentSession.StartBusyIndicatorLoading();
         this._entityResourceService.getEntityResourceByTableName("Customs.DeclarationReferantData").subscribe((response: any) => {
-            this.setFilters();
+                    this.setFilters();
         });
 
     }
@@ -393,7 +393,7 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
 
     ApplyFilters(filters) {
         this.GetFilterForQueriesCount();
-        this._declarationReferantDataWebService.GetQueriesCounts(this.RefId, this.DepId, this.TransportModeId).pipe(throttleTime(2000)).subscribe(
+        this._declarationReferantDataWebService.GetQueriesCounts(this.RefId, this.DepId, this.TransportModeId).pipe(debounceTime(1000)).subscribe(
             (data: any) => {
                 this.counters = data.Result;
                 this.InProgressDeclarationReferantDataId = this.InProgressDeclarationReferantDataId + this.CurrentSession.GetChartId();
@@ -485,7 +485,7 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
                 SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                     .then(cmpRef => {
                         cmpRef.instance.ComponentRef = cmpRef;
-
+               
                         cmpRef.instance.Run(listArgs);
                         cmpRef.instance.BackCompleted.subscribe(($event: any) => {
                             this.UpdateOnReturnFromQuery();

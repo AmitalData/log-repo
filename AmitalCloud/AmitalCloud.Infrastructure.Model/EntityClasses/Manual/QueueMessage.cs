@@ -1,0 +1,68 @@
+﻿using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
+{
+    public class QueueMessage
+    {
+        [Key]
+        public long Id { get; set; }
+        public int Tenant { get; set; }
+        public string QueueDefinitionCode { get; set; }
+        public DateTime CreateDateTime { get; set; }
+        public int Status { get; set; }
+        public string MessageBody { get; set; }
+        public DateTime NextRunDateTime { get; set; }
+        public DateTime? ProcessingDateTime { get; set; }
+        public DateTime? CompleteDateTime { get; set; }
+        public int RetryNumber { get; set; }
+        public string HashCode { get; set; }
+
+        public virtual QueueDefinition QueueDefinition { get; set; }
+        //public QueueMessageMoreDetails QueueMessageMoreDetails { get; set; }
+
+        [Column("TenantPriority")]
+        public int? TenantPriority { get; set; }
+
+
+        [Column("InterfaceTypeCode")]
+        public string InterfaceTypeCode { get; set; }
+
+        [Column("UseRabbitMQ")]
+        public string UseRabbitMQ { get; set; }
+
+
+        [Column("QueueCodeRabbit")]
+        public string QueueCodeRabbit { get; set; }
+
+
+
+
+        [Column("HaveRabbitMQ")]
+        public string HaveRabbitMQ { get; set; }
+
+        [Column("EntityCode")]
+        public string EntityCode { get; set; }
+        [Column("EntityId")]
+        public string EntityId { get; set; }
+
+
+
+
+        #region tomer
+        [Column("RabbitMQCreateDate")]
+        public DateTime RabbitMQCreateDate { get; set; }
+
+        [Column("RabbitMQRetryNumber")]
+        public int RabbitMQRetryNumber { get; set; }
+
+        [Column("RabbitMQErrMess")]
+        public string RabbitMQErrMess { get; set; }
+
+
+        #endregion
+
+
+    }
+}
