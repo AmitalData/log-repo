@@ -151,7 +151,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     if (item.GLAccountLocalName != null)
                     {
                         if (item.GLAccountLocalName.Length > 22) item.GLAccountLocalName = item.GLAccountLocalName.Substring(0, 22);
-                        myStringBuilder.Append(item.GLAccountLocalName.ToUpper().PadLeft(22, ' '));
+                        myStringBuilder.AppendFormat(item.GLAccountLocalName.ToUpper().PadLeft(22, ' '));
                     }
 
                     else
@@ -778,13 +778,13 @@ namespace Logitude.Accounting.BL.CoreBL
                         $"Message: {rootEx.Message} | StackTrace: {rootEx.StackTrace}");
                         throw;
                     }
-                    if (String.IsNullOrEmpty(taxDeductionReportPM.ReportSavedData))
-                    {
-                        taxDeductionReportPM.ReportSavedData = JsonSerializer.Serialize(data);
-                        taxDeductionReportPM.ChangeSetOp = ChangeSetOperation.Update;
-                        var taxDeductionReportUpdateService = new TaxDeductionReportUpdateService(context, new Dictionary<string, IContext>(), tenant);
-                        taxDeductionReportUpdateService.Update(taxDeductionReportPM, true);
-                    }
+
+                    taxDeductionReportPM.ReportSavedData = JsonSerializer.Serialize(data);
+
+                    taxDeductionReportPM.ChangeSetOp = ChangeSetOperation.Update;
+                    var taxDeductionReportUpdateService = new TaxDeductionReportUpdateService(context, new Dictionary<string, IContext>(), tenant);
+                    taxDeductionReportUpdateService.Update(taxDeductionReportPM, true);
+
                     if (!String.IsNullOrWhiteSpace(_AggregateKey))
                     {
                         TryDeleteLockRow(tenant);

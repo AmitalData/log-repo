@@ -101,21 +101,6 @@ void SavePocoOutput(string outputFileName)
   }
 #>
 
-<#+
-private bool ShouldSkipPoco(dynamic field)
-{
-    try {
-        if (field.ObjectFieldDBOnly.GetType() == typeof(string) && field.ObjectFieldDBOnly == "true")
-            return true;
-    } catch {}
-    // (optional backward-compat if you also used SkipPoco before)
-    try {
-        if (field.SkipPoco.GetType() == typeof(string) && field.SkipPoco == "true")
-            return true;
-    } catch {}
-    return false;
-}
-#>
 
 <#+
  private void WritePOCOMethod(dynamic entity)
@@ -179,7 +164,7 @@ namespace <#= namespacestring #>
    <#+
  	foreach(var field in entity["field"])  //get all classes
 	 {
-	 if (ShouldSkipPoco(field)) continue;
+	
 	 if( field.HasDataBaseField.GetType() == typeof(string))
         {
           if(field.HasDataBaseField == "false")
@@ -208,7 +193,7 @@ namespace <#= namespacestring #>
 
 public void WriteProperty(dynamic field)
 {
-if (ShouldSkipPoco(field)) return;
+
 dynamic fieldName = GetPropertyName(field.FieldName);
 BuildAttributes(field);
 string type = GetDataType(field);

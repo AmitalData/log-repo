@@ -13,6 +13,7 @@
   SupportSubEntity="false"
   ApplyGenericCustomFields="false"
   AvailableInDocumentTypes="true"
+  IsLock="false"
   HasHelper="false"
   HasShortTitle="false"
   HasFiltersMenu="false"
@@ -41,6 +42,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   NewWizardControlName="&quot;NewTaxDeductionReportComponent&quot;"
+  LocalDefaultTextBack_up="&quot;ניכוי מס&quot;"
   LocalDefaultText="&quot;BS64:Iteg15nXm9eV15kg157XoSI=&quot;"
   DefaultText="&quot;Tax Deduction Report&quot;"
   Code="&quot;1c9c&quot;"
@@ -265,9 +267,11 @@
     DisplayLongName="false"
     FullFieldLable="&quot;CreateDate&quot;"
     DefaultText="&quot;Create Date&quot;"
+    FullLocalDefaultTextBack_up="&quot;תאריך יצירה&quot;"
     FullLocalDefaultText="&quot;BS64:Iteq15DXqNeZ15og15nXpteZ16jXlCI=&quot;"
     ListFieldLable="&quot;CreateDateListLable&quot;"
     ListLableDefaultText="&quot;Create Date&quot;"
+    ListLocalDefaultTextBack_up="&quot;תאריך יצירה&quot;"
     ListLocalDefaultText="&quot;BS64:Iteq15DXqNeZ15og15nXpteZ16jXlCI=&quot;"
     IsNullable="false"
     IsForeignKey="false"
@@ -342,6 +346,7 @@
     DisplayLongName="false"
     FullFieldLable="&quot;CreatedByUserId&quot;"
     DefaultText="&quot;Created By&quot;"
+    FullLocalDefaultTextBack_up="&quot;נוצר ע\&quot;י&quot;"
     FullLocalDefaultText="&quot;BS64:Iteg15XXpteoINeiXCLXmSI=&quot;"
     IsNullable="false"
     IsForeignKey="true"
@@ -418,9 +423,11 @@
     DisplayLongName="false"
     FullFieldLable="&quot;UpdateDate&quot;"
     DefaultText="&quot;Update Date&quot;"
+    FullLocalDefaultTextBack_up="&quot;תאריך עדכון&quot;"
     FullLocalDefaultText="&quot;BS64:Iteq15DXqNeZ15og16LXk9eb15XXnyI=&quot;"
     ListFieldLable="&quot;UpdateDateListLable&quot;"
     ListLableDefaultText="&quot;Update Date&quot;"
+    ListLocalDefaultTextBack_up="&quot;תאריך עדכון&quot;"
     ListLocalDefaultText="&quot;BS64:Iteq15DXqNeZ15og16LXk9eb15XXnyI=&quot;"
     IsNullable="false"
     IsForeignKey="false"
@@ -644,9 +651,11 @@
     DisplayLongName="false"
     FullFieldLable="&quot;ReportNumber&quot;"
     DefaultText="&quot;Report Number&quot;"
+    FullLocalDefaultTextBack_up="&quot;מספר דוח&quot;"
     FullLocalDefaultText="&quot;BS64:Itee16HXpNeoINeT15XXlyI=&quot;"
     ListFieldLable="&quot;ReportNumberListLable&quot;"
     ListLableDefaultText="&quot;Report Number&quot;"
+    ListLocalDefaultTextBack_up="&quot;מספר דוח&quot;"
     ListLocalDefaultText="&quot;BS64:Itee16HXpNeoINeT15XXlyI=&quot;"
     IsNullable="true"
     IsForeignKey="false"
@@ -722,9 +731,11 @@
     DisplayLongName="false"
     FullFieldLable="&quot;StatusTypeCode&quot;"
     DefaultText="&quot;Status Type&quot;"
+    FullLocalDefaultTextBack_up="&quot;סטטוס&quot;"
     FullLocalDefaultText="&quot;BS64:Iteh15jXmNeV16Ei&quot;"
     ListFieldLable="&quot;StatusTypeCodeListLable&quot;"
     ListLableDefaultText="&quot;Status Type&quot;"
+    ListLocalDefaultTextBack_up="&quot;סטטוס&quot;"
     ListLocalDefaultText="&quot;BS64:Iteh15jXmNeV16Ei&quot;"
     IsNullable="true"
     IsForeignKey="true"
@@ -801,9 +812,11 @@
     DisplayLongName="false"
     FullFieldLable="&quot;IsAdditionalReportExist&quot;"
     DefaultText="&quot;Additional Report Exist&quot;"
+    FullLocalDefaultTextBack_up="&quot;קיים דוח משלים&quot;"
     FullLocalDefaultText="&quot;BS64:Iten15nXmdedINeT15XXlyDXntep15zXmdedIg==&quot;"
     ListFieldLable="&quot;IsAdditionalReportExistListLable&quot;"
     ListLableDefaultText="&quot;Additional Report Exist&quot;"
+    ListLocalDefaultTextBack_up="&quot;קיים דוח משלים&quot;"
     ListLocalDefaultText="&quot;BS64:Iten15nXmdedINeT15XXlyDXntep15zXmdedIg==&quot;"
     IsNullable="false"
     IsForeignKey="false"
@@ -878,9 +891,11 @@
     DisplayLongName="false"
     FullFieldLable="&quot;TaxYear&quot;"
     DefaultText="&quot;Tax Year&quot;"
+    FullLocalDefaultTextBack_up="&quot;שנת מס&quot;"
     FullLocalDefaultText="&quot;BS64:Itep16DXqiDXntehIg==&quot;"
     ListFieldLable="&quot;TaxYearListLable&quot;"
     ListLableDefaultText="&quot;Tax Year&quot;"
+    ListLocalDefaultTextBack_up="&quot;שנת מס&quot;"
     ListLocalDefaultText="&quot;BS64:Itep16DXqiDXntehIg==&quot;"
     IsNullable="true"
     IsForeignKey="false"
@@ -955,9 +970,11 @@
     DisplayLongName="false"
     FullFieldLable="&quot;Email&quot;"
     DefaultText="&quot;Email&quot;"
+    FullLocalDefaultTextBack_up="&quot;כתובת מייל לדיווח&quot;"
     FullLocalDefaultText="&quot;BS64:Iteb16rXldeR16og157XmdeZ15wg15zXk9eZ15XXldeXIg==&quot;"
     ListFieldLable="&quot;EmailListLable&quot;"
     ListLableDefaultText="&quot;Email&quot;"
+    ListLocalDefaultTextBack_up="&quot;כתובת מייל לדיווח&quot;"
     ListLocalDefaultText="&quot;BS64:Iteb16rXldeR16og157XmdeZ15wg15zXk9eZ15XXldeXIg==&quot;"
     IsNullable="false"
     IsForeignKey="false"
@@ -1032,9 +1049,11 @@
     DisplayLongName="false"
     FullFieldLable="&quot;ErrorMessage&quot;"
     DefaultText="&quot;Error Message&quot;"
+    FullLocalDefaultTextBack_up="&quot;הערות שגיאה&quot;"
     FullLocalDefaultText="&quot;BS64:IteU16LXqNeV16og16nXkteZ15DXlCI=&quot;"
     ListFieldLable="&quot;ErrorMessageListLable&quot;"
     ListLableDefaultText="&quot;Error Message&quot;"
+    ListLocalDefaultTextBack_up="&quot;הערות שגיאה&quot;"
     ListLocalDefaultText="&quot;BS64:IteU16LXqNeV16og16nXkteZ15DXlCI=&quot;"
     IsNullable="true"
     IsForeignKey="false"
@@ -1108,9 +1127,11 @@
     DisplayLongName="false"
     FullFieldLable="&quot;CreatedByUser&quot;"
     DefaultText="&quot;Created By User&quot;"
+    FullLocalDefaultTextBack_up="&quot;נוצר ע\&quot;י&quot;"
     FullLocalDefaultText="&quot;BS64:Iteg15XXpteoINeiXCLXmSI=&quot;"
     ListFieldLable="&quot;CreatedByUserListLable&quot;"
     ListLableDefaultText="&quot;Created By User&quot;"
+    ListLocalDefaultTextBack_up="&quot;נוצר ע\&quot;י&quot;"
     ListLocalDefaultText="&quot;BS64:Iteg15XXpteoINeiXCLXmSI=&quot;"
     IsNullable="true"
     IsForeignKey="false"
@@ -1184,9 +1205,11 @@
     DisplayLongName="false"
     FullFieldLable="&quot;Status&quot;"
     DefaultText="&quot;Status&quot;"
+    FullLocalDefaultTextBack_up="&quot;סטטוס&quot;"
     FullLocalDefaultText="&quot;BS64:Iteh15jXmNeV16Ei&quot;"
     ListFieldLable="&quot;StatusListLable&quot;"
     ListLableDefaultText="&quot;Status&quot;"
+    ListLocalDefaultTextBack_up="&quot;סטטוס&quot;"
     ListLocalDefaultText="&quot;BS64:Iteh15jXmNeV16Ei&quot;"
     IsNullable="true"
     IsForeignKey="false"
@@ -1332,9 +1355,11 @@
     DisplayLongName="false"
     FullFieldLable="&quot;ByMonth&quot;"
     DefaultText="&quot;By Month&quot;"
+    FullLocalDefaultTextBack_up="&quot;לפי חודש&quot;"
     FullLocalDefaultText="&quot;BS64:Itec16TXmSDXl9eV15PXqSI=&quot;"
     ListFieldLable="&quot;ByMonthListLable&quot;"
     ListLableDefaultText="&quot;By Month&quot;"
+    ListLocalDefaultTextBack_up="&quot;לפי חודש&quot;"
     ListLocalDefaultText="&quot;BS64:Itec16TXmSDXl9eV15PXqSI=&quot;"
     IsNullable="false"
     IsForeignKey="false"
@@ -1409,9 +1434,11 @@
     DisplayLongName="false"
     FullFieldLable="&quot;Month&quot;"
     DefaultText="&quot;Month&quot;"
+    FullLocalDefaultTextBack_up="&quot;לחודש&quot;"
     FullLocalDefaultText="&quot;BS64:Itec15fXldeT16ki&quot;"
     ListFieldLable="&quot;MonthListLable&quot;"
     ListLableDefaultText="&quot;Month&quot;"
+    ListLocalDefaultTextBack_up="&quot;לחודש&quot;"
     ListLocalDefaultText="&quot;BS64:Itec15fXldeT16ki&quot;"
     IsNullable="true"
     IsForeignKey="false"
@@ -1486,9 +1513,11 @@
     DisplayLongName="false"
     FullFieldLable="&quot;FromMonth&quot;"
     DefaultText="&quot;From Month&quot;"
+    FullLocalDefaultTextBack_up="&quot;מחודש&quot;"
     FullLocalDefaultText="&quot;BS64:Itee15fXldeT16ki&quot;"
     ListFieldLable="&quot;FromMonthListLable&quot;"
     ListLableDefaultText="&quot;FromMonth&quot;"
+    ListLocalDefaultTextBack_up="&quot;מחודש&quot;"
     ListLocalDefaultText="&quot;BS64:Itee15fXldeT16ki&quot;"
     IsNullable="true"
     IsForeignKey="false"
@@ -1508,7 +1537,7 @@
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
     DisplayInRequiredFields="false"
-    HasTemplate="true"
+    HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
@@ -1590,6 +1619,7 @@
   <Query
     Code="&quot;ALLTaxDeductionReports&quot;"
     TextCode="&quot;Tax Deduction Reports&quot;"
+    LocalTextCodeBack_up="&quot;ניכוי מס&quot;"
     LocalTextCode="&quot;BS64:Iteg15nXm9eV15kg157XoSI=&quot;"
     QueryGroupCode="&quot;1c9c&quot;"
     IndexOrder="0"
@@ -1657,6 +1687,7 @@
   </Screen>
   <Tab
     TabName="&quot;General&quot;"
+    TabLocalNameBack_up="&quot;פרטים&quot;"
     TabLocalName="&quot;BS64:Itek16jXmNeZ150i&quot;"
     ObjectTableName="&quot;TaxDeductionReport&quot;"
     Code="&quot;TDGN&quot;"
@@ -1667,9 +1698,11 @@
     HtmlComponentURL="&quot;./Accounting/Components/EditTabs/TaxDeductionReport/TaxDeductionReportGeneralTabComponent&quot;"
     HtmlComponentName="&quot;TaxDeductionReportGeneralTabComponent&quot;"
     IsSpellChecked="false"
-    HasGeneralFeature="false" />
+    HasGeneralFeature="false"
+    IsLocked="false" />
   <Tab
     TabName="&quot;Log&quot;"
+    TabLocalNameBack_up="&quot;לוג&quot;"
     TabLocalName="&quot;BS64:Itec15XXkiI=&quot;"
     ObjectTableName="&quot;TaxDeductionReport&quot;"
     Code="&quot;LOG&quot;"
@@ -1680,9 +1713,11 @@
     HtmlComponentURL="&quot;./Accounting/Components/EditTabs/TaxDeductionReport/TaxDeductionReportLogTabComponent&quot;"
     HtmlComponentName="&quot;TaxDeductionReportLogTabComponent&quot;"
     IsSpellChecked="false"
-    HasGeneralFeature="false" />
+    HasGeneralFeature="false"
+    IsLocked="false" />
   <Tab
     TabName="&quot;Events&quot;"
+    TabLocalNameBack_up="&quot;אירועים&quot;"
     TabLocalName="&quot;BS64:IteQ15nXqNeV16LXmdedIg==&quot;"
     ObjectTableName="&quot;TaxDeductionReport&quot;"
     Code="&quot;TDEV&quot;"
@@ -1691,7 +1726,8 @@
     IsPackagable="false"
     IndexOrder="2"
     IsSpellChecked="false"
-    HasGeneralFeature="false" />
+    HasGeneralFeature="false"
+    IsLocked="false" />
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
@@ -1729,6 +1765,7 @@
       DefaultText="&quot;More&quot;"
       MenuButtonType="&quot;dropdownbutton&quot;"
       IndexOrder="0"
+      LocalDefaultTextBack_up="&quot;נוספים&quot;"
       LocalDefaultText="&quot;BS64:Iteg15XXodek15nXnSI=&quot;"
       IsPackagable="false">
       <MenuItem
@@ -1736,6 +1773,7 @@
         DefaultText="&quot;Download Text file&quot;"
         MenuButtonType="&quot;menuitem&quot;"
         IndexOrder="0"
+        LocalDefaultTextBack_up="&quot;הורד קובץ טקסט&quot;"
         LocalDefaultText="&quot;BS64:IteU15XXqNeTINen15XXkdelINeY16fXodeYIg==&quot;"
         IsPackagable="false" />
       <MenuItem
@@ -1743,6 +1781,7 @@
         DefaultText="&quot;Download PDF file&quot;"
         MenuButtonType="&quot;menuitem&quot;"
         IndexOrder="1"
+        LocalDefaultTextBack_up="&quot;הורד קובץ PDF  &quot;"
         LocalDefaultText="&quot;BS64:IteU15XXqNeTINen15XXkdelIFBERiAgIg==&quot;"
         IsPackagable="false" />
     </MenuButton>
@@ -1752,175 +1791,190 @@
     <TextCode
       Code="&quot;TaxDeductionReport.O.AccountWithoutVendor&quot;"
       DefaultText="&quot;is not connected to Card&quot;"
+      LocalDefaultTextBack_up="&quot;כרטיס הנהח לא מקושר לכרטיס ספק תפעולי&quot;"
       LocalDefaultText="&quot;BS64:Iteb16jXmNeZ16Eg15TXoNeU15cg15zXkCDXnten15XXqdeoINec15vXqNeY15nXoSDXodek16cg16rXpNei15XXnNeZIg==&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;TaxDeductionReport.O.VendorWithoutAccount&quot;"
       DefaultText="&quot; Vendor Card is not connected to Account&quot;"
+      LocalDefaultTextBack_up="&quot; כרטיס ספק תפעולי לא מקושר לכרטיס הנה”ח&quot;"
       LocalDefaultText="&quot;BS64:IiDXm9eo15jXmdehINeh16TXpyDXqtek16LXldec15kg15zXkCDXnten15XXqdeoINec15vXqNeY15nXoSDXlNeg15TigJ3XlyI=&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;TaxDeductionReport.O.PaymentOrder&quot;"
       DefaultText="&quot;Payment Order &quot;"
+      LocalDefaultTextBack_up="&quot;הוראת תשלום &quot;"
       LocalDefaultText="&quot;BS64:IteU15XXqNeQ16og16rXqdec15XXnSAi&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;TaxDeductionReport.O.CardWithoutVatNumber&quot;"
       DefaultText="&quot;GLAccount connected to a card without Vat Number &quot;"
+      LocalDefaultTextBack_up="&quot; כרטיס תפעולי ללא חפ&quot;"
       LocalDefaultText="&quot;BS64:IiDXm9eo15jXmdehINeq16TXoteV15zXmSDXnNec15Ag15fXpCI=&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;TaxDeductionReport.O.CardWithoutAddress&quot;"
       DefaultText="&quot;GLAccount connected to a card without Address&quot;"
+      LocalDefaultTextBack_up="&quot;כרטיס תפועלי ללא כתובת&quot;"
       LocalDefaultText="&quot;BS64:Iteb16jXmNeZ16Eg16rXpNeV16LXnNeZINec15zXkCDXm9eq15XXkdeqIg==&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;TaxDeductionReport.O.VendorGLAccount&quot;"
       DefaultText="&quot;Vendor GLAccount&quot;"
+      LocalDefaultTextBack_up="&quot;כרטיס הספק&quot;"
       LocalDefaultText="&quot;BS64:Iteb16jXmNeZ16Eg15TXodek16ci&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;TaxDeductionReport.O.Connected2ManyCards&quot;"
       DefaultText="&quot;is connected to more than one Operational Vendor&quot;"
+      LocalDefaultTextBack_up="&quot;מחובר ליותר מספק תפעולי אחד&quot;"
       LocalDefaultText="&quot;BS64:Itee15fXldeR16gg15zXmdeV16rXqCDXnteh16TXpyDXqtek16LXldec15kg15DXl9eTIg==&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;TaxDeductionReport.O.ByMonth&quot;"
       DefaultText="&quot;By Month&quot;"
+      LocalDefaultTextBack_up="&quot;חודשי&quot;"
       LocalDefaultText="&quot;BS64:IteX15XXk9ep15ki&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;TaxDeductionReport.O.ByYear&quot;"
       DefaultText="&quot;By Year&quot;"
+      LocalDefaultTextBack_up="&quot;שנתי&quot;"
       LocalDefaultText="&quot;BS64:Itep16DXqteZIg==&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;TaxDeductionReport.O.GLAccountMissedFields&quot;"
       DefaultText="&quot;GLAccount is without &quot;"
+      LocalDefaultTextBack_up="&quot;תפעולי ללא &quot;"
       LocalDefaultText="&quot;BS64:Iteq16TXoteV15zXmSDXnNec15AgIg==&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;TaxDeductionReport.O.Vendor&quot;"
       DefaultText="&quot;Vendor&quot;"
+      LocalDefaultTextBack_up="&quot;ספק&quot;"
       LocalDefaultText="&quot;BS64:Iteh16TXpyI=&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;TaxDeductionReport.O.ToDate&quot;"
       DefaultText="&quot;To Date&quot;"
+      LocalDefaultTextBack_up="&quot;עד תאריך&quot;"
       LocalDefaultText="&quot;BS64:Itei15Mg16rXkNeo15nXmiI=&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;TaxDeductionReport.O.AllVendors&quot;"
       DefaultText="&quot;All Vendors&quot;"
+      LocalDefaultTextBack_up="&quot;כל הספקים&quot;"
       LocalDefaultText="&quot;BS64:Iteb15wg15TXodek16fXmdedIg==&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;TaxDeductionReport.O.NoVendorSelected&quot;"
       DefaultText="&quot;No vendor has been selected&quot;"
+      LocalDefaultTextBack_up="&quot;אף ספק לא נבחר&quot;"
       LocalDefaultText="&quot;BS64:IteQ16Mg16HXpNenINec15Ag16DXkdeX16gi&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;TaxDeductionReport.O.NoVendorGlAccount&quot;"
       DefaultText="&quot;The selected vendor doesn't have GlAccount&quot;"
+      LocalDefaultTextBack_up="&quot;לספק הנבחר לא מחובר כרטיס הנהלת חשבונות&quot;"
       LocalDefaultText="&quot;BS64:Itec16HXpNenINeU16DXkdeX16gg15zXkCDXnteX15XXkdeoINeb16jXmNeZ16Eg15TXoNeU15zXqiDXl9ep15HXldeg15XXqiI=&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;TaxDeductionReport.O.ExcludedFromDeductionReport&quot;"
       DefaultText="&quot;The selected vendor is excluded from deduction report&quot;"
+      LocalDefaultTextBack_up="&quot; הספק הנבחר מסומן &quot;לא לדיווח&quot; בדוח 856&quot;"
       LocalDefaultText="&quot;BS64:IiDXlNeh16TXpyDXlNeg15HXl9eoINee16HXldee158gItec15Ag15zXk9eZ15XXldeXIiDXkdeT15XXlyA4NTYi&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;TaxDeductionReport.O.Periodic&quot;"
       DefaultText="&quot;Periodic&quot;"
+      LocalDefaultTextBack_up="&quot;תקופתי&quot;"
       LocalDefaultText="&quot;BS64:Iteq16fXldek16rXmSI=&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;TaxDeductionReport.O.InvalidMonthPeriod&quot;"
       DefaultText="&quot;To month must be greater than from month&quot;"
+      LocalDefaultTextBack_up="&quot;ערך השדה 'לחודש' חייב להיות גדול מערך השדה 'מחודש'&quot;"
       LocalDefaultText="&quot;BS64:Itei16jXmiDXlNep15PXlCAn15zXl9eV15PXqScg15fXmdeZ15Eg15zXlNeZ15XXqiDXkteT15XXnCDXntei16jXmiDXlNep15PXlCAn157Xl9eV15PXqSci&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;TaxDeductionReport.O.ReportType&quot;"
       DefaultText="&quot;Report Type&quot;"
+      LocalDefaultTextBack_up="&quot;סוג דו''ח&quot;"
       LocalDefaultText="&quot;BS64:Iteh15XXkiDXk9eVJyfXlyI=&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;TaxDeductionReport.O.ReportPeriod&quot;"
       DefaultText="&quot;Report Period&quot;"
+      LocalDefaultTextBack_up="&quot;תקופת הדו''ח&quot;"
       LocalDefaultText="&quot;BS64:Iteq16fXldek16og15TXk9eVJyfXlyI=&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;TaxDeductionReport.O.ReportData&quot;"
       DefaultText="&quot;Report Data&quot;"
+      LocalDefaultTextBack_up="&quot;נתוני הדו''ח&quot;"
       LocalDefaultText="&quot;BS64:Iteg16rXldeg15kg15TXk9eVJyfXlyI=&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;TaxDeductionReport.O.TotalPayments&quot;"
       DefaultText="&quot;Total Payments&quot;"
+      LocalDefaultTextBack_up="&quot;סה''כ תשלומים&quot;"
       LocalDefaultText="&quot;BS64:Iteh15QnJ9ebINeq16nXnNeV157XmdedIg==&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;TaxDeductionReport.O.TotalDeductions&quot;"
       DefaultText="&quot;Total Deductions&quot;"
+      LocalDefaultTextBack_up="&quot;סה''כ ניכויים&quot;"
       LocalDefaultText="&quot;BS64:Iteh15QnJ9ebINeg15nXm9eV15nXmdedIg==&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;TaxDeductionReport.O.Month&quot;"
       DefaultText="&quot;Month&quot;"
+      LocalDefaultTextBack_up="&quot;חודש&quot;"
       LocalDefaultText="&quot;BS64:IteX15XXk9epIg==&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;TaxDeductionReport.O.NumberOfVendors&quot;"
       DefaultText="&quot;Number Of Vendors&quot;"
+      LocalDefaultTextBack_up="&quot;סה''כ ספקים&quot;"
       LocalDefaultText="&quot;BS64:Iteh15QnJ9ebINeh16TXp9eZ150i&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;TaxDeductionReport.O.TotalPaymentsWODividend&quot;"
       DefaultText="&quot;Total Payments without Dividend&quot;"
+      LocalDefaultTextBack_up="&quot;סה''כ תשלומים ללא דיבידנד&quot;"
       LocalDefaultText="&quot;BS64:Iteh15QnJ9ebINeq16nXnNeV157XmdedINec15zXkCDXk9eZ15HXmdeT16DXkyI=&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;TaxDeductionReport.O.TotalDeductionsWODividend&quot;"
       DefaultText="&quot;Total Deductions without Dividend&quot;"
+      LocalDefaultTextBack_up="&quot;סה''כ ניכויים ללא דיבידנד&quot;"
       LocalDefaultText="&quot;BS64:Iteh15QnJ9ebINeg15nXm9eV15nXmdedINec15zXkCDXk9eZ15HXmdeT16DXkyI=&quot;"
-      TextCodeTypeCode="&quot;O&quot;"
-      IsSpellChecked="false" />
-    <TextCode
-      Code="&quot;TaxDeductionReport.O.ReportGenerationMessage&quot;"
-      DefaultText="&quot;The report is being generated&quot;"
-      LocalDefaultText="&quot;הדוח עבר להפקה&quot;"
-      TextCodeTypeCode="&quot;O&quot;"
-      IsSpellChecked="false" />
-    <TextCode
-      Code="&quot;TaxDeductionReport.O.InProgress&quot;"
-      DefaultText="&quot;In Progress&quot;"
-      LocalDefaultText="&quot;בתהליך&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>

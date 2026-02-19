@@ -1,8 +1,6 @@
 ﻿using Logitude.Customs.Data.DataContracts.SIIRequest;
 using System;
 using System.Collections.Generic;
-using System.Text.Json.Serialization;
-using System.Xml.Serialization;
 
 namespace Logitude.Customs.Data.DataContracts.SIIRequest
 {
@@ -24,7 +22,6 @@ namespace Logitude.Customs.Data.DataContracts.SIIRequest
         public string importerCellPhone { get; set; }
         public string importerFax { get; set; }
         public string applicantIdNumber { get; set; }
-        public long applicantSystemId { get; set; }
         public string applicantFullName { get; set; }
         public long customsAgentRegisteredNumber { get; set; }
         public string customsAgentName { get; set; }
@@ -48,9 +45,6 @@ namespace Logitude.Customs.Data.DataContracts.SIIRequest
 
         public bool isNumericCountryCode { get; set; }
         public List<ReleaseRequestLineDto> releaseRequestLinesForm { get; set; }
-        [JsonIgnore]
-        [XmlIgnore]
-        public string DestinationPortLogitudeCode { get; set; }
     }
 
     public class ReleaseRequestLineDto
@@ -74,16 +68,6 @@ namespace Logitude.Customs.Data.DataContracts.SIIRequest
         public DateTime? supplierInvoiceDate { get; set; }
         public string declaredUnitCode { get; set; }
         public IdProductDutchGroup productDutchGroup { get; set; }
-        [JsonIgnore]         
-        [XmlIgnore]         
-        public int? UiLineNumber { get; set; }
-        [JsonIgnore]
-        [XmlIgnore]
-        public int InvoiceCounterKey { get; set; }
-
-        [JsonIgnore]
-        [XmlIgnore]
-        public int InvoiceItemLineNumber { get; set; }
     }
 
     public class FormAttachmentDto

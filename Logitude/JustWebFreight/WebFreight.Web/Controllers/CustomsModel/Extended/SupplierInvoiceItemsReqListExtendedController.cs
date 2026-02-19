@@ -26,7 +26,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 {
     public class SupplierInvoiceItemsReqListExtendedController : ApiController
     {
-        public HttpResponseMessage GetSingle(string declarationId, int invoiceCounterKey, int invoiceItemLineNumber, string siiRequestId)
+        public HttpResponseMessage GetSingle(string declarationId, int lineNumber, int invoiceCounterKey, int invoiceItemLineNumber, string siiRequestId)
         {
             try
             {
@@ -42,7 +42,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 ICustomContext ctx = CustomContext.GetContext(authToken.Tenant);
 
                 var qs = new SupplierInvoiceItemsReqListQueryService(ctx);
-                SupplierInvoiceItemsReqListPM pm = qs.GetOrCreate(siiRequestId, declarationId, invoiceCounterKey, invoiceItemLineNumber, authToken.Tenant);
+                SupplierInvoiceItemsReqListPM pm = qs.GetOrCreate(siiRequestId, declarationId, lineNumber, invoiceCounterKey, invoiceItemLineNumber, authToken.Tenant);
 
                 PerformanceLogger.AddServerExecutionTimeHeader(logKey);
                 return Request.CreateResponse(HttpStatusCode.OK, pm);
@@ -55,9 +55,8 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             }
         }
 
-        [HttpGet]
-        [Route("LookupProductFileByModel")]
-        public async Task<HttpResponseMessage> LookupProductFileByModel(
+        [HttpGet]                                    
+        public async Task<HttpResponseMessage> GetProductFileExists(
             string modelCode,
             string importerNumber,
             string originCountry,
@@ -67,56 +66,57 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             {               
                 string token = HttpContext.Current?.Request?.Headers["Token"];
                 if (string.IsNullOrEmpty(token))
+                {
+                    return Request.CreateResponse(
+                        HttpStatusCode.Unauthorized,
+                        "Missing authentication token.");
+                }
 
-                    return Request.CreateResponse(HttpStatusCode.Unauthorized, new { error = "Missing authentication token." });
-
-                var authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
                 const string interfaceName = CustomsPartnerFtpDetails.InterfaceName_SIIProductFileCheck;
-                const string interfaceNameResponse = CustomsPartnerFtpDetails.InterfaceName_SIIProductFileCheck_Response;
+                const string interfaceName_Response = CustomsPartnerFtpDetails.InterfaceName_SIIProductFileCheck_Response;
                 const string partnerCode = CustomsPartnerFtpDetails.PartnerCode_SII;
 
                 var factory = new SIIRequestApiRequestFactory(authToken.Tenant);
                 var credentials = factory.BuildCredentials(interfaceName, partnerCode);
 
                 var commRequest = factory.BuildCommunicationsDto(interfaceName, partnerCode, declarationId);
-                var commResponse = factory.BuildCommunicationsDto(interfaceNameResponse, partnerCode, declarationId);
+                var commResponse = factory.BuildCommunicationsDto(interfaceName_Response, partnerCode, declarationId);
+
 
                 var dto = new ProductFileRequestDto
                 {
                     credentials = credentials,
                     importerNumber = importerNumber,
                     modelCode = modelCode,
-                    originCountry = originCountry
+                    originCountry = originCountry,
                 };
 
                 var apiRequest = factory.Create(interfaceName, partnerCode, dto, commRequest, commResponse);
+
                 var executor = new RestRequestExecutor();
+                
+                var apiResp =
+                    await executor
+                          .ExecuteAsync<ProductFileRequestDto, ProductFileCheckResponseDto>(apiRequest)
+                          .ConfigureAwait(false);
+
+                bool fileExists = apiResp?.Success == true &&
+                                  apiResp.Result?.productFiles?.Any() == true;
 
 
-                var apiResp = await executor
-                    .ExecuteAsync<ProductFileRequestDto, ProductFileCheckResponseDto>(apiRequest)
-                    .ConfigureAwait(false);
-
-                if (apiResp?.Success != true || apiResp.Result?.productFiles == null || !apiResp.Result.productFiles.Any())
-                    return Request.CreateResponse(HttpStatusCode.BadRequest, new { error = "Product not found by model code." });
-
-                var productFileId = apiResp?.Result?.productFiles?.FirstOrDefault()?.id;
-
-                return Request.CreateResponse(HttpStatusCode.OK, productFileId);
+                return Request.CreateResponse(HttpStatusCode.OK, fileExists);
             }
             catch (Exception ex)
             {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+                return Request.CreateResponse(
+                    HttpStatusCode.BadRequest,
+                    ApiExceptionBuilder.BuildException(ex));
             }
         }
 
-
-        public class ProductFileDto
-        {
-            public string Id { get; set; }   
-        }
 
     }
 }

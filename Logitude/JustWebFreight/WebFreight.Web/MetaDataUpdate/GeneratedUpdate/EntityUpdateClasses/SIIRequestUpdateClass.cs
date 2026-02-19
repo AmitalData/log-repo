@@ -23,7 +23,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class SIIRequestUpdateClass
    {  		
-		public const string HashString = "9cf8feb1781dd32fd19ed811ae9c6be1";
+		public const string HashString = "3ca7b711cdd8633b4ceb24e033bdebb1";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -62,7 +62,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    InActive =  false,
 			      				    IsSaveButtonVisible =  false,
 			      				    IsComposition =  false,
-			      				    EnableSecurity =  true,
+			      				    EnableSecurity =  false,
 			      				    AllowCustomFields =  false,
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "MD",
@@ -70,7 +70,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    LocalDefaultTextBack_up =  "בקשות למכון תקנים",
 			      				    LocalDefaultText =  "BS64:IteR16fXqdeV16og15zXnteb15XXnyDXqten16DXmdedIg==",
 			      				    DefaultText =  "SIIRequest",
-			      				    Code =  "d59a",
+			      				    Code =  "b407",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -1805,69 +1805,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
-
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
-					 
-					 						FieldName =  "SupplierInvoiceItemsReqLists",
-					  						ObjectTableName =  "Customs.SIIRequest",
-					  						FieldsDataType =  "List",
-					  						MinLength =  0,
-					  						MaxLength =  0,
-					  						IsRequired =  false,
-					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
-					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
-					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  0,
-					  						DisplayInList =  false,
-					  						IsCustomFilter =  false,
-					  						IsListFilter =  false,
-					  						MultiLine =  false,
-					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "SupplierInvoiceItemsReqLists",
-					  						ListPropertyPath =  "SupplierInvoiceItemsReqLists",
-					  						DisplayInLookUpIndex =  0,
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
-					  						IsMulti =  true,
-					  						MultiTableName =  "Customs.SupplierInvoiceItemsReqList",
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						InActive =  false,
-					  						DisplayLongName =  false,
-					  						FullFieldLable =  "SupplierInvoiceItemsReqLists",
-					  						DefaultText =  "SupplierInvoiceItems Req Lists",
-					  						IsForeignKey =  false,
-					  						ThisKey =  "DeclarationId,Id",
-					  						OtherKey =  "DeclarationId,SIIRequestID",
-					  						IsMaxLength =  false,
-					  						NoMetaDataField =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
-					  						DisplayInRequiredFields =  false,
-					  						HasTemplate =  false,
-					  						IsCustom =  false,
-					  						EnableFullscreenTextBox =  false,
-					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
- 
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups ,int contextTenant)
@@ -2030,7 +1967,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode SIIRequestTextCode_CustomsSIIRequestORequest = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SIIRequest.O.Request", DefaultText = "Request",LocalDefaultText = @"BS64:IteR16fXqdeUIg==", ObjectTableId = SIIRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode SIIRequestTextCode_CustomsSIIRequestORequiredFields = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SIIRequest.O.RequiredFields", DefaultText = "Required Fields",LocalDefaultText = @"BS64:IteX16HXqCDXqdeT15XXqiDXl9eV15HXlCDXkdee16HXqCDXqdec15nXl9eUINec157Xm9eV158g16rXp9eg15nXnSI=", ObjectTableId = SIIRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode SIIRequestTextCode_CustomsSIIRequestORequiredFields = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SIIRequest.O.RequiredFields", DefaultText = "Required Fields",LocalDefaultText = @"BS64:Itep15PXldeqINeX15XXkdeUINeR157XodeoINep15zXmdeX15Qg15zXnteb15XXnyDXqten16DXmdedIg==", ObjectTableId = SIIRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
  		   TextCode SIIRequestTextCode_CustomsSIIRequestOformApplicationId = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SIIRequest.O.formApplicationId", DefaultText = "Form Application Id",LocalDefaultText = @"BS64:Itee16HXpNeoINek16DXmdeZ15Qi", ObjectTableId = SIIRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
@@ -2107,20 +2044,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode SIIRequestTextCode_CustomsSIIRequestOdeclaredUnitCode = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SIIRequest.O.declaredUnitCode", DefaultText = "declared Unit Code",LocalDefaultText = @"BS64:IteZ15fXmdeT16og157XmdeT15Qg157Xldem15TXqNeqIg==", ObjectTableId = SIIRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
  		   TextCode SIIRequestTextCode_CustomsSIIRequestOFileTypeNotAllowed = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SIIRequest.O.FileTypeNotAllowed", DefaultText = "File type {0} cannot be sent to SII. Allowed: {1}.",LocalDefaultText = @"BS64:Iten15XXkdelINee16HXldeSIHswfSDXkNeZ16DXlSDXnteV16rXqCDXnNep15zXmdeX15Qg15zXnteb15XXnyDXlNeq16fXoNeZ150uINeh15XXkteZ150g157Xldeq16jXmdedOiB7MX0uIg==", ObjectTableId = SIIRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
-
- 		   TextCode SIIRequestTextCode_CustomsSIIRequestOSendSuccessWithRequestNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SIIRequest.O.SendSuccessWithRequestNumber", DefaultText = "SII request succeeded. Request number: {0}",LocalDefaultText = @"BS64:IteU16rXp9eR15wg157XqdeV15Eg16rXp9eZ158g157Xnteb15XXnyDXqten16DXmdedINei150g157Xodek16gg15HXp9ep15QtIHswfSI=", ObjectTableId = SIIRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
-
- 		   TextCode SIIRequestTextCode_CustomsSIIRequestOApplicantSystemId = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SIIRequest.O.ApplicantSystemId", DefaultText = "ApplicantSystemId",LocalDefaultText = @"BS64:Itee15bXlNeUINee16LXqNeb16og16nXldec15fXqiI=", ObjectTableId = SIIRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
-
- 		   TextCode SIIRequestTextCode_CustomsSIIRquestOError = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SIIRquest.O.Error", DefaultText = "Error",LocalDefaultText = @"BS64:Itep15LXmdeQ15XXqiI=", ObjectTableId = SIIRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
-
- 		   TextCode SIIRequestTextCode_CustomsSIIRequestOMissingComputingPartnerTranslation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SIIRequest.O.MissingComputingPartnerTranslation", DefaultText = "Missing Computing Partner translation for field {0} (value: {1})",LocalDefaultText = @"BS64:IteX16HXqCDXqteo15LXldedIENvbXB1dGluZyBQYXJ0bmVyINei15HXldeoINeU16nXk9eUIHswfSAo16LXqNeaOiB7MX0pIg==", ObjectTableId = SIIRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
-
- 		   TextCode SIIRequestTextCode_CustomsSIIRequestOProcessType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SIIRequest.O.ProcessType", DefaultText = "ProcessType",LocalDefaultText = @"BS64:Iteh15XXkiDXqteU15zXmdeaIg==", ObjectTableId = SIIRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
-
- 		   TextCode SIIRequestTextCode_CustomsSIIRequestOAmitalProcessType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SIIRequest.O.AmitalProcessType", DefaultText = "AmitalProcessType",LocalDefaultText = @"BS64:Iteq15TXnNeZ15og16LXnteZ15jXnCI=", ObjectTableId = SIIRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
-
- 		   TextCode SIIRequestTextCode_CustomsSIIRequestONotAmitalProcessType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SIIRequest.O.NotAmitalProcessType", DefaultText = "NotAmitalProcessType",LocalDefaultText = @"BS64:Iteq15TXnNeZ15og15zXkCDXotee15nXmNecIg==", ObjectTableId = SIIRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
    
 	    

@@ -19,18 +19,6 @@ namespace WebFreight.Web.DataProviders
         public bool IsFromGLAccountAgingData { get; set; }
 
         public List<NewAgingPeriod> AgingPeriods { get; set; }
-        public string Past1 { get; set; }     
-        public string Past2 { get; set; }     
-        public string Past3 { get; set; }    
-        public string Past4 { get; set; }     
-        public string Past5 { get; set; }    
-        public string Past6 { get; set; }    
-        public string Past { get; set; }       
-        public string Future1 { get; set; }   
-        public string Future2 { get; set; }   
-        public string Future3 { get; set; }  
-        public string Future { get; set; }
-
     }
 
     public class NewAgingPeriod
@@ -66,10 +54,6 @@ namespace WebFreight.Web.DataProviders
         public string ContactEnglishName { get; set; }
         public string MinimumInterestInvoiceBilling { get; set; }
         public string CreditAllotmentPercentage { get; set; }
-        public string PaymentTermEnglishName { get; set; }
-        public string PaymentTermLocalName { get; set; }
-        public string StandardInterestRateBaseLocalName { get; set; }
-        public decimal? StandardAddInterestPercent { get; set; }
         public decimal? CreditLimit { get; set; }
          public decimal? TotalToCollect { get; set; }
         public decimal? AccountingBalance { get; set; }

@@ -12,7 +12,6 @@ using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
 using System.Data.Entity.Infrastructure;
 using System.Diagnostics;
-using Logitude.Customs.Data.EntityKeys.Extended;
 
 namespace Logitude.Customs.Data.Repsitories
 {
@@ -250,7 +249,7 @@ namespace Logitude.Customs.Data.Repsitories
         private const string CHILD2_SUPPINVOICE = "SupplierInvoice";
         private const string CHILD3_SUPPINVITEM = "SupplierInvoiceItem";
 
-        public IList<PointerTicketDto> GetPointersWithFilingId(IReadOnlyCollection<SiiSelectedRowDto> items, int tenant)
+        public IList<PointerTicketDto> GetPointersWithFilingId(IReadOnlyCollection<SupplierInvoiceItemsReqListKeys> items, int tenant)
         {
             var decIds = items.Select(i => i.DeclarationId).Where(id => id != null).Distinct().ToList();
             var sirIds = items.Select(i => i.SIIRequestID).Where(id => id != null).Distinct().ToList();

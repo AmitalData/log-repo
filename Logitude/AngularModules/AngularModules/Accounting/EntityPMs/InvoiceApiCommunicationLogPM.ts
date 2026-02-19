@@ -91,11 +91,6 @@ export class InvoiceApiCommunicationLogPM {
     public set InvoiceNumber(newValue: string) { if (this.invoiceNumber != newValue) { this.invoiceNumber = newValue; this.MarkAsDirty("InvoiceNumber"); } }
        
 	 
-    private externalInvoiceNumber: string;
-    public get ExternalInvoiceNumber() { return this.externalInvoiceNumber; }
-    public set ExternalInvoiceNumber(newValue: string) { if (this.externalInvoiceNumber != newValue) { this.externalInvoiceNumber = newValue; this.MarkAsDirty("ExternalInvoiceNumber"); } }
-       
-	 
 
     public OldEntityPM: InvoiceApiCommunicationLogPM;
 		

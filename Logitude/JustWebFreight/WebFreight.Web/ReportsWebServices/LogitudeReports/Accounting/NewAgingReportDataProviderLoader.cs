@@ -1,6 +1,5 @@
 ﻿using CHAMP17;
 using Logitude.Accounting.BL.CoreBL.Reports;
-using Logitude.Accounting.BL.DataContract;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.Repositories;
 using Logitude.BL.CommonDataModel.EntityPMs;
@@ -8,7 +7,6 @@ using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.Resolvers;
 using Logitude.Server.Tools.Helpers;
 using NPOI.SS.Formula.Functions;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
@@ -59,42 +57,11 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             AgingDataLine= FilterByObligo(GetFilterValue<string>("Obligo"), AgingDataLine);
             AgingDataLine =FilterByBalance(GetFilterValue<string>("BalanceFilter"), AgingDataLine);
 
-            dataProvider.AgingPeriods = SortAccountingAgingDataLines(AgingDataLine);
-            SetColumnTitles(dataProvider);
+            dataProvider.AgingPeriods = SortAccountingAgingDataLines(AgingDataLine); 
+           
             return dataProvider;
          }
-        private void SetColumnTitles(NewAccountingAgingDataProvider dataProvider)
-        {
-            DateTime AgingForDate = GetFilterValue<DateTime>("AgingForDate");
-            string reportTypeCode =GetFilterValue<string> ("ReportTypeCode");
-            string transactionsText = TextCodesTranslator.TranslateText("Accounting.General.O.Transactions", tenant, true);
-            string transactionsBeforeText = TextCodesTranslator.TranslateText("Accounting.General.O.TransactionsBefore", tenant, true);
-            string transactionsAfterText = TextCodesTranslator.TranslateText("Accounting.General.O.TransactionsAfter", tenant, true);
 
-            bool monthlyAging = reportTypeCode == "2";
-            if (monthlyAging) {
-                dataProvider.Past1 = $"{transactionsText}{Environment.NewLine} {AgingForDate.Month}/{AgingForDate.Year}";
-
-                dataProvider.Past2 = $"{transactionsText}{Environment.NewLine} {AgingForDate.AddMonths(-1).Month}/{AgingForDate.AddMonths(-1).Year}";
-                dataProvider.Past3 = $"{transactionsText}{Environment.NewLine} {AgingForDate.AddMonths(-2).Month}/{AgingForDate.AddMonths(-2).Year}";
-                dataProvider.Past4 = $"{transactionsText}{Environment.NewLine} {AgingForDate.AddMonths(-3).Month}/{AgingForDate.AddMonths(-3).Year}";
-                dataProvider.Past5 = $"{transactionsText}{Environment.NewLine} {AgingForDate.AddMonths(-4).Month}/{AgingForDate.AddMonths(-4).Year}";
-                dataProvider.Past6 = $"{transactionsText}{Environment.NewLine} {AgingForDate.AddMonths(-5).Month}/{AgingForDate.AddMonths(-5).Year}";
-                var pastStartDate = AgingForDate.AddMonths(-5);
-                dataProvider.Past = $"{transactionsBeforeText}{Environment.NewLine} 1/{pastStartDate.Month}/{pastStartDate.Year}";
-
-
-                // Future
-                dataProvider.Future1 = $"{transactionsText}{Environment.NewLine} {AgingForDate.AddMonths(1).Month}/{AgingForDate.AddMonths(1).Year}";
-                dataProvider.Future2 = $"{transactionsText}{Environment.NewLine} {AgingForDate.AddMonths(2).Month}/{AgingForDate.AddMonths(2).Year}";
-                dataProvider.Future3 = $"{transactionsText}{Environment.NewLine} {AgingForDate.AddMonths(3).Month}/{AgingForDate.AddMonths(3).Year}";
-                var lastFutureMonth = AgingForDate.AddMonths(3);
-                var lastDayOfFutureMonth = new DateTime(lastFutureMonth.Year, lastFutureMonth.Month, DateTime.DaysInMonth(lastFutureMonth.Year, lastFutureMonth.Month));
-                dataProvider.Future = $"{transactionsAfterText}{Environment.NewLine}{lastDayOfFutureMonth:dd/MM/yyyy}";
-            }
-           
-
-        }
         private List<NewAgingPeriod> GetAccountingAgingDataLineByFilter()
         {
             try
@@ -107,7 +74,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     var command = connection.CreateCommand();
                     command.CommandText = "usp_NewAgingReport";
                     command.CommandType = System.Data.CommandType.StoredProcedure;
-                    command.CommandTimeout = 300;
+                   
 
 
                     command.Parameters.AddWithValue("@AccountID", GetFilterValue<string>( "CustomerId"));
@@ -123,8 +90,6 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     command.Parameters.AddWithValue("@CurrencyId", GetFilterValue<string>("CurrencyId"));
                     command.Parameters.AddWithValue("@Tenant", tenant);
                     command.Parameters.AddWithValue("@GroupMultiAccounts", GetFilterValue<bool>("IsGroupMultiAccounts"));
-                    command.Parameters.AddWithValue("@ReportDateTypeCode", GetFilterValue<string>("ReportDateTypeCode"));
-                    command.Parameters.AddWithValue("@ReportTypeCode", GetFilterValue<string>("ReportTypeCode"));
 
 
                     using (var reader = command.ExecuteReader())
@@ -154,11 +119,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                                 ContactEnglishName = reader["ContactEnglishName"] != DBNull.Value ? (string)reader["ContactEnglishName"] : null,
                                 MinimumInterestInvoiceBilling = reader["MinimumInterestInvoiceBilling"] != DBNull.Value ? (string)reader["MinimumInterestInvoiceBilling"] : null,
                                 CreditAllotmentPercentage = reader["CreditAllotmentPercentage"] != DBNull.Value ? (string)reader["CreditAllotmentPercentage"] : null,
-                                PaymentTermLocalName = reader["PaymnetTermLocalName"] != DBNull.Value ? (string)reader["PaymnetTermLocalName"] : null,
-                                PaymentTermEnglishName = reader["PaymnetTermEnglishName"] != DBNull.Value ? (string)reader["PaymnetTermEnglishName"] : null,
-                                StandardInterestRateBaseLocalName = reader["StandardInterestRateBaseLocalName"] != DBNull.Value ? (string)reader["StandardInterestRateBaseLocalName"] : null,
-                                StandardAddInterestPercent = reader["StandardAddInterestPercent"] != DBNull.Value ? (decimal?)reader["StandardAddInterestPercent"] : null,
-                                AccountCurrencyCode = reader["AccountCurrencyCode"] != DBNull.Value ? (string)reader["AccountCurrencyCode"] : null,
+                               AccountCurrencyCode = reader["AccountCurrencyCode"] != DBNull.Value ? (string)reader["AccountCurrencyCode"] : null,
                                Minus30Days = reader["Minus30Days"] != DBNull.Value ? (decimal?)reader["Minus30Days"] : 0,
                                   Minus60Days = reader["Minus60Days"] != DBNull.Value ? (decimal?)reader["Minus60Days"] : 0,
                               Minus90Days = reader["Minus90Days"] != DBNull.Value ? (decimal?)reader["Minus90Days"] : 0,
@@ -185,10 +146,10 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 
                 return results;
             }
+
             catch (Exception ex)
             {
-                NetCommonHelper.Logger.DevLog.Instance.WriteError($"Failed to execute usp_NewAgingReport: {ex.Message}");
-                throw ex;
+                throw new Exception();
             }
         }
 

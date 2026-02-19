@@ -625,42 +625,7 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-
-	   private List<SupplierInvoiceItemsReqListPM> supplierInvoiceItemsReqLists;
-	    
-       [Composition]
- 
-		     
-	   [Include]
-	   [Association("SIIRequestSupplierInvoiceItemsReqLists", "DeclarationId,Id","DeclarationId,SIIRequestID")]
-	   [DataMember]
-	   public virtual List<SupplierInvoiceItemsReqListPM> SupplierInvoiceItemsReqLists  
-	   {
-	        get
-             {
-                 if (supplierInvoiceItemsReqLists == null)
-                 {
-                     supplierInvoiceItemsReqLists = new List<SupplierInvoiceItemsReqListPM>();
-                 }
-                 return supplierInvoiceItemsReqLists;
-              }
-             set { supplierInvoiceItemsReqLists = value; }
 	    }
-		   
-	   private List<SupplierInvoiceItemsReqListPM>  deletedSupplierInvoiceItemsReqLists;
-	   public virtual List<SupplierInvoiceItemsReqListPM> DeletedSupplierInvoiceItemsReqLists  
-	   {
-	        get
-             {
-                 if ( deletedSupplierInvoiceItemsReqLists == null)
-                 {
-                      deletedSupplierInvoiceItemsReqLists = new List<SupplierInvoiceItemsReqListPM>();
-                 }
-                 return  deletedSupplierInvoiceItemsReqLists;
-              }
-             set {  deletedSupplierInvoiceItemsReqLists = value; }
-	    }
-	  	    }
    
 }
 	 

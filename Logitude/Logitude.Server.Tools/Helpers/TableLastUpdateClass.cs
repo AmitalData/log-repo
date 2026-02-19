@@ -33,20 +33,13 @@ namespace Logitude.BL.Helpers
         public static void UpdateTableHistory(int tenant, string tableName
             , TableLastUpdateM tableLastUpdateM = null,int contextTenant=0)
         {
-            if (contextTenant == 0)
-            {
-                contextTenant = SettingUtil.GetCurrentTenant();
-            }
+            
             User loggedUser = null;
             ObjectTable entityObjectTable = null;
             IWebFreightContext context = WebFreightContext.GetContext(contextTenant);
             ObjectTableLastUpdateRepository tableLastUpdateRepository = new ObjectTableLastUpdateRepository(context);
             ObjectTableRepository objectTabelRepository = new ObjectTableRepository(context);
             UserRepository userRepository = new UserRepository(contextTenant);
-
-
-
-
             entityObjectTable = objectTabelRepository.GetObjectTableByName(tableName, tenant, true, contextTenant);
             tableName = tableName ?? "";
             if (entityObjectTable == null && tableName.EndsWith("s", StringComparison.OrdinalIgnoreCase))
@@ -255,7 +248,7 @@ return 0;
                 {
                     ObjectTableId = item.Id,
                     AlternativeUserTenant = 0,
-                    AlternativeUserId = "1-1" ///in oracle  //"support@amital.co.il"=1-1
+                    AlternativeUserId = "1-1" ///in oracle  //"admin@fnarsoft.com"=1-1
 
                 }, tenant);
             }

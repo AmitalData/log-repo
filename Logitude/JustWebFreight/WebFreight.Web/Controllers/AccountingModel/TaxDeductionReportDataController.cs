@@ -36,6 +36,10 @@ namespace WebFreight.Web.Controllers.AccountingModel
         {
             try
             {
+                if (!HttpContext.Current.Request.Headers.AllKeys.Contains("Token"))
+                {
+                    return Request.CreateResponse(HttpStatusCode.Unauthorized, "Missing authentication token.");
+                }
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;

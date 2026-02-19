@@ -82,10 +82,6 @@ namespace Logitude.Accounting.Data.EntityMapping
               this.Property(t => t.CalculatedPostponedChequesCommision).HasColumnName("CalculatedPostponedChequesCommision").HasPrecision(16, 2);
 			}
 
-
-            this.Property(t => t.IsForeignCurrency).HasColumnName("IsForeignCurrency");
-
-            this.Property(t => t.ReportCurrencyId).HasColumnName("ReportCurrencyId").HasMaxLength(15).IsUnicode(false);
         }
     }
 }

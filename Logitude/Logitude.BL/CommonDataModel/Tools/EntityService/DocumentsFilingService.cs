@@ -115,7 +115,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             }
             return false;
         }
-        public void Create(DocumentsFilingPM theEntityPm, byte[] fileData = null, string loggedUserId = null, bool FromService = false, string documentId = null)
+        public void Create(DocumentsFilingPM theEntityPm, byte[] fileData = null, string loggedUserId = null, bool FromService = false, string documentId = null, bool isDocumentFromCloud = false)
         {
             this.isNewEntity = true;
             this.entityPM = theEntityPm;
@@ -384,7 +384,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             ///move after adding (was Devart.Data.Oracle.OracleException: ORA-02291: אילוץ כלילות (AMINET_MAIN.FK_N1103284768) הופר - מפתח אב לא נמצא )
             if (!tenantPM.IsDocumentsArchive)
             {
-                AddToTasksQueue(theEntityPm, isNewEntity, loggedUserId);
+                AddToTasksQueue(theEntityPm, isNewEntity, loggedUserId, isDocumentFromCloud);
             }
             foreach (DocumentsFilingMetaDataValuePM itemPM in entityPM.DocumentsFilingMetaDataValues)
             {
@@ -1245,7 +1245,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             if (!string.IsNullOrEmpty(this.entityPM.FileExtension))
             {
                 this.entityPM.FileExtension = this.entityPM.FileExtension.ToLower();
-            } 
+            }
             
             if (isnew)
             {
@@ -1422,7 +1422,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     FileSize = fileData.Length,
 
                 };
-                
                 if (document.Folder == "docsin" && fileInfo.IsUnifreightFillingMode(isnew) || (entityPM.IsFromCloud && LogitudeSettings.StorageServiceMode != "db"))
                 {
                     var fileDataMD5Hash = MD5HashUtil.GetMD5Hash(fileData);
@@ -1456,47 +1455,12 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                         }
                     }
 
-
-
                     fileInfo.UDocumentsFilingId = DocumentsFilingId;
                     fileInfo.UCreateDate = document.CreateDate;
-                }
-                else
-                {
-                    TenantQuery tenantQuery = new TenantQuery(tenant);
-                    bool AccountingActivated = tenantQuery.GetSinglePM(tenant).AccountingActivated;
-                    if (!AccountingActivated)
-                    {
-                        bool? isConnectedToUniFreight = CustomsSettingQueryService.GetLogitudeCustomsSettingsM(tenant)?.IsConnectedToUniFreight;
-                        var isExport = SecurityUtility.CheckFeature("Customs.Declaration", "EXPORTDECLARATIONPSCREEN", tenant);
-
-                        if (isConnectedToUniFreight == false && document.Folder == "docsin" && MyUniFileVerM == null && !isExport)
-                        {
-                            if (isnew)
-                            {
-                                entityPM.LastVersion = 1;
-                            }
-                            else
-                            {
-                                var fileDataMD5Hash = MD5HashUtil.GetMD5Hash(fileData);
-                                DocumentsFilingRepository rep = new DocumentsFilingRepository(entityPM.Tenant);
-                                string lastMd5 = entityPM?.FileDataMD5Hash ?? rep.GetFileDataMD5HashByDocumentIdAndTenant(document.Id, entityPM.Tenant);
-
-                                if (!string.Equals(fileDataMD5Hash, lastMd5, StringComparison.OrdinalIgnoreCase))
-                                {
-                                    this.entityPM.LastVersion = this.entityPM.LastVersion + 1;
-                                    this.entityPM.FileDataMD5Hash = fileDataMD5Hash;
-                                }
-
-                            }
-                        }
-                    }
-                }
+                }//if (document.Folder == "docsin" && fileInfo.IsUnifreightFillingMode())
                 storageservice.Write(fileData, fileInfo);
-                
 
             }
-            
 
      
             return document != null ? document.Id : null;
@@ -1519,7 +1483,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             }
         }
 
-        public void AddToTasksQueue(DocumentsFilingPM extDocPM, bool isnew, string loggedUserId)
+        public void AddToTasksQueue(DocumentsFilingPM extDocPM, bool isnew, string loggedUserId, bool isDocumentFromCloud = false)
         {
             if (LogitudeSettings.IsCostomsDeploy && extDocPM.IsHybrid)//avoid non stop 
             {
@@ -1641,10 +1605,10 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
                             //54378
                             //string UseSend2UServer =ConfigurationManager.AppSettings["20190909.UseSend2UServer8302"]??"";
-
+                            
                             string SuppressUseSend2UServer8302 = ConfigurationManager.AppSettings["20200123.SuppressUseSend2UServer8302"] ?? "";
                             if (string.IsNullOrWhiteSpace(SuppressUseSend2UServer8302)//!string.IsNullOrWhiteSpace(UseSend2UServer) 
-                                && !string.IsNullOrWhiteSpace(this.MetaDataVersionValue) //DeclarationPrint
+                                && !string.IsNullOrWhiteSpace(this.MetaDataVersionValue)//DeclarationPrint
                                 && CustomsSettingQueryService.GetLogitudeCustomsSettingsM(tenant).IsConnectedToUniFreight
                                 )
                             {
@@ -1652,8 +1616,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                             }
                             else
                             {
-                                ObjectTable docChildTable = ObjectTableRepository.GetObjectTableById(extDocPM.ChildObjectTableId, extDocPM.Tenant);
-
 
                                 //INSERT INTO "TOGGLES" (CODE, NAME, SEARCHFIELDS) VALUES ('HCD', 'Hybrid Courier document-Prevent feedback', 'Hybrid document-Prevent feedback')
                                 //INSERT INTO "FEATURETOGGLES"(ID, TENANT, CREATEDATE, CREATEDBYUSERID, UPDATEDATE, UPDATEDBYUSERID, SEARCHFIELDS, TENANTNUMBER, INACTIVE, TOGGLECODE) VALUES('HCD', '1', TO_TIMESTAMP('2022-03-06 14:19:28.729000000', 'YYYY-MM-DD HH24:MI:SS.FF'), '1-9', TO_TIMESTAMP('2022-03-06 14:19:46.456000000', 'YYYY-MM-DD HH24:MI:SS.FF'), '1-9', 'HCD', '1', '0', 'HCD')
@@ -1670,13 +1632,13 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                                 }
                                 bool sendHybridM = true;
 
-                                 if (!(docChildTable?.Name == "Customs.PaymentOrder") && extDocPM.ExternalEntityName == "CFIFILEM" && !extDocPM.IsFromCloud && isConnectedToUniFreight)
+                                 if (extDocPM.ExternalEntityName == "CFIFILEM" && !extDocPM.IsFromCloud && isConnectedToUniFreight && !isDocumentFromCloud)
                                 {
                                     sendHybridM = false;
                                     SendCustomsReferenceByTask(tenant, extDocPM.ExternalEntityReference, extDocPM.CustomReference, xmlstring, loggedUserId);
                                 }
 
-                                if (docChildTable?.Name == "Customs.PaymentOrder" ||( sendHybridM && !extDocPM.IsFromCloud))
+                                if (sendHybridM && !extDocPM.IsFromCloud)
                                 {
                                     List<QueueTask> queue1Tasks = new List<QueueTask>();
 

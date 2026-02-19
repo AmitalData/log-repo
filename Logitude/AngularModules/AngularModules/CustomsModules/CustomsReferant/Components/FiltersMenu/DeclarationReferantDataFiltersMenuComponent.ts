@@ -36,10 +36,10 @@ export class DeclarationReferantDataFiltersMenuComponent
     public UserFilers: ApiQueryFilters;
     public apiQueryFiltersChanged: boolean = false;
     public StatusesFeature:boolean=false;
-    @Input() public isPreDefindReferrantDataFilters: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     public DataContext: DeclarationReferantDataFiltersMenuComponent = this;
     public ObjectTableName: string = "Customs.DeclarationReferantData";
+    @Input() public isPreDefindReferrantDataFilters: boolean = false;
     TransportFilter_A: string;
     TransportFilter_O: string;
     TransportFilter_I: string;
@@ -132,7 +132,7 @@ export class DeclarationReferantDataFiltersMenuComponent
         var DepartmentFromFilters = this.DepartmentFilters.AdditionalFilters.map(({ FieldValue }) => FieldValue);
 
         var myService: UserListService = new UserListService();
-        if (UserListFromFilters[0] != "HowCare" && UserListFromFilters.length != 0 && !AppTool.IsNullOrEmpty(UserListFromFilters[0])) {
+        if (UserListFromFilters[0] != "HowCare" && UserListFromFilters.length != 0 && !AppTool.IsNullOrEmpty(UserListFromFilters[0]) && this.isPreDefindReferrantDataFilters) {
             UserListFromFilters[0].split("%2C").forEach(function (value) {
                     let ul = new UserList();
                     ul.Id = value;
@@ -680,7 +680,7 @@ export class DeclarationReferantDataFiltersMenuComponent
                 "CFIHMAIN.LogitudeTask",
                 "ShowOCRQuery",
                 unifreightMessageM,
-                " הצגת מסך : שםילתם ל - OCR");
+                " הצגת מסך : שאילתא ל - OCR");
         }
         else {
             alert("ShowOCRQuery");

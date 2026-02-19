@@ -21,7 +21,6 @@ export class InvoiceApiCommunicationLogList {
 	ExternalID: string;
 	ARInvoiceId: string;
 	InvoiceNumber: string;
-	ExternalInvoiceNumber: string;
 	
 }
  

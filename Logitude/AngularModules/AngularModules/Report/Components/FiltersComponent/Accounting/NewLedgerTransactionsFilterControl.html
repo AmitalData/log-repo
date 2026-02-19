@@ -14,7 +14,7 @@
         height: 100%;
     }
 
-    .spinner > div {
+    .spinner>div {
         height: 100%;
         width: 14px;
         height: 14px;
@@ -37,18 +37,20 @@
     }
 
     @-webkit-keyframes sk-bouncedelay {
+
         0%,
         80%,
         100% {
-            -webkit-transform: scale(0);
+            -webkit-transform: scale(0)
         }
 
         40% {
-            -webkit-transform: scale(1);
+            -webkit-transform: scale(1.0)
         }
     }
 
     @keyframes sk-bouncedelay {
+
         0%,
         80%,
         100% {
@@ -57,8 +59,8 @@
         }
 
         40% {
-            -webkit-transform: scale(1);
-            transform: scale(1);
+            -webkit-transform: scale(1.0);
+            transform: scale(1.0);
         }
     }
 
@@ -74,18 +76,27 @@
 </style>
 <style>
     .FiltersMenu li {
+        /* width: fit-content !important; */
         width: 80px;
         padding: 0 7px;
         border-width: 1px;
         margin-right: -1px;
     }
-    .FieldRow {
-        height: 32px !important;
+
+    /* .FiltersMenu li:first-child, .FiltersMenu li:last-child{
+        border-radius: 0;
     }
-    ::ng-deep MultiSelectLOV .container{
-        width:155px !important;
+
+    .FiltersMenu li:nth-child(1){
+        background: red;
+        color: red;
     }
-   
+    .FiltersMenu li:first-child{
+        background: blueviolet;
+        color: blueviolet;
+    } */
+
+
     .aboodRTLFilterMenu li:first-child,
     .aboodRTLFilterMenu li:last-child {
         border-radius: 0;
@@ -101,261 +112,187 @@
         border-bottom-left-radius: 3px;
     }
 </style>
-<table style="height: 140px">
-    <tr
-        *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0"
-        style="height: 1px"
-    >
+<table style="height:140px">
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
         <td>
-            <ValidationSummary
-                [ItemsSource]="ValidationErrorsList"
-            ></ValidationSummary>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
         </td>
     </tr>
 
-    <tr
-        [hidden]="IsSchedulerReport && (ValidationErrorsList != null && ValidationErrorsList.length > 0)"
-    >
-        <td style="color: #1b90cb; font-size: 15px; line-height: 15px">
+    <tr [hidden]="IsSchedulerReport && (ValidationErrorsList != null && ValidationErrorsList.length > 0)">
+        <td style="color:#1B90CB; font-size:15px; line-height: 15px;">
             {{'Accounting.General.O.FilterBy' | TextCodeTranslationPipe}}
         </td>
     </tr>
 
-    <tr style="height: 32px">
+    <!-- Filters and Balance -->
+    <tr style="height:32px">
         <td colspan="5">
             <table *ngIf="isReady">
-             
+
+                <tr class="FieldRow">
+
+                    <td>
+                        <table>
+                            <tr>
+                                <td style="width:5px;">
+                                </td>
+                                <td></td>
+                                <td></td>
+                                <td style="width:100px">
+                                    <div class="RadioButton" style="width:100px">
+                                        <input type="radio" [attr.id]="List" [attr.name]="GLAccountFilterRadio"
+                                            (click)="SettingListOrRangGlaccount()" [checked]="IsListGLAccounts"
+                                            style="width:15px" />
+                                        <label [attr.for]="List" style="font-size: 12px">
+                                            {{'Accounting.General.O.GLAccount' | TextCodeTranslationPipe}}
+                                        </label>
+                                    </div>
+
+                                </td>
+
+                            </tr>
+
+                        </table>
+
+                    </td>
+                    <td>
+                        <table>
+                            <tr>
+                                <td style="width: 40px;"></td>
+
+                                <td style="width:100px">
+                                    <div class="RadioButton" style="width:100px">
+
+                                        <input type="radio" [attr.id]="Range" [attr.name]="GLAccountFilterRadio"
+                                            (click)="SettingListOrRangGlaccount() " [checked]="!IsListGLAccounts"
+                                            style="width:15px" />
+                                        <label [attr.for]="Range" style="font-size: 12px">
+                                            {{'GLTransactionReport.O.GLAccountsRange' | TextCodeTranslationPipe}}
+
+                                        </label>
+
+                                    </div>
+
+                                </td>
+                                
+                            </tr>
+
+                        </table>
+
+                    </td>
+
+                    <td *ngIf="IsListGLAccounts">
+                        <table>
+                            <tr>
+
+
+
+                                <td style="width: 235px;">
+                                    <MultiSelectLOV [DataContext]="DataContext"
+                                        [PlaceHolder]="'Accounting.General.O.GLAccount' | TextCodeTranslationPipe"
+                                        [LayoutDirection]="isRTL ?'rtl' : 'ltr'"
+                                        [LOVListComponentPropName]="'ListGLAccounts'"
+                                        [ButtonAddLabel]="'GLAccounts.O.Choose' | TextCodeTranslationPipe">
+                                        <span class="class-MultiSelectLOV-content">
+                                            <LogLov [ShowInActive]="true" style="display: block;width: 105px;"
+                                                [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
+                                                [HideColumns]="true" [LookUpTableName]="'GLAccount'"
+                                                [DisplayMemberPath]="'LocalName'"
+                                                [QueryFilterItems]="GLAccountFilterItems" [ForceShowAddLink]="true"
+                                                [HideAddLink]="true">
+                                            </LogLov>
+                                        </span>
+                                    </MultiSelectLOV>
+                                </td>
+                            </tr>
+                        </table>
+
+
+                    </td>
+
+                    <td *ngIf="!IsListGLAccounts">
+                        <table>
+
+                            <td class="FieldRow">
+                                <LogLov [ShowInActive]="true" style="display: block;width: 150px;" float-start
+                                    [ObjectFieldName]="'FromGLAccountId'" [ObjectTableName]="ObjectTableName"
+                                    [DataContext]="DataContext" [LookUpTableName]="'GLAccount'"
+                                    [QueryFilterItems]="GLAccountFilterItems"
+                                    (SelectedItemChanged)="FromGLAccount = $event" [ForceShowAddLink]="true"
+                                    [HideAddLink]="true" [HideColumns]="true" [StartSearchFromChar]="3"
+                                    [StartSearchFromNumber]="5"
+                                    [PlaceHolder]="'GLTransactionReport.O.FromGLAccount' | TextCodeTranslationPipe">
+
+                                </LogLov>
+
+                                <div style="display: inline-block; width: 117px;padding: 0 5px;">
+                                    <LogLov [ShowInActive]="true" style="display: block;width: 150px;" float-start
+                                        [ObjectFieldName]="'ToGLAccountId'" [ObjectTableName]="ObjectTableName"
+                                        [DataContext]="DataContext" [LookUpTableName]="'GLAccount'"
+                                        [QueryFilterItems]="GLAccountFilterItems"
+                                        (SelectedItemChanged)="ToGLAccount = $event" [ForceShowAddLink]="true"
+                                        [HideAddLink]="true" [HideColumns]="true" [StartSearchFromChar]="3"
+                                        [StartSearchFromNumber]="5"
+                                        [PlaceHolder]="'GLTransactionReport.O.ToGLAccount' | TextCodeTranslationPipe">
+
+                                    </LogLov>
+
+
+                                </div>
+                            </td>
+                        </table>
+                    </td>
+                </tr>
+
                 <!-- Row 1 -->
                 <tr class="FieldRow">
                     <!-- 1 -->
-                    <td text-start></td>
-
-                    <!-- 2 -->
-                    <td  [class.disabled]="IsDisableGlaccountId">
-                        <ul
-                            class="FiltersMenu"
-                            [class.aboodRTLFilterMenu]="isRTL"
-                            float-start
-                        >
-                            <li
-                                float-start
-                                id="filter_glaccount"
-                                (click)="FilterGlAccountClicked('filter_glaccount')"
-                                style="height: 22px"
-                                [class.SelectedFilter]="filterGlAccountSelectedValue === 'filter_glaccount'"
-                            >
-                                {{'Accounting.General.O.GLAccountIs' |
-                                TextCodeTranslationPipe}}
-                            </li>
-                            <li
-                                float-start
-                                id="filter_glaccount_list"
-                                (click)="FilterGlAccountClicked('filter_glaccount_list')"
-                                style="height: 22px"
-                                [class.SelectedFilter]="filterGlAccountSelectedValue === 'filter_glaccount_list'"
-                            >
-                                {{'GLTransactionReport.O.GLAccountList' |
-                                TextCodeTranslationPipe}}
-                            </li>
-                            <li
-                                float-start
-                                id="filter_glaccounts_range"
-                                (click)="FilterGlAccountClicked('filter_glaccounts_range')"
-                                style="height: 22px"
-                                [class.SelectedFilter]="filterGlAccountSelectedValue === 'filter_glaccounts_range'"
-                            >
-                                {{'GLTransactionReport.O.GLAccountsRange' |
-                                TextCodeTranslationPipe}}
-                            </li>
-                        </ul>
-                    </td>
-
-                    <td *ngIf="IsRangGLAccounts">
-                        <LogLov
-                            [ShowInActive]="true"
-                            style="display: block; width: 155px"
-                            float-start
-                            [ObjectFieldName]="'FromGLAccountId'"
-                            [ObjectTableName]="ObjectTableName"
-                            [DataContext]="DataContext"
-                            [LookUpTableName]="'GLAccount'"
-                            [QueryFilterItems]="GLAccountFilterItems"
-                            (SelectedItemChanged)="FromGLAccount = $event"
-                            [ForceShowAddLink]="true"
-                            [HideAddLink]="true"
-                            [HideColumns]="true"
-                            [StartSearchFromChar]="3"
-                            [StartSearchFromNumber]="5"
-                            [PlaceHolder]="'GLTransactionReport.O.FromGLAccount' | TextCodeTranslationPipe"
-                        >
-                        </LogLov>
-                    </td>
-                    <td *ngIf="IsRangGLAccounts">
-                        <LogLov
-                            [ShowInActive]="true"
-                            style="display: block; width: 155px"
-                            float-start
-                            [ObjectFieldName]="'ToGLAccountId'"
-                            [ObjectTableName]="ObjectTableName"
-                            [DataContext]="DataContext"
-                            [LookUpTableName]="'GLAccount'"
-                            [QueryFilterItems]="GLAccountFilterItems"
-                            (SelectedItemChanged)="ToGLAccount = $event"
-                            [ForceShowAddLink]="true"
-                            [HideAddLink]="true"
-                            [HideColumns]="true"
-                            [StartSearchFromChar]="3"
-                            [StartSearchFromNumber]="5"
-                            [PlaceHolder]="'GLTransactionReport.O.ToGLAccount' | TextCodeTranslationPipe"
-                        >
-                        </LogLov>
-                    </td>
-                    <td *ngIf="!IsListGLAccounts && !IsRangGLAccounts"></td>
-                    <td  *ngIf="!IsListGLAccounts && !IsRangGLAccounts">
-                        <LogLov
-                            [ShowInActive]="true"
-                            style="display: block; width: 155px"
-                            float-start
-                            [ObjectFieldName]="'GLAccountId'"
-                            [ObjectTableName]="ObjectTableName"
-                            [DataContext]="DataContext"
-                            [LookUpTableName]="'GLAccount'"
-                            [QueryFilterItems]="GLAccountFilterItems"
-                            (SelectedItemChanged)="GLAccount = $event"
-                            [ForceShowAddLink]="true"
-                            [HideAddLink]="true"
-                            [HideColumns]="true"
-                            [StartSearchFromChar]="3"
-                            [StartSearchFromNumber]="5"
-                            [PlaceHolder]="'Accounting.General.O.GLAccount' | TextCodeTranslationPipe"
-                            [ForceDisabled]="IsDisableGlaccountId"
-                        >
-                        </LogLov>
-                    </td>
-                    <td  *ngIf="IsListGLAccounts"></td>
-                    <td  style="width:155px" *ngIf="IsListGLAccounts">
-                        <MultiSelectLOV
-                            [DataContext]="DataContext"
-                            [PlaceHolder]="'GLTransactionReport.O.GLAccountList' | TextCodeTranslationPipe"
-                            [LayoutDirection]="isRTL ?'rtl' : 'ltr'"
-                            [LOVListComponentPropName]="'ListGLAccounts'"
-                            [ButtonAddLabel]="'GLAccounts.O.Choose' | TextCodeTranslationPipe"
-                        >
-                            <span
-                                class="class-MultiSelectLOV-content"
-                            >
-                                <LogLov
-                                    [ShowInActive]="true"
-                                    style="
-                                        display: block;
-                                        width: 105px;
-                                    "
-                                    [ObjectTableName]="ObjectTableName"
-                                    [DataContext]="DataContext"
-                                    [HideColumns]="true"
-                                    [LookUpTableName]="'GLAccount'"
-                                    [DisplayMemberPath]="'LocalName'"
-                                    [QueryFilterItems]="GLAccountFilterItems"
-                                    [ForceShowAddLink]="true"
-                                    [HideAddLink]="true"
-                                >
-                                </LogLov>
-                            </span>
-                        </MultiSelectLOV>
-                       
-                    </td>
-                    
-
-                    <!-- 5 -->
-                    <td></td>
-
-                    <!-- 6 -->
-                    <td>
-                        <div></div>
-                    </td>
-
-                    <!-- 7 -->
-                    <td></td>
-                </tr>
-                <!-- Row 2 -->
-                <tr class="FieldRow">
-                    <!-- 1 -->
-                    <td style="width: 130px">
-                        <LogLabel
-                            [ObjectFieldName]="'CollectorId'"
-                            [ObjectTableName]="'GLAccount'"
+                    <td style="width: 130px;">
+                        <LogLabel [ObjectFieldName]="'CollectorId'" [ObjectTableName]="'GLAccount'"
                             [Text]="'Accounting.General.O.Collector'| TextCodeTranslationPipe"
-                            [DataContext]="DataContext"
-                        ></LogLabel>
+                            [DataContext]="DataContext"></LogLabel>
                     </td>
 
                     <!-- 2 -->
-                    <td style="width: 330px">
-                        <LogLov
-                            [ShowInActive]="true"
-                            [ObjectFieldName]="'Collector'"
-                            [ObjectTableName]="'GLAccount'"
-                            style="display: block; width: 150px"
-                            float-start
-                            [DataContext]="DataContext"
-                            [SelectedValue]="Collector"
-                            [LookUpTableName]="'User'"
-                            [HideColumns]="true"
-                        >
+                    <td style="width:245px">
+                        <LogLov [ShowInActive]="true" [ObjectFieldName]="'Collector'" [ObjectTableName]="'GLAccount'"
+                            style="display: block; width: 150px;" float-start [DataContext]="DataContext"
+                            [SelectedValue]="Collector" [LookUpTableName]="'User'" [HideColumns]="true">
                         </LogLov>
                     </td>
 
                     <!-- <td style="width:15px"></td> -->
                     <!-- 3 -->
-                    <td style="width: 150px">
-                        <LogLabel
-                            [ObjectFieldName]="'ChartOfAccountsTypeCode'"
+                    <td style="width:150px">
+                        <LogLabel [ObjectFieldName]="'ChartOfAccountsTypeCode'"
                             [Text]="'GLAccount.F.ChartOfAccountsTypeCode' | TextCodeTranslationPipe"
-                            [ObjectTableName]="ObjectTableName"
-                            [DataContext]="DataContext"
-                        >
+                            [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
                         </LogLabel>
                     </td>
 
                     <!-- 4 -->
-                    <td style="width: 250px">
-                        <div style="width: 155px;" *ngIf="chartOfAccountsTypes.length > 0">
-
-                             <ComboBoxWithInCheckBox [AutoHeight]="true" [MinHeight]="150"  
-                                [SelectedItem]="ChartOfAccountsTypeComboboxValue"  [ItemsSource]="chartOfAccountsTypes" (EditedItemSource)="OnChartOfAccountsTypeItemClicked($event)"
-                                [SelectionType]="isRTL?'קבוצה':'Product'"
-                                (SelectedItemChanged)="ChartOfAccountsTypeComboboxValue = $event" [Binding]="'LocalName'" [AlternativeBinding]="'EnglishName'"></ComboBoxWithInCheckBox>
-                        </div>
+                    <td style="width:200px">
+                        <LogLov [ShowInActive]="true" style="display: block;width: 150px;" float-start
+                            [ObjectFieldName]="'ChartOfAccountsTypeCode'" [ObjectTableName]="'GLAccount0'"
+                            [DataContext]="DataContext" [QueryFilterItems]="ChartOfAccountTypeFilterItems"
+                            [LookUpTableName]="'ChartOfAccountsType'" [ForceShowAddLink]="true" [HideAddLink]="true"
+                            [HideColumns]="true">
+                        </LogLov>
                     </td>
 
                     <!-- 5 -->
-                    <td style="width: 90px" colspan="1">
+                    <td style="width:90px;" colspan="1">
                         <!-- with children checkbox-->
                         <div [style.float]="isRTL ? 'right' : 'left'">
-                            <div
-                                float-start
-                                style="width: 20px; padding-top: 2px"
-                            >
-                                <CheckBox
-                                    (Checked)="AttachedGLAccountCheckBox = $event"
-                                    [IsChecked]="AttachedGLAccountCheckBox"
-                                >
+                            <div float-start style="width: 20px; padding-top: 2px;">
+                                <CheckBox (Checked)="AttachedGLAccountCheckBox = $event"
+                                    [IsChecked]="AttachedGLAccountCheckBox">
                                 </CheckBox>
                             </div>
-                            <div
-                                float-end
-                                text-start
-                                style="
-                                    width: 70px;
-                                    padding-left: 4px;
-                                    padding-right: 4px;
-                                    font-size: 12px;
-                                    padding-top: 2px;
-                                    color: #4e4e4e;
-                                "
-                            >
-                                {{'GLTransactionReport.O.WithClosedTransactions'
-                                | TextCodeTranslationPipe}}
+                            <div float-end text-start
+                                style="width: 70px;  padding-left: 4px;padding-right: 4px; font-size: 12px;padding-top: 2px;color: #4e4e4e;">
+                                {{'GLTransactionReport.O.WithClosedTransactions' | TextCodeTranslationPipe}}
                             </div>
                         </div>
                     </td>
@@ -367,228 +304,135 @@
 
                     <!-- 7 -->
                     <td></td>
+
+                </tr>
+
+                <!-- Row 2 -->
+                <tr class="FieldRow">
+
+                    <!-- 1 -->
+                    <td>
+                        <LogLabel [ObjectFieldName]="'CurrencyId'" [ObjectTableName]="ObjectTableName"
+                            [NoObjectField]="true" [DataContext]="DataContext"></LogLabel>
+                    </td>
+
+                    <!-- 2 -->
+                    <td>
+                        <LogLov [ShowInActive]="true" style="display: block;width: 150px;" float-start
+                            [ObjectFieldName]="'CurrencyId'" [ObjectTableName]="ObjectTableName"
+                            [DataContext]="DataContext" [QueryFilterItems]="CurrencyFilters"
+                            [SelectedValue]="CurrencyId" [LookUpTableName]="'Currency'" [HideColumns]="true">
+                        </LogLov>
+                    </td>
+
+                    <!-- 3 -->
+                    <td>
+                        <LogLabel [ObjectFieldName]="'ChartOfAccountId'"
+                            [Text]="'GLAccount.F.ChartOfAccountsId' | TextCodeTranslationPipe"
+                            [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
+                        </LogLabel>
+                    </td>
+
+                    <!-- 4 -->
+                    <td>
+                        <LogLov [ShowInActive]="true" style="display: block;width: 150px;" float-start
+                            [ObjectFieldName]="'ChartOfAccountId'" [ObjectTableName]="ObjectTableName"
+                            [DataContext]="DataContext" [LookUpTableName]="'ChartOfAccount'"
+                            (SelectedItemChanged)="ChartOfAccount = $event" [ForceShowAddLink]="true"
+                            [DependencyFilter1Value]="null" [DependencyFilter2Value]="ChartOfAccountsTypeCode"
+                            [HideAddLink]="true" [HideColumns]="true">
+                        </LogLov>
+                    </td>
+
+                    <!-- 5 -->
+                    <td>
+                        <div [style.float]="isRTL ? 'right' : 'left'">
+                            <div float-start style="width: 20px; padding-top: 2px;">
+                                <CheckBox (Checked)="IncludeChildAccounts = $event" [IsChecked]="IncludeChildAccounts">
+                                </CheckBox>
+                            </div>
+                            <div float-end text-start
+                                style="width: 70px;  padding-left: 4px;padding-right: 4px; font-size: 12px;padding-top: 2px;color: #4e4e4e;">
+                                {{'LedgerTransaction.O.IncludeChildAccounts' | TextCodeTranslationPipe}}
+                            </div>
+                        </div>
+                    </td>
+
+                    <!-- 6 -->
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <!-- 7 -->
+                    <td>
+                        <div></div>
+                    </td>
                 </tr>
 
                 <!-- Row 3 -->
                 <tr class="FieldRow">
                     <!-- 1 -->
-                    <td>
-                        <LogLabel
-                            [ObjectFieldName]="'CurrencyId'"
-                            [ObjectTableName]="ObjectTableName"
-                            [NoObjectField]="true"
-                            [DataContext]="DataContext"
-                        ></LogLabel>
-                    </td>
-
-                    <!-- 2 -->
-                    <td>
-                        <LogLov
-                            [ShowInActive]="true"
-                            style="display: block; width: 150px"
-                            float-start
-                            [ObjectFieldName]="'CurrencyId'"
-                            [ObjectTableName]="ObjectTableName"
-                            [DataContext]="DataContext"
-                            [QueryFilterItems]="CurrencyFilters"
-                            [SelectedValue]="CurrencyId"
-                            [LookUpTableName]="'Currency'"
-                            [HideColumns]="true"
-                        >
-                        </LogLov>
-                    </td>
-
-                    <!-- 3 -->
-                    <td>
-                        <LogLabel
-                            [ObjectFieldName]="'ChartOfAccountId'"
-                            [Text]="'GLAccount.F.ChartOfAccountsId' | TextCodeTranslationPipe"
-                            [ObjectTableName]="ObjectTableName"
-                            [DataContext]="DataContext"
-                        >
-                        </LogLabel>
-                    </td>
-
-                    <!-- 4 -->
-                    <td>
-                        <LogLov
-                            [ShowInActive]="true"
-                            style="display: block; width: 155px"
-                            float-start
-                            [ObjectFieldName]="'ChartOfAccountId'"
-                            [ObjectTableName]="ObjectTableName"
-                            [DataContext]="DataContext"
-                            [LookUpTableName]="'ChartOfAccount'"
-                            (SelectedItemChanged)="ChartOfAccount = $event"
-                            [ForceShowAddLink]="true"
-                            [DependencyFilter1Value]="null"
-                            [DependencyFilter2Value]="ChartOfAccountsTypeCode"
-                            [HideAddLink]="true"
-                            [HideColumns]="true"
-                        >
-                        </LogLov>
-                    </td>
-
-                    <!-- 5 -->
-                    <td>
-                        <div [style.float]="isRTL ? 'right' : 'left'">
-                            <div
-                                float-start
-                                style="width: 20px; padding-top: 2px"
-                            >
-                                <CheckBox
-                                    (Checked)="IncludeChildAccounts = $event"
-                                    [IsChecked]="IncludeChildAccounts"
-                                >
-                                </CheckBox>
-                            </div>
-                            <div
-                                float-end
-                                text-start
-                                style="
-                                    width: 70px;
-                                    padding-left: 4px;
-                                    padding-right: 4px;
-                                    font-size: 12px;
-                                    padding-top: 2px;
-                                    color: #4e4e4e;
-                                "
-                            >
-                                {{'LedgerTransaction.O.IncludeChildAccounts' |
-                                TextCodeTranslationPipe}}
-                            </div>
-                        </div>
-                    </td>
-
-                    <!-- 6 -->
-                    <td>
-                        <div></div>
-                    </td>
-
-                    <!-- 7 -->
-                    <td>
-                        <div></div>
-                    </td>
-                </tr>
-
-                <!-- Row 4 -->
-                <tr class="FieldRow">
-                    <!-- 1 -->
                     <td text-start>
-                        <LogLabel
-                            [ObjectFieldName]="'FromDate'"
-                            [NoObjectField]="true"
+                        <LogLabel [ObjectFieldName]="'FromDate'" [NoObjectField]="true"
                             [Text]="'Accounting.General.O.Datefrom' | TextCodeTranslationPipe"
-                            [ObjectTableName]="ObjectTableName"
-                            [DataContext]="DataContext"
-                        ></LogLabel>
+                            [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                     </td>
+
 
                     <!-- 2 -->
                     <td>
-                        <ul
-                            class="FiltersMenu"
-                            [class.aboodRTLFilterMenu]="isRTL"
-                            float-start
-                        >
-                            <li
-                                float-start
-                                id="filter_accounting"
-                                (click)="FilterDateClicked('filter_accounting')"
-                                style="height: 22px"
-                                [class.SelectedFilter]="filterDateSelectedValue === 'filter_accounting'"
-                            >
-                                {{'GLAccounts.O.filter_accounting' |
-                                TextCodeTranslationPipe}}
+                        <ul class="FiltersMenu" [class.aboodRTLFilterMenu]="isRTL" float-start>
+                            <li float-start id="filter_accounting" (click)="FilterDateClicked('filter_accounting')"
+                                style="height: 22px;"
+                                [class.SelectedFilter]="filterDateSelectedValue === 'filter_accounting'">
+                                {{'GLAccounts.O.filter_accounting' | TextCodeTranslationPipe}}
                             </li>
-                            <li
-                                float-start
-                                id="filter_reference"
-                                (click)="FilterDateClicked('filter_reference')"
-                                style="height: 22px"
-                                [class.SelectedFilter]="filterDateSelectedValue === 'filter_reference'"
-                            >
-                                {{'GLAccounts.O.filter_reference' |
-                                TextCodeTranslationPipe}}
+                            <li float-start id="filter_reference" (click)="FilterDateClicked('filter_reference')"
+                                style="height: 22px;"
+                                [class.SelectedFilter]="filterDateSelectedValue === 'filter_reference'">
+                                {{'GLAccounts.O.filter_reference' | TextCodeTranslationPipe}}
                             </li>
-                            <li
-                                float-start
-                                id="filter_due"
-                                (click)="FilterDateClicked('filter_due')"
-                                style="height: 22px"
-                                [class.SelectedFilter]="filterDateSelectedValue === 'filter_due'"
-                            >
-                                {{'GLAccounts.O.filter_due' |
-                                TextCodeTranslationPipe}}
+                            <li float-start id="filter_due" (click)="FilterDateClicked('filter_due')"
+                                style="height: 22px;" [class.SelectedFilter]="filterDateSelectedValue === 'filter_due'">
+                                {{'GLAccounts.O.filter_due' | TextCodeTranslationPipe}}
                             </li>
                         </ul>
                     </td>
 
                     <!-- 3 -->
-                    <td style="padding-top: 4px; width: 175px;">
-                        <AdvancedDatePicker
-                            style="display: block; width: 155px"
-                            float-start
-                            [ObjectFieldName]="'FromDate'"
-                            [ObjectTableName]="ObjectTableName"
-                            [NoObjectField]="true"
-                            [DataContext]="DataContext"
-                            [InputType]="'date'"
-                            [TimeMode]="'12'"
-                            [SelectedDateValue]="FromDate"
-                            [ShowToolTip]="true"
-                        ></AdvancedDatePicker>
-                        <div style="padding: 0; text-align: center">
-                            {{'Accounting.General.O.To' |
-                            TextCodeTranslationPipe}}
+                    <td>
+                        <AdvancedDatePicker style="display: block;width: 110px;" float-start
+                            [ObjectFieldName]="'FromDate'" [ObjectTableName]="ObjectTableName" [NoObjectField]="true"
+                            [DataContext]="DataContext" [InputType]="'date'" [TimeMode]="'12'"
+                            [SelectedDateValue]="FromDate" [ShowToolTip]="true"></AdvancedDatePicker>
+                        <div style="padding: 0;text-align: center">
+                            {{'Accounting.General.O.To' | TextCodeTranslationPipe}}
                         </div>
                     </td>
 
                     <!-- 4 -->
                     <td>
-                        <AdvancedDatePicker
-                            style="display: block; width: 155px"
-                            float-start
-                            [ObjectFieldName]="'ToDate'"
-                            [ObjectTableName]="ObjectTableName"
-                            [NoObjectField]="true"
-                            [DataContext]="DataContext"
-                            [InputType]="'date'"
-                            [TimeMode]="'12'"
-                            [SelectedDateValue]="ToDate"
-                        ></AdvancedDatePicker>
+                        <AdvancedDatePicker style="display: block;width: 150px;" float-start
+                            [ObjectFieldName]="'ToDate'" [ObjectTableName]="ObjectTableName" [NoObjectField]="true"
+                            [DataContext]="DataContext" [InputType]="'date'" [TimeMode]="'12'"
+                            [SelectedDateValue]="ToDate"></AdvancedDatePicker>
                     </td>
 
                     <!-- 5 -->
                     <td>
                         <div [style.float]="isRTL ? 'right' : 'left'">
-                            <div
-                                float-start
-                                style="width: 20px; padding-top: 2px"
-                            >
-                                <CheckBox
-                                    (Checked)="IncludeRelatedCurrenciesAccount = $event"
-                                    [IsChecked]="IncludeRelatedCurrenciesAccount"
-                                >
+                            <div float-start style="width: 20px; padding-top: 2px;">
+                                <CheckBox (Checked)="IncludeRelatedCurrenciesAccount = $event"
+                                    [IsChecked]="IncludeRelatedCurrenciesAccount">
                                 </CheckBox>
                             </div>
-                            <div
-                                float-end
-                                text-start
-                                style="
-                                    width: 70px;
-                                    padding-left: 4px;
-                                    padding-right: 4px;
-                                    font-size: 12px;
-                                    padding-top: 2px;
-                                    color: #4e4e4e;
-                                "
-                            >
-                                {{'LedgerTransaction.O.IncludeRelatedCurrenciesAccount'
-                                | TextCodeTranslationPipe}}
+                            <div float-end text-start
+                                style="width: 70px;  padding-left: 4px;padding-right: 4px; font-size: 12px;padding-top: 2px;color: #4e4e4e;">
+                                {{'LedgerTransaction.O.IncludeRelatedCurrenciesAccount' | TextCodeTranslationPipe}}
                             </div>
                         </div>
                     </td>
+
 
                     <!-- 6 -->
                     <td>
@@ -596,168 +440,169 @@
                     </td>
 
                     <!-- 7 -->
-                     <td [hidden]="IsSchedulerReport" style="float: right; margin-right: 100px;">
-                        <app-run-report-toggle [isRTL]="isRTL" [IsSchedulerReport]="IsSchedulerReport" (runReport)="RunButtonClicked($event)"></app-run-report-toggle>
-                    </td> 
-                   
+                    <td>
+                        <div style="width: 100px;" float-left>
+                            <button class="GreenButton" (click)="RunButtonClicked()">
+                                {{RunReportTitle}}
+                            </button>
+                        </div>
 
+                    </td>
 
                 </tr>
 
-                <!-- Row 5-->
+                <!-- Row 4 -->
                 <tr class="FieldRow">
                     <!-- Category -->
                     <!-- 1 -->
-                    <td class="Label">
-                        <LogLabel
-                            [ObjectFieldName]="'Category'"
-                            [ObjectTableName]="'GLAccount'"
-                            [Text]="'GLAccount.O.Category' | TextCodeTranslationPipe"
-                            [DataContext]="DataContext"
-                        >
+                    <td  class="Label">
+                        <LogLabel [ObjectFieldName]="'Category'" [ObjectTableName]="'GLAccount'"
+                            [Text]="'GLAccount.O.Category' | TextCodeTranslationPipe" [DataContext]="DataContext">
                         </LogLabel>
                     </td>
 
                     <!-- 2 -->
-                    <td style="padding-top: 6px;">
-                        <tr>
-                            <ComboBox
-                                style="display: inline-block; width: 121px;"
-                                [ItemsSource]="CategoriesList"
-                                [SelectedItem]="SelectedCategory"
-                                (SelectedItemChanged)="SelectedItemChanged($event)"
-                                [IsDisabled]="IsCategoryDisabled"
-                            ></ComboBox>
+                    <td style="">
+                        <ComboBox style="display: inline-block; width: 100px;" [ItemsSource]="CategoriesList"
+                            [SelectedItem]="SelectedCategory" (SelectedItemChanged)="SelectedItemChanged($event)"
+                            [IsDisabled]="IsCategoryDisabled"></ComboBox>
 
-                            <div
-                                style="
-                                    display: inline-block;
-                                    width: 121px;
-                                    padding: 0 5px;
-                                "
-                                [ngSwitch]="SelectedCategory"
-                                [class.disabled]="IsCategoryDisabled"
-                            >
-                                <!-- Category 1 -->
-                                <LogLov
-                                    [ShowInActive]="true"
-                                    *ngSwitchCase="'Category1'"
-                                    [ObjectFieldName]="'Category1'"
-                                    [ObjectTableName]="'GLAccount'"
-                                    [DataContext]="DataContext"
-                                    [DisplayMemberPath]="'LocalName'"
-                                    [LookUpTableName]="'Category1'"
-                                    [HideColumns]="true"
-                                >
-                                </LogLov>
+                        <div style="display: inline-block; width: 117px;padding: 0 5px;" [ngSwitch]="SelectedCategory"
+                            [class.disabled]="IsCategoryDisabled">
 
-                                <!-- Category 2 -->
-                                <LogLov
-                                    [ShowInActive]="true"
-                                    *ngSwitchCase="'Category2'"
-                                    [ObjectFieldName]="'Category2'"
-                                    [ObjectTableName]="'GLAccount'"
-                                    [DataContext]="DataContext"
-                                    [DisplayMemberPath]="'LocalName'"
-                                    [LookUpTableName]="'Category2'"
-                                    [HideColumns]="true"
-                                >
-                                </LogLov>
+                            <!-- Category 1 -->
+                            <LogLov [ShowInActive]="true" *ngSwitchCase="'Category 1'" [ObjectFieldName]="'Category1'"
+                                [ObjectTableName]="'GLAccount'" [DataContext]="DataContext"
+                                [DisplayMemberPath]="'LocalName'" [LookUpTableName]="'Category1'" [HideColumns]="true">
+                            </LogLov>
 
-                                <!-- Category 3 -->
-                                <LogLov
-                                    [ShowInActive]="true"
-                                    *ngSwitchCase="'Category3'"
-                                    [ObjectFieldName]="'Category3'"
-                                    [ObjectTableName]="'GLAccount'"
-                                    [DataContext]="DataContext"
-                                    [DisplayMemberPath]="'LocalName'"
-                                    [LookUpTableName]="'Category3'"
-                                    [HideColumns]="true"
-                                >
-                                </LogLov>
+                            <!-- Category 2 -->
+                            <LogLov [ShowInActive]="true" *ngSwitchCase="'Category 2'" [ObjectFieldName]="'Category2'"
+                                [ObjectTableName]="'GLAccount'" [DataContext]="DataContext"
+                                [DisplayMemberPath]="'LocalName'" [LookUpTableName]="'Category2'" [HideColumns]="true">
+                            </LogLov>
 
-                                <!-- Category 4 -->
-                                <LogLov
-                                    [ShowInActive]="true"
-                                    *ngSwitchCase="'Category4'"
-                                    [ObjectFieldName]="'Category4'"
-                                    [ObjectTableName]="'GLAccount'"
-                                    [DataContext]="DataContext"
-                                    [DisplayMemberPath]="'LocalName'"
-                                    [LookUpTableName]="'Category4'"
-                                    [HideColumns]="true"
-                                >
-                                </LogLov>
+                            <!-- Category 3 -->
+                            <LogLov [ShowInActive]="true" *ngSwitchCase="'Category 3'" [ObjectFieldName]="'Category3'"
+                                [ObjectTableName]="'GLAccount'" [DataContext]="DataContext"
+                                [DisplayMemberPath]="'LocalName'" [LookUpTableName]="'Category3'" [HideColumns]="true">
+                            </LogLov>
 
-                                <!-- Category 5 -->
-                                <LogLov
-                                    [ShowInActive]="true"
-                                    *ngSwitchCase="'Category5'"
-                                    [ObjectFieldName]="'Category5'"
-                                    [ObjectTableName]="'GLAccount'"
-                                    [DataContext]="DataContext"
-                                    [DisplayMemberPath]="'LocalName'"
-                                    [LookUpTableName]="'Category5'"
-                                    [HideColumns]="true"
-                                >
-                                </LogLov>
+                            <!-- Category 4 -->
+                            <LogLov [ShowInActive]="true" *ngSwitchCase="'Category 4'" [ObjectFieldName]="'Category4'"
+                                [ObjectTableName]="'GLAccount'" [DataContext]="DataContext"
+                                [DisplayMemberPath]="'LocalName'" [LookUpTableName]="'Category4'" [HideColumns]="true">
+                            </LogLov>
 
-                                <!-- Default -->
-                                <div *ngSwitchDefault>
-                                    <!--<span style="font-style: italic; color: #d1d1d1;font-size: 10px;">Select category first...</span>-->
-                                    <ComboBox
-                                        [ItemsSource]="[]"
-                                        [IsDisabled]="true"
-                                    ></ComboBox>
-                                </div>
+                            <!-- Category 5 -->
+                            <LogLov [ShowInActive]="true" *ngSwitchCase="'Category 5'" [ObjectFieldName]="'Category5'"
+                                [ObjectTableName]="'GLAccount'" [DataContext]="DataContext"
+                                [DisplayMemberPath]="'LocalName'" [LookUpTableName]="'Category5'" [HideColumns]="true">
+                            </LogLov>
+
+                            <!-- Default -->
+                            <div *ngSwitchDefault>
+                                <!--<span style="font-style: italic; color: #d1d1d1;font-size: 10px;">Select category first...</span>-->
+                                <ComboBox [ItemsSource]="[]" [IsDisabled]="true"></ComboBox>
                             </div>
-                        </tr>
+
+                        </div>
                     </td>
 
                     <!-- 3 -->
                     <td>
-                        <LogLabel
-                            [ObjectFieldName]="'SalesmanUserId'"
-                            [ObjectTableName]="'GLAccount'"
-                            [NoObjectField]="true"
-                            [DataContext]="DataContext"
-                        ></LogLabel>
+                        <LogLabel [ObjectFieldName]="'SalesmanUserId'" [ObjectTableName]="'GLAccount'"
+                            [NoObjectField]="true" [DataContext]="DataContext"></LogLabel>
                     </td>
 
                     <!-- 4 -->
                     <td>
-                        <LogLov
-                            [ShowInActive]="true"
-                            style="display: block; width: 155px"
-                            float-start
-                            [ObjectFieldName]="'Salesman'"
-                            [ObjectTableName]="'GLAccount'"
-                            [DataContext]="DataContext"
-                            [LookUpTableName]="'User'"
-                            [SelectedValue]="Salesman"
-                            [QueryFilterItems]="SalesmanFilterItems"
-                            [HideColumns]="true"
-                        >
+                        <LogLov [ShowInActive]="true" style="display: block; width: 150px;" float-start
+                            [ObjectFieldName]="'Salesman'" [ObjectTableName]="'GLAccount'" [DataContext]="DataContext"
+                            [LookUpTableName]="'User'" [SelectedValue]="Salesman"
+                            [QueryFilterItems]="SalesmanFilterItems" [HideColumns]="true">
                         </LogLov>
                     </td>
-                    <td></td>
-                    <td></td>
-                    <td [hidden]="IsSchedulerReport" style="width: 200px"> 
+                    <td>
 
-                    </td> 
-                   <td [hidden]="!IsSchedulerReport" style="float: right; margin-right: 100px;">
-                        <app-run-report-toggle [isRTL]="isRTL" [IsSchedulerReport]="IsSchedulerReport" (runReport)="RunButtonClicked($event)"></app-run-report-toggle>
-                    </td> 
+                    </td>
+                    <td>
+
+                    </td>
+                    <td style="width: 200px"></td>
+
+
                 </tr>
 
-           
-                <tr
-                    [hidden]="IsSchedulerReport && (ValidationErrorsList != null && ValidationErrorsList.length > 0)"
-                    style="height: 15px"
-                >
+
+                <tr [hidden]="!IsSchedulerReport" class="FieldRow">
+                    <td style="width:210px">
+                        <LogLabel [ObjectFieldName]="'BalanceInLocalCurrency'"
+                            [Text]="'GLAccount.F.BalanceInLocalCurrency' | TextCodeTranslationPipe"
+                            [ObjectTableName]="'GLAccount'" [DataContext]="DataContext">
+                        </LogLabel>
+                    </td>
+                    <td>
+                        <ComboBox style="display: block;width: 200px;" [ItemsSource]="operatorsList"
+                            [Binding]="'LocalName'" [SelectedItem]="selectedAmountOperator"
+                            (SelectedItemChanged)="selectedAmountOperator = $event"></ComboBox>
+                    </td>
+
+                    <td style="width: 200px;" [style.text-align]="isRTL ? 'right' : 'left'">
+
+                        <LogTextBox style="display: block;width: 150px;" [ObjectFieldName]="'BalanceInLocalCurrency'"
+                            [InputType]="'decimal'" [DataContext]="DataContext" [NoObjectField]="true"
+                            [ObjectTableName]="'GLAccount'" [HideColumns]="true" [Text]="BalanceInLocalCurrency">
+                        </LogTextBox>
+                    </td>
+                    <td style="width: 200px">
+                        <div></div>
+                    </td>
+                    <td>
+                        <div></div>
+                    </td>
+                    <td>
+                        <div></div>
+                    </td>
+                    <td></td>
+                </tr>
+                <tr [hidden]="!IsSchedulerReport" class="FieldRow">
+                    <td style="width:210px">
+                        <LogLabel [ObjectFieldName]="'LocalBalanceInDue'"
+                            [Text]="'GLAccount.F.LocalBalanceInDue' | TextCodeTranslationPipe"
+                            [ObjectTableName]="'GLAccount'" [DataContext]="DataContext">
+                        </LogLabel>
+                    </td>
+                    <td>
+                        <ComboBox style="display: block;width: 200px;" [ItemsSource]="operatorsList"
+                            [Binding]="'LocalName'" [SelectedItem]="selectedAmountOperatorLocalBalanceInDue"
+                            (SelectedItemChanged)="selectedAmountOperatorLocalBalanceInDue = $event"></ComboBox>
+                    </td>
+
+                    <td style="width: 200px;" [style.text-align]="isRTL ? 'right' : 'left'">
+
+                        <LogTextBox style="display: block;width: 150px;" [ObjectFieldName]="'LocalBalanceInDue'"
+                            [InputType]="'decimal'" [DataContext]="DataContext" [NoObjectField]="true"
+                            [ObjectTableName]="'GLAccount'" [HideColumns]="true" [Text]="LocalBalanceInDue">
+                        </LogTextBox>
+                    </td>
+                    <td style="width: 200px">
+                        <div></div>
+                    </td>
+                    <td>
+                        <div></div>
+                    </td>
+                    <td>
+                        <div></div>
+                    </td>
+                    <td></td>
+                </tr>
+                <tr [hidden]="IsSchedulerReport && (ValidationErrorsList != null && ValidationErrorsList.length > 0)"
+                    style="height: 15px;">
                     <div></div>
                 </tr>
+
+
             </table>
         </td>
     </tr>

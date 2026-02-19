@@ -913,29 +913,25 @@ namespace Logitude.Accounting.BL.DataContract
 
         private void SetErrorMessage(ByVendorList groupedbyVendor, List<CardList> selectedVendors, string cardsCodes)
         {
-            if (taxDeductionReport != null) {
-                if (groupedbyVendor.VATNumber == null)
+            if (groupedbyVendor.VATNumber == null)
+            {
+                var vendorsWithoutVatNumberCache = selectedVendors.Where(d => d.VatNumber == null
+                                                            && !VendorsWithoutVatNumberCache.Contains(d.Code)).ToList();
+                if (vendorsWithoutVatNumberCache.Any())
                 {
-                    var vendorsWithoutVatNumberCache = selectedVendors.Where(d => d.VatNumber == null
-                                                                && !VendorsWithoutVatNumberCache.Contains(d.Code)).ToList();
-                    if (vendorsWithoutVatNumberCache.Any())
-                    {
-                        taxDeductionReport.ErrorMessage = (taxDeductionReport.ErrorMessage ?? "") + Environment.NewLine + (vendorsWithoutVatNumberCache.Count > 1
-                            ? " Vendor GLAccount " + groupedbyVendor.DisplayNumber + " is connected to more than one Operational Vendor Card and none of them contain a VAT number" + cardsCodes
-                            : TextCodesTranslator.TranslateText("TaxDeductionReport.O.CardWithoutVatNumber", Tenant) + ", " + TextCodesTranslator.TranslateText("Card.F.Code", Tenant) + ":" + vendorsWithoutVatNumberCache[0].Code);
-                        VendorsWithoutVatNumberCache.UnionWith(vendorsWithoutVatNumberCache.Select(d => d.Code).Distinct());
+                    taxDeductionReport.ErrorMessage = (taxDeductionReport.ErrorMessage ?? "") + Environment.NewLine + (vendorsWithoutVatNumberCache.Count > 1
+                        ? " Vendor GLAccount " + groupedbyVendor.DisplayNumber + " is connected to more than one Operational Vendor Card and none of them contain a VAT number" + cardsCodes
+                        : TextCodesTranslator.TranslateText("TaxDeductionReport.O.CardWithoutVatNumber", Tenant) + ", " + TextCodesTranslator.TranslateText("Card.F.Code", Tenant) + ":" + vendorsWithoutVatNumberCache[0].Code);
+                    VendorsWithoutVatNumberCache.UnionWith(vendorsWithoutVatNumberCache.Select(d => d.Code).Distinct());
 
-                    }
-                }
-                if (groupedbyVendor.VendorAddress == null && groupedbyVendor.VendorCity == null)
-                {
-                    taxDeductionReport.ErrorMessage = (taxDeductionReport.ErrorMessage ?? "") + Environment.NewLine + (selectedVendors.Count > 1
-                        ? " Vendor GLAccount " + groupedbyVendor.DisplayNumber + " is connected to more than one Operational Vendor Card and none of them contain an address" + cardsCodes
-                        : TextCodesTranslator.TranslateText("TaxDeductionReport.O.CardWithoutAddress", Tenant) + ", " + TextCodesTranslator.TranslateText("Card.F.Code", Tenant) + ":" + selectedVendors[0].Code);
                 }
             }
-
-         
+            if (groupedbyVendor.VendorAddress == null && groupedbyVendor.VendorCity == null)
+            {
+                taxDeductionReport.ErrorMessage = (taxDeductionReport.ErrorMessage ?? "") + Environment.NewLine + (selectedVendors.Count > 1 
+                    ? " Vendor GLAccount " + groupedbyVendor.DisplayNumber + " is connected to more than one Operational Vendor Card and none of them contain an address" + cardsCodes 
+                    : TextCodesTranslator.TranslateText("TaxDeductionReport.O.CardWithoutAddress", Tenant) + ", " + TextCodesTranslator.TranslateText("Card.F.Code", Tenant) + ":" + selectedVendors[0].Code);
+            }
         }
 
         private void DeleteVendorFromTaxDeductionReportLines(string vendorId)
@@ -1028,7 +1024,6 @@ namespace Logitude.Accounting.BL.DataContract
             groupedbyVendor.AssessingOfficerCode = gLAccount.AssessingOfficeCode;
             groupedbyVendor.AssessingOfficerName = gLAccount.AssessingOfficeName;
             groupedbyVendor.DeductionFileTypeCode = gLAccount.DeductionFileTypeCode;
-            groupedbyVendor.DeductionFileTypeName = gLAccount.DeductionFileTypeName;
             groupedbyVendor.DeductionFileNumber = gLAccount.DeductionFileNumber;
             groupedbyVendor.DeductionType = gLAccount.DeductionTypeId;
             groupedbyVendor.EnglishName = childGLAccount != null ? childGLAccount.EnglishName : gLAccount.EnglishName;

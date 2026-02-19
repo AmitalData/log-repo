@@ -98,7 +98,7 @@
 
                                             </tr>
                                             <!-- IsAdditionalReportExist -->
-                                            <tr *ngIf="!entityPM.ByMonth" class="FormFieldRow">
+                                            <tr class="FormFieldRow">
                                                 <td [ngStyle]="{ 'text-align': isRTL ? 'right' : 'left', 'vertical-align': 'top', 'width': '150px' }">
                                                     <LogLabel [ObjectFieldName]="'IsAdditionalReportExist'" [ObjectTableName]="ObjectTableName"
                                                               [DataContext]="DataContext"></LogLabel>
@@ -113,7 +113,7 @@
                                             </tr>
 
                                             <!-- Email -->
-                                            <tr *ngIf="!entityPM.ByMonth" class="FormFieldRow" style="width: 400px;">
+                                            <tr class="FormFieldRow" style="width: 400px;">
                                                 <td style="vertical-align:top;width: 150px;" [style.text-align]="isRTL ? 'right' : 'left'">
                                                     <LogLabel [ObjectFieldName]="'Email'" [ObjectTableName]="ObjectTableName"
                                                               [DataContext]="DataContext"></LogLabel>
@@ -125,16 +125,14 @@
                                                 </td>
                                                 <td></td>
                                             </tr>
-                                            <tr style="height: 15px;"><td><div style="width: 15px;"></div></td></tr>
 
-                                              <!-- Report Data -->
-                                              <tr *ngIf="entityPM.StatusTypeCode === TaxDeductionStatus.Completed"  class="TabTitleRow">
-                                                <td [style.text-align]="isRTL ? 'right' : 'left'">{{'TaxDeductionReport.O.ReportData' | TextCodeTranslationPipe}} </td>
-                                            </tr>
-                                            <tr style="height: 15px;"><td><div style="width: 15px;"></div></td></tr>
-
-                                            <tr *ngIf="entityPM.StatusTypeCode === TaxDeductionStatus.Completed" class="FormFieldRow">
-                                                <td></td>
+                                            <!-- Report Data -->
+                                            <tr class="FormFieldRow">
+                                                <td style="vertical-align:top;width: 150px;" [style.text-align]="isRTL ? 'right' : 'left'">
+                                                    <LogLabel [ObjectFieldName]="'ByMonth'" [TextCode]="'TaxDeductionReport.O.ReportData'"
+                                                            [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
+                                                    </LogLabel>
+                                                </td>
                                                 <td colspan="2">
                                                     <div style="max-width: 50vw; width: 100%;">
                                                         <!-- Totals Table -->
@@ -178,20 +176,8 @@
                                                     </div>
                                                 </td>
                                             </tr>
-                                               
-                                            <tr *ngIf="entityPM.StatusTypeCode === TaxDeductionStatus.InProgress" class="TabTitleRow">
-                                                <td style="font-size: 35px !important ;text-align: center !important;padding-top:30px;">{{'TaxDeductionReport.O.InProgress' | TextCodeTranslationPipe}}
-                                                </td>
-                                                
-                                            </tr>
-                                            <tr class="FormFieldRow">
 
 
-                                                <td *ngIf="entityPM.StatusTypeCode === TaxDeductionStatus.Failed" [style.text-align]="isRTL ? 'right' : 'left'">
-                                                    <button style="display: inline-block;width:100px;" class="Button" [disabled]="Building" (click)="RunService()">{{'Accounting.O.Rebuild' | TextCodeTranslationPipe}}</button>
-                                                </td>
-                                                <td></td>
-                                            </tr>
 
 
 
