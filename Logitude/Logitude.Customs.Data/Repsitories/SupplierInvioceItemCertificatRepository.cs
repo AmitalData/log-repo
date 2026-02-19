@@ -168,11 +168,7 @@ INNER JOIN SupplierInvoices ON SupplierInvoiceItems.DeclarationId = SupplierInvo
                 {
                     wherestring += " and SupplierInvioceItemCertificats.AttachmentTypeCode = '" + attachmentTypeCode + "'";
                 }
-                else
-                {
-                    wherestring += " and Customs.SupplierInvioceItemCertificats.AttachmentTypeCode IS NULL";
-                }
-
+                
                 if (!string.IsNullOrEmpty(reqConfirmationTypeCode) && reqConfirmationTypeCode !="null")
                 {
                     wherestring += " and Customs.SupplierInvioceItemCertificats.ReqConfirmationTypeCode = '" + reqConfirmationTypeCode + "'";
@@ -331,10 +327,6 @@ INNER JOIN SupplierInvoices ON SupplierInvoiceItems.DeclarationId = SupplierInvo
                 if (!string.IsNullOrEmpty(attachmentTypeCode) && attachmentTypeCode != "null")
                 {
                     wherestring += " and SupplierInvioceItemCertificats.AttachmentTypeCode = '" + attachmentTypeCode + "'";
-                }
-                else
-                {
-                    wherestring += " and Customs.SupplierInvioceItemCertificats.AttachmentTypeCode IS NULL";
                 }
 
                 if (!string.IsNullOrEmpty(reqConfirmationTypeCode) && reqConfirmationTypeCode != "null")

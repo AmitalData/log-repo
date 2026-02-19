@@ -71,11 +71,6 @@ export class PublicShipmentDetailsComponent implements OnInit
         return this.milestones.find(d=>d.Code == this.Shipment.CurrentMilestoneCode)?.EnglishName;
     }
 
-    public get CurrentMilestoneWeight(): number {
-        return this.CurrentMilestoneField?.Weight != null ? this.CurrentMilestoneField.Weight : 0;
-
-    }
-
 
     GetMilstones(){
         this.milestonesService.getAll(this.tenant)
@@ -351,32 +346,35 @@ export class PublicShipmentDetailsComponent implements OnInit
 
          }
     }
-    public FilteredMilestoneFields: Milestone[] = [];
     SetMilestonesFields(result: CargoTrackingShipmentWithMilestones)
     {
 
-        this.AllMilestoneFields = result.Milestones ? [...result.Milestones] : [];
-        // Sort milestones by Weight ascending
-        if (this.AllMilestoneFields && this.AllMilestoneFields.length) {
-            this.AllMilestoneFields.sort((a, b) => (a.Weight ?? 0) - (b.Weight ?? 0));
-            this.AllMilestoneFields.forEach(S => {
+        this.AllMilestoneFields = result.Milestones;
+        if (this.AllMilestoneFields) {
+            this.AllMilestoneFields.forEach(S =>
+            {
                 if (S.IsEstimation || (S.EstimationDate && !S.Date)) {
+
                     this.FuturesMilestoneFields.push(S);
                     if (S.IsEstimation || (S.EstimationDate != null || S.Date != null)) {
+
                         this.isPlannedMilestonesExist = true;
                     }
                 }
+
                 else if (!S.IsCurrent && S.Date != null) {
+
                     this.CompletedMilestoneFields.push(S);
                 }
                 else if (S.Date != null) {
+
                     this.CurrentMilestoneField = S;
                 }
                 if(S.Code ==  MilestoneCodes.BookingNote && S.Notes){
                     S.Notes = 'Booking Conf. Num: '+ S.Notes;
                 }
+
             });
-            this.hasMilestoneWithTenant = this.AllMilestoneFields.some(m => m.TenantId == this.Shipment.Tenant);  
         }
 
 
@@ -402,9 +400,6 @@ export class PublicShipmentDetailsComponent implements OnInit
     public FuturesMilestoneFields: Milestone[] = [];
     public CurrentMilestoneField: Milestone = new Milestone();
     public Events: Events [] = [];
-
-    
-    public hasMilestoneWithTenant: boolean = false;
 
     TenantMangment:TenantManagementPM
     ShipmentReferences: string[] = [];
@@ -480,7 +475,6 @@ export class Milestone
     public IsEstimation: boolean;
     public IsCurrent: boolean;
     public InActive: boolean;
-    public TenantId: number;
 }
 
 
