@@ -13,7 +13,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 {
     public partial class ProceduralFaultUpdateService
     {
-        private void UpdateUnifreight(ProceduralFaultPM dirtyEntityPM,string direction)
+        private void UpdateUnifreight(ProceduralFaultPM dirtyEntityPM)
         {
             string loggingUserId = AuthenticationUtil.ResolveUserId(dirtyEntityPM.Tenant);
 
@@ -42,7 +42,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
             }
 
-            if (direction != "E" && toSendStatusLIK == true)
+            if (toSendStatusLIK == true)
             {
                 SendProceduralFaultStatus("LIK", "LIK", dirtyEntityPM, loggingUserId);
             }

@@ -31,7 +31,6 @@
     <!-- Dates -->
     <div text-start class="TextTrimming" *ngIf="fieldName == 'CreateDateTime'">{{ rowData[fieldName] | DateTimePipe:'SD' }}</div>
     <div text-start class="TextTrimming" *ngIf="fieldName == 'InterestValueDate'">{{ rowData[fieldName] | DateTimePipe:'SD' }}</div>
-    <div text-start class="TextTrimming" *ngIf="fieldName == 'AccountingDate'">{{ rowData[fieldName] | DateTimePipe:'SD' }}</div>
 
     <!-- JournalNumber -->
     <div text-start class="TextTrimming" *ngIf="fieldName == 'JournalNumber'">
