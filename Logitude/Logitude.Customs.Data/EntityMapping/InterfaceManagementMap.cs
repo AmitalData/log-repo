@@ -70,11 +70,6 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.EntityLockId).HasColumnName("EntityLockId").HasMaxLength(15).IsUnicode(false);
 
-            this.Property(t => t.IsCustomsFile).HasColumnName("IsCustomsFile");
-
-            this.Property(t => t.IsUnifreight).HasColumnName("IsUnifreight");
-
-            this.Property(t => t.QueueDefinitionGroup).HasColumnName("QueueDefinitionGroup").HasMaxLength(100).IsUnicode(false);
         }
     }
 }

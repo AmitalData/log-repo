@@ -10,7 +10,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
     {
         ICommonDataContext commonDataContext;
 
-
+        public CommunicationAttachmentRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
 
         public CommunicationAttachmentRepository(ICommonDataContext context)
         {

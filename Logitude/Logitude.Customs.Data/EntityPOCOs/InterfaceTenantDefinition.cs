@@ -56,10 +56,6 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string QueueGroupCode { get; set; }
         [Column("SendTime")]
 	    public string SendTime { get; set; }
-        [Column("IsCustomsFile")]
-	    public bool? IsCustomsFile { get; set; }
-        [Column("IsUnifreight")]
-	    public bool? IsUnifreight { get; set; }
     }
 }
 	 

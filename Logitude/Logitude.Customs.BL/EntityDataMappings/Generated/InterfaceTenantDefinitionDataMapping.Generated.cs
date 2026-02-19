@@ -125,15 +125,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 				entityPOCO.SendTime = entityPM.SendTime;
 			}
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsCustomsFile))
-            {
-				entityPOCO.IsCustomsFile = entityPM.IsCustomsFile;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsUnifreight))
-            {
-				entityPOCO.IsUnifreight = entityPM.IsUnifreight;
-			}
 			}
 
 		public void POCOToPM(InterfaceTenantDefinitionPM entityPM, POCO.InterfaceTenantDefinition entityPOCO)
@@ -199,16 +190,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.SendTime = entityPOCO.SendTime;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsCustomsFile))
-            {
-					entityPM.IsCustomsFile = entityPOCO.IsCustomsFile;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsUnifreight))
-            {
-					entityPM.IsUnifreight = entityPOCO.IsUnifreight;
-            }
-
+		
 		}
 
 		public void PMToOldPM(InterfaceTenantDefinitionPM entityPM, InterfaceTenantDefinitionPM oldEntityPM)
