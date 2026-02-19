@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Mocks;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.InvoiceModel;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
@@ -63,8 +61,6 @@ using Logitude.Accounting.Data.Enums;
 using AccountingEntityValues = Logitude.BL.InvoiceModel.CloseTables.AccountingEntityValues;
 using Logitude.Server.Tools.QueueService;
 using Logitude.BL.InfrastructureModel.EntityQueries;
-using Logitude.BL.InvoiceModel.Tools.Exceptions;
-
 
 
 
@@ -740,6 +736,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             {
                 entityPM.SetApproved = false;
                 entityPM.StatusCode = "AC";
+                this.GenerateInvoiceNumber();
             }
             if (invoice.StatusCode == "AR")
             {
@@ -760,7 +757,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                 if (invoice.ApprovedDate != null)
                 {
-                    throw new InvoiceAlreadyApprovedException("This invoice is already approved");
+                    throw new ApplicationException("This invoice is already approved");
                 }
             }
 
@@ -770,10 +767,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             }
 
             this.ValidateHigherStatus();
-            if (entityPM.IsAutoCredit && entityPM.SetApprovedAutoCredit)
-            {
-                this.GenerateInvoiceNumber();
-            }
+
             if (entityPM.SetCancelDraft)
             {
                 this.CancelDraftInvoice();
@@ -1167,7 +1161,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                             }
                         }
 
-                        throw new InvoiceAlreadyApprovedException(msg);
+                        throw new ApplicationException(msg);
                     }
                 }
 
@@ -1633,11 +1627,6 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                 int year = myComparativeDate.Value.Year;
                                 int month = myComparativeDate.Value.Month;
                                 month += myPaymentTerm.NumberOfMonths;
-                                if (month > 12)
-                                {
-                                    month -= 12;
-                                    year += 1;
-                                }
                                 int daysInMonth = DateTime.DaysInMonth(year, month);
 
                                 myComparativeDate = new DateTime(year, month, daysInMonth, 0, 0, 0);
@@ -2212,7 +2201,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                         if (line.GLAccountId == null)
                         {
-                            if (line.ReceivableCreditGLAccountId == myChargesType.ReceivableCreditGLAccountId && myChargesType.AccountingVATSplit)
+
+                            if (myChargesType.AccountingVATSplit)
                             {
                                 ChargeTypeAccounting myChargeTypeAccounting = (from d in iQueryable_ChargeTypeAccounting where d.ChargeTypeId == line.ChargesTypeId && d.VatTypeId == line.VatTypeId select d).FirstOrDefault();
                                 if (myChargeTypeAccounting != null)
@@ -2220,9 +2210,10 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                     line.GLAccountId = myChargeTypeAccounting.ReceivableCreditGLAccountId;
                                 }
                             }
+
                             else
                             {
-                                line.GLAccountId = line.ReceivableCreditGLAccountId;
+                                line.GLAccountId = myChargesType.ReceivableCreditGLAccountId;
                             }
 
                             if (string.IsNullOrEmpty(line.GLAccountId))
@@ -3302,16 +3293,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     myLineNumber += 1;
                 }
             }
-           else  if (this.isApprovingInvoice || this.entityPM.SetApprovedAutoCredit)
-            {
-                foreach (ARInvoiceLinePM item in entityPM.InvoiceLines)
-                {
-                    this.UpdateInvoiceLine(item);
-                    this.UpdateReceivable(item);
-                    isUpdateTotalVats = true;                    
 
-                }
-            }
             else
             {
                 int myLineNumber = invoiceLineRepository.GetBiggestLineNumber(entityPM.Id, tenant);
@@ -3475,8 +3457,7 @@ $"[InterestTransactionPM] CreateInterestTransactionLineForVatLine  ARInvoiceId (
                     CurrencyId = entityPM.InvoiceCurrencyId,
                     ChangeSetOp = ChangeSetOperation.Insert,
                     JournalId = entityPM.JournalId,
-                    AccountingDate = entityPM.InvoiceDate,
-                    Notes = entityPM.MainEntityReference,
+                    AccountingDate = entityPM.InvoiceDate
                 };
                 return InterestTransactionVatLine;
             }
@@ -3562,8 +3543,8 @@ $"[InterestTransactionPM] CreateInterestTransactionLineForInvoiceLine  ARInvoice
                     ChangeSetOp = ChangeSetOperation.Insert,
                     CurrencyId = invoiceLine.ForiegnCurrencyId,
                     JournalId = entityPM.JournalId,
-                    AccountingDate = entityPM.InvoiceDate,
-                    Notes = entityPM.MainEntityReference,
+                    AccountingDate = entityPM.InvoiceDate
+
                 };
                 return interestTransaction;
             }
@@ -4205,14 +4186,9 @@ $"[InterestTransactionPM] CreateInterestTransactionLineForInvoiceLine  ARInvoice
                     if (entityPM.StatusCode == InvoiceAutoCreditStatus)
                         AutoReconcileAutoCreditInvoiceWithAutoCreditedInvoice(journal);
 
-                    AccountingEntityJournalRepository accountingEntityJournalRepository = new AccountingEntityJournalRepository(tenant);
-                    bool accountingEntityJournalExists = accountingEntityJournalRepository.Exists(journal.Tenant, journal.AccountingEntityId, journal.AccountingEntityCode, AccountingEntityJournalActions.ARInvoiceApprove, null);
 
                     IJournalUpdateServiceExt journalUpdate = ContainerAccessor.Container.Resolve(typeof(IJournalUpdateServiceExt), "JournalUpdateServiceExt", new ParameterOverride("", 1)) as IJournalUpdateServiceExt;
-                    if (!accountingEntityJournalExists)
-                    {
-                        AddAccountingEntitieJournal(journal, AccountingEntityJournalActions.ARInvoiceApprove);
-                    }
+                    AddAccountingEntitieJournal(journal, AccountingEntityJournalActions.ARInvoiceApprove);
                     journalUpdate.Update(journal);
                     if (interestTransaction != null)
                     {
@@ -5174,15 +5150,15 @@ $"[InterestTransactionPM] CreateInterestTransactionLineForInvoiceLine  ARInvoice
 
         }
 
-        public void BuildDocumentsForNewInvoice(ARInvoicePM aRInvoicePM, InterestReportPM interestReportPM)
+        public void BuildDocumentsForNewInvoice(ARInvoicePM aRInvoicePM, InterestReportPM interestReport)
         {
 
-            ObjectTableQuery objectTableQuery = new ObjectTableQuery(interestReportPM.Tenant);
+            ObjectTableQuery objectTableQuery = new ObjectTableQuery(interestReport.Tenant);
             string InterestReportObjectTableId = objectTableQuery.GetObjectTableIdByName("InterestReport");
             string ARInvoiceObjectTableId = objectTableQuery.GetObjectTableIdByName("ARInvoice");
             string ARInvoiceChildEntityReference = !string.IsNullOrEmpty(aRInvoicePM.InvoiceNumber) ? aRInvoicePM.InvoiceNumber : "Draft: " + aRInvoicePM.DraftNumber;
             BuildDocument(aRInvoicePM.Id, "999G", ARInvoiceObjectTableId, ARInvoiceChildEntityReference , aRInvoicePM.CreatedByUserId, aRInvoicePM.Tenant);
-            BuildDocument(interestReportPM.Id, "ITDT", InterestReportObjectTableId, interestReportPM.ReportNumber, aRInvoicePM.CreatedByUserId, aRInvoicePM.Tenant);
+            BuildDocument(interestReport.Id, "ITDT", InterestReportObjectTableId, interestReport.ReportNumber, aRInvoicePM.CreatedByUserId, aRInvoicePM.Tenant);
         }
 
         public void BuildDocumentsForNewInvoiceLite(ARInvoicePM aRInvoicePM, InterestReport interestReport)
@@ -5234,24 +5210,8 @@ $"[InterestTransactionPM] CreateInterestTransactionLineForInvoiceLine  ARInvoice
                     ChildReference = reference,
                     
                 };
-
                 DocumentHelper documentHelper = new DocumentHelper();
-                 
-                var result = documentHelper.PutCreateDocumentOut(documentOutArgs, userId);
-                DocumentOutPM documentOutPM = result.document;
-                if (!result.isSign)
-                {
-                    DocumentTypePM documentTypePM = documentTypeQuery.GetSinglePM(documentTypeId, tenant);
-                    IExportDocumentHelper exportDocumentHelper = ContainerAccessor.Container.Resolve(typeof(IExportDocumentHelper), "ExportDocumentHelper", new ParameterOverride("", 1)) as IExportDocumentHelper;
-
-                    documentTypePM.DocumentTypeCopies.ForEach(doc =>
-                    {
-                        exportDocumentHelper.ExportDocument2Pdf(documentTypeId, id, objectTable?.Id, null, null, documentOutPM.Id, tenant, doc.Id, userId);
-                    });
-                }
-
-
-
+                DocumentOutPM documentOutPM = documentHelper.PutCreateDocumentOut(documentOutArgs, userId);
             }
             catch (Exception ex)
             {
@@ -5263,40 +5223,6 @@ $"[InterestTransactionPM] CreateInterestTransactionLineForInvoiceLine  ARInvoice
 
 
         }
-
-
-       /* public void PrintOrSendInvoice(string id, string reference, int tenant, string userId)
-        {
-            try
-            {
-                ObjectTableRepository objectTabelRepository = new ObjectTableRepository(tenant);
-                Simplog.Data.InfrastructureModel.EntityPOCOs.ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("ARInvoice", tenant, true);
-                DocumentTypeQuery documentTypeQuery = new DocumentTypeQuery(tenant);
-                string documentTypeId = documentTypeQuery.GetDocumentTypeListIdByCodeAndTenant("999G", tenant);
-                CreateDocumentOutArgs documentOutArgs = new CreateDocumentOutArgs()
-                {
-                    EntityId = id,
-                    Tenant = tenant,
-                    ObjectTableId = objectTable?.Id,
-                    SignHSM = true,
-                    DocumentTypeId = documentTypeId,
-                    ChildReference = reference,
-
-                };
-                DocumentHelper documentHelper = new DocumentHelper();
-                DocumentOutPM documentOutPM = documentHelper.PutCreateDocumentOut(documentOutArgs, userId);
-            }
-            catch (Exception ex)
-            {
-
-                throw ex;
-            }
-
-
-
-
-        }
-       */
 
         public class ConfirmationNumberAPI
         {

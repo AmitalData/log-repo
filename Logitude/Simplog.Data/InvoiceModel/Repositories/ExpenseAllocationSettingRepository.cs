@@ -1,8 +1,7 @@
-﻿using Simplog.Data.InfrastructureModel.EntityPOCOs;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Simplog.Data.InvoiceModel.Repositories
 {
@@ -27,15 +26,7 @@ namespace Simplog.Data.InvoiceModel.Repositories
         {
             return (from record in context.ExpenseAllocationSettings where record.EntityId == entityId && record.Tenant == tenant && record.ObjectTableId == objectTableId select record).FirstOrDefault();          
         }
-        public IQueryable<ExpenseAllocationSetting> GetExpenseAllocationSettings(int tenant)
-        {
-            return (from record in context.ExpenseAllocationSettings where record.Tenant == tenant select record);
-        }
-        public ExpenseAllocationSetting GetSingleById(string id, int tenant)
-        {
-            return (from a in context.ExpenseAllocationSettings where a.Id == id && a.Tenant == tenant select a).FirstOrDefault();
-        }
-        public void Add(ExpenseAllocationSetting entity)
+         public void Add(ExpenseAllocationSetting entity)
         {
             context.ExpenseAllocationSettings.Add(entity);
         }
@@ -77,10 +68,9 @@ namespace Simplog.Data.InvoiceModel.Repositories
         public ExpenseAllocationSetting GetSingle(Simplog.Server.Infrastructure.EntityKeyFields entityKeys)
         {
             throw new System.NotImplementedException();
-
         }
 
 
-
+     
     }
 }

@@ -1,0 +1,62 @@
+{
+  "phase": "phase1-frontend",
+  "name": "Frontend Cleanup",
+  "branch": "refactor/frontend-cleanup",
+  "status": "not_started",
+  "steps": [
+    {
+      "id": "1.1-fe",
+      "name": "Remove node_modules folders",
+      "status": "not_started",
+      "foldersRemoved": 0,
+      "spaceSavedMB": 0,
+      "backupBranch": null,
+      "commitSha": null,
+      "timestamp": null
+    },
+    {
+      "id": "1.2-fe",
+      "name": "Remove dist folders",
+      "status": "not_started",
+      "foldersRemoved": 0,
+      "spaceSavedMB": 0,
+      "commitSha": null,
+      "timestamp": null
+    },
+    {
+      "id": "1.3-fe",
+      "name": "Remove .angular cache",
+      "status": "not_started",
+      "foldersRemoved": 0,
+      "commitSha": null,
+      "timestamp": null
+    },
+    {
+      "id": "1.4-fe",
+      "name": "Update .gitignore for frontend",
+      "status": "not_started",
+      "commitSha": null,
+      "timestamp": null
+    },
+    {
+      "id": "1.5-fe",
+      "name": "Test npm install",
+      "status": "not_started",
+      "installSucceeded": null,
+      "timestamp": null
+    },
+    {
+      "id": "1.6-fe",
+      "name": "Measure improvement",
+      "status": "not_started",
+      "timestamp": null
+    }
+  ],
+  "currentStep": "1.1-fe",
+  "lastUpdated": null,
+  "metrics": {
+    "before": null,
+    "after": null
+  }
+}
+

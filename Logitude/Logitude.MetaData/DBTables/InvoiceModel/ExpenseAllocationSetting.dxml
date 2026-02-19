@@ -93,7 +93,7 @@
   <Column
     Name="PaymentDateType"
     Type="varchar"
-    Size="50">
+    Size="10">
     <Constraints
       Nullable="true" />
   </Column>

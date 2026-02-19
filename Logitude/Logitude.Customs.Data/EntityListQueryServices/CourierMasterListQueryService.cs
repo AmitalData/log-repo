@@ -1,5 +1,4 @@
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -16,7 +15,6 @@ using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.EntityLists;
 using Devart.Common;
 using Devart.Data.Linq;
-using Logitude.Customs.Data.Repsitories;
 
 namespace Logitude.Customs.Data.EntityListQueryServices
 {
@@ -31,37 +29,30 @@ namespace Logitude.Customs.Data.EntityListQueryServices
         IQueryable<HawbQuantityNoTransPaymentClass> qHawbQuantityNoTransPayment;
         private IQueryable<CourierMasterList> GetIqueryableList(IQueryable<CourierMaster> iQueryable)
         {
-
-           var qOpenDeclarations =
-           from cd in context.CourierDeclarations
-           join s in context.DeclarationCourierStatuses
-               on cd.DeclarationId equals s.DeclarationId
-           where s.IsClosedForFollowUp == false
-           group cd by cd.CourierMasterId into g
-           select new OpenDeclarationsClass
-           {
-               CourierMasterId = g.Key,
-               OpenDeclarations = g.Count()
-           };
-
+            var openDeclarationsGrouped = from dcs in context.DeclarationCourierStatuses
+                                          where !dcs.IsClosedForFollowUp
+                                          join cd in context.CourierDeclarations
+                                          on dcs.DeclarationId equals cd.DeclarationId
+                                          group dcs by cd.CourierMasterId into g
+                                          select new
+                                          {
+                                              CourierMasterId = g.Key,
+                                              OpenDeclarations = g.Count()
+                                          };
             var today = DateTime.Now.Date;
 
             IQueryable<CourierMasterList> query = (from a in iQueryable.Include("CustomsAirline").Include("MAWBType").Include("OriginPort").Include("GatewayPort").Include("Card")
+                                                   join openDecl in openDeclarationsGrouped
+                                                   on a.Id equals openDecl.CourierMasterId into openDeclJoin
+                                                   from openDecl in openDeclJoin.DefaultIfEmpty()
 
                                                    join qCourierDeclarationStatuses in context.DecCourierStatusesViews
                                                    on a.Id equals qCourierDeclarationStatuses.CourierMasterId
                                                    into qCourierDeclarationStatusesJoin
                                                    from myJoinCourierDeclarationStatuses in qCourierDeclarationStatusesJoin.DefaultIfEmpty()
-                                                   
-
-                                                    join recOpenDeclarations in qOpenDeclarations
-                                                    on a.Id equals recOpenDeclarations.CourierMasterId
-                                                    into joinOpenDeclarations
-                                                    from recOpenDeclarations in joinOpenDeclarations.DefaultIfEmpty()
 
                                                    select new CourierMasterList()
                                                    {
-                                                       // comments made because of cannot convert nclob to char exception ---mohammad
                                                        SearchFields = a.SearchFields,
                                                        AirlinePrefix = a.CustomsAirline == null ? null : a.CustomsAirline.AirlinePrefix,
                                                        Id = a.Id,
@@ -75,7 +66,6 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                        IsOpen = a.IsOpen,
                                                        IsCancelled = a.IsCancelled,
                                                        EstimatedArrivalDate = a.EstimatedArrivalDate,
-                                                       //EstimatedArrivalDateOnly = a.EstimatedArrivalDate != null ? a.EstimatedArrivalDate.Value.Date : a.EstimatedArrivalDate,
                                                        GatewayPortName = a.GatewayPort != null ? a.GatewayPort.LocalName : null,
                                                        OriginPortName = a.OriginPort != null ? a.OriginPort.LocalName : null,
                                                        CreateDateTime = a.CreateDateTime,
@@ -102,7 +92,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                        EstimatedArrivalColor =
                                                        a.EstimatedArrivalDate != null ? (System.Data.Entity.DbFunctions.TruncateTime(a.EstimatedArrivalDate.Value) == today ? "Blue" :
                                                        (System.Data.Entity.DbFunctions.TruncateTime(a.EstimatedArrivalDate.Value) < today ? "Red" : "Black")) : "Black",
-                                                       OpenDeclarations = recOpenDeclarations != null ? recOpenDeclarations.OpenDeclarations : 0,
+                                                       OpenDeclarations = openDecl != null ? openDecl.OpenDeclarations : 0,
                                                        CourierMasterRemarks = a.CourierMasterRemarks,
                                                        EstimatedArrivalTimeOnly = a.EstimatedArrivalDate,
                                                        EstimatedArrivalDateOnly = a.EstimatedArrivalDate,
@@ -114,14 +104,12 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                        HawbQuantityNoClassification = myJoinCourierDeclarationStatuses.QuantityNoClassification,
                                                        HawbQuantityNoTransManifest = myJoinCourierDeclarationStatuses.QuantityNoManifest,
                                                        HawbQuantityNoTransDeclaration = myJoinCourierDeclarationStatuses.QuantityNoDeclaration,
-
                                                        DocumentStatusCode = myJoinCourierDeclarationStatuses.DocumentStatusCode,
                                                        CourierPaymentStatusCode = myJoinCourierDeclarationStatuses.CourierPaymentStatusCode,
                                                        CourierDeclarationStatusCode = myJoinCourierDeclarationStatuses.CourierDeclarationStatusCode,
                                                        CourierManifestStatusCode = myJoinCourierDeclarationStatuses.CourierManifestStatusCode,
                                                        IsCourierMissingClassification = myJoinCourierDeclarationStatuses.IsCourierMissingClassification,
-                                                       IsReadyForInvoice = a.IsReadyForInvoice,
-                                                       UnifreightLeadingFile = a.UnifreightLeadingFile,
+                                                       IsReadyForInvoice = a.IsReadyForInvoice
                                                    }); ;
             return query;
         }
@@ -293,135 +281,125 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
         public List<CourierMasterList> AddCalcFields(List<CourierMasterList> entityLists)
         {
-            CourierDeclarationRepository courierDeclarationRepository = new CourierDeclarationRepository(context);
-           
-            var today = DateTime.Now.Date;
-            var ids = entityLists.Select(x => x.Id).ToList();
-            var qJoin =
-(from p in context.CourierDeclarations
- join dec in context.Declarations
-                     on p.DeclarationId equals dec.Id
-                     into DecJoin
- from myDeclarations in DecJoin
- join sts1 in context.DeclarationCourierStatuses
-                     on myDeclarations.Id equals sts1.DeclarationId
-                     into DeclarationCourierStatusesJoin
- from myDeclarationCourierStatuses in DeclarationCourierStatusesJoin
- where ids.Contains(p.CourierMasterId)
- select new
- {
-     p.CourierMasterId,
-     myDeclarations.CourierCustomStatusCode,
-     myDeclarationCourierStatuses.IsClosedForFollowUp,
-     myDeclarationCourierStatuses.CourierDeclarationStatusCode,
-     myDeclarationCourierStatuses.CourierPendingReasonList,
-     myDeclarationCourierStatuses.DocumentStatusCode,
-     myDeclarationCourierStatuses.IsCourierMissingClassification
- });
+            var ids = entityLists.Select(x => x.Id).ToHashSet();
 
-            var qJoinList = qJoin.ToList();
+            var qJoin = (
+                from p in context.CourierDeclarations
+                where ids.Contains(p.CourierMasterId)
+                join dec in context.Declarations on p.DeclarationId equals dec.Id into DecJoin
+                from myDeclarations in DecJoin.DefaultIfEmpty()
+                join sts in context.DeclarationCourierStatuses on myDeclarations.Id equals sts.DeclarationId into StsJoin
+                from myStatus in StsJoin.DefaultIfEmpty()
+                select new
+                {
+                    p.CourierMasterId,
+                    myDeclarations.CourierCustomStatusCode,
+                    myStatus.IsClosedForFollowUp,
+                    myStatus.CourierDeclarationStatusCode,
+                    myStatus.CourierPendingReasonList,
+                    myStatus.DocumentStatusCode,
+                    myStatus.IsCourierMissingClassification
+                }
+            ).ToList();
 
-            List<MyJoin> qMyJoin =
-                  (
-                  from rec in qJoinList
-                  group rec by rec.CourierMasterId into g
-                  select new MyJoin
-                  {
-                      CourierMasterId = g.Key,
-                      IsClosedForFollowUp0 = g.Count(r => r.IsClosedForFollowUp == false),
-                      P900 = g.Count(
-                          r => r.CourierPendingReasonList != null && r.CourierPendingReasonList.Contains("900")),
-                      IsCourierMissingClassification = g.Count(r => r.IsCourierMissingClassification == true),
-                      IsMissingImporterId = g.Count(
-                          r => (r.CourierPendingReasonList != null && r.CourierPendingReasonList.Contains("902"))
-                          && r.IsClosedForFollowUp == false),
-                      IsPendingCustoms = g.Count(r => r.CourierCustomStatusCode == "2" && r.IsClosedForFollowUp == false),
-                      IsSuspendedDeclarations = g.Count(r => r.IsClosedForFollowUp == false && r.CourierCustomStatusCode == "2"),
+            var joinMap = qJoin
+                .GroupBy(r => r.CourierMasterId)
+                .ToDictionary(g => g.Key, g =>
+                {
+                    var list = g.ToList();
+                    int closed = list.Count(r => r.IsClosedForFollowUp == false);
+                    int hawbQtyNoDocs = list.Count(s => !s.IsClosedForFollowUp && (s.DocumentStatusCode == "M" || s.DocumentStatusCode == "X"));
 
-                      HawbQuantityNoDocuments = g.Count(s => s.IsClosedForFollowUp == false && s.DocumentStatusCode == "M"
-                      || s.IsClosedForFollowUp == false && s.DocumentStatusCode == "X"),
+                    return new MyJoin
+                    {
+                        CourierMasterId = g.Key,
+                        IsClosedForFollowUp0 = closed,
+                        P900 = list.Count(r => r.CourierPendingReasonList?.Contains("900") == true),
+                        IsCourierMissingClassification = list.Count(r => r.IsCourierMissingClassification == true),
+                        IsMissingImporterId = list.Count(r => r.CourierPendingReasonList?.Contains("902") == true && !r.IsClosedForFollowUp),
+                        IsPendingCustoms = list.Count(r => r.CourierCustomStatusCode == "2" && !r.IsClosedForFollowUp),
+                        IsSuspendedDeclarations = list.Count(r => !r.IsClosedForFollowUp && r.CourierCustomStatusCode == "2"),
+                        HawbQuantityNoDocuments = hawbQtyNoDocs,
+                        NoDocumentsStatusR = list.Count(r => !r.IsClosedForFollowUp && r.CourierDeclarationStatusCode == "R"),
+                        NoDocumentsStatusI = list.Count(r => !r.IsClosedForFollowUp && r.CourierDeclarationStatusCode == "I"),
+                        NoDocumentsStatusV = list.Count(r => !r.IsClosedForFollowUp && r.CourierDeclarationStatusCode == "V"),
+                    };
+                });
 
-                      NoDocumentsStatusR = g.Count(s => s.IsClosedForFollowUp == false && s.CourierDeclarationStatusCode == "R"),
-                      NoDocumentsStatusI = g.Count(s => s.IsClosedForFollowUp == false && s.CourierDeclarationStatusCode == "I"),
-                      NoDocumentsStatusV = g.Count(s => s.IsClosedForFollowUp == false && s.CourierDeclarationStatusCode == "V"),
-
-                      //NoDocumentsStatus = g.All(s => s.IsClosedForFollowUp == false && s.CourierDeclarationStatusCode == "R") ? -2 :
-                      //                    g.Any(s => s.IsClosedForFollowUp == false && s.CourierDeclarationStatusCode == "I") ? -3 :
-                      //                    g.All(s => s.IsClosedForFollowUp == false && s.CourierDeclarationStatusCode == "V") ? -4 : 0,
-
-                  }
-                  ).ToList();
-
-
-
-            entityLists = entityLists.Select(a => new CourierMasterList()
+            return entityLists.Select(a =>
             {
-                SearchFields = a.SearchFields,
-                AirlinePrefix = a.AirlinePrefix,
-                Id = a.Id,
-                Tenant = a.Tenant,
-                MAWB = a.MAWB,
-                MAWBTypeCode = a.MAWBTypeCode,
-                MAWBTypeName = a.MAWBTypeName,
-                HAWB = a.HAWB,
-                GatewayPortCode = a.GatewayPortCode,
-                OriginPortCode = a.OriginPortCode,
-                IsOpen = a.IsOpen,
-                IsCancelled = a.IsCancelled,
-                EstimatedArrivalDate = a.EstimatedArrivalDate,
-                GatewayPortName = a.GatewayPortName,
-                OriginPortName = a.OriginPortName,
-                CreateDateTime = a.CreateDateTime,
-                CreatedByUserName = a.CreatedByUserName,
-                AirlineId = a.AirlineId,
-                AirlineName = a.AirlineName,
-                UpdateDateTime = a.UpdateDateTime,
-                UpdatedByUserName = a.UpdatedByUserName,
-                ManifestNumber = a.ManifestNumber,
-                CreatedByUserId = a.CreatedByUserId,
-                DepartureDate = a.DepartureDate,
-                FlightNumber = a.FlightNumber,
-                GrossMassMeasure = a.GrossMassMeasure,
-                PackageQuantity = a.PackageQuantity,
-                ShortHAWB = a.ShortHAWB,
-                UpdatedByUserId = a.UpdatedByUserId,
-                WeightValueCode = a.WeightValueCode,
-                WeightValueName = a.WeightValueName,
-                StorageSiteCode = a.StorageSiteCode,
-                StorageSiteName = a.StorageSiteName,
-                TruckerId = a.TruckerId,
-                IntegratorCode = a.IntegratorCode,
-                IntegratorName = a.IntegratorName,
-                EstimatedArrivalColor = a.EstimatedArrivalColor,
-                CalcClosedForFollowUp = qMyJoin.FirstOrDefault(c => c.CourierMasterId == a.Id) != null ? qMyJoin.FirstOrDefault(c => c.CourierMasterId == a.Id).IsClosedForFollowUp0 : 0,
-                CalcMissingClassification = qMyJoin.FirstOrDefault(c => c.CourierMasterId == a.Id) != null ? qMyJoin.FirstOrDefault(c => c.CourierMasterId == a.Id).IsCourierMissingClassification : 0,
-                CalcMissingImporterId = qMyJoin.FirstOrDefault(c => c.CourierMasterId == a.Id) != null ? qMyJoin.FirstOrDefault(c => c.CourierMasterId == a.Id).IsMissingImporterId : 0,
-                CalcPending900 = qMyJoin.FirstOrDefault(c => c.CourierMasterId == a.Id) != null ? qMyJoin.FirstOrDefault(c => c.CourierMasterId == a.Id).P900 : 0,
-                CalcPendingCustoms = qMyJoin.FirstOrDefault(c => c.CourierMasterId == a.Id) != null ? qMyJoin.FirstOrDefault(c => c.CourierMasterId == a.Id).IsPendingCustoms : 0,
-                CalcSuspendedDeclarations = qMyJoin.FirstOrDefault(c => c.CourierMasterId == a.Id) != null ? qMyJoin.FirstOrDefault(c => c.CourierMasterId == a.Id).IsSuspendedDeclarations : 0,
-                NoOfCourierHawbWithoutDelivery = courierDeclarationRepository.CountNoOfCourierHawbWithoutDelivery(a.Id, a.Tenant).ToString(),
-                NoOfCourierHawbwWithoutHatara = courierDeclarationRepository.CounNoOfCourierHawbwWithoutHatara(a.Id, a.Tenant).ToString(),
-                HawbQuantityNoDocuments = qMyJoin.FirstOrDefault(c => c.CourierMasterId == a.Id) == null ? 0 :
-                qMyJoin.FirstOrDefault(c => c.CourierMasterId == a.Id).HawbQuantityNoDocuments > 0 ? qMyJoin.FirstOrDefault(c => c.CourierMasterId == a.Id).HawbQuantityNoDocuments
-                                            : qMyJoin.FirstOrDefault(c => c.CourierMasterId == a.Id).NoDocumentsStatusR == qMyJoin.FirstOrDefault(c => c.CourierMasterId == a.Id).IsClosedForFollowUp0 ? -2
-                                            : qMyJoin.FirstOrDefault(c => c.CourierMasterId == a.Id).NoDocumentsStatusI > 0 ? -3
-                                            : qMyJoin.FirstOrDefault(c => c.CourierMasterId == a.Id).NoDocumentsStatusV == qMyJoin.FirstOrDefault(c => c.CourierMasterId == a.Id).IsClosedForFollowUp0 ? -4 : 0,
+                joinMap.TryGetValue(a.Id, out var calc);
 
+                int noDocs = 0;
+                if (calc != null)
+                {
+                    if (calc.HawbQuantityNoDocuments > 0)
+                        noDocs = calc.HawbQuantityNoDocuments;
+                    else if (calc.NoDocumentsStatusR == calc.IsClosedForFollowUp0)
+                        noDocs = -2;
+                    else if (calc.NoDocumentsStatusI > 0)
+                        noDocs = -3;
+                    else if (calc.NoDocumentsStatusV == calc.IsClosedForFollowUp0)
+                        noDocs = -4;
+                }
 
+                return new CourierMasterList
+                {
+                    SearchFields = a.SearchFields,
+                    AirlinePrefix = a.AirlinePrefix,
+                    Id = a.Id,
+                    Tenant = a.Tenant,
+                    MAWB = a.MAWB,
+                    MAWBTypeCode = a.MAWBTypeCode,
+                    MAWBTypeName = a.MAWBTypeName,
+                    HAWB = a.HAWB,
+                    GatewayPortCode = a.GatewayPortCode,
+                    OriginPortCode = a.OriginPortCode,
+                    IsOpen = a.IsOpen,
+                    IsCancelled = a.IsCancelled,
+                    EstimatedArrivalDate = a.EstimatedArrivalDate,
+                    GatewayPortName = a.GatewayPortName,
+                    OriginPortName = a.OriginPortName,
+                    CreateDateTime = a.CreateDateTime,
+                    CreatedByUserName = a.CreatedByUserName,
+                    AirlineId = a.AirlineId,
+                    AirlineName = a.AirlineName,
+                    UpdateDateTime = a.UpdateDateTime,
+                    UpdatedByUserName = a.UpdatedByUserName,
+                    ManifestNumber = a.ManifestNumber,
+                    CreatedByUserId = a.CreatedByUserId,
+                    DepartureDate = a.DepartureDate,
+                    FlightNumber = a.FlightNumber,
+                    GrossMassMeasure = a.GrossMassMeasure,
+                    PackageQuantity = a.PackageQuantity,
+                    ShortHAWB = a.ShortHAWB,
+                    UpdatedByUserId = a.UpdatedByUserId,
+                    WeightValueCode = a.WeightValueCode,
+                    WeightValueName = a.WeightValueName,
+                    StorageSiteCode = a.StorageSiteCode,
+                    StorageSiteName = a.StorageSiteName,
+                    TruckerId = a.TruckerId,
+                    IntegratorCode = a.IntegratorCode,
+                    IntegratorName = a.IntegratorName,
+                    EstimatedArrivalColor = a.EstimatedArrivalColor,
+                    NoOfCourierHawbWithoutDelivery = string.IsNullOrWhiteSpace(a.NoOfCourierHawbWithoutDelivery) ? "0" : a.NoOfCourierHawbWithoutDelivery,
+                    NoOfCourierHawbwWithoutHatara = string.IsNullOrWhiteSpace(a.NoOfCourierHawbwWithoutHatara) ? "0" : a.NoOfCourierHawbwWithoutHatara,
+
+                    CalcClosedForFollowUp = calc?.IsClosedForFollowUp0 ?? 0,
+                    CalcMissingClassification = calc?.IsCourierMissingClassification ?? 0,
+                    CalcMissingImporterId = calc?.IsMissingImporterId ?? 0,
+                    CalcPending900 = calc?.P900 ?? 0,
+                    CalcPendingCustoms = calc?.IsPendingCustoms ?? 0,
+                    CalcSuspendedDeclarations = calc?.IsSuspendedDeclarations ?? 0,
+                    HawbQuantityNoDocuments = noDocs
+                };
             }).ToList();
-
-            return entityLists;
         }
     }
-    internal class OpenDeclarationsClass
-    {
-        public string CourierMasterId { get; set; }
-        public int OpenDeclarations { get; set; }
-    }
 
-    internal class HawbQuantityNoDocumentsClass
+        internal class HawbQuantityNoDocumentsClass
     {
-        public int Status { get; internal set; }
+         public int Status { get; internal set; }
         public string CourierMasterId { get; internal set; }
         public int HawbQuantityNoDocuments { get; internal set; }
     }
@@ -441,9 +419,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
         public int HawbQuantityNoTransManifest { get; internal set; }
     }
 
-    internal class HawbQuantityNoTransDeclarationClass
+    internal  class HawbQuantityNoTransDeclarationClass
     {
-        public int Status { get; internal set; }
+        public  int Status { get; internal set; }
         public string CourierMasterId { get; internal set; }
         public int HawbQuantityNoTransDeclaration { get; internal set; }
     }

@@ -1,0 +1,383 @@
+﻿ASYNC/AWAIT OPPORTUNITY ANALYSIS
+Generated: 2025-10-19 12:14:28
+
+This report identifies synchronous database calls that should be async.
+
+Why async matters:
+- Synchronous calls block threads
+- Async allows threads to handle other requests
+- Can increase throughput by 2-3x
+
+Example BAD pattern:
+  public ShipmentPM Get(string id) {
+      return repo.GetById(id);  // Blocks thread!
+  }
+
+Example GOOD pattern:
+  public async Task<ShipmentPM> GetAsync(string id) {
+      return await repo.GetByIdAsync(id);  // Non-blocking!
+  }
+
+========================================
+
+
+CONTROLLER ACTIONS WITHOUT ASYNC
+Found 8 synchronous actions (showing first 50):
+
+File: .\Logitude\JustWebFreight\WebFreight.Web\Controllers\CargoTrackingModel\CargoSessionController.cs
+Line 16: public IHttpActionResult GetSessionTimeOut()
+
+File: .\Logitude\JustWebFreight\WebFreight.Web\Controllers\CommonDataModel\ExternalLinkController.cs
+Line 20: public IHttpActionResult GetExternalLink(string Ref, string param)
+
+File: .\Logitude\JustWebFreight\WebFreight.Web\Controllers\CommonDataModel\ExternalLinkController.cs
+Line 44: public IHttpActionResult GetForward(string token)
+
+File: .\Logitude\JustWebFreight\WebFreight.Web\Controllers\DigitalPortal\DigitalTotangoController.cs
+Line 14: public IHttpActionResult Post(TotangoActivityInfo activityInfo)
+
+File: .\Logitude\JustWebFreight\WebFreight.Web\Controllers\WebHook\LinksGatewayController.cs
+Line 20: public IHttpActionResult GetLink(string Menu, string SecurityKey="", string Tenant= "")
+
+File: .\Logitude\JustWebFreight\WebFreight.Web\Controllers\WebServices\SyncCCUTablesController.cs
+Line 13: public IHttpActionResult GetSyncData(string fileNo = null, int? customsFileNo = null, bool allTask = false)
+
+File: .\Logitude\JustWebFreight\WebFreight.Web\Controllers\WebServices\SyncCCUTablesController.cs
+Line 34: public IHttpActionResult UpdateSyncData(string fileNo, DateTime syncDT)
+
+File: .\Logitude\JustWebFreight\WebFreight.Web\Controllers\WebServices\SyncCCUTablesController.cs
+Line 55: public IHttpActionResult GetLastSyncDate(string fileNo)
+
+
+REPOSITORY METHODS WITHOUT ASYNC
+Found 50 synchronous methods (showing first 50):
+
+File: .\Logitude\Simplog.Data\Azure\Repositories\CommunicationLogsRepository.cs
+Line 77: public void Update(CommunicationLogsAzure entity)
+
+File: .\Logitude\Simplog.Data\CommonDataModel\Repositories\AccountingPartnerRepository.cs
+Line 64: public void Update(AccountingPartner entity)
+
+File: .\Logitude\Simplog.Data\CommonDataModel\Repositories\AccountingSettingRepository.cs
+Line 45: public void Update(AccountingSetting entity)
+
+File: .\Logitude\Simplog.Data\CommonDataModel\Repositories\AccountingSystemRepository.cs
+Line 50: public void Update(AccountingSystem entity)
+
+File: .\Logitude\Simplog.Data\CommonDataModel\Repositories\AdditionalServiceRepository.cs
+Line 58: public void Update(AdditionalService entity)
+
+File: .\Logitude\Simplog.Data\CommonDataModel\Repositories\AddressRepository.cs
+Line 51: public Address GetByCardIdAndTypeId(string cardId, string addressTypeId, int tenant)
+
+File: .\Logitude\Simplog.Data\CommonDataModel\Repositories\AddressRepository.cs
+Line 106: public void Update(Address entity)
+
+File: .\Logitude\Simplog.Data\CommonDataModel\Repositories\AddressTypeRepository.cs
+Line 44: public void Update(AddressType entity)
+
+File: .\Logitude\Simplog.Data\CommonDataModel\Repositories\AgentRepository.cs
+Line 91: public void Update(Agent entity)
+
+File: .\Logitude\Simplog.Data\CommonDataModel\Repositories\AgentSharedDocumentRepository.cs
+Line 61: public void Update(AgentSharedDocument entity)
+
+File: .\Logitude\Simplog.Data\CommonDataModel\Repositories\AgentSharedManifestRepository.cs
+Line 77: public void Update(AgentSharedManifest entity)
+
+File: .\Logitude\Simplog.Data\CommonDataModel\Repositories\AirlineMessagingRuleRepository.cs
+Line 56: public void Update(AirlineMessagingRule entity)
+
+File: .\Logitude\Simplog.Data\CommonDataModel\Repositories\AirlineRepository.cs
+Line 119: public void Update(Airline entity)
+
+File: .\Logitude\Simplog.Data\CommonDataModel\Repositories\AirlineStatisticsRepository.cs
+Line 68: public void Update(AirlineStatistics entity)
+
+File: .\Logitude\Simplog.Data\CommonDataModel\Repositories\AutomationHistoryRepository.cs
+Line 41: public string GetAutomationXMLFromAutomationHistoryByDate(DateTime? updatedate , string automationId,  int tenant)
+
+File: .\Logitude\Simplog.Data\CommonDataModel\Repositories\AutomationHistoryRepository.cs
+Line 65: public void Update(AutomationHistory entity)
+
+File: .\Logitude\Simplog.Data\CommonDataModel\Repositories\AutomationLastUpdateRepository.cs
+Line 26: public AutomationLastUpdate GetSingleAutomationLastUpdate(string objecttableId, int tenant)
+
+File: .\Logitude\Simplog.Data\CommonDataModel\Repositories\AutomationLastUpdateRepository.cs
+Line 37: public void Add(AutomationLastUpdate entity)
+
+File: .\Logitude\Simplog.Data\CommonDataModel\Repositories\AutomationLastUpdateRepository.cs
+Line 42: public void Remove(AutomationLastUpdate entity)
+
+File: .\Logitude\Simplog.Data\CommonDataModel\Repositories\AutomationLastUpdateRepository.cs
+Line 50: public void Update(AutomationLastUpdate entity)
+
+File: .\Logitude\Simplog.Data\CommonDataModel\Repositories\AutomationLastUpdateRepository.cs
+Line 78: public AutomationLastUpdate GetSingle(Simplog.Server.Infrastructure.EntityKeyFields entityKeys)
+
+File: .\Logitude\Simplog.Data\CommonDataModel\Repositories\AutomationRepository.cs
+Line 58: public void Update(Automation entity)
+
+File: .\Logitude\Simplog.Data\CommonDataModel\Repositories\AutomationRepository.cs
+Line 155: public    Automation GetAutomationByIdFromCache(string objectTableId, string automationId, int tenant, string lastUpdateDate)
+
+File: .\Logitude\Simplog.Data\CommonDataModel\Repositories\AutomationResultEmailRecipientRepository.cs
+Line 71: public void Update(AutomationResultEmailRecipient entity)
+
+File: .\Logitude\Simplog.Data\CommonDataModel\Repositories\AWBDescriptionOfGoodsRepository.cs
+Line 53: public void Update(AWBDescriptionOfGoods entity)
+
+File: .\Logitude\Simplog.Data\CommonDataModel\Repositories\BlobFileRepository.cs
+Line 44: public void Update(BlobFile entity)
+
+File: .\Logitude\Simplog.Data\CommonDataModel\Repositories\BranchRepository.cs
+Line 68: public void Update(Branch entity)
+
+File: .\Logitude\Simplog.Data\CommonDataModel\Repositories\BusinessUnitRepository.cs
+Line 62: public void Update(BusinessUnit entity)
+
+File: .\Logitude\Simplog.Data\CommonDataModel\Repositories\CardContactAdditionalServiceRepository.cs
+Line 66: public void Update(CardContactAdditionalService entity)
+
+File: .\Logitude\Simplog.Data\CommonDataModel\Repositories\CardContactProductRepository.cs
+Line 67: public void Update(CardContactProduct entity)
+
+File: .\Logitude\Simplog.Data\CommonDataModel\Repositories\CardContactRepository.cs
+Line 168: public void Update(CardContact entity)
+
+File: .\Logitude\Simplog.Data\CommonDataModel\Repositories\CardExternalAccountsByProductRepository.cs
+Line 55: public void Update(CardExternalAccountsByProduct entity)
+
+File: .\Logitude\Simplog.Data\CommonDataModel\Repositories\CardExternalCodeByCurrencyRepository.cs
+Line 72: public void Update(CardExternalCodeByCurrency entity)
+
+File: .\Logitude\Simplog.Data\CommonDataModel\Repositories\CardRepository.cs
+Line 604: public void Update(Card entity)
+
+File: .\Logitude\Simplog.Data\CommonDataModel\Repositories\CardSearchRepository.cs
+Line 51: public void Update(CardSearch entity)
+
+File: .\Logitude\Simplog.Data\CommonDataModel\Repositories\CargoTenantMilestoneDefinitionRepository.cs
+Line 57: public void Update(CargoTenantMilestoneDefinition entity)
+
+File: .\Logitude\Simplog.Data\CommonDataModel\Repositories\CarrierAreaRepository.cs
+Line 50: public void Update(CarrierArea entity)
+
+File: .\Logitude\Simplog.Data\CommonDataModel\Repositories\CarrierAreasPortRepository.cs
+Line 53: public void Update(CarrierAreasPort entity)
+
+File: .\Logitude\Simplog.Data\CommonDataModel\Repositories\CarrierServiceLineRepository.cs
+Line 59: public void Update(CarrierServiceLine entity)
+
+File: .\Logitude\Simplog.Data\CommonDataModel\Repositories\ChargesExternalAccountsByProductRepository.cs
+Line 54: public void Update(ChargesExternalAccountsByProduct entity)
+
+File: .\Logitude\Simplog.Data\CommonDataModel\Repositories\ChargesTypeRepository.cs
+Line 108: public void Update(ChargesType entity)
+
+File: .\Logitude\Simplog.Data\CommonDataModel\Repositories\ChargeTypeAccountingRepository.cs
+Line 54: public void Update(ChargeTypeAccounting entity)
+
+File: .\Logitude\Simplog.Data\CommonDataModel\Repositories\CheckDigitControlAlgorithmRepository.cs
+Line 52: public void Update(CheckDigitControlAlgorithm entity)
+
+File: .\Logitude\Simplog.Data\CommonDataModel\Repositories\ColorIndexRepository.cs
+Line 51: public void Update(ColorIndex entity)
+
+File: .\Logitude\Simplog.Data\CommonDataModel\Repositories\CommodityRepository.cs
+Line 81: public void Update(Commodity entity)
+
+File: .\Logitude\Simplog.Data\CommonDataModel\Repositories\CommunicationAttachmentRepository.cs
+Line 53: public void Update(CommunicationAttachment entity)
+
+File: .\Logitude\Simplog.Data\CommonDataModel\Repositories\CommunicationLogRepository.cs
+Line 205: public void Update(CommunicationLog entity)
+
+File: .\Logitude\Simplog.Data\CommonDataModel\Repositories\CommunicationLogStepRepository.cs
+Line 88: public void Update(CommunicationLogStep entity)
+
+File: .\Logitude\Simplog.Data\CommonDataModel\Repositories\CommunicationLogTypeRepository.cs
+Line 54: public void Update(CommunicationLogType entity)
+
+File: .\Logitude\Simplog.Data\CommonDataModel\Repositories\CommunicationStatusTypeRepository.cs
+Line 54: public void Update(CommunicationStatusType entity)
+
+
+BUSINESS LOGIC WITH SYNC DATABASE CALLS
+Found 30 potential cases (showing first 30):
+
+File: .\Logitude\Logitude.BL\AnalyticTableServices\ShipmentAnalyticTableService.cs
+Line 43: AddressRepository addressRepository = new AddressRepository(commonDataContext);
+
+File: .\Logitude\Logitude.BL\AnalyticTableServices\ShipmentAnalyticTableService.cs
+Line 44: shipmentAnalytic.FromCountryId = shipment.ShipmentMasterData.MainCarriageFromAddressId == null ? null : addressRepository.GetSingleAddress(shipment.ShipmentMasterData.MainCarriageFromAddressId, shipment.Tenant)?.CountryId;
+
+File: .\Logitude\Logitude.BL\AnalyticTableServices\ShipmentAnalyticTableService.cs
+Line 45: shipmentAnalytic.ToCountryId = shipment.ShipmentMasterData.MainCarriageToAddressId == null ? null : addressRepository.GetSingleAddress(shipment.ShipmentMasterData.MainCarriageToAddressId, shipment.Tenant)?.CountryId;
+
+File: .\Logitude\Logitude.BL\AnalyticTableServices\ShipmentAnalyticTableService.cs
+Line 48: PortRepository portsRep = new PortRepository(commonDataContext);
+
+File: .\Logitude\Logitude.BL\CommonDataModel\APIDataContract\QueryService\AddressQueryService.cs
+Line 25: CardRepository cardRepository = new CardRepository(Tenant);
+
+File: .\Logitude\Logitude.BL\CommonDataModel\APIDataContract\QueryService\AddressQueryService.cs
+Line 26: string cardId = cardRepository.GetActiveCardIdByCode(MyEntity.ExternalId, Tenant);
+
+File: .\Logitude\Logitude.BL\CommonDataModel\APIDataContract\QueryService\APIUnassignedDataHandler.cs
+Line 24: private ObjectTableRepository objectTableRepository;
+
+File: .\Logitude\Logitude.BL\CommonDataModel\APIDataContract\QueryService\APIUnassignedDataHandler.cs
+Line 33: this.objectTableRepository = new ObjectTableRepository(this.tenant);
+
+File: .\Logitude\Logitude.BL\CommonDataModel\APIDataContract\QueryService\APIUnassignedDataHandler.cs
+Line 206: ObjectTable objectTable = this.objectTableRepository.GetObjectTableByName(objectTableName, this.tenant, true);
+
+File: .\Logitude\Logitude.BL\CommonDataModel\APIDataContract\QueryService\CustomerQueryService.cs
+Line 303: List<ContactPM> result = entityQuery.GetContactsbyCustomerId(customerId, tenant).ToList();
+
+File: .\Logitude\Logitude.BL\CommonDataModel\APIDataContract\QueryService\CustomFieldQueryService.cs
+Line 20: ObjectFieldRepository fieldsRepository;
+
+File: .\Logitude\Logitude.BL\CommonDataModel\APIDataContract\QueryService\CustomFieldQueryService.cs
+Line 21: ObjectTableRepository tablesRepository;
+
+File: .\Logitude\Logitude.BL\CommonDataModel\APIDataContract\QueryService\CustomFieldQueryService.cs
+Line 29: fieldsRepository = new ObjectFieldRepository(context);
+
+File: .\Logitude\Logitude.BL\CommonDataModel\APIDataContract\QueryService\CustomFieldQueryService.cs
+Line 30: tablesRepository = new ObjectTableRepository(context);
+
+File: .\Logitude\Logitude.BL\CommonDataModel\APIDataContract\QueryService\CustomFieldQueryService.cs
+Line 32: this.Table = tablesRepository.GetObjectTableByName(tableName, tenant, true);
+
+File: .\Logitude\Logitude.BL\CommonDataModel\APIDataContract\QueryService\CustomFieldQueryService.cs
+Line 33: this.TableCustomFields = fieldsRepository.GetCustomObjectFields(this.Table.Id, tenant);
+
+File: .\Logitude\Logitude.BL\CommonDataModel\APIDataContract\QueryService\DocumentsFilingQueryService.cs
+Line 38: ContactRepository contactRep = new ContactRepository(Tenant);
+
+File: .\Logitude\Logitude.BL\CommonDataModel\APIDataContract\QueryService\DocumentsFilingQueryService.cs
+Line 49: var objectTableId = ObjectTableRepository.GetObjectTableByName(documentsFiling.EntityType.Name);
+
+File: .\Logitude\Logitude.BL\CommonDataModel\APIDataContract\QueryService\DocumentsFilingQueryService.cs
+Line 52: var documentTypeId = new DocumentTypeRepository(tenant).GetDocumentTypeIdByCodeAndObjectTable(documentsFiling.DocumentType.Code, objectTableId, tenant);
+
+File: .\Logitude\Logitude.BL\CommonDataModel\APIDataContract\QueryService\DocumentsFilingQueryService.cs
+Line 69: TicketRepository ticketRepository = new TicketRepository(tenant);
+
+File: .\Logitude\Logitude.BL\CommonDataModel\APIDataContract\QueryService\DocumentsFilingQueryService.cs
+Line 70: entityId = ticketRepository.GetTicketId(documentsFiling.EntityNumber, tenant);
+
+File: .\Logitude\Logitude.BL\CommonDataModel\APIDataContract\QueryService\DocumentsFilingQueryService.cs
+Line 74: ShipmentOrderRepository shipmentRepository = new ShipmentOrderRepository(tenant);
+
+File: .\Logitude\Logitude.BL\CommonDataModel\APIDataContract\QueryService\DocumentsFilingQueryService.cs
+Line 75: entityId = shipmentRepository.GetIdByCode(documentsFiling.EntityNumber, tenant);
+
+File: .\Logitude\Logitude.BL\CommonDataModel\APIDataContract\QueryService\DocumentsFilingQueryService.cs
+Line 91: ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
+
+File: .\Logitude\Logitude.BL\CommonDataModel\APIDataContract\QueryService\DocumentsFilingQueryService.cs
+Line 92: string shipmentId = shipmentRepository.GetShipmentIdByShipmentNumber(shipmentNumber, tenant);
+
+File: .\Logitude\Logitude.BL\CommonDataModel\APIDataContract\QueryService\DocumentsFilingQueryService.cs
+Line 95: shipmentId = shipmentRepository.GetShipmentIdByShipmentNumber(("AF/" + shipmentNumber.Substring(2)), tenant);
+
+File: .\Logitude\Logitude.BL\CommonDataModel\APIDataContract\QueryService\VatTypeQueryService.cs
+Line 70: VatTypePercentageRepository vatTypePercentageRepository = new VatTypePercentageRepository(tenant);
+
+File: .\Logitude\Logitude.BL\CommonDataModel\APIDataContract\QueryService\VatTypeQueryService.cs
+Line 71: VatTypeRepository vatTyperepository = new VatTypeRepository(tenant);
+
+File: .\Logitude\Logitude.BL\CommonDataModel\APIDataContract\QueryService\VatTypeQueryService.cs
+Line 74: VatTypeRepository vatTypeRepository = new VatTypeRepository(tenatToCopy);
+
+File: .\Logitude\Logitude.BL\CommonDataModel\APIDataContract\QueryService\VatTypeQueryService.cs
+Line 75: List<Simplog.Data.CommonDataModel.EntityPOCOs.VatType> pocos = vatTypeRepository.All().Where(t => t.InActive == false && t.Tenant== tenant).ToList();
+
+
+BLOCKING ASYNC CALLS (.Result / .Wait())
+Found 20 blocking patterns:
+WARNING: These defeat the purpose of async!
+
+File: .\Logitude\Amital.WEB.API\Areas\HelpPage\SampleGeneration\HelpPageSampleGenerator.cs
+Line 308: formatter.WriteToStreamAsync(type, value, ms, content, null).Wait();
+
+File: .\Logitude\AmitalCustomsWindowsService\Tester\LoadTest\LoadTestWorkerService.cs
+Line 75: t.Wait();
+
+File: .\Logitude\AmitalCustomsWindowsService\Tester\LoadTest\LoadTestWorkerService.cs
+Line 183: t.Wait();
+
+File: .\Logitude\CommunicationWorkerRole\Analyzers\ContainerRequestSender.cs
+Line 46: loginToExternalServiceTask.Wait();
+
+File: .\Logitude\CommunicationWorkerRole\Analyzers\ContainerRequestSender.cs
+Line 47: if (loginToExternalServiceTask.Result != null && loginToExternalServiceTask.Result.HasError)
+
+File: .\Logitude\CommunicationWorkerRole\Analyzers\ContainerRequestSender.cs
+Line 49: throw new ApplicationException(loginToExternalServiceTask.Result.ErrorMessage);
+
+File: .\Logitude\CommunicationWorkerRole\Analyzers\ContainerRequestSender.cs
+Line 51: var token = loginToExternalServiceTask.Result.Result;
+
+File: .\Logitude\CommunicationWorkerRole\Analyzers\ContainerStatusesReceiver.cs
+Line 31: loginToExternalServiceTask.Wait();
+
+File: .\Logitude\CommunicationWorkerRole\Analyzers\ContainerStatusesReceiver.cs
+Line 32: if (loginToExternalServiceTask.Result != null && loginToExternalServiceTask.Result.HasError)
+
+File: .\Logitude\CommunicationWorkerRole\Analyzers\ContainerStatusesReceiver.cs
+Line 34: throw new ApplicationException(loginToExternalServiceTask.Result.ErrorMessage);
+
+File: .\Logitude\CommunicationWorkerRole\Analyzers\ContainerStatusesReceiver.cs
+Line 36: token = loginToExternalServiceTask.Result.Result;
+
+File: .\Logitude\CommunicationWorkerRole\Service References\ExternalTasksQueueWcfService\Reference.cs
+Line 111: return this.ResultField;
+
+File: .\Logitude\CommunicationWorkerRole\Service References\ExternalTasksQueueWcfService\Reference.cs
+Line 114: if ((object.ReferenceEquals(this.ResultField, value) != true)) {
+
+File: .\Logitude\CommunicationWorkerRole\Service References\ExternalTasksQueueWcfService\Reference.cs
+Line 115: this.ResultField = value;
+
+File: .\Logitude\CommunicationWorkerRole\Service References\ExternalTasksQueueWcfService\Reference.cs
+Line 124: return this.Result2Field;
+
+File: .\Logitude\CommunicationWorkerRole\Service References\ExternalTasksQueueWcfService\Reference.cs
+Line 127: if ((object.ReferenceEquals(this.Result2Field, value) != true)) {
+
+File: .\Logitude\CommunicationWorkerRole\Service References\ExternalTasksQueueWcfService\Reference.cs
+Line 128: this.Result2Field = value;
+
+File: .\Logitude\CommunicationWorkerRole\Service References\ShipmentWcfServiceReference\Reference.cs
+Line 21644: return this.ResultField;
+
+File: .\Logitude\CommunicationWorkerRole\Service References\ShipmentWcfServiceReference\Reference.cs
+Line 21647: if ((object.ReferenceEquals(this.ResultField, value) != true)) {
+
+File: .\Logitude\CommunicationWorkerRole\Service References\ShipmentWcfServiceReference\Reference.cs
+Line 21648: this.ResultField = value;
+
+
+========================================
+SUMMARY
+========================================
+
+Total async opportunities: 108
+
+Synchronous controllers: 8
+Synchronous repositories: 50
+Synchronous BL methods: 30
+Blocking async calls: 20
+
+RECOMMENDATION:
+1. Start with controllers - convert to async Task<IHttpActionResult>
+2. Then repositories - add Async suffix and return Task<T>
+3. Then business logic - propagate async through call chain
+4. Fix any .Result or .Wait() calls immediately
+
+Expected impact: 2-3x more concurrent request capacity
+Effort: Medium (requires careful testing)

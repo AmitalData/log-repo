@@ -1,0 +1,36 @@
+{
+  "refactorVersion": "1.0.0",
+  "startDate": "2025-01-19",
+  "strategy": "parallel",
+  "phases": {
+    "phase0": {
+      "name": "Safety Setup",
+      "status": "in_progress",
+      "branch": "AMITAL_MAIN",
+      "startTime": "2025-01-19T00:00:00Z",
+      "completedTime": null,
+      "checkpointFile": "refactor/checkpoints/phase0-checkpoint.json"
+    },
+    "phase1-frontend": {
+      "name": "Frontend Cleanup",
+      "status": "not_started",
+      "branch": "refactor/frontend-cleanup",
+      "startTime": null,
+      "completedTime": null,
+      "checkpointFile": "refactor/checkpoints/phase1-fe-checkpoint.json"
+    },
+    "phase1-backend": {
+      "name": "Backend Cleanup",
+      "status": "not_started",
+      "branch": "refactor/backend-cleanup",
+      "startTime": null,
+      "completedTime": null,
+      "checkpointFile": "refactor/checkpoints/phase1-be-checkpoint.json"
+    }
+  },
+  "currentPhase": "phase0",
+  "lastUpdated": "2025-01-19T00:00:00Z",
+  "backupBranches": [],
+  "baselineMetrics": null
+}
+

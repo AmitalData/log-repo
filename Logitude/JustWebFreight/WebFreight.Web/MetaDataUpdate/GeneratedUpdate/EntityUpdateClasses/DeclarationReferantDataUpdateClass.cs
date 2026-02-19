@@ -23,8 +23,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationReferantDataUpdateClass
    {  		
- 		public const string HashString = "69e397a206343c236fa46fbe1754ab2f";
- 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
+		public const string HashString = "25c8c227c6db0fb139c09c630c80d5fe";
+	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
             AddObjectsAndObjectFields.AddObjectTable(new ObjectTableDetails()
@@ -1315,7 +1315,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 						FieldName =  "TransportModeId",
 					  						ObjectTableName =  "Customs.DeclarationReferantData",
 					  						FieldsDataType =  "LookUp",
-					  						LookUpTableName =  "TransportMode",
+					  						LookUpTableName =  "Customs.CustomsTransportMode",
 					  						MinLength =  0,
 					  						MaxLength =  17,
 					  						IsRequired =  false,
@@ -4742,8 +4742,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						FullLocalDefaultText =  "FCL/LCL",
 					  						ListFieldLable =  "FclLclListLable",
 					  						ListLableDefaultText =  "FCL/LCL",
-					  						ListLocalDefaultTextBack_up =  "FCL/LCLקוד ",
-					  						ListLocalDefaultText =  "BS64:IkZDTC9MQ0zXp9eV15MgIg==",
+					  						ListLocalDefaultText =  "FCL/LCL",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "FclLclCode",
 					  						NavigationPropertyName =  "FclLclCodeTable",
@@ -6664,7 +6663,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  2,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						IsListFilter =  false,
 					  						MultiLine =  false,
@@ -6680,6 +6679,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Customs.DeclarationReferantData",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -6692,6 +6692,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DefaultText =  "Origin Country",
 					  						FullLocalDefaultTextBack_up =  "םרץ מוצם",
 					  						FullLocalDefaultText =  "BS64:IteQ16jXpSDXnteV16bXkCI=",
+					  						ListFieldLable =  "OriginCountryCodeListLable",
+					  						ListLableDefaultText =  "OriginCountryCode",
+					  						ListLocalDefaultTextBack_up =  "םרץ מוצם",
+					  						ListLocalDefaultText =  "BS64:IteQ16jXpSDXnteV16bXkCI=",
 					  						IsForeignKey =  false,
 					  						ForeignEntity =  "CustomsCountry",
 					  						NavigationPropertyName =  "OriginCountry",

@@ -304,7 +304,6 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entity.IsExpense = entityPM.IsExpense;
             entity.PrepaidCollectId = entityPM.PrepaidCollectId;
             entity.IsRegionalTax = entityPM.IsRegionalTax;
-            entity.ReceivableCreditGLAccountId = entityPM.ReceivableCreditGLAccountId;
 
             Tenant myTenant = TenantRepository.GetSingleTenant(entityPM.Tenant, true);
 

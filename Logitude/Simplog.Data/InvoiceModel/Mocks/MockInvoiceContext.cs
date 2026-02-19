@@ -20,7 +20,7 @@ namespace Simplog.Data.InvoiceModel.Mocks
             {
                 if (arinvoices == null)
                 {
-                    arinvoices = new List<ARInvoice>()
+                    arinvoices = new List<ARInvoice>() 
                     {
                         new ARInvoice()
                         {
@@ -40,12 +40,12 @@ namespace Simplog.Data.InvoiceModel.Mocks
                 InvoiceCurrencyId = "1-1",
                 InvoiceCurrencyExchangeRate = 1,
                 InvoiceDate = DateTime.Now.Date,
-
+               
                 InvoiceNumber = "1002",
                 IsClosed = false,
                 LocalCurrencyId = "1-1",
                 MainEntityId = "1-1",
-
+               
                 PaymentTermId = "1-1",
                 ProfitCurrencyExchangeRate = 1,
                 ProfitCurrencyId = "1-1",
@@ -53,7 +53,7 @@ namespace Simplog.Data.InvoiceModel.Mocks
                 UpdateDate = DateTime.Now.Date,
                 StatusCode = "DR",
                 UpdatedByUserId = "1-1",
-
+                
                         },
 
                           new ARInvoice()
@@ -74,12 +74,12 @@ namespace Simplog.Data.InvoiceModel.Mocks
                 InvoiceCurrencyId = "1-2",
                 InvoiceCurrencyExchangeRate = 1,
                 InvoiceDate = DateTime.Now.Date,
-
+               
                 InvoiceNumber = "1001",
                 IsClosed = false,
                 LocalCurrencyId = "1-2",
                 MainEntityId = "1-1",
-
+               
                 PaymentTermId = "1-1",
                 ProfitCurrencyExchangeRate = 1,
                 ProfitCurrencyId = "1-2",
@@ -87,7 +87,7 @@ namespace Simplog.Data.InvoiceModel.Mocks
                 UpdateDate = DateTime.Now.Date,
                 StatusCode = "DR",
                 UpdatedByUserId = "1-1",
-
+                
                         },
                                new ARInvoice()
                         {
@@ -107,12 +107,12 @@ namespace Simplog.Data.InvoiceModel.Mocks
                 InvoiceCurrencyId = "1-3",
                 InvoiceCurrencyExchangeRate = 1,
                 InvoiceDate = DateTime.Now.Date,
-
+               
                 InvoiceNumber = "1001",
                 IsClosed = false,
                 LocalCurrencyId = "1-3",
                 MainEntityId = "1-1",
-
+               
                 PaymentTermId = "1-1",
                 ProfitCurrencyExchangeRate = 1,
                 ProfitCurrencyId = "1-3",
@@ -120,7 +120,7 @@ namespace Simplog.Data.InvoiceModel.Mocks
                 UpdateDate = DateTime.Now.Date,
                 StatusCode = "DR",
                 UpdatedByUserId = "1-1",
-
+               
                         },
                     };
                     arInvoiceObjectSet = new MockObjectSet<ARInvoice>(arinvoices);
@@ -167,7 +167,7 @@ namespace Simplog.Data.InvoiceModel.Mocks
             }
         }
 
-
+       
         public IDbSet<ARInvoiceStatus> ARInvoiceStatuses
         {
             get
@@ -344,7 +344,7 @@ namespace Simplog.Data.InvoiceModel.Mocks
             }
         }
 
-
+    
         List<APInvoice> apinvoices;
         MockObjectSet<APInvoice> apInvoiceObjectSet;
         public IDbSet<APInvoice> APInvoices
@@ -353,7 +353,7 @@ namespace Simplog.Data.InvoiceModel.Mocks
             {
                 if (apinvoices == null)
                 {
-                    apinvoices = new List<APInvoice>()
+                    apinvoices = new List<APInvoice>() 
                     {
                         new APInvoice()
                         {
@@ -373,12 +373,12 @@ namespace Simplog.Data.InvoiceModel.Mocks
                 InvoiceCurrencyId = "1-1",
                 InvoiceCurrencyExchangeRate = 1,
                 InvoiceDate = DateTime.Now.Date,
-
+               
                 InvoiceNumber = "1002",
                 IsClosed = false,
                 LocalCurrencyId = "1-1",
                 MainEntityId = "1-1",
-
+               
                 PaymentTermId = "1-1",
                 ProfitCurrencyExchangeRate = 1,
                 ProfitCurrencyId = "1-1",
@@ -407,12 +407,12 @@ namespace Simplog.Data.InvoiceModel.Mocks
                 InvoiceCurrencyId = "1-2",
                 InvoiceCurrencyExchangeRate = 1,
                 InvoiceDate = DateTime.Now.Date,
-
+               
                 InvoiceNumber = "1001",
                 IsClosed = false,
                 LocalCurrencyId = "1-2",
                 MainEntityId = "1-1",
-
+               
                 PaymentTermId = "1-1",
                 ProfitCurrencyExchangeRate = 1,
                 ProfitCurrencyId = "1-2",
@@ -440,12 +440,12 @@ namespace Simplog.Data.InvoiceModel.Mocks
                 InvoiceCurrencyId = "1-3",
                 InvoiceCurrencyExchangeRate = 1,
                 InvoiceDate = DateTime.Now.Date,
-
+               
                 InvoiceNumber = "1001",
                 IsClosed = false,
                 LocalCurrencyId = "1-3",
                 MainEntityId = "1-1",
-
+               
                 PaymentTermId = "1-1",
                 ProfitCurrencyExchangeRate = 1,
                 ProfitCurrencyId = "1-3",
@@ -484,31 +484,31 @@ namespace Simplog.Data.InvoiceModel.Mocks
         {
             get
             {
-                return new MockObjectSet<APInvoiceStatus>(new List<APInvoiceStatus>()
+                return new MockObjectSet<APInvoiceStatus>(new List<APInvoiceStatus>() 
             {
-                new APInvoiceStatus()
+                new APInvoiceStatus() 
                 {
-                    Code = "AC", Name = "Approval Cancel", SearchFields = "AC,Approval Cancel"
+                    Code = "AC", Name = "Approval Cancel", SearchFields = "AC,Approval Cancel" 
                 } ,
-                new APInvoiceStatus()
+                new APInvoiceStatus() 
                 {
-                    Code = "AD", Name = "Approved", SearchFields = "AD,Approved"
+                    Code = "AD", Name = "Approved", SearchFields = "AD,Approved" 
                 } ,
-                new APInvoiceStatus()
+                new APInvoiceStatus() 
                 {
-                    Code = "PD", Name = "Paid", SearchFields = "PD,Paid"
+                    Code = "PD", Name = "Paid", SearchFields = "PD,Paid" 
                 } ,
-                new APInvoiceStatus()
+                new APInvoiceStatus() 
                 {
-                    Code = "PP", Name = "Partially Paid", SearchFields = "PP,Partially Paid"
+                    Code = "PP", Name = "Partially Paid", SearchFields = "PP,Partially Paid" 
                 } ,
-                new APInvoiceStatus()
+                new APInvoiceStatus() 
                 {
-                    Code = "VD", Name = "Void", SearchFields = "VD,Void"
+                    Code = "VD", Name = "Void", SearchFields = "VD,Void" 
                 } ,
-                new APInvoiceStatus()
+                new APInvoiceStatus() 
                 {
-                    Code = "WA", Name = "Waiting For Approval", SearchFields = "WA,Waiting For Approval"
+                    Code = "WA", Name = "Waiting For Approval", SearchFields = "WA,Waiting For Approval" 
                 } ,
             });
             }
@@ -554,7 +554,7 @@ namespace Simplog.Data.InvoiceModel.Mocks
         {
             get { throw new NotImplementedException(); }
         }
-
+        
         public IDbSet<APPaymentStatus> APPaymentStatus
         {
             get { throw new NotImplementedException(); }
@@ -618,11 +618,6 @@ namespace Simplog.Data.InvoiceModel.Mocks
             set { }
         }
 
-        public IDbSet<ExpenseAllocationFlow> ExpenseAllocationFlows
-        {
-            get { throw new NotImplementedException(); }
-            set { }
-        }
         List<CreditCardType> creditCardTypes;
         MockObjectSet<CreditCardType> creditCardTypeObjectSet;
         public IDbSet<CreditCardType> CreditCardTypes
@@ -838,8 +833,7 @@ namespace Simplog.Data.InvoiceModel.Mocks
         }
         public IDbSet<ARInvoiceChargesConstraint> ARInvoiceChargesConstraints => throw new NotImplementedException();
 
-        public IDbSet<QBOGlobalTaxCalculation> QBOGlobalTaxCalculations
-        {
+        public IDbSet<QBOGlobalTaxCalculation> QBOGlobalTaxCalculations {
             get
             {
                 throw new NotImplementedException();
@@ -865,20 +859,6 @@ namespace Simplog.Data.InvoiceModel.Mocks
             }
         }
         public IDbSet<BankAccountView> BankAccountView
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-        }
-        public IDbSet<MasavInterface> MasavInterfaces
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-        }
-        public IDbSet<MasavInterfaceStatus> MasavInterfaceStatuses
         {
             get
             {

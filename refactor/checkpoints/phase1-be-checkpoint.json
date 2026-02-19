@@ -1,0 +1,56 @@
+{
+  "phase": "phase1-backend",
+  "name": "Backend Cleanup",
+  "branch": "refactor/backend-cleanup",
+  "status": "not_started",
+  "steps": [
+    {
+      "id": "1.1-be",
+      "name": "Remove obj folders",
+      "status": "not_started",
+      "foldersRemoved": 0,
+      "spaceSavedMB": 0,
+      "backupBranch": null,
+      "commitSha": null,
+      "timestamp": null
+    },
+    {
+      "id": "1.2-be",
+      "name": "Remove bin folders",
+      "status": "not_started",
+      "foldersRemoved": 0,
+      "spaceSavedMB": 0,
+      "commitSha": null,
+      "timestamp": null
+    },
+    {
+      "id": "1.3-be",
+      "name": "Remove packages folders",
+      "status": "not_started",
+      "foldersRemoved": 0,
+      "spaceSavedGB": 0,
+      "commitSha": null,
+      "timestamp": null
+    },
+    {
+      "id": "1.4-be",
+      "name": "Update .gitignore",
+      "status": "not_started",
+      "commitSha": null,
+      "timestamp": null
+    },
+    {
+      "id": "1.5-be",
+      "name": "Measure improvement",
+      "status": "not_started",
+      "timestamp": null
+    }
+  ],
+  "currentStep": "1.1-be",
+  "lastUpdated": null,
+  "metrics": {
+    "before": null,
+    "after": null
+  }
+}
+

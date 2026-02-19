@@ -63,7 +63,7 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.ListControllers
 		    	IInvoiceContext MyContext = InvoiceContext.GetContext(authToken.Tenant);
 				ExpenseAllocationSettingRepository  expenseAllocationSettingRepository = new ExpenseAllocationSettingRepository(MyContext);
 				ExpenseAllocationSettingList entityList = null;
-				ExpenseAllocationSetting entityPoco = expenseAllocationSettingRepository.GetSingleById(id , authToken.Tenant);
+				ExpenseAllocationSetting entityPoco = expenseAllocationSettingRepository.GetSingleExpenseAllocationSetting(id , authToken.Tenant);
                 if (entityPoco != null)
 				{
 									List<ExpenseAllocationSetting> singleEntityList = new List<ExpenseAllocationSetting>();

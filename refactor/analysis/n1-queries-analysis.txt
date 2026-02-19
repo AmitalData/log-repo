@@ -1,0 +1,393 @@
+﻿N+1 QUERY PATTERN ANALYSIS
+Generated: 2025-10-19 12:13:46
+
+This report identifies potential N+1 query issues in the codebase.
+
+N+1 queries occur when:
+1. You load a collection of entities
+2. Then loop through them
+3. And access a navigation property inside the loop
+4. Causing N additional queries (one per entity)
+
+Example BAD pattern:
+  var shipments = context.Shipments.ToList();  // 1 query
+  foreach(var s in shipments) {
+      var customer = s.Customer.Name;  // N queries!
+  }
+
+Example GOOD pattern:
+  var shipments = context.Shipments
+      .Include(s => s.Customer)  // Eager load
+      .ToList();  // 1 query total
+
+========================================
+
+
+PATTERN 1: foreach loops with property access
+Found 20 potential cases:
+
+File: C:\LWC_Prod\log-repo\Logitude\Amital.WEB.API\Areas\HelpPage\ModelDescriptions\ModelDescriptionGenerator.cs
+Line 303: foreach (ParameterAnnotation annotation in annotations)
+
+File: C:\LWC_Prod\log-repo\Logitude\Amital.WEB.API\Areas\HelpPage\SampleGeneration\HelpPageSampleGenerator.cs
+Line 105: foreach (var actionSample in actionSamples)
+
+File: C:\LWC_Prod\log-repo\Logitude\Amital.WEB.API\Areas\HelpPage\SampleGeneration\HelpPageSampleGenerator.cs
+Line 420: foreach (var sample in ActionSamples)
+
+File: C:\LWC_Prod\log-repo\Logitude\Amital.WEB.API\Areas\HelpPage\HelpPageConfigurationExtensions.cs
+Line 295: foreach (ParameterDescription uriParameter in complexTypeDescription.Properties)
+
+File: C:\LWC_Prod\log-repo\Logitude\Amital.WEB.API\Areas\HelpPage\HelpPageConfigurationExtensions.cs
+Line 357: foreach (ApiParameterDescription apiParameter in apiDescription.ParameterDescriptions)
+
+File: C:\LWC_Prod\log-repo\Logitude\Amital.WEB.API\Areas\HelpPage\HelpPageConfigurationExtensions.cs
+Line 393: foreach (var item in sampleGenerator.GetSampleRequests(apiModel.ApiDescription))
+
+File: C:\LWC_Prod\log-repo\Logitude\Amital.WEB.API\Areas\HelpPage\HelpPageConfigurationExtensions.cs
+Line 399: foreach (var item in sampleGenerator.GetSampleResponses(apiModel.ApiDescription))
+
+File: C:\LWC_Prod\log-repo\Logitude\AmitalCustomsWindowsService\Tester\CustomMessage\LoadTesterForm.cs
+Line 35: foreach (var item in _list)
+
+File: C:\LWC_Prod\log-repo\Logitude\AmitalCustomsWindowsService\Tester\CustomMessage\LoadTesterForm.cs
+Line 92: //foreach (var item in _list)
+
+File: C:\LWC_Prod\log-repo\Logitude\AmitalCustomsWindowsService\Tester\Oracle2SQL.cs
+Line 236: foreach (var tab in myTables.Where(r => r.IsGlobalModel == isGlobalModel))
+
+File: C:\LWC_Prod\log-repo\Logitude\AmitalCustomsWindowsService\Tester\Oracle2SQL.cs
+Line 238: foreach (var prop in tab.MyPropertys)
+
+File: C:\LWC_Prod\log-repo\Logitude\AmitalCustomsWindowsService\Tester\Oracle2SQL.cs
+Line 436: foreach (var line in lines)
+
+File: C:\LWC_Prod\log-repo\Logitude\AmitalCustomsWindowsService\Tester\TesterForm.cs
+Line 984: notUniqeNames.ForEach(r =>
+
+File: C:\LWC_Prod\log-repo\Logitude\AmitalCustomsWindowsService\MyWinService.cs
+Line 325: _Workers.ForEach(w => {
+
+File: C:\LWC_Prod\log-repo\Logitude\CargoTrackingWinFormService\CargoTrackingForm.cs
+Line 366: foreach (CargoTrackingTable table in CargoTableLists)
+
+File: C:\LWC_Prod\log-repo\Logitude\CargoTrackingWinFormService\CargoTrackingForm.cs
+Line 582: foreach (PropertyInfo p in props)
+
+File: C:\LWC_Prod\log-repo\Logitude\CommunicationWorkerRole\ReportScheduler\GLAccountValidator.cs
+Line 54: reportFilterItems.ForEach(item => {
+
+File: C:\LWC_Prod\log-repo\Logitude\CommunicationWorkerRole\Services\Logbox\ImporterBuilderShipmentsOrderBatchService.cs
+Line 50: foreach (var ShipmentOrder in shipmentsOrders)
+
+File: C:\LWC_Prod\log-repo\Logitude\CommunicationWorkerRole\Services\BIReportSchedulerTaskService.cs
+Line 130: schedulerDetails.ReportDetails.DWQueryFilterData.FilterItems.ForEach(filter => {
+
+File: C:\LWC_Prod\log-repo\Logitude\CommunicationWorkerRole\Services\CustomerDebNotificationsTaskService.cs
+Line 98: foreach (var account in GLAccountByTenantAndCustomerDebtNotification)
+
+
+PATTERN 2: ToList() followed by foreach
+Found 20 potential cases:
+
+File: C:\LWC_Prod\log-repo\Logitude\AmitalCustomsWindowsService\MyWinService.cs
+Line 265: List<BatchServicesDefinitionPM> BatchServicesDefinitions = BatchServicesQuery.GetAllActiveBatchServicesDefinitions().ToList();//.Where(b => b.Code == "EmailOut-EmailQueue")
+
+File: C:\LWC_Prod\log-repo\Logitude\CommunicationWorkerRole\Services\SAT\UpdateCanceledSATEntitiesStatusesService.cs
+Line 29: List<ARInvoice> aRInvoices = aRInvoiceRepository.GetInvoices().Where(aRInvoice => aRInvoice.SATTransferStatusCode == sATCanceledStatusCode && !string.IsNullOrEmpty(aRInvoice.SATXML)).ToList();
+
+File: C:\LWC_Prod\log-repo\Logitude\CommunicationWorkerRole\Services\SAT\UpdateCanceledSATEntitiesStatusesService.cs
+Line 51: List<ARPayment> aRPayments = aRPaymentRepository.GetARPayments().Where(aRPayment => aRPayment.SATTransferStatusCode == sATCanceledStatusCode && !string.IsNullOrEmpty(aRPayment.SATXML)).ToList();
+
+File: C:\LWC_Prod\log-repo\Logitude\CommunicationWorkerRole\Services\FroalaEditorImageLibraryService.cs
+Line 28: List<string> images = emailBody.Split('<').Where(s => s.StartsWith("img") && s.Contains("href='imagelibrary-")).ToList();
+
+File: C:\LWC_Prod\log-repo\Logitude\CommunicationWorkerRole\Services\ReportSchedulerTaskService.cs
+Line 678: List<Contact> partnerContacts = repositry.GetContactsByCardId(connectedPartner.PartnerId).ToList();
+
+File: C:\LWC_Prod\log-repo\Logitude\CommunicationWorkerRole\Tasks\FTPSchedulerTask.cs
+Line 65: //	var directoryFiles = ftpService.DirectoryListSimple(schedulerDetails.FTPDetails.Folder).Where(f => !string.IsNullOrWhiteSpace(f) && !string.IsNullOrWhiteSpace(Path.GetExtension(f))).ToList();
+
+File: C:\LWC_Prod\log-repo\Logitude\CommunicationWorkerRole\AutomationWorkerRole.cs
+Line 175: List<Automation> otherAutomations = automationRepository.GetAutomationsByObjectTableId(otherObjectTableId, Tenant, otherObjectTableLastUpdateDate).Where(d => d.Type == type).ToList();
+
+File: C:\LWC_Prod\log-repo\Logitude\CommunicationWorkerRole\CargoReferencesSyncWorkerRole.cs
+Line 275: var searches = group.ToList();
+
+File: C:\LWC_Prod\log-repo\Logitude\CommunicationWorkerRole\CargoReferencesSyncWorkerRole.cs
+Line 277: searches = searches.Where(e => !e.ReferenceType.StartsWith(ForwardingPreFix) && !e.ReferenceType.StartsWith(OrderPreFix)).ToList();
+
+File: C:\LWC_Prod\log-repo\Logitude\CommunicationWorkerRole\DeploymentPackageWorkerRole.cs
+Line 61: var deploymentPackageExecutionLogs = deploymentPackageExecutionLogRepository.GetAllDeploymentPackageExecutionLogs().Where(d => d.ExecutedByServerName == System.Environment.MachineName && d.StatusCode == deploymentPackageExecutionProgressStatus && d.StartDate < DateTime.Now).ToList();
+
+File: C:\LWC_Prod\log-repo\Logitude\CommunicationWorkerRole\DocumentExecutionWorkerRole.cs
+Line 90: var documentsExecutionLogs = documentsExecutionLogRepository.GetAllDocumentsExecutionLogs().Where(d => d.ExecutedByServerName == System.Environment.MachineName && d.StatusCode == documentsExecutionProgressStatus && d.StartDate < DateTime.Now).ToList();
+
+File: C:\LWC_Prod\log-repo\Logitude\CommunicationWorkerRole\EmailingHelper.cs
+Line 173: List<string> imagesList = htmlStringArray.Where(s => s.StartsWith("img") && s.IndexOf("cid:") != -1).ToList();
+
+File: C:\LWC_Prod\log-repo\Logitude\CommunicationWorkerRole\FTPToAnalyzeQueueWorkerRole.cs
+Line 33: List<CustomsInterfaceSetting> artimusSettings = customsInterfaceSettingRepository.GetAllArtimusCustomsInterfaceSettings().ToList();
+
+File: C:\LWC_Prod\log-repo\Logitude\CommunicationWorkerRole\FTPToAnalyzeQueueWorkerRole.cs
+Line 42: List<INTTRASetting> allINTTRASetting = myCommonContext.INTTRASettings.Where(d => d.InSettingsId != null).ToList();
+
+File: C:\LWC_Prod\log-repo\Logitude\CommunicationWorkerRole\FTPToAnalyzeQueueWorkerRole.cs
+Line 50: List<AccountingSetting> accountingSettings = myCommonContext.AccountingSettings.Where(d => d.TransferFTPDetailId != null).ToList();
+
+File: C:\LWC_Prod\log-repo\Logitude\CommunicationWorkerRole\GeneralWorkerRole.cs
+Line 27: //                                                                        select a).ToList();
+
+File: C:\LWC_Prod\log-repo\Logitude\CommunicationWorkerRole\InboundEmailWorkerRole.cs
+Line 864: List<string> docIds = myCorrespondencesAttachments.Where(a => a.CorrespondenceId == item.EntityLineId && a.Tenant == item.Tenant).Select(d => d.DocumentFilingId).ToList();
+
+File: C:\LWC_Prod\log-repo\Logitude\CommunicationWorkerRole\InboundEmailWorkerRole.cs
+Line 1004: List<string> docIds = myCorrespondencesAttachments.Where(a => a.CorrespondenceId == item.EntityLineId && a.Tenant == item.Tenant).Select(d => d.DocumentFilingId).ToList();
+
+File: C:\LWC_Prod\log-repo\Logitude\CommunicationWorkerRole\InboundEmailWorkerRole.cs
+Line 1102: List<string> docIds = myCorrespondencesAttachments.Where(a => a.CorrespondenceId == item.EntityLineId && a.Tenant == item.Tenant).Select(d => d.DocumentFilingId).ToList();
+
+File: C:\LWC_Prod\log-repo\Logitude\CommunicationWorkerRole\InboundEmailWorkerRole.cs
+Line 1254: List<string> docIds = myCorrespondencesAttachments.Where(a => a.CorrespondenceId == item.EntityLineId && a.Tenant == item.Tenant).Select(d => d.DocumentFilingId).ToList();
+
+
+PATTERN 3: Database queries inside loops
+Found 20 potential cases:
+
+File: C:\LWC_Prod\log-repo\Logitude\Amital.WEB.API\Areas\HelpPage\SampleGeneration\HelpPageSampleGenerator.cs
+Line 250: foreach (var formatter in api.ActionDescriptor.Configuration.Formatters)
+
+File: C:\LWC_Prod\log-repo\Logitude\AmitalCustomsWindowsService\Tester\Oracle2SQL.cs
+Line 236: foreach (var tab in myTables.Where(r => r.IsGlobalModel == isGlobalModel))
+
+File: C:\LWC_Prod\log-repo\Logitude\AmitalCustomsWindowsService\Tester\Oracle2SQL.cs
+Line 238: foreach (var prop in tab.MyPropertys)
+
+File: C:\LWC_Prod\log-repo\Logitude\AmitalCustomsWindowsService\Tester\Oracle2SQL.cs
+Line 436: foreach (var line in lines)
+
+File: C:\LWC_Prod\log-repo\Logitude\AmitalCustomsWindowsService\DBWorkerService.cs
+Line 285: foreach (var batchServicesDefinitionPM in BatchServicesDefinitions)
+
+File: C:\LWC_Prod\log-repo\Logitude\AmitalCustomsWindowsService\MyWinService.cs
+Line 266: foreach (var batchServicesDefinitionPM in BatchServicesDefinitions)
+
+File: C:\LWC_Prod\log-repo\Logitude\CommunicationWorkerRole\Services\SAT\UpdateCanceledSATEntitiesStatusesService.cs
+Line 31: listOfARInvoices.ToList().ForEach(subARInvoices =>
+
+File: C:\LWC_Prod\log-repo\Logitude\CommunicationWorkerRole\Services\SAT\UpdateCanceledSATEntitiesStatusesService.cs
+Line 39: Parallel.ForEach(subARInvoices, (aRInvoice) =>
+
+File: C:\LWC_Prod\log-repo\Logitude\CommunicationWorkerRole\Services\SAT\UpdateCanceledSATEntitiesStatusesService.cs
+Line 53: listOfARPayments.ToList().ForEach(subARPayments =>
+
+File: C:\LWC_Prod\log-repo\Logitude\CommunicationWorkerRole\Services\SAT\UpdateCanceledSATEntitiesStatusesService.cs
+Line 61: subARPayments.ForEach(arPayment =>
+
+File: C:\LWC_Prod\log-repo\Logitude\CommunicationWorkerRole\Services\ContainerSchedulerTaskService.cs
+Line 38: foreach (Container container in allContainers)
+
+File: C:\LWC_Prod\log-repo\Logitude\CommunicationWorkerRole\Services\MultiEntityUpdateService.cs
+Line 170: Parallel.ForEach(((IEnumerable)entityPMs).Cast<object>().ToList(), (entityPM) =>
+
+File: C:\LWC_Prod\log-repo\Logitude\CommunicationWorkerRole\Services\QueryReportService.cs
+Line 315: schedulerDetails.ReportDetails.ReportFilterItems.ForEach(filterItem => {
+
+File: C:\LWC_Prod\log-repo\Logitude\CommunicationWorkerRole\Services\QuoteSchedulerTaskService.cs
+Line 48: foreach (Quote item in allQuotes)
+
+File: C:\LWC_Prod\log-repo\Logitude\CommunicationWorkerRole\Services\ReportSchedulerTaskService.cs
+Line 656: reportFilterItems.ForEach(item => {
+
+File: C:\LWC_Prod\log-repo\Logitude\CommunicationWorkerRole\Tasks\DeleteTaskSchedulerHistoriesTask.cs
+Line 34: foreach (var Task in Tasks)
+
+File: C:\LWC_Prod\log-repo\Logitude\CommunicationWorkerRole\Tasks\FTPSchedulerTask.cs
+Line 53: //foreach (var message in fTPSchedulerTaskService.MessagesList)
+
+File: C:\LWC_Prod\log-repo\Logitude\CommunicationWorkerRole\Tasks\UpdateTimeManagementDurations.cs
+Line 70: foreach (var itemGroup in dataGroups)
+
+File: C:\LWC_Prod\log-repo\Logitude\CommunicationWorkerRole\Tasks\UpdateTimeManagementDurations.cs
+Line 107: foreach (TMEmployeeTime item in itemsNotProrated)
+
+File: C:\LWC_Prod\log-repo\Logitude\CommunicationWorkerRole\Tasks\UpdateTimeManagementDurations.cs
+Line 120: foreach (TMEmployeeTime item in itemsProrated)
+
+
+PATTERN 4: Queries without eager loading
+Found 30 potential cases in repositories:
+
+File: C:\LWC_Prod\log-repo\Logitude\Simplog.Data\Azure\Repositories\CommunicationLogsRepository.cs
+Line 35: //return (from entity in context.CreateQuery<CommunicationLogsAzure>(TableName).OrderBy(d => d.GMTCreateDateTime) select entity).FirstOrDefault();
+
+File: C:\LWC_Prod\log-repo\Logitude\Simplog.Data\Azure\Repositories\CommunicationLogsRepository.cs
+Line 38: //        select a).OrderBy(d=>d.LogDateTime).FirstOrDefault();
+
+File: C:\LWC_Prod\log-repo\Logitude\Simplog.Data\Azure\Repositories\CommunicationLogsRepository.cs
+Line 45: //return (from entity in context.CreateQuery<CommunicationLogsAzure>(TableName).Where(a => a.Id == id) select entity).FirstOrDefault();
+
+File: C:\LWC_Prod\log-repo\Logitude\Simplog.Data\Azure\Repositories\CommunicationLogsRepository.cs
+Line 48: //        select a).FirstOrDefault();
+
+File: C:\LWC_Prod\log-repo\Logitude\Simplog.Data\Azure\Repositories\CommunicationLogsRepository.cs
+Line 91: //return (from entity in context.CreateQuery<CommunicationLogsAzure>(TableName) select entity).ToList();
+
+File: C:\LWC_Prod\log-repo\Logitude\Simplog.Data\Azure\Repositories\CommunicationLogsRepository.cs
+Line 92: //return context.ErrorLogsEntity.ToList();
+
+File: C:\LWC_Prod\log-repo\Logitude\Simplog.Data\CommonDataModel\Repositories\AccountingPartnerRepository.cs
+Line 47: return (from record in context.AccountingPartners where ids.Contains(record.Id) && record.Tenant == tenant select record).ToList();
+
+File: C:\LWC_Prod\log-repo\Logitude\Simplog.Data\CommonDataModel\Repositories\AccountingPartnerRepository.cs
+Line 76: return context.AccountingPartners.ToList();
+
+File: C:\LWC_Prod\log-repo\Logitude\Simplog.Data\CommonDataModel\Repositories\AccountingSettingRepository.cs
+Line 29: select a).FirstOrDefault();
+
+File: C:\LWC_Prod\log-repo\Logitude\Simplog.Data\CommonDataModel\Repositories\AccountingSettingRepository.cs
+Line 54: return this.context.AccountingSettings.ToList();
+
+File: C:\LWC_Prod\log-repo\Logitude\Simplog.Data\CommonDataModel\Repositories\AccountingSettingRepository.cs
+Line 80: return (from a in context.AccountingSettings where a.Id == id select a).FirstOrDefault();
+
+File: C:\LWC_Prod\log-repo\Logitude\Simplog.Data\CommonDataModel\Repositories\AccountingSystemRepository.cs
+Line 36: return (from record in context.AccountingSystems where record.Code == code select record).FirstOrDefault();
+
+File: C:\LWC_Prod\log-repo\Logitude\Simplog.Data\CommonDataModel\Repositories\AccountingSystemRepository.cs
+Line 58: return context.AccountingSystems.ToList();
+
+File: C:\LWC_Prod\log-repo\Logitude\Simplog.Data\CommonDataModel\Repositories\AdditionalServiceRepository.cs
+Line 35: return (from record in context.AdditionalServices where record.Id == id && record.Tenant == tenant select record).FirstOrDefault();
+
+File: C:\LWC_Prod\log-repo\Logitude\Simplog.Data\CommonDataModel\Repositories\AddressRepository.cs
+Line 114: return context.Addresses.ToList();
+
+File: C:\LWC_Prod\log-repo\Logitude\Simplog.Data\CommonDataModel\Repositories\AddressRepository.cs
+Line 142: select a.Id).FirstOrDefault();
+
+File: C:\LWC_Prod\log-repo\Logitude\Simplog.Data\CommonDataModel\Repositories\AddressTypeRepository.cs
+Line 31: select a).FirstOrDefault();
+
+File: C:\LWC_Prod\log-repo\Logitude\Simplog.Data\CommonDataModel\Repositories\AddressTypeRepository.cs
+Line 52: return context.AddressTypes.ToList();
+
+File: C:\LWC_Prod\log-repo\Logitude\Simplog.Data\CommonDataModel\Repositories\AgentRepository.cs
+Line 43: return (from record in context.Agents where record.Id == id && record.Tenant == tenant select record).FirstOrDefault();
+
+File: C:\LWC_Prod\log-repo\Logitude\Simplog.Data\CommonDataModel\Repositories\AgentRepository.cs
+Line 64: return (from record in context.Agents where record.AgentSharedLogisticsKey == key && record.Tenant == tenant select record.Id).FirstOrDefault();
+
+File: C:\LWC_Prod\log-repo\Logitude\Simplog.Data\CommonDataModel\Repositories\AgentRepository.cs
+Line 71: return (from record in context.Agents where record.Id == agentId && record.Tenant == tenant select record.AgentSharedLogisticsKey).FirstOrDefault();
+
+File: C:\LWC_Prod\log-repo\Logitude\Simplog.Data\CommonDataModel\Repositories\AgentRepository.cs
+Line 103: return context.Agents.ToList();
+
+File: C:\LWC_Prod\log-repo\Logitude\Simplog.Data\CommonDataModel\Repositories\AgentRepository.cs
+Line 130: select record).FirstOrDefault();
+
+File: C:\LWC_Prod\log-repo\Logitude\Simplog.Data\CommonDataModel\Repositories\AgentSharedDocumentRepository.cs
+Line 37: return (from record in context.AgentSharedDocuments where record.Id == id && record.Tenant == tenant select record).FirstOrDefault();
+
+File: C:\LWC_Prod\log-repo\Logitude\Simplog.Data\CommonDataModel\Repositories\AgentSharedDocumentRepository.cs
+Line 43: return (from record in context.AgentSharedDocuments where record.AgentReference == agentReference && record.Tenant == tenant select record).OrderByDescending(d=>d.CreateDate).FirstOrDefault();
+
+File: C:\LWC_Prod\log-repo\Logitude\Simplog.Data\CommonDataModel\Repositories\AgentSharedDocumentRepository.cs
+Line 73: return context.AgentSharedDocuments.ToList();
+
+File: C:\LWC_Prod\log-repo\Logitude\Simplog.Data\CommonDataModel\Repositories\AgentSharedManifestRepository.cs
+Line 54: return (from record in context.AgentSharedManifests where record.AgentReference == agentRef && record.Tenant == tenant select record).FirstOrDefault();
+
+File: C:\LWC_Prod\log-repo\Logitude\Simplog.Data\CommonDataModel\Repositories\AgentSharedManifestRepository.cs
+Line 89: return context.AgentSharedManifests.ToList();
+
+File: C:\LWC_Prod\log-repo\Logitude\Simplog.Data\CommonDataModel\Repositories\AirlineMessagingRuleRepository.cs
+Line 64: return context.AirlineMessagingRules.ToList();
+
+File: C:\LWC_Prod\log-repo\Logitude\Simplog.Data\CommonDataModel\Repositories\AirlineRepository.cs
+Line 33: select a).FirstOrDefault();
+
+
+PATTERN 5: Select with navigation properties
+Found 20 potential cases:
+
+File: C:\LWC_Prod\log-repo\Logitude\JustWebFreight\WebFreight.Web\Controllers\CustomsModel\WebServices\DeclarationWebServiceController.cs
+Line 1185: .GetMulti(aynList.Select(r => r.itm.Id)
+
+File: C:\LWC_Prod\log-repo\Logitude\JustWebFreight\WebFreight.Web\Controllers\DigitalPortal\DigitalDashboardController.cs
+Line 525: return result.Select(a => new { a.Key.Code, a.Key.TransportModeId, a.count })
+
+File: C:\LWC_Prod\log-repo\Logitude\JustWebFreight\WebFreight.Web\Controllers\DigitalPortal\DigitalShipmentController.cs
+Line 200: .Select(a => a.FieldCode.Replace($"Shipment.{tenant}.", ""))
+
+File: C:\LWC_Prod\log-repo\Logitude\JustWebFreight\WebFreight.Web\Controllers\WebDomainControllers\CRMDomainController.cs
+Line 2221: List<string> contactsIds = cardContactProducts.Select(s => s.CardContact.ContactId).ToList();
+
+File: C:\LWC_Prod\log-repo\Logitude\JustWebFreight\WebFreight.Web\Controllers\WebDomainControllers\CRMDomainController.cs
+Line 2236: List<string> contactsIds = cardContactAdditionalServices.Select(s => s.CardContact.ContactId).ToList();
+
+File: C:\LWC_Prod\log-repo\Logitude\JustWebFreight\WebFreight.Web\CustomWebServices\BL\XLSExport\CourierMasterWSheetExport.cs
+Line 78: select new { declaration = PendingGroup.Key, pending = PendingGroup.Select(g => g.CourierPendingReason.LocalName) });
+
+File: C:\LWC_Prod\log-repo\Logitude\JustWebFreight\WebFreight.Web\CustomWebServices\BL\XLSExport\CourierMasterWSheetExport.cs
+Line 505: //           .Select(c => c.CourierPendingReason.LocalName))
+
+File: C:\LWC_Prod\log-repo\Logitude\JustWebFreight\WebFreight.Web\Helpers\AmitalAPI\AmitalApiSchemaApi.cs
+Line 32: string queryString = string.Join("&", parameters.Properties().Select(p => $"{p.Name}={Uri.EscapeDataString(p.Value.ToString())}"));
+
+File: C:\LWC_Prod\log-repo\Logitude\JustWebFreight\WebFreight.Web\Helpers\DigitalPortalQueryToExcelExportService.cs
+Line 628: .Select(a => a.FieldCode.Replace($"Shipment.{tenant}.", ""))
+
+File: C:\LWC_Prod\log-repo\Logitude\JustWebFreight\WebFreight.Web\InfrastructureModel\GeneralDomainService.cs
+Line 3651: //    textCodesList = textCodesList.Select(r=>r.ObjectTable.ObjectFields.Where(o=>o.IsCustom == false &&o.FieldLable == r.Code)))
+
+File: C:\LWC_Prod\log-repo\Logitude\JustWebFreight\WebFreight.Web\ReportsWebServices\LogitudeReports\Accounting\AccountingDepositReportManager.cs
+Line 271: List<string> shipmentsIds = arinvoicePayments.Where(d => d.ARInvoice!= null && d.ARInvoice.MainEntityReference != null).Select(s => s.ARInvoice.MainEntityReference).ToList();
+
+File: C:\LWC_Prod\log-repo\Logitude\JustWebFreight\WebFreight.Web\ReportsWebServices\LogitudeReports\CRM\BluesnapPaymentsReportManager.cs
+Line 120: List<string> tenantsIds = iQueryable_Tenantmanagements.ToList().Select(e => e.Id.ToString()).ToList();
+
+File: C:\LWC_Prod\log-repo\Logitude\JustWebFreight\WebFreight.Web\ReportsWebServices\LogitudeReports\Customs\ExportDeclarationLoader.cs
+Line 96: .Select(x => new { x.DeclarationId, x.CounterKey, x.ItemCode, x.ClassificationCode, x.PackageQuantity, x.InvoiceQuantityType, x.ItemPrice, OriginCountryName = x.OriginCountry.LocalName, TransactionNatureName = x.TransactionNatureType.LocalName, x.LineNumber })
+
+File: C:\LWC_Prod\log-repo\Logitude\JustWebFreight\WebFreight.Web\ReportsWebServices\LogitudeReports\Customs\ExportDeclarationLoader.cs
+Line 101: .Select(x => new { x.DeclarationId, x.FinalCargoTypeCode, x.FinalManifestNumber, x.FinalSecondCargoId, x.FinalThirdCargoId, x.FinalCargoType.LocalName })
+
+File: C:\LWC_Prod\log-repo\Logitude\JustWebFreight\WebFreight.Web\ReportsWebServices\LogitudeReports\Customs\ExportDeclarationLoader.cs
+Line 271: .Select(x => new { x.DeclarationId, x.ConsignmentNumber, x.ConsignmentType, CargoTypeName = x.CargoType.LocalName, x.ManifestNumber, x.SecondCargoID, x.ThirdCargoID, x.CargoDescription, FinalDestinationPort = x.FinalDestinationPort.LocalName })
+
+File: C:\LWC_Prod\log-repo\Logitude\JustWebFreight\WebFreight.Web\ReportsWebServices\LogitudeReports\TimeManagement\EmployeeTimeSheetManager.cs
+Line 93: var dateList = Enumerable.Range(0, 1 + toDate.Value.Subtract(fromDate.Value).Days).Select(offset => fromDate.Value.AddDays(offset)).ToList();
+
+File: C:\LWC_Prod\log-repo\Logitude\JustWebFreight\WebFreight.Web\ReportsWebServices\InvoiceWebService.asmx.cs
+Line 1639: List<string> foriegnCurrencies = invoiceLines.GroupBy(g => new { g.ForiegnCurrencyId }).Select(s => s.Key.ForiegnCurrencyId).ToList();
+
+File: C:\LWC_Prod\log-repo\Logitude\JustWebFreight\WebFreight.Web\ReportsWebServices\InvoiceWebService.asmx.cs
+Line 3317: List<string> foriegnCurrencies = invoiceLines.GroupBy(g => new { g.ForiegnCurrencyId }).Select(s => s.Key.ForiegnCurrencyId).ToList();
+
+File: C:\LWC_Prod\log-repo\Logitude\JustWebFreight\WebFreight.Web\ReportsWebServices\LogitudeReportsWebService.asmx.cs
+Line 10413: List<string> commonList = parentList.Select(s1 => s1.Contact.Email.ToLower()).Intersect(childList.Select(s2 => s2.Contact.Email.ToLower())).ToList();
+
+File: C:\LWC_Prod\log-repo\Logitude\Logitude.Accounting.BL\CoreBL\BuildTenant\FullAccountingProvider.cs
+Line 616: .Select(r => r.DisplayNumber.ToString().Substring(6))
+
+
+========================================
+SUMMARY
+========================================
+
+Total potential N+1 issues found: 110
+
+Pattern 1 (foreach with navigation): 20
+Pattern 2 (ToList + foreach): 20
+Pattern 3 (queries in loops): 20
+Pattern 4 (missing Include): 30
+Pattern 5 (Select navigation): 20
+
+RECOMMENDATION:
+These are potential issues that require manual review.
+Not all findings are actual problems - context matters.
+Priority: Review top 10-20 most frequently executed code paths.
+
+Expected impact if fixed: 30-50% faster API responses

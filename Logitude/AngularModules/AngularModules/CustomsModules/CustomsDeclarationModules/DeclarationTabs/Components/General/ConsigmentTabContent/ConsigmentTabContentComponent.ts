@@ -171,6 +171,14 @@ export class ConsigmentTabContentComponent
         //if (this.Tab.ComponentReference && this.Tab.ComponentReference.ngOnDestroy) {
         //    this.Tab.ComponentReference.ngOnDestroy();
         //}
+        if(this.EntityPM.IsDirty){
+            this.declarationPM.IsChanged = true;
+            this._DeclarationPMService.update(this.declarationPM).subscribe((response: ServiceResponse) => {
+                if (!response.HasError) {
+                    this.EntityPM = response.Result;
+                }
+            });
+        }
 
         if (this.Tab) {
             this.Tab.ComponentReference = null;

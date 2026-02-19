@@ -1,0 +1,39 @@
+{
+  "phase": "phase0",
+  "name": "Safety Setup",
+  "status": "in_progress",
+  "steps": [
+    {
+      "id": "0.1",
+      "name": "Create backup branches",
+      "status": "in_progress",
+      "backupBranch": null,
+      "timestamp": "2025-01-19T00:00:00Z"
+    },
+    {
+      "id": "0.2",
+      "name": "Create safety scripts",
+      "status": "not_started",
+      "scriptsCreated": [],
+      "timestamp": null
+    },
+    {
+      "id": "0.3",
+      "name": "Measure baseline metrics",
+      "status": "not_started",
+      "metricsFile": null,
+      "timestamp": null
+    },
+    {
+      "id": "0.4",
+      "name": "Human approval",
+      "status": "not_started",
+      "approvedBy": null,
+      "timestamp": null
+    }
+  ],
+  "currentStep": "0.1",
+  "lastUpdated": "2025-01-19T00:00:00Z",
+  "notes": "Phase 0 must complete before Phase 1 can begin"
+}
+

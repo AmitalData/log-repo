@@ -59,8 +59,6 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
         public string JournalNumber { get; set; }
 
         public List<Invoice> Invoices { get; set; }
-        public Currency Currency { get; set; }
-
     }
 
     public class Invoice

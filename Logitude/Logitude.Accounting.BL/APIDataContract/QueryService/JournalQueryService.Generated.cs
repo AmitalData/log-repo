@@ -202,19 +202,9 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
 						}
 						 
 					}
-                      if (MyEntity.Currency != null)
-                      {
-                    CurrencyQueryService CurrencyCurrencyService = new CurrencyQueryService(Tenant);
-
-                    var myCurrencyPM = CurrencyCurrencyService.CurrencyDataMappingAndValidatin(MyEntity.Currency, Tenant, ComputingPartnerName);
-                          if (myCurrencyPM != null)
-                          {
-                              temp.CurrencyId = myCurrencyPM.Id;
-                          }
-			         
-                      }
-
-                    temp.JournalNumber = MyEntity.AccountingEntityId;
+			
+					
+					temp.JournalNumber = MyEntity.AccountingEntityId;
 					if(MyEntity.JournalLines != null && MyEntity.JournalLines.Count > 0)
 					{
 						JournalLineQueryService JournalLineService4 = new JournalLineQueryService(Tenant);

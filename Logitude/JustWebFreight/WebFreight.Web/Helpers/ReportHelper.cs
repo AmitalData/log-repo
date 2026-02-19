@@ -55,9 +55,6 @@ using WebFreight.Web.ShipmentPackageModel;
 using WebFreight.Web.TaxesApprovalModel;
 using WebFreight.Web.WebServices;
 using System.Reflection;
-using WebFreight.Web.DataContracts;
-using Microsoft.VisualStudio.Services.Common;
-using static Microsoft.VisualStudio.PlatformUI.SearchFilterDataSource;
 
 
 namespace WebFreight.Web.Helpers
@@ -281,7 +278,7 @@ namespace WebFreight.Web.Helpers
 
 
 
-        public string AddReportTemplate(string reportId, string description, string userId, string documentId, int tenant, ReportsTemplateRepository reportsTemplateRepository, ReportsTemplatesVersionRepository reportsTemplatesVersionRepository, List<ReportsTemplate> reportsTemplates, bool isSystem, string templateType, string entityId = null, string objectTableId = null, string subject = null, string originalTemplateId = null, bool useStimul = false)
+        public string AddReportTemplate(string reportId, string description, string userId, string documentId, int tenant, ReportsTemplateRepository reportsTemplateRepository, ReportsTemplatesVersionRepository reportsTemplatesVersionRepository, List<ReportsTemplate> reportsTemplates, bool isSystem, string templateType, string entityId = null, string objectTableId = null, string subject = null, string originalTemplateId = null)
 		{
             NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"Creating report template for report: {reportId}, template type: {templateType}, tenant: {tenant}, description: {description}");
 
@@ -304,8 +301,7 @@ namespace WebFreight.Web.Helpers
 				EntityId = entityId,
 				ObjectTableId = objectTableId,
                 OriginalTemplateId = originalTemplateId,
-                Subject = subject,
-				UseStimul = useStimul
+                Subject = subject
 			};
 			reportsTemplateRepository.Add(reportsTemplate);
 
@@ -831,26 +827,10 @@ namespace WebFreight.Web.Helpers
 				}
 
 			}
-            ExcelReportService reportsTemplateQuery = new ExcelReportService(reportFliter.tenant);
-            ExportToExcelHelper exportToExcelHelper = new ExportToExcelHelper();
-
-            IWorkbook workbook;
-
-            if (reportFliter.DefaultExcelNoStimId == "DefExcelTempId")
-			{
-                 workbook = exportToExcelHelper.ExportToExcel(reportStimulDataProviderDetails.CurrentBusinessObject.BusinessObjectValue, reportStimulDataProviderDetails.CurrentBusinessObject.Name);
-            }
-            else
-			{
-                var selectedData = reportsTemplateQuery.GetSelectedDataProviderFields(reportFliter.ReportId, reportFliter.DefaultExcelNoStimId);
-                var sortMap = new Dictionary<string, int>();
-                var filteredData = FilterSelectedFieldsWithParent(reportStimulDataProviderDetails.CurrentBusinessObject.BusinessObjectValue, selectedData, null, sortMap);
-
-                workbook = exportToExcelHelper.ExportToExcel(filteredData, reportStimulDataProviderDetails.CurrentBusinessObject.Name, sortMap);
-            }
-
-
-            MemoryStream memoryStream = new MemoryStream();
+			ExportToExcelHelper exportToExcelHelper = new ExportToExcelHelper();
+			IWorkbook workbook = exportToExcelHelper.ExportToExcel(reportStimulDataProviderDetails.CurrentBusinessObject.BusinessObjectValue, reportStimulDataProviderDetails.CurrentBusinessObject.Name);
+			
+			MemoryStream memoryStream = new MemoryStream();
 			workbook.Write(memoryStream);
             MemoryStream tempStream = new MemoryStream(memoryStream.ToArray());
 
@@ -865,54 +845,6 @@ namespace WebFreight.Web.Helpers
             ReadFileFromStreamFileAndSaveOnStorgeByChunks(tempFilePath, reportFliter, ".xlsx");
 
 
-        }
-
-
-        private IDictionary<string, object> FilterSelectedFieldsWithParent(object source, List<DataProviderField> selectedFields, string parentName = null, Dictionary<string, int> sortMap = null)
-        {
-            var result = new Dictionary<string, object>();
-            if (source == null || selectedFields == null)
-                return result;
-
-            foreach (var field in selectedFields)
-            {
-                var prop = source.GetType().GetProperty(field.Name);
-                if (prop == null)
-                    continue;
-
-                var value = prop.GetValue(source);
-
-                string columnName = !string.IsNullOrEmpty(field.Translation)
-                    ? field.Translation
-                    : (string.IsNullOrEmpty(parentName)
-                        ? field.Name
-                        : parentName + "_" + field.Name);
-
-
-                if (field.Type == "List" && value is IEnumerable enumerable)
-                {
-                    var list = new List<object>();
-                    foreach (var item in enumerable)
-                    {
-                        if (field.Fields?.Any() == true)
-                        {
-                            list.Add(FilterSelectedFieldsWithParent(item, field.Fields, field.Name, sortMap));
-                        }
-                        else
-                        {
-                            list.Add(item);
-                        }
-                    }
-                    result[columnName] = list;
-                }
-                else
-                {
-                    sortMap?.TryAdd(columnName, field.Sort);
-                    result[columnName] = value;
-                }
-            }
-
-            return result;
         }
 
         public MemoryStream GetExcel(string reportKey,string fileName,int tenant)
@@ -2475,34 +2407,34 @@ namespace WebFreight.Web.Helpers
 				nonArrayProperties.ForEach(Columns => row[Columns.Name] = Columns.Value);
 		}
 
+	
 
-
-        private void ReadFileFromStreamFileAndSaveOnStorgeByChunks(string tempFilePath, ReportFliter reportFliter, string extension)
-        {
-            BlobFileInfo fileInfo = GetNewBlobFileInfo((reportFliter.ReportKey + "@" + reportFliter.ReportName + extension), extension, reportFliter.tenant);
-            IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
-            List<string> blockIdsList = new List<string>();
+		private void ReadFileFromStreamFileAndSaveOnStorgeByChunks(string tempFilePath, ReportFliter reportFliter, string extension)
+		{
+			BlobFileInfo fileInfo = GetNewBlobFileInfo((reportFliter.ReportKey + "@" + reportFliter.ReportName + extension), extension, reportFliter.tenant);
+			IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
+			List<string> blockIdsList = new List<string>();
 			int bufferNumber = 0; long sendSize = 0;
-            using (FileStream fileStream = new FileStream(tempFilePath, FileMode.Open, FileAccess.Read))
-            {
-                int bytesRead;
-                fileInfo.FileSize = fileStream.Length;
-                var buffer = new byte[GetChunkSize(fileStream.Length, sendSize)];
-                while ((bytesRead = fileStream.Read(buffer, 0, buffer.Length)) > 0)
-                {
+			using (FileStream fileStream = new FileStream(tempFilePath, FileMode.Open, FileAccess.Read))
+			{
+				int bytesRead;
+				fileInfo.FileSize = fileStream.Length;
+				var buffer = new byte[GetChunkSize(fileStream.Length, sendSize)];
+				while ((bytesRead = fileStream.Read(buffer, 0, buffer.Length)) > 0)
+				{
 					sendSize += buffer.Length;
-                    var blockId = Convert.ToBase64String(Guid.NewGuid().ToByteArray());
-                    blockIdsList.Add(blockId);
-                    storageservice.WriteBlock(buffer, sendSize, blockIdsList.ToArray(), bufferNumber, fileInfo);
+					var blockId = Convert.ToBase64String(Guid.NewGuid().ToByteArray());
+					blockIdsList.Add(blockId);
+					storageservice.WriteBlock(buffer, sendSize, blockIdsList.ToArray(), bufferNumber, fileInfo);
 					bufferNumber += 1;
-                    buffer = new byte[GetChunkSize(fileStream.Length, sendSize)];
-                }
+					buffer = new byte[GetChunkSize(fileStream.Length, sendSize)];
+				}
 				fileStream.Close();
-            }
-            File.Delete(tempFilePath);
-        }
+			}
+			File.Delete(tempFilePath);
+		}
 
-        private long GetChunkSize(long fileSize, long sendSize)
+		private long GetChunkSize(long fileSize, long sendSize)
 		{
 			long chunkSize = 1000000;
 			if ((fileSize - sendSize) < chunkSize) chunkSize = fileSize - sendSize;
@@ -2638,7 +2570,7 @@ namespace WebFreight.Web.Helpers
 
 		#region UpdateReport
 
-        public void CopyFromTenant0(int tenant, int tenantToCopy, string reportCode = null)
+        public void CopyFromTenant0(int tenant, int tenantToCopy)
         {
             ICommonDataContext commonDataContext = CommonDataContext.GetContext(tenantToCopy);
             reportsTemplateRepository = new ReportsTemplateRepository(commonDataContext);
@@ -2651,7 +2583,7 @@ namespace WebFreight.Web.Helpers
             ReportGroupQuery reportGroupQuery = new ReportGroupQuery(tenantToCopy);
             string accountingReportGroupId = reportGroupQuery.GetReportGroupPMsByTenant(0).Where(a => a.Code == "RACC").Select(a => a.Id).FirstOrDefault();
             tenantZeroReportsTemplate = reportsTemplateRepository.GetReportsTemplates(0)
-                .Where(d => d.IsCopiedAtSignup && d.Report.ReportGroupId == accountingReportGroupId && !d.InActive).ToList();
+                .Where(d => d.IsCopiedAtSignup && d.Report.ReportGroupId == accountingReportGroupId).ToList();
             tenantZeroReportsTemplatesVersionLists = reportsTemplatesVersionRepository.GetReportsTemplatesVersionsByReportsTemplateIds(tenantZeroReportsTemplate.Select(d => d.Id).ToList(), 0);
             documentLists = documentRepository.GetDocumentsByIds(tenantZeroReportsTemplatesVersionLists.Select(d => d.ReportDocumentId).ToList());
             List<Report> tenantZeroReports = tenantZeroReportsTemplate.Select(a => a.Report).Distinct().ToList();
@@ -2660,11 +2592,6 @@ namespace WebFreight.Web.Helpers
             myTenantReportsTemplatesVersion = reportsTemplatesVersionRepository.GetReportsTemplatesVersionsByReportsTemplateIds(myTenantReportsTemplate.Select(d => d.Id).ToList(), tenantToCopy);
             ReportRepository reportRepository = new ReportRepository(commonDataContext);
             List<Report> myReports = reportRepository.GetReports(tenantToCopy).ToList();
-
-			if (!string.IsNullOrEmpty(reportCode))
-			{
-				tenantZeroReports = tenantZeroReports.Where(a => a.Code == reportCode).ToList();
-            }
 
             tenantZeroReports.ForEach(report => CreateReportTemplates(report, tenantToCopy, userId, myReports));
 
@@ -2747,8 +2674,7 @@ namespace WebFreight.Web.Helpers
 							FeatureUniqeCode = report.FeatureUniqeCode,
 							AvailableForScheduling = report.AvailableForScheduling,
 							DisablePreview = report.DisablePreview,
-							DefaultExcelTemplateId = report.DefaultExcelTemplateId,
-							DefaultExcelNoStimId = report.DefaultExcelNoStimId
+							DefaultExcelTemplateId = report.DefaultExcelTemplateId
 
 						};
 						reportRepository.Add(newReport);
@@ -2973,7 +2899,7 @@ namespace WebFreight.Web.Helpers
 			if (string.IsNullOrEmpty(documentId))
 				return false;
 
-            myReport.DefaultExcelTemplateId = AddReportTemplate(myReport.Id, systemExcelReportTemplate.Description, userId, documentId, tenant, reportsTemplateRepository, reportsTemplatesVersionRepository, null, true, "E", null, null, null, systemExcelReportTemplate.Id , systemExcelReportTemplate.UseStimul);
+            myReport.DefaultExcelTemplateId = AddReportTemplate(myReport.Id, systemExcelReportTemplate.Description, userId, documentId, tenant, reportsTemplateRepository, reportsTemplatesVersionRepository, null, true, "E", null, null, null, systemExcelReportTemplate.Id);
 			return true;
 
 		}
@@ -2994,13 +2920,7 @@ namespace WebFreight.Web.Helpers
 				Tenant = reportFliter.tenant,
 				StatusCode = "W",
 				ReportId = reportFliter.ReportId,
-                ReportTemplateId = reportFliter.ProcessType == "ExportToExcel"
-					? (!string.IsNullOrEmpty(reportFliter.DefaultExcelNoStimId)
-						? reportFliter.DefaultExcelNoStimId
-						: null)
-					: (!string.IsNullOrWhiteSpace(reportFliter.DefaultTemplateId)
-						? reportFliter.DefaultTemplateId
-						: null),
+				ReportTemplateId = string.IsNullOrWhiteSpace(reportFliter.DefaultTemplateId) ? null : reportFliter.DefaultTemplateId,
 				DisablePreview = reportFliter.DisablePreview,
                 NotDisplayInMenu = reportFliter.NotDisplayInMenu ,
 			};
@@ -3018,13 +2938,13 @@ namespace WebFreight.Web.Helpers
 
 		public static void AddStimulsoftLicenseKey()
 		{
-            StiLicense.Key = "6vJhGtLLLz2GNviWmUTrhSqnOItdDwjBylQzQcAOiHlDUTDyyOzH1Ys3qCPYbCdoOPkp0wcjMFs/nMMKkWriMMfI0I" +
-"PTmv3vqyK+kiZMWBXbmk/5nVaYnoKdZDQcs9S4EXbREpWCaBtBUPBdGK/RvynNQgdJ92boAv5dvQNf+cI/TFtMD5Zu" +
-"IUmN7IUWcOYxu68ChgVJhjNdkvfh+tpcYa9gRW/Ik/9N1FO2Uaq7qiKAnO0rn1Put5GiR8zSvegcgRcRzkn5wApANF" +
-"lb0W//9Ce8sgpSUwO1no2Auf/Efv+2uV3Ld9e5WZvjKskFJDhLYbdvWq3xNMZkwdo0qSBdavsMZqOtPfpzpSmrGPCC" +
-"cFFCq4hgXdc9BrS7XjM/KGcojYpSArv6b3oEp4XOa1rgach8lukVJCR5WwMAyfgXHT9Na5d87xey46BtTRZWJd2Svx" +
-"tXYYoWNDtqe0IEh54aL6prLL162XgeDiWnlUiLIHYm3Jtwp6/N39l+p3kHYDdGnS+vgv1Eso7uUmYl7FKrqzjczh7l" +
-"wjvqoQrAretQXTtTlqp0O8LtDn2cbEsboWm3";
+			StiLicense.Key = "6vJhGtLLLz2GNviWmUTrhSqnOItdDwjBylQzQcAOiHk5LQfMb0Dr1Ze4z6YRXSb7imTiay6/HzKYGUzkd/h3FMt5R7" +
+"uunoM5lX8Vs2voVkSeT6Wv6WI6Jcy4xOeAjjPkTBhC+ivrrxidMQjLaebItqFcnJWqKXBUgoJa0WfmH3soi0IbfEmI" +
+"fQ3ZmMq5BHsjsKoHSdnbzDUPWMXieYRTJZL6tsBC6QRy2ALPnYwg88ZJDGAWgAqMhZ+M0BVM17B3YJN9mu1MfAblN7" +
+"rG1eWrSrR5B53af4aeWs0RmqVNatfenGL8sufvTgOiyEuQmC9J7sHOT6VoQpWOlZthrc7JOl4zbw+qduZHZrpLuK+1" +
+"O3AB8EeDCQ6EgM8TcUesQBZZrUA4ZUFpxsCdvL0n4DQiB1tIof1TGHXCtZ62S1kAfU4XJzEGM/g3MYbKridAK5ckyc" +
+"0xwsK2y46rm9W3EV0m49Na0pcJe+2ZScc6BP1o3tDS9ddHbfkt7hFZpUNTqOxn9BOP0YVoQul+dPckYle4PS4mzXVp" +
+"tMrKV4En69rnW/z658axW0kQ2GxorKwW0IAR";
 		}
 	}
 

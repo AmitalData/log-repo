@@ -1,0 +1,114 @@
+﻿FRONTEND BUNDLE ANALYSIS
+Generated: 2025-10-19 12:15:06
+
+Quick analysis of Angular application structure and dependencies.
+
+
+PACKAGE DEPENDENCIES
+Production dependencies: 50
+Development dependencies: 33
+
+Major dependencies:
+  @angular/animations: ^9.1.13
+  @angular/cdk: ^9.2.4
+  @angular/common: ~9.1.1
+  @angular/compiler: ~9.1.1
+  @angular/core: ~9.1.1
+  @angular/forms: ~9.1.1
+  @angular/platform-browser: ~9.1.1
+  @angular/platform-browser-dynamic: ~9.1.1
+  @angular/router: ~9.1.1
+  @azure/msal-angular: ^2.5.4
+  @azure/msal-browser: ^2.34.0
+  @microsoft/applicationinsights-angularplugin-js: ^2.6.2
+  @microsoft/applicationinsights-web: ^2.8.18
+  @types/mocha: ^7.0.2
+  ag-grid-angular: ^20.0.0
+  ag-grid-community: ^20.0.0
+  ag-grid-enterprise: ^20.0.0
+  angular-fusioncharts: 3.0.4
+  angular-mentions: ^1.4.0
+  collaboration-tool-tasks-list: ^11.2.19
+  console: ^0.7.2
+  fast-json-patch: ^3.1.1
+  file-saver: ^2.0.5
+  fusioncharts: ^3.19.0
+  lodash.clonedeep: ^4.5.0
+  logitude-dashboard-library: 3.1.75
+  logitude-workflow: latest
+  mochawesome-report-generator: ^5.1.0
+  ng-zorro-antd: ^9.3.0
+  ng2-pdf-viewer: ^7.0.2
+  ngx-monaco-editor: ^9.0.0
+  object-path: ^0.11.8
+  pretty-print-json: ^1.3.1
+  primeflex: ^3.0.1
+  primeicons: ^4.1.0
+  primeng: 10.0.3
+  primereact: ^8.3.0
+  quill: ^1.3.7
+  react: ^17.0.2
+  react-dom: ^17.0.2
+  rxjs: ~6.5.4
+  safe-clone-deep: ^1.1.5
+  selenium-webdriver: ^4.0.0-alpha.5
+  stream: 0.0.2
+  timers: ^0.1.1
+  tslib: ^1.10.0
+  webdriver-manager: ^12.1.6
+  xlsx: ^0.18.5
+  xml-js: ^1.6.11
+  zone.js: ^0.11.1
+
+ANGULAR MODULES
+Total modules: 21
+
+Modules found:
+  Module_ACCT.ts
+  Module_APP.ts
+  Module_BOOK.ts
+  Module_COMN.ts
+  Module_CTRL.ts
+  Module_CRM.ts
+  Module_CUST.ts
+  Module_DASH.ts
+  Module_DAASH.ts
+  Module_INFR.ts
+  Module_INVC.ts
+  Module_QUOT.ts
+  Module_REPO.ts
+  Module_SHRD.ts
+  Module_SHIP.ts
+  Module_SHIPOR.ts
+  Module_SHIP.ts
+  Module_SOCL.ts
+  Module_Tariff.ts
+  Module_TIME.ts
+  Module_WARH.ts
+
+APPLICATION STRUCTURE
+Components: 1660
+Services: 2075
+
+
+========================================
+OPTIMIZATION OPPORTUNITIES
+========================================
+
+1. LAZY LOADING:
+   - 21 modules could be lazy loaded
+   - Expected impact: 60-70% smaller initial bundle
+
+2. TREE SHAKING:
+   - Review unused dependencies
+   - Remove duplicate UI libraries
+   - Expected impact: 20-30% smaller bundle
+
+3. CODE SPLITTING:
+   - Split vendor bundle from application code
+   - Expected impact: Better caching, faster updates
+
+4. ANGULAR UPGRADE:
+   - Current: Angular 9.x
+   - Target: Angular 17/18
+   - Expected impact: 40-50% faster build + runtime
