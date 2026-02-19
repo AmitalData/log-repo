@@ -1,71 +1,62 @@
-﻿using Logitude.Accounting.BL.CloseTables;
-using Logitude.Accounting.BL.MagayaRef;
-using Logitude.Accounting.BL.Utils;
-using Logitude.Accounting.Data.Repositories;
-using Logitude.BL.Helpers;
+﻿using CHAMP17;
+using Logitude.Server.Tools.QueueService;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Server.Infrastructure;
 using System;
-using System.Collections.Generic;
 
 namespace Logitude.Accounting.BL.Interfaces.Magaya
 {
     public class InvoiceApiService
     {
-        private CSSoapService helper;
+     //   private CSSoapServiceClient _client;
         private int _accessKey;
 
-        public void OpenConnection(int tenant)
+        public bool OpenConnection(string user, string password)
         {
             try
             {
-                var user = DefaultService.Instance.Get(tenant, "Magaya", "Magaya")?.Value1;
-                var password = DefaultService.Instance.Get(tenant, "Magaya", "Magaya")?.Value2;
-                NetCommonHelper.Logger.DevLog.Instance.WriteInfo("OpenConnection Started");
-                if(string.IsNullOrEmpty(user) ||  string.IsNullOrEmpty(password))
-                {
-                    NetCommonHelper.Logger.DevLog.Instance.WriteError("OpenConnection Failed: User or Password is not configured.");
-                    throw new InvalidOperationException("OpenConnection Failed: User or Password is not configured");
-                }
-                helper = new CSSoapService();
-                int key;
-                api_session_error result = helper.StartSession(user, password, out key);
-                if (result == api_session_error.no_error)
-                {
-                    _accessKey = key;
-                   
-                }
-                else
-                {
-                    throw new InvalidOperationException($"OpenConnection Failed: {result}");
-                }
+                //NetCommonHelper.Logger.DevLog.Instance.WriteInfo($"OpenConnection Started: user: {user},password: {password} ");
+
+                //_client = new CSSoapServiceClient();
+                //int key;
+                //api_session_error result = _client.StartSession(user, password, out key);
+                //if (result == api_session_error.no_error)
+                //{
+                //    _accessKey = key;
+                //    return true;
+                //}
+                //else
+                //{
+                //    return false;
+                //}
+                return true;
             }
             catch (Exception ex)
             {
                 NetCommonHelper.Logger.DevLog.Instance.WriteError($"OpenConnection Exception: {ex.Message}");
-                throw ex;
+                return false;
             }
         }
 
-        public void EndSession()
+        public bool EndSession()
         {
             try
             {
-                EnsureSessionStarted();
+                //if (_client == null)
+                //    throw new InvalidOperationException("Session not started.");
 
-                api_session_error result = helper.EndSession(_accessKey);
-                if(!(result == api_session_error.no_error))
-                {
-                    throw new InvalidOperationException($"EndSession Failed: {result}");
-                }
-              
+                //api_session_error result = _client.EndSession(_accessKey);
+                //return result == api_session_error.no_error;
+                return true;
             }
             catch (Exception ex)
             {
                 NetCommonHelper.Logger.DevLog.Instance.WriteError($"EndSession Exception: {ex.Message}");
-                throw ex;
+                return false;
             }
         }
 
-        public  string  QueryLog(
+        public (bool Success, string LogXml) QueryLog(
             string startDate,
             string endDate,
             int logEntryType,
@@ -74,94 +65,72 @@ namespace Logitude.Accounting.BL.Interfaces.Magaya
         {
             try
             {
-                EnsureSessionStarted();
-                string trans_list_xml;
-                api_session_error result = helper.QueryLog(
-                    _accessKey,
-                    startDate,
-                    endDate,
-                    logEntryType,
-                    transType,
-                    flags,
-                    out trans_list_xml);
+                //if (_client == null)
+                //    throw new InvalidOperationException("Session not started.");
 
-                if (result == api_session_error.no_error)
-                {
-                    return trans_list_xml;
-                }
-                else
-                {
-                    throw new InvalidOperationException($"QueryLog Failed: {result}");
-                }
+                //string transListXml;
+                //api_session_error result = _client.QueryLog(
+                //    _accessKey,
+                //    startDate,
+                //    endDate,
+                //    logEntryType,
+                //    transType,
+                //    flags,
+                //    out transListXml);
+
+                //if (result == api_session_error.no_error)
+                //{
+                //    return (true, transListXml);
+                //}
+                //else
+                //{
+                //        return (false, null);
+                //}
+                return (false, null);
             }
             catch (Exception ex)
             {
                 NetCommonHelper.Logger.DevLog.Instance.WriteError($"QueryLog Exception: {ex.Message}");
-                throw ex;
+                return (false, null);
             }
         }
 
-        public  string  GetTransaction(
+        public (bool Success, string TransactionXml) GetTransaction(
     string type,
     int flags,
     string number)
         {
             try
             {
-                EnsureSessionStarted();
-                string transXml;
-                api_session_error result = helper.GetTransaction(
-                    _accessKey,
-                    type,
-                    flags,
-                    number,
-                    out transXml);
+                //if (_client == null)
+                //    throw new InvalidOperationException("Session not started.");
 
-                if (result == api_session_error.no_error)
-                {
-                    return transXml;
-                }
-                else
-                {
-                    throw new InvalidOperationException($"GetTransaction Failed: {result}");
-                }
+                //string transXml;
+                //api_session_error result = _client.GetTransaction(
+                //    _accessKey,
+                //    type,
+                //    flags,
+                //    number,
+                //    out transXml);
+
+                //if (result == api_session_error.no_error)
+                //{
+                //    return (true, transXml);
+                //}
+                //else
+                //{
+                //    return (false, null);
+                //}
+                return (false, null);
             }
             catch (Exception ex)
             {
                 NetCommonHelper.Logger.DevLog.Instance.WriteError($"GetTransaction Exception: {ex.Message}");
-                throw ex;
+                return (false, null);
             }
         }
 
 
-        public void ReSendQueue(string  id,int tenant)
-        {
-            InvoiceApiQueryBatch invoiceApiQueryBatch = new InvoiceApiQueryBatch();
-            try
-            {
-                InvoiceApiCommunicationLogRepository invoiceApiCommunicationLogRepository = new InvoiceApiCommunicationLogRepository(tenant);
-               var communicationLog= invoiceApiCommunicationLogRepository.GetSingle(id, tenant);
-                communicationLog.StatusCode  = InvoiceApiStatusEnum.Pending;
-                        var messageBody = new Dictionary<string, string>
-                       {
-                        { "Guid", communicationLog?.ExternalID },
-                        { "InvoiceApiId", communicationLog?.Id},
-                        };
-                      invoiceApiQueryBatch.SaveInvoiceApiInvoiceInQueue(messageBody, tenant);
-                      
-            }
-            catch (Exception ex)
-            {
-                NetCommonHelper.Logger.DevLog.Instance.WriteError($"ReSendQueue Exception: {ex.Message}");
-                throw ex;
-            }
-        }
-
-        private void EnsureSessionStarted()
-        {
-            if (helper == null)
-                throw new InvalidOperationException("Session not started.");
-        }
 
 
 

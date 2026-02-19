@@ -15,7 +15,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     public class DocumentFilingBackupSettingQuery
     {
         DocumentFilingBackupSettingRepository repository;
-
+        public DocumentFilingBackupSettingQuery()
+        {
+            repository = new DocumentFilingBackupSettingRepository();
+        }
 
 
         public DocumentFilingBackupSettingQuery(DocumentFilingBackupSettingRepository DocumentFilingBackupSettingRepository)

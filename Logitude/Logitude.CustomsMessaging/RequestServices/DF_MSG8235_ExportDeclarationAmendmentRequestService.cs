@@ -441,7 +441,7 @@ namespace Logitude.CustomsMessaging.RequestServices
                 throw new BusinessErrorException("_DirtyDeclarationPaymentPM.DeclarationId could not convert to long ");
             }
             var myCCUFILEMRepository = new CCUFILEMRepository(declarationPM.Tenant);
-            var ccufilem = myCCUFILEMRepository.GetFILENOByCUSTOMFILENO(lCUSTOMFILENO,declarationPM.Tenant);
+            var ccufilem = myCCUFILEMRepository.GetFILENOByCUSTOMFILENO(lCUSTOMFILENO);
 
 
             var myCCUQUELOCKRepository = new CCUQUELOCKRepository(requestParams.Tenant);
@@ -1078,7 +1078,7 @@ namespace Logitude.CustomsMessaging.RequestServices
                 // declarationGoodsShipment.SequenceNumericSpecified = true;
 
                 //
-                declarationGoodsShipment.Invoice = GetDeclarationGoodsShipmentInvoice(supplierInvoicePM, declarationPM.Direction, declarationPM.DeclarationTypeCode);
+                declarationGoodsShipment.Invoice = GetDeclarationGoodsShipmentInvoice(supplierInvoicePM, declarationPM.Direction);
 
                 string vendorNumber = GetVendorNumber(supplierInvoicePM.VendorId);
 
@@ -1411,7 +1411,7 @@ namespace Logitude.CustomsMessaging.RequestServices
         }
 
 
-        private DeclarationGoodsShipmentInvoice GetDeclarationGoodsShipmentInvoice(SupplierInvoicePM supplierInvoicePM, string direction,string declarationTypeCode)
+        private DeclarationGoodsShipmentInvoice GetDeclarationGoodsShipmentInvoice(SupplierInvoicePM supplierInvoicePM, string direction)
         {
             var declarationGoodsShipmentInvoice = new DeclarationGoodsShipmentInvoice();
             declarationGoodsShipmentInvoice.ID = SetIDTypeValue<InvoiceIdentificationIDType>(supplierInvoicePM.InvoiceNumber);
@@ -1429,13 +1429,13 @@ namespace Logitude.CustomsMessaging.RequestServices
             {
                 declarationGoodsShipmentInvoice.TypeCode = SetCodeTypeValue<InvoiceTypeCodeType>(supplierInvoicePM.AccountTypeCode);
             } // moran 13.7.14 - Task 6817 <--
-            declarationGoodsShipmentInvoice.DMExtensions = GetDMExtensionsGoodsShipment(supplierInvoicePM, direction, declarationTypeCode);
+            declarationGoodsShipmentInvoice.DMExtensions = GetDMExtensionsGoodsShipment(supplierInvoicePM, direction);
 
             return declarationGoodsShipmentInvoice;
         }
 
 
-        private DeclarationGoodsShipmentInvoiceDMExtensions GetDMExtensionsGoodsShipment(SupplierInvoicePM supplierInvoicePM, string direction, string declarationTypeCode)
+        private DeclarationGoodsShipmentInvoiceDMExtensions GetDMExtensionsGoodsShipment(SupplierInvoicePM supplierInvoicePM, string direction)
         {
 
             var DMExtensions = new DeclarationGoodsShipmentInvoiceDMExtensions();
@@ -1473,9 +1473,7 @@ namespace Logitude.CustomsMessaging.RequestServices
                     DeclarationGoodsShipmentInvoiceDMExtensionsPaymentDetails declarationGoodsShipmentInvoiceDMExtensionsPaymentDetails = new DeclarationGoodsShipmentInvoiceDMExtensionsPaymentDetails();
                     declarationGoodsShipmentInvoiceDMExtensionsPaymentDetails.SequenceNumeric = supplierInvoicePayments.SequenceNumeric;
                     declarationGoodsShipmentInvoiceDMExtensionsPaymentDetails.PaymentType = SetCodeTypeValue<PaymentType>(supplierInvoicePayments.PaymentTypeCode);
-                    decimal amount = supplierInvoicePM.InvoiceAmount ?? 0m;
-
-                    InvoiceAmountType invoiceAmountType = SetAmountTypeValue<InvoiceAmountType>(supplierInvoicePM.InvoiceCurrencyTypeCode, amount);
+                    InvoiceAmountType invoiceAmountType = SetAmountTypeValue<InvoiceAmountType>(supplierInvoicePM.InvoiceCurrencyTypeCode, supplierInvoicePM.InvoiceAmount.Value);
                     declarationGoodsShipmentInvoiceDMExtensionsPaymentDetails.PaymentAmount = new PaymentAmountAmountType() { Value = supplierInvoicePayments.PaymentAmount, currencyID = direction == "E" ? invoiceAmountType.currencyID : ISO3AlphaCurrencyCodeContentType.USD, currencyIDSpecified = true };
 
 
@@ -1484,8 +1482,6 @@ namespace Logitude.CustomsMessaging.RequestServices
 
                 DMExtensions.PaymentDetails = DeclarationGoodsShipmentInvoiceDMExtensionsPaymentDetails.ToArray();
             }
-
-            if (declarationTypeCode != "3")
             DMExtensions.DutyRegimeProtocolCode = SetCodeTypeValue<DeclarationGoodsShipmentInvoiceDMExtensionsDutyRegimeProtocolCode>(supplierInvoicePM.DutyRegimeProtocolCode);
 
             DMExtensions.BuyerDetails = new DeclarationGoodsShipmentInvoiceDMExtensionsBuyerDetails();

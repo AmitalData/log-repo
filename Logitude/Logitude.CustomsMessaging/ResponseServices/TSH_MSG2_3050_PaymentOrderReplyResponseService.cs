@@ -859,7 +859,19 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 myPaymentOrderLineUpdateService.Update(item, false);
             }
         }
-      
+
+        private void DeletedPaymentOrderConnectionTables(PaymentOrderConnectionTableUpdateService paymentOrderConnectionTableUpdateService, string connectedEntityCode)
+        {
+            foreach (var paymentItem in _PaymentOrderPM.PaymentOrderConnectionTables)
+            {
+                // Delete old connection if it from the same type 
+                if (paymentItem.ConnectedEntityCode == connectedEntityCode)
+                {
+                    paymentItem.ChangeSetOp = ChangeSetOperation.Delete;
+                    paymentOrderConnectionTableUpdateService.Update(paymentItem, false);
+                }
+            }
+        }
     }
 
     public class AnalyzePaymentDocumentManager
@@ -984,7 +996,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             documentsFilingPM.DocumentTypeId = documentType.Id;
             if (_DeclarationPM != null)
             {
-                documentsFilingPM.EntityId = _DeclarationPM.IsAmendment == true ? _DeclarationPM.AmendmentOriginalDeclartation : _DeclarationPM.Id;
+                documentsFilingPM.EntityId = _DeclarationPM.Id;
                 documentsFilingPM.ObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
                 documentsFilingPM.ChildEntityId = _PaymentOrderPM.Id;
                 documentsFilingPM.ChildObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.PaymentOrder");

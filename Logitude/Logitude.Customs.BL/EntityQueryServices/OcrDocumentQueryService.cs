@@ -41,7 +41,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
             try
             {
                 var customsEnvironmentSettingQueryService = new CustomsEnvironmentSettingQueryService(tenant);
-                var environmentSettingPM = customsEnvironmentSettingQueryService.GetEnvironmentSettingPM(tenant);
+                var environmentSettingPM = customsEnvironmentSettingQueryService.GetEnvironmentSettingPM();
                 var (ocrServiceUrl, tenantFromUrl) = ParseOcrServiceUrl(environmentSettingPM.UpdateDocOcrServiceUrl, tenant);
                 environmentSettingPM.UpdateDocOcrServiceUrl= ocrServiceUrl;                                 
                var settingService = new CustomsSettingQueryService(tenant);
