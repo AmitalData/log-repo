@@ -74,6 +74,7 @@
     <None Include="DBOthers\SProcedures\usp_SetTenantIdleProcedure.dxml" />
     <None Include="DBOthers\SProcedures\usp_Queue_Peek_ThreadPerTenant.dxml" />
     <None Include="DBOthers\SProcedures\usp_UpdateJournalLinesSequence.dxml" />
+    <None Include="DBOthers\SProcedures\usp_UpdateJournalLinesSequence.dxml" />
     <None Include="DBOthers\SProcedures\usp_FixFailedReconcileJournals.dxml" />
     <None Include="DBOthers\SProcedures\usp_OpenTransaction.dxml" />
     <None Include="DBOthers\SProcedures\usp_MonthlyBalancesReport.dxml" />
@@ -336,7 +337,6 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <None Include="DBScripts\Post\202106200820_ Fill0GLAccountMoreData.sxml" />
-    <None Include="DBScripts\20250807_Create_IX_LedgerTransactions_Covering.sxml" />
     <Compile Include="ElasticDemoModel\ElasticDemoGen.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
