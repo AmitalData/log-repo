@@ -49,7 +49,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
             //ObjectTable table = tableRep.GetObjectTableByName("TaxDeductionReport", 0, true);
             try
             {
-                DocumentsFilingPM docFilingPM = TaxDeductionReportService.Create856File(ref taxDeductionReportPM, parameterArgs.Tenant);
+                DocumentsFilingPM docFilingPM = TaxDeductionReportService.Create856File(parameterArgs.ReportId, parameterArgs.Tenant);
                
                 //DocumentOutPM documentOutPM = TaxDeductionReportService.CreateDocumentOut(documentType.Id, parameterArgs.ReportId, null, null, table.Id, parameterArgs.Tenant);
                 taxDeductionReportPM.StatusTypeCode = "3";

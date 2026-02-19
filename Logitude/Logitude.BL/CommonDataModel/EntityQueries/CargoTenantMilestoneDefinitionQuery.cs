@@ -12,7 +12,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         CargoTenantMilestoneDefinitionRepository repository;
 
-  
+        public CargoTenantMilestoneDefinitionQuery()
+        {
+            repository = new CargoTenantMilestoneDefinitionRepository(); 
+            
+        }
 
         public CargoTenantMilestoneDefinitionQuery(int tenant)
         {

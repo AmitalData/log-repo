@@ -22,7 +22,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
             commonDataContext = CommonDataContext.GetContext(tenant);
         }
 
-
+        public CustomerCompetitorProductRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
 
         public IQueryable<CustomerCompetitorProduct> GetAllCustomerCompetitorProducts(int tenant)
         {

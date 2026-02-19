@@ -16,7 +16,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         CompetitorRepository repository;
 
-
+        public CompetitorQuery()
+        {
+               repository = new CompetitorRepository(); 
+        }
 
         public CompetitorQuery(int tenant)
         {

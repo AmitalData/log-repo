@@ -20,7 +20,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         CountryCityRepository repository;
 
-
+        public CountryCityQuery()
+        {
+            repository = new CountryCityRepository(); 
+        }
 
         public CountryCityQuery(int tenant)
         {
@@ -260,8 +263,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         {
             ICommonDataContext MyContext = CommonDataContext.GetContext(tenatToCopy);
             CountryCityService service = new CountryCityService(MyContext, tenatToCopy);
-            CountryQuery CountryQuery = new CountryQuery(tenatToCopy);
-			CountryRepository CountryRepository = new CountryRepository(tenatToCopy);
+            CountryQuery CountryQuery = new CountryQuery();
+			CountryRepository CountryRepository = new CountryRepository();
 
 			CountryCityRepository repository = new CountryCityRepository(tenant);   
             List<CountryCity> CountryCityList = this.repository.GetCountryCities(tenant).ToList();
