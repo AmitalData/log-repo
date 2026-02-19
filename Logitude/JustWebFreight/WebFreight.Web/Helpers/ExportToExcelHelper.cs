@@ -328,18 +328,7 @@ namespace WebFreight.Web.Helpers
 						stop = true;
 					}
 				}
-                if (stop == false)
-                {
-                    MethodsInfo = getMethodsInfo("WebFreight.Web.AccountingModel.DomainServices.OpenFormatReportDomainService", query);
-                    if (MethodsInfo != null)
-                    {
-                        getListMethodInfo = MethodsInfo.ListMethodInfo;
-                        getCountMethodInfo = MethodsInfo.CountMethodInfo;
-                        context = MethodsInfo.context;
-                        stop = true;
-                    }
-                }
-                if (stop == false)
+				if (stop == false)
 				{
 					MethodsInfo = getMethodsInfo("WebFreight.Web.AccountingModel.DomainServices.ARPaymentChequeDomainService", query);
 					if (MethodsInfo != null)
@@ -1508,24 +1497,23 @@ namespace WebFreight.Web.Helpers
 		public NPOI.SS.UserModel.IWorkbook ExportToExcel(object data,string name = null , Dictionary<string, int> sortMap = null)
 		{
 			FillTranslation();
-			bool withPrefix = sortMap == null;
-            DataTable dataTable = FlattenToDataTable(data, withPrefix);
+			DataTable dataTable = FlattenToDataTable(data);
 			return ConvertDataTableToWorkbook(dataTable, name, sortMap);
 		}
 
 	
 
-	    public DataTable FlattenToDataTable(object data, bool withPrefix)
+	    public DataTable FlattenToDataTable(object data)
 		{			
 			JObject root = JObject.FromObject(data);			
 			DataTable table = new DataTable();
-			RecurseFlatten(root, table, new Dictionary<string, dynamic>(), withPrefix);		
+			RecurseFlatten(root, table, new Dictionary<string, dynamic>());		
 			return table;
 		}
 
 		private static void RecurseFlatten(JObject node,
 										   DataTable table,
-										   Dictionary<string, dynamic> currentRow, bool withPrefix = false, string prefixProp = null)
+										   Dictionary<string, dynamic> currentRow)
 		{
 			var scalars = node.Properties()
 							  .Where(p => !(p.Value is JArray) && !(p.Value is JObject))
@@ -1534,10 +1522,8 @@ namespace WebFreight.Web.Helpers
 			foreach (var prop in scalars)
 			{
 				string name = prop.Name;
-                if (withPrefix && !string.IsNullOrEmpty(prefixProp))
-                    name = prefixProp + prop.Name;
 
-                currentRow[name] = prop.Value.Type == JTokenType.Null
+				currentRow[name] = prop.Value.Type == JTokenType.Null
 										? null
 										: prop.Value;
 			}
@@ -1557,31 +1543,18 @@ namespace WebFreight.Web.Helpers
 						foreach (var child in childArray.Children<JObject>())
 						{
 							var newRowData = new Dictionary<string, dynamic>(currentRow);
-							string prefix = null;
-                            if (withPrefix)
-                                 prefix = arrayProp.Name + "_";
-
-                            foreach (var cp in child.Properties().Where(p => !(p.Value is JArray) && !(p.Value is JObject)))
+							foreach (var cp in child.Properties().Where(p => !(p.Value is JArray) && !(p.Value is JObject)))
 							{
 
-								if (withPrefix)
-								{
-                                    newRowData[prefix + cp.Name] = cp.Value.Type == JTokenType.Null
-                                                               ? null
-                                                               : cp.Value;
-                                }
 
-								else
-								{
-
-                                    newRowData[cp.Name] = cp.Value.Type == JTokenType.Null
-                                                               ? null
-                                                               : cp.Value;
-                                }
-                                  
+								newRowData[cp.Name] = cp.Value.Type == JTokenType.Null
+															   ? null
+															   : cp.Value;
 
 							}
-							RecurseFlatten(child, table, newRowData, withPrefix, prefix);
+							RecurseFlatten(child, table, newRowData);
+
+
 
 						}
 						foreach (var child in childArray.Children())

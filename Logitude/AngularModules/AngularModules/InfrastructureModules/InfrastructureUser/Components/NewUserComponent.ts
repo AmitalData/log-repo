@@ -185,13 +185,6 @@ export class NewUserComponent extends BaseComponent implements OnInit {
                 this.NewUserPM.Tenant = SessionInfo.LoggedUserTenant;
                 this.NewUserPM.Technology = "AG";
                 this.NewUserPM.LayoutDirection = "rtl";
-
-                if (SessionLocator.TenantPM.HebrewTenant) {
-                    this.NewUserPM.ShowLocalNameInLOV = true;
-                    this.NewUserPM.DontShowLocalLabels = false;
-                    this.NewUserPM.LayoutDirection = "rtl";
-                }
-
                 this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
 
                 this.userPMService.insert(this.NewUserPM).subscribe((myResult: any) => {

@@ -239,20 +239,11 @@ export class AppTool {
 			logitude_url = 'http://localhost:9996/'; //test.logitudeworld.com/test/';//
 		}
 		else {
-			logitude_url = this.getAppBaseUrl(logitude_url);
+			logitude_url = logitude_url.replace("/customs-book", "");
 			logitude_url = logitude_url.replace("login", "");
 		}
 		return logitude_url;
 	}
-
-	public static getAppBaseUrl(fullUrl: string): string {
-		const match = fullUrl.match(/^(.*?\/customs-book)/i);
-		if (!match) {
-			throw new Error('customs-book not found in URL');
-		}
-		return match[1].replace(/\/customs-book$/i, '/') ;
-	}
-
 
 	public static GetQuickbooksPageBasedOnAuth() {
 		SessionLocator.TenantManagementJS;
@@ -360,7 +351,9 @@ export class AppTool {
 
 		return myResult;
 	}
-
+  	public static IsNullOrUndefined(myFieldValue: any) {
+        return myFieldValue == null || myFieldValue == undefined;
+    }
 	// Measurments
 	public static GetWeightFromWeight(fromWeightCode: string, toWeightCode: string, myWeight: number) {
 		var myResult: number = null;
@@ -3325,6 +3318,7 @@ class AmitalList<Item> extends Array<Item> {
 		return this.reduce((a: Item, b: Item): Item => (select(a) > select(b) ? a : b));
 	}
 }
+
 ////--- itzik : Why Array Tool ? - better extend !!!!
 
 export class Pattern {

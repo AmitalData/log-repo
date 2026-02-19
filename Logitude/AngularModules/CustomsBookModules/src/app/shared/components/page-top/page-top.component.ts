@@ -1,37 +1,41 @@
-import { AfterViewInit, ChangeDetectorRef, Component, EventEmitter, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, OnDestroy, Output, ViewChild } from '@angular/core';
 import { SearchBy, SearchService } from './service/top-page.service';
 import { FormsModule, } from '@angular/forms';
 import { HeaderService, searchState } from '../app-header/service/header.service';
 import { FilterPopupService } from '../filter-popup/service/filter-popup.service';
+import { FilterPopupComponent } from '../filter-popup/filter-popup.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { RomanToolService } from '../../services/roman-tool.service';
-import { SearchCustomsItemAutocomplateComponent } from './search-customs-item-autocomplate/search-customs-item-autocomplate.component';
-import { AppTool } from '../../../core/Infrastructure/Tools';
+import { Subject, takeUntil } from 'rxjs';
 
 
 @Component({
 	selector: 'app-page-top',
 	standalone: true,
-	imports: [FormsModule, MatAutocompleteModule, SearchCustomsItemAutocomplateComponent],
+	imports: [FormsModule, MatAutocompleteModule, FilterPopupComponent],
 	templateUrl: './page-top.component.html',
 	styleUrl: './page-top.component.css',
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PageTopComponent implements AfterViewInit {
-	@ViewChild(SearchCustomsItemAutocomplateComponent) searchCustomsItemAutocomplateComponent: SearchCustomsItemAutocomplateComponent;
+export class PageTopComponent implements AfterViewInit, OnDestroy {
 	@Output() searchClick = new EventEmitter<string | number>();
 	textToSearch: string = '';
 	searchHeader: string = 'חיפוש פרט מכס/מילה/צירוף מילים';
+
+	private destroy$ = new Subject<void>();
 
 	constructor(
 		public searchService: SearchService,
 		private headerService: HeaderService,
 		private filterPopupService: FilterPopupService,
-		public romanTool: RomanToolService, private cdr: ChangeDetectorRef
+		public romanTool: RomanToolService, 
+		private cdr: ChangeDetectorRef
 	) { }
 
 	ngAfterViewInit() {
 		this.cdr.detectChanges();
 	}
+
 	public text: string = '';
 	public checked: string | number = '';
 	public searchBy = SearchByParam;
@@ -42,13 +46,18 @@ export class PageTopComponent implements AfterViewInit {
 	ngOnInit() {
 		this.text = this.searchHeader;
 		this.checked = this.searchService.GetDefaultValue();
-		this.headerService.searchState$.subscribe((searchText) => {
-			this.currentSearchState = searchText;
-		});
-		this.searchService.searchTextFromHost.subscribe((searchText) => {
-			this.textToSearch = searchText;
-			this.clickSearch();
-		});
+		
+		this.headerService.searchState$
+			.pipe(takeUntil(this.destroy$))
+			.subscribe((searchText) => {
+				this.currentSearchState = searchText;
+				this.cdr.markForCheck();
+			});
+	}
+
+	ngOnDestroy() {
+		this.destroy$.next();
+		this.destroy$.complete();
 	}
 
 	// #112160
@@ -76,7 +85,6 @@ export class PageTopComponent implements AfterViewInit {
 	}
 
 	clickSearch() {
-		this.searchCustomsItemAutocomplateComponent?.clearAutocomplete();
 
 		if (this.textToSearch.trim() === "") {
 			this.textToSearch = "";
@@ -98,7 +106,13 @@ export class PageTopComponent implements AfterViewInit {
 		}
 
 		this.searchClick.emit(this.searchByNumOrText);
+		// this.searchClick.emit(this.searchService.selectSearchBy);// #112160
 		this.filterPopupService.toggleFilterPopup(false);
+
+		this.searchService.searchText$.subscribe((searchText) => {
+			// reset search input in html:
+			if (searchText === "") this.textToSearch = "";
+		});
 	}
 
 	onCustomsItemSelected(textToSearch: string) {
@@ -106,6 +120,10 @@ export class PageTopComponent implements AfterViewInit {
 		this.searchService.SearchBy('searchBy_form01');
 		this.searchByNumOrText = SearchBy.searchBy_form01;
 		this.clickSearch();
+	}
+
+	filterClickEvent(filters: any) {
+		this.searchClick.emit(filters);
 	}
 }
 

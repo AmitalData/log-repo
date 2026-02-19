@@ -1698,11 +1698,6 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             get;
             set;
         }
-        public IDbSet<OceanCarrierStatusAPIconfig> OceanCarrierStatusAPIconfigs
-        {
-            get;
-            set;
-        }
         public IDbSet<OceanInsightsStatuses> OceanInsightsStatuses
         {
             get;
@@ -1936,9 +1931,6 @@ namespace Logitude.DatabaseMigration.LogitudeModel
         public IDbSet<ARInvoiceStockLine> ARInvoiceStockLines { get; set; }
         #endregion
         public IDbSet<ARInvoicesSignedStatus> ARInvoicesSignedStatuses { get; set; }
-        public IDbSet<MasavInterface> MasavInterfaces { get; set; }
-        public IDbSet<MasavInterfaceStatus> MasavInterfaceStatuses { get; set; }
-
 
         #region Quotes Context
         public IDbSet<QuoteClosingReason> QuoteClosingReasons { get; set; }
@@ -5143,8 +5135,6 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new AWBDescriptionOfGoodsMap());
             modelBuilder.Configurations.Add(new OceanInsightsStatusesMap());
             modelBuilder.Configurations.Add(new OceanInsightsRequestMap());
-            modelBuilder.Configurations.Add(new OceanCarrierStatusAPIconfigMap());
-
             modelBuilder.Configurations.Add(new OceanInsightsRequestsCountMap());
             modelBuilder.Configurations.Add(new LogitudeMessagesTransmissionLogMap());
             // modelBuilder.Configurations.Add(new EntityChangesAutomationMap());

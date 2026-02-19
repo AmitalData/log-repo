@@ -431,18 +431,18 @@
 
                             </div>
 
-                            <div  style="height:5%;"></div>
+                            <div *ngIf="IsEnableReportTemplateExcel" style="height:5%;"></div>
 
-                            <div  style="height:5%;"></div>
+                            <div *ngIf="IsEnableRegularReportTemplate" style="height:5%;"></div>
 
 
-                            <div style="height:28.3%;vertical-align:top;" >
+                            <div style="height:28.3%;vertical-align:top;" *ngIf="IsEnableReportTemplateExcel">
 
                                 <table>
 
                                     <tr style="height:25px">
                                         <td>
-                                            <div style="text-align:left;width:100%;height:25px;"><span style="vertical-align:central;text-align:left;font-size:16px;color:#1B90CB">Excel Templates (Native)</span></div>
+                                            <div style="text-align:left;width:100%;height:25px;"><span style="vertical-align:central;text-align:left;font-size:16px;color:#1B90CB">Excel Templates (Non-Stimul)</span></div>
                                         </td>
                                     </tr>
 

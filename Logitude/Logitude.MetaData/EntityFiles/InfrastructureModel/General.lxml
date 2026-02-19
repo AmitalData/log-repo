@@ -66,7 +66,7 @@
   IsLookUp="false"
   IsTabsHidden="false"
   SearchFields="&quot;General,Generals,,Id,&quot;">
-<Screen
+  <Screen
     Name="&quot;GeneralHeaderScreen&quot;"
     ObjectTableName="&quot;General&quot;"
     IsReadOnly="true"
@@ -2124,13 +2124,6 @@
       DefaultText="&quot;Adjust&quot;"
       LocalDefaultTextBack_up="&quot;אישור הפרשים&quot;"
       LocalDefaultText="&quot;BS64:IteQ15nXqdeV16gg15TXpNeo16nXmdedIg==&quot;"
-      TextCodeTypeCode="&quot;O&quot;"
-      IsSpellChecked="false" />
-    <TextCode
-      Code="&quot;Accounting.General.B.RevaluationJournal&quot;"
-      DefaultText="&quot;Revaluation Journal&quot;"
-      LocalDefaultTextBack_up="&quot;פקודת שערוך&quot;"
-      LocalDefaultText="&quot;BS64:Itek16fXldeT16og16nXoteo15XXmiI=&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
@@ -6826,7 +6819,6 @@
       LocalDefaultText="&quot;BS64:Itep15zXlyDXnNeo16fXoiI=&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
-
     <TextCode
       Code="&quot;Accounting.General.O.CreateANewTaxReport&quot;"
       DefaultText="&quot;Tax Report&quot;"
@@ -6837,20 +6829,6 @@
       Code="&quot;Accounting.General.O.CancelTaxReport&quot;"
       DefaultText="&quot;Cancel Tax Report&quot;"
       LocalDefaultText="&quot;ביטול דוח מעמ&quot;"
-      TextCodeTypeCode="&quot;O&quot;"
-      IsSpellChecked="false" />
-    <TextCode
-      Code="&quot;Accounting.General.O.TransactionsBefore&quot;"
-      DefaultText="&quot;Transactions Before&quot;"
-      LocalDefaultTextBack_up="&quot; תנועות לפני&quot;"
-      LocalDefaultText="&quot;BS64:IiDXqteg15XXoteV16og15zXpNeg15ki&quot;"
-      TextCodeTypeCode="&quot;O&quot;"
-      IsSpellChecked="false" />
-    <TextCode
-      Code="&quot;Accounting.General.O.TransactionsAfter&quot;"
-      DefaultText="&quot;Transactions After&quot;"
-      LocalDefaultTextBack_up="&quot;תנועות אחרי&quot;"
-      LocalDefaultText="&quot;BS64:Iteq16DXldei15XXqiDXkNeX16jXmSI=&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
@@ -9340,7 +9318,7 @@
       IsOld="false"
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
-    <Feature
+     <Feature
       Code="&quot;General.Features.CustomerDebtNotification&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
       FeatureTextCodeCode="&quot;General.Features.General.Features.CustomerDebtNotification&quot;"

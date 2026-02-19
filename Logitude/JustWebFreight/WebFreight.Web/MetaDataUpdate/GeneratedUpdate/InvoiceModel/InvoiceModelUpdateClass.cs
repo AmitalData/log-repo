@@ -99,8 +99,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel
 		ExpenseAllocationFlowUpdateClass  ExpenseAllocationFlowUpdateClass = new ExpenseAllocationFlowUpdateClass();
 		ExpenseAllocationSettingUpdateClass  ExpenseAllocationSettingUpdateClass = new ExpenseAllocationSettingUpdateClass();
 		ExternalSystemsTablesCodeUpdateClass  ExternalSystemsTablesCodeUpdateClass = new ExternalSystemsTablesCodeUpdateClass();
-		MasavInterfaceUpdateClass  MasavInterfaceUpdateClass = new MasavInterfaceUpdateClass();
-		MasavInterfaceStatusUpdateClass  MasavInterfaceStatusUpdateClass = new MasavInterfaceStatusUpdateClass();
 		QBOGlobalTaxCalculationUpdateClass  QBOGlobalTaxCalculationUpdateClass = new QBOGlobalTaxCalculationUpdateClass();
 		SATInterfaceUpdateClass  SATInterfaceUpdateClass = new SATInterfaceUpdateClass();
 		SATInterfaceSettingUpdateClass  SATInterfaceSettingUpdateClass = new SATInterfaceSettingUpdateClass();
@@ -303,8 +301,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel
 			TablesHashStrings.Add("ExpenseAllocationFlow",  ExpenseAllocationFlowUpdateClass.HashString);
 			TablesHashStrings.Add("ExpenseAllocationSetting",  ExpenseAllocationSettingUpdateClass.HashString);
 			TablesHashStrings.Add("ExternalSystemsTablesCode",  ExternalSystemsTablesCodeUpdateClass.HashString);
-			TablesHashStrings.Add("MasavInterface",  MasavInterfaceUpdateClass.HashString);
-			TablesHashStrings.Add("MasavInterfaceStatus",  MasavInterfaceStatusUpdateClass.HashString);
 			TablesHashStrings.Add("QBOGlobalTaxCalculation",  QBOGlobalTaxCalculationUpdateClass.HashString);
 			TablesHashStrings.Add("SATInterface",  SATInterfaceUpdateClass.HashString);
 			TablesHashStrings.Add("SATInterfaceSetting",  SATInterfaceSettingUpdateClass.HashString);
@@ -1729,76 +1725,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("MasavInterface", ObjectTables, MasavInterfaceUpdateClass.HashString))
-			{
-				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
-				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("MasavInterface",contextTenant);
-					MasavInterfaceUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository,contextTenant);
-					this.ObjectContext.SaveChanges();
-					List<ObjectField> addedFields = new List<ObjectField>();
-					List<TextCode> addedTextCodes = new List<TextCode>();
-					MasavInterfaceUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository, addedFields, addedTextCodes,contextTenant);
-					SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes,contextTenant);
-					SqlBulkInsert.BulkInsert("ObjectFields", addedFields,contextTenant);					
-					//this.ObjectContext.TextCodes.AddRange(addedTextCodes);
-					//this.ObjectContext.ObjectFields.AddRange(addedFields);
-					//this.ObjectContext.SaveChanges();
-					MasavInterfaceUpdateClass.AddTableQueries(Queries, QueryColumns, ObjectTables, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters,tenantQueryGroups,contextTenant);
-					//this.ObjectContext.SaveChanges();
-					MasavInterfaceUpdateClass.AddTableScreens(tenantScreens, tenantScreenFields, screensRepository, screenFieldsRepository, ObjectContext,contextTenant);
-					//this.ObjectContext.SaveChanges();
-					MasavInterfaceUpdateClass.AddTableTabs(TenantObjectTableTabs, TextCodes, objectTableTabsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, ObjectContext,contextTenant);
-					//this.ObjectContext.SaveChanges();
-					MasavInterfaceUpdateClass.AddTableEventTypes(tenantEventTypes, EventTypeRepository, ObjectContext, AllEntityStatuses,contextTenant);
-					//this.ObjectContext.SaveChanges();
-					MasavInterfaceUpdateClass.AddTableFeatures(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext,contextTenant);
-					//this.ObjectContext.SaveChanges();
-					MasavInterfaceUpdateClass.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext,contextTenant);
-					//this.ObjectContext.SaveChanges();
-					MasavInterfaceUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext,contextTenant);
-					this.ObjectContext.SaveChanges();
-					scope.Complete();
-				}
-			}
-
-			if(MetadataUpdateUtility.IsChangedMetadataTable("MasavInterfaceStatus", ObjectTables, MasavInterfaceStatusUpdateClass.HashString))
-			{
-				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
-				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("MasavInterfaceStatus",contextTenant);
-					MasavInterfaceStatusUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository,contextTenant);
-					this.ObjectContext.SaveChanges();
-					List<ObjectField> addedFields = new List<ObjectField>();
-					List<TextCode> addedTextCodes = new List<TextCode>();
-					MasavInterfaceStatusUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository, addedFields, addedTextCodes,contextTenant);
-					SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes,contextTenant);
-					SqlBulkInsert.BulkInsert("ObjectFields", addedFields,contextTenant);					
-					//this.ObjectContext.TextCodes.AddRange(addedTextCodes);
-					//this.ObjectContext.ObjectFields.AddRange(addedFields);
-					//this.ObjectContext.SaveChanges();
-					MasavInterfaceStatusUpdateClass.AddTableQueries(Queries, QueryColumns, ObjectTables, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters,tenantQueryGroups,contextTenant);
-					//this.ObjectContext.SaveChanges();
-					MasavInterfaceStatusUpdateClass.AddTableScreens(tenantScreens, tenantScreenFields, screensRepository, screenFieldsRepository, ObjectContext,contextTenant);
-					//this.ObjectContext.SaveChanges();
-					MasavInterfaceStatusUpdateClass.AddTableTabs(TenantObjectTableTabs, TextCodes, objectTableTabsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, ObjectContext,contextTenant);
-					//this.ObjectContext.SaveChanges();
-					MasavInterfaceStatusUpdateClass.AddTableEventTypes(tenantEventTypes, EventTypeRepository, ObjectContext, AllEntityStatuses,contextTenant);
-					//this.ObjectContext.SaveChanges();
-					MasavInterfaceStatusUpdateClass.AddTableFeatures(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext,contextTenant);
-					//this.ObjectContext.SaveChanges();
-					MasavInterfaceStatusUpdateClass.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext,contextTenant);
-					//this.ObjectContext.SaveChanges();
-					MasavInterfaceStatusUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext,contextTenant);
-					this.ObjectContext.SaveChanges();
-					scope.Complete();
-				}
- 
-				MasavInterfaceStatusUpdateClass.FillMasavInterfaceStatus(contextTenant);
-
- 
-			}
-
 			if(MetadataUpdateUtility.IsChangedMetadataTable("QBOGlobalTaxCalculation", ObjectTables, QBOGlobalTaxCalculationUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -2105,10 +2031,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel
 	
 	   	   ExternalSystemsTablesCodeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository,contextTenant);
 	
-	   	   MasavInterfaceUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository,contextTenant);
-	
-	   	   MasavInterfaceStatusUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository,contextTenant);
-	
 	   	   QBOGlobalTaxCalculationUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository,contextTenant);
 	
 	   	   SATInterfaceUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository,contextTenant);
@@ -2209,10 +2131,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel
 	
 	   	   //ExternalSystemsTablesCodeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository,TextCodeRepository,contextTenant);
 	
-	   	   //MasavInterfaceUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository,TextCodeRepository,contextTenant);
-	
-	   	   //MasavInterfaceStatusUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository,TextCodeRepository,contextTenant);
-	
 	   	   //QBOGlobalTaxCalculationUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository,TextCodeRepository,contextTenant);
 	
 	   	   //SATInterfaceUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository,TextCodeRepository,contextTenant);
@@ -2311,10 +2229,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel
 	   	   ExpenseAllocationSettingUpdateClass.AddTableQueries(Queries,QueryColumns, ObjectTables, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters,tenantQueryGroups,contextTenant);
 	
 	   	   ExternalSystemsTablesCodeUpdateClass.AddTableQueries(Queries,QueryColumns, ObjectTables, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters,tenantQueryGroups,contextTenant);
-	
-	   	   MasavInterfaceUpdateClass.AddTableQueries(Queries,QueryColumns, ObjectTables, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters,tenantQueryGroups,contextTenant);
-	
-	   	   MasavInterfaceStatusUpdateClass.AddTableQueries(Queries,QueryColumns, ObjectTables, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters,tenantQueryGroups,contextTenant);
 	
 	   	   QBOGlobalTaxCalculationUpdateClass.AddTableQueries(Queries,QueryColumns, ObjectTables, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters,tenantQueryGroups,contextTenant);
 	
@@ -2415,10 +2329,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel
 	
 	   	   ExternalSystemsTablesCodeUpdateClass.AddTableScreens(tenantScreens,tenantScreenFields,screensRepository,screenFieldsRepository,ObjectContext,contextTenant);
 	
-	   	   MasavInterfaceUpdateClass.AddTableScreens(tenantScreens,tenantScreenFields,screensRepository,screenFieldsRepository,ObjectContext,contextTenant);
-	
-	   	   MasavInterfaceStatusUpdateClass.AddTableScreens(tenantScreens,tenantScreenFields,screensRepository,screenFieldsRepository,ObjectContext,contextTenant);
-	
 	   	   QBOGlobalTaxCalculationUpdateClass.AddTableScreens(tenantScreens,tenantScreenFields,screensRepository,screenFieldsRepository,ObjectContext,contextTenant);
 	
 	   	   SATInterfaceUpdateClass.AddTableScreens(tenantScreens,tenantScreenFields,screensRepository,screenFieldsRepository,ObjectContext,contextTenant);
@@ -2517,10 +2427,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel
 	   	   ExpenseAllocationSettingUpdateClass.AddTableTabs(TenantObjectTableTabs,TextCodes,objectTableTabsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,ObjectContext,contextTenant);
 	
 	   	   ExternalSystemsTablesCodeUpdateClass.AddTableTabs(TenantObjectTableTabs,TextCodes,objectTableTabsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,ObjectContext,contextTenant);
-	
-	   	   MasavInterfaceUpdateClass.AddTableTabs(TenantObjectTableTabs,TextCodes,objectTableTabsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,ObjectContext,contextTenant);
-	
-	   	   MasavInterfaceStatusUpdateClass.AddTableTabs(TenantObjectTableTabs,TextCodes,objectTableTabsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,ObjectContext,contextTenant);
 	
 	   	   QBOGlobalTaxCalculationUpdateClass.AddTableTabs(TenantObjectTableTabs,TextCodes,objectTableTabsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,ObjectContext,contextTenant);
 	
@@ -2621,10 +2527,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel
 	
 	   	   ExternalSystemsTablesCodeUpdateClass.AddTableEventTypes(tenantEventTypes,EventTypeRepository,ObjectContext,AllEntityStatuses,contextTenant);
 	
-	   	   MasavInterfaceUpdateClass.AddTableEventTypes(tenantEventTypes,EventTypeRepository,ObjectContext,AllEntityStatuses,contextTenant);
-	
-	   	   MasavInterfaceStatusUpdateClass.AddTableEventTypes(tenantEventTypes,EventTypeRepository,ObjectContext,AllEntityStatuses,contextTenant);
-	
 	   	   QBOGlobalTaxCalculationUpdateClass.AddTableEventTypes(tenantEventTypes,EventTypeRepository,ObjectContext,AllEntityStatuses,contextTenant);
 	
 	   	   SATInterfaceUpdateClass.AddTableEventTypes(tenantEventTypes,EventTypeRepository,ObjectContext,AllEntityStatuses,contextTenant);
@@ -2724,10 +2626,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel
 	
 	   	   ExternalSystemsTablesCodeUpdateClass.AddTableFeatures(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext,contextTenant);
 	
-	   	   MasavInterfaceUpdateClass.AddTableFeatures(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext,contextTenant);
-	
-	   	   MasavInterfaceStatusUpdateClass.AddTableFeatures(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext,contextTenant);
-	
 	   	   QBOGlobalTaxCalculationUpdateClass.AddTableFeatures(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext,contextTenant);
 	
 	   	   SATInterfaceUpdateClass.AddTableFeatures(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext,contextTenant);
@@ -2825,10 +2723,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel
 	   	   ExpenseAllocationSettingUpdateClass.AddTableTextCodes(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext,contextTenant);
 	
 	   	   ExternalSystemsTablesCodeUpdateClass.AddTableTextCodes(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext,contextTenant);
-	
-	   	   MasavInterfaceUpdateClass.AddTableTextCodes(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext,contextTenant);
-	
-	   	   MasavInterfaceStatusUpdateClass.AddTableTextCodes(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext,contextTenant);
 	
 	   	   QBOGlobalTaxCalculationUpdateClass.AddTableTextCodes(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext,contextTenant);
 	
@@ -2928,10 +2822,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel
 	
 	   	   ExternalSystemsTablesCodeUpdateClass.AddTableMenuButtons(tenantMenuButtons,tenantMenuButtonGroups,TextCodes,TextCodeRepository,FeaturesRepository,menuButtonRepository,TenantFeatures,menuButtonGroupRepository ,ObjectContext,contextTenant);
 	
-	   	   MasavInterfaceUpdateClass.AddTableMenuButtons(tenantMenuButtons,tenantMenuButtonGroups,TextCodes,TextCodeRepository,FeaturesRepository,menuButtonRepository,TenantFeatures,menuButtonGroupRepository ,ObjectContext,contextTenant);
-	
-	   	   MasavInterfaceStatusUpdateClass.AddTableMenuButtons(tenantMenuButtons,tenantMenuButtonGroups,TextCodes,TextCodeRepository,FeaturesRepository,menuButtonRepository,TenantFeatures,menuButtonGroupRepository ,ObjectContext,contextTenant);
-	
 	   	   QBOGlobalTaxCalculationUpdateClass.AddTableMenuButtons(tenantMenuButtons,tenantMenuButtonGroups,TextCodes,TextCodeRepository,FeaturesRepository,menuButtonRepository,TenantFeatures,menuButtonGroupRepository ,ObjectContext,contextTenant);
 	
 	   	   SATInterfaceUpdateClass.AddTableMenuButtons(tenantMenuButtons,tenantMenuButtonGroups,TextCodes,TextCodeRepository,FeaturesRepository,menuButtonRepository,TenantFeatures,menuButtonGroupRepository ,ObjectContext,contextTenant);
@@ -3003,9 +2893,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel
 	
 	   
 	   
-	   
-	   	   MasavInterfaceStatusUpdateClass.FillMasavInterfaceStatus(contextTenant);
-	
 	   
 	   
 	   	   QBOGlobalTaxCalculationUpdateClass.FillQBOGlobalTaxCalculation(contextTenant);

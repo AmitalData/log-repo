@@ -999,11 +999,6 @@ namespace Logitude.Customs.BL.EntityQueryServices
         {
             return repository.GetTenantPriorityByEntityIDAndTeant(EntityID, tenant);
         }
-        public bool HasBlockingRequests(string customFileNumber, int tenant, string interfaceTypeCode)
-        {
-            return repository.HasBlockingRequests(customFileNumber, tenant, interfaceTypeCode);
-        }
-
 
     }
 

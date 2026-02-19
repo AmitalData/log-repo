@@ -1,114 +1,29 @@
-﻿<div *ngIf="isReady" class="TabHolder">
+﻿<div *ngIf="isReady"  class="TabHolder">
     <table>
+        <tr class="TabTitleRow">
+            <td>{{'Customer.TH.AWBStock' | TextCodeTranslationPipe}}</td>
+        </tr>
+
         <tr style="height: 1px">
             <td>
-                <tr style="height: 20px">
-                    <td>
-                        <div></div>
-                    </td>
-                </tr>
                 <table>
                     <tr>
-                        <td
-                            style="width: 120px"
-                            [style.text-align]="isRTL ? 'right' : 'left'"
-                        >
-                            <LogLabel
-                                [NoObjectField]="true"
-                                [ObjectFieldName]="'StartDateTime'"
-                                [DataContext]="DataContext"
-                                [Text]="'ExpenseAllocationSetting.O.StartDateTime' | TextCodeTranslationPipe"
-                            ></LogLabel>
+                        <td class="HeaderScreenLable" style="width: 40px">
+                            {{'Accounting.General.O.OriginalAmount' | TextCodeTranslationPipe}}
                         </td>
-                        <td style="width: 15px"></td>
-                        <td style="width: 150px">
-                            <div style="width: 150px">
-                                {{StartDateTime | DateTimePipe:'D'}}
-                            </div>
-                        </td>
-                        <td
-                            style="width: 100px"
-                            [style.text-align]="isRTL ? 'right' : 'left'"
-                        >
-                            <LogLabel
-                                [NoObjectField]="true"
-                                [ObjectFieldName]="'NumberOfPayments'"
-                                [DataContext]="DataContext"
-                                [Text]="'ExpenseAllocationSetting.F.NumberOfPayments' | TextCodeTranslationPipe"
-                            ></LogLabel>
-                        </td>
-                        <td style="width: 15px"></td>
                         <td
                             style="
                                 color: #282e30;
                                 font-size: 12px;
                                 width: 100px;
-                                width: 100px;
                             "
                         >
-                            {{NumberOfPayments}}
+                            {{originalAmount |
+                            NumbersPipe:'N2'}}
                         </td>
-                        <td
-                            style="width: 120px"
-                            [style.text-align]="isRTL ? 'right' : 'left'"
-                        >
-                            <LogLabel
-                                [NoObjectField]="true"
-                                [ObjectFieldName]="'PaymentDateType'"
-                                [DataContext]="DataContext"
-                                [Text]="'ExpenseAllocationSetting.F.PaymentDateType' | TextCodeTranslationPipe"
-                            ></LogLabel>
+                        <td class="HeaderScreenLable" style="width: 40px">
+                            {{'ExpenseAllocationFlow.O.AmountPaid' | TextCodeTranslationPipe}}
                         </td>
-                        <td style="width: 15px"></td>
-                        <td style="width: 150px">{{PaymentDateType}}</td>
-
-                        <td >
-                            <div></div>
-                        </td>
-
-                        <td style="width: 5px">
-                            <div></div>
-                        </td>
-                    </tr>
-                </table>
-                <tr style="height: 20px">
-                    <td>
-                        <div></div>
-                    </td>
-                </tr>
-                <table>
-                    <tr>
-                        <td  style="width: 120px">
-                            
-                            <LogLabel
-                                [NoObjectField]="true"
-                                [ObjectFieldName]="'originalAmount'"
-                                [DataContext]="DataContext"
-                                [Text]="'ExpenseAllocationFlow.O.TotalExpensesAllocation' | TextCodeTranslationPipe"
-                            ></LogLabel>
-                        </td>
-                        <td style="width: 15px"></td>
-
-                        <td
-                            style="
-                                color: #282e30;
-                                font-size: 12px;
-                                width: 150px;
-                            "
-                        >
-                            {{originalAmount | NumbersPipe:'N2'}}
-                        </td>
-                        <td  style="width: 100px">
-                            
-                            <LogLabel
-                                [NoObjectField]="true"
-                                [ObjectFieldName]="'amountPaid'"
-                                [DataContext]="DataContext"
-                                [Text]="'ExpenseAllocationFlow.O.RecognizedExpense' | TextCodeTranslationPipe"
-                            ></LogLabel>
-                        </td>
-                        <td style="width: 15px"></td>
-
                         <td
                             style="
                                 color: #282e30;
@@ -118,31 +33,27 @@
                         >
                             {{isVoided ? 0 : (amountPaid | NumbersPipe:'N2')}}
                         </td>
-                        <td  style="width: 120px">
-                            <LogLabel
-                                [NoObjectField]="true"
-                                [ObjectFieldName]="'amountDue'"
-                                [DataContext]="DataContext"
-                                [Text]="'ExpenseAllocationFlow.O.UnrecognizedExpenses' | TextCodeTranslationPipe"
-                            ></LogLabel>
+                        <td class="HeaderScreenLable" style="width: 40px">
+                            {{'ExpenseAllocationFlow.O.AmountDue' | TextCodeTranslationPipe}}
                         </td>
-                        <td style="width: 15px"></td>
-
                         <td
                             style="
                                 color: #282e30;
                                 font-size: 12px;
-                                width: 150px;
+                                width: 100px;
                             "
                         >
-                            {{isVoided ?
-                            ('ExpenseAllocationFlow.O.InvoiceVoided' |
-                            TextCodeTranslationPipe) : (amountDue |
-                            NumbersPipe:'N2')}}
+                            {{isVoided ? ('ExpenseAllocationFlow.O.InvoiceVoided' | TextCodeTranslationPipe) : (amountDue | NumbersPipe:'N2')}}
                         </td>
 
-                        <td >
+                        <td style="width: 700px">
                             <div></div>
+                        </td>
+
+                        <td style="width: 100px">
+                            <button class="Button" (click)="settingsClicked()">
+                                {{'ExpenseAllocationFlow.O.ExpenseAllocationSetting' | TextCodeTranslationPipe}}
+                            </button>
                         </td>
 
                         <td style="width: 5px">
@@ -173,8 +84,17 @@
                                             max-width: 200px;
                                         "
                                     >
-                                        {{'ExpenseAllocationFlow.F.RunDate' |
-                                        TextCodeTranslationPipe}}
+                                    {{'ExpenseAllocationFlow.F.RunDate' | TextCodeTranslationPipe}}
+                                </td>
+                                    <td
+                                        style="
+                                            width: 120px;
+                                            min-width: 120px;
+                                            max-width: 120px;
+                                        "
+                                    >
+                                    {{'Accounting.General.O.Amount' | TextCodeTranslationPipe}}
+
                                     </td>
                                     <td
                                         style="
@@ -183,18 +103,7 @@
                                             max-width: 120px;
                                         "
                                     >
-                                        {{'Accounting.General.O.Amount' |
-                                        TextCodeTranslationPipe}}
-                                    </td>
-                                    <td
-                                        style="
-                                            width: 120px;
-                                            min-width: 120px;
-                                            max-width: 120px;
-                                        "
-                                    >
-                                        {{'ExpenseAllocationFlow.F.JournalNumber'
-                                        | TextCodeTranslationPipe}}
+                                        {{'ExpenseAllocationFlow.F.JournalNumber' | TextCodeTranslationPipe}}
                                     </td>
                                     <td
                                         style="
@@ -203,8 +112,8 @@
                                             max-width: 90px;
                                         "
                                     >
-                                        {{'ExpenseAllocationFlow.F.Status' |
-                                        TextCodeTranslationPipe}}
+                                    {{'ExpenseAllocationFlow.F.Status' | TextCodeTranslationPipe}}
+   
                                     </td>
 
                                     <td class="LastChild">
@@ -243,7 +152,7 @@
                                             position: relative;
                                         "
                                     >
-                                        {{(periodAmount | NumbersPipe:'N2')}}
+                                        {{item.JournalId === EntityPM.JournalId  ? (nonPrepaidPaidAmount | NumbersPipe:'N2') : (periodAmount | NumbersPipe:'N2')}}
                                     </td>
 
                                     <td

@@ -1,13 +1,13 @@
-import {EventEmitter, Output, OnInit, OnChanges, Component} from '@angular/core';
-import {ServiceResponse} from '../../../DataContracts/ServiceResponse';
-import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
+import { EventEmitter, Output, OnInit, OnChanges, Component, OnDestroy } from '@angular/core';
+import { ServiceResponse } from '../../../DataContracts/ServiceResponse';
+import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 
 interface IRow {
     pageIndex: number;
     rowIndex: number;
 }
 
-export class VirtualRowController implements OnInit, OnChanges {
+export class VirtualRowController implements OnInit, OnChanges, OnDestroy {
     dataSource: any;
     public cachedData: { [key: string]: any };
     private pageSize: number = 30; // = 15;
@@ -88,41 +88,41 @@ export class VirtualRowController implements OnInit, OnChanges {
                     res.subscribe((viewResponse: ServiceResponse) => {
                         if (!viewResponse.HasError) {
                             // if (this.MyCallTime == null || viewResponse.CallTime > this.MyCallTime) {
-                                this.MyCallTime = viewResponse.CallTime;
-                                console.log("this.MyCallTime " + this.MyCallTime);
-                                this.RecievedDataCount = viewResponse.Result.length;
-                                var jsonlist = viewResponse.Result;
-                                for (var i = 0; i < jsonlist.length; i++) {
-                                    this.cachedData[i + (pageIndex * PSize)] = jsonlist[i];
+                            this.MyCallTime = viewResponse.CallTime;
+                            console.log("this.MyCallTime " + this.MyCallTime);
+                            this.RecievedDataCount = viewResponse.Result.length;
+                            var jsonlist = viewResponse.Result;
+                            for (var i = 0; i < jsonlist.length; i++) {
+                                this.cachedData[i + (pageIndex * PSize)] = jsonlist[i];
+                            }
+                            var requestedRows = this.rowsRequested.filter(x => x.pageIndex == pageIndex);
+                            requestedRows.forEach((value: IRow, index: number) => {
+                                if (jsonlist[index] != undefined) {
                                 }
-                                var requestedRows = this.rowsRequested.filter(x => x.pageIndex == pageIndex);
-                                requestedRows.forEach((value: IRow, index: number) => {
-                                    if (jsonlist[index] != undefined) {
-                                    }
-                                    result.push({ RowIndex: value.rowIndex, RowData: jsonlist[index] });
+                                result.push({ RowIndex: value.rowIndex, RowData: jsonlist[index] });
+                            });
+
+                            if (this.cacheBuffer.length > 0) {
+
+                                this.cacheBuffer.forEach((cacheValue, index: number) => {
+                                    result.push({ RowIndex: cacheValue.RowIndex, RowData: cacheValue.RowData });
                                 });
-
-                                if (this.cacheBuffer.length > 0) {
-
-                                    this.cacheBuffer.forEach((cacheValue, index: number) => {
-                                        result.push({ RowIndex: cacheValue.RowIndex, RowData: cacheValue.RowData });
-                                    });
-                                    this.cacheBuffer = [];
-                                }
+                                this.cacheBuffer = [];
+                            }
 
 
-                                if (!getCount) {
-                                    this.requestedRowsReady.emit(result);
-                                }
-                                else {
-                           
-                                   
-                                    this.requestedRowCount.emit(viewResponse.Count);
-                                    this.allRecords.emit(viewResponse.Result);
-                                }
+                            if (!getCount) {
+                                this.requestedRowsReady.emit(result);
+                            }
+                            else {
+
+
+                                this.requestedRowCount.emit(viewResponse.Count);
+                                this.allRecords.emit(viewResponse.Result);
+                            }
                             // }
                         }
-                    });
+                    })
                 });
             }
             else {
@@ -185,6 +185,24 @@ export class VirtualRowController implements OnInit, OnChanges {
     public ClearCache() {
         this.cachedData = {};
         this.rowsRequested = [];
+    }
+
+    ngOnDestroy() {
+        this.cachedData = {};
+        this.rowsRequested = [];
+        this.cacheBuffer = [];
+        this.dataSource = null;
+        this.requestedRowsReady = null;
+        this.requestedRowCount = null;
+        this.allRecords = null;
+        this.MyCallTime = null;
+        this.OldFilters = null;
+        this.oldSearchFields = null;
+        this.ReloadData = null;
+        this.RecievedDataCount = null;
+        this.dataSource.unsubscribe();
+
+
     }
 
 }

@@ -3,7 +3,7 @@ import {AppTool, DateFormats, DateParts} from '../Tools';
 import {TextCodeTranslator} from '../Utilities/TextCodeTranslator';
 import {SessionLocator} from '../Utilities/SessionLocator';
 
-@Pipe({ name: 'LogBoxStatusDatePipe' })
+@Pipe({ name: 'LogBoxStatusDatePipe', standalone: true })
 
 export class LogBoxStatusDatePipe {
     transform(value: Date, myFormat: string = null): string {

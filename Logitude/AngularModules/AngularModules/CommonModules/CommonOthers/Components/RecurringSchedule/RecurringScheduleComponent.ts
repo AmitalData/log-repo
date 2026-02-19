@@ -18,8 +18,6 @@ export class RecurringScheduleComponent extends BaseComponent {
     public isReady = false;
     public disabled = false;
     public IsDayDisabled = false;
-    public validationErrorsList: string[];
-    RecurringScheduleComponent = RecurringScheduleComponent;
     public typeRadio: 'RecurrenceCount' | 'EndDateTime' = 'RecurrenceCount';
 
     private currentSession = SessionLocator.SelectedSession;
@@ -193,7 +191,8 @@ export class RecurringScheduleComponent extends BaseComponent {
         this.currentSession.CloseCurrentWindow();
     }
 
-    public static getDisplayText(type: string,): string {
+    public getDisplayText(type: string): string {
+        if (!this.isRTL) return type;
 
         const map: Record<string, string> = {
             [AllocationDateType.StartOfMonth]: TextCodeTranslator.Translate(
@@ -221,8 +220,8 @@ export class RecurringScheduleComponent extends BaseComponent {
         return map[type] || type;
     }
 
-    public static getDisplayTextOfDay(day: string): string {
-        
+    public getDisplayTextOfDay(day: string): string {
+        if (!this.isRTL) return day;
 
         const map: Record<string, string> = {
             Sunday: TextCodeTranslator.Translate(
@@ -434,8 +433,6 @@ export class RecurringScheduleComponent extends BaseComponent {
         this.currentSession.CloseCurrentWindowEmit('ok');
     }
     validateDate(): boolean {
-        this.validationErrorsList = [];
-
         if (this.minDate && new Date(this.startDateTime) < new Date(this.minDate)) {
             this.UIProperties.SetValidity(
                 'StartDateTime',
@@ -444,12 +441,7 @@ export class RecurringScheduleComponent extends BaseComponent {
                 TextCodeTranslator.Translate(
                     'ExpenseAllocationSetting.O.EndDateError'
                 )
-
             );
-            this.validationErrorsList.push(TextCodeTranslator.Translate(
-                'ExpenseAllocationSetting.O.EndDateError'
-            ));
-
             return false;
         } 
         else if( this.EndDateTime && new Date(this.startDateTime) > new Date(this.EndDateTime)) {
@@ -461,10 +453,6 @@ export class RecurringScheduleComponent extends BaseComponent {
                     'ExpenseAllocationSetting.O.StartDateAfterEndDateError'
                 )
             );
-            this.validationErrorsList.push(TextCodeTranslator.Translate(
-                'ExpenseAllocationSetting.O.StartDateAfterEndDateError'
-            ));
-
             return false;
         }
         else if(this.startDateTime < DateTool.GetCurrentDateAsUtc()) {
@@ -476,10 +464,6 @@ export class RecurringScheduleComponent extends BaseComponent {
                     'ExpenseAllocationSetting.O.PastDateError'
                 )
             );
-            this.validationErrorsList.push(TextCodeTranslator.Translate(
-                'ExpenseAllocationSetting.O.PastDateError'
-            ));
-
             return false;
         }
         else {

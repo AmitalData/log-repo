@@ -407,29 +407,6 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
-	  private string revalJrnlRef1 ;
-	  	  
-       
-	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string RevalJrnlRef1  
-	   {
-	    
-	     get
-		{
-		   return revalJrnlRef1;
-		 }
-		 set
-		 {
-		   if(revalJrnlRef1 != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="RevalJrnlRef1",OldValue=revalJrnlRef1,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   revalJrnlRef1=value;
-		   }
-			
-		 }
-	   }
 	    }
    
 }

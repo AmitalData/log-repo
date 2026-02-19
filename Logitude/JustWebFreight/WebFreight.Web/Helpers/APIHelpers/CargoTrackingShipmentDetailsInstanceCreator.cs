@@ -164,7 +164,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
             CargoTrackingShipmentQueryService cargoTrackingShipmentQueryService = new CargoTrackingShipmentQueryService(MyContext);
             var milestone = cargoTrackingShipmentQueryService.GetMilestonesDictionaryByCode();
             var cargoTrackingMilestoneBuilder = new CargoTrackingMilestoneBuilder();
-            return cargoTrackingMilestoneBuilder.BuildShipmentMilstones(cargoTrackingShipment, milestone);
+            return cargoTrackingMilestoneBuilder.BuildShipmentMilstones(cargoTrackingShipment, milestone, true);
         }
 
         private List<TraceEventPM> GetAllShipmentEvents(ShipmentPM shipment)
@@ -250,7 +250,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
             {
                 EnglishName = cargoTrackingMilestone.EnglishName,
                 LocalName = cargoTrackingMilestone.LocalName,
-                Code = milestone.ExternalCode,
+                Code = cargoTrackingMilestone.ExternalCode,
                 Date = milestone.Date?.ToString("dd/MM/yyyy"),
                 Time = milestone.Date?.ToString("HH:mm"),
                 EstimationDate = milestone.Date == null ? milestone.EstimationDate?.ToString("dd/MM/yyyy") : null,

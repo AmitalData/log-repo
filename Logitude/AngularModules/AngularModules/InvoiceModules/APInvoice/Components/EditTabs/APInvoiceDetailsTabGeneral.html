@@ -291,6 +291,16 @@
                                                 </td>
                                             </tr>
 
+                                            <!-- Operational date -->
+                                            <tr *ngIf="ShowOperationalDate" class="FormFieldRow">
+                                                <td style="width: 135px;">
+                                                    <LogLabel [ObjectFieldName]="'OperationalDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+                                                <td>
+                                                    <LogDatePicker [ObjectFieldName]="'OperationalDate'" [SelectedDateValue]="OperationalDate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogDatePicker>
+                                                </td>
+                                            </tr>
+
                                             <td>
                                                 <div></div>
                                             </td>
@@ -781,10 +791,9 @@
                                                         [IsEnabled]="item.IsScreenEnabled && IsPrepaidExpenses"></CheckBox>
                                                 </div>                                                
                                             </div>
-                                       </log-cell-template>
-                                   </ng-template>
-                                  </log-column>
-
+                                        </log-cell-template>
+                                    </ng-template>
+                                </log-column>
                                     <!-- Tool -->
                                     <log-column [width]="'55'">
                                         <ng-template let-item>

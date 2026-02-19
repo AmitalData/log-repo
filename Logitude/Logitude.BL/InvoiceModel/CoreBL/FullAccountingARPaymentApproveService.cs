@@ -586,8 +586,7 @@ $"[InterestTransactionPM] MapInterestTransactionPMFromBankTransferARPaymentPM  A
             CreateCreditLines(ref counter);
             CreateDebitLines(ref counter);
             CheckAbiltiyOfCreatingAutomaticReconcileForJournal();
-            if (FeatureToggleHelper.HasFeatureToggle("RFR", paymentPM.Tenant))
-                ProcessInvoiceDifference(ref counter);
+            ProcessInvoiceDifference(ref counter);
 
             AutoExternalReconcileBankTransferPageLines();
 
@@ -658,7 +657,7 @@ $"[InterestTransactionPM] MapInterestTransactionPMFromBankTransferARPaymentPM  A
                 ForeignAmount = 0,
                 ExchangeRate = (decimal)paymentPM.PaymentCurrencyExchangeRate,
                 Reference1 = paymentPM.PaymentNo,
-                Notes = TranslateTextsClass.Translate("Revaluations.Q.Revaluation", 0, true),
+                Notes = "Revaluation on Foreign Currency Receipt",
                 DueDate = GetDueDate(),
                 
             };
@@ -685,7 +684,7 @@ $"[InterestTransactionPM] MapInterestTransactionPMFromBankTransferARPaymentPM  A
                 ForeignAmount = 0,
                 ExchangeRate = (decimal)paymentPM.PaymentCurrencyExchangeRate,
                 Reference1 = paymentPM.PaymentNo,
-                Notes = TranslateTextsClass.Translate("Revaluations.Q.Revaluation", 0, true),
+                Notes = "Revaluation on Foreign Currency Receipt",
                 DueDate = GetDueDate(),
                 
             };
@@ -750,13 +749,10 @@ $"[InterestTransactionPM] MapInterestTransactionPMFromBankTransferARPaymentPM  A
             {
                 var AutoReconcileARPaymentServiceExt = ContainerAccessor.Container.Resolve(typeof(IAutoReconcileServiceExt), "AutoReconcileServiceExt", new ParameterOverride("", 1)) as IAutoReconcileServiceExt;
                 var AutoReconcileRecordList = new List<AutoReconcileRecord>();
-
-                ARInvoiceQuery aRInvoiceQuery = new ARInvoiceQuery(tenant);
-                var aRInvoiceLineRepository = new ARInvoiceLineRepository(tenant);
-
                 paymentPM.PaymentInvoices.ForEach(r =>
                 {
-                    var arInvoiceCanBeReconcilied = aRInvoiceQuery.CheckIfArInvoiceCanBeReconcilied(r.ARInvoiceId, tenant, aRInvoiceLineRepository);
+
+                    var arInvoiceCanBeReconcilied = CheckIfArInvoiceCanBeReconcilied(r.ARInvoiceId, tenant);
                     if (arInvoiceCanBeReconcilied)
                     {
                         var item = new AutoReconcileRecord()
@@ -779,6 +775,18 @@ $"[InterestTransactionPM] MapInterestTransactionPMFromBankTransferARPaymentPM  A
                 }
 
             }
+        }
+
+        private bool CheckIfArInvoiceCanBeReconcilied(string aRInvoiceId, int tenant)
+        {
+            var aRInvoiceLineRepository = new ARInvoiceLineRepository(tenant);
+            if (paymentGLAccount.IsMultiCurrency == true)
+            {
+                var arinvoiceLines = aRInvoiceLineRepository.GetInvoiceLinesByInvoiceId(aRInvoiceId, tenant);
+                var arinvoiceLinesCurrencies = arinvoiceLines.Select(x => x.ForiegnCurrencyId).Distinct().ToList();
+                return arinvoiceLinesCurrencies.Count > 1 ? false : true;
+            }
+            return true;
         }
 
         private string GetGLAccountIdByPaymentMethodCode(ARPaymentPM entityPm)

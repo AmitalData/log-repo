@@ -12,12 +12,13 @@ import { AddCommentService } from '../add-comment/service/add-comment.service';
 import { NgClass, NgFor, NgForOf, NgIf } from '@angular/common';
 import { SessionInfo } from '../../../core/Infrastructure/Utilities/SessionInfo';
 import { RulesComponent } from "../rules/rules.component";
+import { Pipes } from '../../../core/Infrastructure/ModuleDeclarations';
 
 
 @Component({
   selector: 'app-details-frame',
   standalone: true,
-  imports: [NgClass, FontAwesomeModule, AccordionComponent, CommentsComponent, RulesComponent, NgFor, NgForOf, NgIf],
+  imports: [NgClass, FontAwesomeModule, AccordionComponent, CommentsComponent, RulesComponent, NgFor, NgForOf, NgIf, Pipes],
   templateUrl: './details-frame.component.html',
   styleUrl: './details-frame.component.css'
 })
@@ -29,6 +30,7 @@ export class DetailsFrameComponent implements OnInit {
   @Input() showCommentsIsOpen: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   @Input() showRulesIsOpen: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   @Input() showDetailsStatus: boolean;
+  // @Input() itemData: BehaviorSubject<ItemData> = new BehaviorSubject<ItemData>(null);
   @Input() currentItem: BehaviorSubject<CB_CustomsItemComputedDataList>;
   item: CB_CustomsItemComputedDataList;
   showComments: boolean = false;
@@ -63,10 +65,14 @@ export class DetailsFrameComponent implements OnInit {
         this.showRulesIsOpen.subscribe((isOpen: boolean) => {
           this.showRules = isOpen;
         });
+
+        // this.addCommentService.allComments.subscribe((data: RemarksClassificationList[]) => {
+        //   this.countOfComments = data?.length > 0 ? data.length : 0;
+        // });
         this.addCommentService.fullCommentsData.subscribe((data: RemarksClassificationList[]) => {
           this.item.remarksClassificationList = data.filter(x => x.CustomsItemsID == this.item?.CustomsItemID);
           this.countOfComments = this.item.remarksClassificationList?.length > 0 ? this.item.remarksClassificationList?.length : 0;
-        });
+        }); 
       }
     });
   }

@@ -309,27 +309,17 @@ export class NoStimulReportTemplateComponent implements OnInit {
     SelectChanges(selectedField: DataProviderField, selectedListName: string) {
         this.SelectedField = selectedField;
         this.SelectedListName = selectedListName;
-    
-        this.UnSelectAllFields();
-    
-        if (selectedField?.Type === 'List') {
-            this.IsbtnAddDisabled = true;
-            this.IsbtnRemoveDisabled = true;
-            this.IsbtnUpDisabled = true;
-            this.IsbtnDownDisabled = true;
-            return;
-        }
-    
-        const isDataProviderFields = selectedListName === 'DataProviderFields';
-        this.IsbtnAddDisabled = !isDataProviderFields;
-        this.IsbtnRemoveDisabled = isDataProviderFields;
-    
-        const isFlatList = selectedListName === 'SelectedDataProviderFieldsFlat';
-        this.IsbtnUpDisabled = !isFlatList;
-        this.IsbtnDownDisabled = !isFlatList;
-    }
-    
 
+        this.IsbtnAddDisabled = selectedListName != 'DataProviderFields';
+        this.IsbtnRemoveDisabled = selectedListName == 'DataProviderFields';
+
+        this.IsbtnUpDisabled = selectedListName != 'SelectedDataProviderFieldsFlat';
+        this.IsbtnDownDisabled = selectedListName != 'SelectedDataProviderFieldsFlat';
+
+        this.UnSelectAllFields();
+    }
+
+    
     CloseButtonClicked() {
         this.CurrentSession.CurrentWindow.Close("");
     }

@@ -6,13 +6,11 @@ using Logitude.Customs.BL.EntityDataMappings;
 
 namespace Logitude.Customs.BL.EntityQueryServices
 {
-
-
-    public partial class SupplierInvoiceItemsReqListQueryService : EntityQueryService<SupplierInvoiceItemsReqList, SupplierInvoiceItemsReqListKeys, SupplierInvoiceItemsReqListPM, SIIRequestPM, SIIRequestKeys>
+    public partial class SupplierInvoiceItemsReqListQueryService : EntityQueryService<SupplierInvoiceItemsReqList, SupplierInvoiceItemsReqListKeys, SupplierInvoiceItemsReqListPM, object, SupplierInvoiceItemsReqListKeys>
     {
-        public SupplierInvoiceItemsReqListPM GetOrCreate(string siiRequestId, string declarationid, int invoicecounterkey, int invoiceitemlinenumber,int tenant)
+        public SupplierInvoiceItemsReqListPM GetOrCreate(string siiRequestId, string declarationid, int linenumber, int invoicecounterkey, int invoiceitemlinenumber,int tenant)
         {
-            var pm = GetSingle(declarationid, siiRequestId, invoicecounterkey, invoiceitemlinenumber, true, false);
+            var pm = GetSingle(declarationid, linenumber, siiRequestId, invoicecounterkey, invoiceitemlinenumber, true, false);
             if(pm != null)
             {
                 return pm;
@@ -21,9 +19,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
             var newPo = new SupplierInvoiceItemsReqList
             {
                 Tenant = tenant,
-                SIIRequestID = siiRequestId,
                 DeclarationId = declarationid,
-                LineNumber = 0, 
+                LineNumber = 1,  // not clear what linenumber shud be right now so we return 1 for now -- linenumber is key 
                 InvoiceCounterKey = invoicecounterkey,
                 InvoiceItemLineNumber = invoiceitemlinenumber,
             };
@@ -34,7 +31,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
             mapping.POCOToPM(newPm, newPo);
             return newPm;
         }
-        public SupplierInvoiceItemsReqListPM GetRequestLine(string siiRequestId, string declarationid, int invoicecounterkey, int invoiceitemlinenumber, int tenant)
+        public SupplierInvoiceItemsReqListPM GetRequest(string siiRequestId, string declarationid, int invoicecounterkey, int invoiceitemlinenumber, int tenant)
         {
             SupplierInvoiceItemsReqList entity = repository.GetRequest(siiRequestId, declarationid, invoicecounterkey, invoiceitemlinenumber, tenant);
             if (entity == null)
@@ -44,15 +41,5 @@ namespace Logitude.Customs.BL.EntityQueryServices
             var EntityPM = GetEntityPM(entity);
             return EntityPM;
         }
-        public SupplierInvoiceItemsReqListPM GetLineForSiiStatusUpdate(string requestNumber,int lineNumber,string modelCode,int tenant)
-        {
-            var entity = repository.GetLineForSiiStatusUpdate(requestNumber, lineNumber, modelCode,tenant);
-
-            if (entity == null)
-                return null;
-
-            return GetEntityPM(entity);
-        }
-
     }
 }

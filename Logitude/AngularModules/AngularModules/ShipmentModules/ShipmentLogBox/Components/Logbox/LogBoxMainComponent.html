@@ -142,13 +142,13 @@
                                                                     </tr>
                                                                     <tr *ngIf="isPrivateLabel == false" style="float:right;direction:rtl;">
                                                                         <td style="width:130px;vertical-align:top">
-                                                                            ניתן להגדיר סוגי מסמכים שנדרשים לחתימה דיגטלית
+                                                                            {{ 'Logbox.O.YouCanDefineDocumentTypesThatRequireADigitalSignature' | TextCodeTranslationPipe }}
                                                                         </td>
                                                                         <td style="width:40px;vertical-align:top">
-                                                                            <a class="Link" style="margin-right:15px;margin-left:15px;height:auto" (click)="LearnMoreToolTipArea()">הגדר כעת</a>
+                                                                            <a class="Link" style="margin-right:15px;margin-left:15px;height:auto" (click)="LearnMoreToolTipArea()">{{ 'Logbox.O.DefineNow' | TextCodeTranslationPipe }}</a>
                                                                         </td>
                                                                         <td style="width:40px;vertical-align:top">
-                                                                            <a class="Link" style="height:auto" (click)="CloseToolTipArea()">התעלם</a>
+                                                                            <a class="Link" style="height:auto" (click)="CloseToolTipArea()">{{ 'Logbox.O.Ignore' | TextCodeTranslationPipe }}</a>
                                                                         </td>
                                                                     </tr>
                                                                 </table>

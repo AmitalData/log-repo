@@ -194,7 +194,6 @@ namespace Logitude.CargoTracking.Def.EntityPMs
         public bool? IsCurrent { get; set; }
         public bool? InActive { get; set; }
         public int TenantId { get; set; }
-        public string ExternalCode {  get; set; }
     }
 
     public class ConnectedOrder

@@ -226,8 +226,10 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                                     break;
                             }
                         }
+
                     }
                 }
+
 
 
 
@@ -244,7 +246,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                         {
                             TenantQuery tenantQuery = new TenantQuery(entityPM.Tenant);
                             var tenantCurrencyId = tenantQuery.GetLocalCurrencyFromTenant(entityPM.Tenant);
-                            CreateRevaluationJournal(entityPM, glAccountPM.ControlAccountId, tenantCurrencyId, entityPM.RevalJrnlRef1);
+                            CreateRevaluationJournal(entityPM, glAccountPM.ControlAccountId, tenantCurrencyId);
                         }
                     }
                 }
@@ -264,7 +266,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         }
 
 
-        public void CreateRevaluationJournal(ReconciliationPM reconciliationPM, string controlAccountId, string tenantCurrencyId, string revalJrnlRef1)
+        private void CreateRevaluationJournal(ReconciliationPM reconciliationPM, string controlAccountId, string tenantCurrencyId)
         {
             try
             {
@@ -325,8 +327,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                             LocalAmount = groupLocalRecoAmount,
                             ForeignAmount = 0,
                             CurrencyId = group.Key,
-                            Reference1 = revalJrnlRef1,
-                            Notes = TranslateTextsClass.Translate("Revaluations.Q.Revaluation", 0, true),
+                            Notes = "Revaluation on Foreign Currency Reco.",
                             ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
                         });
 
@@ -345,10 +346,27 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                             LocalAmount = groupLocalRecoAmount,
                             ForeignAmount = 0,
                             CurrencyId = group.Key,
-                            Reference1 = revalJrnlRef1,
-                            Notes = TranslateTextsClass.Translate("Revaluations.Q.Revaluation", 0, true),
+                            Notes = "Revaluation on Foreign Currency Reco.",
                             ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
                         });
+
+
+                        List<ReconciliationLinePM> recoLines = reconciliationPM.ReconciliationLines
+                            .Where(x => x.CurrencyId == group.Key)
+                            .ToList();
+                        newJournalReconcilesHS.Union(from item in recoLines
+                                                     select new JournalReconcilePM()
+                                                     {
+                                                         ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
+                                                         Tenant = reconciliationPM.Tenant,
+                                                         LedgerTransactionId = item.TransactionId,
+                                                         Line = item.Line,
+                                                         CurrencyId = tenantCurrencyId,
+                                                         ReconciliationAmount = groupLocalRecoAmount,
+                                                         IsPartial = item.IsPartial,
+
+                                                     }).ToHashSet();
+
 
                     }
                 }

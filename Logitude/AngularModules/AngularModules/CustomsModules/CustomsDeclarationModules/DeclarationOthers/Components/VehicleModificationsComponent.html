@@ -51,7 +51,7 @@
                             <td style="width:150px;">
 
                                 <SearchBox [SearchText]="ChassisNumber" (TextChanged)="ChassisNumberTextChanged($event)"
-                                           [Watermark]="'סנן לפי שילדה'"></SearchBox>
+                                           [Watermark]="'LBL_FILTER_BY_CHASSIS' | TextCodeTranslationPipe"></SearchBox>
 
                             </td>
 
@@ -83,7 +83,7 @@
 
                                 <!--סנן לפי סוג התאמה-->
                                 <LogWaterMark
-                                              [Watermark]="'סנן לפי סוג התאמה'"
+                                              [Watermark]="'LBL_FILTER_BY_ADJUSTMENT_TYPE' | TextCodeTranslationPipe"
                                               [LogWaterMarkValue]="AdjustmentTypeCode"              
                                               >
                                     <LogLov 
@@ -133,7 +133,7 @@
                                                 <!--template bindings={
                                                   "ng-reflect-ng-if": "true"
                                                 }-->
-                                                <div _ngcontent-wld-42="" style="overflow: hidden; text-overflow: ellipsis; line-height: 26px; height: 26px;">סנן לפי שילדה </div>
+                                                <div _ngcontent-wld-42="" style="overflow: hidden; text-overflow: ellipsis; line-height: 26px; height: 26px;">{{'LBL_FILTER_BY_CHASSIS' | TextCodeTranslationPipe}} </div>
 
                                                 <!--template bindings={
                                                   "ng-reflect-ng-if": "false"
@@ -153,7 +153,7 @@
                                                 <!--template bindings={
                                                   "ng-reflect-ng-if": "true"
                                                 }-->
-                                                <div _ngcontent-wld-42="" style="overflow: hidden; text-overflow: ellipsis; line-height: 26px; height: 26px;">סוג התאמה</div>
+                                                <div _ngcontent-wld-42="" style="overflow: hidden; text-overflow: ellipsis; line-height: 26px; height: 26px;">{{'LBL_ADJUSTMENT_TYPE' | TextCodeTranslationPipe}}</div>
 
                                                 <!--template bindings={
                                                   "ng-reflect-ng-if": "false"
@@ -173,7 +173,7 @@
                                                 <!--template bindings={
                                                   "ng-reflect-ng-if": "true"
                                                 }-->
-                                                <div _ngcontent-wld-42="" style="overflow: hidden; text-overflow: ellipsis; line-height: 26px; height: 26px;">סכום התאמה</div>
+                                                <div _ngcontent-wld-42="" style="overflow: hidden; text-overflow: ellipsis; line-height: 26px; height: 26px;">{{'LBL_ADJUSTMENT_AMOUNT' | TextCodeTranslationPipe}}</div>
 
                                                 <!--template bindings={
                                                   "ng-reflect-ng-if": "false"
@@ -262,7 +262,7 @@
                                             <td class="AdjustmentTypeClass MyTotal"
                                                 style="width:170px;">
                                                 <!--{{'Customs.PaymentOrder.O.Total' | TextCodeTranslationPipe }}-->
-                                                <div style="text-align:left;margin-left:5px;">סה"כ</div>
+                                                <div style="text-align:left;margin-left:5px;">{{'LBL_TOTAL' | TextCodeTranslationPipe}}</div>
                                             </td>
                                             <td class="DeductAmountClass MyTotal" style="width:100px;">
                                                 {{myGroup.Total}}

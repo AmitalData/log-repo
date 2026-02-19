@@ -111,19 +111,19 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             }
 
             if (ShouldCreateAnotherTask(settingPM.Id, settingPM.NumberOfPayments))
-                AddTask(settingPM,theEntity.RunDate);
+                AddTask(settingPM);
         }
 
 
 
-        public void AddTask(ExpenseAllocationSettingPM settingPM ,DateTime lastRunDate)
+        public void AddTask(ExpenseAllocationSettingPM settingPM)
         {
             ExpenseAllocationFlow expenseAllocationFlow = new ExpenseAllocationFlow();
             expenseAllocationFlow.Id = IdCounter.GetNumber("ExpenseAllocationFlow", tenant).ToString();
             expenseAllocationFlow.Tenant = tenant;
             expenseAllocationFlow.SettingId = settingPM.Id;
             expenseAllocationFlow.Status = "Done";
-            expenseAllocationFlow.RunDate = GetNextRunDate(settingPM.PaymentDateType, settingPM.MonthInterval, lastRunDate);
+            expenseAllocationFlow.RunDate = GetNextRunDate(settingPM.PaymentDateType, settingPM.MonthInterval, DateTime.Now);
             expenseAllocationFlow.JournalId = null;
 
             entityRepository.Add(expenseAllocationFlow);
@@ -213,8 +213,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                                         DebitAccountId = d.ChargeTypeGLAccountId,
                                                         CreditAccountId = accountingSettings?.PrepaidExpensesGLAccountId,
                                                         Line = ++counter,
-                                                        DocumentDate = TenantServerConfigration.GetCurrentDateTime(tenant),
-                                                        AccountingDate = TenantServerConfigration.GetCurrentDateTime(tenant),
+                                                        DocumentDate = theEntityPm.InvoiceDate.Value,
+                                                        AccountingDate = theEntityPm.AccountingDate != null ? theEntityPm.AccountingDate.Value : TenantServerConfigration.GetCurrentDateTime(tenant),
                                                         DueDate = theEntityPm.DueDate.Value,
                                                         LocalAmount = (Math.Round(d.VatRecognizedPercentage == null ? (decimal)d.LocalCurrencyAmount.Value : (decimal)d.LocalAmountWithVatRecognized.Value, 2)) / settingPM.NumberOfPayments,
                                                         CurrencyId = d.ForiegnCurrencyId,
@@ -327,8 +327,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             journalLine.Line = lineNo;
             journalLine.ActionCode = AccountingActionCodes.Credit;
             journalLine.ActionTypeCodeEnum = JournalActionTypeEnum.Credit;
-            journalLine.DocumentDate = TenantServerConfigration.GetCurrentDateTime(tenant);
-            journalLine.AccountingDate =  TenantServerConfigration.GetCurrentDateTime(tenant);
+            journalLine.DocumentDate = theEntityPm.InvoiceDate.Value;
+            journalLine.AccountingDate = theEntityPm.AccountingDate != null ? theEntityPm.AccountingDate.Value : TenantServerConfigration.GetCurrentDateTime(tenant);
             journalLine.DueDate = theEntityPm.DueDate.Value;
 
             journalLine.Reference1 = theEntityPm.InvoiceNumber;

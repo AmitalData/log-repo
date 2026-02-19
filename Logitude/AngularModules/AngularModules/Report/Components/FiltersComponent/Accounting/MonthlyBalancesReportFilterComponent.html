@@ -86,8 +86,8 @@
         </td>
 
         <td></td>
-        <td ></td>
-        <td colspan="3" style="padding-right:100px;">
+
+        <td colspan="3" style="padding-right: 100px;">
             <div style="width: 90px;">
                 <app-run-report-toggle [isRTL]="true" [IsSchedulerReport]="IsSchedulerReport" (runReport)="RunReport($event)"></app-run-report-toggle>
             </div>
@@ -95,32 +95,24 @@
 
     </tr>
     <tr style="height:10px"></tr>
-    <tr style="height: 32px;">  
+    <tr style="height: 32px;">
         <td style="width:10px"></td>
-        <td style="width: 120px;">           
-                <LogLabel [NoObjectField]="true"  [ObjectTableName]="ObjectTableName"
-                    [DataContext]="DataContext" [Text]="'GLAccount.F.ChartOfAccountsTypeCode'  | TextCodeTranslationPipe"></LogLabel>    
-        </td>
-        <td style="width: 150px;">
-            <ComboBoxWithInCheckBox [AutoHeight]="true" [MinHeight]="150" [ItemsSource]="chartOfAccountsTypes" 
-            [SelectedItem]="ChartOfAccountsTypeComboboxValue" (EditedItemSource)="OnChartOfAccountsTypeItemClicked($event)"
-            [SelectionType]="showLocal?'קבוצה':'Product'"
-            (SelectedItemChanged)="SelectedChartOfAccountsTypeChanged($event)" [Binding]="'LocalName'" [AlternativeBinding]="'EnglishName'"></ComboBoxWithInCheckBox>
-        </td>
-        <td>
-            <LogLabel [NoObjectField]="true"  [ObjectTableName]="ObjectTableName"
-                [DataContext]="DataContext" [Text]="'GLAccount.F.ChartOfAccountsId'  | TextCodeTranslationPipe"></LogLabel>
+        <td style="width:70px">
+            <LogLabel [NoObjectField]="true" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
+                [Text]="'GLAccount.F.ChartOfAccountsId' | TextCodeTranslationPipe"></LogLabel>
+
         </td>
         <td style="width: 150px;">
             <ComboBoxWithInCheckBox 
-                    [SelectionType]="showLocal?'קבוצה':'Product'"
-                    [SelectedItem]="ChartOfAccountsComboBoxValue" 
-                    (EditedItemSource)="OnChartOfAccountsItemClicked($event)"
-                    (SelectedItemChanged)="SelectedChartOfAccountsChanged($event)"
-                    [Binding]="'LocalName'"
-                    [AutoHeight]="true" [MinHeight]="150"                         
-                    [AlternativeBinding]="'EnglishName'" 
-                    [ItemsSource]="chartOfAccounts" #comboBoxWithCheckBoxChartOfAccountsComboBoxValue></ComboBoxWithInCheckBox>
+            [SelectionType]="showLocal?'קבוצה':'Product'"
+            [SelectedItem]="ChartOfAccountsComboBoxValue" 
+            (EditedItemSource)="OnChartOfAccountsItemClicked($event)"
+            (SelectedItemChanged)="SelectedItemChanged($event)"
+            [Binding]="'LocalName'"
+            [AutoHeight]="true" [MinHeight]="150"                         
+            [AlternativeBinding]="'EnglishName'" 
+            [ItemsSource]="chartOfAccounts"></ComboBoxWithInCheckBox>
+               
         </td>
       
         
@@ -138,7 +130,6 @@
             <CheckBox [IsChecked]="DetailedForJobs" (Checked)="DetailedForJobs = $event"></CheckBox>
         </td>
         <td style="width:100px"></td>
-        <td ></td>
 
     </tr>
 </table>

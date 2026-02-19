@@ -23,7 +23,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class PhysicalCheckUpdateClass
    {  		
-		public const string HashString = "9d9d0a49efcc9283e663f1cd2f45d244";
+		public const string HashString = "ac543d20291162fa798ea17684575768";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -58,7 +58,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    IsMain =  true,
 			      				    IsAutoComplete =  false,
 			      				    EnableEditFromLOV =  false,
-			      				    SortingByObjectField =  "OpenDate",
+			      				    SortingByObjectField =  "Id",
 			      				    InActive =  false,
 			      				    IsSaveButtonVisible =  true,
 			      				    IsComposition =  false,
@@ -4240,7 +4240,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query OpenChecksQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = PhysicalCheckTextCode_0.Id, NameTextCodeCode = PhysicalCheckTextCode_0.Code, ObjectTableName = "Customs.PhysicalCheck", Code = "OpenChecks",  QueryGroupCode = "PHCK", IndexOrder = 0, Tenant = 0, ObjectTableId = PhysicalCheckObjectTable.Id, QuerySection = "Customs.PhysicalCheck", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = PhysicalCheckFeature_0.Id,FeatureUniqeCode= PhysicalCheckFeature_0.FeatureUniqeCode, DefaultSortName = "OpenDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries,contextTenant);
+			  Query OpenChecksQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = PhysicalCheckTextCode_0.Id, NameTextCodeCode = PhysicalCheckTextCode_0.Code, ObjectTableName = "Customs.PhysicalCheck", Code = "OpenChecks",  QueryGroupCode = "PHCK", IndexOrder = 0, Tenant = 0, ObjectTableId = PhysicalCheckObjectTable.Id, QuerySection = "Customs.PhysicalCheck", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = PhysicalCheckFeature_0.Id,FeatureUniqeCode= PhysicalCheckFeature_0.FeatureUniqeCode, DefaultSortName = "Id", DefaultSortDirection = "Desending", Perspective = null }, addedQueries,contextTenant);
 	
 			 QueryColumn OpenChecksQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenChecksQuery.Id,QueryCode = OpenChecksQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.PhysicalCheck.MyCloseCheckBox" , ColumnWidth = 40 }, addedQueryColumns,contextTenant);
 
@@ -4281,7 +4281,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
   
 	      
 
-			  Query ClosedChecksQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = PhysicalCheckTextCode_1.Id, NameTextCodeCode = PhysicalCheckTextCode_1.Code, ObjectTableName = "Customs.PhysicalCheck", Code = "ClosedChecks",  QueryGroupCode = "PHCK", IndexOrder = 1, Tenant = 0, ObjectTableId = PhysicalCheckObjectTable.Id, QuerySection = "Customs.PhysicalCheck", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = PhysicalCheckFeature_1.Id,FeatureUniqeCode= PhysicalCheckFeature_1.FeatureUniqeCode, DefaultSortName = "OpenDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries,contextTenant);
+			  Query ClosedChecksQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = PhysicalCheckTextCode_1.Id, NameTextCodeCode = PhysicalCheckTextCode_1.Code, ObjectTableName = "Customs.PhysicalCheck", Code = "ClosedChecks",  QueryGroupCode = "PHCK", IndexOrder = 1, Tenant = 0, ObjectTableId = PhysicalCheckObjectTable.Id, QuerySection = "Customs.PhysicalCheck", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = PhysicalCheckFeature_1.Id,FeatureUniqeCode= PhysicalCheckFeature_1.FeatureUniqeCode, DefaultSortName = "Id", DefaultSortDirection = "Desending", Perspective = null }, addedQueries,contextTenant);
 	
 			 QueryColumn ClosedChecksQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedChecksQuery.Id,QueryCode = ClosedChecksQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.PhysicalCheck.CustomFileNo" , ColumnWidth = 90 }, addedQueryColumns,contextTenant);
 
@@ -4320,7 +4320,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
   
 	      
 
-			  Query ByUpcomingChecksQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = PhysicalCheckTextCode_2.Id, NameTextCodeCode = PhysicalCheckTextCode_2.Code, ObjectTableName = "Customs.PhysicalCheck", Code = "By Upcoming Checks",  QueryGroupCode = "PHCK", IndexOrder = 2, Tenant = 0, ObjectTableId = PhysicalCheckObjectTable.Id, QuerySection = "Customs.PhysicalCheck", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = PhysicalCheckFeature_2.Id,FeatureUniqeCode= PhysicalCheckFeature_2.FeatureUniqeCode, DefaultSortName = "OpenDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries,contextTenant);
+			  Query ByUpcomingChecksQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = PhysicalCheckTextCode_2.Id, NameTextCodeCode = PhysicalCheckTextCode_2.Code, ObjectTableName = "Customs.PhysicalCheck", Code = "By Upcoming Checks",  QueryGroupCode = "PHCK", IndexOrder = 2, Tenant = 0, ObjectTableId = PhysicalCheckObjectTable.Id, QuerySection = "Customs.PhysicalCheck", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = PhysicalCheckFeature_2.Id,FeatureUniqeCode= PhysicalCheckFeature_2.FeatureUniqeCode, DefaultSortName = "Id", DefaultSortDirection = "Desending", Perspective = null }, addedQueries,contextTenant);
 	
 			 QueryColumn ByUpcomingChecksQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ByUpcomingChecksQuery.Id,QueryCode = ByUpcomingChecksQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.PhysicalCheck.CustomFileNo" , ColumnWidth = 90 }, addedQueryColumns,contextTenant);
 

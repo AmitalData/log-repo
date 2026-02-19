@@ -6,11 +6,12 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { SessionInfo } from '../../../core/Infrastructure/Utilities/SessionInfo';
 import { FormsModule } from '@angular/forms';
 import { NgIf } from '@angular/common';
+import { Pipes } from '../../../core/Infrastructure/ModuleDeclarations';
 
 @Component({
   selector: 'app-add-comment',
   standalone: true,
-  imports: [FormsModule, NgIf],
+  imports: [FormsModule, NgIf, Pipes],
   templateUrl: './add-comment.component.html',
   styleUrls: ['./add-comment.component.css']
 })

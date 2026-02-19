@@ -24,7 +24,7 @@ namespace Logitude.Customs.BL.BL.SIIRequest
             _mapper = new SIIRequestApiDataMapper(tenant);
         }
 
-        public async Task<(ApiResponse<ReleaseRequestApiResponseDto> Response, ReleaseRequestApiDto Dto)> SendAsync(string siiRequestId, string declarationId, SiiSendRequestBodyDto body)
+        public async Task<(ApiResponse<ReleaseRequestApiResponseDto> Response, ReleaseRequestApiDto Dto)> SendAsync(string siiRequestId, string declarationId, List<SiiSelectedRowDto> selectedRows)
         {
             var credentials = _factory.BuildCredentials(InterfaceName, PartnerCode);
             var config = _factory.GetEndpointConfig(InterfaceName, PartnerCode);
@@ -32,7 +32,7 @@ namespace Logitude.Customs.BL.BL.SIIRequest
             var commRequest = _factory.BuildCommunicationsDto(InterfaceName, PartnerCode, declarationId);
             var commResponse = _factory.BuildCommunicationsDto(InterfaceName_Response, PartnerCode, declarationId);
 
-            var dto = _mapper.Build(credentials, siiRequestId, body);
+            var dto = _mapper.Build(credentials, siiRequestId, selectedRows);
             var apiReq = ApiRequestBuilder.Build(_tenant, config, dto, commRequest, commResponse);
 
             var executor = new RestRequestExecutor();

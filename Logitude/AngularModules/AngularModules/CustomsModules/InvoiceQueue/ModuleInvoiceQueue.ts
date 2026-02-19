@@ -2,8 +2,10 @@ import { NgModule } from '@angular/core';
 import { InfrastructureModule } from '../../Infrastructure/Module_INFR';
 import { Components, ModuleDeclarations } from './ModuleDeclarations';
 import { ModuleCustomsControls } from '../CustomsControls/ModuleCustomsControls';
+import { ControlsModule } from '../../Controls/Module_CTRL';
+
 @NgModule({
-    imports: [InfrastructureModule, ModuleCustomsControls],
+    imports: [InfrastructureModule, ModuleCustomsControls, ControlsModule],
     exports: [...Components, ModuleCustomsControls],
     declarations: [...Components],
     entryComponents: [...Components],

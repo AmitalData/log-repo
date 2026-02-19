@@ -57,7 +57,6 @@ using WebFreight.Web.WebServices;
 using System.Reflection;
 using WebFreight.Web.DataContracts;
 using Microsoft.VisualStudio.Services.Common;
-using static Microsoft.VisualStudio.PlatformUI.SearchFilterDataSource;
 
 
 namespace WebFreight.Web.Helpers
@@ -832,25 +831,14 @@ namespace WebFreight.Web.Helpers
 
 			}
             ExcelReportService reportsTemplateQuery = new ExcelReportService(reportFliter.tenant);
+            var  selectedData = reportsTemplateQuery.GetSelectedDataProviderFields(reportFliter.ReportId, reportFliter.DefaultExcelNoStimId);
+            var sortMap = new Dictionary<string, int>();
+            var filteredData = FilterSelectedFieldsaWithParent(reportStimulDataProviderDetails.CurrentBusinessObject.BusinessObjectValue, selectedData, null , sortMap);
             ExportToExcelHelper exportToExcelHelper = new ExportToExcelHelper();
 
-            IWorkbook workbook;
-
-            if (reportFliter.DefaultExcelNoStimId == "DefExcelTempId")
-			{
-                 workbook = exportToExcelHelper.ExportToExcel(reportStimulDataProviderDetails.CurrentBusinessObject.BusinessObjectValue, reportStimulDataProviderDetails.CurrentBusinessObject.Name);
-            }
-            else
-			{
-                var selectedData = reportsTemplateQuery.GetSelectedDataProviderFields(reportFliter.ReportId, reportFliter.DefaultExcelNoStimId);
-                var sortMap = new Dictionary<string, int>();
-                var filteredData = FilterSelectedFieldsWithParent(reportStimulDataProviderDetails.CurrentBusinessObject.BusinessObjectValue, selectedData, null, sortMap);
-
-                workbook = exportToExcelHelper.ExportToExcel(filteredData, reportStimulDataProviderDetails.CurrentBusinessObject.Name, sortMap);
-            }
-
-
-            MemoryStream memoryStream = new MemoryStream();
+			IWorkbook workbook = exportToExcelHelper.ExportToExcel(filteredData, reportStimulDataProviderDetails.CurrentBusinessObject.Name, sortMap);
+			
+			MemoryStream memoryStream = new MemoryStream();
 			workbook.Write(memoryStream);
             MemoryStream tempStream = new MemoryStream(memoryStream.ToArray());
 
@@ -868,7 +856,7 @@ namespace WebFreight.Web.Helpers
         }
 
 
-        private IDictionary<string, object> FilterSelectedFieldsWithParent(object source, List<DataProviderField> selectedFields, string parentName = null, Dictionary<string, int> sortMap = null)
+        private IDictionary<string, object> FilterSelectedFieldsaWithParent(object source, List<DataProviderField> selectedFields, string parentName = null, Dictionary<string, int> sortMap = null)
         {
             var result = new Dictionary<string, object>();
             if (source == null || selectedFields == null)
@@ -896,7 +884,7 @@ namespace WebFreight.Web.Helpers
                     {
                         if (field.Fields?.Any() == true)
                         {
-                            list.Add(FilterSelectedFieldsWithParent(item, field.Fields, field.Name, sortMap));
+                            list.Add(FilterSelectedFieldsaWithParent(item, field.Fields, field.Name, sortMap));
                         }
                         else
                         {
@@ -2651,7 +2639,7 @@ namespace WebFreight.Web.Helpers
             ReportGroupQuery reportGroupQuery = new ReportGroupQuery(tenantToCopy);
             string accountingReportGroupId = reportGroupQuery.GetReportGroupPMsByTenant(0).Where(a => a.Code == "RACC").Select(a => a.Id).FirstOrDefault();
             tenantZeroReportsTemplate = reportsTemplateRepository.GetReportsTemplates(0)
-                .Where(d => d.IsCopiedAtSignup && d.Report.ReportGroupId == accountingReportGroupId && !d.InActive).ToList();
+                .Where(d => d.IsCopiedAtSignup && d.Report.ReportGroupId == accountingReportGroupId).ToList();
             tenantZeroReportsTemplatesVersionLists = reportsTemplatesVersionRepository.GetReportsTemplatesVersionsByReportsTemplateIds(tenantZeroReportsTemplate.Select(d => d.Id).ToList(), 0);
             documentLists = documentRepository.GetDocumentsByIds(tenantZeroReportsTemplatesVersionLists.Select(d => d.ReportDocumentId).ToList());
             List<Report> tenantZeroReports = tenantZeroReportsTemplate.Select(a => a.Report).Distinct().ToList();
@@ -3018,13 +3006,13 @@ namespace WebFreight.Web.Helpers
 
 		public static void AddStimulsoftLicenseKey()
 		{
-            StiLicense.Key = "6vJhGtLLLz2GNviWmUTrhSqnOItdDwjBylQzQcAOiHlDUTDyyOzH1Ys3qCPYbCdoOPkp0wcjMFs/nMMKkWriMMfI0I" +
-"PTmv3vqyK+kiZMWBXbmk/5nVaYnoKdZDQcs9S4EXbREpWCaBtBUPBdGK/RvynNQgdJ92boAv5dvQNf+cI/TFtMD5Zu" +
-"IUmN7IUWcOYxu68ChgVJhjNdkvfh+tpcYa9gRW/Ik/9N1FO2Uaq7qiKAnO0rn1Put5GiR8zSvegcgRcRzkn5wApANF" +
-"lb0W//9Ce8sgpSUwO1no2Auf/Efv+2uV3Ld9e5WZvjKskFJDhLYbdvWq3xNMZkwdo0qSBdavsMZqOtPfpzpSmrGPCC" +
-"cFFCq4hgXdc9BrS7XjM/KGcojYpSArv6b3oEp4XOa1rgach8lukVJCR5WwMAyfgXHT9Na5d87xey46BtTRZWJd2Svx" +
-"tXYYoWNDtqe0IEh54aL6prLL162XgeDiWnlUiLIHYm3Jtwp6/N39l+p3kHYDdGnS+vgv1Eso7uUmYl7FKrqzjczh7l" +
-"wjvqoQrAretQXTtTlqp0O8LtDn2cbEsboWm3";
+			StiLicense.Key = "6vJhGtLLLz2GNviWmUTrhSqnOItdDwjBylQzQcAOiHk5LQfMb0Dr1Ze4z6YRXSb7imTiay6/HzKYGUzkd/h3FMt5R7" +
+"uunoM5lX8Vs2voVkSeT6Wv6WI6Jcy4xOeAjjPkTBhC+ivrrxidMQjLaebItqFcnJWqKXBUgoJa0WfmH3soi0IbfEmI" +
+"fQ3ZmMq5BHsjsKoHSdnbzDUPWMXieYRTJZL6tsBC6QRy2ALPnYwg88ZJDGAWgAqMhZ+M0BVM17B3YJN9mu1MfAblN7" +
+"rG1eWrSrR5B53af4aeWs0RmqVNatfenGL8sufvTgOiyEuQmC9J7sHOT6VoQpWOlZthrc7JOl4zbw+qduZHZrpLuK+1" +
+"O3AB8EeDCQ6EgM8TcUesQBZZrUA4ZUFpxsCdvL0n4DQiB1tIof1TGHXCtZ62S1kAfU4XJzEGM/g3MYbKridAK5ckyc" +
+"0xwsK2y46rm9W3EV0m49Na0pcJe+2ZScc6BP1o3tDS9ddHbfkt7hFZpUNTqOxn9BOP0YVoQul+dPckYle4PS4mzXVp" +
+"tMrKV4En69rnW/z658axW0kQ2GxorKwW0IAR";
 		}
 	}
 

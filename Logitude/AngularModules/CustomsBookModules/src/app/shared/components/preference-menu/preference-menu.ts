@@ -5,11 +5,12 @@ import { CB_Preference, PreferencesService, SettinsTableData } from './Preferenc
 import { SessionInfo } from '../../../core/Infrastructure/Utilities/SessionInfo';
 import { MatIconModule } from '@angular/material/icon';
 import { ColorPickerService, Cmyk, ColorPickerModule } from 'ngx-color-picker';
+import { Pipes } from '../../../core/Infrastructure/ModuleDeclarations';
 
 @Component({
   selector: 'app-preference-menu',
   standalone: true,
-  imports: [FormsModule, NgFor, NgIf, MatIconModule, NgStyle, ColorPickerModule],
+  imports: [FormsModule, NgFor, NgIf, MatIconModule, NgStyle, ColorPickerModule, Pipes],
   templateUrl: './preference-menu.html',
   styleUrl: './preference-menu.css',
 })

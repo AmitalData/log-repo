@@ -1,7 +1,7 @@
 ﻿import {Pipe} from '@angular/core';
 import {AppTool, DateTool, FontTool} from '../../Tools';
 
-@Pipe({ name: 'DateTimeToColorPipe' })
+@Pipe({ name: 'DateTimeToColorPipe', standalone: true })
 
 export class DateTimeToColorPipe {
     transform(value: Date, defaultColor: string = null): string {

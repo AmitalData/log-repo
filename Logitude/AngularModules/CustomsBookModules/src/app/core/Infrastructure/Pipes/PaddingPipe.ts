@@ -1,7 +1,7 @@
 ﻿import {Pipe} from '@angular/core';
 import {AppTool} from '../Tools';
 
-@Pipe({ name: 'PaddingPipe' })
+@Pipe({ name: 'PaddingPipe', standalone: true })
 
 export class PaddingPipe {
     transform(number: any, Direction: string, Count: number, Character: string): string {

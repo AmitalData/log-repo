@@ -332,7 +332,7 @@ export class ReportTemplateComponent implements OnInit {
         logWindow.WindowArgs = windowArgs;
         if (!item.UseStimul){
             logWindow.Show("./Report/Components/NoStimulReportTemplateComponent"); 
-            logWindow.Title = "Edit Excel Templates (Native)";
+            logWindow.Title = "Edit Excel Templates (Non-Stimul)";
 
         }
         else

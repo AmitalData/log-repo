@@ -3,11 +3,12 @@ import { FilterPopupService, FiltersSearch } from './service/filter-popup.servic
 import { NgClass, NgIf } from '@angular/common';
 import { SearchService } from '../page-top/service/top-page.service';
 import { HeaderService } from '../app-header/service/header.service';
+import { Pipes } from '../../../core/Infrastructure/ModuleDeclarations';
 
 @Component({
 	selector: 'app-filter-popup',
 	standalone: true,
-	imports: [NgClass, NgIf],
+	imports: [NgClass, NgIf, Pipes],
 	templateUrl: './filter-popup.component.html',
 	styleUrl: './filter-popup.component.css',
 })

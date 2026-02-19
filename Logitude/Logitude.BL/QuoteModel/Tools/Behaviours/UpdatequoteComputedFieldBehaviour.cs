@@ -25,8 +25,6 @@ namespace Logitude.BL.QuoteModel.Tools.Behaviours
 		private QuoteComputedField quoteComputedField;
 		private QuotePM quoteEntityPM;
 		private List<QuoteChargePM> quoteCharges;
-        private string accountingCurrencyId;
-
 		public void Handle(IServiceInitializer initializer)
 		{
 			this.initializer = (QuoteServiceInitializer)initializer;
@@ -38,9 +36,6 @@ namespace Logitude.BL.QuoteModel.Tools.Behaviours
 			{
 				this.quoteEntityPM = this.initializer.EntityPM;
 			}
-			TenantQuery tenantQuery = new TenantQuery(this.initializer.Tenant);
-			TenantPM tPM = tenantQuery.GetSinglePM(this.initializer.Tenant);
-			accountingCurrencyId = tPM?.CurrencyId;
 			this.HandleBehaviour();
 		}
 		private void HandleBehaviour()
@@ -224,19 +219,12 @@ namespace Logitude.BL.QuoteModel.Tools.Behaviours
 
 		private void MapEstimatedPayablesInSalesCurrencyField()
 		{
-
-            if (quoteEntityPM.QuoteCharges != null && quoteEntityPM.ExchangeRate != null && quoteEntityPM.ExchangeRate != 0)
-            {
-
-				var totalLocal = quoteCharges.Sum(d => d.CostTotalAmountLocal ?? 0) ;
-				var costTotalAmountLocalrounded = Math.Round(totalLocal, 2, MidpointRounding.AwayFromZero);
-                var calculateEstimatedPayablesInSale = (costTotalAmountLocalrounded / quoteEntityPM.ExchangeRate) ?? 0;
-				quoteComputedField.EstimatedPayablesInSales = Math.Round(calculateEstimatedPayablesInSale, 2, MidpointRounding.AwayFromZero);
+			if (quoteEntityPM.QuoteCharges != null)
+			{
+				quoteComputedField.EstimatedPayablesInSales = quoteCharges.Sum(d => d.CostAmountInSaleCurrency);
 			}
+		}
 
- 		}	
-
-	
 		private void MapEstimatedReceivablesInLocalCurrencyField()
 		{
 			if (quoteEntityPM.QuoteCharges != null)
@@ -275,10 +263,13 @@ namespace Logitude.BL.QuoteModel.Tools.Behaviours
 
 			ChargesTypeRepository chargesTypeRepository = new ChargesTypeRepository(initializer.Tenant);
 			CurrencyRepository currencyRepository = new CurrencyRepository(initializer.Tenant);
+			TenantQuery tenantQuery = new TenantQuery(initializer.Tenant);
+			TenantPM tPM = tenantQuery.GetSinglePM(initializer.Tenant);
+			string accountingCurrencyId = tPM.CurrencyId;
 
 			var chargesTypes = chargesTypeRepository.GetChargesTypesOfVAL(initializer.Tenant).ToHashSet();
 			var quoteChargesVal = quoteCharges
-				.Where(d => d != null && chargesTypes.Contains(d.ChargesTypeId) && d.CostTotalAmount.HasValue).ToList();
+				.Where(d => d != null && chargesTypes.Contains(d.ChargesTypeId)).ToList();
 
 			if (!quoteChargesVal.Any())
 				return;

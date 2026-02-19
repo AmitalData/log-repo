@@ -17072,15 +17072,15 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             pendingErrorPlaceRepository.SubmitChanges();
         }
 
-		public void FillCourierPendingReasonTable(int tenant)
-		{
-			//CourierPendingReasonRepository courierPendingReasonRepository = new CourierPendingReasonRepository(tenant);
-			//AddClosedTables.AddCourierPendingReason(new CourierPendingReason() { Code = "900", EnglishName = "Payment", LocalName = "תשלום" }, courierPendingReasonRepository);
-			//AddClosedTables.AddCourierPendingReason(new CourierPendingReason() { Code = "901", EnglishName = "Distribution", LocalName = "הפצה" }, courierPendingReasonRepository);
-			//AddClosedTables.AddCourierPendingReason(new CourierPendingReason() { Code = "902", EnglishName = "Distribution", LocalName = "הפצה" }, courierPendingReasonRepository);
-			//courierPendingReasonRepository.SubmitChanges();
-		}
-		public void FillContainerizationStatusCodeTable(int tenant)
+        public void FillCourierPendingReasonTable(int tenant)
+        {
+            //CourierPendingReasonRepository courierPendingReasonRepository = new CourierPendingReasonRepository(tenant);
+            //AddClosedTables.AddCourierPendingReason(new CourierPendingReason() { Code = "900", EnglishName = "Payment", LocalName = "תשלום" }, courierPendingReasonRepository);
+            //AddClosedTables.AddCourierPendingReason(new CourierPendingReason() { Code = "901", EnglishName = "Distribution", LocalName = "הפצה" }, courierPendingReasonRepository);
+            //AddClosedTables.AddCourierPendingReason(new CourierPendingReason() { Code = "902", EnglishName = "Distribution", LocalName = "הפצה" }, courierPendingReasonRepository);
+            //courierPendingReasonRepository.SubmitChanges();
+        }
+        public void FillContainerizationStatusCodeTable(int tenant)
         {
             var repo = new ContainerizationStatusCodeRepository(tenant);
             var dic = repo.GetAll().ToDictionary<ContainerizationStatusCode, string, ContainerizationStatusCode>(rec => rec.Code, a => a);
@@ -17580,19 +17580,6 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             AddClosedTables.AddOrUpdateSIIDocumentType(new SIIDocumentType() { Code = "9", LocalName = "קטלוגים/תצהירים" }, sIIDocumentTypeRepository);
             AddClosedTables.AddOrUpdateSIIDocumentType(new SIIDocumentType() { Code = "101", LocalName = "אחר" }, sIIDocumentTypeRepository);
             sIIDocumentTypeRepository.SubmitChanges();
-        }
-        public void FillSIIRequestLineStatus(int tenant)
-        {
-            var repo = new SIIRequestLineStatusRepository(tenant);
-
-            AddClosedTables.AddOrUpdateSIIRequestLineStatus(new SIIRequestLineStatus { Code = "1", LocalName = "אישור ניפוק ומכירה" }, repo);
-            AddClosedTables.AddOrUpdateSIIRequestLineStatus(new SIIRequestLineStatus { Code = "2", LocalName = "איסור ניפוק ומכירה" }, repo);
-            AddClosedTables.AddOrUpdateSIIRequestLineStatus(new SIIRequestLineStatus { Code = "3", LocalName = "שחרור למכס תחת התחייבות ואיסור ניפוק ומכירה" }, repo);
-            AddClosedTables.AddOrUpdateSIIRequestLineStatus(new SIIRequestLineStatus { Code = "4", LocalName = "הודעה על קריאה להשבת מוצר (ריקול)" }, repo);
-            AddClosedTables.AddOrUpdateSIIRequestLineStatus(new SIIRequestLineStatus { Code = "5", LocalName = "אישור הצהרת עמידה לתקן" }, repo);
-            AddClosedTables.AddOrUpdateSIIRequestLineStatus(new SIIRequestLineStatus { Code = "6", LocalName = "אין אישור הצהרת עמידה לתקן" }, repo);
-
-            repo.SubmitChanges();
         }
 
     }

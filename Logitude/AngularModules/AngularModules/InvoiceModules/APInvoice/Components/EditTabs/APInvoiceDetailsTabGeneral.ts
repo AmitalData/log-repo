@@ -72,6 +72,7 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     ColumnsWidths: any[] = [];
     public IsUsingVirtuallization: boolean = false;
     public GLAccountsFilterItems: ApiQueryFilters;
+    public ShowOperationalDate: boolean = false;
 
     constructor(private entityArgs: EntityArgs) {
         super();
@@ -150,6 +151,9 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         if (hideVatTypesFeature) {
             this.AllowVatTypes = false;
         }
+
+        const invoiceReferenceDate = FeatureLocator.Features.filter(f => f.Code == "InvoiceReferenceDate");
+        this.ShowOperationalDate = invoiceReferenceDate?.length > 0;
     }
 
 
@@ -222,6 +226,7 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
             this.UIProperties.SetEnabled("InvoiceNumber", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("VATNumber", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("InvoiceDate", this.ObjectTableName, false);
+            this.UIProperties.SetEnabled("OperationalDate", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("AccountingDate", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("InvoiceCurrencyId", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("VatTypeId", this.ObjectTableName, false);
@@ -239,6 +244,7 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
             this.UIProperties.SetEnabled("InvoiceNumber", this.ObjectTableName, true);
             this.UIProperties.SetEnabled("VATNumber", this.ObjectTableName, true);
             this.UIProperties.SetEnabled("InvoiceDate", this.ObjectTableName, true);
+            this.UIProperties.SetEnabled("OperationalDate", this.ObjectTableName, true);
             this.UIProperties.SetEnabled("AccountingDate", this.ObjectTableName, true);
             this.UIProperties.SetEnabled("InvoiceCurrencyId", this.ObjectTableName, true);
             this.UIProperties.SetEnabled("VatTypeId", this.ObjectTableName, true);
@@ -410,6 +416,7 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     }
 
     saveExpenseAllocationSetting(){
+        var allIsPrepaidExpenses = this.EntityPM.InvoiceLines.every(line => line.IsPrepaidExpenses === true);
         var approved = this.EntityPM?.StatusCode === "AD";
         if(this.EntityPM?.Id){
             this.expenseAllocationSetting.EntityId = this.EntityPM?.Id;
@@ -419,7 +426,9 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
                     if (!res.HasError) {
                         this.expenseAllocationSetting = res.Result;
                         if(approved){
-                            
+                            if(!allIsPrepaidExpenses){
+                                this.addExpenseAllocationFlow(this.EntityPM?.JournalId);
+                            }
                             this.addExpenseAllocationFlow();
 
                         }
@@ -439,7 +448,9 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
                     if (!res.HasError) {
                         this.expenseAllocationSetting = res.Result;
                         if(approved){
-                            
+                            if(!allIsPrepaidExpenses){
+                                this.addExpenseAllocationFlow(this.EntityPM?.JournalId);
+                            }
                             this.addExpenseAllocationFlow();
                         }
                         else{
@@ -908,8 +919,6 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         if (this.EntityPM.AmountInInvoiceCurrency != setValue) {
             this.EntityPM.AmountInInvoiceCurrency = setValue;
             this.EntityPM.InvoiceExpectedAmount = setValue;
-            this.ComputeTotals();
-
 
            
         }
@@ -1229,9 +1238,9 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
             SelectedDayByWeek: selectedDayByWeek
             }
             ;
-        logWindow.Width = 550;
-        logWindow.Height = 380;
-        logWindow.Title = TextCodeTranslator.Translate("APInvoice.O.ExpenseAllocationSetting");
+        logWindow.Width = 600;
+        logWindow.Height = 450;
+        logWindow.Title = "Recurring Schedule Settings";
         logWindow.ShowCloseButton =  true;
         logWindow.ComponentLoaded.subscribe(comp => {
             logWindow.WindowClosed.subscribe(s => {
@@ -1276,6 +1285,13 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
             this.EntityPM.InvoiceDate = newValue;
             InvoiceTool.ComputeAPInvoiceDueDate(this.EntityPM);
             this.OnInvoiceDateChangedLoad();
+        }
+    }
+
+    get OperationalDate() { return this.EntityPM.OperationalDate; }
+    set OperationalDate(newValue: Date) {
+        if (this.ShowOperationalDate && this.EntityPM.OperationalDate != newValue) {
+            this.EntityPM.OperationalDate = newValue;
         }
     }
 

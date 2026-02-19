@@ -2,7 +2,7 @@
 import {AppTool, DateTool} from '../Tools';
 import {TextCodeTranslator} from '../Utilities/TextCodeTranslator';
 
-@Pipe({ name: 'FollowUpDatePipe' })
+@Pipe({ name: 'FollowUpDatePipe', standalone: true })
 
 export class FollowUpDatePipe {
 

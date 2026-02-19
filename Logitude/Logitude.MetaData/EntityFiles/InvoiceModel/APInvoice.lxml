@@ -5486,15 +5486,16 @@
     CopyToDW="false"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
-    CanFilter="false"
+    CanFilter="true"
     DisplayOnly="false"
     SystemRequired="false"
     ObjectFieldNotRequired="false"
     SystemMaxLength="0"
-    DisplayInList="false"
+    DisplayInList="true"
     ConverterName="&quot;Simplog.Infrastructure.Utilities.Converters.DateTimeToDateConverter&quot;"
     IsCustomFilter="false"
     IsListFilter="false"
+    Operator="&quot;Equals&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -13461,20 +13462,6 @@
       DefaultText="&quot;The start date of the expense allocation cannot be earlier than the accounting date.&quot;"
       LocalDefaultTextBack_up="&quot;לא ניתן להגדיר תאריך התחלה של פריסת ההוצאות מוקדם מהתאריך החשבונאי&quot;"
       LocalDefaultText="&quot;BS64:Itec15Ag16DXmdeq158g15zXlNeS15PXmdeoINeq15DXqNeZ15og15TXqteX15zXlCDXqdecINek16jXmdeh16og15TXlNeV16bXkNeV16og157Xlden15PXnSDXnteU16rXkNeo15nXmiDXlNeX16nXkdeV16DXkNeZIg==&quot;"
-      TextCodeTypeCode="&quot;O&quot;"
-      IsSpellChecked="false" />
-    <TextCode
-      Code="&quot;APInvoice.O.ExpenseAllocationSetting&quot;"
-      DefaultText="&quot;Expense Allocation Setting&quot;"
-      LocalDefaultTextBack_up="&quot;הגדרות פריסה&quot;"
-      LocalDefaultText="&quot;BS64:IteU15LXk9eo15XXqiDXpNeo15nXodeUIg==&quot;"
-      TextCodeTypeCode="&quot;O&quot;"
-      IsSpellChecked="false" />
-    <TextCode
-      Code="&quot;APInvoice.O.PrepaidExpensesLineRequired&quot;"
-      DefaultText="&quot;Prepaid expenses line selection is required.&quot;"
-      LocalDefaultTextBack_up="&quot;חובה לסמן שורה להוצאות מראש&quot;"
-      LocalDefaultText="&quot;BS64:IteX15XXkdeUINec16HXntefINep15XXqNeUINec15TXldem15DXldeqINee16jXkNepIg==&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
