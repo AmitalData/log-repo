@@ -838,7 +838,6 @@ export class GLAccountOverviewComponent extends BaseComponent {
 
 
 
-    
     //#region Aging Details
     chartId: string = "";
 
