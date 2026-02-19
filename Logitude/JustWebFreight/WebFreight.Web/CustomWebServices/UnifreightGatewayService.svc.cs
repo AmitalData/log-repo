@@ -23,10 +23,6 @@ using Logitude.AmitalMessaging.Utils;
 using Logitude.Customs.BL.Messaging.Customs;
 using Simplog.Server.Infrastructure.Helpers;
 using System.Threading;
-using System.Web;
-using Logitude.Customs.BL.EntityQueryServices;
-using WebFreight.Web.App_Code.AngularJS_App_Code.Generated;
-using WebFreight.Web.Security;
 
 namespace WebFreight.Web.CustomWebServices
 {
@@ -448,10 +444,23 @@ SUCCESS={4}"
                     _sbGatewayLog.AppendLine("UnifreightImpersonate  Failed ");
                 }
                 unifreightGenericService.SetTenant(iTenanat);
-                if (!HttpContext.Current.Items.Contains("Tenant"))
+                if (false)
                 {
-                    HttpContext.Current.Items.Add("Tenant", iTenanat);
+                    AuthenticationUtil.DebugUsers();
+
+
+                    // Wait for all tasks to complete.
+                    Task[] tasks = new Task[10];
+                    for (int i = 0; i < 10; i++)
+                    {
+                        //System.Threading.Tasks.Task.Factory.StartNew(() => {  ; });
+                        tasks[i] = Task.Factory.StartNew(() => AuthenticationUtil.DebugUsers());
+                    }
+                    Task.WaitAll(tasks);
                 }
+
+
+
 
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction(TimeSpan.FromMinutes(10)))//new TransactionScope(TransactionScopeOption.RequiresNew, TimeSpan.FromMinutes(10)))
                 {
@@ -463,6 +472,7 @@ SUCCESS={4}"
                         }
  
                 }
+                //DataOut1 = XmlGenericUtil<GenericResponseObj>.SerializeObject(unifreightGenericService.MyGenericResponseObj);
             }
             catch (BusinessErrorException businessErrorException)
             {

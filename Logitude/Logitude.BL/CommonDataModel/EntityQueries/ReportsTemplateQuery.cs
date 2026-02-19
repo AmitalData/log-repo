@@ -22,7 +22,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         ReportsTemplateRepository repository;
 
-
+        public ReportsTemplateQuery()
+        {
+            repository = new ReportsTemplateRepository();
+        }
 
         public ReportsTemplateQuery(int tenant)
         {
@@ -88,8 +91,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 Subject = a.Subject,
                                                 ReplyTo = a.ReplyTo,
                                                 ObjectTableId = a.ObjectTableId,
-                                                EntityId = a.EntityId,
-                                                UseStimul = a.UseStimul
+                                                EntityId = a.EntityId
                                             }).FirstOrDefault();
 
 
@@ -165,7 +167,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         public IQueryable<ReportsTemplateList> GetReportsTemplateListsByReportId(string reportId, int tenant , string templateType = null)
         {
-            IQueryable<ReportsTemplateList> reportsTemplateLists = from a in repository.context.ReportsTemplates.Include("Report")
+            IQueryable<ReportsTemplateList> reportsTemplateLists = from a in repository.context.ReportsTemplates
                                                                    where a.Tenant == tenant && a.ReportId == reportId && !a.InActive
                                                                    select new ReportsTemplateList()
                                                                    {
@@ -186,9 +188,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                        Subject = a.Subject,
                                                                        ReplyTo = a.ReplyTo,
                                                                        ObjectTableId = a.ObjectTableId,
-                                                                       EntityId = a.EntityId,
-                                                                       UseStimul = a.UseStimul,
-                                                                       IsDefault = (a.Report.DefaultTemplateId == a.Id) || (a.Report.DefaultExcelTemplateId == a.Id) || (a.Report.DefaultExcelNoStimId == a.Id)
+                                                                       EntityId = a.EntityId
 
                                                                    };
             if (!string.IsNullOrEmpty(templateType))
@@ -222,8 +222,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                       ReplyTo = a.ReplyTo,
                                                                       ObjectTableId = a.ObjectTableId,
                                                                       IsCopiedAtSignup = a.IsCopiedAtSignup,
-                                                                      UseStimul = a.UseStimul,
-                                                                      EntityId = a.EntityId,
+                                                                      EntityId = a.EntityId
                                                                   };
 
             if (!string.IsNullOrEmpty(templateType))

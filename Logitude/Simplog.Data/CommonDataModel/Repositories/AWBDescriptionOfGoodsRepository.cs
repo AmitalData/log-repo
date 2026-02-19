@@ -12,7 +12,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
     {
         ICommonDataContext commonDataContext;
 
- 
+        public AWBDescriptionOfGoodsRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
 
         public AWBDescriptionOfGoodsRepository(ICommonDataContext context)
         {

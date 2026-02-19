@@ -46,7 +46,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
             //var qs = new DeclarationCourierStatusQueryService(context);
             var repo = new DeclarationCourierStatusRepository(context);
             var listPoco = new List<DeclarationCourierStatus>();
-            decimal minValPay = GetMinValPay(requestParams.Tenant); 
             if (customResponse.ServerSplitDeclarationsList != null && customResponse.ServerSplitDeclarationsList.Count > 0)
             {
                 mess.AppendLine($"מפוצל כבר !!!");
@@ -75,7 +74,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                           customResponse.SelectedTotalInvoiceValue,
                           customResponse.SelectedFastIndividualProcessValue,
                           customResponse.SelectedCustomStatusValue,
-                          customResponse.SelectedFinalReleaseValue, minValPay);
+                          customResponse.SelectedFinalReleaseValue);
                     }
                     else
                     {
@@ -85,7 +84,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             customResponse.SelectedTotalInvoiceValue,
                             customResponse.SelectedFastIndividualProcessValue,
                             customResponse.SelectedCustomStatusValue,
-                            customResponse.SelectedFinalReleaseValue, minValPay);
+                            customResponse.SelectedFinalReleaseValue);
                     }
                 }
                 if (listPoco.Count == 0)
@@ -174,20 +173,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
         public override INF_MSG_GenericResponseData GetResponse(DCAInUCB2715WithResponseContentHeader customResponse, GenericRequestParams requestParams)
         {
             return this.MyResponseData;
-        }
-        private decimal GetMinValPay(int tenant)
-        {
-            const decimal fallback = 75m;
-            DefaultValueQueryService defaultValueQueryService = new DefaultValueQueryService(tenant);
-            var s = defaultValueQueryService.GetDefault("ISRAEL", "CGO_MINVAL_PAY", "NON", "NON", tenant);
-
-            if (string.IsNullOrWhiteSpace(s)) return fallback;
-
-            var normalized = s.Trim().Replace(",", ".");
-            if (decimal.TryParse(normalized, NumberStyles.Any, CultureInfo.InvariantCulture, out var val) && val > 0)
-                return val;
-
-            return fallback;
         }
 
     }

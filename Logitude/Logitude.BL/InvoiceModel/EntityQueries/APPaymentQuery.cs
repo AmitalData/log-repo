@@ -30,7 +30,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
 
         public APPaymentQuery()
         {
-            repository = new APPaymentRepository();
+            repository = new APPaymentRepository(); 
         }
 
         public APPaymentQuery(int tenant)
@@ -88,7 +88,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                        UpdateDate = a.UpdateDate,
                                        UpdatedByUserId = a.UpdatedByUserId,
                                        VendorName = a.VendorCard == null ? "" : (loggedContact.DontShowLocalLabels ? a.VendorCard.EnglishName : a.VendorCard.LocalName),
-                                       VendorCountry = a.VendorCard == null ? "" : a.VendorCard.CountryCode,
+                                       VendorCountry = a.VendorCard == null ? "" :  a.VendorCard.CountryCode,
                                        VendorLocalName = a.VendorCard == null ? "" : a.VendorCard.LocalName,
                                        VendorCode = a.VendorCard == null ? "" : a.VendorCard.Code,
                                        ExternalAccountingEntityId = a.ExternalAccountingEntityId,
@@ -197,7 +197,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             Tenant tenantPoco = tenantRepository.GetSingleTenant(tenant);
             return (tenantPoco != null && tenantPoco.AccountingActivated);
         }
-        public Contact GetLogContact(int tenant)
+        public Contact  GetLogContact(int tenant)
         {
             ContactRepository contactRep = new ContactRepository(tenant);
             string email = "";
@@ -210,9 +210,9 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             {
                 email = "system@tenant" + tenant + ".com";
             }
-
+           
             Contact contact = contactRep.GetSingleContactByEmail(email, tenant);
-
+           
 
             return contact;
 
@@ -309,63 +309,63 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
         {
             IQueryable<APPaymentPM> result = (from a in repository.context.APPayments.Include("LocalCurrency").Include("PaymentMethod").Include("TransferStatus").Include("Status").Include("Branch")
                                               where a.Tenant == tenant
-                                              select new APPaymentPM()
-                                              {
-                                                  CreateDate = a.CreateDate,
-                                                  Id = a.Id,
-                                                  InternalNotes = a.InternalNotes,
-                                                  IsClosed = a.IsClosed,
-                                                  LocalCurrencyId = a.LocalCurrencyId,
-                                                  LocalCurrencyCode = a.LocalCurrency != null ? a.LocalCurrency.Code : null,
-                                                  PaymentCurrencyExchangeRate = a.PaymentCurrencyExchangeRate,
-                                                  PaymentCurrencyId = a.PaymentCurrencyId,
-                                                  RegisterDate = a.RegisterDate,
-                                                  PaymentNo = a.PaymentNo,
-                                                  PrintDate = a.PrintDate,
-                                                  PrintNotes = a.PrintNotes,
-                                                  StatusCode = a.StatusCode,
-                                                  OpenAmount = a.OpenAmount,
-                                                  Tenant = a.Tenant,
-                                                  //SearchFields = a.SearchFields,
-                                                  Account = a.Account,
-                                                  AmountInLocalCurrency = a.AmountInLocalCurrency,
-                                                  AmountInPaymentCurrency = a.AmountInPaymentCurrency,
-                                                  Bank = a.Bank,
-                                                  BankBranch = a.BankBranch,
-                                                  ChequeOrPaymentRef = a.ChequeOrPaymentRef,
-                                                  CreatedByUserId = a.CreatedByUserId,
-                                                  PaymentCurrencyExchangeRateDate = a.PaymentCurrencyExchangeRateDate,
-                                                  AccountingPaymentMethodId = a.AccountingPaymentMethodId,
-                                                  PrintedByUserId = a.PrintedByUserId,
-                                                  VendorAddressId = a.VendorAddressId,
-                                                  VendorId = a.VendorId,
-                                                  ValueDate = a.ValueDate,
-                                                  BranchId = a.BranchId,
-                                                  UpdateDate = a.UpdateDate,
-                                                  UpdatedByUserId = a.UpdatedByUserId,
-                                                  //PaymentMethodName = a.PaymentMethod == null ? null : a.PaymentMethod.Name,
-                                                  CreditCardTypeId = a.CreditCardTypeId,
-                                                  ExternalAccountingEntityId = a.ExternalAccountingEntityId,
-                                                  TransferError = a.TransferError,
-                                                  TransferStatusCode = a.TransferStatusCode,
-                                                  TransferStatusName = a.TransferStatus == null ? "" : a.TransferStatus.Name,
-                                                  ReadyForTransfer = a.TransferStatusCode == "RD" ? true : false,
-                                                  TaxDeductionLocalAmount = a.TaxDeductionLocalAmount,
-                                                  TaxDeductionPercentage = a.TaxDeductionPercentage,
-                                                  ApprovedByUserId = a.ApprovedByUserId,
-                                                  ApprovedDateTime = a.ApprovedDateTime,
-                                                  BankAccountId = a.BankAccountId,
-                                                  FirstApproveDate = a.FirstApproveDate,
-                                                  BranchName = a.Branch == null ? null : a.Branch.EnglishName,
-                                                  VendorBankAccountNumber = a.VendorBankAccountNumber,
-                                                  VendorBankAddress = a.VendorBankAddress,
-                                                  VendorBankName = a.VendorBankName,
-                                                  VendorIBANNumber = a.VendorIBANNumber,
-                                                  VendorSwift = a.VendorSwift,
-                                                  ExternalPaymentAmount = a.ExternalPaymentAmount,
-                                                  ExternalPaymentDate = a.ExternalPaymentDate,
-                                                  ExternalPaymentNotes = a.ExternalPaymentNotes,
-                                              });
+                    select new APPaymentPM()
+                    {
+                        CreateDate = a.CreateDate,
+                        Id = a.Id,
+                        InternalNotes = a.InternalNotes,
+                        IsClosed = a.IsClosed,
+                        LocalCurrencyId = a.LocalCurrencyId,
+                        LocalCurrencyCode = a.LocalCurrency != null ? a.LocalCurrency.Code : null,
+                        PaymentCurrencyExchangeRate = a.PaymentCurrencyExchangeRate,
+                        PaymentCurrencyId = a.PaymentCurrencyId,
+                        RegisterDate = a.RegisterDate,
+                        PaymentNo = a.PaymentNo,
+                        PrintDate = a.PrintDate,
+                        PrintNotes = a.PrintNotes,
+                        StatusCode = a.StatusCode,
+                        OpenAmount = a.OpenAmount,
+                        Tenant = a.Tenant,
+                        //SearchFields = a.SearchFields,
+                        Account = a.Account,
+                        AmountInLocalCurrency = a.AmountInLocalCurrency,
+                        AmountInPaymentCurrency = a.AmountInPaymentCurrency,
+                        Bank = a.Bank,
+                        BankBranch = a.BankBranch,
+                        ChequeOrPaymentRef = a.ChequeOrPaymentRef,
+                        CreatedByUserId = a.CreatedByUserId,
+                        PaymentCurrencyExchangeRateDate = a.PaymentCurrencyExchangeRateDate,
+                        AccountingPaymentMethodId = a.AccountingPaymentMethodId,
+                        PrintedByUserId = a.PrintedByUserId,
+                        VendorAddressId = a.VendorAddressId,
+                        VendorId = a.VendorId,
+                        ValueDate = a.ValueDate,
+                        BranchId = a.BranchId,
+                        UpdateDate = a.UpdateDate,
+                        UpdatedByUserId = a.UpdatedByUserId,
+                        //PaymentMethodName = a.PaymentMethod == null ? null : a.PaymentMethod.Name,
+                        CreditCardTypeId = a.CreditCardTypeId,
+                        ExternalAccountingEntityId = a.ExternalAccountingEntityId,
+                        TransferError = a.TransferError,
+                        TransferStatusCode = a.TransferStatusCode,
+                        TransferStatusName = a.TransferStatus == null ? "" : a.TransferStatus.Name,
+                        ReadyForTransfer = a.TransferStatusCode == "RD" ? true : false,
+                        TaxDeductionLocalAmount = a.TaxDeductionLocalAmount,
+                        TaxDeductionPercentage = a.TaxDeductionPercentage,
+                        ApprovedByUserId = a.ApprovedByUserId,
+                        ApprovedDateTime = a.ApprovedDateTime,
+                        BankAccountId = a.BankAccountId,
+                        FirstApproveDate = a.FirstApproveDate,
+                        BranchName = a.Branch == null ? null : a.Branch.EnglishName,
+                        VendorBankAccountNumber = a.VendorBankAccountNumber,
+                        VendorBankAddress = a.VendorBankAddress,
+                        VendorBankName = a.VendorBankName,
+                        VendorIBANNumber = a.VendorIBANNumber,
+                        VendorSwift = a.VendorSwift,
+                        ExternalPaymentAmount = a.ExternalPaymentAmount,
+                        ExternalPaymentDate = a.ExternalPaymentDate,
+                        ExternalPaymentNotes = a.ExternalPaymentNotes,
+                    });
 
             result = BranchPermitionsFilter.AddUserBranchRestrictionFilters<APPaymentPM>(new QueryOperations(), result, tenant);
             return result;
@@ -444,7 +444,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
 
             Currency currency = CurrencyRepository.GetSingleCurrency(payment.PaymentCurrencyId, payment.Tenant, true);
             payment.PaymentCurrencyCode = currency != null ? currency.Code : null;
-            return BranchPermitionsFilter.AddUserBranchRestrictionFilters(new QueryOperations(), payment, tenant); ;
+            return BranchPermitionsFilter.AddUserBranchRestrictionFilters(new QueryOperations(), payment, tenant);;
         }
 
         public IQueryable<APPaymentList> GetIQueryableEntityList(IQueryable<APPayment> iQueryable)
@@ -524,11 +524,6 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                                    ExternalPaymentDate = a.ExternalPaymentDate,
                                                    ExternalPaymentNotes = a.ExternalPaymentNotes,
                                                    ConnectedInvoicesNumbers = a.ConnectedInvoicesNumbers,
-                                                   VendorPartnerTypeId = a.VendorCard == null ? "" : a.VendorCard.PartnerTypeId,
-                                                   VendorBankBranch = a.VendorCard == null ? "" : a.VendorCard.BankBranch,
-                                                   VendorBankAccount = a.VendorCard == null ? "" : a.VendorCard.AccountNumber,
-                                                   VendorBankCode = a.VendorCard == null ? "" : a.VendorCard.BankCodeId,
-                                                   MasavInterfaceId = a.MasavInterfaceId
                                                };
             return result;
         }
@@ -582,8 +577,8 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                             VendorLocalName = a.VendorCard == null ? "" : a.VendorCard.LocalName,
                             VendorCode = a.VendorCard == null ? "" : a.VendorCard.Code,
                             ExternalAccountingEntityId = a.ExternalAccountingEntityId,
-                            TransferError = a.TransferError,
-                            TransferStatusCode = a.TransferStatusCode,
+                            TransferError=a.TransferError,
+                            TransferStatusCode=a.TransferStatusCode,
                             TransferStatusName = a.TransferStatus == null ? "" : a.TransferStatus.Name,
                             ReadyForTransfer = a.TransferStatusCode == "RD" ? true : false,
                             TaxDeductionLocalAmount = a.TaxDeductionLocalAmount,
@@ -615,8 +610,6 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                         };
 
             return query;
-        }
-
-       
+        }      
     }
 }

@@ -35,17 +35,6 @@ export class FieldTemplateComponent {
     public showLocal: boolean = !SessionLocator.LoggedUserPM.DontShowLocal;
     public tenantCurrency: string = "";
     private CurrentSession = SessionLocator.SelectedSession;
-    public ColorByStatus: { [key: string]: string } = {
-        'Draft': '',
-        'Waiting for Approval': 'darkorange',
-        'Approved': 'green',
-        'Voided': 'darkred',
-        'Cancelled': 'darkred',
-        'In processing': 'rgb(35, 9, 182)',
-        'InProcessing': 'rgb(35, 9, 182)',
-        'Failed': 'rgb(4, 159, 152)'
-    };
-
     constructor() {
         this.TenantCurrencySign = SessionLocator.TenantPM.CurrencySign;
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
@@ -141,15 +130,6 @@ export class FieldTemplateComponent {
             }
             else {
                 this.FieldValue = this.Entity.StatusLocalName;
-            }
-            if (this.Entity.StatusTypeCode == "2") {
-                this.textColor = "orange";
-            }
-            else if (this.Entity.StatusTypeCode == "3") {
-                this.textColor = "green";
-            }
-            else if (this.Entity.StatusTypeCode == "4") {
-                this.textColor = "red";
             }
         }
 
